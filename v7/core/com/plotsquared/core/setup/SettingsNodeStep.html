@@ -7,6 +7,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.setup, class: SettingsNodeStep">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.setup.SettingsNodeStep class">
+<meta name="keywords" content="handleInput()">
+<meta name="keywords" content="getSuggestions()">
+<meta name="keywords" content="getDefaultValue()">
+<meta name="keywords" content="announce()">
+<meta name="keywords" content="createSuggestions()">
+<meta name="keywords" content="getConfigurationNode()">
+<meta name="keywords" content="getId()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +42,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/SettingsNodeStep.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -80,7 +90,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="SetupStep.html" title="interface in com.plotsquared.core.setup">SetupStep</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SettingsNodeStep</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-39">SettingsNodeStep</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="SetupStep.html" title="interface in com.plotsquared.core.setup">SetupStep</a></span></div>
 <div class="block">A SettingsNodeStep is a step wrapping a <a href="../configuration/ConfigurationNode.html" title="class in com.plotsquared.core.configuration"><code>ConfigurationNode</code></a>.</div>
@@ -166,7 +176,7 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 <li>
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.configuration.ConfigurationNode,int,com.plotsquared.core.setup.SettingsNodesWrapper)">
 <h3>SettingsNodeStep</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SettingsNodeStep</span><wbr><span class="parameters">(<a href="../configuration/ConfigurationNode.html" title="class in com.plotsquared.core.configuration">ConfigurationNode</a>&nbsp;configurationNode,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-45">SettingsNodeStep</a></span><wbr><span class="parameters">(<a href="../configuration/ConfigurationNode.html" title="class in com.plotsquared.core.configuration">ConfigurationNode</a>&nbsp;configurationNode,
  int&nbsp;id,
  <a href="SettingsNodesWrapper.html" title="class in com.plotsquared.core.setup">SettingsNodesWrapper</a>&nbsp;wrapper)</span></div>
 </section>
@@ -182,7 +192,7 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 <li>
 <section class="detail" id="handleInput(com.plotsquared.core.player.PlotPlayer,com.plotsquared.core.setup.PlotAreaBuilder,java.lang.String)">
 <h3>handleInput</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetupStep.html" title="interface in com.plotsquared.core.setup">SetupStep</a></span>&nbsp;<span class="element-name">handleInput</span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;plotPlayer,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="SetupStep.html" title="interface in com.plotsquared.core.setup">SetupStep</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-58">handleInput</a></span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;plotPlayer,
  <a href="PlotAreaBuilder.html" title="class in com.plotsquared.core.setup">PlotAreaBuilder</a>&nbsp;builder,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;argument)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="SetupStep.html#handleInput(com.plotsquared.core.player.PlotPlayer,com.plotsquared.core.setup.PlotAreaBuilder,java.lang.String)">SetupStep</a></code></span></div>
@@ -202,7 +212,7 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 <li>
 <section class="detail" id="getSuggestions()">
 <h3>getSuggestions</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getSuggestions</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-66">getSuggestions</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="SetupStep.html#getSuggestions()">getSuggestions</a></code>&nbsp;in interface&nbsp;<code><a href="SetupStep.html" title="interface in com.plotsquared.core.setup">SetupStep</a></code></dd>
@@ -212,7 +222,7 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 <li>
 <section class="detail" id="getDefaultValue()">
 <h3>getDefaultValue</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getDefaultValue</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-72">getDefaultValue</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="SetupStep.html#getDefaultValue()">getDefaultValue</a></code>&nbsp;in interface&nbsp;<code><a href="SetupStep.html" title="interface in com.plotsquared.core.setup">SetupStep</a></code></dd>
@@ -222,7 +232,7 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 <li>
 <section class="detail" id="announce(com.plotsquared.core.player.PlotPlayer)">
 <h3>announce</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">announce</span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;plotPlayer)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-78">announce</a></span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;plotPlayer)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="SetupStep.html#announce(com.plotsquared.core.player.PlotPlayer)">SetupStep</a></code></span></div>
 <div class="block">Announces this step to the player.</div>
 <dl class="notes">
@@ -236,7 +246,7 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 <li>
 <section class="detail" id="createSuggestions(com.plotsquared.core.player.PlotPlayer,java.lang.String)">
 <h3>createSuggestions</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../command/Command.html" title="class in com.plotsquared.core.command">Command</a>&gt;</span>&nbsp;<span class="element-name">createSuggestions</span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;plotPlayer,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../command/Command.html" title="class in com.plotsquared.core.command">Command</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-94">createSuggestions</a></span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;plotPlayer,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;argument)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="SetupStep.html#createSuggestions(com.plotsquared.core.player.PlotPlayer,java.lang.String)">SetupStep</a></code></span></div>
 <div class="block">Creates a collection of suggestions for the current input.</div>
@@ -254,13 +264,13 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 <li>
 <section class="detail" id="getConfigurationNode()">
 <h3>getConfigurationNode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../configuration/ConfigurationNode.html" title="class in com.plotsquared.core.configuration">ConfigurationNode</a></span>&nbsp;<span class="element-name">getConfigurationNode</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../configuration/ConfigurationNode.html" title="class in com.plotsquared.core.configuration">ConfigurationNode</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-112">getConfigurationNode</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getId()">
 <h3>getId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getId</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/setup/SettingsNodeStep.html#line-116">getId</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -270,6 +280,10 @@ implements <a href="SetupStep.html" title="interface in com.plotsquared.core.set
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

@@ -7,6 +7,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.util, class: WorldUtil">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.util.WorldUtil class">
+<meta name="keywords" content="setBiome()">
+<meta name="keywords" content="isWorld()">
+<meta name="keywords" content="getSignSynchronous()">
+<meta name="keywords" content="getSpawn()">
+<meta name="keywords" content="setSpawn()">
+<meta name="keywords" content="saveWorld()">
+<meta name="keywords" content="getClosestBlock()">
+<meta name="keywords" content="setSign()">
+<meta name="keywords" content="getBiome()">
+<meta name="keywords" content="getBiomeSynchronous()">
+<meta name="keywords" content="getBlock()">
+<meta name="keywords" content="getBlockSynchronous()">
+<meta name="keywords" content="getHighestBlock()">
+<meta name="keywords" content="getHighestBlockSynchronous()">
+<meta name="keywords" content="setBiomes()">
+<meta name="keywords" content="getWeWorld()">
+<meta name="keywords" content="refreshChunk()">
+<meta name="keywords" content="upload()">
+<meta name="keywords" content="getChunkChunks()">
+<meta name="keywords" content="isBlockSame()">
+<meta name="keywords" content="getHealth()">
+<meta name="keywords" content="setHealth()">
+<meta name="keywords" content="getFoodLevel()">
+<meta name="keywords" content="setFoodLevel()">
+<meta name="keywords" content="getTypesInCategory()">
+<meta name="keywords" content="getTileEntityTypes()">
+<meta name="keywords" content="getTileEntityCount()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +62,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/WorldUtil.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -76,7 +106,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">WorldUtil</span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-63">WorldUtil</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
@@ -290,7 +320,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>WorldUtil</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">WorldUtil</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-63">WorldUtil</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -304,7 +334,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBiome(java.lang.String,com.sk89q.worldedit.regions.CuboidRegion,com.sk89q.worldedit.world.biome.BiomeType)">
 <h3>setBiome</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setBiome</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-73">setBiome</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
  <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a>&nbsp;region,
  <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
 <div class="block">Set the biome in a region</div>
@@ -321,7 +351,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isWorld(java.lang.String)">
 <h3>isWorld</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isWorld</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-84">isWorld</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName)</span></div>
 <div class="block">Check if a given world name corresponds to a real world</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -336,7 +366,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getSignSynchronous(com.plotsquared.core.location.Location)">
 <h3>getSignSynchronous</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getSignSynchronous</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-91">getSignSynchronous</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">May result in synchronous chunk loading</div>
 </div>
@@ -351,7 +381,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSpawn(java.lang.String)">
 <h3>getSpawn</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name">getSpawn</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-101">getSpawn</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
 <div class="block">Get the world spawn location</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -364,7 +394,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setSpawn(com.plotsquared.core.location.Location)">
 <h3>setSpawn</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSpawn</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-109">setSpawn</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 <div class="block">Set the world spawn location</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -375,7 +405,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="saveWorld(java.lang.String)">
 <h3>saveWorld</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">saveWorld</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-116">saveWorld</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
 <div class="block">Save a world</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -386,7 +416,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getClosestBlock(java.lang.String)">
 <h3>getClosestBlock</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="StringComparison.html" title="class in com.plotsquared.core.util">StringComparison</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&gt;.<a href="StringComparison.ComparisonResult.html" title="class in com.plotsquared.core.util">ComparisonResult</a></span>&nbsp;<span class="element-name">getClosestBlock</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="StringComparison.html" title="class in com.plotsquared.core.util">StringComparison</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&gt;.<a href="StringComparison.ComparisonResult.html" title="class in com.plotsquared.core.util">ComparisonResult</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-124">getClosestBlock</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Get a string comparison with the closets block state matching a given string</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -399,7 +429,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setSign(com.plotsquared.core.location.Location,com.plotsquared.core.configuration.caption.Caption[],net.kyori.adventure.text.minimessage.tag.resolver.TagResolver...)">
 <h3>setSign</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSign</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-134">setSign</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../configuration/caption/Caption.html" title="interface in com.plotsquared.core.configuration.caption">Caption</a>[]&nbsp;lines,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.adventure.kyori.net/text-minimessage/4.12.0/net/kyori/adventure/text/minimessage/tag/resolver/TagResolver.html" title="class or interface in net.kyori.adventure.text.minimessage.tag.resolver" class="external-link">TagResolver</a>...&nbsp;replacements)</span></div>
 <div class="block">Set the block at the specified location to a sign, with given text</div>
@@ -414,7 +444,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBiome(java.lang.String,int,int,java.util.function.Consumer)">
 <h3>getBiome</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">getBiome</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-148">getBiome</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
  int&nbsp;x,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&gt;&nbsp;result)</span></div>
@@ -432,7 +462,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getBiomeSynchronous(java.lang.String,int,int)">
 <h3>getBiomeSynchronous</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a></span>&nbsp;<span class="element-name">getBiomeSynchronous</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
+</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-159">getBiomeSynchronous</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
  int&nbsp;x,
  int&nbsp;z)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -452,7 +482,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBlock(com.plotsquared.core.location.Location,java.util.function.Consumer)">
 <h3>getBlock</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">getBlock</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-169">getBlock</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&gt;&nbsp;result)</span></div>
 <div class="block">Get the block at a given location (asynchronously)</div>
 <dl class="notes">
@@ -466,7 +496,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getBlockSynchronous(com.plotsquared.core.location.Location)">
 <h3>getBlockSynchronous</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a></span>&nbsp;<span class="element-name">getBlockSynchronous</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-178">getBlockSynchronous</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="#getBlock(com.plotsquared.core.location.Location,java.util.function.Consumer)"><code>getBlock(Location, Consumer)</code></a></div>
 </div>
@@ -482,7 +512,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getHighestBlock(java.lang.String,int,int,java.util.function.IntConsumer)">
 <h3>getHighestBlock</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">getHighestBlock</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-190">getHighestBlock</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
  int&nbsp;x,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/IntConsumer.html" title="class or interface in java.util.function" class="external-link">IntConsumer</a>&nbsp;result)</span></div>
@@ -500,7 +530,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getHighestBlockSynchronous(java.lang.String,int,int)">
 <h3>getHighestBlockSynchronous</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative int</span>&nbsp;<span class="element-name">getHighestBlockSynchronous</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
+</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-201">getHighestBlockSynchronous</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
  int&nbsp;x,
  int&nbsp;z)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -520,7 +550,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBiomes(java.lang.String,com.sk89q.worldedit.regions.CuboidRegion,com.sk89q.worldedit.world.biome.BiomeType)">
 <h3>setBiomes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setBiomes</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-212">setBiomes</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a>&nbsp;region,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
 <div class="block">Set the biome in a region</div>
@@ -535,7 +565,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getWeWorld(java.lang.String)">
 <h3>getWeWorld</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/World.html" title="class or interface in com.sk89q.worldedit.world" class="external-link">World</a></span>&nbsp;<span class="element-name">getWeWorld</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/World.html" title="class or interface in com.sk89q.worldedit.world" class="external-link">World</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-223">getWeWorld</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
 <div class="block">Get the WorldEdit <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/World.html" title="class or interface in com.sk89q.worldedit.world" class="external-link"><code>World</code></a> corresponding to a world name</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -548,7 +578,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="refreshChunk(int,int,java.lang.String)">
 <h3>refreshChunk</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshChunk</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-232">refreshChunk</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;z,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
 <div class="block">Refresh (resend) chunk to player. Usually after setting the biome</div>
@@ -563,7 +593,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="upload(com.plotsquared.core.plot.Plot,java.util.UUID,java.lang.String,com.plotsquared.core.util.task.RunnableVal)">
 <h3>upload</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">upload</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-234">upload</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;file,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="task/RunnableVal.html" title="class in com.plotsquared.core.util.task">RunnableVal</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URL.html" title="class or interface in java.net" class="external-link">URL</a>&gt;&nbsp;whenDone)</span></div>
@@ -572,13 +602,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChunkChunks(java.lang.String)">
 <h3>getChunkChunks</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;</span>&nbsp;<span class="element-name">getChunkChunks</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-335">getChunkChunks</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="isBlockSame(com.sk89q.worldedit.world.block.BlockState,com.sk89q.worldedit.world.block.BlockState)">
 <h3>isBlockSame</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isBlockSame</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&nbsp;block1,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-365">isBlockSame</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&nbsp;block1,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&nbsp;block2)</span></div>
 <div class="block">Check if two blocks are the same type)</div>
 <dl class="notes">
@@ -593,7 +623,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getHealth(com.plotsquared.core.player.PlotPlayer)">
 <h3>getHealth</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative double</span>&nbsp;<span class="element-name">getHealth</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative double</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-373">getHealth</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
 <div class="block">Get the player health</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -606,7 +636,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setHealth(com.plotsquared.core.player.PlotPlayer,double)">
 <h3>setHealth</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHealth</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-382">setHealth</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
  @org.checkerframework.checker.index.qual.NonNegative double&nbsp;health)</span></div>
 <div class="block">Set the player health</div>
 <dl class="notes">
@@ -619,7 +649,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getFoodLevel(com.plotsquared.core.player.PlotPlayer)">
 <h3>getFoodLevel</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative int</span>&nbsp;<span class="element-name">getFoodLevel</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-390">getFoodLevel</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
 <div class="block">Get the player food level</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -632,7 +662,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setFoodLevel(com.plotsquared.core.player.PlotPlayer,int)">
 <h3>setFoodLevel</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFoodLevel</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-399">setFoodLevel</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
  @org.checkerframework.checker.index.qual.NonNegative int&nbsp;foodLevel)</span></div>
 <div class="block">Set the player food level</div>
 <dl class="notes">
@@ -645,7 +675,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTypesInCategory(java.lang.String)">
 <h3>getTypesInCategory</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/entity/EntityType.html" title="class or interface in com.sk89q.worldedit.world.entity" class="external-link">EntityType</a>&gt;</span>&nbsp;<span class="element-name">getTypesInCategory</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;category)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/entity/EntityType.html" title="class or interface in com.sk89q.worldedit.world.entity" class="external-link">EntityType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-407">getTypesInCategory</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;category)</span></div>
 <div class="block">Get all entity types belonging to an entity category</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -658,7 +688,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTileEntityTypes()">
 <h3>getTileEntityTypes</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockType.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockType</a>&gt;</span>&nbsp;<span class="element-name">getTileEntityTypes</span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockType.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-415">getTileEntityTypes</a></span>()</div>
 <div class="block">Get all recognized tile entity types</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -669,7 +699,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getTileEntityCount(java.lang.String,com.sk89q.worldedit.math.BlockVector2)">
 <h3>getTileEntityCount</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative int</span>&nbsp;<span class="element-name">getTileEntityCount</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/util/WorldUtil.html#line-425">getTileEntityCount</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&nbsp;chunk)</span></div>
 <div class="block">Get the tile entity count in a chunk</div>
 <dl class="notes">
@@ -688,6 +718,10 @@ loadScripts(document, 'script');</script>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

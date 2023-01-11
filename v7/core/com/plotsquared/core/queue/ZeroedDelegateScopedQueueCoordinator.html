@@ -7,6 +7,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.queue, class: ZeroedDelegateScopedQueueCoordinator">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.queue.ZeroedDelegateScopedQueueCoordinator class">
+<meta name="keywords" content="setBiome()">
+<meta name="keywords" content="fillBiome()">
+<meta name="keywords" content="setBlock()">
+<meta name="keywords" content="setTile()">
+<meta name="keywords" content="getMin()">
+<meta name="keywords" content="getMax()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +41,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/ZeroedDelegateScopedQueueCoordinator.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -84,7 +93,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="BlockArrayCacheScopedQueueCoordinator.html" title="class in com.plotsquared.core.queue">BlockArrayCacheScopedQueueCoordinator</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ZeroedDelegateScopedQueueCoordinator</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-37">ZeroedDelegateScopedQueueCoordinator</a></span>
 <span class="extends-implements">extends <a href="DelegateQueueCoordinator.html" title="class in com.plotsquared.core.queue">DelegateQueueCoordinator</a></span></div>
 <div class="block">Queue that only sets blocks with a designated X-Z area, will accept any Y values. Requires all blocks be set normalized to
  zero in the x and z directions, i.e. starting from 0,0. An offset of the minimum point of the region will then be applied to
@@ -206,7 +215,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.queue.QueueCoordinator,com.plotsquared.core.location.Location,com.plotsquared.core.location.Location)">
 <h3>ZeroedDelegateScopedQueueCoordinator</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ZeroedDelegateScopedQueueCoordinator</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="QueueCoordinator.html" title="class in com.plotsquared.core.queue">QueueCoordinator</a>&nbsp;parent,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-55">ZeroedDelegateScopedQueueCoordinator</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="QueueCoordinator.html" title="class in com.plotsquared.core.queue">QueueCoordinator</a>&nbsp;parent,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;min,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;max)</span></div>
 <div class="block">Create a new ScopedQueueCoordinator instance that delegates to a given QueueCoordinator. Locations are inclusive.</div>
@@ -227,7 +236,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBiome(int,int,com.sk89q.worldedit.world.biome.BiomeType)">
 <h3>setBiome</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setBiome</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-69">setBiome</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="QueueCoordinator.html#setBiome(int,int,com.sk89q.worldedit.world.biome.BiomeType)">QueueCoordinator</a></code></span></div>
@@ -247,7 +256,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBiome(int,int,int,com.sk89q.worldedit.world.biome.BiomeType)">
 <h3>setBiome</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setBiome</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-74">setBiome</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
@@ -269,13 +278,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="fillBiome(com.sk89q.worldedit.world.biome.BiomeType)">
 <h3>fillBiome</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">fillBiome</span><wbr><span class="parameters">(<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-79">fillBiome</a></span><wbr><span class="parameters">(<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="setBlock(int,int,int,com.sk89q.worldedit.world.block.BaseBlock)">
 <h3>setBlock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setBlock</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-89">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>&nbsp;id)</span></div>
@@ -297,7 +306,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBlock(int,int,int,com.sk89q.worldedit.world.block.BlockState)">
 <h3>setBlock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setBlock</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-94">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&nbsp;id)</span></div>
@@ -319,7 +328,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBlock(int,int,int,com.sk89q.worldedit.function.pattern.Pattern)">
 <h3>setBlock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setBlock</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-99">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/function/pattern/Pattern.html" title="class or interface in com.sk89q.worldedit.function.pattern" class="external-link">Pattern</a>&nbsp;pattern)</span></div>
@@ -341,7 +350,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setTile(int,int,int,com.sk89q.jnbt.CompoundTag)">
 <h3>setTile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setTile</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-104">setTile</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/jnbt/CompoundTag.html" title="class or interface in com.sk89q.jnbt" class="external-link">CompoundTag</a>&nbsp;tag)</span></div>
@@ -363,13 +372,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMin()">
 <h3>getMin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name">getMin</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-109">getMin</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMax()">
 <h3>getMax</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name">getMax</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/ZeroedDelegateScopedQueueCoordinator.html#line-113">getMax</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -379,6 +388,10 @@ loadScripts(document, 'script');</script>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

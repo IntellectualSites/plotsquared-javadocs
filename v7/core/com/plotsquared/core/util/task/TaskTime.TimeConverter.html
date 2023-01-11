@@ -7,6 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.util.task, class: TaskTime, interface: TimeConverter">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.util.task.TaskTime.TimeConverter interface">
+<meta name="keywords" content="msToTicks()">
+<meta name="keywords" content="ticksToMs()">
+<meta name="keywords" content="toTicks()">
+<meta name="keywords" content="toMs()">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +39,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/TaskTime.TimeConverter.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../new-list.html">New</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
@@ -77,7 +84,7 @@ loadScripts(document, 'script');</script>
 <dd><a href="TaskTime.html" title="class in com.plotsquared.core.util.task">TaskTime</a></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">TaskTime.TimeConverter</span></div>
+<div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/util/task/TaskTime.html#line-111">TaskTime.TimeConverter</a></span></div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -129,7 +136,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="msToTicks(long)">
 <h3>msToTicks</h3>
-<div class="member-signature"><span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name">msToTicks</span><wbr><span class="parameters">(@org.checkerframework.checker.index.qual.NonNegative long&nbsp;ms)</span></div>
+<div class="member-signature"><span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/util/task/TaskTime.TimeConverter.html#line-119">msToTicks</a></span><wbr><span class="parameters">(@org.checkerframework.checker.index.qual.NonNegative long&nbsp;ms)</span></div>
 <div class="block">Convert from milliseconds to server ticks</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -142,7 +149,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="ticksToMs(long)">
 <h3>ticksToMs</h3>
-<div class="member-signature"><span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name">ticksToMs</span><wbr><span class="parameters">(@org.checkerframework.checker.index.qual.NonNegative long&nbsp;ticks)</span></div>
+<div class="member-signature"><span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/util/task/TaskTime.TimeConverter.html#line-128">ticksToMs</a></span><wbr><span class="parameters">(@org.checkerframework.checker.index.qual.NonNegative long&nbsp;ticks)</span></div>
 <div class="block">Convert from server ticks to milliseconds</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -155,7 +162,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="toTicks(com.plotsquared.core.util.task.TaskTime)">
 <h3>toTicks</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name">toTicks</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="TaskTime.html" title="class in com.plotsquared.core.util.task">TaskTime</a>&nbsp;taskTime)</span></div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/util/task/TaskTime.TimeConverter.html#line-137">toTicks</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="TaskTime.html" title="class in com.plotsquared.core.util.task">TaskTime</a>&nbsp;taskTime)</span></div>
 <div class="block">Convert the task time to server ticks</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -168,7 +175,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="toMs(com.plotsquared.core.util.task.TaskTime)">
 <h3>toMs</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name">toMs</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="TaskTime.html" title="class in com.plotsquared.core.util.task">TaskTime</a>&nbsp;taskTime)</span></div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">@org.checkerframework.checker.index.qual.NonNegative long</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/util/task/TaskTime.TimeConverter.html#line-152">toMs</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="TaskTime.html" title="class in com.plotsquared.core.util.task">TaskTime</a>&nbsp;taskTime)</span></div>
 <div class="block">Convert the task time to milliseconds</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -185,6 +192,10 @@ loadScripts(document, 'script');</script>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

@@ -7,6 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.configuration, class: MemoryConfiguration">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.configuration.MemoryConfiguration class">
+<meta name="keywords" content="defaults">
+<meta name="keywords" content="options">
+<meta name="keywords" content="addDefault()">
+<meta name="keywords" content="addDefaults()">
+<meta name="keywords" content="getDefaults()">
+<meta name="keywords" content="setDefaults()">
+<meta name="keywords" content="getParent()">
+<meta name="keywords" content="options()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +43,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/MemoryConfiguration.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -86,7 +97,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="file/FileConfiguration.html" title="class in com.plotsquared.core.configuration.file">FileConfiguration</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">MemoryConfiguration</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-28">MemoryConfiguration</a></span>
 <span class="extends-implements">extends <a href="MemorySection.html" title="class in com.plotsquared.core.configuration">MemorySection</a>
 implements <a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a></span></div>
 <div class="block">This is a <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> implementation that does not save or load
@@ -209,13 +220,13 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="defaults">
 <h3>defaults</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a></span>&nbsp;<span class="element-name">defaults</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-30">defaults</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="options">
 <h3>options</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="MemoryConfigurationOptions.html" title="class in com.plotsquared.core.configuration">MemoryConfigurationOptions</a></span>&nbsp;<span class="element-name">options</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="MemoryConfigurationOptions.html" title="class in com.plotsquared.core.configuration">MemoryConfigurationOptions</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-31">options</a></span></div>
 </section>
 </li>
 </ul>
@@ -229,14 +240,14 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>MemoryConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MemoryConfiguration</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-36">MemoryConfiguration</a></span>()</div>
 <div class="block">Creates an empty <a href="MemoryConfiguration.html" title="class in com.plotsquared.core.configuration"><code>MemoryConfiguration</code></a> with no default values.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.configuration.Configuration)">
 <h3>MemoryConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MemoryConfiguration</span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-46">MemoryConfiguration</a></span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
 <div class="block">Creates an empty <a href="MemoryConfiguration.html" title="class in com.plotsquared.core.configuration"><code>MemoryConfiguration</code></a> using the specified <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> as a source for all default values.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -257,7 +268,7 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="addDefault(java.lang.String,java.lang.Object)">
 <h3>addDefault</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-50">addDefault</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="ConfigurationSection.html#addDefault(java.lang.String,java.lang.Object)">ConfigurationSection</a></code></span></div>
 <div class="block">Sets the default value in the root at the given path as provided.
@@ -288,7 +299,7 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="addDefaults(java.util.Map)">
 <h3>addDefaults</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDefaults</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;defaults)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-59">addDefaults</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;defaults)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Configuration.html#addDefaults(java.util.Map)">Configuration</a></code></span></div>
 <div class="block">Sets the default values of the given paths as provided.
  <p>If no source <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> was provided as a default
@@ -305,7 +316,7 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="addDefaults(com.plotsquared.core.configuration.Configuration)">
 <h3>addDefaults</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDefaults</span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-66">addDefaults</a></span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Configuration.html#addDefaults(com.plotsquared.core.configuration.Configuration)">Configuration</a></code></span></div>
 <div class="block">Sets the default values of the given paths as provided.
  <p>If no source <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> was provided as a default
@@ -325,7 +336,7 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="getDefaults()">
 <h3>getDefaults</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a></span>&nbsp;<span class="element-name">getDefaults</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-71">getDefaults</a></span>()</div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Configuration.html#getDefaults()">Configuration</a></code></span></div>
 <div class="block">Gets the source <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> for this configuration.
 
@@ -343,7 +354,7 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="setDefaults(com.plotsquared.core.configuration.Configuration)">
 <h3>setDefaults</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDefaults</span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-76">setDefaults</a></span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Configuration.html#setDefaults(com.plotsquared.core.configuration.Configuration)">Configuration</a></code></span></div>
 <div class="block">Sets the source of all default values for this <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a>.
 
@@ -360,7 +371,7 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="getParent()">
 <h3>getParent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a></span>&nbsp;<span class="element-name">getParent</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-85">getParent</a></span>()</div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="ConfigurationSection.html#getParent()">ConfigurationSection</a></code></span></div>
 <div class="block">Gets the parent <a href="ConfigurationSection.html" title="interface in com.plotsquared.core.configuration"><code>ConfigurationSection</code></a> that directly contains
  this <a href="ConfigurationSection.html" title="interface in com.plotsquared.core.configuration"><code>ConfigurationSection</code></a>.
@@ -384,7 +395,7 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 <li>
 <section class="detail" id="options()">
 <h3>options</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MemoryConfigurationOptions.html" title="class in com.plotsquared.core.configuration">MemoryConfigurationOptions</a></span>&nbsp;<span class="element-name">options</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="MemoryConfigurationOptions.html" title="class in com.plotsquared.core.configuration">MemoryConfigurationOptions</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/MemoryConfiguration.html#line-90">options</a></span>()</div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="Configuration.html#options()">Configuration</a></code></span></div>
 <div class="block">Gets the <code>ConfigurationOptions</code> for this <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a>.
  <p>All setters through this method are chainable.</p></div>
@@ -403,6 +414,10 @@ implements <a href="Configuration.html" title="interface in com.plotsquared.core
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

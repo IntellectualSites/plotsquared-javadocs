@@ -7,6 +7,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.queue.subscriber, class: DefaultProgressSubscriber">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.queue.subscriber.DefaultProgressSubscriber class">
+<meta name="keywords" content="notifyProgress()">
+<meta name="keywords" content="notifyEnd()">
+<meta name="keywords" content="cancel()">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +38,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/DefaultProgressSubscriber.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../../new-list.html">New</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
@@ -80,7 +86,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="ProgressSubscriber.html" title="interface in com.plotsquared.core.queue.subscriber">ProgressSubscriber</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DefaultProgressSubscriber</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/queue/subscriber/DefaultProgressSubscriber.html#line-46">DefaultProgressSubscriber</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="ProgressSubscriber.html" title="interface in com.plotsquared.core.queue.subscriber">ProgressSubscriber</a></span></div>
 <div class="block">The default PlotSquared Progress Subscriber. Can be used for both console and player tasks.
@@ -154,20 +160,20 @@ implements <a href="ProgressSubscriber.html" title="interface in com.plotsquared
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DefaultProgressSubscriber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultProgressSubscriber</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/queue/subscriber/DefaultProgressSubscriber.html#line-64">DefaultProgressSubscriber</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.player.PlotPlayer)">
 <h3>DefaultProgressSubscriber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultProgressSubscriber</span><wbr><span class="parameters">(@Nullable
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/queue/subscriber/DefaultProgressSubscriber.html#line-69">DefaultProgressSubscriber</a></span><wbr><span class="parameters">(@Nullable
  <a href="../../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;actor)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.player.PlotPlayer,long,long,com.plotsquared.core.configuration.caption.Caption)">
 <h3>DefaultProgressSubscriber</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DefaultProgressSubscriber</span><wbr><span class="parameters">(@Nullable
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/queue/subscriber/DefaultProgressSubscriber.html#line-81">DefaultProgressSubscriber</a></span><wbr><span class="parameters">(@Nullable
  <a href="../../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;actor,
  long&nbsp;interval,
  long&nbsp;wait,
@@ -186,7 +192,7 @@ implements <a href="ProgressSubscriber.html" title="interface in com.plotsquared
 <li>
 <section class="detail" id="notifyProgress(com.plotsquared.core.queue.ChunkCoordinator,double)">
 <h3>notifyProgress</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyProgress</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../ChunkCoordinator.html" title="class in com.plotsquared.core.queue">ChunkCoordinator</a>&nbsp;coordinator,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/queue/subscriber/DefaultProgressSubscriber.html#line-102">notifyProgress</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../ChunkCoordinator.html" title="class in com.plotsquared.core.queue">ChunkCoordinator</a>&nbsp;coordinator,
  double&nbsp;progress)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="ProgressSubscriber.html#notifyProgress(com.plotsquared.core.queue.ChunkCoordinator,double)">ProgressSubscriber</a></code></span></div>
 <div class="block">Notify about a progress update in the coordinator</div>
@@ -202,7 +208,7 @@ implements <a href="ProgressSubscriber.html" title="interface in com.plotsquared
 <li>
 <section class="detail" id="notifyEnd()">
 <h3>notifyEnd</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">notifyEnd</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/queue/subscriber/DefaultProgressSubscriber.html#line-127">notifyEnd</a></span>()</div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="ProgressSubscriber.html#notifyEnd()">ProgressSubscriber</a></code></span></div>
 <div class="block">Notify the subscriber that its parent ChunkCoordinator has finished</div>
 <dl class="notes">
@@ -214,7 +220,7 @@ implements <a href="ProgressSubscriber.html" title="interface in com.plotsquared
 <li>
 <section class="detail" id="cancel()">
 <h3>cancel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">cancel</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../../src-html/com/plotsquared/core/queue/subscriber/DefaultProgressSubscriber.html#line-131">cancel</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -224,6 +230,10 @@ implements <a href="ProgressSubscriber.html" title="interface in com.plotsquared
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

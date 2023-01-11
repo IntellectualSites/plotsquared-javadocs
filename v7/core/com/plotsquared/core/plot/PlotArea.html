@@ -7,6 +7,101 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.plot, class: PlotArea">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.plot.PlotArea class">
+<meta name="keywords" content="plots">
+<meta name="keywords" content="createManager()">
+<meta name="keywords" content="getQueue()">
+<meta name="keywords" content="getRegion()">
+<meta name="keywords" content="getMin()">
+<meta name="keywords" content="getMax()">
+<meta name="keywords" content="equals()">
+<meta name="keywords" content="getClusters()">
+<meta name="keywords" content="isCompatible()">
+<meta name="keywords" content="loadDefaultConfiguration()">
+<meta name="keywords" content="loadConfiguration()">
+<meta name="keywords" content="saveConfiguration()">
+<meta name="keywords" content="toString()">
+<meta name="keywords" content="asComponent()">
+<meta name="keywords" content="hashCode()">
+<meta name="keywords" content="getSettingNodes()">
+<meta name="keywords" content="getPlotAbs()">
+<meta name="keywords" content="getPlot()">
+<meta name="keywords" content="getOwnedPlot()">
+<meta name="keywords" content="getOwnedPlotAbs()">
+<meta name="keywords" content="contains()">
+<meta name="keywords" content="buildRangeContainsY()">
+<meta name="keywords" content="notifyIfOutsideBuildArea()">
+<meta name="keywords" content="getPlotsAbs()">
+<meta name="keywords" content="getPlots()">
+<meta name="keywords" content="getPlotCount()">
+<meta name="keywords" content="hasPlot()">
+<meta name="keywords" content="getCluster()">
+<meta name="keywords" content="getFirstIntersectingCluster()">
+<meta name="keywords" content="setMeta()">
+<meta name="keywords" content="getMeta()">
+<meta name="keywords" content="getBasePlots()">
+<meta name="keywords" content="forEachBasePlot()">
+<meta name="keywords" content="getPlotsRaw()">
+<meta name="keywords" content="getPlotEntries()">
+<meta name="keywords" content="addPlot()">
+<meta name="keywords" content="getNextFreePlot()">
+<meta name="keywords" content="addPlotIfAbsent()">
+<meta name="keywords" content="addPlotAbs()">
+<meta name="keywords" content="getBorder()">
+<meta name="keywords" content="setupBorder()">
+<meta name="keywords" content="deleteMeta()">
+<meta name="keywords" content="canClaim()">
+<meta name="keywords" content="removePlot()">
+<meta name="keywords" content="mergePlots()">
+<meta name="keywords" content="getPlotSelectionOwned()">
+<meta name="keywords" content="removeCluster()">
+<meta name="keywords" content="addCluster()">
+<meta name="keywords" content="hasSchematic()">
+<meta name="keywords" content="useEconomy()">
+<meta name="keywords" content="hasWorldBorder()">
+<meta name="keywords" content="allowSigns()">
+<meta name="keywords" content="signMaterial()">
+<meta name="keywords" content="legacySignMaterial()">
+<meta name="keywords" content="getFlag()">
+<meta name="keywords" content="getRoadFlag()">
+<meta name="keywords" content="getWorldName()">
+<meta name="keywords" content="getId()">
+<meta name="keywords" content="getPlotManager()">
+<meta name="keywords" content="getWorldHash()">
+<meta name="keywords" content="getGenerator()">
+<meta name="keywords" content="isAutoMerge()">
+<meta name="keywords" content="isMiscSpawnUnowned()">
+<meta name="keywords" content="isMobSpawning()">
+<meta name="keywords" content="isMobSpawnerSpawning()">
+<meta name="keywords" content="getPlotBiome()">
+<meta name="keywords" content="isPlotChat()">
+<meta name="keywords" content="isForcingPlotChat()">
+<meta name="keywords" content="isSchematicClaimSpecify()">
+<meta name="keywords" content="isSchematicOnClaim()">
+<meta name="keywords" content="getSchematicFile()">
+<meta name="keywords" content="isSpawnEggs()">
+<meta name="keywords" content="getSignMaterial()">
+<meta name="keywords" content="isSpawnCustom()">
+<meta name="keywords" content="isSpawnBreeding()">
+<meta name="keywords" content="getType()">
+<meta name="keywords" content="setType()">
+<meta name="keywords" content="getTerrain()">
+<meta name="keywords" content="setTerrain()">
+<meta name="keywords" content="isHomeAllowNonmember()">
+<meta name="keywords" content="nonmemberHome()">
+<meta name="keywords" content="defaultHome()">
+<meta name="keywords" content="setDefaultHome()">
+<meta name="keywords" content="getMaxBuildHeight()">
+<meta name="keywords" content="getMinBuildHeight()">
+<meta name="keywords" content="getMinGenHeight()">
+<meta name="keywords" content="getMaxGenHeight()">
+<meta name="keywords" content="getGameMode()">
+<meta name="keywords" content="getPrices()">
+<meta name="keywords" content="getSchematics()">
+<meta name="keywords" content="isRoadFlags()">
+<meta name="keywords" content="getFlagContainer()">
+<meta name="keywords" content="getRoadFlagContainer()">
+<meta name="keywords" content="setAllowSigns()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +129,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/PlotArea.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -84,7 +181,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../generator/GridPlotWorld.html" title="class in com.plotsquared.core.generator">GridPlotWorld</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">PlotArea</span>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-91">PlotArea</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://jd.adventure.kyori.net/api/4.12.0/net/kyori/adventure/text/ComponentLike.html" title="class or interface in net.kyori.adventure.text" class="external-link">ComponentLike</a></span></div>
 </section>
@@ -589,7 +686,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="plots">
 <h3>plots</h3>
-<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">plots</span></div>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-101">plots</a></span></div>
 </section>
 </li>
 </ul>
@@ -603,7 +700,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,com.plotsquared.core.generator.IndependentPlotGenerator,com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId,com.plotsquared.core.configuration.file.YamlConfiguration,com.plotsquared.core.queue.GlobalBlockQueue)">
 <h3>PlotArea</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PlotArea</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-157">PlotArea</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../generator/IndependentPlotGenerator.html" title="class in com.plotsquared.core.generator">IndependentPlotGenerator</a>&nbsp;generator,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;min,
@@ -623,19 +720,19 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="createManager()">
 <h3>createManager</h3>
-<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotManager.html" title="class in com.plotsquared.core.plot">PlotManager</a></span>&nbsp;<span class="element-name">createManager</span>()</div>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotManager.html" title="class in com.plotsquared.core.plot">PlotManager</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-213">createManager</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getQueue()">
 <h3>getQueue</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../queue/QueueCoordinator.html" title="class in com.plotsquared.core.queue">QueueCoordinator</a></span>&nbsp;<span class="element-name">getQueue</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../queue/QueueCoordinator.html" title="class in com.plotsquared.core.queue">QueueCoordinator</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-216">getQueue</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRegion()">
 <h3>getRegion</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a></span>&nbsp;<span class="element-name">getRegion</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-226">getRegion</a></span>()</div>
 <div class="block">Returns the region for this PlotArea, or a CuboidRegion encompassing
  the whole world if none exists.</div>
 <dl class="notes">
@@ -647,7 +744,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getMin()">
 <h3>getMin</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></span>&nbsp;<span class="element-name">getMin</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-260">getMin</a></span>()</div>
 <div class="block">Returns the minimum value of a <a href="PlotId.html" title="class in com.plotsquared.core.plot"><code>PlotId</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -658,7 +755,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getMax()">
 <h3>getMax</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></span>&nbsp;<span class="element-name">getMax</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-269">getMax</a></span>()</div>
 <div class="block">Returns the max PlotId.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -669,7 +766,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="equals(java.lang.Object)">
 <h3>equals</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-273">equals</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -679,13 +776,13 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getClusters()">
 <h3>getClusters</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&gt;</span>&nbsp;<span class="element-name">getClusters</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-286">getClusters</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isCompatible(com.plotsquared.core.plot.PlotArea)">
 <h3>isCompatible</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCompatible</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;plotArea)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-296">isCompatible</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;plotArea)</span></div>
 <div class="block">Check if a PlotArea is compatible (move/copy etc.).</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -698,7 +795,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="loadDefaultConfiguration(com.plotsquared.core.configuration.ConfigurationSection)">
 <h3>loadDefaultConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadDefaultConfiguration</span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-313">loadDefaultConfiguration</a></span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
 <div class="block">When a world is created, the following method will be called for each.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -709,13 +806,13 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="loadConfiguration(com.plotsquared.core.configuration.ConfigurationSection)">
 <h3>loadConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadConfiguration</span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-440">loadConfiguration</a></span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="saveConfiguration(com.plotsquared.core.configuration.ConfigurationSection)">
 <h3>saveConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">saveConfiguration</span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-447">saveConfiguration</a></span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
 <div class="block">Saving core PlotArea settings.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -726,7 +823,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="toString()">
 <h3>toString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-517">toString</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -737,7 +834,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <section class="detail" id="asComponent()">
 <h3>asComponent</h3>
 <div class="member-signature"><span class="annotations">@NotNull
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="https://jd.adventure.kyori.net/api/4.12.0/net/kyori/adventure/text/Component.html" title="class or interface in net.kyori.adventure.text" class="external-link">Component</a></span>&nbsp;<span class="element-name">asComponent</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@NotNull <a href="https://jd.adventure.kyori.net/api/4.12.0/net/kyori/adventure/text/Component.html" title="class or interface in net.kyori.adventure.text" class="external-link">Component</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-527">asComponent</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://jd.adventure.kyori.net/api/4.12.0/net/kyori/adventure/text/ComponentLike.html#asComponent()" title="class or interface in net.kyori.adventure.text" class="external-link">asComponent</a></code>&nbsp;in interface&nbsp;<code><a href="https://jd.adventure.kyori.net/api/4.12.0/net/kyori/adventure/text/ComponentLike.html" title="class or interface in net.kyori.adventure.text" class="external-link">ComponentLike</a></code></dd>
@@ -747,7 +844,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="hashCode()">
 <h3>hashCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-532">hashCode</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -757,7 +854,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getSettingNodes()">
 <h3>getSettingNodes</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="../configuration/ConfigurationNode.html" title="class in com.plotsquared.core.configuration">ConfigurationNode</a>[]</span>&nbsp;<span class="element-name">getSettingNodes</span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="../configuration/ConfigurationNode.html" title="class in com.plotsquared.core.configuration">ConfigurationNode</a>[]</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-545">getSettingNodes</a></span>()</div>
 <div class="block">Used for the <b>/plot setup</b> command Return null if you do not want to support this feature</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -768,7 +865,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getPlotAbs(com.plotsquared.core.location.Location)">
 <h3>getPlotAbs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getPlotAbs</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-553">getPlotAbs</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 <div class="block">Gets the <a href="Plot.html" title="class in com.plotsquared.core.plot"><code>Plot</code></a> at a location.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -781,7 +878,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getPlot(com.plotsquared.core.location.Location)">
 <h3>getPlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getPlot</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-568">getPlot</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 <div class="block">Gets the base plot at a location.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -794,7 +891,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getOwnedPlot(com.plotsquared.core.location.Location)">
 <h3>getOwnedPlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getOwnedPlot</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-583">getOwnedPlot</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 <div class="block">Get the owned base plot at a location.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -807,7 +904,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getOwnedPlotAbs(com.plotsquared.core.location.Location)">
 <h3>getOwnedPlotAbs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getOwnedPlotAbs</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-599">getOwnedPlotAbs</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 <div class="block">Get the owned plot at a location.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -820,7 +917,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getOwnedPlotAbs(com.plotsquared.core.plot.PlotId)">
 <h3>getOwnedPlotAbs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getOwnedPlotAbs</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-614">getOwnedPlotAbs</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
 <div class="block">Get the owned Plot at a PlotId.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -833,32 +930,32 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getOwnedPlot(com.plotsquared.core.plot.PlotId)">
 <h3>getOwnedPlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getOwnedPlot</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-618">getOwnedPlot</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="contains(int,int)">
 <h3>contains</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">contains</span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-623">contains</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;z)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="contains(com.plotsquared.core.plot.PlotId)">
 <h3>contains</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">contains</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-627">contains</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="contains(com.plotsquared.core.location.Location)">
 <h3>contains</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">contains</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-632">contains</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="buildRangeContainsY(int)">
 <h3>buildRangeContainsY</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">buildRangeContainsY</span><wbr><span class="parameters">(int&nbsp;y)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-643">buildRangeContainsY</a></span><wbr><span class="parameters">(int&nbsp;y)</span></div>
 <div class="block">Get if the <code>PlotArea</code>'s build range (min build height -> max build height) contains the given y value</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -871,7 +968,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="notifyIfOutsideBuildArea(com.plotsquared.core.player.PlotPlayer,int)">
 <h3>notifyIfOutsideBuildArea</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">notifyIfOutsideBuildArea</span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-656">notifyIfOutsideBuildArea</a></span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
  int&nbsp;y)</span></div>
 <div class="block">Utility method to check if the player is attempting to place blocks outside the build area, and notify of this if the
  player does not have permissions.</div>
@@ -889,19 +986,19 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getPlotsAbs(java.util.UUID)">
 <h3>getPlotsAbs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getPlotsAbs</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-671">getPlotsAbs</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlots(java.util.UUID)">
 <h3>getPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getPlots</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-684">getPlots</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlots()">
 <h3>getPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getPlots</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-694">getPlots</a></span>()</div>
 <div class="block">A collection of the claimed plots in this <a href="PlotArea.html" title="class in com.plotsquared.core.plot"><code>PlotArea</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -912,14 +1009,14 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getPlotCount(java.util.UUID)">
 <h3>getPlotCount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPlotCount</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-698">getPlotCount</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlots(com.plotsquared.core.player.PlotPlayer)">
 <h3>getPlots</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getPlots</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-712">getPlots</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="#getPlots(java.util.UUID)"><code>getPlots(UUID)</code></a></div>
 </div>
@@ -935,31 +1032,31 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="hasPlot(java.util.UUID)">
 <h3>hasPlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasPlot</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-719">hasPlot</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlotCount(com.plotsquared.core.player.PlotPlayer)">
 <h3>getPlotCount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPlotCount</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-723">getPlotCount</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlotAbs(com.plotsquared.core.plot.PlotId)">
 <h3>getPlotAbs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getPlotAbs</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-727">getPlotAbs</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlot(com.plotsquared.core.plot.PlotId)">
 <h3>getPlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getPlot</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-739">getPlot</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlotCount()">
 <h3>getPlotCount</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getPlotCount</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-756">getPlotCount</a></span>()</div>
 <div class="block">Retrieves the number of claimed plot in the <a href="PlotArea.html" title="class in com.plotsquared.core.plot"><code>PlotArea</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -970,20 +1067,20 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getCluster(com.plotsquared.core.location.Location)">
 <h3>getCluster</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a></span>&nbsp;<span class="element-name">getCluster</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-760">getCluster</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;location)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFirstIntersectingCluster(com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId)">
 <h3>getFirstIntersectingCluster</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a></span>&nbsp;<span class="element-name">getFirstIntersectingCluster</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos1,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-768">getFirstIntersectingCluster</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos1,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos2)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="setMeta(java.lang.String,java.lang.Object)">
 <h3>setMeta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMeta</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-795">setMeta</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
 <div class="block">Session only plot metadata (session is until the server stops).
  <br>
@@ -998,14 +1095,14 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getMeta(java.lang.String,T)">
 <h3 id="getMeta(java.lang.String,java.lang.Object)">getMeta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> T</span>&nbsp;<span class="element-name">getMeta</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> T</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-802">getMeta</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> T&nbsp;def)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMeta(java.lang.String)">
 <h3>getMeta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getMeta</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-815">getMeta</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Get the metadata for a key<br>
  <br>
  For persistent metadata use the flag system</div>
@@ -1020,20 +1117,20 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getBasePlots()">
 <h3>getBasePlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getBasePlots</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-822">getBasePlots</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="forEachBasePlot(java.util.function.Consumer)">
 <h3>forEachBasePlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forEachBasePlot</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;run)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-835">forEachBasePlot</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;run)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlotsRaw()">
 <h3>getPlotsRaw</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getPlotsRaw</span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-850">getPlotsRaw</a></span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Poorly implemented. May be removed in future.</div>
 </div>
@@ -1047,38 +1144,38 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getPlotEntries()">
 <h3>getPlotEntries</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="class or interface in java.util" class="external-link">Map.Entry</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&gt;</span>&nbsp;<span class="element-name">getPlotEntries</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="class or interface in java.util" class="external-link">Map.Entry</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-855">getPlotEntries</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addPlot(com.plotsquared.core.plot.Plot)">
 <h3>addPlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addPlot</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-859">addPlot</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNextFreePlot(com.plotsquared.core.player.PlotPlayer,com.plotsquared.core.plot.PlotId)">
 <h3>getNextFreePlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name">getNextFreePlot</span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-869">getNextFreePlot</a></span><wbr><span class="parameters">(<a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;start)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addPlotIfAbsent(com.plotsquared.core.plot.Plot)">
 <h3>addPlotIfAbsent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addPlotIfAbsent</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-900">addPlotIfAbsent</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addPlotAbs(com.plotsquared.core.plot.Plot)">
 <h3>addPlotAbs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">addPlotAbs</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-913">addPlotAbs</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBorder()">
 <h3>getBorder</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getBorder</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-922">getBorder</a></span>()</div>
 <div class="block">Get the plot border distance for a world<br></div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1089,14 +1186,14 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="setupBorder()">
 <h3>setupBorder</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setupBorder</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-938">setupBorder</a></span>()</div>
 <div class="block">Setup the plot border for a world (usually done when the world is created).</div>
 </section>
 </li>
 <li>
 <section class="detail" id="deleteMeta(java.lang.String)">
 <h3>deleteMeta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteMeta</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-958">deleteMeta</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="block">Delete the metadata for a key.
  - metadata is session only
  - deleting other plugin's metadata may cause issues</div>
@@ -1109,7 +1206,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="canClaim(com.plotsquared.core.player.PlotPlayer,com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId)">
 <h3>canClaim</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">canClaim</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-964">canClaim</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos1,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos2)</span></div>
 </section>
@@ -1117,13 +1214,13 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="removePlot(com.plotsquared.core.plot.PlotId)">
 <h3>removePlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">removePlot</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1000">removePlot</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="mergePlots(java.util.List,boolean)">
 <h3>mergePlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">mergePlots</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&gt;&nbsp;plotIds,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1012">mergePlots</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&gt;&nbsp;plotIds,
  boolean&nbsp;removeRoads)</span></div>
 <div class="block">Merge a list of plots together. This is non-blocking for the world-changes that will be made. To run a task when the
  world changes are complete, use <a href="#mergePlots(java.util.List,boolean,java.lang.Runnable)"><code>mergePlots(List, boolean, Runnable)</code></a>;</div>
@@ -1139,7 +1236,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="mergePlots(java.util.List,boolean,java.lang.Runnable)">
 <h3>mergePlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">mergePlots</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&gt;&nbsp;plotIds,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1026">mergePlots</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&gt;&nbsp;plotIds,
  boolean&nbsp;removeRoads,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 <div class="block">Merge a list of plots together. This is non-blocking for the world-changes that will be made.</div>
@@ -1159,7 +1256,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getPlotSelectionOwned(com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId)">
 <h3>getPlotSelectionOwned</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getPlotSelectionOwned</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos1,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1106">getPlotSelectionOwned</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos1,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;pos2)</span></div>
 <div class="block">Get a set of owned plots within a selection (chooses the best algorithm based on selection size.
  i.e. A selection of billions of plots will work fine</div>
@@ -1175,25 +1272,25 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="removeCluster(com.plotsquared.core.plot.PlotCluster)">
 <h3>removeCluster</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeCluster</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;plotCluster)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1131">removeCluster</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;plotCluster)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addCluster(com.plotsquared.core.plot.PlotCluster)">
 <h3>addCluster</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addCluster</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;plotCluster)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1139">addCluster</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;plotCluster)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCluster(java.lang.String)">
 <h3>getCluster</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a></span>&nbsp;<span class="element-name">getCluster</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;string)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1156">getCluster</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;string)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="hasSchematic(java.lang.String)">
 <h3>hasSchematic</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasSchematic</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schematic)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1172">hasSchematic</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schematic)</span></div>
 <div class="block">Get whether a schematic with that name is available or not.
  If a schematic is available, it can be used for plot claiming.</div>
 <dl class="notes">
@@ -1207,7 +1304,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="useEconomy()">
 <h3>useEconomy</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">useEconomy</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1181">useEconomy</a></span>()</div>
 <div class="block">Get whether economy is enabled and used on this plot area or not.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1218,7 +1315,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="hasWorldBorder()">
 <h3>hasWorldBorder</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasWorldBorder</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1190">hasWorldBorder</a></span>()</div>
 <div class="block">Get whether the plot area is limited by a world border or not.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1229,7 +1326,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="allowSigns()">
 <h3>allowSigns</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">allowSigns</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1199">allowSigns</a></span>()</div>
 <div class="block">Get whether plot signs are allowed or not.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1240,7 +1337,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="signMaterial()">
 <h3>signMaterial</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">signMaterial</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1208">signMaterial</a></span>()</div>
 <div class="block">Get the plot sign material.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -1251,13 +1348,13 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="legacySignMaterial()">
 <h3>legacySignMaterial</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">legacySignMaterial</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1212">legacySignMaterial</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFlag(java.lang.Class)">
 <h3>getFlag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getFlag</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;T,<wbr>?&gt;&gt;&nbsp;flagClass)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1224">getFlag</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;T,<wbr>?&gt;&gt;&nbsp;flagClass)</span></div>
 <div class="block">Get the value associated with the specified flag. This will look at
  the default values stored in <a href="flag/GlobalFlagContainer.html" title="class in com.plotsquared.core.plot.flag"><code>GlobalFlagContainer</code></a>.</div>
 <dl class="notes">
@@ -1275,7 +1372,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <h3 id="getFlag(com.plotsquared.core.plot.flag.PlotFlag)">getFlag</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T,<wbr>
 V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;T,<wbr>
-?&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getFlag</span><wbr><span class="parameters">(V&nbsp;flag)</span></div>
+?&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1237">getFlag</a></span><wbr><span class="parameters">(V&nbsp;flag)</span></div>
 <div class="block">Get the value associated with the specified flag. This will look at
  the default values stored in <a href="flag/GlobalFlagContainer.html" title="class in com.plotsquared.core.plot.flag"><code>GlobalFlagContainer</code></a>.</div>
 <dl class="notes">
@@ -1292,7 +1389,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getRoadFlag(java.lang.Class)">
 <h3>getRoadFlag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getRoadFlag</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;T,<wbr>?&gt;&gt;&nbsp;flagClass)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1251">getRoadFlag</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;T,<wbr>?&gt;&gt;&nbsp;flagClass)</span></div>
 <div class="block">Get the value associated with the specified road flag. This will look at
  the default values stored in <a href="flag/GlobalFlagContainer.html" title="class in com.plotsquared.core.plot.flag"><code>GlobalFlagContainer</code></a>.</div>
 <dl class="notes">
@@ -1310,7 +1407,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <h3 id="getRoadFlag(com.plotsquared.core.plot.flag.PlotFlag)">getRoadFlag</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T,<wbr>
 V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;T,<wbr>
-?&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getRoadFlag</span><wbr><span class="parameters">(V&nbsp;flag)</span></div>
+?&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1264">getRoadFlag</a></span><wbr><span class="parameters">(V&nbsp;flag)</span></div>
 <div class="block">Get the value associated with the specified road flag. This will look at
  the default values stored in <a href="flag/GlobalFlagContainer.html" title="class in com.plotsquared.core.plot.flag"><code>GlobalFlagContainer</code></a>.</div>
 <dl class="notes">
@@ -1327,127 +1424,127 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getWorldName()">
 <h3>getWorldName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getWorldName</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1270">getWorldName</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getId()">
 <h3>getId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getId</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1274">getId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlotManager()">
 <h3>getPlotManager</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotManager.html" title="class in com.plotsquared.core.plot">PlotManager</a></span>&nbsp;<span class="element-name">getPlotManager</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotManager.html" title="class in com.plotsquared.core.plot">PlotManager</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1278">getPlotManager</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getWorldHash()">
 <h3>getWorldHash</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getWorldHash</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1282">getWorldHash</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getGenerator()">
 <h3>getGenerator</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../generator/IndependentPlotGenerator.html" title="class in com.plotsquared.core.generator">IndependentPlotGenerator</a></span>&nbsp;<span class="element-name">getGenerator</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../generator/IndependentPlotGenerator.html" title="class in com.plotsquared.core.generator">IndependentPlotGenerator</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1286">getGenerator</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isAutoMerge()">
 <h3>isAutoMerge</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAutoMerge</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1290">isAutoMerge</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isMiscSpawnUnowned()">
 <h3>isMiscSpawnUnowned</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMiscSpawnUnowned</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1294">isMiscSpawnUnowned</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isMobSpawning()">
 <h3>isMobSpawning</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMobSpawning</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1298">isMobSpawning</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isMobSpawnerSpawning()">
 <h3>isMobSpawnerSpawning</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMobSpawnerSpawning</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1302">isMobSpawnerSpawning</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPlotBiome()">
 <h3>getPlotBiome</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a></span>&nbsp;<span class="element-name">getPlotBiome</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1306">getPlotBiome</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isPlotChat()">
 <h3>isPlotChat</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isPlotChat</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1310">isPlotChat</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isForcingPlotChat()">
 <h3>isForcingPlotChat</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isForcingPlotChat</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1314">isForcingPlotChat</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSchematicClaimSpecify()">
 <h3>isSchematicClaimSpecify</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSchematicClaimSpecify</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1318">isSchematicClaimSpecify</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSchematicOnClaim()">
 <h3>isSchematicOnClaim</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSchematicOnClaim</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1322">isSchematicOnClaim</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSchematicFile()">
 <h3>getSchematicFile</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSchematicFile</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1326">getSchematicFile</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSpawnEggs()">
 <h3>isSpawnEggs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSpawnEggs</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1330">isSpawnEggs</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSignMaterial()">
 <h3>getSignMaterial</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getSignMaterial</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1334">getSignMaterial</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSpawnCustom()">
 <h3>isSpawnCustom</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSpawnCustom</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1338">isSpawnCustom</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSpawnBreeding()">
 <h3>isSpawnBreeding</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSpawnBreeding</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1342">isSpawnBreeding</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getType()">
 <h3>getType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlotAreaType.html" title="enum class in com.plotsquared.core.plot">PlotAreaType</a></span>&nbsp;<span class="element-name">getType</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlotAreaType.html" title="enum class in com.plotsquared.core.plot">PlotAreaType</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1346">getType</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setType(com.plotsquared.core.plot.PlotAreaType)">
 <h3>setType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setType</span><wbr><span class="parameters">(<a href="PlotAreaType.html" title="enum class in com.plotsquared.core.plot">PlotAreaType</a>&nbsp;type)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1355">setType</a></span><wbr><span class="parameters">(<a href="PlotAreaType.html" title="enum class in com.plotsquared.core.plot">PlotAreaType</a>&nbsp;type)</span></div>
 <div class="block">Set the type of this plot area.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1458,13 +1555,13 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getTerrain()">
 <h3>getTerrain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlotAreaTerrainType.html" title="enum class in com.plotsquared.core.plot">PlotAreaTerrainType</a></span>&nbsp;<span class="element-name">getTerrain</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlotAreaTerrainType.html" title="enum class in com.plotsquared.core.plot">PlotAreaTerrainType</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1360">getTerrain</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setTerrain(com.plotsquared.core.plot.PlotAreaTerrainType)">
 <h3>setTerrain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTerrain</span><wbr><span class="parameters">(<a href="PlotAreaTerrainType.html" title="enum class in com.plotsquared.core.plot">PlotAreaTerrainType</a>&nbsp;terrain)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1369">setTerrain</a></span><wbr><span class="parameters">(<a href="PlotAreaTerrainType.html" title="enum class in com.plotsquared.core.plot">PlotAreaTerrainType</a>&nbsp;terrain)</span></div>
 <div class="block">Set the terrain generation type of this plot area.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -1475,13 +1572,13 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="isHomeAllowNonmember()">
 <h3>isHomeAllowNonmember</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHomeAllowNonmember</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1373">isHomeAllowNonmember</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="nonmemberHome()">
 <h3>nonmemberHome</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../location/BlockLoc.html" title="class in com.plotsquared.core.location">BlockLoc</a></span>&nbsp;<span class="element-name">nonmemberHome</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../location/BlockLoc.html" title="class in com.plotsquared.core.location">BlockLoc</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1382">nonmemberHome</a></span>()</div>
 <div class="block">Get the location for non-members to be teleported to.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -1492,7 +1589,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="defaultHome()">
 <h3>defaultHome</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../location/BlockLoc.html" title="class in com.plotsquared.core.location">BlockLoc</a></span>&nbsp;<span class="element-name">defaultHome</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../location/BlockLoc.html" title="class in com.plotsquared.core.location">BlockLoc</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1392">defaultHome</a></span>()</div>
 <div class="block">Get the default location for players to be teleported to. May be overridden by <code>nonmemberHome</code> if the player is
  not a member of the plot.</div>
 <dl class="notes">
@@ -1504,27 +1601,27 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="setDefaultHome(com.plotsquared.core.location.BlockLoc)">
 <h3>setDefaultHome</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDefaultHome</span><wbr><span class="parameters">(<a href="../location/BlockLoc.html" title="class in com.plotsquared.core.location">BlockLoc</a>&nbsp;defaultHome)</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1396">setDefaultHome</a></span><wbr><span class="parameters">(<a href="../location/BlockLoc.html" title="class in com.plotsquared.core.location">BlockLoc</a>&nbsp;defaultHome)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMaxBuildHeight()">
 <h3>getMaxBuildHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMaxBuildHeight</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1403">getMaxBuildHeight</a></span>()</div>
 <div class="block">Get the maximum height players may build in. Exclusive.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMinBuildHeight()">
 <h3>getMinBuildHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMinBuildHeight</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1410">getMinBuildHeight</a></span>()</div>
 <div class="block">Get the minimum height players may build in. Inclusive.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMinGenHeight()">
 <h3>getMinGenHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMinGenHeight</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1419">getMinGenHeight</a></span>()</div>
 <div class="block">Get the min height from which PlotSquared will generate blocks. Inclusive.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -1535,7 +1632,7 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getMaxGenHeight()">
 <h3>getMaxGenHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMaxGenHeight</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1428">getMaxGenHeight</a></span>()</div>
 <div class="block">Get the max height to which PlotSquared will generate blocks. Inclusive.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -1546,43 +1643,43 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 <li>
 <section class="detail" id="getGameMode()">
 <h3>getGameMode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/gamemode/GameMode.html" title="class or interface in com.sk89q.worldedit.world.gamemode" class="external-link">GameMode</a></span>&nbsp;<span class="element-name">getGameMode</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/gamemode/GameMode.html" title="class or interface in com.sk89q.worldedit.world.gamemode" class="external-link">GameMode</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1432">getGameMode</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPrices()">
 <h3>getPrices</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../util/PlotExpression.html" title="class in com.plotsquared.core.util">PlotExpression</a>&gt;</span>&nbsp;<span class="element-name">getPrices</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../util/PlotExpression.html" title="class in com.plotsquared.core.util">PlotExpression</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1436">getPrices</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSchematics()">
 <h3>getSchematics</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getSchematics</span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1440">getSchematics</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isRoadFlags()">
 <h3>isRoadFlags</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRoadFlags</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1444">isRoadFlags</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFlagContainer()">
 <h3>getFlagContainer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="flag/FlagContainer.html" title="class in com.plotsquared.core.plot.flag">FlagContainer</a></span>&nbsp;<span class="element-name">getFlagContainer</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="flag/FlagContainer.html" title="class in com.plotsquared.core.plot.flag">FlagContainer</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1448">getFlagContainer</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRoadFlagContainer()">
 <h3>getRoadFlagContainer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="flag/FlagContainer.html" title="class in com.plotsquared.core.plot.flag">FlagContainer</a></span>&nbsp;<span class="element-name">getRoadFlagContainer</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="flag/FlagContainer.html" title="class in com.plotsquared.core.plot.flag">FlagContainer</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1452">getRoadFlagContainer</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setAllowSigns(boolean)">
 <h3>setAllowSigns</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAllowSigns</span><wbr><span class="parameters">(boolean&nbsp;allowSigns)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/plot/PlotArea.html#line-1456">setAllowSigns</a></span><wbr><span class="parameters">(boolean&nbsp;allowSigns)</span></div>
 </section>
 </li>
 </ul>
@@ -1592,6 +1689,10 @@ V extends <a href="flag/PlotFlag.html" title="class in com.plotsquared.core.plot
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

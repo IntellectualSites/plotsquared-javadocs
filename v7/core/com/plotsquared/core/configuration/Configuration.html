@@ -7,6 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.configuration, interface: Configuration">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.configuration.Configuration interface">
+<meta name="keywords" content="addDefault()">
+<meta name="keywords" content="addDefaults()">
+<meta name="keywords" content="getDefaults()">
+<meta name="keywords" content="setDefaults()">
+<meta name="keywords" content="options()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +40,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/Configuration.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -81,7 +89,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="file/FileConfiguration.html" title="class in com.plotsquared.core.configuration.file">FileConfiguration</a></code>, <code><a href="MemoryConfiguration.html" title="class in com.plotsquared.core.configuration">MemoryConfiguration</a></code>, <code><a href="file/YamlConfiguration.html" title="class in com.plotsquared.core.configuration.file">YamlConfiguration</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Configuration</span><span class="extends-implements">
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/Configuration.html#line-26">Configuration</a></span><span class="extends-implements">
 extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a></span></div>
 <div class="block">Represents a source of configurable options and settings.</div>
 </section>
@@ -149,7 +157,7 @@ extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.
 <li>
 <section class="detail" id="addDefault(java.lang.String,java.lang.Object)">
 <h3>addDefault</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addDefault</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/Configuration.html#line-40">addDefault</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
 <div class="block">Sets the default value of the given path as provided.
  <p>If no source <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> was provided as a default
@@ -171,7 +179,7 @@ extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.
 <li>
 <section class="detail" id="addDefaults(java.util.Map)">
 <h3>addDefaults</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addDefaults</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;defaults)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/Configuration.html#line-52">addDefaults</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;defaults)</span></div>
 <div class="block">Sets the default values of the given paths as provided.
  <p>If no source <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> was provided as a default
  collection, then a new <a href="MemoryConfiguration.html" title="class in com.plotsquared.core.configuration"><code>MemoryConfiguration</code></a> will be created to
@@ -187,7 +195,7 @@ extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.
 <li>
 <section class="detail" id="addDefaults(com.plotsquared.core.configuration.Configuration)">
 <h3>addDefaults</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addDefaults</span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/Configuration.html#line-67">addDefaults</a></span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
 <div class="block">Sets the default values of the given paths as provided.
  <p>If no source <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> was provided as a default
  collection, then a new <a href="MemoryConfiguration.html" title="class in com.plotsquared.core.configuration"><code>MemoryConfiguration</code></a> will be created to
@@ -206,7 +214,7 @@ extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.
 <li>
 <section class="detail" id="getDefaults()">
 <h3>getDefaults</h3>
-<div class="member-signature"><span class="return-type"><a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a></span>&nbsp;<span class="element-name">getDefaults</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/Configuration.html#line-78">getDefaults</a></span>()</div>
 <div class="block">Gets the source <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a> for this configuration.
 
  <p>If no configuration source was set, but default values were added, then
@@ -221,7 +229,7 @@ extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.
 <li>
 <section class="detail" id="setDefaults(com.plotsquared.core.configuration.Configuration)">
 <h3>setDefaults</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setDefaults</span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/Configuration.html#line-89">setDefaults</a></span><wbr><span class="parameters">(<a href="Configuration.html" title="interface in com.plotsquared.core.configuration">Configuration</a>&nbsp;defaults)</span></div>
 <div class="block">Sets the source of all default values for this <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a>.
 
  <p>If a previous source was set, or previous default values were defined,
@@ -237,7 +245,7 @@ extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.
 <li>
 <section class="detail" id="options()">
 <h3>options</h3>
-<div class="member-signature"><span class="return-type">com.plotsquared.core.configuration.ConfigurationOptions</span>&nbsp;<span class="element-name">options</span>()</div>
+<div class="member-signature"><span class="return-type">com.plotsquared.core.configuration.ConfigurationOptions</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/configuration/Configuration.html#line-97">options</a></span>()</div>
 <div class="block">Gets the <code>ConfigurationOptions</code> for this <a href="Configuration.html" title="interface in com.plotsquared.core.configuration"><code>Configuration</code></a>.
  <p>All setters through this method are chainable.</p></div>
 <dl class="notes">
@@ -253,6 +261,10 @@ extends <a href="ConfigurationSection.html" title="interface in com.plotsquared.
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

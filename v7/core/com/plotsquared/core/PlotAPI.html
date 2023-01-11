@@ -7,6 +7,18 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core, class: PlotAPI">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.PlotAPI class">
+<meta name="keywords" content="getAllPlots()">
+<meta name="keywords" content="getPlayerPlots()">
+<meta name="keywords" content="addPlotArea()">
+<meta name="keywords" content="getChunkManager()">
+<meta name="keywords" content="getBlockQueue()">
+<meta name="keywords" content="getSchematicHandler()">
+<meta name="keywords" content="getPlotAreas()">
+<meta name="keywords" content="sendConsoleMessage()">
+<meta name="keywords" content="getPlotSquared()">
+<meta name="keywords" content="wrapPlayer()">
+<meta name="keywords" content="registerListener()">
 <link rel="stylesheet" type="text/css" href="../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +46,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/PlotAPI.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../new-list.html">New</a></li>
 <li><a href="../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../index-all.html">Index</a></li>
 <li><a href="../../../help-doc.html#class">Help</a></li>
@@ -76,7 +90,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PlotAPI</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-55">PlotAPI</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">PlotSquared API.
 
@@ -203,7 +217,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>PlotAPI</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PlotAPI</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-58">PlotAPI</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -217,7 +231,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getAllPlots()">
 <h3>getAllPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getAllPlots</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-66">getAllPlots</a></span>()</div>
 <div class="block">Gets all plots.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -228,7 +242,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPlayerPlots(com.plotsquared.core.player.PlotPlayer)">
 <h3>getPlayerPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name">getPlayerPlots</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-76">getPlayerPlots</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player)</span></div>
 <div class="block">Gets all plots for a player.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -241,7 +255,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addPlotArea(com.plotsquared.core.plot.PlotArea)">
 <h3>addPlotArea</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPlotArea</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;plotArea)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-86">addPlotArea</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;plotArea)</span></div>
 <div class="block">Adds a plot world.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -258,7 +272,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChunkManager()">
 <h3>getChunkManager</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="util/ChunkManager.html" title="class in com.plotsquared.core.util">ChunkManager</a></span>&nbsp;<span class="element-name">getChunkManager</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="util/ChunkManager.html" title="class in com.plotsquared.core.util">ChunkManager</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-103">getChunkManager</a></span>()</div>
 <div class="block">ChunkManager class contains several useful methods.
  <ul>
  <li>Chunk deletion</li>
@@ -282,7 +296,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBlockQueue()">
 <h3>getBlockQueue</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="queue/GlobalBlockQueue.html" title="class in com.plotsquared.core.queue">GlobalBlockQueue</a></span>&nbsp;<span class="element-name">getBlockQueue</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="queue/GlobalBlockQueue.html" title="class in com.plotsquared.core.queue">GlobalBlockQueue</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-112">getBlockQueue</a></span>()</div>
 <div class="block">Gets the block/biome set queue</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -293,7 +307,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSchematicHandler()">
 <h3>getSchematicHandler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="util/SchematicHandler.html" title="class in com.plotsquared.core.util">SchematicHandler</a></span>&nbsp;<span class="element-name">getSchematicHandler</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="util/SchematicHandler.html" title="class in com.plotsquared.core.util">SchematicHandler</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-123">getSchematicHandler</a></span>()</div>
 <div class="block">SchematicHandler class contains methods related to pasting, reading
  and writing schematics.</div>
 <dl class="notes">
@@ -311,7 +325,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPlotAreas(java.lang.String)">
 <h3>getPlotAreas</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&gt;</span>&nbsp;<span class="element-name">getPlotAreas</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-133">getPlotAreas</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world)</span></div>
 <div class="block">Gets a list of PlotAreas in the world.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -324,7 +338,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="sendConsoleMessage(java.lang.String,net.kyori.adventure.text.minimessage.tag.resolver.TagResolver...)">
 <h3>sendConsoleMessage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sendConsoleMessage</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-146">sendConsoleMessage</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.adventure.kyori.net/text-minimessage/4.12.0/net/kyori/adventure/text/minimessage/tag/resolver/TagResolver.html" title="class or interface in net.kyori.adventure.text.minimessage.tag.resolver" class="external-link">TagResolver</a> <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> ...&nbsp;replacements)</span></div>
 <div class="block">Send a message to the console. The message supports color codes.</div>
 <dl class="notes">
@@ -337,7 +351,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="sendConsoleMessage(com.plotsquared.core.configuration.caption.Caption,net.kyori.adventure.text.minimessage.tag.resolver.TagResolver...)">
 <h3>sendConsoleMessage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sendConsoleMessage</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="configuration/caption/Caption.html" title="interface in com.plotsquared.core.configuration.caption">Caption</a>&nbsp;caption,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-159">sendConsoleMessage</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="configuration/caption/Caption.html" title="interface in com.plotsquared.core.configuration.caption">Caption</a>&nbsp;caption,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.adventure.kyori.net/text-minimessage/4.12.0/net/kyori/adventure/text/minimessage/tag/resolver/TagResolver.html" title="class or interface in net.kyori.adventure.text.minimessage.tag.resolver" class="external-link">TagResolver</a> <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> ...&nbsp;replacements)</span></div>
 <div class="block">Sends a message to the console.</div>
 <dl class="notes">
@@ -350,7 +364,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getPlotSquared()">
 <h3>getPlotSquared</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotSquared.html" title="class in com.plotsquared.core">PlotSquared</a></span>&nbsp;<span class="element-name">getPlotSquared</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="PlotSquared.html" title="class in com.plotsquared.core">PlotSquared</a></span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-172">getPlotSquared</a></span>()</div>
 <div class="block">Gets the PlotSquared class.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -367,7 +381,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="wrapPlayer(java.util.UUID)">
 <h3>wrapPlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;</span>&nbsp;<span class="element-name">wrapPlayer</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-185">wrapPlayer</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <div class="block">Gets the PlotPlayer for a UUID.
 
  <p><i>Please note that PlotSquared can be configured to provide
@@ -383,7 +397,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="wrapPlayer(java.lang.String)">
 <h3>wrapPlayer</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;</span>&nbsp;<span class="element-name">wrapPlayer</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;player)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-195">wrapPlayer</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;player)</span></div>
 <div class="block">Gets the PlotPlayer for a username.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -396,7 +410,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="registerListener(java.lang.Object)">
 <h3>registerListener</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">registerListener</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;listener)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../src-html/com/plotsquared/core/PlotAPI.html#line-205">registerListener</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;listener)</span></div>
 <div class="block">Registers a listener for PlotSquared Events</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -417,6 +431,10 @@ loadScripts(document, 'script');</script>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

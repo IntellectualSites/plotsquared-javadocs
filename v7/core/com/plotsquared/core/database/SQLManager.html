@@ -7,6 +7,94 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.database, class: SQLManager">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.database.SQLManager class">
+<meta name="keywords" content="SET_OWNER">
+<meta name="keywords" content="GET_ALL_PLOTS">
+<meta name="keywords" content="CREATE_PLOTS">
+<meta name="keywords" content="CREATE_SETTINGS">
+<meta name="keywords" content="CREATE_TIERS">
+<meta name="keywords" content="CREATE_PLOT">
+<meta name="keywords" content="CREATE_PLOT_SAFE">
+<meta name="keywords" content="CREATE_CLUSTER">
+<meta name="keywords" content="globalTasks">
+<meta name="keywords" content="notifyTasks">
+<meta name="keywords" content="plotTasks">
+<meta name="keywords" content="playerTasks">
+<meta name="keywords" content="clusterTasks">
+<meta name="keywords" content="isValid()">
+<meta name="keywords" content="reconnect()">
+<meta name="keywords" content="getGlobalTasks()">
+<meta name="keywords" content="getNotifyTasks()">
+<meta name="keywords" content="addPlotTask()">
+<meta name="keywords" content="addPlayerTask()">
+<meta name="keywords" content="addClusterTask()">
+<meta name="keywords" content="addGlobalTask()">
+<meta name="keywords" content="addNotifyTask()">
+<meta name="keywords" content="sendBatch()">
+<meta name="keywords" content="getConnection()">
+<meta name="keywords" content="setOwner()">
+<meta name="keywords" content="createPlotsAndData()">
+<meta name="keywords" content="createTiers()">
+<meta name="keywords" content="createFlags()">
+<meta name="keywords" content="createPlots()">
+<meta name="keywords" content="setBulk()">
+<meta name="keywords" content="createSettings()">
+<meta name="keywords" content="createEmptySettings()">
+<meta name="keywords" content="createPlotSafe()">
+<meta name="keywords" content="commit()">
+<meta name="keywords" content="createPlotAndSettings()">
+<meta name="keywords" content="createTables()">
+<meta name="keywords" content="deleteSettings()">
+<meta name="keywords" content="deleteHelpers()">
+<meta name="keywords" content="deleteTrusted()">
+<meta name="keywords" content="deleteDenied()">
+<meta name="keywords" content="deleteComments()">
+<meta name="keywords" content="deleteRatings()">
+<meta name="keywords" content="delete()">
+<meta name="keywords" content="createPlotSettings()">
+<meta name="keywords" content="getClusterId()">
+<meta name="keywords" content="getId()">
+<meta name="keywords" content="updateTables()">
+<meta name="keywords" content="deleteRows()">
+<meta name="keywords" content="convertFlags()">
+<meta name="keywords" content="getPlots()">
+<meta name="keywords" content="setMerged()">
+<meta name="keywords" content="swapPlots()">
+<meta name="keywords" content="movePlot()">
+<meta name="keywords" content="setFlag()">
+<meta name="keywords" content="removeFlag()">
+<meta name="keywords" content="setAlias()">
+<meta name="keywords" content="purgeIds()">
+<meta name="keywords" content="purge()">
+<meta name="keywords" content="setPosition()">
+<meta name="keywords" content="removeComment()">
+<meta name="keywords" content="clearInbox()">
+<meta name="keywords" content="getComments()">
+<meta name="keywords" content="setComment()">
+<meta name="keywords" content="removeTrusted()">
+<meta name="keywords" content="removeMember()">
+<meta name="keywords" content="setTrusted()">
+<meta name="keywords" content="setMember()">
+<meta name="keywords" content="removeDenied()">
+<meta name="keywords" content="setDenied()">
+<meta name="keywords" content="getRatings()">
+<meta name="keywords" content="setRating()">
+<meta name="keywords" content="addPersistentMeta()">
+<meta name="keywords" content="removePersistentMeta()">
+<meta name="keywords" content="getPersistentMeta()">
+<meta name="keywords" content="getClusters()">
+<meta name="keywords" content="setClusterName()">
+<meta name="keywords" content="removeHelper()">
+<meta name="keywords" content="setHelper()">
+<meta name="keywords" content="createCluster()">
+<meta name="keywords" content="resizeCluster()">
+<meta name="keywords" content="removeInvited()">
+<meta name="keywords" content="setInvited()">
+<meta name="keywords" content="deleteTables()">
+<meta name="keywords" content="validateAllPlots()">
+<meta name="keywords" content="replaceWorld()">
+<meta name="keywords" content="replaceUUID()">
+<meta name="keywords" content="close()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +122,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/SQLManager.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -80,7 +170,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SQLManager</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-78">SQLManager</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></span></div>
 </section>
@@ -578,69 +668,69 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="SET_OWNER">
 <h3>SET_OWNER</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">SET_OWNER</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-84">SET_OWNER</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="GET_ALL_PLOTS">
 <h3>GET_ALL_PLOTS</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">GET_ALL_PLOTS</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-85">GET_ALL_PLOTS</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CREATE_PLOTS">
 <h3>CREATE_PLOTS</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_PLOTS</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-86">CREATE_PLOTS</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CREATE_SETTINGS">
 <h3>CREATE_SETTINGS</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_SETTINGS</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-87">CREATE_SETTINGS</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CREATE_TIERS">
 <h3>CREATE_TIERS</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_TIERS</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-88">CREATE_TIERS</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CREATE_PLOT">
 <h3>CREATE_PLOT</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_PLOT</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-89">CREATE_PLOT</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CREATE_PLOT_SAFE">
 <h3>CREATE_PLOT_SAFE</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_PLOT_SAFE</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-90">CREATE_PLOT_SAFE</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="CREATE_CLUSTER">
 <h3>CREATE_CLUSTER</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_CLUSTER</span></div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-91">CREATE_CLUSTER</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="globalTasks">
 <h3>globalTasks</h3>
-<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name">globalTasks</span></div>
+<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-105">globalTasks</a></span></div>
 <div class="block">important tasks</div>
 </section>
 </li>
 <li>
 <section class="detail" id="notifyTasks">
 <h3>notifyTasks</h3>
-<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name">notifyTasks</span></div>
+<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-109">notifyTasks</a></span></div>
 <div class="block">Notify tasks</div>
 </section>
 </li>
 <li>
 <section class="detail" id="plotTasks">
 <h3>plotTasks</h3>
-<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&gt;&gt;</span>&nbsp;<span class="element-name">plotTasks</span></div>
+<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-119">plotTasks</a></span></div>
 <div class="block">plot
  plot_denied
  plot_helpers
@@ -653,14 +743,14 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="playerTasks">
 <h3>playerTasks</h3>
-<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&gt;&gt;</span>&nbsp;<span class="element-name">playerTasks</span></div>
+<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-123">playerTasks</a></span></div>
 <div class="block">player_meta</div>
 </section>
 </li>
 <li>
 <section class="detail" id="clusterTasks">
 <h3>clusterTasks</h3>
-<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&gt;&gt;</span>&nbsp;<span class="element-name">clusterTasks</span></div>
+<div class="member-signature"><span class="modifiers">public volatile</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentHashMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentHashMap</a>&lt;<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-130">clusterTasks</a></span></div>
 <div class="block">cluster
  cluster_helpers
  cluster_invited
@@ -678,7 +768,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.database.Database,java.lang.String,com.plotsquared.core.util.EventDispatcher,com.plotsquared.core.listener.PlotListener,com.plotsquared.core.configuration.file.YamlConfiguration)">
 <h3>SQLManager</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">SQLManager</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Database.html" title="class in com.plotsquared.core.database">Database</a>&nbsp;database,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-143">SQLManager</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="Database.html" title="class in com.plotsquared.core.database">Database</a>&nbsp;database,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;prefix,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../util/EventDispatcher.html" title="class in com.plotsquared.core.util">EventDispatcher</a>&nbsp;eventDispatcher,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../listener/PlotListener.html" title="class in com.plotsquared.core.listener">PlotListener</a>&nbsp;plotListener,
@@ -707,76 +797,76 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="isValid()">
 <h3>isValid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isValid</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-229">isValid</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="reconnect()">
 <h3>reconnect</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">reconnect</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-245">reconnect</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getGlobalTasks()">
 <h3>getGlobalTasks</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name">getGlobalTasks</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-255">getGlobalTasks</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNotifyTasks()">
 <h3>getNotifyTasks</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name">getNotifyTasks</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Queue.html" title="class or interface in java.util" class="external-link">Queue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-259">getNotifyTasks</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addPlotTask(com.plotsquared.core.plot.Plot,com.plotsquared.core.database.SQLManager.UniqueStatement)">
 <h3>addPlotTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPlotTask</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-263">addPlotTask</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&nbsp;task)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addPlayerTask(java.util.UUID,com.plotsquared.core.database.SQLManager.UniqueStatement)">
 <h3>addPlayerTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPlayerTask</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-294">addPlayerTask</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
  <a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&nbsp;task)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addClusterTask(com.plotsquared.core.plot.PlotCluster,com.plotsquared.core.database.SQLManager.UniqueStatement)">
 <h3>addClusterTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addClusterTask</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-328">addClusterTask</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
  <a href="SQLManager.UniqueStatement.html" title="class in com.plotsquared.core.database">SQLManager.UniqueStatement</a>&nbsp;task)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addGlobalTask(java.lang.Runnable)">
 <h3>addGlobalTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addGlobalTask</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-359">addGlobalTask</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="addNotifyTask(java.lang.Runnable)">
 <h3>addNotifyTask</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addNotifyTask</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-363">addNotifyTask</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;task)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="sendBatch()">
 <h3>sendBatch</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">sendBatch</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-369">sendBatch</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getConnection()">
 <h3>getConnection</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></span>&nbsp;<span class="element-name">getConnection</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-564">getConnection</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setOwner(com.plotsquared.core.plot.Plot,java.util.UUID)">
 <h3>setOwner</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOwner</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-574">setOwner</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <div class="block">Set Plot owner</div>
 <dl class="notes">
@@ -791,7 +881,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createPlotsAndData(java.util.List,java.lang.Runnable)">
 <h3>createPlotsAndData</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createPlotsAndData</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;myList,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-592">createPlotsAndData</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;myList,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#createPlotsAndData(java.util.List,java.lang.Runnable)">AbstractDB</a></code></span></div>
 <div class="block">Creates all settings, and create default helpers, trusted + denied lists.</div>
@@ -807,7 +897,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createTiers(java.util.ArrayList,java.lang.String,java.lang.Runnable)">
 <h3>createTiers</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createTiers</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.plotsquared.core.database.SQLManager.UUIDPair&gt;&nbsp;myList,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-679">createTiers</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.plotsquared.core.database.SQLManager.UUIDPair&gt;&nbsp;myList,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tier,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 <div class="block">Create a plot</div>
@@ -820,7 +910,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createFlags(java.util.Map,java.util.List,java.lang.Runnable)">
 <h3>createFlags</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createFlags</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;ids,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-726">createFlags</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;ids,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;plots,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 </section>
@@ -828,7 +918,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createPlots(java.util.List,java.lang.Runnable)">
 <h3>createPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createPlots</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;myList,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-762">createPlots</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;myList,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 <div class="block">Create a plot</div>
 <dl class="notes">
@@ -840,7 +930,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setBulk(java.util.List,com.plotsquared.core.database.StmtMod,java.lang.Runnable)">
 <h3>setBulk</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setBulk</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;T&gt;&nbsp;objList,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-824">setBulk</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;T&gt;&nbsp;objList,
  <a href="StmtMod.html" title="class in com.plotsquared.core.database">StmtMod</a>&lt;T&gt;&nbsp;mod,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 </section>
@@ -848,21 +938,21 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createSettings(java.util.ArrayList,java.lang.Runnable)">
 <h3>createSettings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createSettings</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.plotsquared.core.database.SQLManager.LegacySettings&gt;&nbsp;myList,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-934">createSettings</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;com.plotsquared.core.database.SQLManager.LegacySettings&gt;&nbsp;myList,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="createEmptySettings(java.util.ArrayList,java.lang.Runnable)">
 <h3>createEmptySettings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createEmptySettings</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;myList,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-999">createEmptySettings</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;myList,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="createPlotSafe(com.plotsquared.core.plot.Plot,java.lang.Runnable,java.lang.Runnable)">
 <h3>createPlotSafe</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createPlotSafe</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1047">createPlotSafe</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;success,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;failure)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#createPlotSafe(com.plotsquared.core.plot.Plot,java.lang.Runnable,java.lang.Runnable)">AbstractDB</a></code></span></div>
@@ -878,13 +968,13 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="commit()">
 <h3>commit</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">commit</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1110">commit</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createPlotAndSettings(com.plotsquared.core.plot.Plot,java.lang.Runnable)">
 <h3>createPlotAndSettings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createPlotAndSettings</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1124">createPlotAndSettings</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -895,7 +985,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createTables()">
 <h3>createTables</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createTables</span>()
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1177">createTables</a></span>()
                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Create tables.</div>
 <dl class="notes">
@@ -909,7 +999,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteSettings(com.plotsquared.core.plot.Plot)">
 <h3>deleteSettings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteSettings</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1332">deleteSettings</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#deleteSettings(com.plotsquared.core.plot.Plot)">deleteSettings</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -919,7 +1009,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteHelpers(com.plotsquared.core.plot.Plot)">
 <h3>deleteHelpers</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteHelpers</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1349">deleteHelpers</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#deleteHelpers(com.plotsquared.core.plot.Plot)">deleteHelpers</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -929,7 +1019,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteTrusted(com.plotsquared.core.plot.Plot)">
 <h3>deleteTrusted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteTrusted</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1369">deleteTrusted</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#deleteTrusted(com.plotsquared.core.plot.Plot)">deleteTrusted</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -939,7 +1029,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteDenied(com.plotsquared.core.plot.Plot)">
 <h3>deleteDenied</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteDenied</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1389">deleteDenied</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#deleteDenied(com.plotsquared.core.plot.Plot)">AbstractDB</a></code></span></div>
 <div class="block">Removes all denied players from the plot.</div>
 <dl class="notes">
@@ -953,7 +1043,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteComments(com.plotsquared.core.plot.Plot)">
 <h3>deleteComments</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteComments</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1409">deleteComments</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#deleteComments(com.plotsquared.core.plot.Plot)">AbstractDB</a></code></span></div>
 <div class="block">Deletes all comments from the plot.</div>
 <dl class="notes">
@@ -967,7 +1057,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteRatings(com.plotsquared.core.plot.Plot)">
 <h3>deleteRatings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteRatings</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1427">deleteRatings</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#deleteRatings(com.plotsquared.core.plot.Plot)">deleteRatings</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -977,7 +1067,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="delete(com.plotsquared.core.plot.Plot)">
 <h3>delete</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">delete</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1452">delete</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <div class="block">Delete a plot.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -990,7 +1080,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createPlotSettings(int,com.plotsquared.core.plot.Plot)">
 <h3>createPlotSettings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createPlotSettings</span><wbr><span class="parameters">(int&nbsp;id,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1480">createPlotSettings</a></span><wbr><span class="parameters">(int&nbsp;id,
  <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <div class="block">Creates plot settings</div>
 <dl class="notes">
@@ -1005,7 +1095,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="getClusterId(com.plotsquared.core.plot.PlotCluster)">
 <h3>getClusterId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getClusterId</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1497">getClusterId</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#getClusterId(com.plotsquared.core.plot.PlotCluster)">AbstractDB</a></code></span></div>
 <div class="block">Gets the id of a given plot cluster.</div>
 <dl class="notes">
@@ -1021,7 +1111,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="getId(com.plotsquared.core.plot.Plot)">
 <h3>getId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getId</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1537">getId</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#getId(com.plotsquared.core.plot.Plot)">AbstractDB</a></code></span></div>
 <div class="block">Gets the table entry ID.</div>
 <dl class="notes">
@@ -1037,7 +1127,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="updateTables(int[])">
 <h3>updateTables</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateTables</span><wbr><span class="parameters">(int[]&nbsp;oldVersion)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1575">updateTables</a></span><wbr><span class="parameters">(int[]&nbsp;oldVersion)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#updateTables(int%5B%5D)">updateTables</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -1047,7 +1137,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteRows(java.util.ArrayList,java.lang.String,java.lang.String)">
 <h3>deleteRows</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deleteRows</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;rowIds,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1665">deleteRows</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;rowIds,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;column)</span></div>
 </section>
@@ -1055,7 +1145,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="convertFlags()">
 <h3>convertFlags</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">convertFlags</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1706">convertFlags</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#convertFlags()">convertFlags</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -1065,7 +1155,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="getPlots()">
 <h3>getPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&gt;</span>&nbsp;<span class="element-name">getPlots</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>,<wbr><a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-1794">getPlots</a></span>()</div>
 <div class="block">Load all plots, helpers, denied, trusted, and every setting from DB into a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link"><code>HashMap</code></a>.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1078,7 +1168,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setMerged(com.plotsquared.core.plot.Plot,boolean[])">
 <h3>setMerged</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMerged</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2145">setMerged</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  boolean[]&nbsp;merged)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setMerged(com.plotsquared.core.plot.Plot,boolean%5B%5D)">AbstractDB</a></code></span></div>
 <div class="block">Sets the merged status for a plot.</div>
@@ -1094,7 +1184,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="swapPlots(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.Plot)">
 <h3>swapPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name">swapPlots</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot1,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2165">swapPlots</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot1,
  <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot2)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#swapPlots(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.Plot)">AbstractDB</a></code></span></div>
 <div class="block">Swaps the settings, helpers etc. of two plots.</div>
@@ -1110,7 +1200,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="movePlot(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.Plot)">
 <h3>movePlot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">movePlot</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;original,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2195">movePlot</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;original,
  <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;newPlot)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1121,7 +1211,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setFlag(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.flag.PlotFlag)">
 <h3>setFlag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFlag</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2216">setFlag</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="../plot/flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;?,<wbr>?&gt;&nbsp;flag)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setFlag(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.flag.PlotFlag)">AbstractDB</a></code></span></div>
 <div class="block">Sets plot flag.</div>
@@ -1137,7 +1227,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removeFlag(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.flag.PlotFlag)">
 <h3>removeFlag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeFlag</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2244">removeFlag</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="../plot/flag/PlotFlag.html" title="class in com.plotsquared.core.plot.flag">PlotFlag</a>&lt;?,<wbr>?&gt;&nbsp;flag)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#removeFlag(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.flag.PlotFlag)">AbstractDB</a></code></span></div>
 <div class="block">Remove a plot flag.</div>
@@ -1153,7 +1243,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setAlias(com.plotsquared.core.plot.Plot,java.lang.String)">
 <h3>setAlias</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAlias</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2262">setAlias</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setAlias(com.plotsquared.core.plot.Plot,java.lang.String)">AbstractDB</a></code></span></div>
 <div class="block">Sets the plot alias.</div>
@@ -1169,7 +1259,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="purgeIds(java.util.Set)">
 <h3>purgeIds</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">purgeIds</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;uniqueIds)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2283">purgeIds</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;uniqueIds)</span></div>
 <div class="block">Purge all plots with the following database IDs</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1182,7 +1272,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="purge(com.plotsquared.core.plot.PlotArea,java.util.Set)">
 <h3>purge</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">purge</span><wbr><span class="parameters">(<a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;area,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2346">purge</a></span><wbr><span class="parameters">(<a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;area,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&gt;&nbsp;plots)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#purge(com.plotsquared.core.plot.PlotArea,java.util.Set)">AbstractDB</a></code></span></div>
 <div class="block">Purges a whole world.</div>
@@ -1198,7 +1288,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setPosition(com.plotsquared.core.plot.Plot,java.lang.String)">
 <h3>setPosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2377">setPosition</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;position)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setPosition(com.plotsquared.core.plot.Plot,java.lang.String)">AbstractDB</a></code></span></div>
 <div class="block">Sets the plot home position.</div>
@@ -1214,7 +1304,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removeComment(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.comment.PlotComment)">
 <h3>removeComment</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeComment</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2395">removeComment</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="../plot/comment/PlotComment.html" title="class in com.plotsquared.core.plot.comment">PlotComment</a>&nbsp;comment)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#removeComment(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.comment.PlotComment)">AbstractDB</a></code></span></div>
 <div class="block">Removes the specified comment from the given plot.</div>
@@ -1230,7 +1320,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="clearInbox(com.plotsquared.core.plot.Plot,java.lang.String)">
 <h3>clearInbox</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearInbox</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2427">clearInbox</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;inbox)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#clearInbox(com.plotsquared.core.plot.Plot,java.lang.String)">AbstractDB</a></code></span></div>
 <div class="block">Clears the specified inbox on the given plot.</div>
@@ -1246,7 +1336,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="getComments(com.plotsquared.core.plot.Plot,java.lang.String,com.plotsquared.core.util.task.RunnableVal)">
 <h3>getComments</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">getComments</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2454">getComments</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;inbox,
  <a href="../util/task/RunnableVal.html" title="class in com.plotsquared.core.util.task">RunnableVal</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../plot/comment/PlotComment.html" title="class in com.plotsquared.core.plot.comment">PlotComment</a>&gt;&gt;&nbsp;whenDone)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#getComments(com.plotsquared.core.plot.Plot,java.lang.String,com.plotsquared.core.util.task.RunnableVal)">AbstractDB</a></code></span></div>
@@ -1262,7 +1352,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setComment(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.comment.PlotComment)">
 <h3>setComment</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setComment</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2514">setComment</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="../plot/comment/PlotComment.html" title="class in com.plotsquared.core.plot.comment">PlotComment</a>&nbsp;comment)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setComment(com.plotsquared.core.plot.Plot,com.plotsquared.core.plot.comment.PlotComment)">AbstractDB</a></code></span></div>
 <div class="block">Adds the specified comment to the given plot.</div>
@@ -1278,7 +1368,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removeTrusted(com.plotsquared.core.plot.Plot,java.util.UUID)">
 <h3>removeTrusted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeTrusted</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2536">removeTrusted</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#removeTrusted(com.plotsquared.core.plot.Plot,java.util.UUID)">AbstractDB</a></code></span></div>
 <div class="block">Remove the specified player from the trust list of the specified plot.</div>
@@ -1294,7 +1384,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removeMember(com.plotsquared.core.plot.Plot,java.util.UUID)">
 <h3>removeMember</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeMember</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2554">removeMember</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1308,7 +1398,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setTrusted(com.plotsquared.core.plot.Plot,java.util.UUID)">
 <h3>setTrusted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTrusted</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2572">setTrusted</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1322,7 +1412,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setMember(com.plotsquared.core.plot.Plot,java.util.UUID)">
 <h3>setMember</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMember</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2590">setMember</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1336,7 +1426,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removeDenied(com.plotsquared.core.plot.Plot,java.util.UUID)">
 <h3>removeDenied</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeDenied</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2608">removeDenied</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#removeDenied(com.plotsquared.core.plot.Plot,java.util.UUID)">AbstractDB</a></code></span></div>
 <div class="block">Removes the specified player from the denied list of the specified plot.</div>
@@ -1352,7 +1442,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setDenied(com.plotsquared.core.plot.Plot,java.util.UUID)">
 <h3>setDenied</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDenied</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2626">setDenied</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setDenied(com.plotsquared.core.plot.Plot,java.util.UUID)">AbstractDB</a></code></span></div>
 <div class="block">Denies the specified player from the given plot.</div>
@@ -1368,7 +1458,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="getRatings(com.plotsquared.core.plot.Plot)">
 <h3>getRatings</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name">getRatings</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2644">getRatings</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#getRatings(com.plotsquared.core.plot.Plot)">AbstractDB</a></code></span></div>
 <div class="block">Gets the ratings from the specified plot.</div>
 <dl class="notes">
@@ -1384,7 +1474,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setRating(com.plotsquared.core.plot.Plot,java.util.UUID,int)">
 <h3>setRating</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRating</span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2665">setRating</a></span><wbr><span class="parameters">(<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;rater,
  int&nbsp;value)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setRating(com.plotsquared.core.plot.Plot,java.util.UUID,int)">AbstractDB</a></code></span></div>
@@ -1398,7 +1488,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="delete(com.plotsquared.core.plot.PlotCluster)">
 <h3>delete</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">delete</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2684">delete</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#delete(com.plotsquared.core.plot.PlotCluster)">delete</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -1408,7 +1498,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="addPersistentMeta(java.util.UUID,java.lang.String,byte[],boolean)">
 <h3>addPersistentMeta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addPersistentMeta</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2740">addPersistentMeta</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  byte[]&nbsp;meta,
  boolean&nbsp;replace)</span></div>
@@ -1421,7 +1511,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removePersistentMeta(java.util.UUID,java.lang.String)">
 <h3>removePersistentMeta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removePersistentMeta</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2774">removePersistentMeta</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1432,7 +1522,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="getPersistentMeta(java.util.UUID,com.plotsquared.core.util.task.RunnableVal)">
 <h3>getPersistentMeta</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">getPersistentMeta</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2792">getPersistentMeta</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid,
  <a href="../util/task/RunnableVal.html" title="class in com.plotsquared.core.util.task">RunnableVal</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>byte[]&gt;&gt;&nbsp;result)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1443,7 +1533,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="getClusters()">
 <h3>getClusters</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&gt;&gt;</span>&nbsp;<span class="element-name">getClusters</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&gt;&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2830">getClusters</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#getClusters()">getClusters</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -1455,7 +1545,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setClusterName(com.plotsquared.core.plot.PlotCluster,java.lang.String)">
 <h3>setClusterName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setClusterName</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2979">setClusterName</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#setClusterName(com.plotsquared.core.plot.PlotCluster,java.lang.String)">AbstractDB</a></code></span></div>
 <div class="block">Renames a cluster to the given name.</div>
@@ -1471,7 +1561,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removeHelper(com.plotsquared.core.plot.PlotCluster,java.util.UUID)">
 <h3>removeHelper</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeHelper</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-2998">removeHelper</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1485,7 +1575,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setHelper(com.plotsquared.core.plot.PlotCluster,java.util.UUID)">
 <h3>setHelper</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setHelper</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3016">setHelper</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1499,7 +1589,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="createCluster(com.plotsquared.core.plot.PlotCluster)">
 <h3>createCluster</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createCluster</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3034">createCluster</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#createCluster(com.plotsquared.core.plot.PlotCluster)">createCluster</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -1509,7 +1599,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="resizeCluster(com.plotsquared.core.plot.PlotCluster,com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId)">
 <h3>resizeCluster</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resizeCluster</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;current,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3088">resizeCluster</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;current,
  <a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;min,
  <a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;max)</span></div>
 <dl class="notes">
@@ -1521,7 +1611,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setPosition(com.plotsquared.core.plot.PlotCluster,java.lang.String)">
 <h3>setPosition</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3114">setPosition</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;position)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1532,7 +1622,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="removeInvited(com.plotsquared.core.plot.PlotCluster,java.util.UUID)">
 <h3>removeInvited</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeInvited</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3132">removeInvited</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1543,7 +1633,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="setInvited(com.plotsquared.core.plot.PlotCluster,java.util.UUID)">
 <h3>setInvited</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setInvited</span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3150">setInvited</a></span><wbr><span class="parameters">(<a href="../plot/PlotCluster.html" title="class in com.plotsquared.core.plot">PlotCluster</a>&nbsp;cluster,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;uuid)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -1554,7 +1644,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="deleteTables()">
 <h3>deleteTables</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">deleteTables</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3168">deleteTables</a></span>()</div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#deleteTables()">AbstractDB</a></code></span></div>
 <div class="block">Don't use this method unless you want to ruin someone's server.</div>
 <dl class="notes">
@@ -1568,7 +1658,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="validateAllPlots(java.util.Set)">
 <h3>validateAllPlots</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">validateAllPlots</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;toValidate)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3195">validateAllPlots</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&gt;&nbsp;toValidate)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AbstractDB.html#validateAllPlots(java.util.Set)">validateAllPlots</a></code>&nbsp;in interface&nbsp;<code><a href="AbstractDB.html" title="interface in com.plotsquared.core.database">AbstractDB</a></code></dd>
@@ -1578,7 +1668,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="replaceWorld(java.lang.String,java.lang.String,com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId)">
 <h3>replaceWorld</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replaceWorld</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;oldWorld,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3323">replaceWorld</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;oldWorld,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newWorld,
  <a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;min,
  <a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;max)</span></div>
@@ -1591,7 +1681,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="replaceUUID(java.util.UUID,java.util.UUID)">
 <h3>replaceUUID</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replaceUUID</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;old,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3379">replaceUUID</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;old,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/UUID.html" title="class or interface in java.util" class="external-link">UUID</a>&nbsp;now)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#replaceUUID(java.util.UUID,java.util.UUID)">AbstractDB</a></code></span></div>
 <div class="block">Replaces a old uuid with a new one in the database.
@@ -1609,7 +1699,7 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 <li>
 <section class="detail" id="close()">
 <h3>close</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/database/SQLManager.html#line-3407">close</a></span>()</div>
 <div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="AbstractDB.html#close()">AbstractDB</a></code></span></div>
 <div class="block">Closes the database. Generally not recommended to be used by add-ons.</div>
 <dl class="notes">
@@ -1625,6 +1715,10 @@ implements <a href="AbstractDB.html" title="interface in com.plotsquared.core.da
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

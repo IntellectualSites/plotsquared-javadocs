@@ -7,6 +7,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.core.generator, class: SingleWorldGenerator">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.core.generator.SingleWorldGenerator class">
+<meta name="keywords" content="getName()">
+<meta name="keywords" content="generateChunk()">
+<meta name="keywords" content="getNewPlotArea()">
+<meta name="keywords" content="initialize()">
+<meta name="keywords" content="getBiome()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +40,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/SingleWorldGenerator.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -78,7 +86,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SingleWorldGenerator</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/SingleWorldGenerator.html#line-35">SingleWorldGenerator</a></span>
 <span class="extends-implements">extends <a href="IndependentPlotGenerator.html" title="class in com.plotsquared.core.generator">IndependentPlotGenerator</a></span></div>
 </section>
 <section class="summary">
@@ -164,7 +172,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.plot.world.PlotAreaManager)">
 <h3>SingleWorldGenerator</h3>
 <div class="member-signature"><span class="annotations"><a href="https://google.github.io/guice/api-docs/5.1.0/javadoc/com/google/inject/Inject.html" title="class or interface in com.google.inject" class="external-link">@Inject</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="element-name">SingleWorldGenerator</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/world/PlotAreaManager.html" title="interface in com.plotsquared.core.plot.world">PlotAreaManager</a>&nbsp;plotAreaManager)</span></div>
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/SingleWorldGenerator.html#line-49">SingleWorldGenerator</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/world/PlotAreaManager.html" title="interface in com.plotsquared.core.plot.world">PlotAreaManager</a>&nbsp;plotAreaManager)</span></div>
 </section>
 </li>
 </ul>
@@ -178,7 +186,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getName()">
 <h3>getName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getName</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/SingleWorldGenerator.html#line-54">getName</a></span>()</div>
 <div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="IndependentPlotGenerator.html#getName()">IndependentPlotGenerator</a></code></span></div>
 <div class="block">Get the name of this generator.</div>
 <dl class="notes">
@@ -192,7 +200,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="generateChunk(com.plotsquared.core.queue.ZeroedDelegateScopedQueueCoordinator,com.plotsquared.core.plot.PlotArea,boolean)">
 <h3>generateChunk</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">generateChunk</span><wbr><span class="parameters">(<a href="../queue/ZeroedDelegateScopedQueueCoordinator.html" title="class in com.plotsquared.core.queue">ZeroedDelegateScopedQueueCoordinator</a>&nbsp;result,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/SingleWorldGenerator.html#line-59">generateChunk</a></span><wbr><span class="parameters">(<a href="../queue/ZeroedDelegateScopedQueueCoordinator.html" title="class in com.plotsquared.core.queue">ZeroedDelegateScopedQueueCoordinator</a>&nbsp;result,
  <a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;settings,
  boolean&nbsp;biomes)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="IndependentPlotGenerator.html#generateChunk(com.plotsquared.core.queue.ZeroedDelegateScopedQueueCoordinator,com.plotsquared.core.plot.PlotArea,boolean)">IndependentPlotGenerator</a></code></span></div>
@@ -210,7 +218,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getNewPlotArea(java.lang.String,java.lang.String,com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId)">
 <h3>getNewPlotArea</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a></span>&nbsp;<span class="element-name">getNewPlotArea</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/SingleWorldGenerator.html#line-77">getNewPlotArea</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;world,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;min,
  <a href="../plot/PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;max)</span></div>
@@ -232,7 +240,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="initialize(com.plotsquared.core.plot.PlotArea)">
 <h3>initialize</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initialize</span><wbr><span class="parameters">(<a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;area)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/SingleWorldGenerator.html#line-82">initialize</a></span><wbr><span class="parameters">(<a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;area)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="IndependentPlotGenerator.html#initialize(com.plotsquared.core.plot.PlotArea)">IndependentPlotGenerator</a></code></span></div>
 <div class="block">It is preferred for the PlotArea object to do most of the initialization necessary.</div>
 <dl class="notes">
@@ -246,7 +254,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBiome(com.plotsquared.core.plot.PlotArea,int,int,int)">
 <h3>getBiome</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a></span>&nbsp;<span class="element-name">getBiome</span><wbr><span class="parameters">(<a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;settings,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/SingleWorldGenerator.html#line-86">getBiome</a></span><wbr><span class="parameters">(<a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;settings,
  int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z)</span></div>
@@ -272,6 +280,10 @@ loadScripts(document, 'script');</script>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

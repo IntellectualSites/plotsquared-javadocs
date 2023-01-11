@@ -7,6 +7,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.bukkit.listener, class: BlockEventListener">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.bukkit.listener.BlockEventListener class">
+<meta name="keywords" content="sendBlockChange()">
+<meta name="keywords" content="onRedstoneEvent()">
+<meta name="keywords" content="onPhysicsEvent()">
+<meta name="keywords" content="blockCreate()">
+<meta name="keywords" content="blockDestroy()">
+<meta name="keywords" content="onBlockSpread()">
+<meta name="keywords" content="onCauldronEmpty()">
+<meta name="keywords" content="onBlockForm()">
+<meta name="keywords" content="onEntityBlockForm()">
+<meta name="keywords" content="onBlockDamage()">
+<meta name="keywords" content="onFade()">
+<meta name="keywords" content="onChange()">
+<meta name="keywords" content="onGrow()">
+<meta name="keywords" content="onBlockPistonExtend()">
+<meta name="keywords" content="onBlockPistonRetract()">
+<meta name="keywords" content="onBlockDispense()">
+<meta name="keywords" content="onStructureGrow()">
+<meta name="keywords" content="onBigBoom()">
+<meta name="keywords" content="onBlockBurn()">
+<meta name="keywords" content="onBlockIgnite()">
+<meta name="keywords" content="onLeavesDecay()">
+<meta name="keywords" content="onSpongeAbsorb()">
+<meta name="keywords" content="onBlockMultiPlace()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +58,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/BlockEventListener.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -80,7 +106,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/Listener.html" title="class or interface in org.bukkit.event" class="external-link">Listener</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">BlockEventListener</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-121">BlockEventListener</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/Listener.html" title="class or interface in org.bukkit.event" class="external-link">Listener</a></span></div>
 </section>
@@ -202,7 +228,7 @@ implements <a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/Listener.h
 <section class="detail" id="&lt;init&gt;(com.plotsquared.core.plot.world.PlotAreaManager,com.sk89q.worldedit.WorldEdit)">
 <h3>BlockEventListener</h3>
 <div class="member-signature"><span class="annotations"><a href="https://google.github.io/guice/api-docs/5.1.0/javadoc/com/google/inject/Inject.html" title="class or interface in com.google.inject" class="external-link">@Inject</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="element-name">BlockEventListener</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/plot/world/PlotAreaManager.html" title="class or interface in com.plotsquared.core.plot.world" class="external-link">PlotAreaManager</a>&nbsp;plotAreaManager,
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-140">BlockEventListener</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/plot/world/PlotAreaManager.html" title="class or interface in com.plotsquared.core.plot.world" class="external-link">PlotAreaManager</a>&nbsp;plotAreaManager,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> com.sk89q.worldedit.WorldEdit&nbsp;worldEdit)</span></div>
 </section>
 </li>
@@ -217,140 +243,140 @@ implements <a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/Listener.h
 <li>
 <section class="detail" id="sendBlockChange(org.bukkit.Location,org.bukkit.block.data.BlockData)">
 <h3>sendBlockChange</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sendBlockChange</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/Location.html" title="class or interface in org.bukkit" class="external-link">Location</a>&nbsp;bloc,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-146">sendBlockChange</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/Location.html" title="class or interface in org.bukkit" class="external-link">Location</a>&nbsp;bloc,
  <a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/data/BlockData.html" title="class or interface in org.bukkit.block.data" class="external-link">BlockData</a>&nbsp;data)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onRedstoneEvent(org.bukkit.event.block.BlockRedstoneEvent)">
 <h3>onRedstoneEvent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onRedstoneEvent</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockRedstoneEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockRedstoneEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-165">onRedstoneEvent</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockRedstoneEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockRedstoneEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onPhysicsEvent(org.bukkit.event.block.BlockPhysicsEvent)">
 <h3>onPhysicsEvent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onPhysicsEvent</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPhysicsEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPhysicsEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-224">onPhysicsEvent</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPhysicsEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPhysicsEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="blockCreate(org.bukkit.event.block.BlockPlaceEvent)">
 <h3>blockCreate</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">blockCreate</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPlaceEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPlaceEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-270">blockCreate</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPlaceEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPlaceEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="blockDestroy(org.bukkit.event.block.BlockBreakEvent)">
 <h3>blockDestroy</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">blockDestroy</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockBreakEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockBreakEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-355">blockDestroy</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockBreakEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockBreakEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockSpread(org.bukkit.event.block.BlockSpreadEvent)">
 <h3>onBlockSpread</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockSpread</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockSpreadEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockSpreadEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-450">onBlockSpread</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockSpreadEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockSpreadEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onCauldronEmpty(org.bukkit.event.block.CauldronLevelChangeEvent)">
 <h3>onCauldronEmpty</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onCauldronEmpty</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/CauldronLevelChangeEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">CauldronLevelChangeEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-503">onCauldronEmpty</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/CauldronLevelChangeEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">CauldronLevelChangeEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockForm(org.bukkit.event.block.BlockFormEvent)">
 <h3>onBlockForm</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockForm</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockFormEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockFormEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-555">onBlockForm</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockFormEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockFormEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onEntityBlockForm(org.bukkit.event.block.EntityBlockFormEvent)">
 <h3>onEntityBlockForm</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onEntityBlockForm</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/EntityBlockFormEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">EntityBlockFormEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-593">onEntityBlockForm</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/EntityBlockFormEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">EntityBlockFormEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockDamage(org.bukkit.event.block.BlockDamageEvent)">
 <h3>onBlockDamage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockDamage</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockDamageEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockDamageEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-647">onBlockDamage</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockDamageEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockDamageEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onFade(org.bukkit.event.block.BlockFadeEvent)">
 <h3>onFade</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onFade</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockFadeEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockFadeEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-706">onFade</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockFadeEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockFadeEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onChange(org.bukkit.event.block.BlockFromToEvent)">
 <h3>onChange</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onChange</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockFromToEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockFromToEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-749">onChange</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockFromToEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockFromToEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onGrow(org.bukkit.event.block.BlockGrowEvent)">
 <h3>onGrow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onGrow</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockGrowEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockGrowEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-846">onGrow</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockGrowEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockGrowEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockPistonExtend(org.bukkit.event.block.BlockPistonExtendEvent)">
 <h3>onBlockPistonExtend</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockPistonExtend</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPistonExtendEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPistonExtendEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-870">onBlockPistonExtend</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPistonExtendEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPistonExtendEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockPistonRetract(org.bukkit.event.block.BlockPistonRetractEvent)">
 <h3>onBlockPistonRetract</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockPistonRetract</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPistonRetractEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPistonRetractEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-926">onBlockPistonRetract</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockPistonRetractEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockPistonRetractEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockDispense(org.bukkit.event.block.BlockDispenseEvent)">
 <h3>onBlockDispense</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockDispense</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockDispenseEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockDispenseEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-970">onBlockDispense</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockDispenseEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockDispenseEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onStructureGrow(org.bukkit.event.world.StructureGrowEvent)">
 <h3>onStructureGrow</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onStructureGrow</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/world/StructureGrowEvent.html" title="class or interface in org.bukkit.event.world" class="external-link">StructureGrowEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-1000">onStructureGrow</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/world/StructureGrowEvent.html" title="class or interface in org.bukkit.event.world" class="external-link">StructureGrowEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBigBoom(org.bukkit.event.block.BlockExplodeEvent)">
 <h3>onBigBoom</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBigBoom</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockExplodeEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockExplodeEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-1061">onBigBoom</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockExplodeEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockExplodeEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockBurn(org.bukkit.event.block.BlockBurnEvent)">
 <h3>onBlockBurn</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockBurn</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockBurnEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockBurnEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-1090">onBlockBurn</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockBurnEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockBurnEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockIgnite(org.bukkit.event.block.BlockIgniteEvent)">
 <h3>onBlockIgnite</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockIgnite</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockIgniteEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockIgniteEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-1110">onBlockIgnite</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockIgniteEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockIgniteEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onLeavesDecay(org.bukkit.event.block.LeavesDecayEvent)">
 <h3>onLeavesDecay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onLeavesDecay</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/LeavesDecayEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">LeavesDecayEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-1219">onLeavesDecay</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/LeavesDecayEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">LeavesDecayEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onSpongeAbsorb(org.bukkit.event.block.SpongeAbsorbEvent)">
 <h3>onSpongeAbsorb</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onSpongeAbsorb</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/SpongeAbsorbEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">SpongeAbsorbEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-1239">onSpongeAbsorb</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/SpongeAbsorbEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">SpongeAbsorbEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="onBlockMultiPlace(org.bukkit.event.block.BlockMultiPlaceEvent)">
 <h3>onBlockMultiPlace</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onBlockMultiPlace</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockMultiPlaceEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockMultiPlaceEvent</a>&nbsp;event)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/listener/BlockEventListener.html#line-1271">onBlockMultiPlace</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/block/BlockMultiPlaceEvent.html" title="class or interface in org.bukkit.event.block" class="external-link">BlockMultiPlaceEvent</a>&nbsp;event)</span></div>
 </section>
 </li>
 </ul>
@@ -360,6 +386,10 @@ implements <a href="https://jd.papermc.io/paper/1.19/org/bukkit/event/Listener.h
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

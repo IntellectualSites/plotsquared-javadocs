@@ -7,6 +7,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="description" content="declaration: package: com.plotsquared.bukkit.util, class: BukkitWorld">
 <meta name="generator" content="javadoc/ClassWriterImpl">
+<meta name="keywords" content="com.plotsquared.bukkit.util.BukkitWorld class">
+<meta name="keywords" content="of()">
+<meta name="keywords" content="getMinWorldHeight()">
+<meta name="keywords" content="getMaxWorldHeight()">
+<meta name="keywords" content="getPlatformWorld()">
+<meta name="keywords" content="getName()">
+<meta name="keywords" content="getMinHeight()">
+<meta name="keywords" content="getMaxHeight()">
+<meta name="keywords" content="equals()">
+<meta name="keywords" content="hashCode()">
+<meta name="keywords" content="toString()">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
@@ -34,7 +45,9 @@ loadScripts(document, 'script');</script>
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/BukkitWorld.html">Use</a></li>
 <li><a href="package-tree.html">Tree</a></li>
+<li><a href="../../../../new-list.html">New</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
 <li><a href="../../../../help-doc.html#class">Help</a></li>
@@ -80,7 +93,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html" title="class or interface in com.plotsquared.core.location" class="external-link">World</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&gt;</code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">BukkitWorld</span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-28">BukkitWorld</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html" title="class or interface in com.plotsquared.core.location" class="external-link">World</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&gt;</span></div>
 </section>
@@ -167,7 +180,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="of(java.lang.String)">
 <h3>of</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="BukkitWorld.html" title="class in com.plotsquared.bukkit.util">BukkitWorld</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="BukkitWorld.html" title="class in com.plotsquared.bukkit.util">BukkitWorld</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-56">of</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName)</span></div>
 <div class="block">Get a new <a href="BukkitWorld.html" title="class in com.plotsquared.bukkit.util"><code>BukkitWorld</code></a> from a world name</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -180,7 +193,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="of(org.bukkit.World)">
 <h3>of</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="BukkitWorld.html" title="class in com.plotsquared.bukkit.util">BukkitWorld</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="BukkitWorld.html" title="class in com.plotsquared.bukkit.util">BukkitWorld</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-70">of</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</span></div>
 <div class="block">Get a new <a href="BukkitWorld.html" title="class in com.plotsquared.bukkit.util"><code>BukkitWorld</code></a> from a Bukkit world</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -193,7 +206,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getMinWorldHeight(org.bukkit.World)">
 <h3>getMinWorldHeight</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMinWorldHeight</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-85">getMinWorldHeight</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</span></div>
 <div class="block">Get the min world height from a Bukkit <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link"><code>World</code></a>. Inclusive</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -204,7 +217,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getMaxWorldHeight(org.bukkit.World)">
 <h3>getMaxWorldHeight</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMaxWorldHeight</span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-94">getMaxWorldHeight</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</span></div>
 <div class="block">Get the max world height from a Bukkit <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link"><code>World</code></a>. Exclusive</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -215,7 +228,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getPlatformWorld()">
 <h3>getPlatformWorld</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a></span>&nbsp;<span class="element-name">getPlatformWorld</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-98">getPlatformWorld</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html#getPlatformWorld()" title="class or interface in com.plotsquared.core.location" class="external-link">getPlatformWorld</a></code>&nbsp;in interface&nbsp;<code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html" title="class or interface in com.plotsquared.core.location" class="external-link">World</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&gt;</code></dd>
@@ -225,7 +238,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getName()">
 <h3>getName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getName</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-103">getName</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html#getName()" title="class or interface in com.plotsquared.core.location" class="external-link">getName</a></code>&nbsp;in interface&nbsp;<code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html" title="class or interface in com.plotsquared.core.location" class="external-link">World</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&gt;</code></dd>
@@ -235,7 +248,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getMinHeight()">
 <h3>getMinHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMinHeight</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-108">getMinHeight</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html#getMinHeight()" title="class or interface in com.plotsquared.core.location" class="external-link">getMinHeight</a></code>&nbsp;in interface&nbsp;<code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html" title="class or interface in com.plotsquared.core.location" class="external-link">World</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&gt;</code></dd>
@@ -245,7 +258,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getMaxHeight()">
 <h3>getMaxHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getMaxHeight</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-113">getMaxHeight</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html#getMaxHeight()" title="class or interface in com.plotsquared.core.location" class="external-link">getMaxHeight</a></code>&nbsp;in interface&nbsp;<code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/location/World.html" title="class or interface in com.plotsquared.core.location" class="external-link">World</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&gt;</code></dd>
@@ -255,7 +268,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="equals(java.lang.Object)">
 <h3>equals</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-118">equals</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;o)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -265,7 +278,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="hashCode()">
 <h3>hashCode</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-130">hashCode</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -275,7 +288,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="toString()">
 <h3>toString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/util/BukkitWorld.html#line-135">toString</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
@@ -289,6 +302,10 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
 </main>
+<footer role="contentinfo">
+<hr>
+<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+</footer>
 </div>
 </div>
 </body>

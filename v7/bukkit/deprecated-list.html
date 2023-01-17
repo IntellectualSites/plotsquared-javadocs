@@ -78,7 +78,7 @@ loadScripts(document, 'script');</script>
 <ul class="block-list">
 <li>
 <div id="for-removal">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="for-removal-tab0" role="tab" aria-selected="true" aria-controls="for-removal.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('for-removal', 'for-removal', 2)" class="active-table-tab">Terminally Deprecated Elements</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="for-removal-tab0" role="tab" aria-selected="true" aria-controls="for-removal.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('for-removal', 'for-removal', 2)" class="active-table-tab">Terminally Deprecated Elements</button><button id="for-removal-tab1" role="tab" aria-selected="false" aria-controls="for-removal.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('for-removal', 'for-removal-tab1', 2)" class="table-tab">Terminally Deprecated in TODO</button></div>
 <div id="for-removal.tabpanel" role="tabpanel">
 <div class="summary-table two-column-summary" aria-labelledby="for-removal-tab0">
 <div class="table-header col-first">Element</div>
@@ -87,18 +87,23 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color for-removal">
 <div class="deprecation-comment">P2 effectively no longer supports 1.13</div>
 </div>
-<div class="col-summary-item-name odd-row-color for-removal"><a href="com/plotsquared/bukkit/managers/MultiverseWorldManager.html" title="class in com.plotsquared.bukkit.managers">com.plotsquared.bukkit.managers.MultiverseWorldManager</a></div>
-<div class="col-last odd-row-color for-removal">
-<div class="deprecation-comment">Deprecated and scheduled for removal without replacement
-         in favor of the build in setup wizard.</div>
+<div class="col-summary-item-name odd-row-color for-removal for-removal-tab1"><a href="com/plotsquared/bukkit/player/BukkitPlayer.html#%3Cinit%3E(com.plotsquared.core.plot.world.PlotAreaManager,com.plotsquared.core.util.EventDispatcher,org.bukkit.entity.Player,boolean,com.plotsquared.core.permissions.PermissionHandler)">com.plotsquared.bukkit.player.BukkitPlayer<wbr>(PlotAreaManager, EventDispatcher, Player, boolean, PermissionHandler)</a></div>
+<div class="col-last odd-row-color for-removal for-removal-tab1">
+<div class="deprecation-comment">Please do not use this method. Instead use <a href="com/plotsquared/bukkit/util/BukkitUtil.html#adapt(org.bukkit.entity.Player)"><code>BukkitUtil.adapt(Player)</code></a>, as it caches player objects.
+ This method will be made private in a future release.</div>
 </div>
-<div class="col-summary-item-name even-row-color for-removal"><a href="com/plotsquared/bukkit/schematic/StateWrapper.html#%3Cinit%3E(org.bukkit.block.BlockState)">com.plotsquared.bukkit.schematic.StateWrapper<wbr>(BlockState)</a></div>
-<div class="col-last even-row-color for-removal">
+<div class="col-summary-item-name even-row-color for-removal for-removal-tab1"><a href="com/plotsquared/bukkit/player/BukkitPlayer.html#%3Cinit%3E(com.plotsquared.core.plot.world.PlotAreaManager,com.plotsquared.core.util.EventDispatcher,org.bukkit.entity.Player,com.plotsquared.core.permissions.PermissionHandler)">com.plotsquared.bukkit.player.BukkitPlayer<wbr>(PlotAreaManager, EventDispatcher, Player, PermissionHandler)</a></div>
+<div class="col-last even-row-color for-removal for-removal-tab1">
+<div class="deprecation-comment">Please do not use this method. Instead use <a href="com/plotsquared/bukkit/util/BukkitUtil.html#adapt(org.bukkit.entity.Player)"><code>BukkitUtil.adapt(Player)</code></a>, as it caches player objects.
+ This method will be made private in a future release.</div>
+</div>
+<div class="col-summary-item-name odd-row-color for-removal"><a href="com/plotsquared/bukkit/schematic/StateWrapper.html#%3Cinit%3E(org.bukkit.block.BlockState)">com.plotsquared.bukkit.schematic.StateWrapper<wbr>(BlockState)</a></div>
+<div class="col-last odd-row-color for-removal">
 <div class="deprecation-comment">in favour of using WE methods for obtaining NBT, specifically by obtaining a
          <code>BaseBlock</code> and then using <code>BaseBlock.getNbtData()</code></div>
 </div>
-<div class="col-summary-item-name odd-row-color for-removal"><a href="com/plotsquared/bukkit/schematic/StateWrapper.html#getTag()">com.plotsquared.bukkit.schematic.StateWrapper.getTag()</a></div>
-<div class="col-last odd-row-color for-removal">
+<div class="col-summary-item-name even-row-color for-removal"><a href="com/plotsquared/bukkit/schematic/StateWrapper.html#getTag()">com.plotsquared.bukkit.schematic.StateWrapper.getTag()</a></div>
+<div class="col-last even-row-color for-removal">
 <div class="deprecation-comment">in favour of using WorldEdit methods for obtaining NBT, specifically by obtaining a
          <code>BaseBlock</code> and then using <code>BaseBlock.getNbtData()</code></div>
 </div>
@@ -122,7 +127,8 @@ loadScripts(document, 'script');</script>
 <div class="col-summary-item-name odd-row-color class"><a href="com/plotsquared/bukkit/managers/MultiverseWorldManager.html" title="class in com.plotsquared.bukkit.managers">com.plotsquared.bukkit.managers.MultiverseWorldManager</a></div>
 <div class="col-last odd-row-color class">
 <div class="deprecation-comment">Deprecated and scheduled for removal without replacement
-         in favor of the build in setup wizard.</div>
+         in favor of the build in setup wizard.
+         However, this class will be kept around for a while, given it's not a maintenance burden.</div>
 </div>
 </div>
 </div>
@@ -152,11 +158,21 @@ loadScripts(document, 'script');</script>
 <ul class="block-list">
 <li>
 <div id="constructor">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="constructor-tab0" role="tab" aria-selected="true" aria-controls="constructor.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('constructor', 'constructor', 2)" class="active-table-tab">Deprecated Constructors</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="constructor-tab0" role="tab" aria-selected="true" aria-controls="constructor.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('constructor', 'constructor', 2)" class="active-table-tab">Deprecated Constructors</button><button id="constructor-tab1" role="tab" aria-selected="false" aria-controls="constructor.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('constructor', 'constructor-tab1', 2)" class="table-tab">Deprecated in TODO</button></div>
 <div id="constructor.tabpanel" role="tabpanel">
 <div class="summary-table two-column-summary" aria-labelledby="constructor-tab0">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
+<div class="col-summary-item-name even-row-color constructor constructor-tab1"><a href="com/plotsquared/bukkit/player/BukkitPlayer.html#%3Cinit%3E(com.plotsquared.core.plot.world.PlotAreaManager,com.plotsquared.core.util.EventDispatcher,org.bukkit.entity.Player,boolean,com.plotsquared.core.permissions.PermissionHandler)">com.plotsquared.bukkit.player.BukkitPlayer<wbr>(PlotAreaManager, EventDispatcher, Player, boolean, PermissionHandler)</a></div>
+<div class="col-last even-row-color constructor constructor-tab1">
+<div class="deprecation-comment">Please do not use this method. Instead use <a href="com/plotsquared/bukkit/util/BukkitUtil.html#adapt(org.bukkit.entity.Player)"><code>BukkitUtil.adapt(Player)</code></a>, as it caches player objects.
+ This method will be made private in a future release.</div>
+</div>
+<div class="col-summary-item-name odd-row-color constructor constructor-tab1"><a href="com/plotsquared/bukkit/player/BukkitPlayer.html#%3Cinit%3E(com.plotsquared.core.plot.world.PlotAreaManager,com.plotsquared.core.util.EventDispatcher,org.bukkit.entity.Player,com.plotsquared.core.permissions.PermissionHandler)">com.plotsquared.bukkit.player.BukkitPlayer<wbr>(PlotAreaManager, EventDispatcher, Player, PermissionHandler)</a></div>
+<div class="col-last odd-row-color constructor constructor-tab1">
+<div class="deprecation-comment">Please do not use this method. Instead use <a href="com/plotsquared/bukkit/util/BukkitUtil.html#adapt(org.bukkit.entity.Player)"><code>BukkitUtil.adapt(Player)</code></a>, as it caches player objects.
+ This method will be made private in a future release.</div>
+</div>
 <div class="col-summary-item-name even-row-color constructor"><a href="com/plotsquared/bukkit/schematic/StateWrapper.html#%3Cinit%3E(org.bukkit.block.BlockState)">com.plotsquared.bukkit.schematic.StateWrapper<wbr>(BlockState)</a></div>
 <div class="col-last even-row-color constructor">
 <div class="deprecation-comment">in favour of using WE methods for obtaining NBT, specifically by obtaining a

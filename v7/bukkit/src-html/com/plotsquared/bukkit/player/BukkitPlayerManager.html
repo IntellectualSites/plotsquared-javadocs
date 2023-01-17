@@ -67,41 +67,43 @@
 <span class="source-line-no">054</span><span id="line-54"></span>
 <span class="source-line-no">055</span><span id="line-55">    @NonNull</span>
 <span class="source-line-no">056</span><span id="line-56">    @Override</span>
-<span class="source-line-no">057</span><span id="line-57">    public BukkitPlayer getPlayer(final @NonNull Player object) {</span>
-<span class="source-line-no">058</span><span id="line-58">        if (object.getUniqueId().version() == 2) { // not a real player</span>
-<span class="source-line-no">059</span><span id="line-59">            return new BukkitPlayer(this.plotAreaManager, this.eventDispatcher, object, false, this.permissionHandler);</span>
-<span class="source-line-no">060</span><span id="line-60">        }</span>
-<span class="source-line-no">061</span><span id="line-61">        if (!object.isOnline()) {</span>
-<span class="source-line-no">062</span><span id="line-62">            throw new NoSuchPlayerException(object.getUniqueId());</span>
-<span class="source-line-no">063</span><span id="line-63">        }</span>
-<span class="source-line-no">064</span><span id="line-64">        return getPlayer(object.getUniqueId());</span>
-<span class="source-line-no">065</span><span id="line-65">    }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    @Override</span>
-<span class="source-line-no">068</span><span id="line-68">    public @NonNull BukkitPlayer createPlayer(final @NonNull UUID uuid) {</span>
-<span class="source-line-no">069</span><span id="line-69">        final Player player = Bukkit.getPlayer(uuid);</span>
-<span class="source-line-no">070</span><span id="line-70">        if (player == null || !player.isOnline()) {</span>
-<span class="source-line-no">071</span><span id="line-71">            throw new NoSuchPlayerException(uuid);</span>
-<span class="source-line-no">072</span><span id="line-72">        }</span>
-<span class="source-line-no">073</span><span id="line-73">        return new BukkitPlayer(this.plotAreaManager, this.eventDispatcher, player, this.permissionHandler);</span>
-<span class="source-line-no">074</span><span id="line-74">    }</span>
-<span class="source-line-no">075</span><span id="line-75"></span>
-<span class="source-line-no">076</span><span id="line-76">    @Nullable</span>
-<span class="source-line-no">077</span><span id="line-77">    @Override</span>
-<span class="source-line-no">078</span><span id="line-78">    public BukkitOfflinePlayer getOfflinePlayer(final @Nullable UUID uuid) {</span>
-<span class="source-line-no">079</span><span id="line-79">        if (uuid == null) {</span>
-<span class="source-line-no">080</span><span id="line-80">            return null;</span>
-<span class="source-line-no">081</span><span id="line-81">        }</span>
-<span class="source-line-no">082</span><span id="line-82">        return new BukkitOfflinePlayer(Bukkit.getOfflinePlayer(uuid), this.permissionHandler);</span>
-<span class="source-line-no">083</span><span id="line-83">    }</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    @NonNull</span>
-<span class="source-line-no">086</span><span id="line-86">    @Override</span>
-<span class="source-line-no">087</span><span id="line-87">    public BukkitOfflinePlayer getOfflinePlayer(final @NonNull String username) {</span>
-<span class="source-line-no">088</span><span id="line-88">        return new BukkitOfflinePlayer(Bukkit.getOfflinePlayer(username), this.permissionHandler);</span>
-<span class="source-line-no">089</span><span id="line-89">    }</span>
-<span class="source-line-no">090</span><span id="line-90"></span>
-<span class="source-line-no">091</span><span id="line-91">}</span>
+<span class="source-line-no">057</span><span id="line-57">    @SuppressWarnings("deprecation")</span>
+<span class="source-line-no">058</span><span id="line-58">    public BukkitPlayer getPlayer(final @NonNull Player object) {</span>
+<span class="source-line-no">059</span><span id="line-59">        if (object.getUniqueId().version() == 2) { // not a real player</span>
+<span class="source-line-no">060</span><span id="line-60">            return new BukkitPlayer(this.plotAreaManager, this.eventDispatcher, object, false, this.permissionHandler);</span>
+<span class="source-line-no">061</span><span id="line-61">        }</span>
+<span class="source-line-no">062</span><span id="line-62">        if (!object.isOnline()) {</span>
+<span class="source-line-no">063</span><span id="line-63">            throw new NoSuchPlayerException(object.getUniqueId());</span>
+<span class="source-line-no">064</span><span id="line-64">        }</span>
+<span class="source-line-no">065</span><span id="line-65">        return getPlayer(object.getUniqueId());</span>
+<span class="source-line-no">066</span><span id="line-66">    }</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    @Override</span>
+<span class="source-line-no">069</span><span id="line-69">    @SuppressWarnings("deprecation")</span>
+<span class="source-line-no">070</span><span id="line-70">    public @NonNull BukkitPlayer createPlayer(final @NonNull UUID uuid) {</span>
+<span class="source-line-no">071</span><span id="line-71">        final Player player = Bukkit.getPlayer(uuid);</span>
+<span class="source-line-no">072</span><span id="line-72">        if (player == null || !player.isOnline()) {</span>
+<span class="source-line-no">073</span><span id="line-73">            throw new NoSuchPlayerException(uuid);</span>
+<span class="source-line-no">074</span><span id="line-74">        }</span>
+<span class="source-line-no">075</span><span id="line-75">        return new BukkitPlayer(this.plotAreaManager, this.eventDispatcher, player, this.permissionHandler);</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    @Nullable</span>
+<span class="source-line-no">079</span><span id="line-79">    @Override</span>
+<span class="source-line-no">080</span><span id="line-80">    public BukkitOfflinePlayer getOfflinePlayer(final @Nullable UUID uuid) {</span>
+<span class="source-line-no">081</span><span id="line-81">        if (uuid == null) {</span>
+<span class="source-line-no">082</span><span id="line-82">            return null;</span>
+<span class="source-line-no">083</span><span id="line-83">        }</span>
+<span class="source-line-no">084</span><span id="line-84">        return new BukkitOfflinePlayer(Bukkit.getOfflinePlayer(uuid), this.permissionHandler);</span>
+<span class="source-line-no">085</span><span id="line-85">    }</span>
+<span class="source-line-no">086</span><span id="line-86"></span>
+<span class="source-line-no">087</span><span id="line-87">    @NonNull</span>
+<span class="source-line-no">088</span><span id="line-88">    @Override</span>
+<span class="source-line-no">089</span><span id="line-89">    public BukkitOfflinePlayer getOfflinePlayer(final @NonNull String username) {</span>
+<span class="source-line-no">090</span><span id="line-90">        return new BukkitOfflinePlayer(Bukkit.getOfflinePlayer(username), this.permissionHandler);</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">}</span>
 
 
 

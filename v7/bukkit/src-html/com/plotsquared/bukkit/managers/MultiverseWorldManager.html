@@ -43,31 +43,32 @@
 <span class="source-line-no">030</span><span id="line-30"> *</span>
 <span class="source-line-no">031</span><span id="line-31"> * @deprecated Deprecated and scheduled for removal without replacement</span>
 <span class="source-line-no">032</span><span id="line-32"> *         in favor of the build in setup wizard.</span>
-<span class="source-line-no">033</span><span id="line-33"> */</span>
-<span class="source-line-no">034</span><span id="line-34">@Deprecated(forRemoval = true, since = "6.0.0")</span>
-<span class="source-line-no">035</span><span id="line-35">@Singleton</span>
-<span class="source-line-no">036</span><span id="line-36">public class MultiverseWorldManager extends BukkitWorldManager {</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">    @Override</span>
-<span class="source-line-no">039</span><span id="line-39">    public @Nullable World handleWorldCreation(final @NonNull String worldName, final @Nullable String generator) {</span>
-<span class="source-line-no">040</span><span id="line-40">        // First let Bukkit register the world</span>
-<span class="source-line-no">041</span><span id="line-41">        this.setGenerator(worldName, generator);</span>
-<span class="source-line-no">042</span><span id="line-42">        // Then we send the console command</span>
-<span class="source-line-no">043</span><span id="line-43">        final StringBuilder commandBuilder = new StringBuilder("mv create ")</span>
-<span class="source-line-no">044</span><span id="line-44">                .append(worldName).append(" normal");</span>
-<span class="source-line-no">045</span><span id="line-45">        if (generator != null) {</span>
-<span class="source-line-no">046</span><span id="line-46">            commandBuilder.append(" -g ").append(generator);</span>
-<span class="source-line-no">047</span><span id="line-47">        }</span>
-<span class="source-line-no">048</span><span id="line-48">        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), commandBuilder.toString());</span>
-<span class="source-line-no">049</span><span id="line-49">        return Bukkit.getWorld(worldName);</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">    @Override</span>
-<span class="source-line-no">053</span><span id="line-53">    public String getName() {</span>
-<span class="source-line-no">054</span><span id="line-54">        return "bukkit-multiverse";</span>
-<span class="source-line-no">055</span><span id="line-55">    }</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">}</span>
+<span class="source-line-no">033</span><span id="line-33"> *         However, this class will be kept around for a while, given it's not a maintenance burden.</span>
+<span class="source-line-no">034</span><span id="line-34"> */</span>
+<span class="source-line-no">035</span><span id="line-35">@Deprecated</span>
+<span class="source-line-no">036</span><span id="line-36">@Singleton</span>
+<span class="source-line-no">037</span><span id="line-37">public class MultiverseWorldManager extends BukkitWorldManager {</span>
+<span class="source-line-no">038</span><span id="line-38"></span>
+<span class="source-line-no">039</span><span id="line-39">    @Override</span>
+<span class="source-line-no">040</span><span id="line-40">    public @Nullable World handleWorldCreation(final @NonNull String worldName, final @Nullable String generator) {</span>
+<span class="source-line-no">041</span><span id="line-41">        // First let Bukkit register the world</span>
+<span class="source-line-no">042</span><span id="line-42">        this.setGenerator(worldName, generator);</span>
+<span class="source-line-no">043</span><span id="line-43">        // Then we send the console command</span>
+<span class="source-line-no">044</span><span id="line-44">        final StringBuilder commandBuilder = new StringBuilder("mv create ")</span>
+<span class="source-line-no">045</span><span id="line-45">                .append(worldName).append(" normal");</span>
+<span class="source-line-no">046</span><span id="line-46">        if (generator != null) {</span>
+<span class="source-line-no">047</span><span id="line-47">            commandBuilder.append(" -g ").append(generator);</span>
+<span class="source-line-no">048</span><span id="line-48">        }</span>
+<span class="source-line-no">049</span><span id="line-49">        Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), commandBuilder.toString());</span>
+<span class="source-line-no">050</span><span id="line-50">        return Bukkit.getWorld(worldName);</span>
+<span class="source-line-no">051</span><span id="line-51">    }</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">    @Override</span>
+<span class="source-line-no">054</span><span id="line-54">    public String getName() {</span>
+<span class="source-line-no">055</span><span id="line-55">        return "bukkit-multiverse";</span>
+<span class="source-line-no">056</span><span id="line-56">    }</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">}</span>
 
 
 

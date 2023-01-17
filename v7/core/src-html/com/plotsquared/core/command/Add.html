@@ -39,52 +39,52 @@
 <span class="source-line-no">026</span><span id="line-26">import com.plotsquared.core.player.PlotPlayer;</span>
 <span class="source-line-no">027</span><span id="line-27">import com.plotsquared.core.plot.Plot;</span>
 <span class="source-line-no">028</span><span id="line-28">import com.plotsquared.core.util.EventDispatcher;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.core.util.Permissions;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.core.util.PlayerManager;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.core.util.TabCompletions;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.core.util.task.RunnableVal2;</span>
-<span class="source-line-no">033</span><span id="line-33">import com.plotsquared.core.util.task.RunnableVal3;</span>
-<span class="source-line-no">034</span><span id="line-34">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">035</span><span id="line-35">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">036</span><span id="line-36">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">037</span><span id="line-37">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">038</span><span id="line-38"></span>
-<span class="source-line-no">039</span><span id="line-39">import java.util.Collection;</span>
-<span class="source-line-no">040</span><span id="line-40">import java.util.Collections;</span>
-<span class="source-line-no">041</span><span id="line-41">import java.util.Iterator;</span>
-<span class="source-line-no">042</span><span id="line-42">import java.util.UUID;</span>
-<span class="source-line-no">043</span><span id="line-43">import java.util.concurrent.CompletableFuture;</span>
-<span class="source-line-no">044</span><span id="line-44">import java.util.concurrent.TimeoutException;</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">@CommandDeclaration(command = "add",</span>
-<span class="source-line-no">047</span><span id="line-47">        usage = "/plot add &lt;player | *&gt;",</span>
-<span class="source-line-no">048</span><span id="line-48">        category = CommandCategory.SETTINGS,</span>
-<span class="source-line-no">049</span><span id="line-49">        permission = "plots.add",</span>
-<span class="source-line-no">050</span><span id="line-50">        requiredType = RequiredType.PLAYER)</span>
-<span class="source-line-no">051</span><span id="line-51">public class Add extends Command {</span>
-<span class="source-line-no">052</span><span id="line-52"></span>
-<span class="source-line-no">053</span><span id="line-53">    private final EventDispatcher eventDispatcher;</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">    @Inject</span>
-<span class="source-line-no">056</span><span id="line-56">    public Add(final @NonNull EventDispatcher eventDispatcher) {</span>
-<span class="source-line-no">057</span><span id="line-57">        super(MainCommand.getInstance(), true);</span>
-<span class="source-line-no">058</span><span id="line-58">        this.eventDispatcher = eventDispatcher;</span>
-<span class="source-line-no">059</span><span id="line-59">    }</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    @Override</span>
-<span class="source-line-no">062</span><span id="line-62">    public CompletableFuture&lt;Boolean&gt; execute(</span>
-<span class="source-line-no">063</span><span id="line-63">            final PlotPlayer&lt;?&gt; player, String[] args,</span>
+<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.core.util.PlayerManager;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.core.util.TabCompletions;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.core.util.task.RunnableVal2;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.core.util.task.RunnableVal3;</span>
+<span class="source-line-no">033</span><span id="line-33">import net.kyori.adventure.text.Component;</span>
+<span class="source-line-no">034</span><span id="line-34">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">035</span><span id="line-35">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
+<span class="source-line-no">036</span><span id="line-36">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">037</span><span id="line-37"></span>
+<span class="source-line-no">038</span><span id="line-38">import java.util.Collection;</span>
+<span class="source-line-no">039</span><span id="line-39">import java.util.Collections;</span>
+<span class="source-line-no">040</span><span id="line-40">import java.util.Iterator;</span>
+<span class="source-line-no">041</span><span id="line-41">import java.util.UUID;</span>
+<span class="source-line-no">042</span><span id="line-42">import java.util.concurrent.CompletableFuture;</span>
+<span class="source-line-no">043</span><span id="line-43">import java.util.concurrent.TimeoutException;</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">@CommandDeclaration(command = "add",</span>
+<span class="source-line-no">046</span><span id="line-46">        usage = "/plot add &lt;player | *&gt;",</span>
+<span class="source-line-no">047</span><span id="line-47">        category = CommandCategory.SETTINGS,</span>
+<span class="source-line-no">048</span><span id="line-48">        permission = "plots.add",</span>
+<span class="source-line-no">049</span><span id="line-49">        requiredType = RequiredType.PLAYER)</span>
+<span class="source-line-no">050</span><span id="line-50">public class Add extends Command {</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">    private final EventDispatcher eventDispatcher;</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">    @Inject</span>
+<span class="source-line-no">055</span><span id="line-55">    public Add(final @NonNull EventDispatcher eventDispatcher) {</span>
+<span class="source-line-no">056</span><span id="line-56">        super(MainCommand.getInstance(), true);</span>
+<span class="source-line-no">057</span><span id="line-57">        this.eventDispatcher = eventDispatcher;</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    @Override</span>
+<span class="source-line-no">061</span><span id="line-61">    public CompletableFuture&lt;Boolean&gt; execute(</span>
+<span class="source-line-no">062</span><span id="line-62">            final PlotPlayer&lt;?&gt; player,</span>
+<span class="source-line-no">063</span><span id="line-63">            String[] args,</span>
 <span class="source-line-no">064</span><span id="line-64">            RunnableVal3&lt;Command, Runnable, Runnable&gt; confirm,</span>
 <span class="source-line-no">065</span><span id="line-65">            RunnableVal2&lt;Command, CommandResult&gt; whenDone</span>
 <span class="source-line-no">066</span><span id="line-66">    ) throws CommandException {</span>
 <span class="source-line-no">067</span><span id="line-67">        final Plot plot = check(player.getCurrentPlot(), TranslatableCaption.of("errors.not_in_plot"));</span>
 <span class="source-line-no">068</span><span id="line-68">        checkTrue(plot.hasOwner(), TranslatableCaption.of("info.plot_unowned"));</span>
 <span class="source-line-no">069</span><span id="line-69">        checkTrue(</span>
-<span class="source-line-no">070</span><span id="line-70">                plot.isOwner(player.getUUID()) || Permissions</span>
-<span class="source-line-no">071</span><span id="line-71">                        .hasPermission(player, Permission.PERMISSION_ADMIN_COMMAND_TRUST),</span>
-<span class="source-line-no">072</span><span id="line-72">                TranslatableCaption.of("permission.no_plot_perms")</span>
-<span class="source-line-no">073</span><span id="line-73">        );</span>
-<span class="source-line-no">074</span><span id="line-74">        checkTrue(args.length == 1, TranslatableCaption.of("commandconfig.command_syntax"),</span>
+<span class="source-line-no">070</span><span id="line-70">                plot.isOwner(player.getUUID()) || player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_TRUST),</span>
+<span class="source-line-no">071</span><span id="line-71">                TranslatableCaption.of("permission.no_plot_perms")</span>
+<span class="source-line-no">072</span><span id="line-72">        );</span>
+<span class="source-line-no">073</span><span id="line-73">        checkTrue(args.length == 1,</span>
+<span class="source-line-no">074</span><span id="line-74">                TranslatableCaption.of("commandconfig.command_syntax"),</span>
 <span class="source-line-no">075</span><span id="line-75">                TagResolver.resolver("value", Tag.inserting(Component.text("/plot add &lt;player | *&gt;")))</span>
 <span class="source-line-no">076</span><span id="line-76">        );</span>
 <span class="source-line-no">077</span><span id="line-77">        final CompletableFuture&lt;Boolean&gt; future = new CompletableFuture&lt;&gt;();</span>
@@ -109,81 +109,80 @@
 <span class="source-line-no">096</span><span id="line-96">                    int size = plot.getTrusted().size() + plot.getMembers().size();</span>
 <span class="source-line-no">097</span><span id="line-97">                    while (iterator.hasNext()) {</span>
 <span class="source-line-no">098</span><span id="line-98">                        UUID uuid = iterator.next();</span>
-<span class="source-line-no">099</span><span id="line-99">                        if (uuid == DBFunc.EVERYONE &amp;&amp; !(</span>
-<span class="source-line-no">100</span><span id="line-100">                                Permissions.hasPermission(player, Permission.PERMISSION_TRUST_EVERYONE) || Permissions</span>
-<span class="source-line-no">101</span><span id="line-101">                                        .hasPermission(player, Permission.PERMISSION_ADMIN_COMMAND_TRUST))) {</span>
-<span class="source-line-no">102</span><span id="line-102">                            player.sendMessage(</span>
-<span class="source-line-no">103</span><span id="line-103">                                    TranslatableCaption.of("errors.invalid_player"),</span>
-<span class="source-line-no">104</span><span id="line-104">                                    TagResolver.resolver("value", Tag.inserting(</span>
-<span class="source-line-no">105</span><span id="line-105">                                            PlayerManager.resolveName(uuid).toComponent(player)</span>
-<span class="source-line-no">106</span><span id="line-106">                                    ))</span>
-<span class="source-line-no">107</span><span id="line-107">                            );</span>
-<span class="source-line-no">108</span><span id="line-108">                            iterator.remove();</span>
-<span class="source-line-no">109</span><span id="line-109">                            continue;</span>
-<span class="source-line-no">110</span><span id="line-110">                        }</span>
-<span class="source-line-no">111</span><span id="line-111">                        if (plot.isOwner(uuid)) {</span>
-<span class="source-line-no">112</span><span id="line-112">                            player.sendMessage(</span>
-<span class="source-line-no">113</span><span id="line-113">                                    TranslatableCaption.of("member.already_added"),</span>
-<span class="source-line-no">114</span><span id="line-114">                                    TagResolver.resolver("player", Tag.inserting(</span>
-<span class="source-line-no">115</span><span id="line-115">                                            PlayerManager.resolveName(uuid).toComponent(player)</span>
-<span class="source-line-no">116</span><span id="line-116">                                    ))</span>
-<span class="source-line-no">117</span><span id="line-117">                            );</span>
-<span class="source-line-no">118</span><span id="line-118">                            iterator.remove();</span>
-<span class="source-line-no">119</span><span id="line-119">                            continue;</span>
-<span class="source-line-no">120</span><span id="line-120">                        }</span>
-<span class="source-line-no">121</span><span id="line-121">                        if (plot.getMembers().contains(uuid)) {</span>
-<span class="source-line-no">122</span><span id="line-122">                            player.sendMessage(</span>
-<span class="source-line-no">123</span><span id="line-123">                                    TranslatableCaption.of("member.already_added"),</span>
-<span class="source-line-no">124</span><span id="line-124">                                    TagResolver.resolver("player", Tag.inserting(</span>
-<span class="source-line-no">125</span><span id="line-125">                                            PlayerManager.resolveName(uuid).toComponent(player)</span>
-<span class="source-line-no">126</span><span id="line-126">                                    ))</span>
-<span class="source-line-no">127</span><span id="line-127">                            );</span>
-<span class="source-line-no">128</span><span id="line-128">                            iterator.remove();</span>
-<span class="source-line-no">129</span><span id="line-129">                            continue;</span>
-<span class="source-line-no">130</span><span id="line-130">                        }</span>
-<span class="source-line-no">131</span><span id="line-131">                        size += plot.getTrusted().contains(uuid) ? 0 : 1;</span>
-<span class="source-line-no">132</span><span id="line-132">                    }</span>
-<span class="source-line-no">133</span><span id="line-133">                    checkTrue(!uuids.isEmpty(), null);</span>
-<span class="source-line-no">134</span><span id="line-134">                    int localAddSize = plot.getMembers().size();</span>
-<span class="source-line-no">135</span><span id="line-135">                    int maxAddSize = Permissions.hasPermissionRange(player, Permission.PERMISSION_ADD, Settings.Limit.MAX_PLOTS);</span>
-<span class="source-line-no">136</span><span id="line-136">                    if (localAddSize &gt;= maxAddSize) {</span>
-<span class="source-line-no">137</span><span id="line-137">                        player.sendMessage(</span>
-<span class="source-line-no">138</span><span id="line-138">                                TranslatableCaption.of("members.plot_max_members_added"),</span>
-<span class="source-line-no">139</span><span id="line-139">                                TagResolver.resolver("amount", Tag.inserting(Component.text(localAddSize)))</span>
-<span class="source-line-no">140</span><span id="line-140">                        );</span>
-<span class="source-line-no">141</span><span id="line-141">                        return;</span>
-<span class="source-line-no">142</span><span id="line-142">                    }</span>
-<span class="source-line-no">143</span><span id="line-143">                    // Success</span>
-<span class="source-line-no">144</span><span id="line-144">                    confirm.run(this, () -&gt; {</span>
-<span class="source-line-no">145</span><span id="line-145">                        for (UUID uuid : uuids) {</span>
-<span class="source-line-no">146</span><span id="line-146">                            if (uuid != DBFunc.EVERYONE) {</span>
-<span class="source-line-no">147</span><span id="line-147">                                if (!plot.removeTrusted(uuid)) {</span>
-<span class="source-line-no">148</span><span id="line-148">                                    if (plot.getDenied().contains(uuid)) {</span>
-<span class="source-line-no">149</span><span id="line-149">                                        plot.removeDenied(uuid);</span>
-<span class="source-line-no">150</span><span id="line-150">                                    }</span>
-<span class="source-line-no">151</span><span id="line-151">                                }</span>
-<span class="source-line-no">152</span><span id="line-152">                            }</span>
-<span class="source-line-no">153</span><span id="line-153">                            plot.addMember(uuid);</span>
-<span class="source-line-no">154</span><span id="line-154">                            this.eventDispatcher.callMember(player, plot, uuid, true);</span>
-<span class="source-line-no">155</span><span id="line-155">                            player.sendMessage(TranslatableCaption.of("member.member_added"));</span>
-<span class="source-line-no">156</span><span id="line-156">                        }</span>
-<span class="source-line-no">157</span><span id="line-157">                    }, null);</span>
-<span class="source-line-no">158</span><span id="line-158">                } catch (final Throwable exception) {</span>
-<span class="source-line-no">159</span><span id="line-159">                    future.completeExceptionally(exception);</span>
-<span class="source-line-no">160</span><span id="line-160">                    return;</span>
-<span class="source-line-no">161</span><span id="line-161">                }</span>
-<span class="source-line-no">162</span><span id="line-162">            }</span>
-<span class="source-line-no">163</span><span id="line-163">            future.complete(true);</span>
-<span class="source-line-no">164</span><span id="line-164">        });</span>
-<span class="source-line-no">165</span><span id="line-165">        return future;</span>
-<span class="source-line-no">166</span><span id="line-166">    }</span>
-<span class="source-line-no">167</span><span id="line-167"></span>
-<span class="source-line-no">168</span><span id="line-168">    @Override</span>
-<span class="source-line-no">169</span><span id="line-169">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
-<span class="source-line-no">170</span><span id="line-170">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
-<span class="source-line-no">171</span><span id="line-171">    }</span>
-<span class="source-line-no">172</span><span id="line-172"></span>
-<span class="source-line-no">173</span><span id="line-173">}</span>
+<span class="source-line-no">099</span><span id="line-99">                        if (uuid == DBFunc.EVERYONE &amp;&amp; !(player.hasPermission(Permission.PERMISSION_TRUST_EVERYONE) || player.hasPermission(</span>
+<span class="source-line-no">100</span><span id="line-100">                                Permission.PERMISSION_ADMIN_COMMAND_TRUST))) {</span>
+<span class="source-line-no">101</span><span id="line-101">                            player.sendMessage(</span>
+<span class="source-line-no">102</span><span id="line-102">                                    TranslatableCaption.of("errors.invalid_player"),</span>
+<span class="source-line-no">103</span><span id="line-103">                                    TagResolver.resolver("value", Tag.inserting(</span>
+<span class="source-line-no">104</span><span id="line-104">                                            PlayerManager.resolveName(uuid).toComponent(player)</span>
+<span class="source-line-no">105</span><span id="line-105">                                    ))</span>
+<span class="source-line-no">106</span><span id="line-106">                            );</span>
+<span class="source-line-no">107</span><span id="line-107">                            iterator.remove();</span>
+<span class="source-line-no">108</span><span id="line-108">                            continue;</span>
+<span class="source-line-no">109</span><span id="line-109">                        }</span>
+<span class="source-line-no">110</span><span id="line-110">                        if (plot.isOwner(uuid)) {</span>
+<span class="source-line-no">111</span><span id="line-111">                            player.sendMessage(</span>
+<span class="source-line-no">112</span><span id="line-112">                                    TranslatableCaption.of("member.already_added"),</span>
+<span class="source-line-no">113</span><span id="line-113">                                    TagResolver.resolver("player", Tag.inserting(</span>
+<span class="source-line-no">114</span><span id="line-114">                                            PlayerManager.resolveName(uuid).toComponent(player)</span>
+<span class="source-line-no">115</span><span id="line-115">                                    ))</span>
+<span class="source-line-no">116</span><span id="line-116">                            );</span>
+<span class="source-line-no">117</span><span id="line-117">                            iterator.remove();</span>
+<span class="source-line-no">118</span><span id="line-118">                            continue;</span>
+<span class="source-line-no">119</span><span id="line-119">                        }</span>
+<span class="source-line-no">120</span><span id="line-120">                        if (plot.getMembers().contains(uuid)) {</span>
+<span class="source-line-no">121</span><span id="line-121">                            player.sendMessage(</span>
+<span class="source-line-no">122</span><span id="line-122">                                    TranslatableCaption.of("member.already_added"),</span>
+<span class="source-line-no">123</span><span id="line-123">                                    TagResolver.resolver("player", Tag.inserting(</span>
+<span class="source-line-no">124</span><span id="line-124">                                            PlayerManager.resolveName(uuid).toComponent(player)</span>
+<span class="source-line-no">125</span><span id="line-125">                                    ))</span>
+<span class="source-line-no">126</span><span id="line-126">                            );</span>
+<span class="source-line-no">127</span><span id="line-127">                            iterator.remove();</span>
+<span class="source-line-no">128</span><span id="line-128">                            continue;</span>
+<span class="source-line-no">129</span><span id="line-129">                        }</span>
+<span class="source-line-no">130</span><span id="line-130">                        size += plot.getTrusted().contains(uuid) ? 0 : 1;</span>
+<span class="source-line-no">131</span><span id="line-131">                    }</span>
+<span class="source-line-no">132</span><span id="line-132">                    checkTrue(!uuids.isEmpty(), null);</span>
+<span class="source-line-no">133</span><span id="line-133">                    int localAddSize = plot.getMembers().size();</span>
+<span class="source-line-no">134</span><span id="line-134">                    int maxAddSize = player.hasPermissionRange(Permission.PERMISSION_ADD, Settings.Limit.MAX_PLOTS);</span>
+<span class="source-line-no">135</span><span id="line-135">                    if (localAddSize &gt;= maxAddSize) {</span>
+<span class="source-line-no">136</span><span id="line-136">                        player.sendMessage(</span>
+<span class="source-line-no">137</span><span id="line-137">                                TranslatableCaption.of("members.plot_max_members_added"),</span>
+<span class="source-line-no">138</span><span id="line-138">                                TagResolver.resolver("amount", Tag.inserting(Component.text(localAddSize)))</span>
+<span class="source-line-no">139</span><span id="line-139">                        );</span>
+<span class="source-line-no">140</span><span id="line-140">                        return;</span>
+<span class="source-line-no">141</span><span id="line-141">                    }</span>
+<span class="source-line-no">142</span><span id="line-142">                    // Success</span>
+<span class="source-line-no">143</span><span id="line-143">                    confirm.run(this, () -&gt; {</span>
+<span class="source-line-no">144</span><span id="line-144">                        for (UUID uuid : uuids) {</span>
+<span class="source-line-no">145</span><span id="line-145">                            if (uuid != DBFunc.EVERYONE) {</span>
+<span class="source-line-no">146</span><span id="line-146">                                if (!plot.removeTrusted(uuid)) {</span>
+<span class="source-line-no">147</span><span id="line-147">                                    if (plot.getDenied().contains(uuid)) {</span>
+<span class="source-line-no">148</span><span id="line-148">                                        plot.removeDenied(uuid);</span>
+<span class="source-line-no">149</span><span id="line-149">                                    }</span>
+<span class="source-line-no">150</span><span id="line-150">                                }</span>
+<span class="source-line-no">151</span><span id="line-151">                            }</span>
+<span class="source-line-no">152</span><span id="line-152">                            plot.addMember(uuid);</span>
+<span class="source-line-no">153</span><span id="line-153">                            this.eventDispatcher.callMember(player, plot, uuid, true);</span>
+<span class="source-line-no">154</span><span id="line-154">                            player.sendMessage(TranslatableCaption.of("member.member_added"));</span>
+<span class="source-line-no">155</span><span id="line-155">                        }</span>
+<span class="source-line-no">156</span><span id="line-156">                    }, null);</span>
+<span class="source-line-no">157</span><span id="line-157">                } catch (final Throwable exception) {</span>
+<span class="source-line-no">158</span><span id="line-158">                    future.completeExceptionally(exception);</span>
+<span class="source-line-no">159</span><span id="line-159">                    return;</span>
+<span class="source-line-no">160</span><span id="line-160">                }</span>
+<span class="source-line-no">161</span><span id="line-161">            }</span>
+<span class="source-line-no">162</span><span id="line-162">            future.complete(true);</span>
+<span class="source-line-no">163</span><span id="line-163">        });</span>
+<span class="source-line-no">164</span><span id="line-164">        return future;</span>
+<span class="source-line-no">165</span><span id="line-165">    }</span>
+<span class="source-line-no">166</span><span id="line-166"></span>
+<span class="source-line-no">167</span><span id="line-167">    @Override</span>
+<span class="source-line-no">168</span><span id="line-168">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
+<span class="source-line-no">169</span><span id="line-169">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
+<span class="source-line-no">170</span><span id="line-170">    }</span>
+<span class="source-line-no">171</span><span id="line-171"></span>
+<span class="source-line-no">172</span><span id="line-172">}</span>
 
 
 

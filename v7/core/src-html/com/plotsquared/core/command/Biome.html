@@ -40,69 +40,68 @@
 <span class="source-line-no">027</span><span id="line-27">import com.sk89q.worldedit.world.biome.BiomeType;</span>
 <span class="source-line-no">028</span><span id="line-28">import com.sk89q.worldedit.world.biome.BiomeTypes;</span>
 <span class="source-line-no">029</span><span id="line-29">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">030</span><span id="line-30">import net.kyori.adventure.text.TextComponent;</span>
-<span class="source-line-no">031</span><span id="line-31">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">032</span><span id="line-32">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">import java.util.Collection;</span>
-<span class="source-line-no">035</span><span id="line-35">import java.util.Locale;</span>
-<span class="source-line-no">036</span><span id="line-36">import java.util.stream.Collectors;</span>
-<span class="source-line-no">037</span><span id="line-37"></span>
-<span class="source-line-no">038</span><span id="line-38">@CommandDeclaration(command = "setbiome",</span>
-<span class="source-line-no">039</span><span id="line-39">        permission = "plots.set.biome",</span>
-<span class="source-line-no">040</span><span id="line-40">        usage = "/plot biome [biome]",</span>
-<span class="source-line-no">041</span><span id="line-41">        aliases = {"biome", "sb", "setb", "b"},</span>
-<span class="source-line-no">042</span><span id="line-42">        category = CommandCategory.APPEARANCE,</span>
-<span class="source-line-no">043</span><span id="line-43">        requiredType = RequiredType.NONE)</span>
-<span class="source-line-no">044</span><span id="line-44">public class Biome extends SetCommand {</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">    @Override</span>
-<span class="source-line-no">047</span><span id="line-47">    public boolean set(final PlotPlayer&lt;?&gt; player, final Plot plot, final String value) {</span>
-<span class="source-line-no">048</span><span id="line-48">        BiomeType biome = null;</span>
-<span class="source-line-no">049</span><span id="line-49">        try {</span>
-<span class="source-line-no">050</span><span id="line-50">            biome = BiomeTypes.get(value.toLowerCase());</span>
-<span class="source-line-no">051</span><span id="line-51">        } catch (final Exception ignore) {</span>
-<span class="source-line-no">052</span><span id="line-52">        }</span>
-<span class="source-line-no">053</span><span id="line-53">        if (biome == null) {</span>
-<span class="source-line-no">054</span><span id="line-54">            String separator = TranslatableCaption.of("blocklist.block_list_separator").getComponent(player);</span>
-<span class="source-line-no">055</span><span id="line-55">            player.sendMessage(TranslatableCaption.of("biome.need_biome"));</span>
-<span class="source-line-no">056</span><span id="line-56">            player.sendMessage(</span>
-<span class="source-line-no">057</span><span id="line-57">                    StaticCaption.of(</span>
-<span class="source-line-no">058</span><span id="line-58">                            TranslatableCaption.of("commandconfig.subcommand_set_options_header_only").getComponent(player)</span>
-<span class="source-line-no">059</span><span id="line-59">                                    + StringMan.join(BiomeType.REGISTRY.values(), separator)</span>
-<span class="source-line-no">060</span><span id="line-60">                    )</span>
-<span class="source-line-no">061</span><span id="line-61">            );</span>
-<span class="source-line-no">062</span><span id="line-62">            return false;</span>
-<span class="source-line-no">063</span><span id="line-63">        }</span>
-<span class="source-line-no">064</span><span id="line-64">        if (plot.getRunning() &gt; 0) {</span>
-<span class="source-line-no">065</span><span id="line-65">            player.sendMessage(TranslatableCaption.of("errors.wait_for_timer"));</span>
-<span class="source-line-no">066</span><span id="line-66">            return false;</span>
-<span class="source-line-no">067</span><span id="line-67">        }</span>
-<span class="source-line-no">068</span><span id="line-68">        if (plot.getVolume() &gt; Integer.MAX_VALUE) {</span>
-<span class="source-line-no">069</span><span id="line-69">            player.sendMessage(TranslatableCaption.of("schematics.schematic_too_large"));</span>
-<span class="source-line-no">070</span><span id="line-70">            return false;</span>
-<span class="source-line-no">071</span><span id="line-71">        }</span>
-<span class="source-line-no">072</span><span id="line-72">        plot.addRunning();</span>
-<span class="source-line-no">073</span><span id="line-73">        plot.getPlotModificationManager().setBiome(biome, () -&gt; {</span>
-<span class="source-line-no">074</span><span id="line-74">            plot.removeRunning();</span>
-<span class="source-line-no">075</span><span id="line-75">            player.sendMessage(</span>
-<span class="source-line-no">076</span><span id="line-76">                    TranslatableCaption.of("biome.biome_set_to"),</span>
-<span class="source-line-no">077</span><span id="line-77">                    TagResolver.resolver("value", Tag.inserting(Component.text(value.toLowerCase())))</span>
-<span class="source-line-no">078</span><span id="line-78">            );</span>
-<span class="source-line-no">079</span><span id="line-79">        });</span>
-<span class="source-line-no">080</span><span id="line-80">        return true;</span>
-<span class="source-line-no">081</span><span id="line-81">    }</span>
-<span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    @Override</span>
-<span class="source-line-no">084</span><span id="line-84">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
-<span class="source-line-no">085</span><span id="line-85">        return SuggestionHelper.getNamespacedRegistrySuggestions(BiomeType.REGISTRY, args[0])</span>
-<span class="source-line-no">086</span><span id="line-86">                .map(value -&gt; value.toLowerCase(Locale.ENGLISH).replace("minecraft:", ""))</span>
-<span class="source-line-no">087</span><span id="line-87">                .filter(value -&gt; value.startsWith(args[0].toLowerCase(Locale.ENGLISH)))</span>
-<span class="source-line-no">088</span><span id="line-88">                .map(value -&gt; new Command(null, false, value, "", RequiredType.NONE, null) {</span>
-<span class="source-line-no">089</span><span id="line-89">                }).collect(Collectors.toList());</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">}</span>
+<span class="source-line-no">030</span><span id="line-30">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">031</span><span id="line-31">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">import java.util.Collection;</span>
+<span class="source-line-no">034</span><span id="line-34">import java.util.Locale;</span>
+<span class="source-line-no">035</span><span id="line-35">import java.util.stream.Collectors;</span>
+<span class="source-line-no">036</span><span id="line-36"></span>
+<span class="source-line-no">037</span><span id="line-37">@CommandDeclaration(command = "setbiome",</span>
+<span class="source-line-no">038</span><span id="line-38">        permission = "plots.set.biome",</span>
+<span class="source-line-no">039</span><span id="line-39">        usage = "/plot biome [biome]",</span>
+<span class="source-line-no">040</span><span id="line-40">        aliases = {"biome", "sb", "setb", "b"},</span>
+<span class="source-line-no">041</span><span id="line-41">        category = CommandCategory.APPEARANCE,</span>
+<span class="source-line-no">042</span><span id="line-42">        requiredType = RequiredType.NONE)</span>
+<span class="source-line-no">043</span><span id="line-43">public class Biome extends SetCommand {</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    @Override</span>
+<span class="source-line-no">046</span><span id="line-46">    public boolean set(final PlotPlayer&lt;?&gt; player, final Plot plot, final String value) {</span>
+<span class="source-line-no">047</span><span id="line-47">        BiomeType biome = null;</span>
+<span class="source-line-no">048</span><span id="line-48">        try {</span>
+<span class="source-line-no">049</span><span id="line-49">            biome = BiomeTypes.get(value.toLowerCase());</span>
+<span class="source-line-no">050</span><span id="line-50">        } catch (final Exception ignore) {</span>
+<span class="source-line-no">051</span><span id="line-51">        }</span>
+<span class="source-line-no">052</span><span id="line-52">        if (biome == null) {</span>
+<span class="source-line-no">053</span><span id="line-53">            String separator = TranslatableCaption.of("blocklist.block_list_separator").getComponent(player);</span>
+<span class="source-line-no">054</span><span id="line-54">            player.sendMessage(TranslatableCaption.of("biome.need_biome"));</span>
+<span class="source-line-no">055</span><span id="line-55">            player.sendMessage(</span>
+<span class="source-line-no">056</span><span id="line-56">                    StaticCaption.of(</span>
+<span class="source-line-no">057</span><span id="line-57">                            TranslatableCaption.of("commandconfig.subcommand_set_options_header_only").getComponent(player)</span>
+<span class="source-line-no">058</span><span id="line-58">                                    + StringMan.join(BiomeType.REGISTRY.values(), separator)</span>
+<span class="source-line-no">059</span><span id="line-59">                    )</span>
+<span class="source-line-no">060</span><span id="line-60">            );</span>
+<span class="source-line-no">061</span><span id="line-61">            return false;</span>
+<span class="source-line-no">062</span><span id="line-62">        }</span>
+<span class="source-line-no">063</span><span id="line-63">        if (plot.getRunning() &gt; 0) {</span>
+<span class="source-line-no">064</span><span id="line-64">            player.sendMessage(TranslatableCaption.of("errors.wait_for_timer"));</span>
+<span class="source-line-no">065</span><span id="line-65">            return false;</span>
+<span class="source-line-no">066</span><span id="line-66">        }</span>
+<span class="source-line-no">067</span><span id="line-67">        if (plot.getVolume() &gt; Integer.MAX_VALUE) {</span>
+<span class="source-line-no">068</span><span id="line-68">            player.sendMessage(TranslatableCaption.of("schematics.schematic_too_large"));</span>
+<span class="source-line-no">069</span><span id="line-69">            return false;</span>
+<span class="source-line-no">070</span><span id="line-70">        }</span>
+<span class="source-line-no">071</span><span id="line-71">        plot.addRunning();</span>
+<span class="source-line-no">072</span><span id="line-72">        plot.getPlotModificationManager().setBiome(biome, () -&gt; {</span>
+<span class="source-line-no">073</span><span id="line-73">            plot.removeRunning();</span>
+<span class="source-line-no">074</span><span id="line-74">            player.sendMessage(</span>
+<span class="source-line-no">075</span><span id="line-75">                    TranslatableCaption.of("biome.biome_set_to"),</span>
+<span class="source-line-no">076</span><span id="line-76">                    TagResolver.resolver("value", Tag.inserting(Component.text(value.toLowerCase())))</span>
+<span class="source-line-no">077</span><span id="line-77">            );</span>
+<span class="source-line-no">078</span><span id="line-78">        });</span>
+<span class="source-line-no">079</span><span id="line-79">        return true;</span>
+<span class="source-line-no">080</span><span id="line-80">    }</span>
+<span class="source-line-no">081</span><span id="line-81"></span>
+<span class="source-line-no">082</span><span id="line-82">    @Override</span>
+<span class="source-line-no">083</span><span id="line-83">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
+<span class="source-line-no">084</span><span id="line-84">        return SuggestionHelper.getNamespacedRegistrySuggestions(BiomeType.REGISTRY, args[0])</span>
+<span class="source-line-no">085</span><span id="line-85">                .map(value -&gt; value.toLowerCase(Locale.ENGLISH).replace("minecraft:", ""))</span>
+<span class="source-line-no">086</span><span id="line-86">                .filter(value -&gt; value.startsWith(args[0].toLowerCase(Locale.ENGLISH)))</span>
+<span class="source-line-no">087</span><span id="line-87">                .map(value -&gt; new Command(null, false, value, "", RequiredType.NONE, null) {</span>
+<span class="source-line-no">088</span><span id="line-88">                }).collect(Collectors.toList());</span>
+<span class="source-line-no">089</span><span id="line-89">    }</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">}</span>
 
 
 

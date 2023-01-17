@@ -5923,7 +5923,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="com/plotsquared/core/permissions/PermissionHolder.html#hasKeyedPermission(java.lang.String,java.lang.String)"><code>PermissionHolder.hasKeyedPermission(String, String)</code></a></div>
 </div>
 </dd>
 <dt><a href="com/plotsquared/core/permissions/PermissionHolder.html#hasKeyedPermission(java.lang.String,java.lang.String)" class="member-name-link">hasKeyedPermission(String, String)</a> - Method in interface com.plotsquared.core.permissions.<a href="com/plotsquared/core/permissions/PermissionHolder.html" title="interface in com.plotsquared.core.permissions">PermissionHolder</a></dt>
@@ -5962,19 +5962,27 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Checks if the plot has an owner.</div>
 </dd>
+<dt><a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermission(com.plotsquared.core.permissions.Permission)" class="member-name-link">hasPermission(Permission)</a> - Method in interface com.plotsquared.core.permissions.<a href="com/plotsquared/core/permissions/PermissionHolder.html" title="interface in com.plotsquared.core.permissions">PermissionHolder</a></dt>
+<dd>
+<div class="block">Check if the owner of the profile has a given (global) permission</div>
+</dd>
 <dt><a href="com/plotsquared/core/util/Permissions.html#hasPermission(com.plotsquared.core.permissions.PermissionHolder,com.plotsquared.core.permissions.Permission)" class="member-name-link">hasPermission(PermissionHolder, Permission)</a> - Static method in class com.plotsquared.core.util.<a href="com/plotsquared/core/util/Permissions.html" title="class in com.plotsquared.core.util">Permissions</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermission(com.plotsquared.core.permissions.Permission)"><code>PermissionHolder.hasPermission(Permission)</code></a></div>
 </div>
 </dd>
 <dt><a href="com/plotsquared/core/util/Permissions.html#hasPermission(com.plotsquared.core.permissions.PermissionHolder,java.lang.String)" class="member-name-link">hasPermission(PermissionHolder, String)</a> - Static method in class com.plotsquared.core.util.<a href="com/plotsquared/core/util/Permissions.html" title="class in com.plotsquared.core.util">Permissions</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermission(java.lang.String)"><code>PermissionHolder.hasPermission(String)</code></a></div>
 </div>
+</dd>
+<dt><a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermission(com.plotsquared.core.permissions.Permission,boolean)" class="member-name-link">hasPermission(Permission, boolean)</a> - Method in interface com.plotsquared.core.permissions.<a href="com/plotsquared/core/permissions/PermissionHolder.html" title="interface in com.plotsquared.core.permissions">PermissionHolder</a></dt>
+<dd>
+<div class="block">Checks if the owner of the profile has a permission, and optionally send the no permission message if applicable.</div>
 </dd>
 <dt><a href="com/plotsquared/core/command/CommandCaller.html#hasPermission(java.lang.String)" class="member-name-link">hasPermission(String)</a> - Method in interface com.plotsquared.core.command.<a href="com/plotsquared/core/command/CommandCaller.html" title="interface in com.plotsquared.core.command">CommandCaller</a></dt>
 <dd>
@@ -5991,6 +5999,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="com/plotsquared/core/player/ConsolePlayer.html#hasPermission(java.lang.String)" class="member-name-link">hasPermission(String)</a> - Method in class com.plotsquared.core.player.<a href="com/plotsquared/core/player/ConsolePlayer.html" title="class in com.plotsquared.core.player">ConsolePlayer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/plotsquared/core/player/PlotPlayer.html#hasPermission(java.lang.String)" class="member-name-link">hasPermission(String)</a> - Method in class com.plotsquared.core.player.<a href="com/plotsquared/core/player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermission(java.lang.String,boolean)" class="member-name-link">hasPermission(String, boolean)</a> - Method in interface com.plotsquared.core.permissions.<a href="com/plotsquared/core/permissions/PermissionHolder.html" title="interface in com.plotsquared.core.permissions">PermissionHolder</a></dt>
+<dd>
+<div class="block">Checks if the owner of the profile has a permission, and optionally send the no permission message if applicable.</div>
+</dd>
+<dt><a href="com/plotsquared/core/player/PlotPlayer.html#hasPermission(java.lang.String,boolean)" class="member-name-link">hasPermission(String, boolean)</a> - Method in class com.plotsquared.core.player.<a href="com/plotsquared/core/player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/plotsquared/core/permissions/ConsolePermissionProfile.html#hasPermission(java.lang.String,java.lang.String)" class="member-name-link">hasPermission(String, String)</a> - Method in enum class com.plotsquared.core.permissions.<a href="com/plotsquared/core/permissions/ConsolePermissionProfile.html" title="enum class in com.plotsquared.core.permissions">ConsolePermissionProfile</a></dt>
 <dd>&nbsp;</dd>
@@ -6010,15 +6024,21 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="com/plotsquared/core/player/PlotPlayer.html#hasPermission(java.lang.String,boolean)"><code>PlotPlayer.hasPermission(String, boolean)</code></a></div>
 </div>
 </dd>
 <dt><a href="com/plotsquared/core/util/Permissions.html#hasPermission(com.plotsquared.core.player.PlotPlayer,java.lang.String,boolean)" class="member-name-link">hasPermission(PlotPlayer&lt;?&gt;, String, boolean)</a> - Static method in class com.plotsquared.core.util.<a href="com/plotsquared/core/util/Permissions.html" title="class in com.plotsquared.core.util">Permissions</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="com/plotsquared/core/player/PlotPlayer.html#hasPermission(java.lang.String,boolean)"><code>PlotPlayer.hasPermission(String, boolean)</code></a></div>
 </div>
+</dd>
+<dt><a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermissionRange(com.plotsquared.core.permissions.Permission,int)" class="member-name-link">hasPermissionRange(Permission, int)</a> - Method in interface com.plotsquared.core.permissions.<a href="com/plotsquared/core/permissions/PermissionHolder.html" title="interface in com.plotsquared.core.permissions">PermissionHolder</a></dt>
+<dd>
+<div class="block">Check the highest permission a PlotPlayer has within a specified range.<br>
+ - Excessively high values will lag<br>
+ - The default range that is checked is <a href="com/plotsquared/core/configuration/Settings.Limit.html#MAX_PLOTS"><code>Settings.Limit.MAX_PLOTS</code></a><br></div>
 </dd>
 <dt><a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermissionRange(java.lang.String,int)" class="member-name-link">hasPermissionRange(String, int)</a> - Method in interface com.plotsquared.core.permissions.<a href="com/plotsquared/core/permissions/PermissionHolder.html" title="interface in com.plotsquared.core.permissions">PermissionHolder</a></dt>
 <dd>
@@ -6030,14 +6050,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermissionRange(com.plotsquared.core.permissions.Permission,int)"><code>PermissionHolder.hasPermissionRange(Permission, int)</code></a></div>
 </div>
 </dd>
 <dt><a href="com/plotsquared/core/util/Permissions.html#hasPermissionRange(com.plotsquared.core.player.PlotPlayer,java.lang.String,int)" class="member-name-link">hasPermissionRange(PlotPlayer&lt;?&gt;, String, int)</a> - Static method in class com.plotsquared.core.util.<a href="com/plotsquared/core/util/Permissions.html" title="class in com.plotsquared.core.util">Permissions</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="com/plotsquared/core/permissions/PermissionHolder.html#hasPermissionRange(java.lang.String,int)"><code>PermissionHolder.hasPermissionRange(String, int)</code></a></div>
 </div>
 </dd>
 <dt><a href="com/plotsquared/core/plot/PlotArea.html#hasPlot(java.util.UUID)" class="member-name-link">hasPlot(UUID)</a> - Method in class com.plotsquared.core.plot.<a href="com/plotsquared/core/plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a></dt>
@@ -8226,7 +8246,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes</div>
 </div>
 </dd>
 <dt><a href="com/plotsquared/core/util/Permissions.html#%3Cinit%3E()" class="member-name-link">Permissions()</a> - Constructor for class com.plotsquared.core.util.<a href="com/plotsquared/core/util/Permissions.html" title="class in com.plotsquared.core.util">Permissions</a></dt>

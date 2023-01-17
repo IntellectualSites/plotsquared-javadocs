@@ -119,7 +119,7 @@
 <span class="source-line-no">106</span><span id="line-106">                            .getTrusted().contains(uuid))) &amp;&amp; !plot.getFlag(NoWorldeditFlag.class)) {</span>
 <span class="source-line-no">107</span><span id="line-107">                for (CuboidRegion region : plot.getRegions()) {</span>
 <span class="source-line-no">108</span><span id="line-108">                    BlockVector3 pos1 = region.getMinimumPoint().withY(area.getMinBuildHeight());</span>
-<span class="source-line-no">109</span><span id="line-109">                    BlockVector3 pos2 = region.getMaximumPoint().withY(area.getMaxBuildHeight());</span>
+<span class="source-line-no">109</span><span id="line-109">                    BlockVector3 pos2 = region.getMaximumPoint().withY(area.getMaxBuildHeight() - 1);</span>
 <span class="source-line-no">110</span><span id="line-110">                    CuboidRegion copy = new CuboidRegion(pos1, pos2);</span>
 <span class="source-line-no">111</span><span id="line-111">                    regions.add(copy);</span>
 <span class="source-line-no">112</span><span id="line-112">                }</span>

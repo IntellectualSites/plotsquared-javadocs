@@ -44,198 +44,196 @@
 <span class="source-line-no">031</span><span id="line-31">import com.plotsquared.core.player.PlotPlayer;</span>
 <span class="source-line-no">032</span><span id="line-32">import com.plotsquared.core.plot.Plot;</span>
 <span class="source-line-no">033</span><span id="line-33">import com.plotsquared.core.util.EventDispatcher;</span>
-<span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.util.Permissions;</span>
-<span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.util.PlayerManager;</span>
-<span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.util.TabCompletions;</span>
-<span class="source-line-no">037</span><span id="line-37">import com.plotsquared.core.util.task.TaskManager;</span>
-<span class="source-line-no">038</span><span id="line-38">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">039</span><span id="line-39">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">041</span><span id="line-41">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">042</span><span id="line-42">import org.checkerframework.checker.nullness.qual.Nullable;</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">import java.util.Collection;</span>
-<span class="source-line-no">045</span><span id="line-45">import java.util.Collections;</span>
-<span class="source-line-no">046</span><span id="line-46">import java.util.Set;</span>
-<span class="source-line-no">047</span><span id="line-47">import java.util.UUID;</span>
-<span class="source-line-no">048</span><span id="line-48">import java.util.function.Consumer;</span>
-<span class="source-line-no">049</span><span id="line-49"></span>
-<span class="source-line-no">050</span><span id="line-50">@CommandDeclaration(command = "setowner",</span>
-<span class="source-line-no">051</span><span id="line-51">        permission = "plots.admin.command.setowner",</span>
-<span class="source-line-no">052</span><span id="line-52">        usage = "/plot setowner &lt;player&gt;",</span>
-<span class="source-line-no">053</span><span id="line-53">        aliases = {"owner", "so", "seto"},</span>
-<span class="source-line-no">054</span><span id="line-54">        category = CommandCategory.CLAIMING,</span>
-<span class="source-line-no">055</span><span id="line-55">        requiredType = RequiredType.NONE,</span>
-<span class="source-line-no">056</span><span id="line-56">        confirmation = true)</span>
-<span class="source-line-no">057</span><span id="line-57">public class Owner extends SetCommand {</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    private final EventDispatcher eventDispatcher;</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    @Inject</span>
-<span class="source-line-no">062</span><span id="line-62">    public Owner(final @NonNull EventDispatcher eventDispatcher) {</span>
-<span class="source-line-no">063</span><span id="line-63">        this.eventDispatcher = eventDispatcher;</span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    @Override</span>
-<span class="source-line-no">067</span><span id="line-67">    public boolean set(final PlotPlayer&lt;?&gt; player, final Plot plot, String value) {</span>
-<span class="source-line-no">068</span><span id="line-68">        if (value == null || value.isEmpty()) {</span>
-<span class="source-line-no">069</span><span id="line-69">            player.sendMessage(</span>
-<span class="source-line-no">070</span><span id="line-70">                    TranslatableCaption.of("commandconfig.command_syntax"),</span>
-<span class="source-line-no">071</span><span id="line-71">                    TagResolver.resolver("value", Tag.inserting(Component.text("/plot setowner &lt;owner&gt;")))</span>
-<span class="source-line-no">072</span><span id="line-72">            );</span>
-<span class="source-line-no">073</span><span id="line-73">            return false;</span>
-<span class="source-line-no">074</span><span id="line-74">        }</span>
-<span class="source-line-no">075</span><span id="line-75">        @Nullable final UUID oldOwner = plot.getOwnerAbs();</span>
-<span class="source-line-no">076</span><span id="line-76">        Set&lt;Plot&gt; plots = plot.getConnectedPlots();</span>
-<span class="source-line-no">077</span><span id="line-77"></span>
-<span class="source-line-no">078</span><span id="line-78">        final Consumer&lt;UUID&gt; uuidConsumer = uuid -&gt; {</span>
-<span class="source-line-no">079</span><span id="line-79">            if (uuid == null &amp;&amp; !value.equalsIgnoreCase("none") &amp;&amp; !value.equalsIgnoreCase("null")</span>
-<span class="source-line-no">080</span><span id="line-80">                    &amp;&amp; !value.equalsIgnoreCase("-")) {</span>
-<span class="source-line-no">081</span><span id="line-81">                player.sendMessage(</span>
-<span class="source-line-no">082</span><span id="line-82">                        TranslatableCaption.of("errors.invalid_player"),</span>
-<span class="source-line-no">083</span><span id="line-83">                        TagResolver.resolver("value", Tag.inserting(Component.text(value)))</span>
-<span class="source-line-no">084</span><span id="line-84">                );</span>
-<span class="source-line-no">085</span><span id="line-85">                return;</span>
-<span class="source-line-no">086</span><span id="line-86">            }</span>
-<span class="source-line-no">087</span><span id="line-87">            PlotChangeOwnerEvent event = this.eventDispatcher.callOwnerChange(</span>
-<span class="source-line-no">088</span><span id="line-88">                    player,</span>
-<span class="source-line-no">089</span><span id="line-89">                    plot,</span>
-<span class="source-line-no">090</span><span id="line-90">                    plot.hasOwner() ? plot.getOwnerAbs() : null,</span>
-<span class="source-line-no">091</span><span id="line-91">                    uuid,</span>
-<span class="source-line-no">092</span><span id="line-92">                    plot.hasOwner()</span>
-<span class="source-line-no">093</span><span id="line-93">            );</span>
-<span class="source-line-no">094</span><span id="line-94">            if (event.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">095</span><span id="line-95">                player.sendMessage(</span>
-<span class="source-line-no">096</span><span id="line-96">                        TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">097</span><span id="line-97">                        TagResolver.resolver("value", Tag.inserting(Component.text("Owner change")))</span>
-<span class="source-line-no">098</span><span id="line-98">                );</span>
-<span class="source-line-no">099</span><span id="line-99">                return;</span>
-<span class="source-line-no">100</span><span id="line-100">            }</span>
-<span class="source-line-no">101</span><span id="line-101">            uuid = event.getNewOwner();</span>
-<span class="source-line-no">102</span><span id="line-102">            boolean force = event.getEventResult() == Result.FORCE;</span>
-<span class="source-line-no">103</span><span id="line-103">            if (uuid == null) {</span>
-<span class="source-line-no">104</span><span id="line-104">                if (!force &amp;&amp; !Permissions</span>
-<span class="source-line-no">105</span><span id="line-105">                        .hasPermission(player, Permission.PERMISSION_ADMIN_COMMAND_SET_OWNER,</span>
-<span class="source-line-no">106</span><span id="line-106">                                true</span>
-<span class="source-line-no">107</span><span id="line-107">                        )) {</span>
-<span class="source-line-no">108</span><span id="line-108">                    return;</span>
-<span class="source-line-no">109</span><span id="line-109">                }</span>
-<span class="source-line-no">110</span><span id="line-110">                PlotUnlinkEvent unlinkEvent = this.eventDispatcher.callUnlink(</span>
-<span class="source-line-no">111</span><span id="line-111">                        plot.getArea(),</span>
-<span class="source-line-no">112</span><span id="line-112">                        plot,</span>
+<span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.util.PlayerManager;</span>
+<span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.util.TabCompletions;</span>
+<span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.util.task.TaskManager;</span>
+<span class="source-line-no">037</span><span id="line-37">import net.kyori.adventure.text.Component;</span>
+<span class="source-line-no">038</span><span id="line-38">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">039</span><span id="line-39">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
+<span class="source-line-no">040</span><span id="line-40">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">041</span><span id="line-41">import org.checkerframework.checker.nullness.qual.Nullable;</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">import java.util.Collection;</span>
+<span class="source-line-no">044</span><span id="line-44">import java.util.Collections;</span>
+<span class="source-line-no">045</span><span id="line-45">import java.util.Set;</span>
+<span class="source-line-no">046</span><span id="line-46">import java.util.UUID;</span>
+<span class="source-line-no">047</span><span id="line-47">import java.util.function.Consumer;</span>
+<span class="source-line-no">048</span><span id="line-48"></span>
+<span class="source-line-no">049</span><span id="line-49">@CommandDeclaration(command = "setowner",</span>
+<span class="source-line-no">050</span><span id="line-50">        permission = "plots.admin.command.setowner",</span>
+<span class="source-line-no">051</span><span id="line-51">        usage = "/plot setowner &lt;player&gt;",</span>
+<span class="source-line-no">052</span><span id="line-52">        aliases = {"owner", "so", "seto"},</span>
+<span class="source-line-no">053</span><span id="line-53">        category = CommandCategory.CLAIMING,</span>
+<span class="source-line-no">054</span><span id="line-54">        requiredType = RequiredType.NONE,</span>
+<span class="source-line-no">055</span><span id="line-55">        confirmation = true)</span>
+<span class="source-line-no">056</span><span id="line-56">public class Owner extends SetCommand {</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    private final EventDispatcher eventDispatcher;</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    @Inject</span>
+<span class="source-line-no">061</span><span id="line-61">    public Owner(final @NonNull EventDispatcher eventDispatcher) {</span>
+<span class="source-line-no">062</span><span id="line-62">        this.eventDispatcher = eventDispatcher;</span>
+<span class="source-line-no">063</span><span id="line-63">    }</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    @Override</span>
+<span class="source-line-no">066</span><span id="line-66">    public boolean set(final PlotPlayer&lt;?&gt; player, final Plot plot, String value) {</span>
+<span class="source-line-no">067</span><span id="line-67">        if (value == null || value.isEmpty()) {</span>
+<span class="source-line-no">068</span><span id="line-68">            player.sendMessage(</span>
+<span class="source-line-no">069</span><span id="line-69">                    TranslatableCaption.of("commandconfig.command_syntax"),</span>
+<span class="source-line-no">070</span><span id="line-70">                    TagResolver.resolver("value", Tag.inserting(Component.text("/plot setowner &lt;owner&gt;")))</span>
+<span class="source-line-no">071</span><span id="line-71">            );</span>
+<span class="source-line-no">072</span><span id="line-72">            return false;</span>
+<span class="source-line-no">073</span><span id="line-73">        }</span>
+<span class="source-line-no">074</span><span id="line-74">        @Nullable final UUID oldOwner = plot.getOwnerAbs();</span>
+<span class="source-line-no">075</span><span id="line-75">        Set&lt;Plot&gt; plots = plot.getConnectedPlots();</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">        final Consumer&lt;UUID&gt; uuidConsumer = uuid -&gt; {</span>
+<span class="source-line-no">078</span><span id="line-78">            if (uuid == null &amp;&amp; !value.equalsIgnoreCase("none") &amp;&amp; !value.equalsIgnoreCase("null")</span>
+<span class="source-line-no">079</span><span id="line-79">                    &amp;&amp; !value.equalsIgnoreCase("-")) {</span>
+<span class="source-line-no">080</span><span id="line-80">                player.sendMessage(</span>
+<span class="source-line-no">081</span><span id="line-81">                        TranslatableCaption.of("errors.invalid_player"),</span>
+<span class="source-line-no">082</span><span id="line-82">                        TagResolver.resolver("value", Tag.inserting(Component.text(value)))</span>
+<span class="source-line-no">083</span><span id="line-83">                );</span>
+<span class="source-line-no">084</span><span id="line-84">                return;</span>
+<span class="source-line-no">085</span><span id="line-85">            }</span>
+<span class="source-line-no">086</span><span id="line-86">            PlotChangeOwnerEvent event = this.eventDispatcher.callOwnerChange(</span>
+<span class="source-line-no">087</span><span id="line-87">                    player,</span>
+<span class="source-line-no">088</span><span id="line-88">                    plot,</span>
+<span class="source-line-no">089</span><span id="line-89">                    plot.hasOwner() ? plot.getOwnerAbs() : null,</span>
+<span class="source-line-no">090</span><span id="line-90">                    uuid,</span>
+<span class="source-line-no">091</span><span id="line-91">                    plot.hasOwner()</span>
+<span class="source-line-no">092</span><span id="line-92">            );</span>
+<span class="source-line-no">093</span><span id="line-93">            if (event.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">094</span><span id="line-94">                player.sendMessage(</span>
+<span class="source-line-no">095</span><span id="line-95">                        TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">096</span><span id="line-96">                        TagResolver.resolver("value", Tag.inserting(Component.text("Owner change")))</span>
+<span class="source-line-no">097</span><span id="line-97">                );</span>
+<span class="source-line-no">098</span><span id="line-98">                return;</span>
+<span class="source-line-no">099</span><span id="line-99">            }</span>
+<span class="source-line-no">100</span><span id="line-100">            uuid = event.getNewOwner();</span>
+<span class="source-line-no">101</span><span id="line-101">            boolean force = event.getEventResult() == Result.FORCE;</span>
+<span class="source-line-no">102</span><span id="line-102">            if (uuid == null) {</span>
+<span class="source-line-no">103</span><span id="line-103">                if (!force &amp;&amp; !player.hasPermission(</span>
+<span class="source-line-no">104</span><span id="line-104">                        Permission.PERMISSION_ADMIN_COMMAND_SET_OWNER,</span>
+<span class="source-line-no">105</span><span id="line-105">                        true</span>
+<span class="source-line-no">106</span><span id="line-106">                )) {</span>
+<span class="source-line-no">107</span><span id="line-107">                    return;</span>
+<span class="source-line-no">108</span><span id="line-108">                }</span>
+<span class="source-line-no">109</span><span id="line-109">                PlotUnlinkEvent unlinkEvent = this.eventDispatcher.callUnlink(</span>
+<span class="source-line-no">110</span><span id="line-110">                        plot.getArea(),</span>
+<span class="source-line-no">111</span><span id="line-111">                        plot,</span>
+<span class="source-line-no">112</span><span id="line-112">                        false,</span>
 <span class="source-line-no">113</span><span id="line-113">                        false,</span>
-<span class="source-line-no">114</span><span id="line-114">                        false,</span>
-<span class="source-line-no">115</span><span id="line-115">                        PlotUnlinkEvent.REASON.NEW_OWNER</span>
-<span class="source-line-no">116</span><span id="line-116">                );</span>
-<span class="source-line-no">117</span><span id="line-117">                if (unlinkEvent.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">118</span><span id="line-118">                    player.sendMessage(</span>
-<span class="source-line-no">119</span><span id="line-119">                            TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">120</span><span id="line-120">                            TagResolver.resolver("value", Tag.inserting(Component.text("Unlink on owner change")))</span>
-<span class="source-line-no">121</span><span id="line-121">                    );</span>
-<span class="source-line-no">122</span><span id="line-122">                    return;</span>
-<span class="source-line-no">123</span><span id="line-123">                }</span>
-<span class="source-line-no">124</span><span id="line-124">                if (plot.getPlotModificationManager().unlinkPlot(unlinkEvent.isCreateRoad(), unlinkEvent.isCreateRoad())) {</span>
-<span class="source-line-no">125</span><span id="line-125">                    eventDispatcher.callPostUnlink(plot, PlotUnlinkEvent.REASON.NEW_OWNER);</span>
-<span class="source-line-no">126</span><span id="line-126">                }</span>
-<span class="source-line-no">127</span><span id="line-127">                Set&lt;Plot&gt; connected = plot.getConnectedPlots();</span>
-<span class="source-line-no">128</span><span id="line-128">                for (Plot current : connected) {</span>
-<span class="source-line-no">129</span><span id="line-129">                    current.unclaim();</span>
-<span class="source-line-no">130</span><span id="line-130">                    current.getPlotModificationManager().removeSign();</span>
-<span class="source-line-no">131</span><span id="line-131">                }</span>
-<span class="source-line-no">132</span><span id="line-132">                eventDispatcher.callPostOwnerChange(player, plot, oldOwner);</span>
-<span class="source-line-no">133</span><span id="line-133">                player.sendMessage(TranslatableCaption.of("owner.set_owner"));</span>
-<span class="source-line-no">134</span><span id="line-134">                return;</span>
-<span class="source-line-no">135</span><span id="line-135">            }</span>
-<span class="source-line-no">136</span><span id="line-136">            final PlotPlayer&lt;?&gt; other = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
-<span class="source-line-no">137</span><span id="line-137">            if (plot.isOwner(uuid)) {</span>
-<span class="source-line-no">138</span><span id="line-138">                player.sendMessage(</span>
-<span class="source-line-no">139</span><span id="line-139">                        TranslatableCaption.of("member.already_owner"),</span>
-<span class="source-line-no">140</span><span id="line-140">                        TagResolver.resolver(</span>
-<span class="source-line-no">141</span><span id="line-141">                                "player",</span>
-<span class="source-line-no">142</span><span id="line-142">                                Tag.inserting(PlayerManager.resolveName(uuid, false).toComponent(player))</span>
-<span class="source-line-no">143</span><span id="line-143">                        )</span>
-<span class="source-line-no">144</span><span id="line-144">                );</span>
-<span class="source-line-no">145</span><span id="line-145">                return;</span>
-<span class="source-line-no">146</span><span id="line-146">            }</span>
-<span class="source-line-no">147</span><span id="line-147">            if (!force &amp;&amp; !Permissions</span>
-<span class="source-line-no">148</span><span id="line-148">                    .hasPermission(player, Permission.PERMISSION_ADMIN_COMMAND_SET_OWNER)) {</span>
-<span class="source-line-no">149</span><span id="line-149">                if (other == null) {</span>
-<span class="source-line-no">150</span><span id="line-150">                    player.sendMessage(</span>
-<span class="source-line-no">151</span><span id="line-151">                            TranslatableCaption.of("errors.invalid_player_offline"),</span>
-<span class="source-line-no">152</span><span id="line-152">                            TagResolver.resolver(</span>
-<span class="source-line-no">153</span><span id="line-153">                                    "player",</span>
-<span class="source-line-no">154</span><span id="line-154">                                    Tag.inserting(PlayerManager.resolveName(uuid).toComponent(player))</span>
-<span class="source-line-no">155</span><span id="line-155">                            )</span>
-<span class="source-line-no">156</span><span id="line-156">                    );</span>
-<span class="source-line-no">157</span><span id="line-157">                    return;</span>
-<span class="source-line-no">158</span><span id="line-158">                }</span>
-<span class="source-line-no">159</span><span id="line-159">                int size = plots.size();</span>
-<span class="source-line-no">160</span><span id="line-160">                int currentPlots = (Settings.Limit.GLOBAL ?</span>
-<span class="source-line-no">161</span><span id="line-161">                        other.getPlotCount() :</span>
-<span class="source-line-no">162</span><span id="line-162">                        other.getPlotCount(plot.getWorldName())) + size;</span>
-<span class="source-line-no">163</span><span id="line-163">                try (final MetaDataAccess&lt;Integer&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_GRANTED_PLOTS)) {</span>
-<span class="source-line-no">164</span><span id="line-164">                    int grants;</span>
-<span class="source-line-no">165</span><span id="line-165">                    if (currentPlots &gt;= other.getAllowedPlots()) {</span>
-<span class="source-line-no">166</span><span id="line-166">                        if (metaDataAccess.isPresent()) {</span>
-<span class="source-line-no">167</span><span id="line-167">                            grants = metaDataAccess.get().orElse(0);</span>
-<span class="source-line-no">168</span><span id="line-168">                            if (grants &lt;= 0) {</span>
-<span class="source-line-no">169</span><span id="line-169">                                metaDataAccess.remove();</span>
-<span class="source-line-no">170</span><span id="line-170">                                player.sendMessage(TranslatableCaption.of("permission.cant_transfer_more_plots"));</span>
-<span class="source-line-no">171</span><span id="line-171">                                return;</span>
-<span class="source-line-no">172</span><span id="line-172">                            }</span>
-<span class="source-line-no">173</span><span id="line-173">                        }</span>
-<span class="source-line-no">174</span><span id="line-174">                    }</span>
-<span class="source-line-no">175</span><span id="line-175">                }</span>
-<span class="source-line-no">176</span><span id="line-176">            }</span>
-<span class="source-line-no">177</span><span id="line-177">            final UUID finalUUID = uuid;</span>
-<span class="source-line-no">178</span><span id="line-178">            PlotSquared.get().getImpromptuUUIDPipeline().getSingle(uuid, (finalName, throwable) -&gt; {</span>
-<span class="source-line-no">179</span><span id="line-179">                final boolean removeDenied = plot.isDenied(finalUUID);</span>
-<span class="source-line-no">180</span><span id="line-180">                Runnable run = () -&gt; {</span>
-<span class="source-line-no">181</span><span id="line-181">                    if (plot.setOwner(finalUUID, player)) {</span>
-<span class="source-line-no">182</span><span id="line-182">                        if (removeDenied) {</span>
-<span class="source-line-no">183</span><span id="line-183">                            plot.removeDenied(finalUUID);</span>
-<span class="source-line-no">184</span><span id="line-184">                        }</span>
-<span class="source-line-no">185</span><span id="line-185">                        plot.getPlotModificationManager().setSign(finalName);</span>
-<span class="source-line-no">186</span><span id="line-186">                        player.sendMessage(TranslatableCaption.of("owner.set_owner"));</span>
-<span class="source-line-no">187</span><span id="line-187">                        eventDispatcher.callPostOwnerChange(player, plot, oldOwner);</span>
-<span class="source-line-no">188</span><span id="line-188">                        if (other != null) {</span>
-<span class="source-line-no">189</span><span id="line-189">                            other.sendMessage(</span>
-<span class="source-line-no">190</span><span id="line-190">                                    TranslatableCaption.of("owner.now_owner"),</span>
-<span class="source-line-no">191</span><span id="line-191">                                    TagResolver.resolver(</span>
-<span class="source-line-no">192</span><span id="line-192">                                            "plot",</span>
-<span class="source-line-no">193</span><span id="line-193">                                            Tag.inserting(Component.text(plot.getArea() + ";" + plot.getId()))</span>
-<span class="source-line-no">194</span><span id="line-194">                                    )</span>
-<span class="source-line-no">195</span><span id="line-195">                            );</span>
-<span class="source-line-no">196</span><span id="line-196">                        }</span>
-<span class="source-line-no">197</span><span id="line-197">                    } else {</span>
-<span class="source-line-no">198</span><span id="line-198">                        player.sendMessage(TranslatableCaption.of("owner.set_owner_cancelled"));</span>
-<span class="source-line-no">199</span><span id="line-199">                    }</span>
-<span class="source-line-no">200</span><span id="line-200">                };</span>
-<span class="source-line-no">201</span><span id="line-201">                if (hasConfirmation(player)) {</span>
-<span class="source-line-no">202</span><span id="line-202">                    CmdConfirm.addPending(player, "/plot setowner " + value, run);</span>
-<span class="source-line-no">203</span><span id="line-203">                } else {</span>
-<span class="source-line-no">204</span><span id="line-204">                    TaskManager.runTask(run);</span>
-<span class="source-line-no">205</span><span id="line-205">                }</span>
-<span class="source-line-no">206</span><span id="line-206">            });</span>
-<span class="source-line-no">207</span><span id="line-207">        };</span>
-<span class="source-line-no">208</span><span id="line-208"></span>
-<span class="source-line-no">209</span><span id="line-209">        if (value.length() == 36) {</span>
-<span class="source-line-no">210</span><span id="line-210">            try {</span>
-<span class="source-line-no">211</span><span id="line-211">                uuidConsumer.accept(UUID.fromString(value));</span>
-<span class="source-line-no">212</span><span id="line-212">            } catch (Exception ignored) {</span>
-<span class="source-line-no">213</span><span id="line-213">            }</span>
-<span class="source-line-no">214</span><span id="line-214">        } else {</span>
-<span class="source-line-no">215</span><span id="line-215">            PlotSquared.get().getImpromptuUUIDPipeline().getSingle(value, (uuid, throwable) -&gt; uuidConsumer.accept(uuid));</span>
-<span class="source-line-no">216</span><span id="line-216">        }</span>
-<span class="source-line-no">217</span><span id="line-217">        return true;</span>
-<span class="source-line-no">218</span><span id="line-218">    }</span>
-<span class="source-line-no">219</span><span id="line-219"></span>
-<span class="source-line-no">220</span><span id="line-220">    @Override</span>
-<span class="source-line-no">221</span><span id="line-221">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
-<span class="source-line-no">222</span><span id="line-222">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
-<span class="source-line-no">223</span><span id="line-223">    }</span>
-<span class="source-line-no">224</span><span id="line-224"></span>
-<span class="source-line-no">225</span><span id="line-225">}</span>
+<span class="source-line-no">114</span><span id="line-114">                        PlotUnlinkEvent.REASON.NEW_OWNER</span>
+<span class="source-line-no">115</span><span id="line-115">                );</span>
+<span class="source-line-no">116</span><span id="line-116">                if (unlinkEvent.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">117</span><span id="line-117">                    player.sendMessage(</span>
+<span class="source-line-no">118</span><span id="line-118">                            TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">119</span><span id="line-119">                            TagResolver.resolver("value", Tag.inserting(Component.text("Unlink on owner change")))</span>
+<span class="source-line-no">120</span><span id="line-120">                    );</span>
+<span class="source-line-no">121</span><span id="line-121">                    return;</span>
+<span class="source-line-no">122</span><span id="line-122">                }</span>
+<span class="source-line-no">123</span><span id="line-123">                if (plot.getPlotModificationManager().unlinkPlot(unlinkEvent.isCreateRoad(), unlinkEvent.isCreateRoad())) {</span>
+<span class="source-line-no">124</span><span id="line-124">                    eventDispatcher.callPostUnlink(plot, PlotUnlinkEvent.REASON.NEW_OWNER);</span>
+<span class="source-line-no">125</span><span id="line-125">                }</span>
+<span class="source-line-no">126</span><span id="line-126">                Set&lt;Plot&gt; connected = plot.getConnectedPlots();</span>
+<span class="source-line-no">127</span><span id="line-127">                for (Plot current : connected) {</span>
+<span class="source-line-no">128</span><span id="line-128">                    current.unclaim();</span>
+<span class="source-line-no">129</span><span id="line-129">                    current.getPlotModificationManager().removeSign();</span>
+<span class="source-line-no">130</span><span id="line-130">                }</span>
+<span class="source-line-no">131</span><span id="line-131">                eventDispatcher.callPostOwnerChange(player, plot, oldOwner);</span>
+<span class="source-line-no">132</span><span id="line-132">                player.sendMessage(TranslatableCaption.of("owner.set_owner"));</span>
+<span class="source-line-no">133</span><span id="line-133">                return;</span>
+<span class="source-line-no">134</span><span id="line-134">            }</span>
+<span class="source-line-no">135</span><span id="line-135">            final PlotPlayer&lt;?&gt; other = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
+<span class="source-line-no">136</span><span id="line-136">            if (plot.isOwner(uuid)) {</span>
+<span class="source-line-no">137</span><span id="line-137">                player.sendMessage(</span>
+<span class="source-line-no">138</span><span id="line-138">                        TranslatableCaption.of("member.already_owner"),</span>
+<span class="source-line-no">139</span><span id="line-139">                        TagResolver.resolver(</span>
+<span class="source-line-no">140</span><span id="line-140">                                "player",</span>
+<span class="source-line-no">141</span><span id="line-141">                                Tag.inserting(PlayerManager.resolveName(uuid, false).toComponent(player))</span>
+<span class="source-line-no">142</span><span id="line-142">                        )</span>
+<span class="source-line-no">143</span><span id="line-143">                );</span>
+<span class="source-line-no">144</span><span id="line-144">                return;</span>
+<span class="source-line-no">145</span><span id="line-145">            }</span>
+<span class="source-line-no">146</span><span id="line-146">            if (!force &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_SET_OWNER)) {</span>
+<span class="source-line-no">147</span><span id="line-147">                if (other == null) {</span>
+<span class="source-line-no">148</span><span id="line-148">                    player.sendMessage(</span>
+<span class="source-line-no">149</span><span id="line-149">                            TranslatableCaption.of("errors.invalid_player_offline"),</span>
+<span class="source-line-no">150</span><span id="line-150">                            TagResolver.resolver(</span>
+<span class="source-line-no">151</span><span id="line-151">                                    "player",</span>
+<span class="source-line-no">152</span><span id="line-152">                                    Tag.inserting(PlayerManager.resolveName(uuid).toComponent(player))</span>
+<span class="source-line-no">153</span><span id="line-153">                            )</span>
+<span class="source-line-no">154</span><span id="line-154">                    );</span>
+<span class="source-line-no">155</span><span id="line-155">                    return;</span>
+<span class="source-line-no">156</span><span id="line-156">                }</span>
+<span class="source-line-no">157</span><span id="line-157">                int size = plots.size();</span>
+<span class="source-line-no">158</span><span id="line-158">                int currentPlots = (Settings.Limit.GLOBAL ?</span>
+<span class="source-line-no">159</span><span id="line-159">                        other.getPlotCount() :</span>
+<span class="source-line-no">160</span><span id="line-160">                        other.getPlotCount(plot.getWorldName())) + size;</span>
+<span class="source-line-no">161</span><span id="line-161">                try (final MetaDataAccess&lt;Integer&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_GRANTED_PLOTS)) {</span>
+<span class="source-line-no">162</span><span id="line-162">                    int grants;</span>
+<span class="source-line-no">163</span><span id="line-163">                    if (currentPlots &gt;= other.getAllowedPlots()) {</span>
+<span class="source-line-no">164</span><span id="line-164">                        if (metaDataAccess.isPresent()) {</span>
+<span class="source-line-no">165</span><span id="line-165">                            grants = metaDataAccess.get().orElse(0);</span>
+<span class="source-line-no">166</span><span id="line-166">                            if (grants &lt;= 0) {</span>
+<span class="source-line-no">167</span><span id="line-167">                                metaDataAccess.remove();</span>
+<span class="source-line-no">168</span><span id="line-168">                                player.sendMessage(TranslatableCaption.of("permission.cant_transfer_more_plots"));</span>
+<span class="source-line-no">169</span><span id="line-169">                                return;</span>
+<span class="source-line-no">170</span><span id="line-170">                            }</span>
+<span class="source-line-no">171</span><span id="line-171">                        }</span>
+<span class="source-line-no">172</span><span id="line-172">                    }</span>
+<span class="source-line-no">173</span><span id="line-173">                }</span>
+<span class="source-line-no">174</span><span id="line-174">            }</span>
+<span class="source-line-no">175</span><span id="line-175">            final UUID finalUUID = uuid;</span>
+<span class="source-line-no">176</span><span id="line-176">            PlotSquared.get().getImpromptuUUIDPipeline().getSingle(uuid, (finalName, throwable) -&gt; {</span>
+<span class="source-line-no">177</span><span id="line-177">                final boolean removeDenied = plot.isDenied(finalUUID);</span>
+<span class="source-line-no">178</span><span id="line-178">                Runnable run = () -&gt; {</span>
+<span class="source-line-no">179</span><span id="line-179">                    if (plot.setOwner(finalUUID, player)) {</span>
+<span class="source-line-no">180</span><span id="line-180">                        if (removeDenied) {</span>
+<span class="source-line-no">181</span><span id="line-181">                            plot.removeDenied(finalUUID);</span>
+<span class="source-line-no">182</span><span id="line-182">                        }</span>
+<span class="source-line-no">183</span><span id="line-183">                        plot.getPlotModificationManager().setSign(finalName);</span>
+<span class="source-line-no">184</span><span id="line-184">                        player.sendMessage(TranslatableCaption.of("owner.set_owner"));</span>
+<span class="source-line-no">185</span><span id="line-185">                        eventDispatcher.callPostOwnerChange(player, plot, oldOwner);</span>
+<span class="source-line-no">186</span><span id="line-186">                        if (other != null) {</span>
+<span class="source-line-no">187</span><span id="line-187">                            other.sendMessage(</span>
+<span class="source-line-no">188</span><span id="line-188">                                    TranslatableCaption.of("owner.now_owner"),</span>
+<span class="source-line-no">189</span><span id="line-189">                                    TagResolver.resolver(</span>
+<span class="source-line-no">190</span><span id="line-190">                                            "plot",</span>
+<span class="source-line-no">191</span><span id="line-191">                                            Tag.inserting(Component.text(plot.getArea() + ";" + plot.getId()))</span>
+<span class="source-line-no">192</span><span id="line-192">                                    )</span>
+<span class="source-line-no">193</span><span id="line-193">                            );</span>
+<span class="source-line-no">194</span><span id="line-194">                        }</span>
+<span class="source-line-no">195</span><span id="line-195">                    } else {</span>
+<span class="source-line-no">196</span><span id="line-196">                        player.sendMessage(TranslatableCaption.of("owner.set_owner_cancelled"));</span>
+<span class="source-line-no">197</span><span id="line-197">                    }</span>
+<span class="source-line-no">198</span><span id="line-198">                };</span>
+<span class="source-line-no">199</span><span id="line-199">                if (hasConfirmation(player)) {</span>
+<span class="source-line-no">200</span><span id="line-200">                    CmdConfirm.addPending(player, "/plot setowner " + value, run);</span>
+<span class="source-line-no">201</span><span id="line-201">                } else {</span>
+<span class="source-line-no">202</span><span id="line-202">                    TaskManager.runTask(run);</span>
+<span class="source-line-no">203</span><span id="line-203">                }</span>
+<span class="source-line-no">204</span><span id="line-204">            });</span>
+<span class="source-line-no">205</span><span id="line-205">        };</span>
+<span class="source-line-no">206</span><span id="line-206"></span>
+<span class="source-line-no">207</span><span id="line-207">        if (value.length() == 36) {</span>
+<span class="source-line-no">208</span><span id="line-208">            try {</span>
+<span class="source-line-no">209</span><span id="line-209">                uuidConsumer.accept(UUID.fromString(value));</span>
+<span class="source-line-no">210</span><span id="line-210">            } catch (Exception ignored) {</span>
+<span class="source-line-no">211</span><span id="line-211">            }</span>
+<span class="source-line-no">212</span><span id="line-212">        } else {</span>
+<span class="source-line-no">213</span><span id="line-213">            PlotSquared.get().getImpromptuUUIDPipeline().getSingle(value, (uuid, throwable) -&gt; uuidConsumer.accept(uuid));</span>
+<span class="source-line-no">214</span><span id="line-214">        }</span>
+<span class="source-line-no">215</span><span id="line-215">        return true;</span>
+<span class="source-line-no">216</span><span id="line-216">    }</span>
+<span class="source-line-no">217</span><span id="line-217"></span>
+<span class="source-line-no">218</span><span id="line-218">    @Override</span>
+<span class="source-line-no">219</span><span id="line-219">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
+<span class="source-line-no">220</span><span id="line-220">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
+<span class="source-line-no">221</span><span id="line-221">    }</span>
+<span class="source-line-no">222</span><span id="line-222"></span>
+<span class="source-line-no">223</span><span id="line-223">}</span>
 
 
 

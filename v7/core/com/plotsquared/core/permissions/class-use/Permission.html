@@ -83,6 +83,31 @@ loadScripts(document, 'script');</script>
 the order they are declared.</div>
 </div>
 </div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">com.plotsquared.core.permissions</a> with parameters of type <a href="../Permission.html" title="enum class in com.plotsquared.core.permissions">Permission</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>default boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PermissionHolder.</span><code><a href="../PermissionHolder.html#hasPermission(com.plotsquared.core.permissions.Permission)" class="member-name-link">hasPermission</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../Permission.html" title="enum class in com.plotsquared.core.permissions">Permission</a>&nbsp;permission)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Check if the owner of the profile has a given (global) permission</div>
+</div>
+<div class="col-first odd-row-color"><code>default boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">PermissionHolder.</span><code><a href="../PermissionHolder.html#hasPermission(com.plotsquared.core.permissions.Permission,boolean)" class="member-name-link">hasPermission</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../Permission.html" title="enum class in com.plotsquared.core.permissions">Permission</a>&nbsp;permission,
+ boolean&nbsp;notify)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Checks if the owner of the profile has a permission, and optionally send the no permission message if applicable.</div>
+</div>
+<div class="col-first even-row-color"><code>default @org.checkerframework.checker.index.qual.NonNegative int</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PermissionHolder.</span><code><a href="../PermissionHolder.html#hasPermissionRange(com.plotsquared.core.permissions.Permission,int)" class="member-name-link">hasPermissionRange</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../Permission.html" title="enum class in com.plotsquared.core.permissions">Permission</a>&nbsp;stub,
+ @org.checkerframework.checker.index.qual.NonNegative int&nbsp;range)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Check the highest permission a PlotPlayer has within a specified range.<br>
+ - Excessively high values will lag<br>
+ - The default range that is checked is <a href="../../configuration/Settings.Limit.html#MAX_PLOTS"><code>Settings.Limit.MAX_PLOTS</code></a><br></div>
+</div>
+</div>
 </section>
 </li>
 <li>

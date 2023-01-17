@@ -47,293 +47,291 @@
 <span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.util.EventDispatcher;</span>
 <span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.util.InventoryUtil;</span>
 <span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.util.MathMan;</span>
-<span class="source-line-no">037</span><span id="line-37">import com.plotsquared.core.util.Permissions;</span>
-<span class="source-line-no">038</span><span id="line-38">import com.plotsquared.core.util.TabCompletions;</span>
-<span class="source-line-no">039</span><span id="line-39">import com.plotsquared.core.util.query.PlotQuery;</span>
-<span class="source-line-no">040</span><span id="line-40">import com.plotsquared.core.util.task.TaskManager;</span>
-<span class="source-line-no">041</span><span id="line-41">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">042</span><span id="line-42">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">043</span><span id="line-43">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">044</span><span id="line-44">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">045</span><span id="line-45"></span>
-<span class="source-line-no">046</span><span id="line-46">import java.util.Collection;</span>
-<span class="source-line-no">047</span><span id="line-47">import java.util.Collections;</span>
-<span class="source-line-no">048</span><span id="line-48">import java.util.HashMap;</span>
-<span class="source-line-no">049</span><span id="line-49">import java.util.LinkedList;</span>
-<span class="source-line-no">050</span><span id="line-50">import java.util.List;</span>
-<span class="source-line-no">051</span><span id="line-51">import java.util.Map.Entry;</span>
-<span class="source-line-no">052</span><span id="line-52">import java.util.UUID;</span>
-<span class="source-line-no">053</span><span id="line-53">import java.util.stream.Collectors;</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">@CommandDeclaration(command = "rate",</span>
-<span class="source-line-no">056</span><span id="line-56">        permission = "plots.rate",</span>
-<span class="source-line-no">057</span><span id="line-57">        usage = "/plot rate [# | next | purge]",</span>
-<span class="source-line-no">058</span><span id="line-58">        aliases = "rt",</span>
-<span class="source-line-no">059</span><span id="line-59">        category = CommandCategory.INFO,</span>
-<span class="source-line-no">060</span><span id="line-60">        requiredType = RequiredType.PLAYER)</span>
-<span class="source-line-no">061</span><span id="line-61">public class Rate extends SubCommand {</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    private final EventDispatcher eventDispatcher;</span>
-<span class="source-line-no">064</span><span id="line-64">    private final InventoryUtil inventoryUtil;</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    @Inject</span>
-<span class="source-line-no">067</span><span id="line-67">    public Rate(</span>
-<span class="source-line-no">068</span><span id="line-68">            final @NonNull EventDispatcher eventDispatcher,</span>
-<span class="source-line-no">069</span><span id="line-69">            final @NonNull InventoryUtil inventoryUtil</span>
-<span class="source-line-no">070</span><span id="line-70">    ) {</span>
-<span class="source-line-no">071</span><span id="line-71">        this.eventDispatcher = eventDispatcher;</span>
-<span class="source-line-no">072</span><span id="line-72">        this.inventoryUtil = inventoryUtil;</span>
-<span class="source-line-no">073</span><span id="line-73">    }</span>
-<span class="source-line-no">074</span><span id="line-74"></span>
-<span class="source-line-no">075</span><span id="line-75">    @Override</span>
-<span class="source-line-no">076</span><span id="line-76">    public boolean onCommand(final PlotPlayer&lt;?&gt; player, String[] args) {</span>
-<span class="source-line-no">077</span><span id="line-77">        if (args.length == 1) {</span>
-<span class="source-line-no">078</span><span id="line-78">            switch (args[0].toLowerCase()) {</span>
-<span class="source-line-no">079</span><span id="line-79">                case "next" -&gt; {</span>
-<span class="source-line-no">080</span><span id="line-80">                    final List&lt;Plot&gt; plots = PlotQuery.newQuery().whereBasePlot().asList();</span>
-<span class="source-line-no">081</span><span id="line-81">                    plots.sort((p1, p2) -&gt; {</span>
-<span class="source-line-no">082</span><span id="line-82">                        double v1 = 0;</span>
-<span class="source-line-no">083</span><span id="line-83">                        if (!p1.getRatings().isEmpty()) {</span>
-<span class="source-line-no">084</span><span id="line-84">                            for (Entry&lt;UUID, Rating&gt; entry : p1.getRatings().entrySet()) {</span>
-<span class="source-line-no">085</span><span id="line-85">                                v1 -= 11 - entry.getValue().getAverageRating();</span>
-<span class="source-line-no">086</span><span id="line-86">                            }</span>
-<span class="source-line-no">087</span><span id="line-87">                        }</span>
-<span class="source-line-no">088</span><span id="line-88">                        double v2 = 0;</span>
-<span class="source-line-no">089</span><span id="line-89">                        if (!p2.getRatings().isEmpty()) {</span>
-<span class="source-line-no">090</span><span id="line-90">                            for (Entry&lt;UUID, Rating&gt; entry : p2.getRatings().entrySet()) {</span>
-<span class="source-line-no">091</span><span id="line-91">                                v2 -= 11 - entry.getValue().getAverageRating();</span>
-<span class="source-line-no">092</span><span id="line-92">                            }</span>
-<span class="source-line-no">093</span><span id="line-93">                        }</span>
-<span class="source-line-no">094</span><span id="line-94">                        if (v1 == v2) {</span>
-<span class="source-line-no">095</span><span id="line-95">                            return -0;</span>
-<span class="source-line-no">096</span><span id="line-96">                        }</span>
-<span class="source-line-no">097</span><span id="line-97">                        return v2 &gt; v1 ? 1 : -1;</span>
-<span class="source-line-no">098</span><span id="line-98">                    });</span>
-<span class="source-line-no">099</span><span id="line-99">                    UUID uuid = player.getUUID();</span>
-<span class="source-line-no">100</span><span id="line-100">                    for (Plot p : plots) {</span>
-<span class="source-line-no">101</span><span id="line-101">                        if ((!Settings.Done.REQUIRED_FOR_RATINGS || DoneFlag.isDone(p)) &amp;&amp; p</span>
-<span class="source-line-no">102</span><span id="line-102">                                .isBasePlot() &amp;&amp; !p.getRatings().containsKey(uuid) &amp;&amp; !p</span>
-<span class="source-line-no">103</span><span id="line-103">                                .isAdded(uuid)) {</span>
-<span class="source-line-no">104</span><span id="line-104">                            p.teleportPlayer(player, TeleportCause.COMMAND_RATE, result -&gt; {</span>
-<span class="source-line-no">105</span><span id="line-105">                            });</span>
-<span class="source-line-no">106</span><span id="line-106">                            player.sendMessage(TranslatableCaption.of("tutorial.rate_this"));</span>
-<span class="source-line-no">107</span><span id="line-107">                            return true;</span>
-<span class="source-line-no">108</span><span id="line-108">                        }</span>
-<span class="source-line-no">109</span><span id="line-109">                    }</span>
-<span class="source-line-no">110</span><span id="line-110">                    player.sendMessage(TranslatableCaption.of("invalid.found_no_plots"));</span>
-<span class="source-line-no">111</span><span id="line-111">                    return false;</span>
-<span class="source-line-no">112</span><span id="line-112">                }</span>
-<span class="source-line-no">113</span><span id="line-113">                case "purge" -&gt; {</span>
-<span class="source-line-no">114</span><span id="line-114">                    final Plot plot = player.getCurrentPlot();</span>
-<span class="source-line-no">115</span><span id="line-115">                    if (plot == null) {</span>
-<span class="source-line-no">116</span><span id="line-116">                        player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">117</span><span id="line-117">                        return false;</span>
-<span class="source-line-no">118</span><span id="line-118">                    }</span>
-<span class="source-line-no">119</span><span id="line-119">                    if (!Permissions</span>
-<span class="source-line-no">120</span><span id="line-120">                            .hasPermission(player, Permission.PERMISSION_ADMIN_COMMAND_PURGE_RATINGS, true)) {</span>
-<span class="source-line-no">121</span><span id="line-121">                        return false;</span>
-<span class="source-line-no">122</span><span id="line-122">                    }</span>
-<span class="source-line-no">123</span><span id="line-123">                    plot.clearRatings();</span>
-<span class="source-line-no">124</span><span id="line-124">                    player.sendMessage(TranslatableCaption.of("ratings.ratings_purged"));</span>
-<span class="source-line-no">125</span><span id="line-125">                    return true;</span>
-<span class="source-line-no">126</span><span id="line-126">                }</span>
-<span class="source-line-no">127</span><span id="line-127">            }</span>
-<span class="source-line-no">128</span><span id="line-128">        }</span>
-<span class="source-line-no">129</span><span id="line-129">        final Plot plot = player.getCurrentPlot();</span>
-<span class="source-line-no">130</span><span id="line-130">        if (plot == null) {</span>
-<span class="source-line-no">131</span><span id="line-131">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">132</span><span id="line-132">            return false;</span>
-<span class="source-line-no">133</span><span id="line-133">        }</span>
-<span class="source-line-no">134</span><span id="line-134">        if (!plot.hasOwner()) {</span>
-<span class="source-line-no">135</span><span id="line-135">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_owned"));</span>
-<span class="source-line-no">136</span><span id="line-136">            return false;</span>
-<span class="source-line-no">137</span><span id="line-137">        }</span>
-<span class="source-line-no">138</span><span id="line-138">        if (plot.isOwner(player.getUUID())) {</span>
-<span class="source-line-no">139</span><span id="line-139">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_your_own"));</span>
-<span class="source-line-no">140</span><span id="line-140">            return false;</span>
-<span class="source-line-no">141</span><span id="line-141">        }</span>
-<span class="source-line-no">142</span><span id="line-142">        if (Settings.Done.REQUIRED_FOR_RATINGS &amp;&amp; !DoneFlag.isDone(plot)) {</span>
-<span class="source-line-no">143</span><span id="line-143">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_done"));</span>
-<span class="source-line-no">144</span><span id="line-144">            return false;</span>
-<span class="source-line-no">145</span><span id="line-145">        }</span>
-<span class="source-line-no">146</span><span id="line-146">        if (Settings.Ratings.CATEGORIES != null &amp;&amp; !Settings.Ratings.CATEGORIES.isEmpty()) {</span>
-<span class="source-line-no">147</span><span id="line-147">            final Runnable run = new Runnable() {</span>
-<span class="source-line-no">148</span><span id="line-148">                @Override</span>
-<span class="source-line-no">149</span><span id="line-149">                public void run() {</span>
-<span class="source-line-no">150</span><span id="line-150">                    if (plot.getRatings().containsKey(player.getUUID())) {</span>
-<span class="source-line-no">151</span><span id="line-151">                        player.sendMessage(</span>
-<span class="source-line-no">152</span><span id="line-152">                                TranslatableCaption.of("ratings.rating_already_exists"),</span>
-<span class="source-line-no">153</span><span id="line-153">                                TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">154</span><span id="line-154">                        );</span>
-<span class="source-line-no">155</span><span id="line-155">                        return;</span>
-<span class="source-line-no">156</span><span id="line-156">                    }</span>
-<span class="source-line-no">157</span><span id="line-157">                    final MutableInt index = new MutableInt(0);</span>
-<span class="source-line-no">158</span><span id="line-158">                    final MutableInt rating = new MutableInt(0);</span>
-<span class="source-line-no">159</span><span id="line-159">                    String title = Settings.Ratings.CATEGORIES.get(0);</span>
-<span class="source-line-no">160</span><span id="line-160">                    PlotInventory inventory = new PlotInventory(inventoryUtil, player, 1, title) {</span>
-<span class="source-line-no">161</span><span id="line-161">                        @Override</span>
-<span class="source-line-no">162</span><span id="line-162">                        public boolean onClick(int i) {</span>
-<span class="source-line-no">163</span><span id="line-163">                            rating.add((i + 1) * Math.pow(10, index.getValue()));</span>
-<span class="source-line-no">164</span><span id="line-164">                            index.increment();</span>
-<span class="source-line-no">165</span><span id="line-165">                            if (index.getValue() &gt;= Settings.Ratings.CATEGORIES.size()) {</span>
-<span class="source-line-no">166</span><span id="line-166">                                int rV = rating.getValue();</span>
-<span class="source-line-no">167</span><span id="line-167">                                PlotRateEvent event = Rate.this.eventDispatcher</span>
-<span class="source-line-no">168</span><span id="line-168">                                        .callRating(this.getPlayer(), plot, new Rating(rV));</span>
-<span class="source-line-no">169</span><span id="line-169">                                if (event.getRating() != null) {</span>
-<span class="source-line-no">170</span><span id="line-170">                                    plot.addRating(this.getPlayer().getUUID(), event.getRating());</span>
-<span class="source-line-no">171</span><span id="line-171">                                    getPlayer().sendMessage(</span>
-<span class="source-line-no">172</span><span id="line-172">                                            TranslatableCaption.of("ratings.rating_applied"),</span>
-<span class="source-line-no">173</span><span id="line-173">                                            TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">174</span><span id="line-174">                                    );</span>
-<span class="source-line-no">175</span><span id="line-175">                                }</span>
-<span class="source-line-no">176</span><span id="line-176">                                return false;</span>
-<span class="source-line-no">177</span><span id="line-177">                            }</span>
-<span class="source-line-no">178</span><span id="line-178">                            setTitle(Settings.Ratings.CATEGORIES.get(index.getValue()));</span>
-<span class="source-line-no">179</span><span id="line-179">                            return true;</span>
-<span class="source-line-no">180</span><span id="line-180">                        }</span>
-<span class="source-line-no">181</span><span id="line-181">                    };</span>
-<span class="source-line-no">182</span><span id="line-182">                    inventory.setItem(0, new PlotItemStack(Settings.Ratings.BLOCK_0, 1,</span>
-<span class="source-line-no">183</span><span id="line-183">                            TranslatableCaption.of("ratings.0-8").getComponent(player)</span>
-<span class="source-line-no">184</span><span id="line-184">                    ));</span>
-<span class="source-line-no">185</span><span id="line-185">                    inventory.setItem(1, new PlotItemStack(Settings.Ratings.BLOCK_1, 1,</span>
-<span class="source-line-no">186</span><span id="line-186">                            TranslatableCaption.of("ratings.1-8").getComponent(player)</span>
-<span class="source-line-no">187</span><span id="line-187">                    ));</span>
-<span class="source-line-no">188</span><span id="line-188">                    inventory.setItem(2, new PlotItemStack(Settings.Ratings.BLOCK_2, 2,</span>
-<span class="source-line-no">189</span><span id="line-189">                            TranslatableCaption.of("ratings.2-8").getComponent(player)</span>
-<span class="source-line-no">190</span><span id="line-190">                    ));</span>
-<span class="source-line-no">191</span><span id="line-191">                    inventory.setItem(3, new PlotItemStack(Settings.Ratings.BLOCK_3, 3,</span>
-<span class="source-line-no">192</span><span id="line-192">                            TranslatableCaption.of("ratings.3-8").getComponent(player)</span>
-<span class="source-line-no">193</span><span id="line-193">                    ));</span>
-<span class="source-line-no">194</span><span id="line-194">                    inventory.setItem(4, new PlotItemStack(Settings.Ratings.BLOCK_4, 4,</span>
-<span class="source-line-no">195</span><span id="line-195">                            TranslatableCaption.of("ratings.4-8").getComponent(player)</span>
-<span class="source-line-no">196</span><span id="line-196">                    ));</span>
-<span class="source-line-no">197</span><span id="line-197">                    inventory.setItem(5, new PlotItemStack(Settings.Ratings.BLOCK_5, 5,</span>
-<span class="source-line-no">198</span><span id="line-198">                            TranslatableCaption.of("ratings.5-8").getComponent(player)</span>
-<span class="source-line-no">199</span><span id="line-199">                    ));</span>
-<span class="source-line-no">200</span><span id="line-200">                    inventory.setItem(6, new PlotItemStack(Settings.Ratings.BLOCK_6, 6,</span>
-<span class="source-line-no">201</span><span id="line-201">                            TranslatableCaption.of("ratings.6-8").getComponent(player)</span>
-<span class="source-line-no">202</span><span id="line-202">                    ));</span>
-<span class="source-line-no">203</span><span id="line-203">                    inventory.setItem(7, new PlotItemStack(Settings.Ratings.BLOCK_7, 7,</span>
-<span class="source-line-no">204</span><span id="line-204">                            TranslatableCaption.of("ratings.7-8").getComponent(player)</span>
-<span class="source-line-no">205</span><span id="line-205">                    ));</span>
-<span class="source-line-no">206</span><span id="line-206">                    inventory.setItem(8, new PlotItemStack(Settings.Ratings.BLOCK_8, 8,</span>
-<span class="source-line-no">207</span><span id="line-207">                            TranslatableCaption.of("ratings.8-8").getComponent(player)</span>
-<span class="source-line-no">208</span><span id="line-208">                    ));</span>
-<span class="source-line-no">209</span><span id="line-209">                    inventory.openInventory();</span>
-<span class="source-line-no">210</span><span id="line-210">                }</span>
-<span class="source-line-no">211</span><span id="line-211">            };</span>
-<span class="source-line-no">212</span><span id="line-212">            if (plot.getSettings().getRatings() == null) {</span>
-<span class="source-line-no">213</span><span id="line-213">                if (!Settings.Enabled_Components.RATING_CACHE) {</span>
-<span class="source-line-no">214</span><span id="line-214">                    TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">215</span><span id="line-215">                        plot.getSettings().setRatings(DBFunc.getRatings(plot));</span>
-<span class="source-line-no">216</span><span id="line-216">                        run.run();</span>
-<span class="source-line-no">217</span><span id="line-217">                    });</span>
-<span class="source-line-no">218</span><span id="line-218">                    return true;</span>
-<span class="source-line-no">219</span><span id="line-219">                }</span>
-<span class="source-line-no">220</span><span id="line-220">                plot.getSettings().setRatings(new HashMap&lt;&gt;());</span>
-<span class="source-line-no">221</span><span id="line-221">            }</span>
-<span class="source-line-no">222</span><span id="line-222">            run.run();</span>
-<span class="source-line-no">223</span><span id="line-223">            return true;</span>
-<span class="source-line-no">224</span><span id="line-224">        }</span>
-<span class="source-line-no">225</span><span id="line-225">        if (args.length &lt; 1) {</span>
-<span class="source-line-no">226</span><span id="line-226">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_valid"));</span>
-<span class="source-line-no">227</span><span id="line-227">            return true;</span>
-<span class="source-line-no">228</span><span id="line-228">        }</span>
-<span class="source-line-no">229</span><span id="line-229">        String arg = args[0];</span>
-<span class="source-line-no">230</span><span id="line-230">        final int rating;</span>
-<span class="source-line-no">231</span><span id="line-231">        if (MathMan.isInteger(arg) &amp;&amp; arg.length() &lt; 3 &amp;&amp; !arg.isEmpty()) {</span>
-<span class="source-line-no">232</span><span id="line-232">            rating = Integer.parseInt(arg);</span>
-<span class="source-line-no">233</span><span id="line-233">            if (rating &gt; 10 || rating &lt; 1) {</span>
-<span class="source-line-no">234</span><span id="line-234">                player.sendMessage(TranslatableCaption.of("ratings.rating_not_valid"));</span>
-<span class="source-line-no">235</span><span id="line-235">                return false;</span>
-<span class="source-line-no">236</span><span id="line-236">            }</span>
-<span class="source-line-no">237</span><span id="line-237">        } else {</span>
-<span class="source-line-no">238</span><span id="line-238">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_valid"));</span>
-<span class="source-line-no">239</span><span id="line-239">            return false;</span>
-<span class="source-line-no">240</span><span id="line-240">        }</span>
-<span class="source-line-no">241</span><span id="line-241">        final UUID uuid = player.getUUID();</span>
-<span class="source-line-no">242</span><span id="line-242">        final Runnable run = () -&gt; {</span>
-<span class="source-line-no">243</span><span id="line-243">            if (plot.getRatings().containsKey(uuid)) {</span>
-<span class="source-line-no">244</span><span id="line-244">                player.sendMessage(</span>
-<span class="source-line-no">245</span><span id="line-245">                        TranslatableCaption.of("ratings.rating_already_exists"),</span>
-<span class="source-line-no">246</span><span id="line-246">                        TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">247</span><span id="line-247">                );</span>
-<span class="source-line-no">248</span><span id="line-248">                return;</span>
-<span class="source-line-no">249</span><span id="line-249">            }</span>
-<span class="source-line-no">250</span><span id="line-250">            PlotRateEvent event =</span>
-<span class="source-line-no">251</span><span id="line-251">                    this.eventDispatcher.callRating(player, plot, new Rating(rating));</span>
-<span class="source-line-no">252</span><span id="line-252">            if (event.getRating() != null) {</span>
-<span class="source-line-no">253</span><span id="line-253">                plot.addRating(uuid, event.getRating());</span>
-<span class="source-line-no">254</span><span id="line-254">                player.sendMessage(</span>
-<span class="source-line-no">255</span><span id="line-255">                        TranslatableCaption.of("ratings.rating_applied"),</span>
-<span class="source-line-no">256</span><span id="line-256">                        TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">257</span><span id="line-257">                );</span>
-<span class="source-line-no">258</span><span id="line-258">            }</span>
-<span class="source-line-no">259</span><span id="line-259">        };</span>
-<span class="source-line-no">260</span><span id="line-260">        if (plot.getSettings().getRatings() == null) {</span>
-<span class="source-line-no">261</span><span id="line-261">            if (!Settings.Enabled_Components.RATING_CACHE) {</span>
-<span class="source-line-no">262</span><span id="line-262">                TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">263</span><span id="line-263">                    plot.getSettings().setRatings(DBFunc.getRatings(plot));</span>
-<span class="source-line-no">264</span><span id="line-264">                    run.run();</span>
-<span class="source-line-no">265</span><span id="line-265">                });</span>
-<span class="source-line-no">266</span><span id="line-266">                return true;</span>
-<span class="source-line-no">267</span><span id="line-267">            }</span>
-<span class="source-line-no">268</span><span id="line-268">            plot.getSettings().setRatings(new HashMap&lt;&gt;());</span>
-<span class="source-line-no">269</span><span id="line-269">        }</span>
-<span class="source-line-no">270</span><span id="line-270">        run.run();</span>
-<span class="source-line-no">271</span><span id="line-271">        return true;</span>
-<span class="source-line-no">272</span><span id="line-272">    }</span>
-<span class="source-line-no">273</span><span id="line-273"></span>
-<span class="source-line-no">274</span><span id="line-274">    @Override</span>
-<span class="source-line-no">275</span><span id="line-275">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
-<span class="source-line-no">276</span><span id="line-276">        if (args.length == 1) {</span>
-<span class="source-line-no">277</span><span id="line-277">            final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
-<span class="source-line-no">278</span><span id="line-278">            if (Permissions.hasPermission(player, Permission.PERMISSION_RATE)) {</span>
-<span class="source-line-no">279</span><span id="line-279">                completions.add("1 - 10");</span>
-<span class="source-line-no">280</span><span id="line-280">            }</span>
-<span class="source-line-no">281</span><span id="line-281">            if (Permissions.hasPermission(player, Permission.PERMISSION_ADMIN_COMMAND_PURGE_RATINGS)) {</span>
-<span class="source-line-no">282</span><span id="line-282">                completions.add("purge");</span>
-<span class="source-line-no">283</span><span id="line-283">            }</span>
-<span class="source-line-no">284</span><span id="line-284">            final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
-<span class="source-line-no">285</span><span id="line-285">                            .toLowerCase()</span>
-<span class="source-line-no">286</span><span id="line-286">                            .startsWith(args[0].toLowerCase()))</span>
-<span class="source-line-no">287</span><span id="line-287">                    .map(completion -&gt; new Command(null, true, completion, "", RequiredType.PLAYER, CommandCategory.INFO) {</span>
-<span class="source-line-no">288</span><span id="line-288">                    }).collect(Collectors.toCollection(LinkedList::new));</span>
-<span class="source-line-no">289</span><span id="line-289">            if (Permissions.hasPermission(player, Permission.PERMISSION_RATE) &amp;&amp; args[0].length() &gt; 0) {</span>
-<span class="source-line-no">290</span><span id="line-290">                commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
-<span class="source-line-no">291</span><span id="line-291">            }</span>
-<span class="source-line-no">292</span><span id="line-292">            return commands;</span>
-<span class="source-line-no">293</span><span id="line-293">        }</span>
-<span class="source-line-no">294</span><span id="line-294">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
-<span class="source-line-no">295</span><span id="line-295">    }</span>
+<span class="source-line-no">037</span><span id="line-37">import com.plotsquared.core.util.TabCompletions;</span>
+<span class="source-line-no">038</span><span id="line-38">import com.plotsquared.core.util.query.PlotQuery;</span>
+<span class="source-line-no">039</span><span id="line-39">import com.plotsquared.core.util.task.TaskManager;</span>
+<span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.text.Component;</span>
+<span class="source-line-no">041</span><span id="line-41">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">042</span><span id="line-42">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
+<span class="source-line-no">043</span><span id="line-43">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">import java.util.Collection;</span>
+<span class="source-line-no">046</span><span id="line-46">import java.util.Collections;</span>
+<span class="source-line-no">047</span><span id="line-47">import java.util.HashMap;</span>
+<span class="source-line-no">048</span><span id="line-48">import java.util.LinkedList;</span>
+<span class="source-line-no">049</span><span id="line-49">import java.util.List;</span>
+<span class="source-line-no">050</span><span id="line-50">import java.util.Map.Entry;</span>
+<span class="source-line-no">051</span><span id="line-51">import java.util.UUID;</span>
+<span class="source-line-no">052</span><span id="line-52">import java.util.stream.Collectors;</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">@CommandDeclaration(command = "rate",</span>
+<span class="source-line-no">055</span><span id="line-55">        permission = "plots.rate",</span>
+<span class="source-line-no">056</span><span id="line-56">        usage = "/plot rate [# | next | purge]",</span>
+<span class="source-line-no">057</span><span id="line-57">        aliases = "rt",</span>
+<span class="source-line-no">058</span><span id="line-58">        category = CommandCategory.INFO,</span>
+<span class="source-line-no">059</span><span id="line-59">        requiredType = RequiredType.PLAYER)</span>
+<span class="source-line-no">060</span><span id="line-60">public class Rate extends SubCommand {</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    private final EventDispatcher eventDispatcher;</span>
+<span class="source-line-no">063</span><span id="line-63">    private final InventoryUtil inventoryUtil;</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    @Inject</span>
+<span class="source-line-no">066</span><span id="line-66">    public Rate(</span>
+<span class="source-line-no">067</span><span id="line-67">            final @NonNull EventDispatcher eventDispatcher,</span>
+<span class="source-line-no">068</span><span id="line-68">            final @NonNull InventoryUtil inventoryUtil</span>
+<span class="source-line-no">069</span><span id="line-69">    ) {</span>
+<span class="source-line-no">070</span><span id="line-70">        this.eventDispatcher = eventDispatcher;</span>
+<span class="source-line-no">071</span><span id="line-71">        this.inventoryUtil = inventoryUtil;</span>
+<span class="source-line-no">072</span><span id="line-72">    }</span>
+<span class="source-line-no">073</span><span id="line-73"></span>
+<span class="source-line-no">074</span><span id="line-74">    @Override</span>
+<span class="source-line-no">075</span><span id="line-75">    public boolean onCommand(final PlotPlayer&lt;?&gt; player, String[] args) {</span>
+<span class="source-line-no">076</span><span id="line-76">        if (args.length == 1) {</span>
+<span class="source-line-no">077</span><span id="line-77">            switch (args[0].toLowerCase()) {</span>
+<span class="source-line-no">078</span><span id="line-78">                case "next" -&gt; {</span>
+<span class="source-line-no">079</span><span id="line-79">                    final List&lt;Plot&gt; plots = PlotQuery.newQuery().whereBasePlot().asList();</span>
+<span class="source-line-no">080</span><span id="line-80">                    plots.sort((p1, p2) -&gt; {</span>
+<span class="source-line-no">081</span><span id="line-81">                        double v1 = 0;</span>
+<span class="source-line-no">082</span><span id="line-82">                        if (!p1.getRatings().isEmpty()) {</span>
+<span class="source-line-no">083</span><span id="line-83">                            for (Entry&lt;UUID, Rating&gt; entry : p1.getRatings().entrySet()) {</span>
+<span class="source-line-no">084</span><span id="line-84">                                v1 -= 11 - entry.getValue().getAverageRating();</span>
+<span class="source-line-no">085</span><span id="line-85">                            }</span>
+<span class="source-line-no">086</span><span id="line-86">                        }</span>
+<span class="source-line-no">087</span><span id="line-87">                        double v2 = 0;</span>
+<span class="source-line-no">088</span><span id="line-88">                        if (!p2.getRatings().isEmpty()) {</span>
+<span class="source-line-no">089</span><span id="line-89">                            for (Entry&lt;UUID, Rating&gt; entry : p2.getRatings().entrySet()) {</span>
+<span class="source-line-no">090</span><span id="line-90">                                v2 -= 11 - entry.getValue().getAverageRating();</span>
+<span class="source-line-no">091</span><span id="line-91">                            }</span>
+<span class="source-line-no">092</span><span id="line-92">                        }</span>
+<span class="source-line-no">093</span><span id="line-93">                        if (v1 == v2) {</span>
+<span class="source-line-no">094</span><span id="line-94">                            return -0;</span>
+<span class="source-line-no">095</span><span id="line-95">                        }</span>
+<span class="source-line-no">096</span><span id="line-96">                        return v2 &gt; v1 ? 1 : -1;</span>
+<span class="source-line-no">097</span><span id="line-97">                    });</span>
+<span class="source-line-no">098</span><span id="line-98">                    UUID uuid = player.getUUID();</span>
+<span class="source-line-no">099</span><span id="line-99">                    for (Plot p : plots) {</span>
+<span class="source-line-no">100</span><span id="line-100">                        if ((!Settings.Done.REQUIRED_FOR_RATINGS || DoneFlag.isDone(p)) &amp;&amp; p</span>
+<span class="source-line-no">101</span><span id="line-101">                                .isBasePlot() &amp;&amp; !p.getRatings().containsKey(uuid) &amp;&amp; !p</span>
+<span class="source-line-no">102</span><span id="line-102">                                .isAdded(uuid)) {</span>
+<span class="source-line-no">103</span><span id="line-103">                            p.teleportPlayer(player, TeleportCause.COMMAND_RATE, result -&gt; {</span>
+<span class="source-line-no">104</span><span id="line-104">                            });</span>
+<span class="source-line-no">105</span><span id="line-105">                            player.sendMessage(TranslatableCaption.of("tutorial.rate_this"));</span>
+<span class="source-line-no">106</span><span id="line-106">                            return true;</span>
+<span class="source-line-no">107</span><span id="line-107">                        }</span>
+<span class="source-line-no">108</span><span id="line-108">                    }</span>
+<span class="source-line-no">109</span><span id="line-109">                    player.sendMessage(TranslatableCaption.of("invalid.found_no_plots"));</span>
+<span class="source-line-no">110</span><span id="line-110">                    return false;</span>
+<span class="source-line-no">111</span><span id="line-111">                }</span>
+<span class="source-line-no">112</span><span id="line-112">                case "purge" -&gt; {</span>
+<span class="source-line-no">113</span><span id="line-113">                    final Plot plot = player.getCurrentPlot();</span>
+<span class="source-line-no">114</span><span id="line-114">                    if (plot == null) {</span>
+<span class="source-line-no">115</span><span id="line-115">                        player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
+<span class="source-line-no">116</span><span id="line-116">                        return false;</span>
+<span class="source-line-no">117</span><span id="line-117">                    }</span>
+<span class="source-line-no">118</span><span id="line-118">                    if (!player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_PURGE_RATINGS, true)) {</span>
+<span class="source-line-no">119</span><span id="line-119">                        return false;</span>
+<span class="source-line-no">120</span><span id="line-120">                    }</span>
+<span class="source-line-no">121</span><span id="line-121">                    plot.clearRatings();</span>
+<span class="source-line-no">122</span><span id="line-122">                    player.sendMessage(TranslatableCaption.of("ratings.ratings_purged"));</span>
+<span class="source-line-no">123</span><span id="line-123">                    return true;</span>
+<span class="source-line-no">124</span><span id="line-124">                }</span>
+<span class="source-line-no">125</span><span id="line-125">            }</span>
+<span class="source-line-no">126</span><span id="line-126">        }</span>
+<span class="source-line-no">127</span><span id="line-127">        final Plot plot = player.getCurrentPlot();</span>
+<span class="source-line-no">128</span><span id="line-128">        if (plot == null) {</span>
+<span class="source-line-no">129</span><span id="line-129">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
+<span class="source-line-no">130</span><span id="line-130">            return false;</span>
+<span class="source-line-no">131</span><span id="line-131">        }</span>
+<span class="source-line-no">132</span><span id="line-132">        if (!plot.hasOwner()) {</span>
+<span class="source-line-no">133</span><span id="line-133">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_owned"));</span>
+<span class="source-line-no">134</span><span id="line-134">            return false;</span>
+<span class="source-line-no">135</span><span id="line-135">        }</span>
+<span class="source-line-no">136</span><span id="line-136">        if (plot.isOwner(player.getUUID())) {</span>
+<span class="source-line-no">137</span><span id="line-137">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_your_own"));</span>
+<span class="source-line-no">138</span><span id="line-138">            return false;</span>
+<span class="source-line-no">139</span><span id="line-139">        }</span>
+<span class="source-line-no">140</span><span id="line-140">        if (Settings.Done.REQUIRED_FOR_RATINGS &amp;&amp; !DoneFlag.isDone(plot)) {</span>
+<span class="source-line-no">141</span><span id="line-141">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_done"));</span>
+<span class="source-line-no">142</span><span id="line-142">            return false;</span>
+<span class="source-line-no">143</span><span id="line-143">        }</span>
+<span class="source-line-no">144</span><span id="line-144">        if (Settings.Ratings.CATEGORIES != null &amp;&amp; !Settings.Ratings.CATEGORIES.isEmpty()) {</span>
+<span class="source-line-no">145</span><span id="line-145">            final Runnable run = new Runnable() {</span>
+<span class="source-line-no">146</span><span id="line-146">                @Override</span>
+<span class="source-line-no">147</span><span id="line-147">                public void run() {</span>
+<span class="source-line-no">148</span><span id="line-148">                    if (plot.getRatings().containsKey(player.getUUID())) {</span>
+<span class="source-line-no">149</span><span id="line-149">                        player.sendMessage(</span>
+<span class="source-line-no">150</span><span id="line-150">                                TranslatableCaption.of("ratings.rating_already_exists"),</span>
+<span class="source-line-no">151</span><span id="line-151">                                TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">152</span><span id="line-152">                        );</span>
+<span class="source-line-no">153</span><span id="line-153">                        return;</span>
+<span class="source-line-no">154</span><span id="line-154">                    }</span>
+<span class="source-line-no">155</span><span id="line-155">                    final MutableInt index = new MutableInt(0);</span>
+<span class="source-line-no">156</span><span id="line-156">                    final MutableInt rating = new MutableInt(0);</span>
+<span class="source-line-no">157</span><span id="line-157">                    String title = Settings.Ratings.CATEGORIES.get(0);</span>
+<span class="source-line-no">158</span><span id="line-158">                    PlotInventory inventory = new PlotInventory(inventoryUtil, player, 1, title) {</span>
+<span class="source-line-no">159</span><span id="line-159">                        @Override</span>
+<span class="source-line-no">160</span><span id="line-160">                        public boolean onClick(int i) {</span>
+<span class="source-line-no">161</span><span id="line-161">                            rating.add((i + 1) * Math.pow(10, index.getValue()));</span>
+<span class="source-line-no">162</span><span id="line-162">                            index.increment();</span>
+<span class="source-line-no">163</span><span id="line-163">                            if (index.getValue() &gt;= Settings.Ratings.CATEGORIES.size()) {</span>
+<span class="source-line-no">164</span><span id="line-164">                                int rV = rating.getValue();</span>
+<span class="source-line-no">165</span><span id="line-165">                                PlotRateEvent event = Rate.this.eventDispatcher</span>
+<span class="source-line-no">166</span><span id="line-166">                                        .callRating(this.getPlayer(), plot, new Rating(rV));</span>
+<span class="source-line-no">167</span><span id="line-167">                                if (event.getRating() != null) {</span>
+<span class="source-line-no">168</span><span id="line-168">                                    plot.addRating(this.getPlayer().getUUID(), event.getRating());</span>
+<span class="source-line-no">169</span><span id="line-169">                                    getPlayer().sendMessage(</span>
+<span class="source-line-no">170</span><span id="line-170">                                            TranslatableCaption.of("ratings.rating_applied"),</span>
+<span class="source-line-no">171</span><span id="line-171">                                            TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">172</span><span id="line-172">                                    );</span>
+<span class="source-line-no">173</span><span id="line-173">                                }</span>
+<span class="source-line-no">174</span><span id="line-174">                                return false;</span>
+<span class="source-line-no">175</span><span id="line-175">                            }</span>
+<span class="source-line-no">176</span><span id="line-176">                            setTitle(Settings.Ratings.CATEGORIES.get(index.getValue()));</span>
+<span class="source-line-no">177</span><span id="line-177">                            return true;</span>
+<span class="source-line-no">178</span><span id="line-178">                        }</span>
+<span class="source-line-no">179</span><span id="line-179">                    };</span>
+<span class="source-line-no">180</span><span id="line-180">                    inventory.setItem(0, new PlotItemStack(Settings.Ratings.BLOCK_0, 1,</span>
+<span class="source-line-no">181</span><span id="line-181">                            TranslatableCaption.of("ratings.0-8").getComponent(player)</span>
+<span class="source-line-no">182</span><span id="line-182">                    ));</span>
+<span class="source-line-no">183</span><span id="line-183">                    inventory.setItem(1, new PlotItemStack(Settings.Ratings.BLOCK_1, 1,</span>
+<span class="source-line-no">184</span><span id="line-184">                            TranslatableCaption.of("ratings.1-8").getComponent(player)</span>
+<span class="source-line-no">185</span><span id="line-185">                    ));</span>
+<span class="source-line-no">186</span><span id="line-186">                    inventory.setItem(2, new PlotItemStack(Settings.Ratings.BLOCK_2, 2,</span>
+<span class="source-line-no">187</span><span id="line-187">                            TranslatableCaption.of("ratings.2-8").getComponent(player)</span>
+<span class="source-line-no">188</span><span id="line-188">                    ));</span>
+<span class="source-line-no">189</span><span id="line-189">                    inventory.setItem(3, new PlotItemStack(Settings.Ratings.BLOCK_3, 3,</span>
+<span class="source-line-no">190</span><span id="line-190">                            TranslatableCaption.of("ratings.3-8").getComponent(player)</span>
+<span class="source-line-no">191</span><span id="line-191">                    ));</span>
+<span class="source-line-no">192</span><span id="line-192">                    inventory.setItem(4, new PlotItemStack(Settings.Ratings.BLOCK_4, 4,</span>
+<span class="source-line-no">193</span><span id="line-193">                            TranslatableCaption.of("ratings.4-8").getComponent(player)</span>
+<span class="source-line-no">194</span><span id="line-194">                    ));</span>
+<span class="source-line-no">195</span><span id="line-195">                    inventory.setItem(5, new PlotItemStack(Settings.Ratings.BLOCK_5, 5,</span>
+<span class="source-line-no">196</span><span id="line-196">                            TranslatableCaption.of("ratings.5-8").getComponent(player)</span>
+<span class="source-line-no">197</span><span id="line-197">                    ));</span>
+<span class="source-line-no">198</span><span id="line-198">                    inventory.setItem(6, new PlotItemStack(Settings.Ratings.BLOCK_6, 6,</span>
+<span class="source-line-no">199</span><span id="line-199">                            TranslatableCaption.of("ratings.6-8").getComponent(player)</span>
+<span class="source-line-no">200</span><span id="line-200">                    ));</span>
+<span class="source-line-no">201</span><span id="line-201">                    inventory.setItem(7, new PlotItemStack(Settings.Ratings.BLOCK_7, 7,</span>
+<span class="source-line-no">202</span><span id="line-202">                            TranslatableCaption.of("ratings.7-8").getComponent(player)</span>
+<span class="source-line-no">203</span><span id="line-203">                    ));</span>
+<span class="source-line-no">204</span><span id="line-204">                    inventory.setItem(8, new PlotItemStack(Settings.Ratings.BLOCK_8, 8,</span>
+<span class="source-line-no">205</span><span id="line-205">                            TranslatableCaption.of("ratings.8-8").getComponent(player)</span>
+<span class="source-line-no">206</span><span id="line-206">                    ));</span>
+<span class="source-line-no">207</span><span id="line-207">                    inventory.openInventory();</span>
+<span class="source-line-no">208</span><span id="line-208">                }</span>
+<span class="source-line-no">209</span><span id="line-209">            };</span>
+<span class="source-line-no">210</span><span id="line-210">            if (plot.getSettings().getRatings() == null) {</span>
+<span class="source-line-no">211</span><span id="line-211">                if (!Settings.Enabled_Components.RATING_CACHE) {</span>
+<span class="source-line-no">212</span><span id="line-212">                    TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">213</span><span id="line-213">                        plot.getSettings().setRatings(DBFunc.getRatings(plot));</span>
+<span class="source-line-no">214</span><span id="line-214">                        run.run();</span>
+<span class="source-line-no">215</span><span id="line-215">                    });</span>
+<span class="source-line-no">216</span><span id="line-216">                    return true;</span>
+<span class="source-line-no">217</span><span id="line-217">                }</span>
+<span class="source-line-no">218</span><span id="line-218">                plot.getSettings().setRatings(new HashMap&lt;&gt;());</span>
+<span class="source-line-no">219</span><span id="line-219">            }</span>
+<span class="source-line-no">220</span><span id="line-220">            run.run();</span>
+<span class="source-line-no">221</span><span id="line-221">            return true;</span>
+<span class="source-line-no">222</span><span id="line-222">        }</span>
+<span class="source-line-no">223</span><span id="line-223">        if (args.length &lt; 1) {</span>
+<span class="source-line-no">224</span><span id="line-224">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_valid"));</span>
+<span class="source-line-no">225</span><span id="line-225">            return true;</span>
+<span class="source-line-no">226</span><span id="line-226">        }</span>
+<span class="source-line-no">227</span><span id="line-227">        String arg = args[0];</span>
+<span class="source-line-no">228</span><span id="line-228">        final int rating;</span>
+<span class="source-line-no">229</span><span id="line-229">        if (MathMan.isInteger(arg) &amp;&amp; arg.length() &lt; 3 &amp;&amp; !arg.isEmpty()) {</span>
+<span class="source-line-no">230</span><span id="line-230">            rating = Integer.parseInt(arg);</span>
+<span class="source-line-no">231</span><span id="line-231">            if (rating &gt; 10 || rating &lt; 1) {</span>
+<span class="source-line-no">232</span><span id="line-232">                player.sendMessage(TranslatableCaption.of("ratings.rating_not_valid"));</span>
+<span class="source-line-no">233</span><span id="line-233">                return false;</span>
+<span class="source-line-no">234</span><span id="line-234">            }</span>
+<span class="source-line-no">235</span><span id="line-235">        } else {</span>
+<span class="source-line-no">236</span><span id="line-236">            player.sendMessage(TranslatableCaption.of("ratings.rating_not_valid"));</span>
+<span class="source-line-no">237</span><span id="line-237">            return false;</span>
+<span class="source-line-no">238</span><span id="line-238">        }</span>
+<span class="source-line-no">239</span><span id="line-239">        final UUID uuid = player.getUUID();</span>
+<span class="source-line-no">240</span><span id="line-240">        final Runnable run = () -&gt; {</span>
+<span class="source-line-no">241</span><span id="line-241">            if (plot.getRatings().containsKey(uuid)) {</span>
+<span class="source-line-no">242</span><span id="line-242">                player.sendMessage(</span>
+<span class="source-line-no">243</span><span id="line-243">                        TranslatableCaption.of("ratings.rating_already_exists"),</span>
+<span class="source-line-no">244</span><span id="line-244">                        TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">245</span><span id="line-245">                );</span>
+<span class="source-line-no">246</span><span id="line-246">                return;</span>
+<span class="source-line-no">247</span><span id="line-247">            }</span>
+<span class="source-line-no">248</span><span id="line-248">            PlotRateEvent event =</span>
+<span class="source-line-no">249</span><span id="line-249">                    this.eventDispatcher.callRating(player, plot, new Rating(rating));</span>
+<span class="source-line-no">250</span><span id="line-250">            if (event.getRating() != null) {</span>
+<span class="source-line-no">251</span><span id="line-251">                plot.addRating(uuid, event.getRating());</span>
+<span class="source-line-no">252</span><span id="line-252">                player.sendMessage(</span>
+<span class="source-line-no">253</span><span id="line-253">                        TranslatableCaption.of("ratings.rating_applied"),</span>
+<span class="source-line-no">254</span><span id="line-254">                        TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">255</span><span id="line-255">                );</span>
+<span class="source-line-no">256</span><span id="line-256">            }</span>
+<span class="source-line-no">257</span><span id="line-257">        };</span>
+<span class="source-line-no">258</span><span id="line-258">        if (plot.getSettings().getRatings() == null) {</span>
+<span class="source-line-no">259</span><span id="line-259">            if (!Settings.Enabled_Components.RATING_CACHE) {</span>
+<span class="source-line-no">260</span><span id="line-260">                TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">261</span><span id="line-261">                    plot.getSettings().setRatings(DBFunc.getRatings(plot));</span>
+<span class="source-line-no">262</span><span id="line-262">                    run.run();</span>
+<span class="source-line-no">263</span><span id="line-263">                });</span>
+<span class="source-line-no">264</span><span id="line-264">                return true;</span>
+<span class="source-line-no">265</span><span id="line-265">            }</span>
+<span class="source-line-no">266</span><span id="line-266">            plot.getSettings().setRatings(new HashMap&lt;&gt;());</span>
+<span class="source-line-no">267</span><span id="line-267">        }</span>
+<span class="source-line-no">268</span><span id="line-268">        run.run();</span>
+<span class="source-line-no">269</span><span id="line-269">        return true;</span>
+<span class="source-line-no">270</span><span id="line-270">    }</span>
+<span class="source-line-no">271</span><span id="line-271"></span>
+<span class="source-line-no">272</span><span id="line-272">    @Override</span>
+<span class="source-line-no">273</span><span id="line-273">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
+<span class="source-line-no">274</span><span id="line-274">        if (args.length == 1) {</span>
+<span class="source-line-no">275</span><span id="line-275">            final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
+<span class="source-line-no">276</span><span id="line-276">            if (player.hasPermission(Permission.PERMISSION_RATE)) {</span>
+<span class="source-line-no">277</span><span id="line-277">                completions.add("1 - 10");</span>
+<span class="source-line-no">278</span><span id="line-278">            }</span>
+<span class="source-line-no">279</span><span id="line-279">            if (player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_PURGE_RATINGS)) {</span>
+<span class="source-line-no">280</span><span id="line-280">                completions.add("purge");</span>
+<span class="source-line-no">281</span><span id="line-281">            }</span>
+<span class="source-line-no">282</span><span id="line-282">            final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
+<span class="source-line-no">283</span><span id="line-283">                            .toLowerCase()</span>
+<span class="source-line-no">284</span><span id="line-284">                            .startsWith(args[0].toLowerCase()))</span>
+<span class="source-line-no">285</span><span id="line-285">                    .map(completion -&gt; new Command(null, true, completion, "", RequiredType.PLAYER, CommandCategory.INFO) {</span>
+<span class="source-line-no">286</span><span id="line-286">                    }).collect(Collectors.toCollection(LinkedList::new));</span>
+<span class="source-line-no">287</span><span id="line-287">            if (player.hasPermission(Permission.PERMISSION_RATE) &amp;&amp; args[0].length() &gt; 0) {</span>
+<span class="source-line-no">288</span><span id="line-288">                commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
+<span class="source-line-no">289</span><span id="line-289">            }</span>
+<span class="source-line-no">290</span><span id="line-290">            return commands;</span>
+<span class="source-line-no">291</span><span id="line-291">        }</span>
+<span class="source-line-no">292</span><span id="line-292">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
+<span class="source-line-no">293</span><span id="line-293">    }</span>
+<span class="source-line-no">294</span><span id="line-294"></span>
+<span class="source-line-no">295</span><span id="line-295">    private static class MutableInt {</span>
 <span class="source-line-no">296</span><span id="line-296"></span>
-<span class="source-line-no">297</span><span id="line-297">    private static class MutableInt {</span>
+<span class="source-line-no">297</span><span id="line-297">        private int value;</span>
 <span class="source-line-no">298</span><span id="line-298"></span>
-<span class="source-line-no">299</span><span id="line-299">        private int value;</span>
-<span class="source-line-no">300</span><span id="line-300"></span>
-<span class="source-line-no">301</span><span id="line-301">        MutableInt(int i) {</span>
-<span class="source-line-no">302</span><span id="line-302">            this.value = i;</span>
-<span class="source-line-no">303</span><span id="line-303">        }</span>
-<span class="source-line-no">304</span><span id="line-304"></span>
-<span class="source-line-no">305</span><span id="line-305">        void increment() {</span>
-<span class="source-line-no">306</span><span id="line-306">            this.value++;</span>
-<span class="source-line-no">307</span><span id="line-307">        }</span>
-<span class="source-line-no">308</span><span id="line-308"></span>
-<span class="source-line-no">309</span><span id="line-309">        void decrement() {</span>
-<span class="source-line-no">310</span><span id="line-310">            this.value--;</span>
-<span class="source-line-no">311</span><span id="line-311">        }</span>
-<span class="source-line-no">312</span><span id="line-312"></span>
-<span class="source-line-no">313</span><span id="line-313">        int getValue() {</span>
-<span class="source-line-no">314</span><span id="line-314">            return this.value;</span>
-<span class="source-line-no">315</span><span id="line-315">        }</span>
-<span class="source-line-no">316</span><span id="line-316"></span>
-<span class="source-line-no">317</span><span id="line-317">        void add(Number v) {</span>
-<span class="source-line-no">318</span><span id="line-318">            this.value += v.intValue();</span>
-<span class="source-line-no">319</span><span id="line-319">        }</span>
+<span class="source-line-no">299</span><span id="line-299">        MutableInt(int i) {</span>
+<span class="source-line-no">300</span><span id="line-300">            this.value = i;</span>
+<span class="source-line-no">301</span><span id="line-301">        }</span>
+<span class="source-line-no">302</span><span id="line-302"></span>
+<span class="source-line-no">303</span><span id="line-303">        void increment() {</span>
+<span class="source-line-no">304</span><span id="line-304">            this.value++;</span>
+<span class="source-line-no">305</span><span id="line-305">        }</span>
+<span class="source-line-no">306</span><span id="line-306"></span>
+<span class="source-line-no">307</span><span id="line-307">        void decrement() {</span>
+<span class="source-line-no">308</span><span id="line-308">            this.value--;</span>
+<span class="source-line-no">309</span><span id="line-309">        }</span>
+<span class="source-line-no">310</span><span id="line-310"></span>
+<span class="source-line-no">311</span><span id="line-311">        int getValue() {</span>
+<span class="source-line-no">312</span><span id="line-312">            return this.value;</span>
+<span class="source-line-no">313</span><span id="line-313">        }</span>
+<span class="source-line-no">314</span><span id="line-314"></span>
+<span class="source-line-no">315</span><span id="line-315">        void add(Number v) {</span>
+<span class="source-line-no">316</span><span id="line-316">            this.value += v.intValue();</span>
+<span class="source-line-no">317</span><span id="line-317">        }</span>
+<span class="source-line-no">318</span><span id="line-318"></span>
+<span class="source-line-no">319</span><span id="line-319">    }</span>
 <span class="source-line-no">320</span><span id="line-320"></span>
-<span class="source-line-no">321</span><span id="line-321">    }</span>
-<span class="source-line-no">322</span><span id="line-322"></span>
-<span class="source-line-no">323</span><span id="line-323">}</span>
+<span class="source-line-no">321</span><span id="line-321">}</span>
 
 
 

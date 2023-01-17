@@ -46,148 +46,146 @@
 <span class="source-line-no">033</span><span id="line-33">import com.plotsquared.core.plot.flag.implementations.MusicFlag;</span>
 <span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.util.EventDispatcher;</span>
 <span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.util.InventoryUtil;</span>
-<span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.util.Permissions;</span>
-<span class="source-line-no">037</span><span id="line-37">import com.sk89q.worldedit.world.item.ItemType;</span>
-<span class="source-line-no">038</span><span id="line-38">import com.sk89q.worldedit.world.item.ItemTypes;</span>
-<span class="source-line-no">039</span><span id="line-39">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">041</span><span id="line-41">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">042</span><span id="line-42">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">import javax.annotation.Nullable;</span>
-<span class="source-line-no">045</span><span id="line-45">import java.util.Arrays;</span>
-<span class="source-line-no">046</span><span id="line-46">import java.util.Collection;</span>
-<span class="source-line-no">047</span><span id="line-47">import java.util.Locale;</span>
-<span class="source-line-no">048</span><span id="line-48"></span>
-<span class="source-line-no">049</span><span id="line-49">@CommandDeclaration(command = "music",</span>
-<span class="source-line-no">050</span><span id="line-50">        permission = "plots.music",</span>
-<span class="source-line-no">051</span><span id="line-51">        usage = "/plot music",</span>
-<span class="source-line-no">052</span><span id="line-52">        category = CommandCategory.APPEARANCE,</span>
-<span class="source-line-no">053</span><span id="line-53">        requiredType = RequiredType.PLAYER)</span>
-<span class="source-line-no">054</span><span id="line-54">public class Music extends SubCommand {</span>
-<span class="source-line-no">055</span><span id="line-55"></span>
-<span class="source-line-no">056</span><span id="line-56">    private static final Collection&lt;String&gt; DISCS = Arrays</span>
-<span class="source-line-no">057</span><span id="line-57">            .asList("music_disc_13", "music_disc_cat", "music_disc_blocks", "music_disc_chirp",</span>
-<span class="source-line-no">058</span><span id="line-58">                    "music_disc_far", "music_disc_mall", "music_disc_mellohi", "music_disc_stal",</span>
-<span class="source-line-no">059</span><span id="line-59">                    "music_disc_strad", "music_disc_ward", "music_disc_11", "music_disc_wait", "music_disc_otherside",</span>
-<span class="source-line-no">060</span><span id="line-60">                    "music_disc_pigstep", "music_disc_5"</span>
-<span class="source-line-no">061</span><span id="line-61">            );</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    private final InventoryUtil inventoryUtil;</span>
-<span class="source-line-no">064</span><span id="line-64">    private final EventDispatcher eventDispatcher;</span>
-<span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">    @Inject</span>
-<span class="source-line-no">067</span><span id="line-67">    public Music(final @Nullable InventoryUtil inventoryUtil, final @NonNull EventDispatcher eventDispatcher) {</span>
-<span class="source-line-no">068</span><span id="line-68">        this.inventoryUtil = inventoryUtil;</span>
-<span class="source-line-no">069</span><span id="line-69">        this.eventDispatcher = eventDispatcher;</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">    @Override</span>
-<span class="source-line-no">073</span><span id="line-73">    public boolean onCommand(PlotPlayer&lt;?&gt; player, String[] args) {</span>
-<span class="source-line-no">074</span><span id="line-74">        Location location = player.getLocation();</span>
-<span class="source-line-no">075</span><span id="line-75">        final Plot plot = location.getPlotAbs();</span>
-<span class="source-line-no">076</span><span id="line-76">        if (plot == null) {</span>
-<span class="source-line-no">077</span><span id="line-77">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">078</span><span id="line-78">            return false;</span>
-<span class="source-line-no">079</span><span id="line-79">        }</span>
-<span class="source-line-no">080</span><span id="line-80">        if (!plot.hasOwner()) {</span>
-<span class="source-line-no">081</span><span id="line-81">            player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
-<span class="source-line-no">082</span><span id="line-82">            return false;</span>
-<span class="source-line-no">083</span><span id="line-83">        }</span>
-<span class="source-line-no">084</span><span id="line-84">        if (!plot.isAdded(player.getUUID()) &amp;&amp; !Permissions</span>
-<span class="source-line-no">085</span><span id="line-85">                .hasPermission(player, Permission.PERMISSION_ADMIN_MUSIC_OTHER)) {</span>
-<span class="source-line-no">086</span><span id="line-86">            player.sendMessage(</span>
-<span class="source-line-no">087</span><span id="line-87">                    TranslatableCaption.of("permission.no_permission"),</span>
-<span class="source-line-no">088</span><span id="line-88">                    TagResolver.resolver(</span>
-<span class="source-line-no">089</span><span id="line-89">                            "node",</span>
-<span class="source-line-no">090</span><span id="line-90">                            Tag.inserting(Permission.PERMISSION_ADMIN_MUSIC_OTHER)</span>
-<span class="source-line-no">091</span><span id="line-91">                    )</span>
-<span class="source-line-no">092</span><span id="line-92">            );</span>
-<span class="source-line-no">093</span><span id="line-93">            return true;</span>
-<span class="source-line-no">094</span><span id="line-94">        }</span>
-<span class="source-line-no">095</span><span id="line-95">        PlotInventory inv = new PlotInventory(</span>
-<span class="source-line-no">096</span><span id="line-96">                this.inventoryUtil,</span>
-<span class="source-line-no">097</span><span id="line-97">                player,</span>
-<span class="source-line-no">098</span><span id="line-98">                2,</span>
-<span class="source-line-no">099</span><span id="line-99">                TranslatableCaption.of("plotjukebox.jukebox_header").getComponent(player)</span>
-<span class="source-line-no">100</span><span id="line-100">        ) {</span>
-<span class="source-line-no">101</span><span id="line-101">            @Override</span>
-<span class="source-line-no">102</span><span id="line-102">            public boolean onClick(int index) {</span>
-<span class="source-line-no">103</span><span id="line-103">                PlotItemStack item = getItem(index);</span>
-<span class="source-line-no">104</span><span id="line-104">                if (item == null) {</span>
-<span class="source-line-no">105</span><span id="line-105">                    return true;</span>
-<span class="source-line-no">106</span><span id="line-106">                }</span>
-<span class="source-line-no">107</span><span id="line-107">                if (item.getType() == ItemTypes.BEDROCK) {</span>
-<span class="source-line-no">108</span><span id="line-108">                    PlotFlag&lt;?, ?&gt; plotFlag = plot.getFlagContainer().getFlag(MusicFlag.class)</span>
-<span class="source-line-no">109</span><span id="line-109">                            .createFlagInstance(item.getType());</span>
-<span class="source-line-no">110</span><span id="line-110">                    PlotFlagRemoveEvent event = eventDispatcher.callFlagRemove(plotFlag, plot);</span>
-<span class="source-line-no">111</span><span id="line-111">                    if (event.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">112</span><span id="line-112">                        getPlayer().sendMessage(</span>
-<span class="source-line-no">113</span><span id="line-113">                                TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">114</span><span id="line-114">                                TagResolver.resolver("value", Tag.inserting(Component.text("Music removal")))</span>
-<span class="source-line-no">115</span><span id="line-115">                        );</span>
-<span class="source-line-no">116</span><span id="line-116">                        return true;</span>
-<span class="source-line-no">117</span><span id="line-117">                    }</span>
-<span class="source-line-no">118</span><span id="line-118">                    plot.removeFlag(event.getFlag());</span>
-<span class="source-line-no">119</span><span id="line-119">                    getPlayer().sendMessage(</span>
-<span class="source-line-no">120</span><span id="line-120">                            TranslatableCaption.of("flag.flag_removed"),</span>
-<span class="source-line-no">121</span><span id="line-121">                            TagResolver.builder()</span>
-<span class="source-line-no">122</span><span id="line-122">                                    .tag("flag", Tag.inserting(Component.text("music")))</span>
-<span class="source-line-no">123</span><span id="line-123">                                    .tag("value", Tag.inserting(Component.text("music_disc")))</span>
-<span class="source-line-no">124</span><span id="line-124">                                    .build()</span>
-<span class="source-line-no">125</span><span id="line-125">                    );</span>
-<span class="source-line-no">126</span><span id="line-126">                } else if (item.getName().toLowerCase(Locale.ENGLISH).contains("disc")) {</span>
-<span class="source-line-no">127</span><span id="line-127">                    PlotFlag&lt;?, ?&gt; plotFlag = plot.getFlagContainer().getFlag(MusicFlag.class)</span>
-<span class="source-line-no">128</span><span id="line-128">                            .createFlagInstance(item.getType());</span>
-<span class="source-line-no">129</span><span id="line-129">                    PlotFlagAddEvent event = eventDispatcher.callFlagAdd(plotFlag, plot);</span>
-<span class="source-line-no">130</span><span id="line-130">                    if (event.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">131</span><span id="line-131">                        getPlayer().sendMessage(</span>
-<span class="source-line-no">132</span><span id="line-132">                                TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">133</span><span id="line-133">                                TagResolver.resolver("value", Tag.inserting(Component.text("Music addition")))</span>
-<span class="source-line-no">134</span><span id="line-134">                        );</span>
-<span class="source-line-no">135</span><span id="line-135">                        return true;</span>
-<span class="source-line-no">136</span><span id="line-136">                    }</span>
-<span class="source-line-no">137</span><span id="line-137">                    plot.setFlag(event.getFlag());</span>
-<span class="source-line-no">138</span><span id="line-138">                    getPlayer().sendMessage(</span>
-<span class="source-line-no">139</span><span id="line-139">                            TranslatableCaption.of("flag.flag_added"),</span>
-<span class="source-line-no">140</span><span id="line-140">                            TagResolver.builder()</span>
-<span class="source-line-no">141</span><span id="line-141">                                    .tag("flag", Tag.inserting(Component.text("music")))</span>
-<span class="source-line-no">142</span><span id="line-142">                                    .tag("value", Tag.inserting(Component.text(event.getFlag().getValue().toString())))</span>
-<span class="source-line-no">143</span><span id="line-143">                                    .build()</span>
-<span class="source-line-no">144</span><span id="line-144">                    );</span>
-<span class="source-line-no">145</span><span id="line-145">                } else {</span>
-<span class="source-line-no">146</span><span id="line-146">                    getPlayer().sendMessage(TranslatableCaption.of("flag.flag_not_added"));</span>
-<span class="source-line-no">147</span><span id="line-147">                }</span>
-<span class="source-line-no">148</span><span id="line-148">                return false;</span>
-<span class="source-line-no">149</span><span id="line-149">            }</span>
-<span class="source-line-no">150</span><span id="line-150">        };</span>
-<span class="source-line-no">151</span><span id="line-151">        int index = 0;</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">        for (final String disc : DISCS) {</span>
-<span class="source-line-no">154</span><span id="line-154">            final String name = String.format("&lt;gold&gt;%s&lt;/gold&gt;", disc);</span>
-<span class="source-line-no">155</span><span id="line-155">            final String[] lore = {TranslatableCaption.of("plotjukebox.click_to_play").getComponent(player)};</span>
-<span class="source-line-no">156</span><span id="line-156">            ItemType type = ItemTypes.get(disc);</span>
-<span class="source-line-no">157</span><span id="line-157">            if (type == null) {</span>
-<span class="source-line-no">158</span><span id="line-158">                continue;</span>
-<span class="source-line-no">159</span><span id="line-159">            }</span>
-<span class="source-line-no">160</span><span id="line-160">            final PlotItemStack item = new PlotItemStack(type, 1, name, lore);</span>
-<span class="source-line-no">161</span><span id="line-161">            if (inv.setItemChecked(index, item)) {</span>
-<span class="source-line-no">162</span><span id="line-162">                index++;</span>
-<span class="source-line-no">163</span><span id="line-163">            }</span>
-<span class="source-line-no">164</span><span id="line-164">        }</span>
-<span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">        // Always add the cancel button</span>
-<span class="source-line-no">167</span><span id="line-167">        // if (player.getMeta("music") != null) {</span>
-<span class="source-line-no">168</span><span id="line-168">        String name = TranslatableCaption.of("plotjukebox.cancel_music").getComponent(player);</span>
-<span class="source-line-no">169</span><span id="line-169">        String[] lore = {TranslatableCaption.of("plotjukebox.reset_music").getComponent(player)};</span>
-<span class="source-line-no">170</span><span id="line-170">        inv.setItem(index, new PlotItemStack("bedrock", 1, name, lore));</span>
-<span class="source-line-no">171</span><span id="line-171">        // }</span>
-<span class="source-line-no">172</span><span id="line-172"></span>
-<span class="source-line-no">173</span><span id="line-173">        inv.openInventory();</span>
-<span class="source-line-no">174</span><span id="line-174">        return true;</span>
-<span class="source-line-no">175</span><span id="line-175">    }</span>
-<span class="source-line-no">176</span><span id="line-176"></span>
-<span class="source-line-no">177</span><span id="line-177">}</span>
+<span class="source-line-no">036</span><span id="line-36">import com.sk89q.worldedit.world.item.ItemType;</span>
+<span class="source-line-no">037</span><span id="line-37">import com.sk89q.worldedit.world.item.ItemTypes;</span>
+<span class="source-line-no">038</span><span id="line-38">import net.kyori.adventure.text.Component;</span>
+<span class="source-line-no">039</span><span id="line-39">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
+<span class="source-line-no">041</span><span id="line-41">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">import javax.annotation.Nullable;</span>
+<span class="source-line-no">044</span><span id="line-44">import java.util.Arrays;</span>
+<span class="source-line-no">045</span><span id="line-45">import java.util.Collection;</span>
+<span class="source-line-no">046</span><span id="line-46">import java.util.Locale;</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">@CommandDeclaration(command = "music",</span>
+<span class="source-line-no">049</span><span id="line-49">        permission = "plots.music",</span>
+<span class="source-line-no">050</span><span id="line-50">        usage = "/plot music",</span>
+<span class="source-line-no">051</span><span id="line-51">        category = CommandCategory.APPEARANCE,</span>
+<span class="source-line-no">052</span><span id="line-52">        requiredType = RequiredType.PLAYER)</span>
+<span class="source-line-no">053</span><span id="line-53">public class Music extends SubCommand {</span>
+<span class="source-line-no">054</span><span id="line-54"></span>
+<span class="source-line-no">055</span><span id="line-55">    private static final Collection&lt;String&gt; DISCS = Arrays</span>
+<span class="source-line-no">056</span><span id="line-56">            .asList("music_disc_13", "music_disc_cat", "music_disc_blocks", "music_disc_chirp",</span>
+<span class="source-line-no">057</span><span id="line-57">                    "music_disc_far", "music_disc_mall", "music_disc_mellohi", "music_disc_stal",</span>
+<span class="source-line-no">058</span><span id="line-58">                    "music_disc_strad", "music_disc_ward", "music_disc_11", "music_disc_wait", "music_disc_otherside",</span>
+<span class="source-line-no">059</span><span id="line-59">                    "music_disc_pigstep", "music_disc_5"</span>
+<span class="source-line-no">060</span><span id="line-60">            );</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    private final InventoryUtil inventoryUtil;</span>
+<span class="source-line-no">063</span><span id="line-63">    private final EventDispatcher eventDispatcher;</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    @Inject</span>
+<span class="source-line-no">066</span><span id="line-66">    public Music(final @Nullable InventoryUtil inventoryUtil, final @NonNull EventDispatcher eventDispatcher) {</span>
+<span class="source-line-no">067</span><span id="line-67">        this.inventoryUtil = inventoryUtil;</span>
+<span class="source-line-no">068</span><span id="line-68">        this.eventDispatcher = eventDispatcher;</span>
+<span class="source-line-no">069</span><span id="line-69">    }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    @Override</span>
+<span class="source-line-no">072</span><span id="line-72">    public boolean onCommand(PlotPlayer&lt;?&gt; player, String[] args) {</span>
+<span class="source-line-no">073</span><span id="line-73">        Location location = player.getLocation();</span>
+<span class="source-line-no">074</span><span id="line-74">        final Plot plot = location.getPlotAbs();</span>
+<span class="source-line-no">075</span><span id="line-75">        if (plot == null) {</span>
+<span class="source-line-no">076</span><span id="line-76">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
+<span class="source-line-no">077</span><span id="line-77">            return false;</span>
+<span class="source-line-no">078</span><span id="line-78">        }</span>
+<span class="source-line-no">079</span><span id="line-79">        if (!plot.hasOwner()) {</span>
+<span class="source-line-no">080</span><span id="line-80">            player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
+<span class="source-line-no">081</span><span id="line-81">            return false;</span>
+<span class="source-line-no">082</span><span id="line-82">        }</span>
+<span class="source-line-no">083</span><span id="line-83">        if (!plot.isAdded(player.getUUID()) &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_MUSIC_OTHER)) {</span>
+<span class="source-line-no">084</span><span id="line-84">            player.sendMessage(</span>
+<span class="source-line-no">085</span><span id="line-85">                    TranslatableCaption.of("permission.no_permission"),</span>
+<span class="source-line-no">086</span><span id="line-86">                    TagResolver.resolver(</span>
+<span class="source-line-no">087</span><span id="line-87">                            "node",</span>
+<span class="source-line-no">088</span><span id="line-88">                            Tag.inserting(Permission.PERMISSION_ADMIN_MUSIC_OTHER)</span>
+<span class="source-line-no">089</span><span id="line-89">                    )</span>
+<span class="source-line-no">090</span><span id="line-90">            );</span>
+<span class="source-line-no">091</span><span id="line-91">            return true;</span>
+<span class="source-line-no">092</span><span id="line-92">        }</span>
+<span class="source-line-no">093</span><span id="line-93">        PlotInventory inv = new PlotInventory(</span>
+<span class="source-line-no">094</span><span id="line-94">                this.inventoryUtil,</span>
+<span class="source-line-no">095</span><span id="line-95">                player,</span>
+<span class="source-line-no">096</span><span id="line-96">                2,</span>
+<span class="source-line-no">097</span><span id="line-97">                TranslatableCaption.of("plotjukebox.jukebox_header").getComponent(player)</span>
+<span class="source-line-no">098</span><span id="line-98">        ) {</span>
+<span class="source-line-no">099</span><span id="line-99">            @Override</span>
+<span class="source-line-no">100</span><span id="line-100">            public boolean onClick(int index) {</span>
+<span class="source-line-no">101</span><span id="line-101">                PlotItemStack item = getItem(index);</span>
+<span class="source-line-no">102</span><span id="line-102">                if (item == null) {</span>
+<span class="source-line-no">103</span><span id="line-103">                    return true;</span>
+<span class="source-line-no">104</span><span id="line-104">                }</span>
+<span class="source-line-no">105</span><span id="line-105">                if (item.getType() == ItemTypes.BEDROCK) {</span>
+<span class="source-line-no">106</span><span id="line-106">                    PlotFlag&lt;?, ?&gt; plotFlag = plot.getFlagContainer().getFlag(MusicFlag.class)</span>
+<span class="source-line-no">107</span><span id="line-107">                            .createFlagInstance(item.getType());</span>
+<span class="source-line-no">108</span><span id="line-108">                    PlotFlagRemoveEvent event = eventDispatcher.callFlagRemove(plotFlag, plot);</span>
+<span class="source-line-no">109</span><span id="line-109">                    if (event.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">110</span><span id="line-110">                        getPlayer().sendMessage(</span>
+<span class="source-line-no">111</span><span id="line-111">                                TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">112</span><span id="line-112">                                TagResolver.resolver("value", Tag.inserting(Component.text("Music removal")))</span>
+<span class="source-line-no">113</span><span id="line-113">                        );</span>
+<span class="source-line-no">114</span><span id="line-114">                        return true;</span>
+<span class="source-line-no">115</span><span id="line-115">                    }</span>
+<span class="source-line-no">116</span><span id="line-116">                    plot.removeFlag(event.getFlag());</span>
+<span class="source-line-no">117</span><span id="line-117">                    getPlayer().sendMessage(</span>
+<span class="source-line-no">118</span><span id="line-118">                            TranslatableCaption.of("flag.flag_removed"),</span>
+<span class="source-line-no">119</span><span id="line-119">                            TagResolver.builder()</span>
+<span class="source-line-no">120</span><span id="line-120">                                    .tag("flag", Tag.inserting(Component.text("music")))</span>
+<span class="source-line-no">121</span><span id="line-121">                                    .tag("value", Tag.inserting(Component.text("music_disc")))</span>
+<span class="source-line-no">122</span><span id="line-122">                                    .build()</span>
+<span class="source-line-no">123</span><span id="line-123">                    );</span>
+<span class="source-line-no">124</span><span id="line-124">                } else if (item.getName().toLowerCase(Locale.ENGLISH).contains("disc")) {</span>
+<span class="source-line-no">125</span><span id="line-125">                    PlotFlag&lt;?, ?&gt; plotFlag = plot.getFlagContainer().getFlag(MusicFlag.class)</span>
+<span class="source-line-no">126</span><span id="line-126">                            .createFlagInstance(item.getType());</span>
+<span class="source-line-no">127</span><span id="line-127">                    PlotFlagAddEvent event = eventDispatcher.callFlagAdd(plotFlag, plot);</span>
+<span class="source-line-no">128</span><span id="line-128">                    if (event.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">129</span><span id="line-129">                        getPlayer().sendMessage(</span>
+<span class="source-line-no">130</span><span id="line-130">                                TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">131</span><span id="line-131">                                TagResolver.resolver("value", Tag.inserting(Component.text("Music addition")))</span>
+<span class="source-line-no">132</span><span id="line-132">                        );</span>
+<span class="source-line-no">133</span><span id="line-133">                        return true;</span>
+<span class="source-line-no">134</span><span id="line-134">                    }</span>
+<span class="source-line-no">135</span><span id="line-135">                    plot.setFlag(event.getFlag());</span>
+<span class="source-line-no">136</span><span id="line-136">                    getPlayer().sendMessage(</span>
+<span class="source-line-no">137</span><span id="line-137">                            TranslatableCaption.of("flag.flag_added"),</span>
+<span class="source-line-no">138</span><span id="line-138">                            TagResolver.builder()</span>
+<span class="source-line-no">139</span><span id="line-139">                                    .tag("flag", Tag.inserting(Component.text("music")))</span>
+<span class="source-line-no">140</span><span id="line-140">                                    .tag("value", Tag.inserting(Component.text(event.getFlag().getValue().toString())))</span>
+<span class="source-line-no">141</span><span id="line-141">                                    .build()</span>
+<span class="source-line-no">142</span><span id="line-142">                    );</span>
+<span class="source-line-no">143</span><span id="line-143">                } else {</span>
+<span class="source-line-no">144</span><span id="line-144">                    getPlayer().sendMessage(TranslatableCaption.of("flag.flag_not_added"));</span>
+<span class="source-line-no">145</span><span id="line-145">                }</span>
+<span class="source-line-no">146</span><span id="line-146">                return false;</span>
+<span class="source-line-no">147</span><span id="line-147">            }</span>
+<span class="source-line-no">148</span><span id="line-148">        };</span>
+<span class="source-line-no">149</span><span id="line-149">        int index = 0;</span>
+<span class="source-line-no">150</span><span id="line-150"></span>
+<span class="source-line-no">151</span><span id="line-151">        for (final String disc : DISCS) {</span>
+<span class="source-line-no">152</span><span id="line-152">            final String name = String.format("&lt;gold&gt;%s&lt;/gold&gt;", disc);</span>
+<span class="source-line-no">153</span><span id="line-153">            final String[] lore = {TranslatableCaption.of("plotjukebox.click_to_play").getComponent(player)};</span>
+<span class="source-line-no">154</span><span id="line-154">            ItemType type = ItemTypes.get(disc);</span>
+<span class="source-line-no">155</span><span id="line-155">            if (type == null) {</span>
+<span class="source-line-no">156</span><span id="line-156">                continue;</span>
+<span class="source-line-no">157</span><span id="line-157">            }</span>
+<span class="source-line-no">158</span><span id="line-158">            final PlotItemStack item = new PlotItemStack(type, 1, name, lore);</span>
+<span class="source-line-no">159</span><span id="line-159">            if (inv.setItemChecked(index, item)) {</span>
+<span class="source-line-no">160</span><span id="line-160">                index++;</span>
+<span class="source-line-no">161</span><span id="line-161">            }</span>
+<span class="source-line-no">162</span><span id="line-162">        }</span>
+<span class="source-line-no">163</span><span id="line-163"></span>
+<span class="source-line-no">164</span><span id="line-164">        // Always add the cancel button</span>
+<span class="source-line-no">165</span><span id="line-165">        // if (player.getMeta("music") != null) {</span>
+<span class="source-line-no">166</span><span id="line-166">        String name = TranslatableCaption.of("plotjukebox.cancel_music").getComponent(player);</span>
+<span class="source-line-no">167</span><span id="line-167">        String[] lore = {TranslatableCaption.of("plotjukebox.reset_music").getComponent(player)};</span>
+<span class="source-line-no">168</span><span id="line-168">        inv.setItem(index, new PlotItemStack("bedrock", 1, name, lore));</span>
+<span class="source-line-no">169</span><span id="line-169">        // }</span>
+<span class="source-line-no">170</span><span id="line-170"></span>
+<span class="source-line-no">171</span><span id="line-171">        inv.openInventory();</span>
+<span class="source-line-no">172</span><span id="line-172">        return true;</span>
+<span class="source-line-no">173</span><span id="line-173">    }</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175">}</span>
 
 
 

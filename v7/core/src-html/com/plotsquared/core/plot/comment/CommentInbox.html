@@ -34,91 +34,87 @@
 <span class="source-line-no">021</span><span id="line-21">import com.plotsquared.core.database.DBFunc;</span>
 <span class="source-line-no">022</span><span id="line-22">import com.plotsquared.core.player.PlotPlayer;</span>
 <span class="source-line-no">023</span><span id="line-23">import com.plotsquared.core.plot.Plot;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.plotsquared.core.util.Permissions;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.plotsquared.core.util.task.RunnableVal;</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">import java.util.List;</span>
-<span class="source-line-no">028</span><span id="line-28"></span>
-<span class="source-line-no">029</span><span id="line-29">public abstract class CommentInbox {</span>
-<span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">    @Override</span>
-<span class="source-line-no">032</span><span id="line-32">    public abstract String toString();</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    /**</span>
-<span class="source-line-no">035</span><span id="line-35">     * @param plot   the plot's inbox to read</span>
-<span class="source-line-no">036</span><span id="line-36">     * @param player the player trying to read the comment</span>
-<span class="source-line-no">037</span><span id="line-37">     * @return the inbox, otherwise {@code false} false</span>
-<span class="source-line-no">038</span><span id="line-38">     */</span>
-<span class="source-line-no">039</span><span id="line-39">    public boolean canRead(Plot plot, PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">040</span><span id="line-40">        if (Permissions.hasPermission(player, "plots.inbox.read." + this, true)) {</span>
-<span class="source-line-no">041</span><span id="line-41">            return plot.isOwner(player.getUUID()) || Permissions</span>
-<span class="source-line-no">042</span><span id="line-42">                    .hasPermission(player, "plots.inbox.read." + this + ".other", true);</span>
-<span class="source-line-no">043</span><span id="line-43">        }</span>
-<span class="source-line-no">044</span><span id="line-44">        return false;</span>
-<span class="source-line-no">045</span><span id="line-45">    }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">    /**</span>
-<span class="source-line-no">048</span><span id="line-48">     * @param plot   the plot's inbox to write to</span>
-<span class="source-line-no">049</span><span id="line-49">     * @param player the player trying to write the comment</span>
-<span class="source-line-no">050</span><span id="line-50">     * @return {@code true} if the player can write a comment on the plot</span>
-<span class="source-line-no">051</span><span id="line-51">     */</span>
-<span class="source-line-no">052</span><span id="line-52">    public boolean canWrite(Plot plot, PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">053</span><span id="line-53">        if (plot == null) {</span>
-<span class="source-line-no">054</span><span id="line-54">            return Permissions.hasPermission(player, "plots.inbox.write." + this, true);</span>
-<span class="source-line-no">055</span><span id="line-55">        }</span>
-<span class="source-line-no">056</span><span id="line-56">        return Permissions.hasPermission(player, "plots.inbox.write." + this, true) &amp;&amp; (</span>
-<span class="source-line-no">057</span><span id="line-57">                plot.isOwner(player.getUUID()) || Permissions</span>
-<span class="source-line-no">058</span><span id="line-58">                        .hasPermission(player, "plots.inbox.write." + this + ".other", true));</span>
-<span class="source-line-no">059</span><span id="line-59">    }</span>
-<span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    /**</span>
-<span class="source-line-no">062</span><span id="line-62">     * @param plot   the plot's inbox to write to</span>
-<span class="source-line-no">063</span><span id="line-63">     * @param player the player trying to modify the inbox</span>
-<span class="source-line-no">064</span><span id="line-64">     * @return {@code true} if the player can write a comment on the plot</span>
-<span class="source-line-no">065</span><span id="line-65">     */</span>
-<span class="source-line-no">066</span><span id="line-66">    @SuppressWarnings({"BooleanMethodIsAlwaysInverted"})</span>
-<span class="source-line-no">067</span><span id="line-67">    public boolean canModify(Plot plot, PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">068</span><span id="line-68">        if (Permissions.hasPermission(player, "plots.inbox.modify." + this, true)) {</span>
-<span class="source-line-no">069</span><span id="line-69">            return plot.isOwner(player.getUUID()) || Permissions</span>
-<span class="source-line-no">070</span><span id="line-70">                    .hasPermission(player, "plots.inbox.modify." + this + ".other", true);</span>
-<span class="source-line-no">071</span><span id="line-71">        }</span>
-<span class="source-line-no">072</span><span id="line-72">        return false;</span>
-<span class="source-line-no">073</span><span id="line-73">    }</span>
-<span class="source-line-no">074</span><span id="line-74"></span>
-<span class="source-line-no">075</span><span id="line-75">    /**</span>
-<span class="source-line-no">076</span><span id="line-76">     * &lt;br&gt;</span>
-<span class="source-line-no">077</span><span id="line-77">     * The `whenDone` parameter should be executed when it's done fetching the comments.</span>
-<span class="source-line-no">078</span><span id="line-78">     * The value should be set to List of comments</span>
-<span class="source-line-no">079</span><span id="line-79">     *</span>
-<span class="source-line-no">080</span><span id="line-80">     * @param plot     plot</span>
-<span class="source-line-no">081</span><span id="line-81">     * @param whenDone task to run when comments are obtained</span>
-<span class="source-line-no">082</span><span id="line-82">     * @return success or not</span>
-<span class="source-line-no">083</span><span id="line-83">     */</span>
-<span class="source-line-no">084</span><span id="line-84">    public abstract boolean getComments(Plot plot, RunnableVal&lt;List&lt;PlotComment&gt;&gt; whenDone);</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">    /**</span>
-<span class="source-line-no">087</span><span id="line-87">     * @param plot    plot</span>
-<span class="source-line-no">088</span><span id="line-88">     * @param comment the comment to add</span>
-<span class="source-line-no">089</span><span id="line-89">     * @return success or not</span>
-<span class="source-line-no">090</span><span id="line-90">     */</span>
-<span class="source-line-no">091</span><span id="line-91">    public abstract boolean addComment(Plot plot, PlotComment comment);</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">    /**</span>
-<span class="source-line-no">094</span><span id="line-94">     * @param plot    plot</span>
-<span class="source-line-no">095</span><span id="line-95">     * @param comment the comment to remove</span>
-<span class="source-line-no">096</span><span id="line-96">     */</span>
-<span class="source-line-no">097</span><span id="line-97">    public void removeComment(Plot plot, PlotComment comment) {</span>
-<span class="source-line-no">098</span><span id="line-98">        DBFunc.removeComment(plot, comment);</span>
-<span class="source-line-no">099</span><span id="line-99">    }</span>
-<span class="source-line-no">100</span><span id="line-100"></span>
-<span class="source-line-no">101</span><span id="line-101">    /**</span>
-<span class="source-line-no">102</span><span id="line-102">     * @param plot plot</span>
-<span class="source-line-no">103</span><span id="line-103">     */</span>
-<span class="source-line-no">104</span><span id="line-104">    public void clearInbox(Plot plot) {</span>
-<span class="source-line-no">105</span><span id="line-105">        DBFunc.clearInbox(plot, toString());</span>
-<span class="source-line-no">106</span><span id="line-106">    }</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">}</span>
+<span class="source-line-no">024</span><span id="line-24">import com.plotsquared.core.util.task.RunnableVal;</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">import java.util.List;</span>
+<span class="source-line-no">027</span><span id="line-27"></span>
+<span class="source-line-no">028</span><span id="line-28">public abstract class CommentInbox {</span>
+<span class="source-line-no">029</span><span id="line-29"></span>
+<span class="source-line-no">030</span><span id="line-30">    @Override</span>
+<span class="source-line-no">031</span><span id="line-31">    public abstract String toString();</span>
+<span class="source-line-no">032</span><span id="line-32"></span>
+<span class="source-line-no">033</span><span id="line-33">    /**</span>
+<span class="source-line-no">034</span><span id="line-34">     * @param plot   the plot's inbox to read</span>
+<span class="source-line-no">035</span><span id="line-35">     * @param player the player trying to read the comment</span>
+<span class="source-line-no">036</span><span id="line-36">     * @return the inbox, otherwise {@code false} false</span>
+<span class="source-line-no">037</span><span id="line-37">     */</span>
+<span class="source-line-no">038</span><span id="line-38">    public boolean canRead(Plot plot, PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">039</span><span id="line-39">        if (player.hasPermission("plots.inbox.read." + this, true)) {</span>
+<span class="source-line-no">040</span><span id="line-40">            return plot.isOwner(player.getUUID()) || player.hasPermission("plots.inbox.read." + this + ".other", true);</span>
+<span class="source-line-no">041</span><span id="line-41">        }</span>
+<span class="source-line-no">042</span><span id="line-42">        return false;</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    /**</span>
+<span class="source-line-no">046</span><span id="line-46">     * @param plot   the plot's inbox to write to</span>
+<span class="source-line-no">047</span><span id="line-47">     * @param player the player trying to write the comment</span>
+<span class="source-line-no">048</span><span id="line-48">     * @return {@code true} if the player can write a comment on the plot</span>
+<span class="source-line-no">049</span><span id="line-49">     */</span>
+<span class="source-line-no">050</span><span id="line-50">    public boolean canWrite(Plot plot, PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">051</span><span id="line-51">        if (plot == null) {</span>
+<span class="source-line-no">052</span><span id="line-52">            return player.hasPermission("plots.inbox.write." + this, true);</span>
+<span class="source-line-no">053</span><span id="line-53">        }</span>
+<span class="source-line-no">054</span><span id="line-54">        return player.hasPermission("plots.inbox.write." + this, true) &amp;&amp; (</span>
+<span class="source-line-no">055</span><span id="line-55">                plot.isOwner(player.getUUID()) || player.hasPermission("plots.inbox.write." + this + ".other", true));</span>
+<span class="source-line-no">056</span><span id="line-56">    }</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    /**</span>
+<span class="source-line-no">059</span><span id="line-59">     * @param plot   the plot's inbox to write to</span>
+<span class="source-line-no">060</span><span id="line-60">     * @param player the player trying to modify the inbox</span>
+<span class="source-line-no">061</span><span id="line-61">     * @return {@code true} if the player can write a comment on the plot</span>
+<span class="source-line-no">062</span><span id="line-62">     */</span>
+<span class="source-line-no">063</span><span id="line-63">    @SuppressWarnings({"BooleanMethodIsAlwaysInverted"})</span>
+<span class="source-line-no">064</span><span id="line-64">    public boolean canModify(Plot plot, PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">065</span><span id="line-65">        if (player.hasPermission("plots.inbox.modify." + this, true)) {</span>
+<span class="source-line-no">066</span><span id="line-66">            return plot.isOwner(player.getUUID()) || player.hasPermission("plots.inbox.modify." + this + ".other", true);</span>
+<span class="source-line-no">067</span><span id="line-67">        }</span>
+<span class="source-line-no">068</span><span id="line-68">        return false;</span>
+<span class="source-line-no">069</span><span id="line-69">    }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    /**</span>
+<span class="source-line-no">072</span><span id="line-72">     * &lt;br&gt;</span>
+<span class="source-line-no">073</span><span id="line-73">     * The `whenDone` parameter should be executed when it's done fetching the comments.</span>
+<span class="source-line-no">074</span><span id="line-74">     * The value should be set to List of comments</span>
+<span class="source-line-no">075</span><span id="line-75">     *</span>
+<span class="source-line-no">076</span><span id="line-76">     * @param plot     plot</span>
+<span class="source-line-no">077</span><span id="line-77">     * @param whenDone task to run when comments are obtained</span>
+<span class="source-line-no">078</span><span id="line-78">     * @return success or not</span>
+<span class="source-line-no">079</span><span id="line-79">     */</span>
+<span class="source-line-no">080</span><span id="line-80">    public abstract boolean getComments(Plot plot, RunnableVal&lt;List&lt;PlotComment&gt;&gt; whenDone);</span>
+<span class="source-line-no">081</span><span id="line-81"></span>
+<span class="source-line-no">082</span><span id="line-82">    /**</span>
+<span class="source-line-no">083</span><span id="line-83">     * @param plot    plot</span>
+<span class="source-line-no">084</span><span id="line-84">     * @param comment the comment to add</span>
+<span class="source-line-no">085</span><span id="line-85">     * @return success or not</span>
+<span class="source-line-no">086</span><span id="line-86">     */</span>
+<span class="source-line-no">087</span><span id="line-87">    public abstract boolean addComment(Plot plot, PlotComment comment);</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89">    /**</span>
+<span class="source-line-no">090</span><span id="line-90">     * @param plot    plot</span>
+<span class="source-line-no">091</span><span id="line-91">     * @param comment the comment to remove</span>
+<span class="source-line-no">092</span><span id="line-92">     */</span>
+<span class="source-line-no">093</span><span id="line-93">    public void removeComment(Plot plot, PlotComment comment) {</span>
+<span class="source-line-no">094</span><span id="line-94">        DBFunc.removeComment(plot, comment);</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">    /**</span>
+<span class="source-line-no">098</span><span id="line-98">     * @param plot plot</span>
+<span class="source-line-no">099</span><span id="line-99">     */</span>
+<span class="source-line-no">100</span><span id="line-100">    public void clearInbox(Plot plot) {</span>
+<span class="source-line-no">101</span><span id="line-101">        DBFunc.clearInbox(plot, toString());</span>
+<span class="source-line-no">102</span><span id="line-102">    }</span>
+<span class="source-line-no">103</span><span id="line-103"></span>
+<span class="source-line-no">104</span><span id="line-104">}</span>
 
 
 

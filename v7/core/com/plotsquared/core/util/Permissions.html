@@ -88,7 +88,7 @@ loadScripts(document, 'script');</script>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes</div>
 </div>
 <div class="block">The Permissions class handles checking user permissions.<br>
  - This will respect * nodes and plots.admin and can be used to check permission ranges (e.g. plots.plot.5)<br>
@@ -225,7 +225,7 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;notify)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="../player/PlotPlayer.html#hasPermission(java.lang.String,boolean)"><code>PlotPlayer.hasPermission(String, boolean)</code></a></div>
 </div>
 </section>
 </li>
@@ -238,7 +238,7 @@ loadScripts(document, 'script');</script>
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../permissions/Permission.html" title="enum class in com.plotsquared.core.permissions">Permission</a>&nbsp;permission)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="../permissions/PermissionHolder.html#hasPermission(com.plotsquared.core.permissions.Permission)"><code>PermissionHolder.hasPermission(Permission)</code></a></div>
 </div>
 <div class="block">Check if the owner of the profile has a given (global) permission</div>
 <dl class="notes">
@@ -259,7 +259,7 @@ loadScripts(document, 'script');</script>
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;permission)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="../permissions/PermissionHolder.html#hasPermission(java.lang.String)"><code>PermissionHolder.hasPermission(String)</code></a></div>
 </div>
 <div class="block">Check if the owner of the profile has a given (global) permission. There is no guarantee that per-world permissions will
  be checked because unmaintained crap plugins like PEX exist.</div>
@@ -282,7 +282,7 @@ loadScripts(document, 'script');</script>
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="../permissions/PermissionHolder.html#hasKeyedPermission(java.lang.String,java.lang.String)"><code>PermissionHolder.hasKeyedPermission(String, String)</code></a></div>
 </div>
 <div class="block">Check if the owner of the profile has a given (global) keyed permission. Checks both <code>permission.key</code>
  and <code>permission.*</code></div>
@@ -308,7 +308,7 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;notify)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="../player/PlotPlayer.html#hasPermission(java.lang.String,boolean)"><code>PlotPlayer.hasPermission(String, boolean)</code></a></div>
 </div>
 <div class="block">Checks if a PlotPlayer has a permission, and optionally send the no permission message if applicable.</div>
 <dl class="notes">
@@ -331,7 +331,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;range)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="../permissions/PermissionHolder.html#hasPermissionRange(com.plotsquared.core.permissions.Permission,int)"><code>PermissionHolder.hasPermissionRange(Permission, int)</code></a></div>
 </div>
 </section>
 </li>
@@ -345,7 +345,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;range)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">all logic that may once have been in the class lives elsewhere. We also want to do away with statically-accessed
- classes</div>
+         classes. Use <a href="../permissions/PermissionHolder.html#hasPermissionRange(java.lang.String,int)"><code>PermissionHolder.hasPermissionRange(String, int)</code></a></div>
 </div>
 <div class="block">Check the highest permission a PlotPlayer has within a specified range.<br>
  - Excessively high values will lag<br>

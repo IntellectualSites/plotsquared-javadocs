@@ -10,22 +10,17 @@
 <meta name="keywords" content="com.plotsquared.core.generator.HybridPlotWorld class">
 <meta name="keywords" content="ROAD_SCHEMATIC_ENABLED">
 <meta name="keywords" content="PLOT_SCHEMATIC">
-<meta name="keywords" content="PLOT_SCHEMATIC_HEIGHT">
 <meta name="keywords" content="PATH_WIDTH_LOWER">
 <meta name="keywords" content="PATH_WIDTH_UPPER">
 <meta name="keywords" content="G_SCH">
 <meta name="keywords" content="G_SCH_B">
 <meta name="keywords" content="SCHEM_Y">
-<meta name="keywords" content="wrap()">
-<meta name="keywords" content="wrap2()">
 <meta name="keywords" content="rotate()">
 <meta name="keywords" content="createManager()">
 <meta name="keywords" content="getSignLocation()">
 <meta name="keywords" content="loadConfiguration()">
 <meta name="keywords" content="isCompatible()">
 <meta name="keywords" content="setupSchematics()">
-<meta name="keywords" content="addOverlayBlock()">
-<meta name="keywords" content="addOverlayBiome()">
 <meta name="keywords" content="getPlotSchematicEntities()">
 <meta name="keywords" content="getPlotSchematicMinPoint()">
 <meta name="keywords" content="populationNeeded()">
@@ -143,17 +138,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><code><a href="#PLOT_SCHEMATIC" class="member-name-link">PLOT_SCHEMATIC</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><code><a href="#PLOT_SCHEMATIC_HEIGHT" class="member-name-link">PLOT_SCHEMATIC_HEIGHT</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#ROAD_SCHEMATIC_ENABLED" class="member-name-link">ROAD_SCHEMATIC_ENABLED</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><code><a href="#SCHEM_Y" class="member-name-link">SCHEM_Y</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#ROAD_SCHEMATIC_ENABLED" class="member-name-link">ROAD_SCHEMATIC_ENABLED</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>int</code></div>
+<div class="col-second even-row-color"><code><a href="#SCHEM_Y" class="member-name-link">SCHEM_Y</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The Y level at which schematic generation will start, lowest of either road or plot schematic generation.</div>
 </div>
 </div>
@@ -201,27 +191,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addOverlayBiome(short,short,com.sk89q.worldedit.world.biome.BiomeType)" class="member-name-link">addOverlayBiome</a><wbr>(short&nbsp;x,
- short&nbsp;z,
- <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">This method should not be available for public API usage and will be made private.</div>
-</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#addOverlayBlock(short,short,short,com.sk89q.worldedit.world.block.BaseBlock,boolean,int)" class="member-name-link">addOverlayBlock</a><wbr>(short&nbsp;x,
- short&nbsp;y,
- short&nbsp;z,
- <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>&nbsp;id,
- boolean&nbsp;rotate,
- int&nbsp;height)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">This method should not be available for public API usage and will be made private.</div>
-</div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/PlotManager.html" title="class in com.plotsquared.core.plot">PlotManager</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createManager()" class="member-name-link">createManager</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -271,18 +240,6 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setupSchematics()" class="member-name-link">setupSchematics</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static byte</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#wrap(byte,int)" class="member-name-link">wrap</a><wbr>(byte&nbsp;data,
- int&nbsp;start)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static byte</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#wrap2(byte,int)" class="member-name-link">wrap2</a><wbr>(byte&nbsp;data,
- int&nbsp;start)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-</div>
 </div>
 </div>
 </div>
@@ -319,42 +276,33 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="PLOT_SCHEMATIC_HEIGHT">
-<h3>PLOT_SCHEMATIC_HEIGHT</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.9.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-71">PLOT_SCHEMATIC_HEIGHT</a></span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="PATH_WIDTH_LOWER">
 <h3>PATH_WIDTH_LOWER</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-73">PATH_WIDTH_LOWER</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-71">PATH_WIDTH_LOWER</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="PATH_WIDTH_UPPER">
 <h3>PATH_WIDTH_UPPER</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-74">PATH_WIDTH_UPPER</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-72">PATH_WIDTH_UPPER</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="G_SCH">
 <h3>G_SCH</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>[]&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-75">G_SCH</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>[]&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-73">G_SCH</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="G_SCH_B">
 <h3>G_SCH_B</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-76">G_SCH_B</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-74">G_SCH_B</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="SCHEM_Y">
 <h3>SCHEM_Y</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-80">SCHEM_Y</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-78">SCHEM_Y</a></span></div>
 <div class="block">The Y level at which schematic generation will start, lowest of either road or plot schematic generation.</div>
 </section>
 </li>
@@ -370,7 +318,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(java.lang.String,java.lang.String,com.plotsquared.core.generator.IndependentPlotGenerator,com.plotsquared.core.plot.PlotId,com.plotsquared.core.plot.PlotId,com.plotsquared.core.configuration.file.YamlConfiguration,com.plotsquared.core.queue.GlobalBlockQueue)">
 <h3>HybridPlotWorld</h3>
 <div class="member-signature"><span class="annotations"><a href="https://google.github.io/guice/api-docs/5.1.0/javadoc/com/google/inject/Inject.html" title="class or interface in com.google.inject" class="external-link">@Inject</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-93">HybridPlotWorld</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
+</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-91">HybridPlotWorld</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
  @Nullable
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="IndependentPlotGenerator.html" title="class in com.plotsquared.core.generator">IndependentPlotGenerator</a>&nbsp;generator,
@@ -391,35 +339,15 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="wrap(byte,int)">
-<h3>wrap</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.9.0")
-</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-107">wrap</a></span><wbr><span class="parameters">(byte&nbsp;data,
- int&nbsp;start)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="wrap2(byte,int)">
-<h3>wrap2</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.9.0")
-</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-115">wrap2</a></span><wbr><span class="parameters">(byte&nbsp;data,
- int&nbsp;start)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="rotate(com.sk89q.worldedit.world.block.BaseBlock)">
 <h3>rotate</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-123">rotate</a></span><wbr><span class="parameters">(<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-105">rotate</a></span><wbr><span class="parameters">(<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>&nbsp;id)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="createManager()">
 <h3>createManager</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/PlotManager.html" title="class in com.plotsquared.core.plot">PlotManager</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-155">createManager</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/PlotManager.html" title="class in com.plotsquared.core.plot">PlotManager</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-137">createManager</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../plot/PlotArea.html#createManager()">createManager</a></code>&nbsp;in class&nbsp;<code><a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a></code></dd>
@@ -429,13 +357,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSignLocation(com.plotsquared.core.plot.Plot)">
 <h3>getSignLocation</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-163">getSignLocation</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-145">getSignLocation</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/Plot.html" title="class in com.plotsquared.core.plot">Plot</a>&nbsp;plot)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="loadConfiguration(com.plotsquared.core.configuration.ConfigurationSection)">
 <h3>loadConfiguration</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-177">loadConfiguration</a></span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-159">loadConfiguration</a></span><wbr><span class="parameters">(<a href="../configuration/ConfigurationSection.html" title="interface in com.plotsquared.core.configuration">ConfigurationSection</a>&nbsp;config)</span></div>
 <div class="block"><p>This method is called when a world loads. Make sure you set all your constants here. You are provided with the
  configuration section for that specific world.</p></div>
 <dl class="notes">
@@ -447,7 +375,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isCompatible(com.plotsquared.core.plot.PlotArea)">
 <h3>isCompatible</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-219">isCompatible</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;plotArea)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-201">isCompatible</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../plot/PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;plotArea)</span></div>
 <div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../plot/PlotArea.html#isCompatible(com.plotsquared.core.plot.PlotArea)">PlotArea</a></code></span></div>
 <div class="block">Check if a PlotArea is compatible (move/copy etc.).</div>
 <dl class="notes">
@@ -463,7 +391,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setupSchematics()">
 <h3>setupSchematics</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-227">setupSchematics</a></span>()
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-209">setupSchematics</a></span>()
                      throws <span class="exceptions"><a href="../util/SchematicHandler.UnsupportedFormatException.html" title="class in com.plotsquared.core.util">SchematicHandler.UnsupportedFormatException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -472,39 +400,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addOverlayBlock(short,short,short,com.sk89q.worldedit.world.block.BaseBlock,boolean,int)">
-<h3>addOverlayBlock</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.10.2")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-492">addOverlayBlock</a></span><wbr><span class="parameters">(short&nbsp;x,
- short&nbsp;y,
- short&nbsp;z,
- <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>&nbsp;id,
- boolean&nbsp;rotate,
- int&nbsp;height)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">This method should not be available for public API usage and will be made private.</div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="addOverlayBiome(short,short,com.sk89q.worldedit.world.biome.BiomeType)">
-<h3>addOverlayBiome</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.10.2")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-527">addOverlayBiome</a></span><wbr><span class="parameters">(short&nbsp;x,
- short&nbsp;z,
- <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;id)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">This method should not be available for public API usage and will be made private.</div>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="getPlotSchematicEntities()">
 <h3>getPlotSchematicEntities</h3>
 <div class="member-signature"><span class="annotations"><a href="https://javadoc.io/doc/com.intellectualsites.informative-annotations/informative-annotations/latest/com/intellectualsites/annotations/DoNotUse.html" title="class or interface in com.intellectualsites.annotations" class="external-link">@DoNotUse</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/entity/Entity.html" title="class or interface in com.sk89q.worldedit.entity" class="external-link">Entity</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-548">getPlotSchematicEntities</a></span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/entity/Entity.html" title="class or interface in com.sk89q.worldedit.entity" class="external-link">Entity</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-522">getPlotSchematicEntities</a></span>()</div>
 <div class="block">Get the entities contained within the plot schematic for generation. Intended for internal use only.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -516,7 +415,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getPlotSchematicMinPoint()">
 <h3>getPlotSchematicMinPoint</h3>
 <div class="member-signature"><span class="annotations"><a href="https://javadoc.io/doc/com.intellectualsites.informative-annotations/informative-annotations/latest/com/intellectualsites/annotations/DoNotUse.html" title="class or interface in com.intellectualsites.annotations" class="external-link">@DoNotUse</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector3.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector3</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-558">getPlotSchematicMinPoint</a></span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector3.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector3</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-532">getPlotSchematicMinPoint</a></span>()</div>
 <div class="block">Get the minimum point of the plot schematic for generation. Intended for internal use only.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -528,7 +427,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="populationNeeded()">
 <h3>populationNeeded</h3>
 <div class="member-signature"><span class="annotations"><a href="https://javadoc.io/doc/com.intellectualsites.informative-annotations/informative-annotations/latest/com/intellectualsites/annotations/DoNotUse.html" title="class or interface in com.intellectualsites.annotations" class="external-link">@DoNotUse</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-568">populationNeeded</a></span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-542">populationNeeded</a></span>()</div>
 <div class="block">Get if post-generation population of chunks with tiles/entities is needed for this world. Not for public API use.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -541,7 +440,7 @@ loadScripts(document, 'script');</script>
 <h3>getRoot</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
             <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.9.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-576">getRoot</a></span>()</div>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-550">getRoot</a></span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecation-comment">in favour of <a href="#getSchematicRoot()"><code>getSchematicRoot()</code></a></div>
 </div>
@@ -550,7 +449,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSchematicRoot()">
 <h3>getSchematicRoot</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-587">getSchematicRoot</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/generator/HybridPlotWorld.html#line-561">getSchematicRoot</a></span>()</div>
 <div class="block">Get the root folder for this world's generation schematics. May be null if schematics not initialised via
  <a href="#setupSchematics()"><code>setupSchematics()</code></a></div>
 <dl class="notes">

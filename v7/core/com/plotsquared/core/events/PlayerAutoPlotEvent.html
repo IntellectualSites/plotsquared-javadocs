@@ -15,10 +15,6 @@
 <meta name="keywords" content="setEventResult()">
 <meta name="keywords" content="getPlayer()">
 <meta name="keywords" content="getPlotArea()">
-<meta name="keywords" content="getSize_x()">
-<meta name="keywords" content="setSize_x()">
-<meta name="keywords" content="getSize_z()">
-<meta name="keywords" content="setSize_z()">
 <meta name="keywords" content="getSizeX()">
 <meta name="keywords" content="setSizeX()">
 <meta name="keywords" content="getSizeZ()">
@@ -131,7 +127,7 @@ implements <a href="CancellablePlotEvent.html" title="interface in com.plotsquar
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -156,20 +152,6 @@ implements <a href="CancellablePlotEvent.html" title="interface in com.plotsquar
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Obtain the schematic string as used by the <a href="../command/Claim.html" title="class in com.plotsquared.core.command"><code>Claim</code></a> command or null.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getSize_x()" class="member-name-link">getSize_x</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal.</div>
-</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getSize_z()" class="member-name-link">getSize_z</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal.</div>
-</div>
-</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSizeX()" class="member-name-link">getSizeX</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -187,20 +169,6 @@ implements <a href="CancellablePlotEvent.html" title="interface in com.plotsquar
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSchematic(java.lang.String)" class="member-name-link">setSchematic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schematic)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the schematic string used in the claim.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#setSize_x(int)" class="member-name-link">setSize_x</a><wbr>(int&nbsp;sizeX)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal.</div>
-</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#setSize_z(int)" class="member-name-link">setSize_z</a><wbr>(int&nbsp;sizeZ)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal.</div>
-</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSizeX(int)" class="member-name-link">setSizeX</a><wbr>(int&nbsp;sizeX)</code></div>
@@ -332,53 +300,9 @@ implements <a href="CancellablePlotEvent.html" title="interface in com.plotsquar
 </section>
 </li>
 <li>
-<section class="detail" id="getSize_x()">
-<h3>getSize_x</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.1.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-111">getSize_x</a></span>()</div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal. Use <a href="#getSizeX()"><code>getSizeX()</code></a></div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setSize_x(int)">
-<h3>setSize_x</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.1.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-119">setSize_x</a></span><wbr><span class="parameters">(int&nbsp;sizeX)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal. Use <a href="#setSizeX(int)"><code>setSizeX(int)</code></a></div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="getSize_z()">
-<h3>getSize_z</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.1.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-127">getSize_z</a></span>()</div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal. Use <a href="#getSizeZ()"><code>getSizeZ()</code></a></div>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="setSize_z(int)">
-<h3>setSize_z</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.1.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-135">setSize_z</a></span><wbr><span class="parameters">(int&nbsp;sizeZ)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">for removal. Use <a href="#setSizeZ(int)"><code>setSizeZ(int)</code></a></div>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="getSizeX()">
 <h3>getSizeX</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-146">getSizeX</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-114">getSizeX</a></span>()</div>
 <div class="block">Get the x size of the auto-area</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -391,7 +315,7 @@ implements <a href="CancellablePlotEvent.html" title="interface in com.plotsquar
 <li>
 <section class="detail" id="setSizeX(int)">
 <h3>setSizeX</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-156">setSizeX</a></span><wbr><span class="parameters">(int&nbsp;sizeX)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-124">setSizeX</a></span><wbr><span class="parameters">(int&nbsp;sizeX)</span></div>
 <div class="block">Set the x size of the auto-area</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -404,7 +328,7 @@ implements <a href="CancellablePlotEvent.html" title="interface in com.plotsquar
 <li>
 <section class="detail" id="getSizeZ()">
 <h3>getSizeZ</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-166">getSizeZ</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-134">getSizeZ</a></span>()</div>
 <div class="block">Get the z size of the auto-area</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -417,7 +341,7 @@ implements <a href="CancellablePlotEvent.html" title="interface in com.plotsquar
 <li>
 <section class="detail" id="setSizeZ(int)">
 <h3>setSizeZ</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-176">setSizeZ</a></span><wbr><span class="parameters">(int&nbsp;sizeZ)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/events/PlayerAutoPlotEvent.html#line-144">setSizeZ</a></span><wbr><span class="parameters">(int&nbsp;sizeZ)</span></div>
 <div class="block">Set the z size of the auto-area</div>
 <dl class="notes">
 <dt>Parameters:</dt>

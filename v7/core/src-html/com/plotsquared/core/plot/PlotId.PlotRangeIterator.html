@@ -120,212 +120,201 @@
 <span class="source-line-no">107</span><span id="line-107">    }</span>
 <span class="source-line-no">108</span><span id="line-108"></span>
 <span class="source-line-no">109</span><span id="line-109">    /**</span>
-<span class="source-line-no">110</span><span id="line-110">     * Get a copy of the plot ID</span>
+<span class="source-line-no">110</span><span id="line-110">     * Get the ID X component</span>
 <span class="source-line-no">111</span><span id="line-111">     *</span>
-<span class="source-line-no">112</span><span id="line-112">     * @return Plot ID copy</span>
-<span class="source-line-no">113</span><span id="line-113">     * @deprecated PlotId is immutable, copy is not required.</span>
-<span class="source-line-no">114</span><span id="line-114">     */</span>
-<span class="source-line-no">115</span><span id="line-115">    @Deprecated(forRemoval = true, since = "6.10.2")</span>
-<span class="source-line-no">116</span><span id="line-116">    public @NonNull PlotId copy() {</span>
-<span class="source-line-no">117</span><span id="line-117">        return this;</span>
-<span class="source-line-no">118</span><span id="line-118">    }</span>
-<span class="source-line-no">119</span><span id="line-119"></span>
-<span class="source-line-no">120</span><span id="line-120">    /**</span>
-<span class="source-line-no">121</span><span id="line-121">     * Get the ID X component</span>
-<span class="source-line-no">122</span><span id="line-122">     *</span>
-<span class="source-line-no">123</span><span id="line-123">     * @return X component</span>
-<span class="source-line-no">124</span><span id="line-124">     */</span>
-<span class="source-line-no">125</span><span id="line-125">    public int getX() {</span>
-<span class="source-line-no">126</span><span id="line-126">        return this.x;</span>
-<span class="source-line-no">127</span><span id="line-127">    }</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">    /**</span>
-<span class="source-line-no">130</span><span id="line-130">     * Get the ID Y component</span>
-<span class="source-line-no">131</span><span id="line-131">     *</span>
-<span class="source-line-no">132</span><span id="line-132">     * @return Y component</span>
-<span class="source-line-no">133</span><span id="line-133">     */</span>
-<span class="source-line-no">134</span><span id="line-134">    public int getY() {</span>
-<span class="source-line-no">135</span><span id="line-135">        return this.y;</span>
-<span class="source-line-no">136</span><span id="line-136">    }</span>
-<span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">    /**</span>
-<span class="source-line-no">139</span><span id="line-139">     * Get the next plot ID for claiming purposes</span>
-<span class="source-line-no">140</span><span id="line-140">     *</span>
-<span class="source-line-no">141</span><span id="line-141">     * @return Next plot ID</span>
-<span class="source-line-no">142</span><span id="line-142">     */</span>
-<span class="source-line-no">143</span><span id="line-143">    public @NonNull PlotId getNextId() {</span>
-<span class="source-line-no">144</span><span id="line-144">        final int absX = Math.abs(x);</span>
-<span class="source-line-no">145</span><span id="line-145">        final int absY = Math.abs(y);</span>
-<span class="source-line-no">146</span><span id="line-146">        if (absX &gt; absY) {</span>
-<span class="source-line-no">147</span><span id="line-147">            if (x &gt; 0) {</span>
-<span class="source-line-no">148</span><span id="line-148">                return PlotId.of(x, y + 1);</span>
-<span class="source-line-no">149</span><span id="line-149">            } else {</span>
-<span class="source-line-no">150</span><span id="line-150">                return PlotId.of(x, y - 1);</span>
-<span class="source-line-no">151</span><span id="line-151">            }</span>
-<span class="source-line-no">152</span><span id="line-152">        } else if (absY &gt; absX) {</span>
-<span class="source-line-no">153</span><span id="line-153">            if (y &gt; 0) {</span>
-<span class="source-line-no">154</span><span id="line-154">                return PlotId.of(x - 1, y);</span>
-<span class="source-line-no">155</span><span id="line-155">            } else {</span>
-<span class="source-line-no">156</span><span id="line-156">                return PlotId.of(x + 1, y);</span>
-<span class="source-line-no">157</span><span id="line-157">            }</span>
-<span class="source-line-no">158</span><span id="line-158">        } else {</span>
-<span class="source-line-no">159</span><span id="line-159">            if (x == y &amp;&amp; x &gt; 0) {</span>
-<span class="source-line-no">160</span><span id="line-160">                return PlotId.of(x, y + 1);</span>
-<span class="source-line-no">161</span><span id="line-161">            }</span>
-<span class="source-line-no">162</span><span id="line-162">            if (x == absX) {</span>
-<span class="source-line-no">163</span><span id="line-163">                return PlotId.of(x, y + 1);</span>
-<span class="source-line-no">164</span><span id="line-164">            }</span>
-<span class="source-line-no">165</span><span id="line-165">            if (y == absY) {</span>
-<span class="source-line-no">166</span><span id="line-166">                return PlotId.of(x, y - 1);</span>
-<span class="source-line-no">167</span><span id="line-167">            }</span>
-<span class="source-line-no">168</span><span id="line-168">            return PlotId.of(x + 1, y);</span>
-<span class="source-line-no">169</span><span id="line-169">        }</span>
-<span class="source-line-no">170</span><span id="line-170">    }</span>
-<span class="source-line-no">171</span><span id="line-171"></span>
-<span class="source-line-no">172</span><span id="line-172">    /**</span>
-<span class="source-line-no">173</span><span id="line-173">     * Get the PlotId in a relative direction</span>
-<span class="source-line-no">174</span><span id="line-174">     *</span>
-<span class="source-line-no">175</span><span id="line-175">     * @param direction Direction</span>
-<span class="source-line-no">176</span><span id="line-176">     * @return Relative plot ID</span>
-<span class="source-line-no">177</span><span id="line-177">     */</span>
-<span class="source-line-no">178</span><span id="line-178">    public @NonNull PlotId getRelative(final @NonNull Direction direction) {</span>
-<span class="source-line-no">179</span><span id="line-179">        return switch (direction) {</span>
-<span class="source-line-no">180</span><span id="line-180">            case NORTH -&gt; PlotId.of(this.getX(), this.getY() - 1);</span>
-<span class="source-line-no">181</span><span id="line-181">            case EAST -&gt; PlotId.of(this.getX() + 1, this.getY());</span>
-<span class="source-line-no">182</span><span id="line-182">            case SOUTH -&gt; PlotId.of(this.getX(), this.getY() + 1);</span>
-<span class="source-line-no">183</span><span id="line-183">            case WEST -&gt; PlotId.of(this.getX() - 1, this.getY());</span>
-<span class="source-line-no">184</span><span id="line-184">            default -&gt; this;</span>
-<span class="source-line-no">185</span><span id="line-185">        };</span>
-<span class="source-line-no">186</span><span id="line-186">    }</span>
-<span class="source-line-no">187</span><span id="line-187"></span>
-<span class="source-line-no">188</span><span id="line-188">    @Override</span>
-<span class="source-line-no">189</span><span id="line-189">    public boolean equals(final Object obj) {</span>
-<span class="source-line-no">190</span><span id="line-190">        if (this == obj) {</span>
-<span class="source-line-no">191</span><span id="line-191">            return true;</span>
-<span class="source-line-no">192</span><span id="line-192">        }</span>
-<span class="source-line-no">193</span><span id="line-193">        if (obj == null) {</span>
-<span class="source-line-no">194</span><span id="line-194">            return false;</span>
-<span class="source-line-no">195</span><span id="line-195">        }</span>
-<span class="source-line-no">196</span><span id="line-196">        if (this.hashCode() != obj.hashCode()) {</span>
-<span class="source-line-no">197</span><span id="line-197">            return false;</span>
-<span class="source-line-no">198</span><span id="line-198">        }</span>
-<span class="source-line-no">199</span><span id="line-199">        if (getClass() != obj.getClass()) {</span>
-<span class="source-line-no">200</span><span id="line-200">            return false;</span>
-<span class="source-line-no">201</span><span id="line-201">        }</span>
-<span class="source-line-no">202</span><span id="line-202">        final PlotId other = (PlotId) obj;</span>
-<span class="source-line-no">203</span><span id="line-203">        return this.getX() == other.getX() &amp;&amp; this.getY() == other.getY();</span>
+<span class="source-line-no">112</span><span id="line-112">     * @return X component</span>
+<span class="source-line-no">113</span><span id="line-113">     */</span>
+<span class="source-line-no">114</span><span id="line-114">    public int getX() {</span>
+<span class="source-line-no">115</span><span id="line-115">        return this.x;</span>
+<span class="source-line-no">116</span><span id="line-116">    }</span>
+<span class="source-line-no">117</span><span id="line-117"></span>
+<span class="source-line-no">118</span><span id="line-118">    /**</span>
+<span class="source-line-no">119</span><span id="line-119">     * Get the ID Y component</span>
+<span class="source-line-no">120</span><span id="line-120">     *</span>
+<span class="source-line-no">121</span><span id="line-121">     * @return Y component</span>
+<span class="source-line-no">122</span><span id="line-122">     */</span>
+<span class="source-line-no">123</span><span id="line-123">    public int getY() {</span>
+<span class="source-line-no">124</span><span id="line-124">        return this.y;</span>
+<span class="source-line-no">125</span><span id="line-125">    }</span>
+<span class="source-line-no">126</span><span id="line-126"></span>
+<span class="source-line-no">127</span><span id="line-127">    /**</span>
+<span class="source-line-no">128</span><span id="line-128">     * Get the next plot ID for claiming purposes</span>
+<span class="source-line-no">129</span><span id="line-129">     *</span>
+<span class="source-line-no">130</span><span id="line-130">     * @return Next plot ID</span>
+<span class="source-line-no">131</span><span id="line-131">     */</span>
+<span class="source-line-no">132</span><span id="line-132">    public @NonNull PlotId getNextId() {</span>
+<span class="source-line-no">133</span><span id="line-133">        final int absX = Math.abs(x);</span>
+<span class="source-line-no">134</span><span id="line-134">        final int absY = Math.abs(y);</span>
+<span class="source-line-no">135</span><span id="line-135">        if (absX &gt; absY) {</span>
+<span class="source-line-no">136</span><span id="line-136">            if (x &gt; 0) {</span>
+<span class="source-line-no">137</span><span id="line-137">                return PlotId.of(x, y + 1);</span>
+<span class="source-line-no">138</span><span id="line-138">            } else {</span>
+<span class="source-line-no">139</span><span id="line-139">                return PlotId.of(x, y - 1);</span>
+<span class="source-line-no">140</span><span id="line-140">            }</span>
+<span class="source-line-no">141</span><span id="line-141">        } else if (absY &gt; absX) {</span>
+<span class="source-line-no">142</span><span id="line-142">            if (y &gt; 0) {</span>
+<span class="source-line-no">143</span><span id="line-143">                return PlotId.of(x - 1, y);</span>
+<span class="source-line-no">144</span><span id="line-144">            } else {</span>
+<span class="source-line-no">145</span><span id="line-145">                return PlotId.of(x + 1, y);</span>
+<span class="source-line-no">146</span><span id="line-146">            }</span>
+<span class="source-line-no">147</span><span id="line-147">        } else {</span>
+<span class="source-line-no">148</span><span id="line-148">            if (x == y &amp;&amp; x &gt; 0) {</span>
+<span class="source-line-no">149</span><span id="line-149">                return PlotId.of(x, y + 1);</span>
+<span class="source-line-no">150</span><span id="line-150">            }</span>
+<span class="source-line-no">151</span><span id="line-151">            if (x == absX) {</span>
+<span class="source-line-no">152</span><span id="line-152">                return PlotId.of(x, y + 1);</span>
+<span class="source-line-no">153</span><span id="line-153">            }</span>
+<span class="source-line-no">154</span><span id="line-154">            if (y == absY) {</span>
+<span class="source-line-no">155</span><span id="line-155">                return PlotId.of(x, y - 1);</span>
+<span class="source-line-no">156</span><span id="line-156">            }</span>
+<span class="source-line-no">157</span><span id="line-157">            return PlotId.of(x + 1, y);</span>
+<span class="source-line-no">158</span><span id="line-158">        }</span>
+<span class="source-line-no">159</span><span id="line-159">    }</span>
+<span class="source-line-no">160</span><span id="line-160"></span>
+<span class="source-line-no">161</span><span id="line-161">    /**</span>
+<span class="source-line-no">162</span><span id="line-162">     * Get the PlotId in a relative direction</span>
+<span class="source-line-no">163</span><span id="line-163">     *</span>
+<span class="source-line-no">164</span><span id="line-164">     * @param direction Direction</span>
+<span class="source-line-no">165</span><span id="line-165">     * @return Relative plot ID</span>
+<span class="source-line-no">166</span><span id="line-166">     */</span>
+<span class="source-line-no">167</span><span id="line-167">    public @NonNull PlotId getRelative(final @NonNull Direction direction) {</span>
+<span class="source-line-no">168</span><span id="line-168">        return switch (direction) {</span>
+<span class="source-line-no">169</span><span id="line-169">            case NORTH -&gt; PlotId.of(this.getX(), this.getY() - 1);</span>
+<span class="source-line-no">170</span><span id="line-170">            case EAST -&gt; PlotId.of(this.getX() + 1, this.getY());</span>
+<span class="source-line-no">171</span><span id="line-171">            case SOUTH -&gt; PlotId.of(this.getX(), this.getY() + 1);</span>
+<span class="source-line-no">172</span><span id="line-172">            case WEST -&gt; PlotId.of(this.getX() - 1, this.getY());</span>
+<span class="source-line-no">173</span><span id="line-173">            default -&gt; this;</span>
+<span class="source-line-no">174</span><span id="line-174">        };</span>
+<span class="source-line-no">175</span><span id="line-175">    }</span>
+<span class="source-line-no">176</span><span id="line-176"></span>
+<span class="source-line-no">177</span><span id="line-177">    @Override</span>
+<span class="source-line-no">178</span><span id="line-178">    public boolean equals(final Object obj) {</span>
+<span class="source-line-no">179</span><span id="line-179">        if (this == obj) {</span>
+<span class="source-line-no">180</span><span id="line-180">            return true;</span>
+<span class="source-line-no">181</span><span id="line-181">        }</span>
+<span class="source-line-no">182</span><span id="line-182">        if (obj == null) {</span>
+<span class="source-line-no">183</span><span id="line-183">            return false;</span>
+<span class="source-line-no">184</span><span id="line-184">        }</span>
+<span class="source-line-no">185</span><span id="line-185">        if (this.hashCode() != obj.hashCode()) {</span>
+<span class="source-line-no">186</span><span id="line-186">            return false;</span>
+<span class="source-line-no">187</span><span id="line-187">        }</span>
+<span class="source-line-no">188</span><span id="line-188">        if (getClass() != obj.getClass()) {</span>
+<span class="source-line-no">189</span><span id="line-189">            return false;</span>
+<span class="source-line-no">190</span><span id="line-190">        }</span>
+<span class="source-line-no">191</span><span id="line-191">        final PlotId other = (PlotId) obj;</span>
+<span class="source-line-no">192</span><span id="line-192">        return this.getX() == other.getX() &amp;&amp; this.getY() == other.getY();</span>
+<span class="source-line-no">193</span><span id="line-193">    }</span>
+<span class="source-line-no">194</span><span id="line-194"></span>
+<span class="source-line-no">195</span><span id="line-195">    /**</span>
+<span class="source-line-no">196</span><span id="line-196">     * Get a String representation of the plot ID where the</span>
+<span class="source-line-no">197</span><span id="line-197">     * components are separated by ";"</span>
+<span class="source-line-no">198</span><span id="line-198">     *</span>
+<span class="source-line-no">199</span><span id="line-199">     * @return {@code x + ";" + y}</span>
+<span class="source-line-no">200</span><span id="line-200">     */</span>
+<span class="source-line-no">201</span><span id="line-201">    @Override</span>
+<span class="source-line-no">202</span><span id="line-202">    public @NonNull String toString() {</span>
+<span class="source-line-no">203</span><span id="line-203">        return this.getX() + ";" + this.getY();</span>
 <span class="source-line-no">204</span><span id="line-204">    }</span>
 <span class="source-line-no">205</span><span id="line-205"></span>
 <span class="source-line-no">206</span><span id="line-206">    /**</span>
 <span class="source-line-no">207</span><span id="line-207">     * Get a String representation of the plot ID where the</span>
-<span class="source-line-no">208</span><span id="line-208">     * components are separated by ";"</span>
+<span class="source-line-no">208</span><span id="line-208">     * components are separated by a specified string</span>
 <span class="source-line-no">209</span><span id="line-209">     *</span>
-<span class="source-line-no">210</span><span id="line-210">     * @return {@code x + ";" + y}</span>
-<span class="source-line-no">211</span><span id="line-211">     */</span>
-<span class="source-line-no">212</span><span id="line-212">    @Override</span>
-<span class="source-line-no">213</span><span id="line-213">    public @NonNull String toString() {</span>
-<span class="source-line-no">214</span><span id="line-214">        return this.getX() + ";" + this.getY();</span>
+<span class="source-line-no">210</span><span id="line-210">     * @param separator Separator</span>
+<span class="source-line-no">211</span><span id="line-211">     * @return {@code x + separator + y}</span>
+<span class="source-line-no">212</span><span id="line-212">     */</span>
+<span class="source-line-no">213</span><span id="line-213">    public @NonNull String toSeparatedString(String separator) {</span>
+<span class="source-line-no">214</span><span id="line-214">        return this.getX() + separator + this.getY();</span>
 <span class="source-line-no">215</span><span id="line-215">    }</span>
 <span class="source-line-no">216</span><span id="line-216"></span>
 <span class="source-line-no">217</span><span id="line-217">    /**</span>
 <span class="source-line-no">218</span><span id="line-218">     * Get a String representation of the plot ID where the</span>
-<span class="source-line-no">219</span><span id="line-219">     * components are separated by a specified string</span>
+<span class="source-line-no">219</span><span id="line-219">     * components are separated by ","</span>
 <span class="source-line-no">220</span><span id="line-220">     *</span>
-<span class="source-line-no">221</span><span id="line-221">     * @param separator Separator</span>
-<span class="source-line-no">222</span><span id="line-222">     * @return {@code x + separator + y}</span>
-<span class="source-line-no">223</span><span id="line-223">     */</span>
-<span class="source-line-no">224</span><span id="line-224">    public @NonNull String toSeparatedString(String separator) {</span>
-<span class="source-line-no">225</span><span id="line-225">        return this.getX() + separator + this.getY();</span>
-<span class="source-line-no">226</span><span id="line-226">    }</span>
-<span class="source-line-no">227</span><span id="line-227"></span>
-<span class="source-line-no">228</span><span id="line-228">    /**</span>
-<span class="source-line-no">229</span><span id="line-229">     * Get a String representation of the plot ID where the</span>
-<span class="source-line-no">230</span><span id="line-230">     * components are separated by ","</span>
-<span class="source-line-no">231</span><span id="line-231">     *</span>
-<span class="source-line-no">232</span><span id="line-232">     * @return {@code x + "," + y}</span>
-<span class="source-line-no">233</span><span id="line-233">     */</span>
-<span class="source-line-no">234</span><span id="line-234">    public @NonNull String toCommaSeparatedString() {</span>
-<span class="source-line-no">235</span><span id="line-235">        return this.getX() + "," + this.getY();</span>
-<span class="source-line-no">236</span><span id="line-236">    }</span>
-<span class="source-line-no">237</span><span id="line-237"></span>
-<span class="source-line-no">238</span><span id="line-238">    /**</span>
-<span class="source-line-no">239</span><span id="line-239">     * Get a String representation of the plot ID where the</span>
-<span class="source-line-no">240</span><span id="line-240">     * components are separated by "_"</span>
-<span class="source-line-no">241</span><span id="line-241">     *</span>
-<span class="source-line-no">242</span><span id="line-242">     * @return {@code x + "_" + y}</span>
-<span class="source-line-no">243</span><span id="line-243">     */</span>
-<span class="source-line-no">244</span><span id="line-244">    public @NonNull String toUnderscoreSeparatedString() {</span>
-<span class="source-line-no">245</span><span id="line-245">        return this.getX() + "_" + this.getY();</span>
-<span class="source-line-no">246</span><span id="line-246">    }</span>
-<span class="source-line-no">247</span><span id="line-247"></span>
-<span class="source-line-no">248</span><span id="line-248">    /**</span>
-<span class="source-line-no">249</span><span id="line-249">     * Get a String representation of the plot ID where the</span>
-<span class="source-line-no">250</span><span id="line-250">     * components are separated by "-"</span>
-<span class="source-line-no">251</span><span id="line-251">     *</span>
-<span class="source-line-no">252</span><span id="line-252">     * @return {@code x + "-" + y}</span>
-<span class="source-line-no">253</span><span id="line-253">     */</span>
-<span class="source-line-no">254</span><span id="line-254">    public @NonNull String toDashSeparatedString() {</span>
-<span class="source-line-no">255</span><span id="line-255">        return this.getX() + "-" + this.getY();</span>
-<span class="source-line-no">256</span><span id="line-256">    }</span>
+<span class="source-line-no">221</span><span id="line-221">     * @return {@code x + "," + y}</span>
+<span class="source-line-no">222</span><span id="line-222">     */</span>
+<span class="source-line-no">223</span><span id="line-223">    public @NonNull String toCommaSeparatedString() {</span>
+<span class="source-line-no">224</span><span id="line-224">        return this.getX() + "," + this.getY();</span>
+<span class="source-line-no">225</span><span id="line-225">    }</span>
+<span class="source-line-no">226</span><span id="line-226"></span>
+<span class="source-line-no">227</span><span id="line-227">    /**</span>
+<span class="source-line-no">228</span><span id="line-228">     * Get a String representation of the plot ID where the</span>
+<span class="source-line-no">229</span><span id="line-229">     * components are separated by "_"</span>
+<span class="source-line-no">230</span><span id="line-230">     *</span>
+<span class="source-line-no">231</span><span id="line-231">     * @return {@code x + "_" + y}</span>
+<span class="source-line-no">232</span><span id="line-232">     */</span>
+<span class="source-line-no">233</span><span id="line-233">    public @NonNull String toUnderscoreSeparatedString() {</span>
+<span class="source-line-no">234</span><span id="line-234">        return this.getX() + "_" + this.getY();</span>
+<span class="source-line-no">235</span><span id="line-235">    }</span>
+<span class="source-line-no">236</span><span id="line-236"></span>
+<span class="source-line-no">237</span><span id="line-237">    /**</span>
+<span class="source-line-no">238</span><span id="line-238">     * Get a String representation of the plot ID where the</span>
+<span class="source-line-no">239</span><span id="line-239">     * components are separated by "-"</span>
+<span class="source-line-no">240</span><span id="line-240">     *</span>
+<span class="source-line-no">241</span><span id="line-241">     * @return {@code x + "-" + y}</span>
+<span class="source-line-no">242</span><span id="line-242">     */</span>
+<span class="source-line-no">243</span><span id="line-243">    public @NonNull String toDashSeparatedString() {</span>
+<span class="source-line-no">244</span><span id="line-244">        return this.getX() + "-" + this.getY();</span>
+<span class="source-line-no">245</span><span id="line-245">    }</span>
+<span class="source-line-no">246</span><span id="line-246"></span>
+<span class="source-line-no">247</span><span id="line-247">    @Override</span>
+<span class="source-line-no">248</span><span id="line-248">    public int hashCode() {</span>
+<span class="source-line-no">249</span><span id="line-249">        return this.hash;</span>
+<span class="source-line-no">250</span><span id="line-250">    }</span>
+<span class="source-line-no">251</span><span id="line-251"></span>
+<span class="source-line-no">252</span><span id="line-252"></span>
+<span class="source-line-no">253</span><span id="line-253">    public static final class PlotRangeIterator implements Iterator&lt;PlotId&gt;, Iterable&lt;PlotId&gt; {</span>
+<span class="source-line-no">254</span><span id="line-254"></span>
+<span class="source-line-no">255</span><span id="line-255">        private final PlotId start;</span>
+<span class="source-line-no">256</span><span id="line-256">        private final PlotId end;</span>
 <span class="source-line-no">257</span><span id="line-257"></span>
-<span class="source-line-no">258</span><span id="line-258">    @Override</span>
-<span class="source-line-no">259</span><span id="line-259">    public int hashCode() {</span>
-<span class="source-line-no">260</span><span id="line-260">        return this.hash;</span>
-<span class="source-line-no">261</span><span id="line-261">    }</span>
-<span class="source-line-no">262</span><span id="line-262"></span>
-<span class="source-line-no">263</span><span id="line-263"></span>
-<span class="source-line-no">264</span><span id="line-264">    public static final class PlotRangeIterator implements Iterator&lt;PlotId&gt;, Iterable&lt;PlotId&gt; {</span>
-<span class="source-line-no">265</span><span id="line-265"></span>
-<span class="source-line-no">266</span><span id="line-266">        private final PlotId start;</span>
-<span class="source-line-no">267</span><span id="line-267">        private final PlotId end;</span>
-<span class="source-line-no">268</span><span id="line-268"></span>
-<span class="source-line-no">269</span><span id="line-269">        private int x;</span>
-<span class="source-line-no">270</span><span id="line-270">        private int y;</span>
+<span class="source-line-no">258</span><span id="line-258">        private int x;</span>
+<span class="source-line-no">259</span><span id="line-259">        private int y;</span>
+<span class="source-line-no">260</span><span id="line-260"></span>
+<span class="source-line-no">261</span><span id="line-261">        private PlotRangeIterator(final @NonNull PlotId start, final @NonNull PlotId end) {</span>
+<span class="source-line-no">262</span><span id="line-262">            this.start = start;</span>
+<span class="source-line-no">263</span><span id="line-263">            this.end = end;</span>
+<span class="source-line-no">264</span><span id="line-264">            this.x = this.start.getX();</span>
+<span class="source-line-no">265</span><span id="line-265">            this.y = this.start.getY();</span>
+<span class="source-line-no">266</span><span id="line-266">        }</span>
+<span class="source-line-no">267</span><span id="line-267"></span>
+<span class="source-line-no">268</span><span id="line-268">        public static PlotRangeIterator range(final @NonNull PlotId start, final @NonNull PlotId end) {</span>
+<span class="source-line-no">269</span><span id="line-269">            return new PlotRangeIterator(start, end);</span>
+<span class="source-line-no">270</span><span id="line-270">        }</span>
 <span class="source-line-no">271</span><span id="line-271"></span>
-<span class="source-line-no">272</span><span id="line-272">        private PlotRangeIterator(final @NonNull PlotId start, final @NonNull PlotId end) {</span>
-<span class="source-line-no">273</span><span id="line-273">            this.start = start;</span>
-<span class="source-line-no">274</span><span id="line-274">            this.end = end;</span>
-<span class="source-line-no">275</span><span id="line-275">            this.x = this.start.getX();</span>
-<span class="source-line-no">276</span><span id="line-276">            this.y = this.start.getY();</span>
-<span class="source-line-no">277</span><span id="line-277">        }</span>
-<span class="source-line-no">278</span><span id="line-278"></span>
-<span class="source-line-no">279</span><span id="line-279">        public static PlotRangeIterator range(final @NonNull PlotId start, final @NonNull PlotId end) {</span>
-<span class="source-line-no">280</span><span id="line-280">            return new PlotRangeIterator(start, end);</span>
-<span class="source-line-no">281</span><span id="line-281">        }</span>
-<span class="source-line-no">282</span><span id="line-282"></span>
-<span class="source-line-no">283</span><span id="line-283">        @Override</span>
-<span class="source-line-no">284</span><span id="line-284">        public boolean hasNext() {</span>
-<span class="source-line-no">285</span><span id="line-285">            // end is fully included</span>
-<span class="source-line-no">286</span><span id="line-286">            return this.x &lt;= this.end.getX() &amp;&amp; this.y &lt;= this.end.getY();</span>
-<span class="source-line-no">287</span><span id="line-287">        }</span>
-<span class="source-line-no">288</span><span id="line-288"></span>
-<span class="source-line-no">289</span><span id="line-289">        @Override</span>
-<span class="source-line-no">290</span><span id="line-290">        public PlotId next() {</span>
-<span class="source-line-no">291</span><span id="line-291">            if (!hasNext()) {</span>
-<span class="source-line-no">292</span><span id="line-292">                throw new NoSuchElementException("The iterator has no more entries");</span>
-<span class="source-line-no">293</span><span id="line-293">            }</span>
-<span class="source-line-no">294</span><span id="line-294">            // increment *after* getting the result to include the minimum</span>
-<span class="source-line-no">295</span><span id="line-295">            // the id to return</span>
-<span class="source-line-no">296</span><span id="line-296">            PlotId result = PlotId.of(this.x, this.y);</span>
-<span class="source-line-no">297</span><span id="line-297">            // first increase y, then x</span>
-<span class="source-line-no">298</span><span id="line-298">            if (this.y == this.end.getY()) {</span>
-<span class="source-line-no">299</span><span id="line-299">                this.x++;</span>
-<span class="source-line-no">300</span><span id="line-300">                this.y = this.start.getY();</span>
-<span class="source-line-no">301</span><span id="line-301">            } else {</span>
-<span class="source-line-no">302</span><span id="line-302">                this.y++;</span>
-<span class="source-line-no">303</span><span id="line-303">            }</span>
-<span class="source-line-no">304</span><span id="line-304">            return result;</span>
-<span class="source-line-no">305</span><span id="line-305">        }</span>
-<span class="source-line-no">306</span><span id="line-306"></span>
-<span class="source-line-no">307</span><span id="line-307">        @NonNull</span>
-<span class="source-line-no">308</span><span id="line-308">        @Override</span>
-<span class="source-line-no">309</span><span id="line-309">        public Iterator&lt;PlotId&gt; iterator() {</span>
-<span class="source-line-no">310</span><span id="line-310">            return this;</span>
-<span class="source-line-no">311</span><span id="line-311">        }</span>
-<span class="source-line-no">312</span><span id="line-312"></span>
-<span class="source-line-no">313</span><span id="line-313">    }</span>
-<span class="source-line-no">314</span><span id="line-314"></span>
-<span class="source-line-no">315</span><span id="line-315">}</span>
+<span class="source-line-no">272</span><span id="line-272">        @Override</span>
+<span class="source-line-no">273</span><span id="line-273">        public boolean hasNext() {</span>
+<span class="source-line-no">274</span><span id="line-274">            // end is fully included</span>
+<span class="source-line-no">275</span><span id="line-275">            return this.x &lt;= this.end.getX() &amp;&amp; this.y &lt;= this.end.getY();</span>
+<span class="source-line-no">276</span><span id="line-276">        }</span>
+<span class="source-line-no">277</span><span id="line-277"></span>
+<span class="source-line-no">278</span><span id="line-278">        @Override</span>
+<span class="source-line-no">279</span><span id="line-279">        public PlotId next() {</span>
+<span class="source-line-no">280</span><span id="line-280">            if (!hasNext()) {</span>
+<span class="source-line-no">281</span><span id="line-281">                throw new NoSuchElementException("The iterator has no more entries");</span>
+<span class="source-line-no">282</span><span id="line-282">            }</span>
+<span class="source-line-no">283</span><span id="line-283">            // increment *after* getting the result to include the minimum</span>
+<span class="source-line-no">284</span><span id="line-284">            // the id to return</span>
+<span class="source-line-no">285</span><span id="line-285">            PlotId result = PlotId.of(this.x, this.y);</span>
+<span class="source-line-no">286</span><span id="line-286">            // first increase y, then x</span>
+<span class="source-line-no">287</span><span id="line-287">            if (this.y == this.end.getY()) {</span>
+<span class="source-line-no">288</span><span id="line-288">                this.x++;</span>
+<span class="source-line-no">289</span><span id="line-289">                this.y = this.start.getY();</span>
+<span class="source-line-no">290</span><span id="line-290">            } else {</span>
+<span class="source-line-no">291</span><span id="line-291">                this.y++;</span>
+<span class="source-line-no">292</span><span id="line-292">            }</span>
+<span class="source-line-no">293</span><span id="line-293">            return result;</span>
+<span class="source-line-no">294</span><span id="line-294">        }</span>
+<span class="source-line-no">295</span><span id="line-295"></span>
+<span class="source-line-no">296</span><span id="line-296">        @NonNull</span>
+<span class="source-line-no">297</span><span id="line-297">        @Override</span>
+<span class="source-line-no">298</span><span id="line-298">        public Iterator&lt;PlotId&gt; iterator() {</span>
+<span class="source-line-no">299</span><span id="line-299">            return this;</span>
+<span class="source-line-no">300</span><span id="line-300">        }</span>
+<span class="source-line-no">301</span><span id="line-301"></span>
+<span class="source-line-no">302</span><span id="line-302">    }</span>
+<span class="source-line-no">303</span><span id="line-303"></span>
+<span class="source-line-no">304</span><span id="line-304">}</span>
 
 
 

@@ -12,7 +12,6 @@
 <meta name="keywords" content="tag">
 <meta name="keywords" content="jsonToColourCode()">
 <meta name="keywords" content="restoreTag()">
-<meta name="keywords" content="getTag()">
 <meta name="keywords" content="getId()">
 <meta name="keywords" content="serializeInventory()">
 <meta name="keywords" content="serializeItem()">
@@ -87,7 +86,7 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <hr>
-<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-50">StateWrapper</a></span>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-49">StateWrapper</a></span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 </section>
 <section class="summary">
@@ -120,13 +119,6 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(com.sk89q.jnbt.CompoundTag)" class="member-name-link">StateWrapper</a><wbr>(com.sk89q.jnbt.CompoundTag&nbsp;tag)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.bukkit.block.BlockState)" class="member-name-link">StateWrapper</a><wbr>(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/BlockState.html" title="class or interface in org.bukkit.block" class="external-link">BlockState</a>&nbsp;state)</code></div>
-<div class="col-last odd-row-color">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">in favour of using WE methods for obtaining NBT, specifically by obtaining a
-         <code>BaseBlock</code> and then using <code>BaseBlock.getNbtData()</code></div>
-</div>
-</div>
 </div>
 </section>
 </li>
@@ -135,7 +127,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -144,36 +136,28 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getId()" class="member-name-link">getId</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>com.sk89q.jnbt.CompoundTag</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getTag()" class="member-name-link">getTag</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">in favour of using WorldEdit methods for obtaining NBT, specifically by obtaining a
-         <code>BaseBlock</code> and then using <code>BaseBlock.getNbtData()</code></div>
-</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#jsonToColourCode(java.lang.String)" class="member-name-link">jsonToColourCode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#restoreTag(org.bukkit.block.Block)" class="member-name-link">restoreTag</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/Block.html" title="class or interface in org.bukkit.block" class="external-link">Block</a>&nbsp;block)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#jsonToColourCode(java.lang.String)" class="member-name-link">jsonToColourCode</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#restoreTag(org.bukkit.block.Block)" class="member-name-link">restoreTag</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/Block.html" title="class or interface in org.bukkit.block" class="external-link">Block</a>&nbsp;block)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Restore the TileEntity data to the given block</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#restoreTag(java.lang.String,int,int,int)" class="member-name-link">restoreTag</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#restoreTag(java.lang.String,int,int,int)" class="member-name-link">restoreTag</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
  int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Restore the TileEntity data to the given world at the given coordinates.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.sk89q.jnbt.CompoundTag&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serializeInventory(org.bukkit.inventory.ItemStack%5B%5D)" class="member-name-link">serializeInventory</a><wbr>(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>[]&nbsp;items)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>com.sk89q.jnbt.Tag&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serializeItem(org.bukkit.inventory.ItemStack)" class="member-name-link">serializeItem</a><wbr>(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>&nbsp;item)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.sk89q.jnbt.CompoundTag&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serializeInventory(org.bukkit.inventory.ItemStack%5B%5D)" class="member-name-link">serializeInventory</a><wbr>(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>[]&nbsp;items)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>com.sk89q.jnbt.Tag&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serializeItem(org.bukkit.inventory.ItemStack)" class="member-name-link">serializeItem</a><wbr>(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>&nbsp;item)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -194,13 +178,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="state">
 <h3>state</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/BlockState.html" title="class or interface in org.bukkit.block" class="external-link">BlockState</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-52">state</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/BlockState.html" title="class or interface in org.bukkit.block" class="external-link">BlockState</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-51">state</a></span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="tag">
 <h3>tag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.sk89q.jnbt.CompoundTag</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-53">tag</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">com.sk89q.jnbt.CompoundTag</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-52">tag</a></span></div>
 </section>
 </li>
 </ul>
@@ -212,21 +196,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(org.bukkit.block.BlockState)">
-<h3>StateWrapper</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.9.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-59">StateWrapper</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/BlockState.html" title="class or interface in org.bukkit.block" class="external-link">BlockState</a>&nbsp;state)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">in favour of using WE methods for obtaining NBT, specifically by obtaining a
-         <code>BaseBlock</code> and then using <code>BaseBlock.getNbtData()</code></div>
-</div>
-</section>
-</li>
-<li>
 <section class="detail" id="&lt;init&gt;(com.sk89q.jnbt.CompoundTag)">
 <h3>StateWrapper</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-64">StateWrapper</a></span><wbr><span class="parameters">(com.sk89q.jnbt.CompoundTag&nbsp;tag)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-54">StateWrapper</a></span><wbr><span class="parameters">(com.sk89q.jnbt.CompoundTag&nbsp;tag)</span></div>
 </section>
 </li>
 </ul>
@@ -240,13 +212,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="jsonToColourCode(java.lang.String)">
 <h3>jsonToColourCode</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-68">jsonToColourCode</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-58">jsonToColourCode</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="restoreTag(java.lang.String,int,int,int)">
 <h3>restoreTag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-179">restoreTag</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-169">restoreTag</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;worldName,
  int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z)</span></div>
@@ -265,7 +237,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="restoreTag(org.bukkit.block.Block)">
 <h3>restoreTag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-193">restoreTag</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/Block.html" title="class or interface in org.bukkit.block" class="external-link">Block</a>&nbsp;block)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-183">restoreTag</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/block/Block.html" title="class or interface in org.bukkit.block" class="external-link">Block</a>&nbsp;block)</span></div>
 <div class="block">Restore the TileEntity data to the given block</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -276,34 +248,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="getTag()">
-<h3>getTag</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.9.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">com.sk89q.jnbt.CompoundTag</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-263">getTag</a></span>()</div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
-<div class="deprecation-comment">in favour of using WorldEdit methods for obtaining NBT, specifically by obtaining a
-         <code>BaseBlock</code> and then using <code>BaseBlock.getNbtData()</code></div>
-</div>
-<div class="block">Get a CompoundTag of the contents of a block's inventory (chest, furnace, etc.).</div>
-</section>
-</li>
-<li>
 <section class="detail" id="getId()">
 <h3>getId</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-277">getId</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-247">getId</a></span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="serializeInventory(org.bukkit.inventory.ItemStack[])">
 <h3>serializeInventory</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.sk89q.jnbt.CompoundTag&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-285">serializeInventory</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>[]&nbsp;items)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;com.sk89q.jnbt.CompoundTag&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-255">serializeInventory</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>[]&nbsp;items)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="serializeItem(org.bukkit.inventory.ItemStack)">
 <h3>serializeItem</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>com.sk89q.jnbt.Tag&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-297">serializeItem</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>&nbsp;item)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>com.sk89q.jnbt.Tag&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/schematic/StateWrapper.html#line-267">serializeItem</a></span><wbr><span class="parameters">(<a href="https://jd.papermc.io/paper/1.19/org/bukkit/inventory/ItemStack.html" title="class or interface in org.bukkit.inventory" class="external-link">ItemStack</a>&nbsp;item)</span></div>
 </section>
 </li>
 </ul>

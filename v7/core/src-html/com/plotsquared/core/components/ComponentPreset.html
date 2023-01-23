@@ -75,7 +75,7 @@
 <span class="source-line-no">062</span><span id="line-62">    public static ComponentPreset deserialize(final @NonNull Map&lt;String, Object&gt; map) {</span>
 <span class="source-line-no">063</span><span id="line-63">        final ClassicPlotManagerComponent classicPlotManagerComponent = ClassicPlotManagerComponent</span>
 <span class="source-line-no">064</span><span id="line-64">                .fromString(map.getOrDefault("component", "").toString()).orElseThrow(() -&gt;</span>
-<span class="source-line-no">065</span><span id="line-65">                        new IllegalArgumentException("The preset needs a valid target component"));</span>
+<span class="source-line-no">065</span><span id="line-65">                        new IllegalArgumentException("The preset in components.yml needs a valid target component, got: " + map.get("component")));</span>
 <span class="source-line-no">066</span><span id="line-66">        final String pattern = map.getOrDefault("pattern", "").toString();</span>
 <span class="source-line-no">067</span><span id="line-67">        final double cost = Double.parseDouble(map.getOrDefault("cost", "0.0").toString());</span>
 <span class="source-line-no">068</span><span id="line-68">        final String permission = map.getOrDefault("permission", "").toString();</span>

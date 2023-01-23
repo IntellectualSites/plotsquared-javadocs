@@ -244,201 +244,205 @@
 <span class="source-line-no">231</span><span id="line-231">     */</span>
 <span class="source-line-no">232</span><span id="line-232">    public abstract void refreshChunk(int x, int z, String world);</span>
 <span class="source-line-no">233</span><span id="line-233"></span>
-<span class="source-line-no">234</span><span id="line-234">    public void upload(</span>
-<span class="source-line-no">235</span><span id="line-235">            final @NonNull Plot plot,</span>
-<span class="source-line-no">236</span><span id="line-236">            final @Nullable UUID uuid,</span>
-<span class="source-line-no">237</span><span id="line-237">            final @Nullable String file,</span>
-<span class="source-line-no">238</span><span id="line-238">            final @NonNull RunnableVal&lt;URL&gt; whenDone</span>
-<span class="source-line-no">239</span><span id="line-239">    ) {</span>
-<span class="source-line-no">240</span><span id="line-240">        plot.getHome(home -&gt; SchematicHandler.upload(uuid, file, "zip", new RunnableVal&lt;&gt;() {</span>
-<span class="source-line-no">241</span><span id="line-241">            @Override</span>
-<span class="source-line-no">242</span><span id="line-242">            public void run(OutputStream output) {</span>
-<span class="source-line-no">243</span><span id="line-243">                try (final ZipOutputStream zos = new ZipOutputStream(output)) {</span>
-<span class="source-line-no">244</span><span id="line-244">                    File dat = getDat(plot.getWorldName());</span>
-<span class="source-line-no">245</span><span id="line-245">                    Location spawn = getSpawn(plot.getWorldName());</span>
-<span class="source-line-no">246</span><span id="line-246">                    if (dat != null) {</span>
-<span class="source-line-no">247</span><span id="line-247">                        ZipEntry ze = new ZipEntry("world" + File.separator + dat.getName());</span>
-<span class="source-line-no">248</span><span id="line-248">                        zos.putNextEntry(ze);</span>
-<span class="source-line-no">249</span><span id="line-249">                        try (NBTInputStream nis = new NBTInputStream(new GZIPInputStream(new FileInputStream(dat)))) {</span>
-<span class="source-line-no">250</span><span id="line-250">                            Map&lt;String, Tag&gt; tag = ((CompoundTag) nis.readNamedTag().getTag()).getValue();</span>
-<span class="source-line-no">251</span><span id="line-251">                            Map&lt;String, Tag&gt; newMap = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">252</span><span id="line-252">                            for (Map.Entry&lt;String, Tag&gt; entry : tag.entrySet()) {</span>
-<span class="source-line-no">253</span><span id="line-253">                                if (!entry.getKey().equals("Data")) {</span>
-<span class="source-line-no">254</span><span id="line-254">                                    newMap.put(entry.getKey(), entry.getValue());</span>
-<span class="source-line-no">255</span><span id="line-255">                                    continue;</span>
-<span class="source-line-no">256</span><span id="line-256">                                }</span>
-<span class="source-line-no">257</span><span id="line-257">                                Map&lt;String, Tag&gt; data = new HashMap&lt;&gt;(((CompoundTag) entry.getValue()).getValue());</span>
-<span class="source-line-no">258</span><span id="line-258">                                data.put("SpawnX", new IntTag(home.getX()));</span>
-<span class="source-line-no">259</span><span id="line-259">                                data.put("SpawnY", new IntTag(home.getY()));</span>
-<span class="source-line-no">260</span><span id="line-260">                                data.put("SpawnZ", new IntTag(home.getZ()));</span>
-<span class="source-line-no">261</span><span id="line-261">                                newMap.put("Data", new CompoundTag(data));</span>
-<span class="source-line-no">262</span><span id="line-262">                            }</span>
-<span class="source-line-no">263</span><span id="line-263">                            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {</span>
-<span class="source-line-no">264</span><span id="line-264">                                try (NBTOutputStream out = new NBTOutputStream(new GZIPOutputStream(baos, true))) {</span>
-<span class="source-line-no">265</span><span id="line-265">                                    //TODO Find what this should be called</span>
-<span class="source-line-no">266</span><span id="line-266">                                    out.writeNamedTag("Schematic????", new CompoundTag(newMap));</span>
-<span class="source-line-no">267</span><span id="line-267">                                }</span>
-<span class="source-line-no">268</span><span id="line-268">                                zos.write(baos.toByteArray());</span>
-<span class="source-line-no">269</span><span id="line-269">                            }</span>
-<span class="source-line-no">270</span><span id="line-270">                        }</span>
-<span class="source-line-no">271</span><span id="line-271">                    }</span>
-<span class="source-line-no">272</span><span id="line-272">                    setSpawn(spawn);</span>
-<span class="source-line-no">273</span><span id="line-273">                    byte[] buffer = new byte[1024];</span>
-<span class="source-line-no">274</span><span id="line-274">                    Set&lt;BlockVector2&gt; added = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">275</span><span id="line-275">                    for (Plot current : plot.getConnectedPlots()) {</span>
-<span class="source-line-no">276</span><span id="line-276">                        Location bot = current.getBottomAbs();</span>
-<span class="source-line-no">277</span><span id="line-277">                        Location top = current.getTopAbs();</span>
-<span class="source-line-no">278</span><span id="line-278">                        int brx = bot.getX() &gt;&gt; 9;</span>
-<span class="source-line-no">279</span><span id="line-279">                        int brz = bot.getZ() &gt;&gt; 9;</span>
-<span class="source-line-no">280</span><span id="line-280">                        int trx = top.getX() &gt;&gt; 9;</span>
-<span class="source-line-no">281</span><span id="line-281">                        int trz = top.getZ() &gt;&gt; 9;</span>
-<span class="source-line-no">282</span><span id="line-282">                        Set&lt;BlockVector2&gt; files = getChunkChunks(bot.getWorldName());</span>
-<span class="source-line-no">283</span><span id="line-283">                        for (BlockVector2 mca : files) {</span>
-<span class="source-line-no">284</span><span id="line-284">                            if (mca.getX() &gt;= brx &amp;&amp; mca.getX() &lt;= trx &amp;&amp; mca.getZ() &gt;= brz &amp;&amp; mca.getZ() &lt;= trz &amp;&amp; !added.contains(mca)) {</span>
-<span class="source-line-no">285</span><span id="line-285">                                final File file = getMcr(plot.getWorldName(), mca.getX(), mca.getZ());</span>
-<span class="source-line-no">286</span><span id="line-286">                                if (file != null) {</span>
-<span class="source-line-no">287</span><span id="line-287">                                    //final String name = "r." + (x - cx) + "." + (z - cz) + ".mca";</span>
-<span class="source-line-no">288</span><span id="line-288">                                    String name = file.getName();</span>
-<span class="source-line-no">289</span><span id="line-289">                                    final ZipEntry ze = new ZipEntry("world" + File.separator + "region" + File.separator + name);</span>
-<span class="source-line-no">290</span><span id="line-290">                                    zos.putNextEntry(ze);</span>
-<span class="source-line-no">291</span><span id="line-291">                                    added.add(mca);</span>
-<span class="source-line-no">292</span><span id="line-292">                                    try (FileInputStream in = new FileInputStream(file)) {</span>
-<span class="source-line-no">293</span><span id="line-293">                                        int len;</span>
-<span class="source-line-no">294</span><span id="line-294">                                        while ((len = in.read(buffer)) &gt; 0) {</span>
-<span class="source-line-no">295</span><span id="line-295">                                            zos.write(buffer, 0, len);</span>
-<span class="source-line-no">296</span><span id="line-296">                                        }</span>
-<span class="source-line-no">297</span><span id="line-297">                                    }</span>
-<span class="source-line-no">298</span><span id="line-298">                                    zos.closeEntry();</span>
-<span class="source-line-no">299</span><span id="line-299">                                }</span>
-<span class="source-line-no">300</span><span id="line-300">                            }</span>
-<span class="source-line-no">301</span><span id="line-301">                        }</span>
-<span class="source-line-no">302</span><span id="line-302">                    }</span>
-<span class="source-line-no">303</span><span id="line-303">                    zos.closeEntry();</span>
-<span class="source-line-no">304</span><span id="line-304">                    zos.flush();</span>
-<span class="source-line-no">305</span><span id="line-305">                    zos.finish();</span>
-<span class="source-line-no">306</span><span id="line-306">                } catch (IOException e) {</span>
-<span class="source-line-no">307</span><span id="line-307">                    e.printStackTrace();</span>
-<span class="source-line-no">308</span><span id="line-308">                }</span>
-<span class="source-line-no">309</span><span id="line-309">            }</span>
-<span class="source-line-no">310</span><span id="line-310">        }, whenDone));</span>
-<span class="source-line-no">311</span><span id="line-311">    }</span>
-<span class="source-line-no">312</span><span id="line-312"></span>
-<span class="source-line-no">313</span><span id="line-313">    final @Nullable File getDat(final @NonNull String world) {</span>
-<span class="source-line-no">314</span><span id="line-314">        File file = new File(PlotSquared.platform().worldContainer() + File.separator + world + File.separator + "level.dat");</span>
-<span class="source-line-no">315</span><span id="line-315">        if (file.exists()) {</span>
-<span class="source-line-no">316</span><span id="line-316">            return file;</span>
-<span class="source-line-no">317</span><span id="line-317">        }</span>
-<span class="source-line-no">318</span><span id="line-318">        return null;</span>
-<span class="source-line-no">319</span><span id="line-319">    }</span>
-<span class="source-line-no">320</span><span id="line-320"></span>
-<span class="source-line-no">321</span><span id="line-321">    @Nullable</span>
-<span class="source-line-no">322</span><span id="line-322">    private File getMcr(final @NonNull String world, final int x, final int z) {</span>
-<span class="source-line-no">323</span><span id="line-323">        final File file =</span>
-<span class="source-line-no">324</span><span id="line-324">                new File(</span>
-<span class="source-line-no">325</span><span id="line-325">                        PlotSquared.platform().worldContainer(),</span>
-<span class="source-line-no">326</span><span id="line-326">                        world + File.separator + "region" + File.separator + "r." + x + '.' + z + ".mca"</span>
-<span class="source-line-no">327</span><span id="line-327">                );</span>
-<span class="source-line-no">328</span><span id="line-328">        if (file.exists()) {</span>
-<span class="source-line-no">329</span><span id="line-329">            return file;</span>
-<span class="source-line-no">330</span><span id="line-330">        }</span>
-<span class="source-line-no">331</span><span id="line-331">        return null;</span>
-<span class="source-line-no">332</span><span id="line-332">    }</span>
-<span class="source-line-no">333</span><span id="line-333"></span>
-<span class="source-line-no">334</span><span id="line-334"></span>
-<span class="source-line-no">335</span><span id="line-335">    public Set&lt;BlockVector2&gt; getChunkChunks(String world) {</span>
-<span class="source-line-no">336</span><span id="line-336">        File folder = new File(PlotSquared.platform().worldContainer(), world + File.separator + "region");</span>
-<span class="source-line-no">337</span><span id="line-337">        File[] regionFiles = folder.listFiles();</span>
-<span class="source-line-no">338</span><span id="line-338">        if (regionFiles == null) {</span>
-<span class="source-line-no">339</span><span id="line-339">            throw new RuntimeException("Could not find worlds folder: " + folder + " ? (no read access?)");</span>
-<span class="source-line-no">340</span><span id="line-340">        }</span>
-<span class="source-line-no">341</span><span id="line-341">        HashSet&lt;BlockVector2&gt; chunks = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">342</span><span id="line-342">        for (File file : regionFiles) {</span>
-<span class="source-line-no">343</span><span id="line-343">            String name = file.getName();</span>
-<span class="source-line-no">344</span><span id="line-344">            if (name.endsWith("mca")) {</span>
-<span class="source-line-no">345</span><span id="line-345">                String[] split = name.split("\\.");</span>
-<span class="source-line-no">346</span><span id="line-346">                try {</span>
-<span class="source-line-no">347</span><span id="line-347">                    int x = Integer.parseInt(split[1]);</span>
-<span class="source-line-no">348</span><span id="line-348">                    int z = Integer.parseInt(split[2]);</span>
-<span class="source-line-no">349</span><span id="line-349">                    BlockVector2 loc = BlockVector2.at(x, z);</span>
-<span class="source-line-no">350</span><span id="line-350">                    chunks.add(loc);</span>
-<span class="source-line-no">351</span><span id="line-351">                } catch (NumberFormatException ignored) {</span>
-<span class="source-line-no">352</span><span id="line-352">                }</span>
-<span class="source-line-no">353</span><span id="line-353">            }</span>
-<span class="source-line-no">354</span><span id="line-354">        }</span>
-<span class="source-line-no">355</span><span id="line-355">        return chunks;</span>
-<span class="source-line-no">356</span><span id="line-356">    }</span>
-<span class="source-line-no">357</span><span id="line-357"></span>
-<span class="source-line-no">358</span><span id="line-358">    /**</span>
-<span class="source-line-no">359</span><span id="line-359">     * Check if two blocks are the same type)</span>
-<span class="source-line-no">360</span><span id="line-360">     *</span>
-<span class="source-line-no">361</span><span id="line-361">     * @param block1 First block</span>
-<span class="source-line-no">362</span><span id="line-362">     * @param block2 Second block</span>
-<span class="source-line-no">363</span><span id="line-363">     * @return {@code true} if the blocks have the same type, {@code false} if not</span>
-<span class="source-line-no">364</span><span id="line-364">     */</span>
-<span class="source-line-no">365</span><span id="line-365">    public abstract boolean isBlockSame(@NonNull BlockState block1, @NonNull BlockState block2);</span>
-<span class="source-line-no">366</span><span id="line-366"></span>
-<span class="source-line-no">367</span><span id="line-367">    /**</span>
-<span class="source-line-no">368</span><span id="line-368">     * Get the player health</span>
-<span class="source-line-no">369</span><span id="line-369">     *</span>
-<span class="source-line-no">370</span><span id="line-370">     * @param player Player</span>
-<span class="source-line-no">371</span><span id="line-371">     * @return Non-negative health</span>
-<span class="source-line-no">372</span><span id="line-372">     */</span>
-<span class="source-line-no">373</span><span id="line-373">    @NonNegative</span>
-<span class="source-line-no">374</span><span id="line-374">    public abstract double getHealth(@NonNull PlotPlayer&lt;?&gt; player);</span>
-<span class="source-line-no">375</span><span id="line-375"></span>
-<span class="source-line-no">376</span><span id="line-376">    /**</span>
-<span class="source-line-no">377</span><span id="line-377">     * Set the player health</span>
-<span class="source-line-no">378</span><span id="line-378">     *</span>
-<span class="source-line-no">379</span><span id="line-379">     * @param player Player health</span>
-<span class="source-line-no">380</span><span id="line-380">     * @param health Non-negative health</span>
-<span class="source-line-no">381</span><span id="line-381">     */</span>
-<span class="source-line-no">382</span><span id="line-382">    public abstract void setHealth(@NonNull PlotPlayer&lt;?&gt; player, @NonNegative double health);</span>
-<span class="source-line-no">383</span><span id="line-383"></span>
-<span class="source-line-no">384</span><span id="line-384">    /**</span>
-<span class="source-line-no">385</span><span id="line-385">     * Get the player food level</span>
-<span class="source-line-no">386</span><span id="line-386">     *</span>
-<span class="source-line-no">387</span><span id="line-387">     * @param player Player</span>
-<span class="source-line-no">388</span><span id="line-388">     * @return Non-negative food level</span>
-<span class="source-line-no">389</span><span id="line-389">     */</span>
-<span class="source-line-no">390</span><span id="line-390">    @NonNegative</span>
-<span class="source-line-no">391</span><span id="line-391">    public abstract int getFoodLevel(@NonNull PlotPlayer&lt;?&gt; player);</span>
-<span class="source-line-no">392</span><span id="line-392"></span>
-<span class="source-line-no">393</span><span id="line-393">    /**</span>
-<span class="source-line-no">394</span><span id="line-394">     * Set the player food level</span>
-<span class="source-line-no">395</span><span id="line-395">     *</span>
-<span class="source-line-no">396</span><span id="line-396">     * @param player    Player food level</span>
-<span class="source-line-no">397</span><span id="line-397">     * @param foodLevel Non-negative food level</span>
-<span class="source-line-no">398</span><span id="line-398">     */</span>
-<span class="source-line-no">399</span><span id="line-399">    public abstract void setFoodLevel(@NonNull PlotPlayer&lt;?&gt; player, @NonNegative int foodLevel);</span>
-<span class="source-line-no">400</span><span id="line-400"></span>
-<span class="source-line-no">401</span><span id="line-401">    /**</span>
-<span class="source-line-no">402</span><span id="line-402">     * Get all entity types belonging to an entity category</span>
-<span class="source-line-no">403</span><span id="line-403">     *</span>
-<span class="source-line-no">404</span><span id="line-404">     * @param category Entity category</span>
-<span class="source-line-no">405</span><span id="line-405">     * @return Set containing all entities belonging to the given category</span>
-<span class="source-line-no">406</span><span id="line-406">     */</span>
-<span class="source-line-no">407</span><span id="line-407">    public @NonNull</span>
-<span class="source-line-no">408</span><span id="line-408">    abstract Set&lt;EntityType&gt; getTypesInCategory(@NonNull String category);</span>
-<span class="source-line-no">409</span><span id="line-409"></span>
-<span class="source-line-no">410</span><span id="line-410">    /**</span>
-<span class="source-line-no">411</span><span id="line-411">     * Get all recognized tile entity types</span>
-<span class="source-line-no">412</span><span id="line-412">     *</span>
-<span class="source-line-no">413</span><span id="line-413">     * @return Collection containing all known tile entity types</span>
-<span class="source-line-no">414</span><span id="line-414">     */</span>
-<span class="source-line-no">415</span><span id="line-415">    public @NonNull</span>
-<span class="source-line-no">416</span><span id="line-416">    abstract Collection&lt;BlockType&gt; getTileEntityTypes();</span>
-<span class="source-line-no">417</span><span id="line-417"></span>
-<span class="source-line-no">418</span><span id="line-418">    /**</span>
-<span class="source-line-no">419</span><span id="line-419">     * Get the tile entity count in a chunk</span>
-<span class="source-line-no">420</span><span id="line-420">     *</span>
-<span class="source-line-no">421</span><span id="line-421">     * @param world World</span>
-<span class="source-line-no">422</span><span id="line-422">     * @param chunk Chunk coordinates</span>
-<span class="source-line-no">423</span><span id="line-423">     * @return Tile entity count</span>
-<span class="source-line-no">424</span><span id="line-424">     */</span>
-<span class="source-line-no">425</span><span id="line-425">    @NonNegative</span>
-<span class="source-line-no">426</span><span id="line-426">    public abstract int getTileEntityCount(@NonNull String world, @NonNull BlockVector2 chunk);</span>
-<span class="source-line-no">427</span><span id="line-427"></span>
-<span class="source-line-no">428</span><span id="line-428">}</span>
+<span class="source-line-no">234</span><span id="line-234">    /**</span>
+<span class="source-line-no">235</span><span id="line-235">     * The legacy web interface is deprecated for removal in favor of Arkitektonika.</span>
+<span class="source-line-no">236</span><span id="line-236">     */</span>
+<span class="source-line-no">237</span><span id="line-237">    @Deprecated(forRemoval = true, since = "TODO")</span>
+<span class="source-line-no">238</span><span id="line-238">    public void upload(</span>
+<span class="source-line-no">239</span><span id="line-239">            final @NonNull Plot plot,</span>
+<span class="source-line-no">240</span><span id="line-240">            final @Nullable UUID uuid,</span>
+<span class="source-line-no">241</span><span id="line-241">            final @Nullable String file,</span>
+<span class="source-line-no">242</span><span id="line-242">            final @NonNull RunnableVal&lt;URL&gt; whenDone</span>
+<span class="source-line-no">243</span><span id="line-243">    ) {</span>
+<span class="source-line-no">244</span><span id="line-244">        plot.getHome(home -&gt; SchematicHandler.upload(uuid, file, "zip", new RunnableVal&lt;&gt;() {</span>
+<span class="source-line-no">245</span><span id="line-245">            @Override</span>
+<span class="source-line-no">246</span><span id="line-246">            public void run(OutputStream output) {</span>
+<span class="source-line-no">247</span><span id="line-247">                try (final ZipOutputStream zos = new ZipOutputStream(output)) {</span>
+<span class="source-line-no">248</span><span id="line-248">                    File dat = getDat(plot.getWorldName());</span>
+<span class="source-line-no">249</span><span id="line-249">                    Location spawn = getSpawn(plot.getWorldName());</span>
+<span class="source-line-no">250</span><span id="line-250">                    if (dat != null) {</span>
+<span class="source-line-no">251</span><span id="line-251">                        ZipEntry ze = new ZipEntry("world" + File.separator + dat.getName());</span>
+<span class="source-line-no">252</span><span id="line-252">                        zos.putNextEntry(ze);</span>
+<span class="source-line-no">253</span><span id="line-253">                        try (NBTInputStream nis = new NBTInputStream(new GZIPInputStream(new FileInputStream(dat)))) {</span>
+<span class="source-line-no">254</span><span id="line-254">                            Map&lt;String, Tag&gt; tag = ((CompoundTag) nis.readNamedTag().getTag()).getValue();</span>
+<span class="source-line-no">255</span><span id="line-255">                            Map&lt;String, Tag&gt; newMap = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">256</span><span id="line-256">                            for (Map.Entry&lt;String, Tag&gt; entry : tag.entrySet()) {</span>
+<span class="source-line-no">257</span><span id="line-257">                                if (!entry.getKey().equals("Data")) {</span>
+<span class="source-line-no">258</span><span id="line-258">                                    newMap.put(entry.getKey(), entry.getValue());</span>
+<span class="source-line-no">259</span><span id="line-259">                                    continue;</span>
+<span class="source-line-no">260</span><span id="line-260">                                }</span>
+<span class="source-line-no">261</span><span id="line-261">                                Map&lt;String, Tag&gt; data = new HashMap&lt;&gt;(((CompoundTag) entry.getValue()).getValue());</span>
+<span class="source-line-no">262</span><span id="line-262">                                data.put("SpawnX", new IntTag(home.getX()));</span>
+<span class="source-line-no">263</span><span id="line-263">                                data.put("SpawnY", new IntTag(home.getY()));</span>
+<span class="source-line-no">264</span><span id="line-264">                                data.put("SpawnZ", new IntTag(home.getZ()));</span>
+<span class="source-line-no">265</span><span id="line-265">                                newMap.put("Data", new CompoundTag(data));</span>
+<span class="source-line-no">266</span><span id="line-266">                            }</span>
+<span class="source-line-no">267</span><span id="line-267">                            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {</span>
+<span class="source-line-no">268</span><span id="line-268">                                try (NBTOutputStream out = new NBTOutputStream(new GZIPOutputStream(baos, true))) {</span>
+<span class="source-line-no">269</span><span id="line-269">                                    //TODO Find what this should be called</span>
+<span class="source-line-no">270</span><span id="line-270">                                    out.writeNamedTag("Schematic????", new CompoundTag(newMap));</span>
+<span class="source-line-no">271</span><span id="line-271">                                }</span>
+<span class="source-line-no">272</span><span id="line-272">                                zos.write(baos.toByteArray());</span>
+<span class="source-line-no">273</span><span id="line-273">                            }</span>
+<span class="source-line-no">274</span><span id="line-274">                        }</span>
+<span class="source-line-no">275</span><span id="line-275">                    }</span>
+<span class="source-line-no">276</span><span id="line-276">                    setSpawn(spawn);</span>
+<span class="source-line-no">277</span><span id="line-277">                    byte[] buffer = new byte[1024];</span>
+<span class="source-line-no">278</span><span id="line-278">                    Set&lt;BlockVector2&gt; added = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">279</span><span id="line-279">                    for (Plot current : plot.getConnectedPlots()) {</span>
+<span class="source-line-no">280</span><span id="line-280">                        Location bot = current.getBottomAbs();</span>
+<span class="source-line-no">281</span><span id="line-281">                        Location top = current.getTopAbs();</span>
+<span class="source-line-no">282</span><span id="line-282">                        int brx = bot.getX() &gt;&gt; 9;</span>
+<span class="source-line-no">283</span><span id="line-283">                        int brz = bot.getZ() &gt;&gt; 9;</span>
+<span class="source-line-no">284</span><span id="line-284">                        int trx = top.getX() &gt;&gt; 9;</span>
+<span class="source-line-no">285</span><span id="line-285">                        int trz = top.getZ() &gt;&gt; 9;</span>
+<span class="source-line-no">286</span><span id="line-286">                        Set&lt;BlockVector2&gt; files = getChunkChunks(bot.getWorldName());</span>
+<span class="source-line-no">287</span><span id="line-287">                        for (BlockVector2 mca : files) {</span>
+<span class="source-line-no">288</span><span id="line-288">                            if (mca.getX() &gt;= brx &amp;&amp; mca.getX() &lt;= trx &amp;&amp; mca.getZ() &gt;= brz &amp;&amp; mca.getZ() &lt;= trz &amp;&amp; !added.contains(mca)) {</span>
+<span class="source-line-no">289</span><span id="line-289">                                final File file = getMcr(plot.getWorldName(), mca.getX(), mca.getZ());</span>
+<span class="source-line-no">290</span><span id="line-290">                                if (file != null) {</span>
+<span class="source-line-no">291</span><span id="line-291">                                    //final String name = "r." + (x - cx) + "." + (z - cz) + ".mca";</span>
+<span class="source-line-no">292</span><span id="line-292">                                    String name = file.getName();</span>
+<span class="source-line-no">293</span><span id="line-293">                                    final ZipEntry ze = new ZipEntry("world" + File.separator + "region" + File.separator + name);</span>
+<span class="source-line-no">294</span><span id="line-294">                                    zos.putNextEntry(ze);</span>
+<span class="source-line-no">295</span><span id="line-295">                                    added.add(mca);</span>
+<span class="source-line-no">296</span><span id="line-296">                                    try (FileInputStream in = new FileInputStream(file)) {</span>
+<span class="source-line-no">297</span><span id="line-297">                                        int len;</span>
+<span class="source-line-no">298</span><span id="line-298">                                        while ((len = in.read(buffer)) &gt; 0) {</span>
+<span class="source-line-no">299</span><span id="line-299">                                            zos.write(buffer, 0, len);</span>
+<span class="source-line-no">300</span><span id="line-300">                                        }</span>
+<span class="source-line-no">301</span><span id="line-301">                                    }</span>
+<span class="source-line-no">302</span><span id="line-302">                                    zos.closeEntry();</span>
+<span class="source-line-no">303</span><span id="line-303">                                }</span>
+<span class="source-line-no">304</span><span id="line-304">                            }</span>
+<span class="source-line-no">305</span><span id="line-305">                        }</span>
+<span class="source-line-no">306</span><span id="line-306">                    }</span>
+<span class="source-line-no">307</span><span id="line-307">                    zos.closeEntry();</span>
+<span class="source-line-no">308</span><span id="line-308">                    zos.flush();</span>
+<span class="source-line-no">309</span><span id="line-309">                    zos.finish();</span>
+<span class="source-line-no">310</span><span id="line-310">                } catch (IOException e) {</span>
+<span class="source-line-no">311</span><span id="line-311">                    e.printStackTrace();</span>
+<span class="source-line-no">312</span><span id="line-312">                }</span>
+<span class="source-line-no">313</span><span id="line-313">            }</span>
+<span class="source-line-no">314</span><span id="line-314">        }, whenDone));</span>
+<span class="source-line-no">315</span><span id="line-315">    }</span>
+<span class="source-line-no">316</span><span id="line-316"></span>
+<span class="source-line-no">317</span><span id="line-317">    final @Nullable File getDat(final @NonNull String world) {</span>
+<span class="source-line-no">318</span><span id="line-318">        File file = new File(PlotSquared.platform().worldContainer() + File.separator + world + File.separator + "level.dat");</span>
+<span class="source-line-no">319</span><span id="line-319">        if (file.exists()) {</span>
+<span class="source-line-no">320</span><span id="line-320">            return file;</span>
+<span class="source-line-no">321</span><span id="line-321">        }</span>
+<span class="source-line-no">322</span><span id="line-322">        return null;</span>
+<span class="source-line-no">323</span><span id="line-323">    }</span>
+<span class="source-line-no">324</span><span id="line-324"></span>
+<span class="source-line-no">325</span><span id="line-325">    @Nullable</span>
+<span class="source-line-no">326</span><span id="line-326">    private File getMcr(final @NonNull String world, final int x, final int z) {</span>
+<span class="source-line-no">327</span><span id="line-327">        final File file =</span>
+<span class="source-line-no">328</span><span id="line-328">                new File(</span>
+<span class="source-line-no">329</span><span id="line-329">                        PlotSquared.platform().worldContainer(),</span>
+<span class="source-line-no">330</span><span id="line-330">                        world + File.separator + "region" + File.separator + "r." + x + '.' + z + ".mca"</span>
+<span class="source-line-no">331</span><span id="line-331">                );</span>
+<span class="source-line-no">332</span><span id="line-332">        if (file.exists()) {</span>
+<span class="source-line-no">333</span><span id="line-333">            return file;</span>
+<span class="source-line-no">334</span><span id="line-334">        }</span>
+<span class="source-line-no">335</span><span id="line-335">        return null;</span>
+<span class="source-line-no">336</span><span id="line-336">    }</span>
+<span class="source-line-no">337</span><span id="line-337"></span>
+<span class="source-line-no">338</span><span id="line-338"></span>
+<span class="source-line-no">339</span><span id="line-339">    public Set&lt;BlockVector2&gt; getChunkChunks(String world) {</span>
+<span class="source-line-no">340</span><span id="line-340">        File folder = new File(PlotSquared.platform().worldContainer(), world + File.separator + "region");</span>
+<span class="source-line-no">341</span><span id="line-341">        File[] regionFiles = folder.listFiles();</span>
+<span class="source-line-no">342</span><span id="line-342">        if (regionFiles == null) {</span>
+<span class="source-line-no">343</span><span id="line-343">            throw new RuntimeException("Could not find worlds folder: " + folder + " ? (no read access?)");</span>
+<span class="source-line-no">344</span><span id="line-344">        }</span>
+<span class="source-line-no">345</span><span id="line-345">        HashSet&lt;BlockVector2&gt; chunks = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">346</span><span id="line-346">        for (File file : regionFiles) {</span>
+<span class="source-line-no">347</span><span id="line-347">            String name = file.getName();</span>
+<span class="source-line-no">348</span><span id="line-348">            if (name.endsWith("mca")) {</span>
+<span class="source-line-no">349</span><span id="line-349">                String[] split = name.split("\\.");</span>
+<span class="source-line-no">350</span><span id="line-350">                try {</span>
+<span class="source-line-no">351</span><span id="line-351">                    int x = Integer.parseInt(split[1]);</span>
+<span class="source-line-no">352</span><span id="line-352">                    int z = Integer.parseInt(split[2]);</span>
+<span class="source-line-no">353</span><span id="line-353">                    BlockVector2 loc = BlockVector2.at(x, z);</span>
+<span class="source-line-no">354</span><span id="line-354">                    chunks.add(loc);</span>
+<span class="source-line-no">355</span><span id="line-355">                } catch (NumberFormatException ignored) {</span>
+<span class="source-line-no">356</span><span id="line-356">                }</span>
+<span class="source-line-no">357</span><span id="line-357">            }</span>
+<span class="source-line-no">358</span><span id="line-358">        }</span>
+<span class="source-line-no">359</span><span id="line-359">        return chunks;</span>
+<span class="source-line-no">360</span><span id="line-360">    }</span>
+<span class="source-line-no">361</span><span id="line-361"></span>
+<span class="source-line-no">362</span><span id="line-362">    /**</span>
+<span class="source-line-no">363</span><span id="line-363">     * Check if two blocks are the same type)</span>
+<span class="source-line-no">364</span><span id="line-364">     *</span>
+<span class="source-line-no">365</span><span id="line-365">     * @param block1 First block</span>
+<span class="source-line-no">366</span><span id="line-366">     * @param block2 Second block</span>
+<span class="source-line-no">367</span><span id="line-367">     * @return {@code true} if the blocks have the same type, {@code false} if not</span>
+<span class="source-line-no">368</span><span id="line-368">     */</span>
+<span class="source-line-no">369</span><span id="line-369">    public abstract boolean isBlockSame(@NonNull BlockState block1, @NonNull BlockState block2);</span>
+<span class="source-line-no">370</span><span id="line-370"></span>
+<span class="source-line-no">371</span><span id="line-371">    /**</span>
+<span class="source-line-no">372</span><span id="line-372">     * Get the player health</span>
+<span class="source-line-no">373</span><span id="line-373">     *</span>
+<span class="source-line-no">374</span><span id="line-374">     * @param player Player</span>
+<span class="source-line-no">375</span><span id="line-375">     * @return Non-negative health</span>
+<span class="source-line-no">376</span><span id="line-376">     */</span>
+<span class="source-line-no">377</span><span id="line-377">    @NonNegative</span>
+<span class="source-line-no">378</span><span id="line-378">    public abstract double getHealth(@NonNull PlotPlayer&lt;?&gt; player);</span>
+<span class="source-line-no">379</span><span id="line-379"></span>
+<span class="source-line-no">380</span><span id="line-380">    /**</span>
+<span class="source-line-no">381</span><span id="line-381">     * Set the player health</span>
+<span class="source-line-no">382</span><span id="line-382">     *</span>
+<span class="source-line-no">383</span><span id="line-383">     * @param player Player health</span>
+<span class="source-line-no">384</span><span id="line-384">     * @param health Non-negative health</span>
+<span class="source-line-no">385</span><span id="line-385">     */</span>
+<span class="source-line-no">386</span><span id="line-386">    public abstract void setHealth(@NonNull PlotPlayer&lt;?&gt; player, @NonNegative double health);</span>
+<span class="source-line-no">387</span><span id="line-387"></span>
+<span class="source-line-no">388</span><span id="line-388">    /**</span>
+<span class="source-line-no">389</span><span id="line-389">     * Get the player food level</span>
+<span class="source-line-no">390</span><span id="line-390">     *</span>
+<span class="source-line-no">391</span><span id="line-391">     * @param player Player</span>
+<span class="source-line-no">392</span><span id="line-392">     * @return Non-negative food level</span>
+<span class="source-line-no">393</span><span id="line-393">     */</span>
+<span class="source-line-no">394</span><span id="line-394">    @NonNegative</span>
+<span class="source-line-no">395</span><span id="line-395">    public abstract int getFoodLevel(@NonNull PlotPlayer&lt;?&gt; player);</span>
+<span class="source-line-no">396</span><span id="line-396"></span>
+<span class="source-line-no">397</span><span id="line-397">    /**</span>
+<span class="source-line-no">398</span><span id="line-398">     * Set the player food level</span>
+<span class="source-line-no">399</span><span id="line-399">     *</span>
+<span class="source-line-no">400</span><span id="line-400">     * @param player    Player food level</span>
+<span class="source-line-no">401</span><span id="line-401">     * @param foodLevel Non-negative food level</span>
+<span class="source-line-no">402</span><span id="line-402">     */</span>
+<span class="source-line-no">403</span><span id="line-403">    public abstract void setFoodLevel(@NonNull PlotPlayer&lt;?&gt; player, @NonNegative int foodLevel);</span>
+<span class="source-line-no">404</span><span id="line-404"></span>
+<span class="source-line-no">405</span><span id="line-405">    /**</span>
+<span class="source-line-no">406</span><span id="line-406">     * Get all entity types belonging to an entity category</span>
+<span class="source-line-no">407</span><span id="line-407">     *</span>
+<span class="source-line-no">408</span><span id="line-408">     * @param category Entity category</span>
+<span class="source-line-no">409</span><span id="line-409">     * @return Set containing all entities belonging to the given category</span>
+<span class="source-line-no">410</span><span id="line-410">     */</span>
+<span class="source-line-no">411</span><span id="line-411">    public @NonNull</span>
+<span class="source-line-no">412</span><span id="line-412">    abstract Set&lt;EntityType&gt; getTypesInCategory(@NonNull String category);</span>
+<span class="source-line-no">413</span><span id="line-413"></span>
+<span class="source-line-no">414</span><span id="line-414">    /**</span>
+<span class="source-line-no">415</span><span id="line-415">     * Get all recognized tile entity types</span>
+<span class="source-line-no">416</span><span id="line-416">     *</span>
+<span class="source-line-no">417</span><span id="line-417">     * @return Collection containing all known tile entity types</span>
+<span class="source-line-no">418</span><span id="line-418">     */</span>
+<span class="source-line-no">419</span><span id="line-419">    public @NonNull</span>
+<span class="source-line-no">420</span><span id="line-420">    abstract Collection&lt;BlockType&gt; getTileEntityTypes();</span>
+<span class="source-line-no">421</span><span id="line-421"></span>
+<span class="source-line-no">422</span><span id="line-422">    /**</span>
+<span class="source-line-no">423</span><span id="line-423">     * Get the tile entity count in a chunk</span>
+<span class="source-line-no">424</span><span id="line-424">     *</span>
+<span class="source-line-no">425</span><span id="line-425">     * @param world World</span>
+<span class="source-line-no">426</span><span id="line-426">     * @param chunk Chunk coordinates</span>
+<span class="source-line-no">427</span><span id="line-427">     * @return Tile entity count</span>
+<span class="source-line-no">428</span><span id="line-428">     */</span>
+<span class="source-line-no">429</span><span id="line-429">    @NonNegative</span>
+<span class="source-line-no">430</span><span id="line-430">    public abstract int getTileEntityCount(@NonNull String world, @NonNull BlockVector2 chunk);</span>
+<span class="source-line-no">431</span><span id="line-431"></span>
+<span class="source-line-no">432</span><span id="line-432">}</span>
 
 
 

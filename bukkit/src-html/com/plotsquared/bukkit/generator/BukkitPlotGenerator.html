@@ -174,123 +174,129 @@
 <span class="source-line-no">161</span><span id="line-161">        world.setWaterAnimalSpawnLimit(limit);</span>
 <span class="source-line-no">162</span><span id="line-162">    }</span>
 <span class="source-line-no">163</span><span id="line-163"></span>
-<span class="source-line-no">164</span><span id="line-164">    @Override</span>
-<span class="source-line-no">165</span><span id="line-165">    public @NonNull ChunkData generateChunkData(</span>
-<span class="source-line-no">166</span><span id="line-166">            @NonNull World world, @NonNull Random random, int x, int z,</span>
-<span class="source-line-no">167</span><span id="line-167">            @NonNull BiomeGrid biome</span>
-<span class="source-line-no">168</span><span id="line-168">    ) {</span>
-<span class="source-line-no">169</span><span id="line-169">        int minY = BukkitWorld.getMinWorldHeight(world);</span>
-<span class="source-line-no">170</span><span id="line-170">        int maxY = BukkitWorld.getMaxWorldHeight(world);</span>
-<span class="source-line-no">171</span><span id="line-171">        GenChunk result = new GenChunk(minY, maxY);</span>
-<span class="source-line-no">172</span><span id="line-172">        if (this.getPlotGenerator() instanceof SingleWorldGenerator) {</span>
-<span class="source-line-no">173</span><span id="line-173">            if (result.getChunkData() != null) {</span>
-<span class="source-line-no">174</span><span id="line-174">                for (int chunkX = 0; chunkX &lt; 16; chunkX++) {</span>
-<span class="source-line-no">175</span><span id="line-175">                    for (int chunkZ = 0; chunkZ &lt; 16; chunkZ++) {</span>
-<span class="source-line-no">176</span><span id="line-176">                        for (int y = minY; y &lt; maxY; y++) {</span>
-<span class="source-line-no">177</span><span id="line-177">                            biome.setBiome(chunkX, y, chunkZ, Biome.PLAINS);</span>
-<span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">                        }</span>
-<span class="source-line-no">180</span><span id="line-180">                    }</span>
-<span class="source-line-no">181</span><span id="line-181">                }</span>
-<span class="source-line-no">182</span><span id="line-182">                return result.getChunkData();</span>
-<span class="source-line-no">183</span><span id="line-183">            }</span>
-<span class="source-line-no">184</span><span id="line-184">        }</span>
-<span class="source-line-no">185</span><span id="line-185">        // Set the chunk location</span>
-<span class="source-line-no">186</span><span id="line-186">        result.setChunk(new ChunkWrapper(world.getName(), x, z));</span>
-<span class="source-line-no">187</span><span id="line-187">        // Set the result data</span>
-<span class="source-line-no">188</span><span id="line-188">        result.setChunkData(createChunkData(world));</span>
-<span class="source-line-no">189</span><span id="line-189">        result.biomeGrid = biome;</span>
-<span class="source-line-no">190</span><span id="line-190">        result.result = null;</span>
-<span class="source-line-no">191</span><span id="line-191"></span>
-<span class="source-line-no">192</span><span id="line-192">        // Catch any exceptions (as exceptions usually thrown)</span>
-<span class="source-line-no">193</span><span id="line-193">        try {</span>
-<span class="source-line-no">194</span><span id="line-194">            // Fill the result data if necessary</span>
-<span class="source-line-no">195</span><span id="line-195">            if (this.platformGenerator != this) {</span>
-<span class="source-line-no">196</span><span id="line-196">                return this.platformGenerator.generateChunkData(world, random, x, z, biome);</span>
-<span class="source-line-no">197</span><span id="line-197">            } else {</span>
-<span class="source-line-no">198</span><span id="line-198">                generate(BlockVector2.at(x, z), world, result);</span>
-<span class="source-line-no">199</span><span id="line-199">            }</span>
-<span class="source-line-no">200</span><span id="line-200">        } catch (Throwable e) {</span>
-<span class="source-line-no">201</span><span id="line-201">            e.printStackTrace();</span>
-<span class="source-line-no">202</span><span id="line-202">        }</span>
-<span class="source-line-no">203</span><span id="line-203">        // Return the result data</span>
-<span class="source-line-no">204</span><span id="line-204">        return result.getChunkData();</span>
-<span class="source-line-no">205</span><span id="line-205">    }</span>
-<span class="source-line-no">206</span><span id="line-206"></span>
-<span class="source-line-no">207</span><span id="line-207">    private void generate(BlockVector2 loc, World world, ScopedQueueCoordinator result) {</span>
-<span class="source-line-no">208</span><span id="line-208">        // Load if improperly loaded</span>
-<span class="source-line-no">209</span><span id="line-209">        if (!this.loaded) {</span>
-<span class="source-line-no">210</span><span id="line-210">            checkLoaded(world);</span>
-<span class="source-line-no">211</span><span id="line-211">        }</span>
-<span class="source-line-no">212</span><span id="line-212">        // Process the chunk</span>
-<span class="source-line-no">213</span><span id="line-213">        if (ChunkManager.preProcessChunk(loc, result)) {</span>
-<span class="source-line-no">214</span><span id="line-214">            return;</span>
-<span class="source-line-no">215</span><span id="line-215">        }</span>
-<span class="source-line-no">216</span><span id="line-216">        PlotArea area = this.plotAreaManager.getPlotArea(world.getName(), null);</span>
-<span class="source-line-no">217</span><span id="line-217">        if (area == null &amp;&amp; (area = this.plotAreaManager.getPlotArea(this.levelName, null)) == null) {</span>
-<span class="source-line-no">218</span><span id="line-218">            throw new IllegalStateException(</span>
-<span class="source-line-no">219</span><span id="line-219">                    "Cannot regenerate chunk that does not belong to a plot area." + " Location: " + loc</span>
-<span class="source-line-no">220</span><span id="line-220">                            + ", world: " + world);</span>
+<span class="source-line-no">164</span><span id="line-164">    /**</span>
+<span class="source-line-no">165</span><span id="line-165">     * The entire method is deprecated, but kept for compatibility with versions lower than or equal to 1.16.2.</span>
+<span class="source-line-no">166</span><span id="line-166">     * The method will be removed in future versions, because WorldEdit and FastAsyncWorldEdit only support the latest point</span>
+<span class="source-line-no">167</span><span id="line-167">     * release.</span>
+<span class="source-line-no">168</span><span id="line-168">     */</span>
+<span class="source-line-no">169</span><span id="line-169">    @Deprecated(forRemoval = true, since = "6.11.0")</span>
+<span class="source-line-no">170</span><span id="line-170">    @Override</span>
+<span class="source-line-no">171</span><span id="line-171">    public @NonNull ChunkData generateChunkData(</span>
+<span class="source-line-no">172</span><span id="line-172">            @NonNull World world, @NonNull Random random, int x, int z,</span>
+<span class="source-line-no">173</span><span id="line-173">            @NonNull BiomeGrid biome</span>
+<span class="source-line-no">174</span><span id="line-174">    ) {</span>
+<span class="source-line-no">175</span><span id="line-175">        int minY = BukkitWorld.getMinWorldHeight(world);</span>
+<span class="source-line-no">176</span><span id="line-176">        int maxY = BukkitWorld.getMaxWorldHeight(world);</span>
+<span class="source-line-no">177</span><span id="line-177">        GenChunk result = new GenChunk(minY, maxY);</span>
+<span class="source-line-no">178</span><span id="line-178">        if (this.getPlotGenerator() instanceof SingleWorldGenerator) {</span>
+<span class="source-line-no">179</span><span id="line-179">            if (result.getChunkData() != null) {</span>
+<span class="source-line-no">180</span><span id="line-180">                for (int chunkX = 0; chunkX &lt; 16; chunkX++) {</span>
+<span class="source-line-no">181</span><span id="line-181">                    for (int chunkZ = 0; chunkZ &lt; 16; chunkZ++) {</span>
+<span class="source-line-no">182</span><span id="line-182">                        for (int y = minY; y &lt; maxY; y++) {</span>
+<span class="source-line-no">183</span><span id="line-183">                            biome.setBiome(chunkX, y, chunkZ, Biome.PLAINS);</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">                        }</span>
+<span class="source-line-no">186</span><span id="line-186">                    }</span>
+<span class="source-line-no">187</span><span id="line-187">                }</span>
+<span class="source-line-no">188</span><span id="line-188">                return result.getChunkData();</span>
+<span class="source-line-no">189</span><span id="line-189">            }</span>
+<span class="source-line-no">190</span><span id="line-190">        }</span>
+<span class="source-line-no">191</span><span id="line-191">        // Set the chunk location</span>
+<span class="source-line-no">192</span><span id="line-192">        result.setChunk(new ChunkWrapper(world.getName(), x, z));</span>
+<span class="source-line-no">193</span><span id="line-193">        // Set the result data</span>
+<span class="source-line-no">194</span><span id="line-194">        result.setChunkData(createChunkData(world));</span>
+<span class="source-line-no">195</span><span id="line-195">        result.biomeGrid = biome;</span>
+<span class="source-line-no">196</span><span id="line-196">        result.result = null;</span>
+<span class="source-line-no">197</span><span id="line-197"></span>
+<span class="source-line-no">198</span><span id="line-198">        // Catch any exceptions (as exceptions usually thrown)</span>
+<span class="source-line-no">199</span><span id="line-199">        try {</span>
+<span class="source-line-no">200</span><span id="line-200">            // Fill the result data if necessary</span>
+<span class="source-line-no">201</span><span id="line-201">            if (this.platformGenerator != this) {</span>
+<span class="source-line-no">202</span><span id="line-202">                return this.platformGenerator.generateChunkData(world, random, x, z, biome);</span>
+<span class="source-line-no">203</span><span id="line-203">            } else {</span>
+<span class="source-line-no">204</span><span id="line-204">                generate(BlockVector2.at(x, z), world, result);</span>
+<span class="source-line-no">205</span><span id="line-205">            }</span>
+<span class="source-line-no">206</span><span id="line-206">        } catch (Throwable e) {</span>
+<span class="source-line-no">207</span><span id="line-207">            e.printStackTrace();</span>
+<span class="source-line-no">208</span><span id="line-208">        }</span>
+<span class="source-line-no">209</span><span id="line-209">        // Return the result data</span>
+<span class="source-line-no">210</span><span id="line-210">        return result.getChunkData();</span>
+<span class="source-line-no">211</span><span id="line-211">    }</span>
+<span class="source-line-no">212</span><span id="line-212"></span>
+<span class="source-line-no">213</span><span id="line-213">    private void generate(BlockVector2 loc, World world, ScopedQueueCoordinator result) {</span>
+<span class="source-line-no">214</span><span id="line-214">        // Load if improperly loaded</span>
+<span class="source-line-no">215</span><span id="line-215">        if (!this.loaded) {</span>
+<span class="source-line-no">216</span><span id="line-216">            checkLoaded(world);</span>
+<span class="source-line-no">217</span><span id="line-217">        }</span>
+<span class="source-line-no">218</span><span id="line-218">        // Process the chunk</span>
+<span class="source-line-no">219</span><span id="line-219">        if (ChunkManager.preProcessChunk(loc, result)) {</span>
+<span class="source-line-no">220</span><span id="line-220">            return;</span>
 <span class="source-line-no">221</span><span id="line-221">        }</span>
-<span class="source-line-no">222</span><span id="line-222">        try {</span>
-<span class="source-line-no">223</span><span id="line-223">            this.plotGenerator.generateChunk(result, area);</span>
-<span class="source-line-no">224</span><span id="line-224">        } catch (Throwable e) {</span>
-<span class="source-line-no">225</span><span id="line-225">            // Recover from generator error</span>
-<span class="source-line-no">226</span><span id="line-226">            e.printStackTrace();</span>
+<span class="source-line-no">222</span><span id="line-222">        PlotArea area = this.plotAreaManager.getPlotArea(world.getName(), null);</span>
+<span class="source-line-no">223</span><span id="line-223">        if (area == null &amp;&amp; (area = this.plotAreaManager.getPlotArea(this.levelName, null)) == null) {</span>
+<span class="source-line-no">224</span><span id="line-224">            throw new IllegalStateException(</span>
+<span class="source-line-no">225</span><span id="line-225">                    "Cannot regenerate chunk that does not belong to a plot area." + " Location: " + loc</span>
+<span class="source-line-no">226</span><span id="line-226">                            + ", world: " + world);</span>
 <span class="source-line-no">227</span><span id="line-227">        }</span>
-<span class="source-line-no">228</span><span id="line-228">        ChunkManager.postProcessChunk(loc, result);</span>
-<span class="source-line-no">229</span><span id="line-229">    }</span>
-<span class="source-line-no">230</span><span id="line-230"></span>
-<span class="source-line-no">231</span><span id="line-231">    @Override</span>
-<span class="source-line-no">232</span><span id="line-232">    public boolean canSpawn(final @NonNull World world, final int x, final int z) {</span>
-<span class="source-line-no">233</span><span id="line-233">        return true;</span>
-<span class="source-line-no">234</span><span id="line-234">    }</span>
-<span class="source-line-no">235</span><span id="line-235"></span>
-<span class="source-line-no">236</span><span id="line-236">    public boolean shouldGenerateCaves() {</span>
-<span class="source-line-no">237</span><span id="line-237">        return false;</span>
-<span class="source-line-no">238</span><span id="line-238">    }</span>
-<span class="source-line-no">239</span><span id="line-239"></span>
-<span class="source-line-no">240</span><span id="line-240">    public boolean shouldGenerateDecorations() {</span>
-<span class="source-line-no">241</span><span id="line-241">        return false;</span>
-<span class="source-line-no">242</span><span id="line-242">    }</span>
-<span class="source-line-no">243</span><span id="line-243"></span>
-<span class="source-line-no">244</span><span id="line-244">    public boolean isParallelCapable() {</span>
-<span class="source-line-no">245</span><span id="line-245">        return true;</span>
-<span class="source-line-no">246</span><span id="line-246">    }</span>
-<span class="source-line-no">247</span><span id="line-247"></span>
-<span class="source-line-no">248</span><span id="line-248">    public boolean shouldGenerateMobs() {</span>
-<span class="source-line-no">249</span><span id="line-249">        return false;</span>
-<span class="source-line-no">250</span><span id="line-250">    }</span>
-<span class="source-line-no">251</span><span id="line-251"></span>
-<span class="source-line-no">252</span><span id="line-252">    public boolean shouldGenerateStructures() {</span>
-<span class="source-line-no">253</span><span id="line-253">        return true;</span>
-<span class="source-line-no">254</span><span id="line-254">    }</span>
-<span class="source-line-no">255</span><span id="line-255"></span>
-<span class="source-line-no">256</span><span id="line-256">    @Override</span>
-<span class="source-line-no">257</span><span id="line-257">    public String toString() {</span>
-<span class="source-line-no">258</span><span id="line-258">        if (this.platformGenerator == this) {</span>
-<span class="source-line-no">259</span><span id="line-259">            return this.plotGenerator.getName();</span>
-<span class="source-line-no">260</span><span id="line-260">        }</span>
-<span class="source-line-no">261</span><span id="line-261">        if (this.platformGenerator == null) {</span>
-<span class="source-line-no">262</span><span id="line-262">            return "null";</span>
-<span class="source-line-no">263</span><span id="line-263">        } else {</span>
-<span class="source-line-no">264</span><span id="line-264">            return this.platformGenerator.getClass().getName();</span>
-<span class="source-line-no">265</span><span id="line-265">        }</span>
-<span class="source-line-no">266</span><span id="line-266">    }</span>
-<span class="source-line-no">267</span><span id="line-267"></span>
-<span class="source-line-no">268</span><span id="line-268">    @Override</span>
-<span class="source-line-no">269</span><span id="line-269">    public boolean equals(final Object obj) {</span>
-<span class="source-line-no">270</span><span id="line-270">        if (obj == null) {</span>
-<span class="source-line-no">271</span><span id="line-271">            return false;</span>
-<span class="source-line-no">272</span><span id="line-272">        }</span>
-<span class="source-line-no">273</span><span id="line-273">        return toString().equals(obj.toString()) || toString().equals(obj.getClass().getName());</span>
-<span class="source-line-no">274</span><span id="line-274">    }</span>
-<span class="source-line-no">275</span><span id="line-275"></span>
-<span class="source-line-no">276</span><span id="line-276">    public String getLevelName() {</span>
-<span class="source-line-no">277</span><span id="line-277">        return this.levelName;</span>
-<span class="source-line-no">278</span><span id="line-278">    }</span>
-<span class="source-line-no">279</span><span id="line-279"></span>
-<span class="source-line-no">280</span><span id="line-280">}</span>
+<span class="source-line-no">228</span><span id="line-228">        try {</span>
+<span class="source-line-no">229</span><span id="line-229">            this.plotGenerator.generateChunk(result, area);</span>
+<span class="source-line-no">230</span><span id="line-230">        } catch (Throwable e) {</span>
+<span class="source-line-no">231</span><span id="line-231">            // Recover from generator error</span>
+<span class="source-line-no">232</span><span id="line-232">            e.printStackTrace();</span>
+<span class="source-line-no">233</span><span id="line-233">        }</span>
+<span class="source-line-no">234</span><span id="line-234">        ChunkManager.postProcessChunk(loc, result);</span>
+<span class="source-line-no">235</span><span id="line-235">    }</span>
+<span class="source-line-no">236</span><span id="line-236"></span>
+<span class="source-line-no">237</span><span id="line-237">    @Override</span>
+<span class="source-line-no">238</span><span id="line-238">    public boolean canSpawn(final @NonNull World world, final int x, final int z) {</span>
+<span class="source-line-no">239</span><span id="line-239">        return true;</span>
+<span class="source-line-no">240</span><span id="line-240">    }</span>
+<span class="source-line-no">241</span><span id="line-241"></span>
+<span class="source-line-no">242</span><span id="line-242">    public boolean shouldGenerateCaves() {</span>
+<span class="source-line-no">243</span><span id="line-243">        return false;</span>
+<span class="source-line-no">244</span><span id="line-244">    }</span>
+<span class="source-line-no">245</span><span id="line-245"></span>
+<span class="source-line-no">246</span><span id="line-246">    public boolean shouldGenerateDecorations() {</span>
+<span class="source-line-no">247</span><span id="line-247">        return false;</span>
+<span class="source-line-no">248</span><span id="line-248">    }</span>
+<span class="source-line-no">249</span><span id="line-249"></span>
+<span class="source-line-no">250</span><span id="line-250">    public boolean isParallelCapable() {</span>
+<span class="source-line-no">251</span><span id="line-251">        return true;</span>
+<span class="source-line-no">252</span><span id="line-252">    }</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">    public boolean shouldGenerateMobs() {</span>
+<span class="source-line-no">255</span><span id="line-255">        return false;</span>
+<span class="source-line-no">256</span><span id="line-256">    }</span>
+<span class="source-line-no">257</span><span id="line-257"></span>
+<span class="source-line-no">258</span><span id="line-258">    public boolean shouldGenerateStructures() {</span>
+<span class="source-line-no">259</span><span id="line-259">        return true;</span>
+<span class="source-line-no">260</span><span id="line-260">    }</span>
+<span class="source-line-no">261</span><span id="line-261"></span>
+<span class="source-line-no">262</span><span id="line-262">    @Override</span>
+<span class="source-line-no">263</span><span id="line-263">    public String toString() {</span>
+<span class="source-line-no">264</span><span id="line-264">        if (this.platformGenerator == this) {</span>
+<span class="source-line-no">265</span><span id="line-265">            return this.plotGenerator.getName();</span>
+<span class="source-line-no">266</span><span id="line-266">        }</span>
+<span class="source-line-no">267</span><span id="line-267">        if (this.platformGenerator == null) {</span>
+<span class="source-line-no">268</span><span id="line-268">            return "null";</span>
+<span class="source-line-no">269</span><span id="line-269">        } else {</span>
+<span class="source-line-no">270</span><span id="line-270">            return this.platformGenerator.getClass().getName();</span>
+<span class="source-line-no">271</span><span id="line-271">        }</span>
+<span class="source-line-no">272</span><span id="line-272">    }</span>
+<span class="source-line-no">273</span><span id="line-273"></span>
+<span class="source-line-no">274</span><span id="line-274">    @Override</span>
+<span class="source-line-no">275</span><span id="line-275">    public boolean equals(final Object obj) {</span>
+<span class="source-line-no">276</span><span id="line-276">        if (obj == null) {</span>
+<span class="source-line-no">277</span><span id="line-277">            return false;</span>
+<span class="source-line-no">278</span><span id="line-278">        }</span>
+<span class="source-line-no">279</span><span id="line-279">        return toString().equals(obj.toString()) || toString().equals(obj.getClass().getName());</span>
+<span class="source-line-no">280</span><span id="line-280">    }</span>
+<span class="source-line-no">281</span><span id="line-281"></span>
+<span class="source-line-no">282</span><span id="line-282">    public String getLevelName() {</span>
+<span class="source-line-no">283</span><span id="line-283">        return this.levelName;</span>
+<span class="source-line-no">284</span><span id="line-284">    }</span>
+<span class="source-line-no">285</span><span id="line-285"></span>
+<span class="source-line-no">286</span><span id="line-286">}</span>
 
 
 

@@ -137,7 +137,7 @@
 <span class="source-line-no">124</span><span id="line-124">    public String setupWorld(PlotAreaBuilder builder) {</span>
 <span class="source-line-no">125</span><span id="line-125">        this.updateGenerators(false);</span>
 <span class="source-line-no">126</span><span id="line-126">        ConfigurationNode[] steps = builder.settingsNodesWrapper() == null ?</span>
-<span class="source-line-no">127</span><span id="line-127">                new ConfigurationNode[0] : builder.settingsNodesWrapper().getSettingsNodes();</span>
+<span class="source-line-no">127</span><span id="line-127">                new ConfigurationNode[0] : builder.settingsNodesWrapper().settingsNodes();</span>
 <span class="source-line-no">128</span><span id="line-128">        String world = builder.worldName();</span>
 <span class="source-line-no">129</span><span id="line-129">        PlotAreaType type = builder.plotAreaType();</span>
 <span class="source-line-no">130</span><span id="line-130">        String worldPath = "worlds." + builder.worldName();</span>

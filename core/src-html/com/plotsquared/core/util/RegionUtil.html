@@ -108,25 +108,29 @@
 <span class="source-line-no">095</span><span id="line-95">                .getY() &amp;&amp; y &lt;= max.getY();</span>
 <span class="source-line-no">096</span><span id="line-96">    }</span>
 <span class="source-line-no">097</span><span id="line-97"></span>
-<span class="source-line-no">098</span><span id="line-98">    public static @NonNull Rectangle2D toRectangle(final @NonNull CuboidRegion region) {</span>
-<span class="source-line-no">099</span><span id="line-99">        final BlockVector2 min = region.getMinimumPoint().toBlockVector2();</span>
-<span class="source-line-no">100</span><span id="line-100">        final BlockVector2 max = region.getMaximumPoint().toBlockVector2();</span>
-<span class="source-line-no">101</span><span id="line-101">        return new Rectangle2D.Double(min.getX(), min.getZ(), max.getX(), max.getZ());</span>
-<span class="source-line-no">102</span><span id="line-102">    }</span>
-<span class="source-line-no">103</span><span id="line-103"></span>
-<span class="source-line-no">104</span><span id="line-104">    // Because WorldEdit (not FastAsyncWorldEdit) lack this for CuboidRegion</span>
-<span class="source-line-no">105</span><span id="line-105">    public static boolean intersects(CuboidRegion region, CuboidRegion other) {</span>
-<span class="source-line-no">106</span><span id="line-106">        BlockVector3 regionMin = region.getMinimumPoint();</span>
-<span class="source-line-no">107</span><span id="line-107">        BlockVector3 regionMax = region.getMaximumPoint();</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">        BlockVector3 otherMin = other.getMinimumPoint();</span>
-<span class="source-line-no">110</span><span id="line-110">        BlockVector3 otherMax = other.getMaximumPoint();</span>
-<span class="source-line-no">111</span><span id="line-111"></span>
-<span class="source-line-no">112</span><span id="line-112">        return otherMin.getX() &lt;= regionMax.getX() &amp;&amp; otherMax.getX() &gt;= regionMin.getX()</span>
-<span class="source-line-no">113</span><span id="line-113">                &amp;&amp; otherMin.getZ() &lt;= regionMax.getZ() &amp;&amp; otherMax.getZ() &gt;= regionMin.getZ();</span>
-<span class="source-line-no">114</span><span id="line-114">    }</span>
+<span class="source-line-no">098</span><span id="line-98">    /**</span>
+<span class="source-line-no">099</span><span id="line-99">     * @deprecated Unused internally. Scheduled for removal in next major release.</span>
+<span class="source-line-no">100</span><span id="line-100">     */</span>
+<span class="source-line-no">101</span><span id="line-101">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
+<span class="source-line-no">102</span><span id="line-102">    public static @NonNull Rectangle2D toRectangle(final @NonNull CuboidRegion region) {</span>
+<span class="source-line-no">103</span><span id="line-103">        final BlockVector2 min = region.getMinimumPoint().toBlockVector2();</span>
+<span class="source-line-no">104</span><span id="line-104">        final BlockVector2 max = region.getMaximumPoint().toBlockVector2();</span>
+<span class="source-line-no">105</span><span id="line-105">        return new Rectangle2D.Double(min.getX(), min.getZ(), max.getX(), max.getZ());</span>
+<span class="source-line-no">106</span><span id="line-106">    }</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">    // Because WorldEdit (not FastAsyncWorldEdit) lack this for CuboidRegion</span>
+<span class="source-line-no">109</span><span id="line-109">    public static boolean intersects(CuboidRegion region, CuboidRegion other) {</span>
+<span class="source-line-no">110</span><span id="line-110">        BlockVector3 regionMin = region.getMinimumPoint();</span>
+<span class="source-line-no">111</span><span id="line-111">        BlockVector3 regionMax = region.getMaximumPoint();</span>
+<span class="source-line-no">112</span><span id="line-112"></span>
+<span class="source-line-no">113</span><span id="line-113">        BlockVector3 otherMin = other.getMinimumPoint();</span>
+<span class="source-line-no">114</span><span id="line-114">        BlockVector3 otherMax = other.getMaximumPoint();</span>
 <span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">}</span>
+<span class="source-line-no">116</span><span id="line-116">        return otherMin.getX() &lt;= regionMax.getX() &amp;&amp; otherMax.getX() &gt;= regionMin.getX()</span>
+<span class="source-line-no">117</span><span id="line-117">                &amp;&amp; otherMin.getZ() &lt;= regionMax.getZ() &amp;&amp; otherMax.getZ() &gt;= regionMin.getZ();</span>
+<span class="source-line-no">118</span><span id="line-118">    }</span>
+<span class="source-line-no">119</span><span id="line-119"></span>
+<span class="source-line-no">120</span><span id="line-120">}</span>
 
 
 

@@ -92,89 +92,93 @@
 <span class="source-line-no">079</span><span id="line-79">        this.ratings = ratings;</span>
 <span class="source-line-no">080</span><span id="line-80">    }</span>
 <span class="source-line-no">081</span><span id="line-81"></span>
-<span class="source-line-no">082</span><span id="line-82">    public boolean setMerged(int direction, boolean merged) {</span>
-<span class="source-line-no">083</span><span id="line-83">        if (this.merged[direction] != merged) {</span>
-<span class="source-line-no">084</span><span id="line-84">            this.merged[direction] = merged;</span>
-<span class="source-line-no">085</span><span id="line-85">            return true;</span>
-<span class="source-line-no">086</span><span id="line-86">        }</span>
-<span class="source-line-no">087</span><span id="line-87">        return false;</span>
-<span class="source-line-no">088</span><span id="line-88">    }</span>
-<span class="source-line-no">089</span><span id="line-89"></span>
-<span class="source-line-no">090</span><span id="line-90">    public boolean setMerged(Direction direction, boolean merged) {</span>
-<span class="source-line-no">091</span><span id="line-91">        if (Direction.ALL == direction) {</span>
-<span class="source-line-no">092</span><span id="line-92">            throw new IllegalArgumentException("You cannot use Direction.ALL in this method!");</span>
-<span class="source-line-no">093</span><span id="line-93">        }</span>
-<span class="source-line-no">094</span><span id="line-94">        if (this.merged[direction.getIndex()] != merged) {</span>
-<span class="source-line-no">095</span><span id="line-95">            this.merged[direction.getIndex()] = merged;</span>
-<span class="source-line-no">096</span><span id="line-96">            return true;</span>
+<span class="source-line-no">082</span><span id="line-82">    /**</span>
+<span class="source-line-no">083</span><span id="line-83">     * @deprecated Unused internally. Scheduled for removal in next major release. Use {@link PlotSettings#setMerged(Direction, boolean)}</span>
+<span class="source-line-no">084</span><span id="line-84">     */</span>
+<span class="source-line-no">085</span><span id="line-85">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
+<span class="source-line-no">086</span><span id="line-86">    public boolean setMerged(int direction, boolean merged) {</span>
+<span class="source-line-no">087</span><span id="line-87">        if (this.merged[direction] != merged) {</span>
+<span class="source-line-no">088</span><span id="line-88">            this.merged[direction] = merged;</span>
+<span class="source-line-no">089</span><span id="line-89">            return true;</span>
+<span class="source-line-no">090</span><span id="line-90">        }</span>
+<span class="source-line-no">091</span><span id="line-91">        return false;</span>
+<span class="source-line-no">092</span><span id="line-92">    }</span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">    public boolean setMerged(Direction direction, boolean merged) {</span>
+<span class="source-line-no">095</span><span id="line-95">        if (Direction.ALL == direction) {</span>
+<span class="source-line-no">096</span><span id="line-96">            throw new IllegalArgumentException("You cannot use Direction.ALL in this method!");</span>
 <span class="source-line-no">097</span><span id="line-97">        }</span>
-<span class="source-line-no">098</span><span id="line-98">        return false;</span>
-<span class="source-line-no">099</span><span id="line-99">    }</span>
-<span class="source-line-no">100</span><span id="line-100"></span>
-<span class="source-line-no">101</span><span id="line-101">    public BlockLoc getPosition() {</span>
-<span class="source-line-no">102</span><span id="line-102">        if (this.position == null) {</span>
-<span class="source-line-no">103</span><span id="line-103">            return BlockLoc.MINY;</span>
-<span class="source-line-no">104</span><span id="line-104">        }</span>
-<span class="source-line-no">105</span><span id="line-105">        return this.position;</span>
-<span class="source-line-no">106</span><span id="line-106">    }</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">    public void setPosition(BlockLoc position) {</span>
-<span class="source-line-no">109</span><span id="line-109">        if (position != null &amp;&amp; position.getX() == 0 &amp;&amp; position.getY() == 0</span>
-<span class="source-line-no">110</span><span id="line-110">                &amp;&amp; position.getZ() == 0) {</span>
-<span class="source-line-no">111</span><span id="line-111">            position = null;</span>
-<span class="source-line-no">112</span><span id="line-112">        }</span>
-<span class="source-line-no">113</span><span id="line-113">        this.position = position;</span>
-<span class="source-line-no">114</span><span id="line-114">    }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">    @SuppressWarnings({"UnstableApiUsage"})</span>
-<span class="source-line-no">117</span><span id="line-117">    public List&lt;PlotComment&gt; getComments(String inbox) {</span>
-<span class="source-line-no">118</span><span id="line-118">        if (this.comments == null) {</span>
-<span class="source-line-no">119</span><span id="line-119">            return Collections.emptyList();</span>
-<span class="source-line-no">120</span><span id="line-120">        }</span>
-<span class="source-line-no">121</span><span id="line-121"></span>
-<span class="source-line-no">122</span><span id="line-122">        return this.comments.stream().filter(comment -&gt; comment.inbox.equals(inbox))</span>
-<span class="source-line-no">123</span><span id="line-123">                .collect(ImmutableList.toImmutableList());</span>
-<span class="source-line-no">124</span><span id="line-124">    }</span>
+<span class="source-line-no">098</span><span id="line-98">        if (this.merged[direction.getIndex()] != merged) {</span>
+<span class="source-line-no">099</span><span id="line-99">            this.merged[direction.getIndex()] = merged;</span>
+<span class="source-line-no">100</span><span id="line-100">            return true;</span>
+<span class="source-line-no">101</span><span id="line-101">        }</span>
+<span class="source-line-no">102</span><span id="line-102">        return false;</span>
+<span class="source-line-no">103</span><span id="line-103">    }</span>
+<span class="source-line-no">104</span><span id="line-104"></span>
+<span class="source-line-no">105</span><span id="line-105">    public BlockLoc getPosition() {</span>
+<span class="source-line-no">106</span><span id="line-106">        if (this.position == null) {</span>
+<span class="source-line-no">107</span><span id="line-107">            return BlockLoc.MINY;</span>
+<span class="source-line-no">108</span><span id="line-108">        }</span>
+<span class="source-line-no">109</span><span id="line-109">        return this.position;</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">    public void setPosition(BlockLoc position) {</span>
+<span class="source-line-no">113</span><span id="line-113">        if (position != null &amp;&amp; position.getX() == 0 &amp;&amp; position.getY() == 0</span>
+<span class="source-line-no">114</span><span id="line-114">                &amp;&amp; position.getZ() == 0) {</span>
+<span class="source-line-no">115</span><span id="line-115">            position = null;</span>
+<span class="source-line-no">116</span><span id="line-116">        }</span>
+<span class="source-line-no">117</span><span id="line-117">        this.position = position;</span>
+<span class="source-line-no">118</span><span id="line-118">    }</span>
+<span class="source-line-no">119</span><span id="line-119"></span>
+<span class="source-line-no">120</span><span id="line-120">    @SuppressWarnings({"UnstableApiUsage"})</span>
+<span class="source-line-no">121</span><span id="line-121">    public List&lt;PlotComment&gt; getComments(String inbox) {</span>
+<span class="source-line-no">122</span><span id="line-122">        if (this.comments == null) {</span>
+<span class="source-line-no">123</span><span id="line-123">            return Collections.emptyList();</span>
+<span class="source-line-no">124</span><span id="line-124">        }</span>
 <span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">    boolean removeComment(PlotComment comment) {</span>
-<span class="source-line-no">127</span><span id="line-127">        if (this.comments == null) {</span>
-<span class="source-line-no">128</span><span id="line-128">            return false;</span>
-<span class="source-line-no">129</span><span id="line-129">        }</span>
-<span class="source-line-no">130</span><span id="line-130">        return this.comments.remove(comment);</span>
-<span class="source-line-no">131</span><span id="line-131">    }</span>
-<span class="source-line-no">132</span><span id="line-132"></span>
-<span class="source-line-no">133</span><span id="line-133">    void removeComments(List&lt;PlotComment&gt; comments) {</span>
-<span class="source-line-no">134</span><span id="line-134">        comments.forEach(this::removeComment);</span>
+<span class="source-line-no">126</span><span id="line-126">        return this.comments.stream().filter(comment -&gt; comment.inbox.equals(inbox))</span>
+<span class="source-line-no">127</span><span id="line-127">                .collect(ImmutableList.toImmutableList());</span>
+<span class="source-line-no">128</span><span id="line-128">    }</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">    boolean removeComment(PlotComment comment) {</span>
+<span class="source-line-no">131</span><span id="line-131">        if (this.comments == null) {</span>
+<span class="source-line-no">132</span><span id="line-132">            return false;</span>
+<span class="source-line-no">133</span><span id="line-133">        }</span>
+<span class="source-line-no">134</span><span id="line-134">        return this.comments.remove(comment);</span>
 <span class="source-line-no">135</span><span id="line-135">    }</span>
 <span class="source-line-no">136</span><span id="line-136"></span>
-<span class="source-line-no">137</span><span id="line-137">    void addComment(PlotComment comment) {</span>
-<span class="source-line-no">138</span><span id="line-138">        if (this.comments == null) {</span>
-<span class="source-line-no">139</span><span id="line-139">            this.comments = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">140</span><span id="line-140">        }</span>
-<span class="source-line-no">141</span><span id="line-141">        this.comments.add(comment);</span>
-<span class="source-line-no">142</span><span id="line-142">    }</span>
-<span class="source-line-no">143</span><span id="line-143"></span>
-<span class="source-line-no">144</span><span id="line-144">    public boolean[] getMerged() {</span>
-<span class="source-line-no">145</span><span id="line-145">        return this.merged;</span>
+<span class="source-line-no">137</span><span id="line-137">    void removeComments(List&lt;PlotComment&gt; comments) {</span>
+<span class="source-line-no">138</span><span id="line-138">        comments.forEach(this::removeComment);</span>
+<span class="source-line-no">139</span><span id="line-139">    }</span>
+<span class="source-line-no">140</span><span id="line-140"></span>
+<span class="source-line-no">141</span><span id="line-141">    void addComment(PlotComment comment) {</span>
+<span class="source-line-no">142</span><span id="line-142">        if (this.comments == null) {</span>
+<span class="source-line-no">143</span><span id="line-143">            this.comments = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">144</span><span id="line-144">        }</span>
+<span class="source-line-no">145</span><span id="line-145">        this.comments.add(comment);</span>
 <span class="source-line-no">146</span><span id="line-146">    }</span>
 <span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">    public void setMerged(boolean[] merged) {</span>
-<span class="source-line-no">149</span><span id="line-149">        this.merged = merged;</span>
+<span class="source-line-no">148</span><span id="line-148">    public boolean[] getMerged() {</span>
+<span class="source-line-no">149</span><span id="line-149">        return this.merged;</span>
 <span class="source-line-no">150</span><span id="line-150">    }</span>
 <span class="source-line-no">151</span><span id="line-151"></span>
-<span class="source-line-no">152</span><span id="line-152">    public String getAlias() {</span>
-<span class="source-line-no">153</span><span id="line-153">        return this.alias;</span>
+<span class="source-line-no">152</span><span id="line-152">    public void setMerged(boolean[] merged) {</span>
+<span class="source-line-no">153</span><span id="line-153">        this.merged = merged;</span>
 <span class="source-line-no">154</span><span id="line-154">    }</span>
 <span class="source-line-no">155</span><span id="line-155"></span>
-<span class="source-line-no">156</span><span id="line-156">    public void setAlias(String alias) {</span>
-<span class="source-line-no">157</span><span id="line-157">        this.alias = alias;</span>
+<span class="source-line-no">156</span><span id="line-156">    public String getAlias() {</span>
+<span class="source-line-no">157</span><span id="line-157">        return this.alias;</span>
 <span class="source-line-no">158</span><span id="line-158">    }</span>
 <span class="source-line-no">159</span><span id="line-159"></span>
-<span class="source-line-no">160</span><span id="line-160">    public void setComments(List&lt;PlotComment&gt; comments) {</span>
-<span class="source-line-no">161</span><span id="line-161">        this.comments = comments;</span>
+<span class="source-line-no">160</span><span id="line-160">    public void setAlias(String alias) {</span>
+<span class="source-line-no">161</span><span id="line-161">        this.alias = alias;</span>
 <span class="source-line-no">162</span><span id="line-162">    }</span>
 <span class="source-line-no">163</span><span id="line-163"></span>
-<span class="source-line-no">164</span><span id="line-164">}</span>
+<span class="source-line-no">164</span><span id="line-164">    public void setComments(List&lt;PlotComment&gt; comments) {</span>
+<span class="source-line-no">165</span><span id="line-165">        this.comments = comments;</span>
+<span class="source-line-no">166</span><span id="line-166">    }</span>
+<span class="source-line-no">167</span><span id="line-167"></span>
+<span class="source-line-no">168</span><span id="line-168">}</span>
 
 
 

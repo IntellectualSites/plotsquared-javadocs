@@ -154,25 +154,25 @@
 <span class="source-line-no">141</span><span id="line-141">    ) {</span>
 <span class="source-line-no">142</span><span id="line-142"></span>
 <span class="source-line-no">143</span><span id="line-143">        @Override</span>
-<span class="source-line-no">144</span><span id="line-144">            public boolean equals(final Object o) {</span>
-<span class="source-line-no">145</span><span id="line-145">                if (this == o) {</span>
-<span class="source-line-no">146</span><span id="line-146">                    return true;</span>
-<span class="source-line-no">147</span><span id="line-147">                }</span>
-<span class="source-line-no">148</span><span id="line-148">                if (o == null || getClass() != o.getClass()) {</span>
-<span class="source-line-no">149</span><span id="line-149">                    return false;</span>
-<span class="source-line-no">150</span><span id="line-150">                }</span>
-<span class="source-line-no">151</span><span id="line-151">                final PlotCacheKey that = (PlotCacheKey) o;</span>
-<span class="source-line-no">152</span><span id="line-152">                return Objects.equals(plot.getArea(), that.plot.getArea())</span>
-<span class="source-line-no">153</span><span id="line-153">                        &amp;&amp; Objects.equals(plot.getId(), that.plot.getId())</span>
-<span class="source-line-no">154</span><span id="line-154">                        &amp;&amp; Objects.equals(plot.getOwnerAbs(), that.plot.getOwnerAbs());</span>
-<span class="source-line-no">155</span><span id="line-155">            }</span>
+<span class="source-line-no">144</span><span id="line-144">        public boolean equals(final Object o) {</span>
+<span class="source-line-no">145</span><span id="line-145">            if (this == o) {</span>
+<span class="source-line-no">146</span><span id="line-146">                return true;</span>
+<span class="source-line-no">147</span><span id="line-147">            }</span>
+<span class="source-line-no">148</span><span id="line-148">            if (o == null || getClass() != o.getClass()) {</span>
+<span class="source-line-no">149</span><span id="line-149">                return false;</span>
+<span class="source-line-no">150</span><span id="line-150">            }</span>
+<span class="source-line-no">151</span><span id="line-151">            final PlotCacheKey that = (PlotCacheKey) o;</span>
+<span class="source-line-no">152</span><span id="line-152">            return Objects.equals(plot.getArea(), that.plot.getArea())</span>
+<span class="source-line-no">153</span><span id="line-153">                    &amp;&amp; Objects.equals(plot.getId(), that.plot.getId())</span>
+<span class="source-line-no">154</span><span id="line-154">                    &amp;&amp; Objects.equals(plot.getOwnerAbs(), that.plot.getOwnerAbs());</span>
+<span class="source-line-no">155</span><span id="line-155">        }</span>
 <span class="source-line-no">156</span><span id="line-156"></span>
-<span class="source-line-no">157</span><span id="line-157">            @Override</span>
-<span class="source-line-no">158</span><span id="line-158">            public int hashCode() {</span>
-<span class="source-line-no">159</span><span id="line-159">                return Objects.hash(plot.getArea(), plot.getId(), plot.getOwnerAbs());</span>
-<span class="source-line-no">160</span><span id="line-160">            }</span>
+<span class="source-line-no">157</span><span id="line-157">        @Override</span>
+<span class="source-line-no">158</span><span id="line-158">        public int hashCode() {</span>
+<span class="source-line-no">159</span><span id="line-159">            return Objects.hash(plot.getArea(), plot.getId(), plot.getOwnerAbs());</span>
+<span class="source-line-no">160</span><span id="line-160">        }</span>
 <span class="source-line-no">161</span><span id="line-161"></span>
-<span class="source-line-no">162</span><span id="line-162">        }</span>
+<span class="source-line-no">162</span><span id="line-162">    }</span>
 <span class="source-line-no">163</span><span id="line-163"></span>
 <span class="source-line-no">164</span><span id="line-164">}</span>
 

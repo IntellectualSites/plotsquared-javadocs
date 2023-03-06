@@ -71,94 +71,42 @@
 <span class="source-line-no">058</span><span id="line-58">        return false;</span>
 <span class="source-line-no">059</span><span id="line-59">    }</span>
 <span class="source-line-no">060</span><span id="line-60"></span>
-<span class="source-line-no">061</span><span id="line-61">    /**</span>
-<span class="source-line-no">062</span><span id="line-62">     * @deprecated Unused internally. Scheduled for removal in next major release.</span>
-<span class="source-line-no">063</span><span id="line-63">     */</span>
-<span class="source-line-no">064</span><span id="line-64">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
-<span class="source-line-no">065</span><span id="line-65">    public static boolean maskContains(Set&lt;CuboidRegion&gt; mask, double dx, double dy, double dz) {</span>
-<span class="source-line-no">066</span><span id="line-66">        int x = Math.toIntExact(Math.round(dx &gt;= 0 ? dx - 0.5 : dx + 0.5));</span>
-<span class="source-line-no">067</span><span id="line-67">        int y = Math.toIntExact(Math.round(dy - 0.5));</span>
-<span class="source-line-no">068</span><span id="line-68">        int z = Math.toIntExact(Math.round(dz &gt;= 0 ? dz - 0.5 : dz + 0.5));</span>
-<span class="source-line-no">069</span><span id="line-69">        for (CuboidRegion region : mask) {</span>
-<span class="source-line-no">070</span><span id="line-70">            if (RegionUtil.contains(region, x, y, z)) {</span>
-<span class="source-line-no">071</span><span id="line-71">                return true;</span>
-<span class="source-line-no">072</span><span id="line-72">            }</span>
+<span class="source-line-no">061</span><span id="line-61">    public static HashSet&lt;CuboidRegion&gt; getMask(PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">062</span><span id="line-62">        HashSet&lt;CuboidRegion&gt; regions = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">063</span><span id="line-63">        UUID uuid = player.getUUID();</span>
+<span class="source-line-no">064</span><span id="line-64">        Location location = player.getLocation();</span>
+<span class="source-line-no">065</span><span id="line-65">        String world = location.getWorldName();</span>
+<span class="source-line-no">066</span><span id="line-66">        if (!PlotSquared.get().getPlotAreaManager().hasPlotArea(world)) {</span>
+<span class="source-line-no">067</span><span id="line-67">            regions.add(new CuboidRegion(MIN, MAX));</span>
+<span class="source-line-no">068</span><span id="line-68">            return regions;</span>
+<span class="source-line-no">069</span><span id="line-69">        }</span>
+<span class="source-line-no">070</span><span id="line-70">        PlotArea area = player.getApplicablePlotArea();</span>
+<span class="source-line-no">071</span><span id="line-71">        if (area == null) {</span>
+<span class="source-line-no">072</span><span id="line-72">            return regions;</span>
 <span class="source-line-no">073</span><span id="line-73">        }</span>
-<span class="source-line-no">074</span><span id="line-74">        return false;</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    /**</span>
-<span class="source-line-no">078</span><span id="line-78">     * @deprecated Unused internally. Scheduled for removal in next major release.</span>
-<span class="source-line-no">079</span><span id="line-79">     */</span>
-<span class="source-line-no">080</span><span id="line-80">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
-<span class="source-line-no">081</span><span id="line-81">    public static boolean maskContains(Set&lt;CuboidRegion&gt; mask, double dx, double dz) {</span>
-<span class="source-line-no">082</span><span id="line-82">        int x = Math.toIntExact(Math.round(dx &gt;= 0 ? dx - 0.5 : dx + 0.5));</span>
-<span class="source-line-no">083</span><span id="line-83">        int z = Math.toIntExact(Math.round(dz &gt;= 0 ? dz - 0.5 : dz + 0.5));</span>
-<span class="source-line-no">084</span><span id="line-84">        for (CuboidRegion region : mask) {</span>
-<span class="source-line-no">085</span><span id="line-85">            if (RegionUtil.contains(region, x, z)) {</span>
-<span class="source-line-no">086</span><span id="line-86">                return true;</span>
-<span class="source-line-no">087</span><span id="line-87">            }</span>
-<span class="source-line-no">088</span><span id="line-88">        }</span>
-<span class="source-line-no">089</span><span id="line-89">        return false;</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    public static HashSet&lt;CuboidRegion&gt; getMask(PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">093</span><span id="line-93">        HashSet&lt;CuboidRegion&gt; regions = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">094</span><span id="line-94">        UUID uuid = player.getUUID();</span>
-<span class="source-line-no">095</span><span id="line-95">        Location location = player.getLocation();</span>
-<span class="source-line-no">096</span><span id="line-96">        String world = location.getWorldName();</span>
-<span class="source-line-no">097</span><span id="line-97">        if (!PlotSquared.get().getPlotAreaManager().hasPlotArea(world)) {</span>
-<span class="source-line-no">098</span><span id="line-98">            regions.add(new CuboidRegion(MIN, MAX));</span>
-<span class="source-line-no">099</span><span id="line-99">            return regions;</span>
-<span class="source-line-no">100</span><span id="line-100">        }</span>
-<span class="source-line-no">101</span><span id="line-101">        PlotArea area = player.getApplicablePlotArea();</span>
-<span class="source-line-no">102</span><span id="line-102">        if (area == null) {</span>
-<span class="source-line-no">103</span><span id="line-103">            return regions;</span>
-<span class="source-line-no">104</span><span id="line-104">        }</span>
-<span class="source-line-no">105</span><span id="line-105">        boolean allowMember = player.hasPermission("plots.worldedit.member");</span>
-<span class="source-line-no">106</span><span id="line-106">        Plot plot = player.getCurrentPlot();</span>
-<span class="source-line-no">107</span><span id="line-107">        try (final MetaDataAccess&lt;Plot&gt; metaDataAccess =</span>
-<span class="source-line-no">108</span><span id="line-108">                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_WORLD_EDIT_REGION_PLOT)) {</span>
-<span class="source-line-no">109</span><span id="line-109">            if (plot == null) {</span>
-<span class="source-line-no">110</span><span id="line-110">                plot = metaDataAccess.get().orElse(null);</span>
-<span class="source-line-no">111</span><span id="line-111">            }</span>
-<span class="source-line-no">112</span><span id="line-112">            if (plot != null &amp;&amp; (!Settings.Done.RESTRICT_BUILDING || !DoneFlag.isDone(plot)) &amp;&amp; (</span>
-<span class="source-line-no">113</span><span id="line-113">                    (allowMember &amp;&amp; plot.isAdded(uuid)) || (!allowMember &amp;&amp; plot.isOwner(uuid) || plot</span>
-<span class="source-line-no">114</span><span id="line-114">                            .getTrusted().contains(uuid))) &amp;&amp; !plot.getFlag(NoWorldeditFlag.class)) {</span>
-<span class="source-line-no">115</span><span id="line-115">                for (CuboidRegion region : plot.getRegions()) {</span>
-<span class="source-line-no">116</span><span id="line-116">                    BlockVector3 pos1 = region.getMinimumPoint().withY(area.getMinBuildHeight());</span>
-<span class="source-line-no">117</span><span id="line-117">                    BlockVector3 pos2 = region.getMaximumPoint().withY(area.getMaxBuildHeight() - 1);</span>
-<span class="source-line-no">118</span><span id="line-118">                    CuboidRegion copy = new CuboidRegion(pos1, pos2);</span>
-<span class="source-line-no">119</span><span id="line-119">                    regions.add(copy);</span>
-<span class="source-line-no">120</span><span id="line-120">                }</span>
-<span class="source-line-no">121</span><span id="line-121">                metaDataAccess.set(plot);</span>
-<span class="source-line-no">122</span><span id="line-122">            }</span>
-<span class="source-line-no">123</span><span id="line-123">        }</span>
-<span class="source-line-no">124</span><span id="line-124">        return regions;</span>
-<span class="source-line-no">125</span><span id="line-125">    }</span>
-<span class="source-line-no">126</span><span id="line-126"></span>
-<span class="source-line-no">127</span><span id="line-127">    /**</span>
-<span class="source-line-no">128</span><span id="line-128">     * @deprecated Unused internally. Scheduled for removal in next major release.</span>
-<span class="source-line-no">129</span><span id="line-129">     */</span>
-<span class="source-line-no">130</span><span id="line-130">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
-<span class="source-line-no">131</span><span id="line-131">    public static boolean intersects(CuboidRegion region1, CuboidRegion region2) {</span>
-<span class="source-line-no">132</span><span id="line-132">        return RegionUtil.intersects(region1, region2);</span>
-<span class="source-line-no">133</span><span id="line-133">    }</span>
-<span class="source-line-no">134</span><span id="line-134"></span>
-<span class="source-line-no">135</span><span id="line-135">    /**</span>
-<span class="source-line-no">136</span><span id="line-136">     * @deprecated Unused internally. Scheduled for removal in next major release.</span>
-<span class="source-line-no">137</span><span id="line-137">     */</span>
-<span class="source-line-no">138</span><span id="line-138">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
-<span class="source-line-no">139</span><span id="line-139">    public static boolean regionContains(CuboidRegion selection, HashSet&lt;CuboidRegion&gt; mask) {</span>
-<span class="source-line-no">140</span><span id="line-140">        for (CuboidRegion region : mask) {</span>
-<span class="source-line-no">141</span><span id="line-141">            if (intersects(region, selection)) {</span>
-<span class="source-line-no">142</span><span id="line-142">                return true;</span>
-<span class="source-line-no">143</span><span id="line-143">            }</span>
-<span class="source-line-no">144</span><span id="line-144">        }</span>
-<span class="source-line-no">145</span><span id="line-145">        return false;</span>
-<span class="source-line-no">146</span><span id="line-146">    }</span>
-<span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">}</span>
+<span class="source-line-no">074</span><span id="line-74">        boolean allowMember = player.hasPermission("plots.worldedit.member");</span>
+<span class="source-line-no">075</span><span id="line-75">        Plot plot = player.getCurrentPlot();</span>
+<span class="source-line-no">076</span><span id="line-76">        try (final MetaDataAccess&lt;Plot&gt; metaDataAccess =</span>
+<span class="source-line-no">077</span><span id="line-77">                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_WORLD_EDIT_REGION_PLOT)) {</span>
+<span class="source-line-no">078</span><span id="line-78">            if (plot == null) {</span>
+<span class="source-line-no">079</span><span id="line-79">                plot = metaDataAccess.get().orElse(null);</span>
+<span class="source-line-no">080</span><span id="line-80">            }</span>
+<span class="source-line-no">081</span><span id="line-81">            if (plot != null &amp;&amp; (!Settings.Done.RESTRICT_BUILDING || !DoneFlag.isDone(plot)) &amp;&amp; (</span>
+<span class="source-line-no">082</span><span id="line-82">                    (allowMember &amp;&amp; plot.isAdded(uuid)) || (!allowMember &amp;&amp; plot.isOwner(uuid) || plot</span>
+<span class="source-line-no">083</span><span id="line-83">                            .getTrusted().contains(uuid))) &amp;&amp; !plot.getFlag(NoWorldeditFlag.class)) {</span>
+<span class="source-line-no">084</span><span id="line-84">                for (CuboidRegion region : plot.getRegions()) {</span>
+<span class="source-line-no">085</span><span id="line-85">                    BlockVector3 pos1 = region.getMinimumPoint().withY(area.getMinBuildHeight());</span>
+<span class="source-line-no">086</span><span id="line-86">                    BlockVector3 pos2 = region.getMaximumPoint().withY(area.getMaxBuildHeight() - 1);</span>
+<span class="source-line-no">087</span><span id="line-87">                    CuboidRegion copy = new CuboidRegion(pos1, pos2);</span>
+<span class="source-line-no">088</span><span id="line-88">                    regions.add(copy);</span>
+<span class="source-line-no">089</span><span id="line-89">                }</span>
+<span class="source-line-no">090</span><span id="line-90">                metaDataAccess.set(plot);</span>
+<span class="source-line-no">091</span><span id="line-91">            }</span>
+<span class="source-line-no">092</span><span id="line-92">        }</span>
+<span class="source-line-no">093</span><span id="line-93">        return regions;</span>
+<span class="source-line-no">094</span><span id="line-94">    }</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">}</span>
 
 
 

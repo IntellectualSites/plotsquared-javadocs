@@ -234,55 +234,56 @@
 <span class="source-line-no">221</span><span id="line-221">                                ids.add(plot.temp);</span>
 <span class="source-line-no">222</span><span id="line-222">                                if (finalClear) {</span>
 <span class="source-line-no">223</span><span id="line-223">                                    plot.getPlotModificationManager().clear(false, true, player,</span>
-<span class="source-line-no">224</span><span id="line-224">                                            () -&gt; LOGGER.info("Plot {} cleared by purge", plot.getId()));</span>
-<span class="source-line-no">225</span><span id="line-225">                                } else {</span>
-<span class="source-line-no">226</span><span id="line-226">                                    plot.getPlotModificationManager().removeSign();</span>
-<span class="source-line-no">227</span><span id="line-227">                                }</span>
-<span class="source-line-no">228</span><span id="line-228">                                plot.getArea().removePlot(plot.getId());</span>
-<span class="source-line-no">229</span><span id="line-229">                                for (PlotPlayer&lt;?&gt; pp : plot.getPlayersInPlot()) {</span>
-<span class="source-line-no">230</span><span id="line-230">                                    Purge.this.plotListener.plotEntry(pp, plot);</span>
-<span class="source-line-no">231</span><span id="line-231">                                }</span>
-<span class="source-line-no">232</span><span id="line-232">                            } catch (NullPointerException e) {</span>
-<span class="source-line-no">233</span><span id="line-233">                                LOGGER.error("NullPointer during purge detected. This is likely"</span>
-<span class="source-line-no">234</span><span id="line-234">                                        + " because you are deleting a world that has been removed", e);</span>
-<span class="source-line-no">235</span><span id="line-235">                            }</span>
-<span class="source-line-no">236</span><span id="line-236">                        }</span>
-<span class="source-line-no">237</span><span id="line-237">                        cleared.set(true);</span>
-<span class="source-line-no">238</span><span id="line-238">                    }</span>
-<span class="source-line-no">239</span><span id="line-239">                    if (iterator.hasNext()) {</span>
-<span class="source-line-no">240</span><span id="line-240">                        TaskManager.runTaskAsync(this);</span>
-<span class="source-line-no">241</span><span id="line-241">                    } else {</span>
-<span class="source-line-no">242</span><span id="line-242">                        TaskManager.runTask(() -&gt; {</span>
-<span class="source-line-no">243</span><span id="line-243">                            DBFunc.purgeIds(ids);</span>
-<span class="source-line-no">244</span><span id="line-244">                            player.sendMessage(</span>
-<span class="source-line-no">245</span><span id="line-245">                                    TranslatableCaption.of("purge.purge_success"),</span>
-<span class="source-line-no">246</span><span id="line-246">                                    TagResolver.resolver(</span>
-<span class="source-line-no">247</span><span id="line-247">                                            "amount",</span>
-<span class="source-line-no">248</span><span id="line-248">                                            Tag.inserting(Component.text(ids.size() + "/" + toDelete.size()))</span>
-<span class="source-line-no">249</span><span id="line-249">                                    )</span>
-<span class="source-line-no">250</span><span id="line-250">                            );</span>
-<span class="source-line-no">251</span><span id="line-251">                        });</span>
-<span class="source-line-no">252</span><span id="line-252">                    }</span>
-<span class="source-line-no">253</span><span id="line-253">                }</span>
-<span class="source-line-no">254</span><span id="line-254">            };</span>
-<span class="source-line-no">255</span><span id="line-255">            TaskManager.runTaskAsync(runasync);</span>
-<span class="source-line-no">256</span><span id="line-256">        };</span>
-<span class="source-line-no">257</span><span id="line-257">        if (hasConfirmation(player)) {</span>
-<span class="source-line-no">258</span><span id="line-258">            if (unknown) {</span>
-<span class="source-line-no">259</span><span id="line-259">                if (Settings.UUID.BACKGROUND_CACHING_ENABLED) {</span>
-<span class="source-line-no">260</span><span id="line-260">                    player.sendMessage(TranslatableCaption.of("purge.confirm_purge_unknown_bg_enabled"));</span>
-<span class="source-line-no">261</span><span id="line-261">                } else {</span>
-<span class="source-line-no">262</span><span id="line-262">                    player.sendMessage(TranslatableCaption.of("purge.confirm_purge_unknown_bg_disabled"));</span>
-<span class="source-line-no">263</span><span id="line-263">                }</span>
-<span class="source-line-no">264</span><span id="line-264">            }</span>
-<span class="source-line-no">265</span><span id="line-265">            CmdConfirm.addPending(player, cmd, run);</span>
-<span class="source-line-no">266</span><span id="line-266">        } else {</span>
-<span class="source-line-no">267</span><span id="line-267">            run.run();</span>
-<span class="source-line-no">268</span><span id="line-268">        }</span>
-<span class="source-line-no">269</span><span id="line-269">        return true;</span>
-<span class="source-line-no">270</span><span id="line-270">    }</span>
-<span class="source-line-no">271</span><span id="line-271"></span>
-<span class="source-line-no">272</span><span id="line-272">}</span>
+<span class="source-line-no">224</span><span id="line-224">                                            () -&gt; LOGGER.info("Plot {} cleared by purge", plot.getId())</span>
+<span class="source-line-no">225</span><span id="line-225">                                    );</span>
+<span class="source-line-no">226</span><span id="line-226">                                } else {</span>
+<span class="source-line-no">227</span><span id="line-227">                                    plot.getPlotModificationManager().removeSign();</span>
+<span class="source-line-no">228</span><span id="line-228">                                }</span>
+<span class="source-line-no">229</span><span id="line-229">                                plot.getArea().removePlot(plot.getId());</span>
+<span class="source-line-no">230</span><span id="line-230">                                for (PlotPlayer&lt;?&gt; pp : plot.getPlayersInPlot()) {</span>
+<span class="source-line-no">231</span><span id="line-231">                                    Purge.this.plotListener.plotEntry(pp, plot);</span>
+<span class="source-line-no">232</span><span id="line-232">                                }</span>
+<span class="source-line-no">233</span><span id="line-233">                            } catch (NullPointerException e) {</span>
+<span class="source-line-no">234</span><span id="line-234">                                LOGGER.error("NullPointer during purge detected. This is likely"</span>
+<span class="source-line-no">235</span><span id="line-235">                                        + " because you are deleting a world that has been removed", e);</span>
+<span class="source-line-no">236</span><span id="line-236">                            }</span>
+<span class="source-line-no">237</span><span id="line-237">                        }</span>
+<span class="source-line-no">238</span><span id="line-238">                        cleared.set(true);</span>
+<span class="source-line-no">239</span><span id="line-239">                    }</span>
+<span class="source-line-no">240</span><span id="line-240">                    if (iterator.hasNext()) {</span>
+<span class="source-line-no">241</span><span id="line-241">                        TaskManager.runTaskAsync(this);</span>
+<span class="source-line-no">242</span><span id="line-242">                    } else {</span>
+<span class="source-line-no">243</span><span id="line-243">                        TaskManager.runTask(() -&gt; {</span>
+<span class="source-line-no">244</span><span id="line-244">                            DBFunc.purgeIds(ids);</span>
+<span class="source-line-no">245</span><span id="line-245">                            player.sendMessage(</span>
+<span class="source-line-no">246</span><span id="line-246">                                    TranslatableCaption.of("purge.purge_success"),</span>
+<span class="source-line-no">247</span><span id="line-247">                                    TagResolver.resolver(</span>
+<span class="source-line-no">248</span><span id="line-248">                                            "amount",</span>
+<span class="source-line-no">249</span><span id="line-249">                                            Tag.inserting(Component.text(ids.size() + "/" + toDelete.size()))</span>
+<span class="source-line-no">250</span><span id="line-250">                                    )</span>
+<span class="source-line-no">251</span><span id="line-251">                            );</span>
+<span class="source-line-no">252</span><span id="line-252">                        });</span>
+<span class="source-line-no">253</span><span id="line-253">                    }</span>
+<span class="source-line-no">254</span><span id="line-254">                }</span>
+<span class="source-line-no">255</span><span id="line-255">            };</span>
+<span class="source-line-no">256</span><span id="line-256">            TaskManager.runTaskAsync(runasync);</span>
+<span class="source-line-no">257</span><span id="line-257">        };</span>
+<span class="source-line-no">258</span><span id="line-258">        if (hasConfirmation(player)) {</span>
+<span class="source-line-no">259</span><span id="line-259">            if (unknown) {</span>
+<span class="source-line-no">260</span><span id="line-260">                if (Settings.UUID.BACKGROUND_CACHING_ENABLED) {</span>
+<span class="source-line-no">261</span><span id="line-261">                    player.sendMessage(TranslatableCaption.of("purge.confirm_purge_unknown_bg_enabled"));</span>
+<span class="source-line-no">262</span><span id="line-262">                } else {</span>
+<span class="source-line-no">263</span><span id="line-263">                    player.sendMessage(TranslatableCaption.of("purge.confirm_purge_unknown_bg_disabled"));</span>
+<span class="source-line-no">264</span><span id="line-264">                }</span>
+<span class="source-line-no">265</span><span id="line-265">            }</span>
+<span class="source-line-no">266</span><span id="line-266">            CmdConfirm.addPending(player, cmd, run);</span>
+<span class="source-line-no">267</span><span id="line-267">        } else {</span>
+<span class="source-line-no">268</span><span id="line-268">            run.run();</span>
+<span class="source-line-no">269</span><span id="line-269">        }</span>
+<span class="source-line-no">270</span><span id="line-270">        return true;</span>
+<span class="source-line-no">271</span><span id="line-271">    }</span>
+<span class="source-line-no">272</span><span id="line-272"></span>
+<span class="source-line-no">273</span><span id="line-273">}</span>
 
 
 

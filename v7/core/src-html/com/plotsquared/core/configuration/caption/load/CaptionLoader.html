@@ -238,7 +238,7 @@
 <span class="source-line-no">225</span><span id="line-225">     */</span>
 <span class="source-line-no">226</span><span id="line-226">    public @NonNull CaptionMap loadOrCreateSingle(final @NonNull Path file) throws IOException {</span>
 <span class="source-line-no">227</span><span id="line-227">        final Locale locale = this.localeExtractor.apply(file);</span>
-<span class="source-line-no">228</span><span id="line-228">        if (!Files.exists(file) ) {</span>
+<span class="source-line-no">228</span><span id="line-228">        if (!Files.exists(file)) {</span>
 <span class="source-line-no">229</span><span id="line-229">            Map&lt;String, String&gt; map = new LinkedHashMap&lt;&gt;();</span>
 <span class="source-line-no">230</span><span id="line-230">            patch(map, locale);</span>
 <span class="source-line-no">231</span><span id="line-231">            save(file, map);</span>

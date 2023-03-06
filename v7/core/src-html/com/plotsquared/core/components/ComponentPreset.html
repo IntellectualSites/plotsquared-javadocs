@@ -62,32 +62,33 @@
 <span class="source-line-no">049</span><span id="line-49">    public static ComponentPreset deserialize(final @NonNull Map&lt;String, Object&gt; map) {</span>
 <span class="source-line-no">050</span><span id="line-50">        final ClassicPlotManagerComponent classicPlotManagerComponent = ClassicPlotManagerComponent</span>
 <span class="source-line-no">051</span><span id="line-51">                .fromString(map.getOrDefault("component", "").toString()).orElseThrow(() -&gt;</span>
-<span class="source-line-no">052</span><span id="line-52">                        new IllegalArgumentException("The preset in components.yml needs a valid target component, got: " + map.get("component")));</span>
-<span class="source-line-no">053</span><span id="line-53">        final String pattern = map.getOrDefault("pattern", "").toString();</span>
-<span class="source-line-no">054</span><span id="line-54">        final double cost = Double.parseDouble(map.getOrDefault("cost", "0.0").toString());</span>
-<span class="source-line-no">055</span><span id="line-55">        final String permission = map.getOrDefault("permission", "").toString();</span>
-<span class="source-line-no">056</span><span id="line-56">        final String displayName = map.getOrDefault("name", "New Package").toString();</span>
-<span class="source-line-no">057</span><span id="line-57">        final List&lt;String&gt; description = (List&lt;String&gt;) map.getOrDefault("description", new ArrayList&lt;&gt;());</span>
-<span class="source-line-no">058</span><span id="line-58">        final ItemType icon = ItemTypes.get(map.getOrDefault("icon", "dirt").toString());</span>
-<span class="source-line-no">059</span><span id="line-59">        return new ComponentPreset(classicPlotManagerComponent, pattern, cost, permission,</span>
-<span class="source-line-no">060</span><span id="line-60">                displayName, description, icon</span>
-<span class="source-line-no">061</span><span id="line-61">        );</span>
-<span class="source-line-no">062</span><span id="line-62">    }</span>
-<span class="source-line-no">063</span><span id="line-63"></span>
-<span class="source-line-no">064</span><span id="line-64">    @Override</span>
-<span class="source-line-no">065</span><span id="line-65">    public Map&lt;String, Object&gt; serialize() {</span>
-<span class="source-line-no">066</span><span id="line-66">        final Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">067</span><span id="line-67">        map.put("component", this.component.name().toLowerCase());</span>
-<span class="source-line-no">068</span><span id="line-68">        map.put("pattern", this.pattern);</span>
-<span class="source-line-no">069</span><span id="line-69">        map.put("cost", this.cost);</span>
-<span class="source-line-no">070</span><span id="line-70">        map.put("permission", this.permission);</span>
-<span class="source-line-no">071</span><span id="line-71">        map.put("name", this.displayName);</span>
-<span class="source-line-no">072</span><span id="line-72">        map.put("description", this.description);</span>
-<span class="source-line-no">073</span><span id="line-73">        map.put("icon", this.icon.getId().replace("minecraft:", ""));</span>
-<span class="source-line-no">074</span><span id="line-74">        return map;</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">}</span>
+<span class="source-line-no">052</span><span id="line-52">                        new IllegalArgumentException("The preset in components.yml needs a valid target component, got: " + map.get(</span>
+<span class="source-line-no">053</span><span id="line-53">                                "component")));</span>
+<span class="source-line-no">054</span><span id="line-54">        final String pattern = map.getOrDefault("pattern", "").toString();</span>
+<span class="source-line-no">055</span><span id="line-55">        final double cost = Double.parseDouble(map.getOrDefault("cost", "0.0").toString());</span>
+<span class="source-line-no">056</span><span id="line-56">        final String permission = map.getOrDefault("permission", "").toString();</span>
+<span class="source-line-no">057</span><span id="line-57">        final String displayName = map.getOrDefault("name", "New Package").toString();</span>
+<span class="source-line-no">058</span><span id="line-58">        final List&lt;String&gt; description = (List&lt;String&gt;) map.getOrDefault("description", new ArrayList&lt;&gt;());</span>
+<span class="source-line-no">059</span><span id="line-59">        final ItemType icon = ItemTypes.get(map.getOrDefault("icon", "dirt").toString());</span>
+<span class="source-line-no">060</span><span id="line-60">        return new ComponentPreset(classicPlotManagerComponent, pattern, cost, permission,</span>
+<span class="source-line-no">061</span><span id="line-61">                displayName, description, icon</span>
+<span class="source-line-no">062</span><span id="line-62">        );</span>
+<span class="source-line-no">063</span><span id="line-63">    }</span>
+<span class="source-line-no">064</span><span id="line-64"></span>
+<span class="source-line-no">065</span><span id="line-65">    @Override</span>
+<span class="source-line-no">066</span><span id="line-66">    public Map&lt;String, Object&gt; serialize() {</span>
+<span class="source-line-no">067</span><span id="line-67">        final Map&lt;String, Object&gt; map = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">068</span><span id="line-68">        map.put("component", this.component.name().toLowerCase());</span>
+<span class="source-line-no">069</span><span id="line-69">        map.put("pattern", this.pattern);</span>
+<span class="source-line-no">070</span><span id="line-70">        map.put("cost", this.cost);</span>
+<span class="source-line-no">071</span><span id="line-71">        map.put("permission", this.permission);</span>
+<span class="source-line-no">072</span><span id="line-72">        map.put("name", this.displayName);</span>
+<span class="source-line-no">073</span><span id="line-73">        map.put("description", this.description);</span>
+<span class="source-line-no">074</span><span id="line-74">        map.put("icon", this.icon.getId().replace("minecraft:", ""));</span>
+<span class="source-line-no">075</span><span id="line-75">        return map;</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">}</span>
 
 
 

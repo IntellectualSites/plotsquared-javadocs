@@ -32,100 +32,88 @@
 <span class="source-line-no">019</span><span id="line-19">package com.plotsquared.core.util;</span>
 <span class="source-line-no">020</span><span id="line-20"></span>
 <span class="source-line-no">021</span><span id="line-21">import com.plotsquared.core.location.Location;</span>
-<span class="source-line-no">022</span><span id="line-22">import com.sk89q.worldedit.math.BlockVector2;</span>
-<span class="source-line-no">023</span><span id="line-23">import com.sk89q.worldedit.math.BlockVector3;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.sk89q.worldedit.regions.CuboidRegion;</span>
-<span class="source-line-no">025</span><span id="line-25">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">026</span><span id="line-26"></span>
-<span class="source-line-no">027</span><span id="line-27">import java.awt.geom.Rectangle2D;</span>
-<span class="source-line-no">028</span><span id="line-28">import java.util.Collection;</span>
-<span class="source-line-no">029</span><span id="line-29">import java.util.Iterator;</span>
+<span class="source-line-no">022</span><span id="line-22">import com.sk89q.worldedit.math.BlockVector3;</span>
+<span class="source-line-no">023</span><span id="line-23">import com.sk89q.worldedit.regions.CuboidRegion;</span>
+<span class="source-line-no">024</span><span id="line-24">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">025</span><span id="line-25"></span>
+<span class="source-line-no">026</span><span id="line-26">import java.util.Collection;</span>
+<span class="source-line-no">027</span><span id="line-27">import java.util.Iterator;</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">public class RegionUtil {</span>
 <span class="source-line-no">030</span><span id="line-30"></span>
-<span class="source-line-no">031</span><span id="line-31">public class RegionUtil {</span>
-<span class="source-line-no">032</span><span id="line-32"></span>
-<span class="source-line-no">033</span><span id="line-33">    public static @NonNull Location[] getCorners(</span>
-<span class="source-line-no">034</span><span id="line-34">            final @NonNull String world,</span>
-<span class="source-line-no">035</span><span id="line-35">            final @NonNull CuboidRegion region</span>
-<span class="source-line-no">036</span><span id="line-36">    ) {</span>
-<span class="source-line-no">037</span><span id="line-37">        final BlockVector3 min = region.getMinimumPoint();</span>
-<span class="source-line-no">038</span><span id="line-38">        final BlockVector3 max = region.getMaximumPoint();</span>
-<span class="source-line-no">039</span><span id="line-39">        return new Location[]{Location.at(world, min), Location.at(world, max)};</span>
-<span class="source-line-no">040</span><span id="line-40">    }</span>
-<span class="source-line-no">041</span><span id="line-41"></span>
-<span class="source-line-no">042</span><span id="line-42">    public static @NonNull Location[] getCorners(String world, Collection&lt;CuboidRegion&gt; regions) {</span>
-<span class="source-line-no">043</span><span id="line-43">        CuboidRegion aabb = getAxisAlignedBoundingBox(regions);</span>
-<span class="source-line-no">044</span><span id="line-44">        return getCorners(world, aabb);</span>
-<span class="source-line-no">045</span><span id="line-45">    }</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">    /**</span>
-<span class="source-line-no">048</span><span id="line-48">     * Create a minimum {@link CuboidRegion} containing all given regions.</span>
-<span class="source-line-no">049</span><span id="line-49">     *</span>
-<span class="source-line-no">050</span><span id="line-50">     * @param regions The regions the bounding box should contain.</span>
-<span class="source-line-no">051</span><span id="line-51">     * @return a CuboidRegion that contains all given regions.</span>
-<span class="source-line-no">052</span><span id="line-52">     */</span>
-<span class="source-line-no">053</span><span id="line-53">    public static @NonNull CuboidRegion getAxisAlignedBoundingBox(Iterable&lt;CuboidRegion&gt; regions) {</span>
-<span class="source-line-no">054</span><span id="line-54">        Iterator&lt;CuboidRegion&gt; iterator = regions.iterator();</span>
-<span class="source-line-no">055</span><span id="line-55">        if (!iterator.hasNext()) {</span>
-<span class="source-line-no">056</span><span id="line-56">            throw new IllegalArgumentException("No regions given");</span>
-<span class="source-line-no">057</span><span id="line-57">        }</span>
-<span class="source-line-no">058</span><span id="line-58">        CuboidRegion next = iterator.next();</span>
-<span class="source-line-no">059</span><span id="line-59">        BlockVector3 min = next.getMinimumPoint();</span>
-<span class="source-line-no">060</span><span id="line-60">        BlockVector3 max = next.getMaximumPoint();</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">        while (iterator.hasNext()) {</span>
-<span class="source-line-no">063</span><span id="line-63">            next = iterator.next();</span>
-<span class="source-line-no">064</span><span id="line-64">            // as max &gt;= min, this is enough to check</span>
-<span class="source-line-no">065</span><span id="line-65">            min = min.getMinimum(next.getMinimumPoint());</span>
-<span class="source-line-no">066</span><span id="line-66">            max = max.getMaximum(next.getMaximumPoint());</span>
-<span class="source-line-no">067</span><span id="line-67">        }</span>
-<span class="source-line-no">068</span><span id="line-68">        return new CuboidRegion(min, max);</span>
-<span class="source-line-no">069</span><span id="line-69">    }</span>
-<span class="source-line-no">070</span><span id="line-70"></span>
-<span class="source-line-no">071</span><span id="line-71">    public static CuboidRegion createRegion(</span>
-<span class="source-line-no">072</span><span id="line-72">            int pos1x, int pos2x, int pos1y, int pos2y, int pos1z,</span>
-<span class="source-line-no">073</span><span id="line-73">            int pos2z</span>
-<span class="source-line-no">074</span><span id="line-74">    ) {</span>
-<span class="source-line-no">075</span><span id="line-75">        BlockVector3 pos1 = BlockVector3.at(pos1x, pos1y, pos1z);</span>
-<span class="source-line-no">076</span><span id="line-76">        BlockVector3 pos2 = BlockVector3.at(pos2x, pos2y, pos2z);</span>
-<span class="source-line-no">077</span><span id="line-77">        return new CuboidRegion(pos1, pos2);</span>
-<span class="source-line-no">078</span><span id="line-78">    }</span>
-<span class="source-line-no">079</span><span id="line-79"></span>
-<span class="source-line-no">080</span><span id="line-80">    public static boolean contains(CuboidRegion region, int x, int z) {</span>
-<span class="source-line-no">081</span><span id="line-81">        BlockVector3 min = region.getMinimumPoint();</span>
-<span class="source-line-no">082</span><span id="line-82">        BlockVector3 max = region.getMaximumPoint();</span>
-<span class="source-line-no">083</span><span id="line-83">        return x &gt;= min.getX() &amp;&amp; x &lt;= max.getX() &amp;&amp; z &gt;= min.getZ() &amp;&amp; z &lt;= max.getZ();</span>
-<span class="source-line-no">084</span><span id="line-84">    }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">    public static boolean contains(CuboidRegion region, int x, int y, int z) {</span>
-<span class="source-line-no">087</span><span id="line-87">        BlockVector3 min = region.getMinimumPoint();</span>
-<span class="source-line-no">088</span><span id="line-88">        BlockVector3 max = region.getMaximumPoint();</span>
-<span class="source-line-no">089</span><span id="line-89">        return x &gt;= min.getX() &amp;&amp; x &lt;= max.getX() &amp;&amp; z &gt;= min.getZ() &amp;&amp; z &lt;= max.getZ() &amp;&amp; y &gt;= min</span>
-<span class="source-line-no">090</span><span id="line-90">                .getY() &amp;&amp; y &lt;= max.getY();</span>
-<span class="source-line-no">091</span><span id="line-91">    }</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">    /**</span>
-<span class="source-line-no">094</span><span id="line-94">     * @deprecated Unused internally. Scheduled for removal in next major release.</span>
-<span class="source-line-no">095</span><span id="line-95">     */</span>
-<span class="source-line-no">096</span><span id="line-96">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
-<span class="source-line-no">097</span><span id="line-97">    public static @NonNull Rectangle2D toRectangle(final @NonNull CuboidRegion region) {</span>
-<span class="source-line-no">098</span><span id="line-98">        final BlockVector2 min = region.getMinimumPoint().toBlockVector2();</span>
-<span class="source-line-no">099</span><span id="line-99">        final BlockVector2 max = region.getMaximumPoint().toBlockVector2();</span>
-<span class="source-line-no">100</span><span id="line-100">        return new Rectangle2D.Double(min.getX(), min.getZ(), max.getX(), max.getZ());</span>
+<span class="source-line-no">031</span><span id="line-31">    public static @NonNull Location[] getCorners(</span>
+<span class="source-line-no">032</span><span id="line-32">            final @NonNull String world,</span>
+<span class="source-line-no">033</span><span id="line-33">            final @NonNull CuboidRegion region</span>
+<span class="source-line-no">034</span><span id="line-34">    ) {</span>
+<span class="source-line-no">035</span><span id="line-35">        final BlockVector3 min = region.getMinimumPoint();</span>
+<span class="source-line-no">036</span><span id="line-36">        final BlockVector3 max = region.getMaximumPoint();</span>
+<span class="source-line-no">037</span><span id="line-37">        return new Location[]{Location.at(world, min), Location.at(world, max)};</span>
+<span class="source-line-no">038</span><span id="line-38">    }</span>
+<span class="source-line-no">039</span><span id="line-39"></span>
+<span class="source-line-no">040</span><span id="line-40">    public static @NonNull Location[] getCorners(String world, Collection&lt;CuboidRegion&gt; regions) {</span>
+<span class="source-line-no">041</span><span id="line-41">        CuboidRegion aabb = getAxisAlignedBoundingBox(regions);</span>
+<span class="source-line-no">042</span><span id="line-42">        return getCorners(world, aabb);</span>
+<span class="source-line-no">043</span><span id="line-43">    }</span>
+<span class="source-line-no">044</span><span id="line-44"></span>
+<span class="source-line-no">045</span><span id="line-45">    /**</span>
+<span class="source-line-no">046</span><span id="line-46">     * Create a minimum {@link CuboidRegion} containing all given regions.</span>
+<span class="source-line-no">047</span><span id="line-47">     *</span>
+<span class="source-line-no">048</span><span id="line-48">     * @param regions The regions the bounding box should contain.</span>
+<span class="source-line-no">049</span><span id="line-49">     * @return a CuboidRegion that contains all given regions.</span>
+<span class="source-line-no">050</span><span id="line-50">     */</span>
+<span class="source-line-no">051</span><span id="line-51">    public static @NonNull CuboidRegion getAxisAlignedBoundingBox(Iterable&lt;CuboidRegion&gt; regions) {</span>
+<span class="source-line-no">052</span><span id="line-52">        Iterator&lt;CuboidRegion&gt; iterator = regions.iterator();</span>
+<span class="source-line-no">053</span><span id="line-53">        if (!iterator.hasNext()) {</span>
+<span class="source-line-no">054</span><span id="line-54">            throw new IllegalArgumentException("No regions given");</span>
+<span class="source-line-no">055</span><span id="line-55">        }</span>
+<span class="source-line-no">056</span><span id="line-56">        CuboidRegion next = iterator.next();</span>
+<span class="source-line-no">057</span><span id="line-57">        BlockVector3 min = next.getMinimumPoint();</span>
+<span class="source-line-no">058</span><span id="line-58">        BlockVector3 max = next.getMaximumPoint();</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">        while (iterator.hasNext()) {</span>
+<span class="source-line-no">061</span><span id="line-61">            next = iterator.next();</span>
+<span class="source-line-no">062</span><span id="line-62">            // as max &gt;= min, this is enough to check</span>
+<span class="source-line-no">063</span><span id="line-63">            min = min.getMinimum(next.getMinimumPoint());</span>
+<span class="source-line-no">064</span><span id="line-64">            max = max.getMaximum(next.getMaximumPoint());</span>
+<span class="source-line-no">065</span><span id="line-65">        }</span>
+<span class="source-line-no">066</span><span id="line-66">        return new CuboidRegion(min, max);</span>
+<span class="source-line-no">067</span><span id="line-67">    }</span>
+<span class="source-line-no">068</span><span id="line-68"></span>
+<span class="source-line-no">069</span><span id="line-69">    public static CuboidRegion createRegion(</span>
+<span class="source-line-no">070</span><span id="line-70">            int pos1x, int pos2x, int pos1y, int pos2y, int pos1z,</span>
+<span class="source-line-no">071</span><span id="line-71">            int pos2z</span>
+<span class="source-line-no">072</span><span id="line-72">    ) {</span>
+<span class="source-line-no">073</span><span id="line-73">        BlockVector3 pos1 = BlockVector3.at(pos1x, pos1y, pos1z);</span>
+<span class="source-line-no">074</span><span id="line-74">        BlockVector3 pos2 = BlockVector3.at(pos2x, pos2y, pos2z);</span>
+<span class="source-line-no">075</span><span id="line-75">        return new CuboidRegion(pos1, pos2);</span>
+<span class="source-line-no">076</span><span id="line-76">    }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">    public static boolean contains(CuboidRegion region, int x, int z) {</span>
+<span class="source-line-no">079</span><span id="line-79">        BlockVector3 min = region.getMinimumPoint();</span>
+<span class="source-line-no">080</span><span id="line-80">        BlockVector3 max = region.getMaximumPoint();</span>
+<span class="source-line-no">081</span><span id="line-81">        return x &gt;= min.getX() &amp;&amp; x &lt;= max.getX() &amp;&amp; z &gt;= min.getZ() &amp;&amp; z &lt;= max.getZ();</span>
+<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    public static boolean contains(CuboidRegion region, int x, int y, int z) {</span>
+<span class="source-line-no">085</span><span id="line-85">        BlockVector3 min = region.getMinimumPoint();</span>
+<span class="source-line-no">086</span><span id="line-86">        BlockVector3 max = region.getMaximumPoint();</span>
+<span class="source-line-no">087</span><span id="line-87">        return x &gt;= min.getX() &amp;&amp; x &lt;= max.getX() &amp;&amp; z &gt;= min.getZ() &amp;&amp; z &lt;= max.getZ() &amp;&amp; y &gt;= min</span>
+<span class="source-line-no">088</span><span id="line-88">                .getY() &amp;&amp; y &lt;= max.getY();</span>
+<span class="source-line-no">089</span><span id="line-89">    }</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">    // Because WorldEdit (not FastAsyncWorldEdit) lack this for CuboidRegion</span>
+<span class="source-line-no">092</span><span id="line-92">    public static boolean intersects(CuboidRegion region, CuboidRegion other) {</span>
+<span class="source-line-no">093</span><span id="line-93">        BlockVector3 regionMin = region.getMinimumPoint();</span>
+<span class="source-line-no">094</span><span id="line-94">        BlockVector3 regionMax = region.getMaximumPoint();</span>
+<span class="source-line-no">095</span><span id="line-95"></span>
+<span class="source-line-no">096</span><span id="line-96">        BlockVector3 otherMin = other.getMinimumPoint();</span>
+<span class="source-line-no">097</span><span id="line-97">        BlockVector3 otherMax = other.getMaximumPoint();</span>
+<span class="source-line-no">098</span><span id="line-98"></span>
+<span class="source-line-no">099</span><span id="line-99">        return otherMin.getX() &lt;= regionMax.getX() &amp;&amp; otherMax.getX() &gt;= regionMin.getX()</span>
+<span class="source-line-no">100</span><span id="line-100">                &amp;&amp; otherMin.getZ() &lt;= regionMax.getZ() &amp;&amp; otherMax.getZ() &gt;= regionMin.getZ();</span>
 <span class="source-line-no">101</span><span id="line-101">    }</span>
 <span class="source-line-no">102</span><span id="line-102"></span>
-<span class="source-line-no">103</span><span id="line-103">    // Because WorldEdit (not FastAsyncWorldEdit) lack this for CuboidRegion</span>
-<span class="source-line-no">104</span><span id="line-104">    public static boolean intersects(CuboidRegion region, CuboidRegion other) {</span>
-<span class="source-line-no">105</span><span id="line-105">        BlockVector3 regionMin = region.getMinimumPoint();</span>
-<span class="source-line-no">106</span><span id="line-106">        BlockVector3 regionMax = region.getMaximumPoint();</span>
-<span class="source-line-no">107</span><span id="line-107"></span>
-<span class="source-line-no">108</span><span id="line-108">        BlockVector3 otherMin = other.getMinimumPoint();</span>
-<span class="source-line-no">109</span><span id="line-109">        BlockVector3 otherMax = other.getMaximumPoint();</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111">        return otherMin.getX() &lt;= regionMax.getX() &amp;&amp; otherMax.getX() &gt;= regionMin.getX()</span>
-<span class="source-line-no">112</span><span id="line-112">                &amp;&amp; otherMin.getZ() &lt;= regionMax.getZ() &amp;&amp; otherMax.getZ() &gt;= regionMin.getZ();</span>
-<span class="source-line-no">113</span><span id="line-113">    }</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">}</span>
+<span class="source-line-no">103</span><span id="line-103">}</span>
 
 
 

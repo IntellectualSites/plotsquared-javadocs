@@ -49,7 +49,7 @@
 <span class="source-line-no">036</span><span id="line-36"> * The min and max points of this queue are offset according to the minimum point given in the constructor, and the offsets set</span>
 <span class="source-line-no">037</span><span id="line-37"> * in {@link BlockArrayCacheScopedQueueCoordinator#setOffsetX(int)} and</span>
 <span class="source-line-no">038</span><span id="line-38"> * {@link BlockArrayCacheScopedQueueCoordinator#setOffsetZ(int)}</span>
-<span class="source-line-no">039</span><span id="line-39"> *</span>
+<span class="source-line-no">039</span><span id="line-39"> * &lt;p&gt;</span>
 <span class="source-line-no">040</span><span id="line-40"> * Internal use only. Subject to change at any time and created for specific use cases.</span>
 <span class="source-line-no">041</span><span id="line-41"> */</span>
 <span class="source-line-no">042</span><span id="line-42">@NotPublic</span>
@@ -67,120 +67,121 @@
 <span class="source-line-no">054</span><span id="line-54">    private final int scopeMaxZ;</span>
 <span class="source-line-no">055</span><span id="line-55">    private int offsetX = 0;</span>
 <span class="source-line-no">056</span><span id="line-56">    private int offsetZ = 0;</span>
-<span class="source-line-no">057</span><span id="line-57">    /**</span>
-<span class="source-line-no">058</span><span id="line-58">     * Construct a new instance</span>
-<span class="source-line-no">059</span><span id="line-59">     *</span>
-<span class="source-line-no">060</span><span id="line-60">     * @param min Inclusive location of the minimum point to limit the scope to.</span>
-<span class="source-line-no">061</span><span id="line-61">     * @param max Inclusive location of the maximum point to limit the scope to.</span>
-<span class="source-line-no">062</span><span id="line-62">     * @since 6.8.0</span>
-<span class="source-line-no">063</span><span id="line-63">     */</span>
-<span class="source-line-no">064</span><span id="line-64">    public BlockArrayCacheScopedQueueCoordinator(Location min, Location max) {</span>
-<span class="source-line-no">065</span><span id="line-65">        super(null, min, max);</span>
-<span class="source-line-no">066</span><span id="line-66">        this.width = max.getX() - min.getX() + 1;</span>
-<span class="source-line-no">067</span><span id="line-67">        this.length = max.getZ() - min.getZ() + 1;</span>
-<span class="source-line-no">068</span><span id="line-68">        this.minY = min.getY();</span>
-<span class="source-line-no">069</span><span id="line-69">        this.maxY = max.getY();</span>
-<span class="source-line-no">070</span><span id="line-70">        this.height = maxY - minY + 1;</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">        this.scopeMinX = min.getX() &amp; 15;</span>
-<span class="source-line-no">073</span><span id="line-73">        this.scopeMinZ = min.getZ() &amp; 15;</span>
-<span class="source-line-no">074</span><span id="line-74">        this.scopeMaxX = scopeMinX + width;</span>
-<span class="source-line-no">075</span><span id="line-75">        this.scopeMaxZ = scopeMinZ + length;</span>
-<span class="source-line-no">076</span><span id="line-76">        this.blockStates = new BlockState[height][width][length];</span>
-<span class="source-line-no">077</span><span id="line-77">    }</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    public BlockState[][][] getBlockStates() {</span>
-<span class="source-line-no">080</span><span id="line-80">        return blockStates;</span>
-<span class="source-line-no">081</span><span id="line-81">    }</span>
-<span class="source-line-no">082</span><span id="line-82"></span>
-<span class="source-line-no">083</span><span id="line-83">    @Override</span>
-<span class="source-line-no">084</span><span id="line-84">    public boolean setBlock(int x, final int y, int z, final @NonNull BlockState id) {</span>
-<span class="source-line-no">085</span><span id="line-85">        x += offsetX;</span>
-<span class="source-line-no">086</span><span id="line-86">        z += offsetZ;</span>
-<span class="source-line-no">087</span><span id="line-87">        if (x &gt;= scopeMinX &amp;&amp; x &lt; scopeMaxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; z &gt;= scopeMinZ &amp;&amp; z &lt; scopeMaxZ) {</span>
-<span class="source-line-no">088</span><span id="line-88">            blockStates[y - minY][x - scopeMinX][z - scopeMinZ] = id;</span>
-<span class="source-line-no">089</span><span id="line-89">        }</span>
-<span class="source-line-no">090</span><span id="line-90">        return false;</span>
-<span class="source-line-no">091</span><span id="line-91">    }</span>
-<span class="source-line-no">092</span><span id="line-92"></span>
-<span class="source-line-no">093</span><span id="line-93">    @Override</span>
-<span class="source-line-no">094</span><span id="line-94">    public boolean setBlock(final int x, final int y, final int z, @NonNull final Pattern pattern) {</span>
-<span class="source-line-no">095</span><span id="line-95">        int rx = x + offsetX;</span>
-<span class="source-line-no">096</span><span id="line-96">        int rz = z + offsetZ;</span>
-<span class="source-line-no">097</span><span id="line-97">        if (rx &gt;= scopeMinX &amp;&amp; rx &lt; scopeMaxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; rz &gt;= scopeMinZ &amp;&amp; rz &lt; scopeMaxZ) {</span>
-<span class="source-line-no">098</span><span id="line-98">            BlockState state = pattern</span>
-<span class="source-line-no">099</span><span id="line-99">                    .applyBlock(super.getMin().getBlockVector3().add(BlockVector3.at(x, y, z)))</span>
-<span class="source-line-no">100</span><span id="line-100">                    .toImmutableState();</span>
-<span class="source-line-no">101</span><span id="line-101">            blockStates[y - minY][rx - scopeMinX][rz - scopeMinZ] = state;</span>
-<span class="source-line-no">102</span><span id="line-102">        }</span>
-<span class="source-line-no">103</span><span id="line-103">        return false;</span>
-<span class="source-line-no">104</span><span id="line-104">    }</span>
-<span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106">    @Override</span>
-<span class="source-line-no">107</span><span id="line-107">    public @NonNull Location getMin() {</span>
-<span class="source-line-no">108</span><span id="line-108">        return super.getMin().add(offsetX - scopeMinX, 0, offsetZ - scopeMinZ);</span>
-<span class="source-line-no">109</span><span id="line-109">    }</span>
-<span class="source-line-no">110</span><span id="line-110"></span>
-<span class="source-line-no">111</span><span id="line-111">    @Override</span>
-<span class="source-line-no">112</span><span id="line-112">    public @NonNull Location getMax() {</span>
-<span class="source-line-no">113</span><span id="line-113">        return getMin().add(15, 0, 15).withY(maxY);</span>
-<span class="source-line-no">114</span><span id="line-114">    }</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">    @Override</span>
-<span class="source-line-no">117</span><span id="line-117">    public boolean setBlock(int x, int y, int z, final @NonNull BaseBlock id) {</span>
-<span class="source-line-no">118</span><span id="line-118">        x += offsetX;</span>
-<span class="source-line-no">119</span><span id="line-119">        z += offsetZ;</span>
-<span class="source-line-no">120</span><span id="line-120">        if (x &gt;= scopeMinX &amp;&amp; x &lt; scopeMaxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; z &gt;= scopeMinZ &amp;&amp; z &lt; scopeMaxZ) {</span>
-<span class="source-line-no">121</span><span id="line-121">            blockStates[y - minY][x - scopeMinX][z - scopeMinZ] = id.toImmutableState();</span>
-<span class="source-line-no">122</span><span id="line-122">        }</span>
-<span class="source-line-no">123</span><span id="line-123">        return false;</span>
-<span class="source-line-no">124</span><span id="line-124">    }</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">    @Override</span>
-<span class="source-line-no">127</span><span id="line-127">    public @Nullable BlockState getBlock(final int x, final int y, final int z) {</span>
-<span class="source-line-no">128</span><span id="line-128">        if (x &gt;= 0 &amp;&amp; x &lt; width &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; z &gt;= 0 &amp;&amp; z &lt; length) {</span>
-<span class="source-line-no">129</span><span id="line-129">            return blockStates[y - minY][x][z];</span>
-<span class="source-line-no">130</span><span id="line-130">        }</span>
-<span class="source-line-no">131</span><span id="line-131">        return null;</span>
-<span class="source-line-no">132</span><span id="line-132">    }</span>
-<span class="source-line-no">133</span><span id="line-133"></span>
-<span class="source-line-no">134</span><span id="line-134">    public void setOffsetX(final int offsetX) {</span>
-<span class="source-line-no">135</span><span id="line-135">        this.offsetX = offsetX;</span>
-<span class="source-line-no">136</span><span id="line-136">    }</span>
-<span class="source-line-no">137</span><span id="line-137"></span>
-<span class="source-line-no">138</span><span id="line-138">    public void setOffsetZ(final int offsetZ) {</span>
-<span class="source-line-no">139</span><span id="line-139">        this.offsetZ = offsetZ;</span>
-<span class="source-line-no">140</span><span id="line-140">    }</span>
-<span class="source-line-no">141</span><span id="line-141"></span>
-<span class="source-line-no">142</span><span id="line-142">    @Override</span>
-<span class="source-line-no">143</span><span id="line-143">    public int size() {</span>
-<span class="source-line-no">144</span><span id="line-144">        return height * width * length;</span>
-<span class="source-line-no">145</span><span id="line-145">    }</span>
-<span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">    @Override</span>
-<span class="source-line-no">148</span><span id="line-148">    public boolean setBiome(final int x, final int z, @NonNull final BiomeType biome) {</span>
-<span class="source-line-no">149</span><span id="line-149">        //do nothing</span>
-<span class="source-line-no">150</span><span id="line-150">        return false;</span>
-<span class="source-line-no">151</span><span id="line-151">    }</span>
-<span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">    @Override</span>
-<span class="source-line-no">154</span><span id="line-154">    public boolean setBiome(final int x, final int y, final int z, @NonNull final BiomeType biome) {</span>
-<span class="source-line-no">155</span><span id="line-155">        //do nothing</span>
-<span class="source-line-no">156</span><span id="line-156">        return false;</span>
-<span class="source-line-no">157</span><span id="line-157">    }</span>
-<span class="source-line-no">158</span><span id="line-158"></span>
-<span class="source-line-no">159</span><span id="line-159">    @Override</span>
-<span class="source-line-no">160</span><span id="line-160">    public void fillBiome(final BiomeType biome) {</span>
-<span class="source-line-no">161</span><span id="line-161">        //do nothing</span>
-<span class="source-line-no">162</span><span id="line-162">    }</span>
-<span class="source-line-no">163</span><span id="line-163"></span>
-<span class="source-line-no">164</span><span id="line-164">    @Override</span>
-<span class="source-line-no">165</span><span id="line-165">    public boolean setTile(final int x, final int y, final int z, @NonNull final CompoundTag tag) {</span>
-<span class="source-line-no">166</span><span id="line-166">        //do nothing</span>
-<span class="source-line-no">167</span><span id="line-167">        return false;</span>
-<span class="source-line-no">168</span><span id="line-168">    }</span>
-<span class="source-line-no">169</span><span id="line-169"></span>
-<span class="source-line-no">170</span><span id="line-170">}</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    /**</span>
+<span class="source-line-no">059</span><span id="line-59">     * Construct a new instance</span>
+<span class="source-line-no">060</span><span id="line-60">     *</span>
+<span class="source-line-no">061</span><span id="line-61">     * @param min Inclusive location of the minimum point to limit the scope to.</span>
+<span class="source-line-no">062</span><span id="line-62">     * @param max Inclusive location of the maximum point to limit the scope to.</span>
+<span class="source-line-no">063</span><span id="line-63">     * @since 6.8.0</span>
+<span class="source-line-no">064</span><span id="line-64">     */</span>
+<span class="source-line-no">065</span><span id="line-65">    public BlockArrayCacheScopedQueueCoordinator(Location min, Location max) {</span>
+<span class="source-line-no">066</span><span id="line-66">        super(null, min, max);</span>
+<span class="source-line-no">067</span><span id="line-67">        this.width = max.getX() - min.getX() + 1;</span>
+<span class="source-line-no">068</span><span id="line-68">        this.length = max.getZ() - min.getZ() + 1;</span>
+<span class="source-line-no">069</span><span id="line-69">        this.minY = min.getY();</span>
+<span class="source-line-no">070</span><span id="line-70">        this.maxY = max.getY();</span>
+<span class="source-line-no">071</span><span id="line-71">        this.height = maxY - minY + 1;</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">        this.scopeMinX = min.getX() &amp; 15;</span>
+<span class="source-line-no">074</span><span id="line-74">        this.scopeMinZ = min.getZ() &amp; 15;</span>
+<span class="source-line-no">075</span><span id="line-75">        this.scopeMaxX = scopeMinX + width;</span>
+<span class="source-line-no">076</span><span id="line-76">        this.scopeMaxZ = scopeMinZ + length;</span>
+<span class="source-line-no">077</span><span id="line-77">        this.blockStates = new BlockState[height][width][length];</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">    public BlockState[][][] getBlockStates() {</span>
+<span class="source-line-no">081</span><span id="line-81">        return blockStates;</span>
+<span class="source-line-no">082</span><span id="line-82">    }</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    @Override</span>
+<span class="source-line-no">085</span><span id="line-85">    public boolean setBlock(int x, final int y, int z, final @NonNull BlockState id) {</span>
+<span class="source-line-no">086</span><span id="line-86">        x += offsetX;</span>
+<span class="source-line-no">087</span><span id="line-87">        z += offsetZ;</span>
+<span class="source-line-no">088</span><span id="line-88">        if (x &gt;= scopeMinX &amp;&amp; x &lt; scopeMaxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; z &gt;= scopeMinZ &amp;&amp; z &lt; scopeMaxZ) {</span>
+<span class="source-line-no">089</span><span id="line-89">            blockStates[y - minY][x - scopeMinX][z - scopeMinZ] = id;</span>
+<span class="source-line-no">090</span><span id="line-90">        }</span>
+<span class="source-line-no">091</span><span id="line-91">        return false;</span>
+<span class="source-line-no">092</span><span id="line-92">    }</span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">    @Override</span>
+<span class="source-line-no">095</span><span id="line-95">    public boolean setBlock(final int x, final int y, final int z, @NonNull final Pattern pattern) {</span>
+<span class="source-line-no">096</span><span id="line-96">        int rx = x + offsetX;</span>
+<span class="source-line-no">097</span><span id="line-97">        int rz = z + offsetZ;</span>
+<span class="source-line-no">098</span><span id="line-98">        if (rx &gt;= scopeMinX &amp;&amp; rx &lt; scopeMaxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; rz &gt;= scopeMinZ &amp;&amp; rz &lt; scopeMaxZ) {</span>
+<span class="source-line-no">099</span><span id="line-99">            BlockState state = pattern</span>
+<span class="source-line-no">100</span><span id="line-100">                    .applyBlock(super.getMin().getBlockVector3().add(BlockVector3.at(x, y, z)))</span>
+<span class="source-line-no">101</span><span id="line-101">                    .toImmutableState();</span>
+<span class="source-line-no">102</span><span id="line-102">            blockStates[y - minY][rx - scopeMinX][rz - scopeMinZ] = state;</span>
+<span class="source-line-no">103</span><span id="line-103">        }</span>
+<span class="source-line-no">104</span><span id="line-104">        return false;</span>
+<span class="source-line-no">105</span><span id="line-105">    }</span>
+<span class="source-line-no">106</span><span id="line-106"></span>
+<span class="source-line-no">107</span><span id="line-107">    @Override</span>
+<span class="source-line-no">108</span><span id="line-108">    public @NonNull Location getMin() {</span>
+<span class="source-line-no">109</span><span id="line-109">        return super.getMin().add(offsetX - scopeMinX, 0, offsetZ - scopeMinZ);</span>
+<span class="source-line-no">110</span><span id="line-110">    }</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">    @Override</span>
+<span class="source-line-no">113</span><span id="line-113">    public @NonNull Location getMax() {</span>
+<span class="source-line-no">114</span><span id="line-114">        return getMin().add(15, 0, 15).withY(maxY);</span>
+<span class="source-line-no">115</span><span id="line-115">    }</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">    @Override</span>
+<span class="source-line-no">118</span><span id="line-118">    public boolean setBlock(int x, int y, int z, final @NonNull BaseBlock id) {</span>
+<span class="source-line-no">119</span><span id="line-119">        x += offsetX;</span>
+<span class="source-line-no">120</span><span id="line-120">        z += offsetZ;</span>
+<span class="source-line-no">121</span><span id="line-121">        if (x &gt;= scopeMinX &amp;&amp; x &lt; scopeMaxX &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; z &gt;= scopeMinZ &amp;&amp; z &lt; scopeMaxZ) {</span>
+<span class="source-line-no">122</span><span id="line-122">            blockStates[y - minY][x - scopeMinX][z - scopeMinZ] = id.toImmutableState();</span>
+<span class="source-line-no">123</span><span id="line-123">        }</span>
+<span class="source-line-no">124</span><span id="line-124">        return false;</span>
+<span class="source-line-no">125</span><span id="line-125">    }</span>
+<span class="source-line-no">126</span><span id="line-126"></span>
+<span class="source-line-no">127</span><span id="line-127">    @Override</span>
+<span class="source-line-no">128</span><span id="line-128">    public @Nullable BlockState getBlock(final int x, final int y, final int z) {</span>
+<span class="source-line-no">129</span><span id="line-129">        if (x &gt;= 0 &amp;&amp; x &lt; width &amp;&amp; y &gt;= minY &amp;&amp; y &lt;= maxY &amp;&amp; z &gt;= 0 &amp;&amp; z &lt; length) {</span>
+<span class="source-line-no">130</span><span id="line-130">            return blockStates[y - minY][x][z];</span>
+<span class="source-line-no">131</span><span id="line-131">        }</span>
+<span class="source-line-no">132</span><span id="line-132">        return null;</span>
+<span class="source-line-no">133</span><span id="line-133">    }</span>
+<span class="source-line-no">134</span><span id="line-134"></span>
+<span class="source-line-no">135</span><span id="line-135">    public void setOffsetX(final int offsetX) {</span>
+<span class="source-line-no">136</span><span id="line-136">        this.offsetX = offsetX;</span>
+<span class="source-line-no">137</span><span id="line-137">    }</span>
+<span class="source-line-no">138</span><span id="line-138"></span>
+<span class="source-line-no">139</span><span id="line-139">    public void setOffsetZ(final int offsetZ) {</span>
+<span class="source-line-no">140</span><span id="line-140">        this.offsetZ = offsetZ;</span>
+<span class="source-line-no">141</span><span id="line-141">    }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    @Override</span>
+<span class="source-line-no">144</span><span id="line-144">    public int size() {</span>
+<span class="source-line-no">145</span><span id="line-145">        return height * width * length;</span>
+<span class="source-line-no">146</span><span id="line-146">    }</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">    @Override</span>
+<span class="source-line-no">149</span><span id="line-149">    public boolean setBiome(final int x, final int z, @NonNull final BiomeType biome) {</span>
+<span class="source-line-no">150</span><span id="line-150">        //do nothing</span>
+<span class="source-line-no">151</span><span id="line-151">        return false;</span>
+<span class="source-line-no">152</span><span id="line-152">    }</span>
+<span class="source-line-no">153</span><span id="line-153"></span>
+<span class="source-line-no">154</span><span id="line-154">    @Override</span>
+<span class="source-line-no">155</span><span id="line-155">    public boolean setBiome(final int x, final int y, final int z, @NonNull final BiomeType biome) {</span>
+<span class="source-line-no">156</span><span id="line-156">        //do nothing</span>
+<span class="source-line-no">157</span><span id="line-157">        return false;</span>
+<span class="source-line-no">158</span><span id="line-158">    }</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">    @Override</span>
+<span class="source-line-no">161</span><span id="line-161">    public void fillBiome(final BiomeType biome) {</span>
+<span class="source-line-no">162</span><span id="line-162">        //do nothing</span>
+<span class="source-line-no">163</span><span id="line-163">    }</span>
+<span class="source-line-no">164</span><span id="line-164"></span>
+<span class="source-line-no">165</span><span id="line-165">    @Override</span>
+<span class="source-line-no">166</span><span id="line-166">    public boolean setTile(final int x, final int y, final int z, @NonNull final CompoundTag tag) {</span>
+<span class="source-line-no">167</span><span id="line-167">        //do nothing</span>
+<span class="source-line-no">168</span><span id="line-168">        return false;</span>
+<span class="source-line-no">169</span><span id="line-169">    }</span>
+<span class="source-line-no">170</span><span id="line-170"></span>
+<span class="source-line-no">171</span><span id="line-171">}</span>
 
 
 

@@ -354,125 +354,128 @@
 <span class="source-line-no">341</span><span id="line-341">                for (Entity entity : hybridPlotWorld.getPlotSchematicEntities()) {</span>
 <span class="source-line-no">342</span><span id="line-342">                    if (region.contains(entity.getLocation().toVector().toBlockPoint())) {</span>
 <span class="source-line-no">343</span><span id="line-343">                        Vector3 pos = (entity.getLocation().toVector()</span>
-<span class="source-line-no">344</span><span id="line-344">                                .subtract(region.getMinimumPoint().withY(hybridPlotWorld.getPlotSchematicMinPoint().getY()).toVector3()))</span>
-<span class="source-line-no">345</span><span id="line-345">                                .add(min.getBlockVector3().withY(hybridPlotWorld.SCHEM_Y).toVector3());</span>
-<span class="source-line-no">346</span><span id="line-346">                        result.setEntity(new PopulatingEntity(</span>
-<span class="source-line-no">347</span><span id="line-347">                                entity,</span>
-<span class="source-line-no">348</span><span id="line-348">                                new com.sk89q.worldedit.util.Location(NullWorld.getInstance(), pos)</span>
-<span class="source-line-no">349</span><span id="line-349">                        ));</span>
-<span class="source-line-no">350</span><span id="line-350">                    }</span>
-<span class="source-line-no">351</span><span id="line-351">                }</span>
-<span class="source-line-no">352</span><span id="line-352">            } catch (RegionOperationException e) {</span>
-<span class="source-line-no">353</span><span id="line-353">                throw new RuntimeException(e);</span>
-<span class="source-line-no">354</span><span id="line-354">            }</span>
-<span class="source-line-no">355</span><span id="line-355">            if (overlap) {</span>
-<span class="source-line-no">356</span><span id="line-356">                try {</span>
-<span class="source-line-no">357</span><span id="line-357">                    region.shift(BlockVector3.at(-hybridPlotWorld.SIZE, 0, -hybridPlotWorld.SIZE));</span>
-<span class="source-line-no">358</span><span id="line-358">                    for (Entity entity : hybridPlotWorld.getPlotSchematicEntities()) {</span>
-<span class="source-line-no">359</span><span id="line-359">                        if (region.contains(entity.getLocation().toVector().toBlockPoint())) {</span>
-<span class="source-line-no">360</span><span id="line-360">                            result.setEntity(entity);</span>
-<span class="source-line-no">361</span><span id="line-361">                        }</span>
-<span class="source-line-no">362</span><span id="line-362">                    }</span>
-<span class="source-line-no">363</span><span id="line-363">                } catch (RegionOperationException e) {</span>
-<span class="source-line-no">364</span><span id="line-364">                    throw new RuntimeException(e);</span>
-<span class="source-line-no">365</span><span id="line-365">                }</span>
-<span class="source-line-no">366</span><span id="line-366">            }</span>
-<span class="source-line-no">367</span><span id="line-367">        }</span>
-<span class="source-line-no">368</span><span id="line-368">        return;</span>
-<span class="source-line-no">369</span><span id="line-369">    }</span>
-<span class="source-line-no">370</span><span id="line-370"></span>
-<span class="source-line-no">371</span><span id="line-371">    @Override</span>
-<span class="source-line-no">372</span><span id="line-372">    public PlotArea getNewPlotArea(String world, String id, PlotId min, PlotId max) {</span>
-<span class="source-line-no">373</span><span id="line-373">        return this.hybridPlotWorldFactory.create(world, id, this, min, max);</span>
-<span class="source-line-no">374</span><span id="line-374">    }</span>
-<span class="source-line-no">375</span><span id="line-375"></span>
-<span class="source-line-no">376</span><span id="line-376">    @Override</span>
-<span class="source-line-no">377</span><span id="line-377">    public void initialize(PlotArea area) {</span>
-<span class="source-line-no">378</span><span id="line-378">        // All initialization is done in the PlotArea class</span>
-<span class="source-line-no">379</span><span id="line-379">    }</span>
-<span class="source-line-no">380</span><span id="line-380"></span>
-<span class="source-line-no">381</span><span id="line-381">    @Override</span>
-<span class="source-line-no">382</span><span id="line-382">    public BiomeType getBiome(final PlotArea settings, final int worldX, final int worldY, final int worldZ) {</span>
-<span class="source-line-no">383</span><span id="line-383">        HybridPlotWorld hybridPlotWorld = (HybridPlotWorld) settings;</span>
-<span class="source-line-no">384</span><span id="line-384">        if (!hybridPlotWorld.PLOT_SCHEMATIC &amp;&amp; !hybridPlotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
-<span class="source-line-no">385</span><span id="line-385">            return hybridPlotWorld.getPlotBiome();</span>
-<span class="source-line-no">386</span><span id="line-386">        }</span>
-<span class="source-line-no">387</span><span id="line-387">        int relativeX = worldX;</span>
-<span class="source-line-no">388</span><span id="line-388">        int relativeZ = worldZ;</span>
-<span class="source-line-no">389</span><span id="line-389">        if (hybridPlotWorld.ROAD_OFFSET_X != 0) {</span>
-<span class="source-line-no">390</span><span id="line-390">            relativeX -= hybridPlotWorld.ROAD_OFFSET_X;</span>
-<span class="source-line-no">391</span><span id="line-391">        }</span>
-<span class="source-line-no">392</span><span id="line-392">        if (hybridPlotWorld.ROAD_OFFSET_Z != 0) {</span>
-<span class="source-line-no">393</span><span id="line-393">            relativeZ -= hybridPlotWorld.ROAD_OFFSET_Z;</span>
+<span class="source-line-no">344</span><span id="line-344">                                .subtract(region</span>
+<span class="source-line-no">345</span><span id="line-345">                                        .getMinimumPoint()</span>
+<span class="source-line-no">346</span><span id="line-346">                                        .withY(hybridPlotWorld.getPlotSchematicMinPoint().getY())</span>
+<span class="source-line-no">347</span><span id="line-347">                                        .toVector3()))</span>
+<span class="source-line-no">348</span><span id="line-348">                                .add(min.getBlockVector3().withY(hybridPlotWorld.SCHEM_Y).toVector3());</span>
+<span class="source-line-no">349</span><span id="line-349">                        result.setEntity(new PopulatingEntity(</span>
+<span class="source-line-no">350</span><span id="line-350">                                entity,</span>
+<span class="source-line-no">351</span><span id="line-351">                                new com.sk89q.worldedit.util.Location(NullWorld.getInstance(), pos)</span>
+<span class="source-line-no">352</span><span id="line-352">                        ));</span>
+<span class="source-line-no">353</span><span id="line-353">                    }</span>
+<span class="source-line-no">354</span><span id="line-354">                }</span>
+<span class="source-line-no">355</span><span id="line-355">            } catch (RegionOperationException e) {</span>
+<span class="source-line-no">356</span><span id="line-356">                throw new RuntimeException(e);</span>
+<span class="source-line-no">357</span><span id="line-357">            }</span>
+<span class="source-line-no">358</span><span id="line-358">            if (overlap) {</span>
+<span class="source-line-no">359</span><span id="line-359">                try {</span>
+<span class="source-line-no">360</span><span id="line-360">                    region.shift(BlockVector3.at(-hybridPlotWorld.SIZE, 0, -hybridPlotWorld.SIZE));</span>
+<span class="source-line-no">361</span><span id="line-361">                    for (Entity entity : hybridPlotWorld.getPlotSchematicEntities()) {</span>
+<span class="source-line-no">362</span><span id="line-362">                        if (region.contains(entity.getLocation().toVector().toBlockPoint())) {</span>
+<span class="source-line-no">363</span><span id="line-363">                            result.setEntity(entity);</span>
+<span class="source-line-no">364</span><span id="line-364">                        }</span>
+<span class="source-line-no">365</span><span id="line-365">                    }</span>
+<span class="source-line-no">366</span><span id="line-366">                } catch (RegionOperationException e) {</span>
+<span class="source-line-no">367</span><span id="line-367">                    throw new RuntimeException(e);</span>
+<span class="source-line-no">368</span><span id="line-368">                }</span>
+<span class="source-line-no">369</span><span id="line-369">            }</span>
+<span class="source-line-no">370</span><span id="line-370">        }</span>
+<span class="source-line-no">371</span><span id="line-371">        return;</span>
+<span class="source-line-no">372</span><span id="line-372">    }</span>
+<span class="source-line-no">373</span><span id="line-373"></span>
+<span class="source-line-no">374</span><span id="line-374">    @Override</span>
+<span class="source-line-no">375</span><span id="line-375">    public PlotArea getNewPlotArea(String world, String id, PlotId min, PlotId max) {</span>
+<span class="source-line-no">376</span><span id="line-376">        return this.hybridPlotWorldFactory.create(world, id, this, min, max);</span>
+<span class="source-line-no">377</span><span id="line-377">    }</span>
+<span class="source-line-no">378</span><span id="line-378"></span>
+<span class="source-line-no">379</span><span id="line-379">    @Override</span>
+<span class="source-line-no">380</span><span id="line-380">    public void initialize(PlotArea area) {</span>
+<span class="source-line-no">381</span><span id="line-381">        // All initialization is done in the PlotArea class</span>
+<span class="source-line-no">382</span><span id="line-382">    }</span>
+<span class="source-line-no">383</span><span id="line-383"></span>
+<span class="source-line-no">384</span><span id="line-384">    @Override</span>
+<span class="source-line-no">385</span><span id="line-385">    public BiomeType getBiome(final PlotArea settings, final int worldX, final int worldY, final int worldZ) {</span>
+<span class="source-line-no">386</span><span id="line-386">        HybridPlotWorld hybridPlotWorld = (HybridPlotWorld) settings;</span>
+<span class="source-line-no">387</span><span id="line-387">        if (!hybridPlotWorld.PLOT_SCHEMATIC &amp;&amp; !hybridPlotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
+<span class="source-line-no">388</span><span id="line-388">            return hybridPlotWorld.getPlotBiome();</span>
+<span class="source-line-no">389</span><span id="line-389">        }</span>
+<span class="source-line-no">390</span><span id="line-390">        int relativeX = worldX;</span>
+<span class="source-line-no">391</span><span id="line-391">        int relativeZ = worldZ;</span>
+<span class="source-line-no">392</span><span id="line-392">        if (hybridPlotWorld.ROAD_OFFSET_X != 0) {</span>
+<span class="source-line-no">393</span><span id="line-393">            relativeX -= hybridPlotWorld.ROAD_OFFSET_X;</span>
 <span class="source-line-no">394</span><span id="line-394">        }</span>
-<span class="source-line-no">395</span><span id="line-395">        int size = hybridPlotWorld.PLOT_WIDTH + hybridPlotWorld.ROAD_WIDTH;</span>
-<span class="source-line-no">396</span><span id="line-396">        relativeX = Math.floorMod(relativeX, size);</span>
-<span class="source-line-no">397</span><span id="line-397">        relativeZ = Math.floorMod(relativeZ, size);</span>
-<span class="source-line-no">398</span><span id="line-398">        BiomeType biome = hybridPlotWorld.G_SCH_B.get(MathMan.pair((short) relativeX, (short) relativeZ));</span>
-<span class="source-line-no">399</span><span id="line-399">        return biome == null ? hybridPlotWorld.getPlotBiome() : biome;</span>
-<span class="source-line-no">400</span><span id="line-400">    }</span>
-<span class="source-line-no">401</span><span id="line-401"></span>
-<span class="source-line-no">402</span><span id="line-402">    /**</span>
-<span class="source-line-no">403</span><span id="line-403">     * Wrapper to allow a WorldEdit {@link Entity} to effectively have a mutable location as the location in its NBT should be changed</span>
-<span class="source-line-no">404</span><span id="line-404">     * when set to the world.</span>
-<span class="source-line-no">405</span><span id="line-405">     *</span>
-<span class="source-line-no">406</span><span id="line-406">     * @since 6.9.0</span>
-<span class="source-line-no">407</span><span id="line-407">     */</span>
-<span class="source-line-no">408</span><span id="line-408">    private static final class PopulatingEntity implements Entity {</span>
-<span class="source-line-no">409</span><span id="line-409"></span>
-<span class="source-line-no">410</span><span id="line-410">        private final Entity parent;</span>
-<span class="source-line-no">411</span><span id="line-411">        private com.sk89q.worldedit.util.Location location;</span>
-<span class="source-line-no">412</span><span id="line-412"></span>
-<span class="source-line-no">413</span><span id="line-413">        /**</span>
-<span class="source-line-no">414</span><span id="line-414">         * @since 6.9.0</span>
-<span class="source-line-no">415</span><span id="line-415">         */</span>
-<span class="source-line-no">416</span><span id="line-416">        private PopulatingEntity(Entity parent, com.sk89q.worldedit.util.Location location) {</span>
-<span class="source-line-no">417</span><span id="line-417">            this.parent = parent;</span>
-<span class="source-line-no">418</span><span id="line-418">            this.location = location;</span>
-<span class="source-line-no">419</span><span id="line-419">        }</span>
-<span class="source-line-no">420</span><span id="line-420"></span>
-<span class="source-line-no">421</span><span id="line-421">        @Nullable</span>
-<span class="source-line-no">422</span><span id="line-422">        @Override</span>
-<span class="source-line-no">423</span><span id="line-423">        public BaseEntity getState() {</span>
-<span class="source-line-no">424</span><span id="line-424">            return parent.getState();</span>
-<span class="source-line-no">425</span><span id="line-425">        }</span>
-<span class="source-line-no">426</span><span id="line-426"></span>
-<span class="source-line-no">427</span><span id="line-427">        @Override</span>
-<span class="source-line-no">428</span><span id="line-428">        public boolean remove() {</span>
-<span class="source-line-no">429</span><span id="line-429">            return parent.remove();</span>
-<span class="source-line-no">430</span><span id="line-430">        }</span>
-<span class="source-line-no">431</span><span id="line-431"></span>
-<span class="source-line-no">432</span><span id="line-432">        @Override</span>
-<span class="source-line-no">433</span><span id="line-433">        public com.sk89q.worldedit.util.Location getLocation() {</span>
-<span class="source-line-no">434</span><span id="line-434">            return location;</span>
-<span class="source-line-no">435</span><span id="line-435">        }</span>
-<span class="source-line-no">436</span><span id="line-436"></span>
-<span class="source-line-no">437</span><span id="line-437">        @Override</span>
-<span class="source-line-no">438</span><span id="line-438">        public boolean setLocation(final com.sk89q.worldedit.util.Location location) {</span>
-<span class="source-line-no">439</span><span id="line-439">            this.location = location;</span>
-<span class="source-line-no">440</span><span id="line-440">            return true;</span>
-<span class="source-line-no">441</span><span id="line-441">        }</span>
-<span class="source-line-no">442</span><span id="line-442"></span>
-<span class="source-line-no">443</span><span id="line-443">        @Override</span>
-<span class="source-line-no">444</span><span id="line-444">        public Extent getExtent() {</span>
-<span class="source-line-no">445</span><span id="line-445">            return parent.getExtent();</span>
-<span class="source-line-no">446</span><span id="line-446">        }</span>
-<span class="source-line-no">447</span><span id="line-447"></span>
-<span class="source-line-no">448</span><span id="line-448">        @Nullable</span>
-<span class="source-line-no">449</span><span id="line-449">        @Override</span>
-<span class="source-line-no">450</span><span id="line-450">        public &lt;T&gt; T getFacet(final Class&lt;? extends T&gt; cls) {</span>
-<span class="source-line-no">451</span><span id="line-451">            return parent.getFacet(cls);</span>
-<span class="source-line-no">452</span><span id="line-452">        }</span>
-<span class="source-line-no">453</span><span id="line-453"></span>
-<span class="source-line-no">454</span><span id="line-454">    }</span>
-<span class="source-line-no">455</span><span id="line-455"></span>
-<span class="source-line-no">456</span><span id="line-456">    private enum SchematicFeature {</span>
-<span class="source-line-no">457</span><span id="line-457">        BIOMES,</span>
-<span class="source-line-no">458</span><span id="line-458">        ROAD,</span>
-<span class="source-line-no">459</span><span id="line-459">        POPULATING</span>
-<span class="source-line-no">460</span><span id="line-460">    }</span>
-<span class="source-line-no">461</span><span id="line-461"></span>
-<span class="source-line-no">462</span><span id="line-462">}</span>
+<span class="source-line-no">395</span><span id="line-395">        if (hybridPlotWorld.ROAD_OFFSET_Z != 0) {</span>
+<span class="source-line-no">396</span><span id="line-396">            relativeZ -= hybridPlotWorld.ROAD_OFFSET_Z;</span>
+<span class="source-line-no">397</span><span id="line-397">        }</span>
+<span class="source-line-no">398</span><span id="line-398">        int size = hybridPlotWorld.PLOT_WIDTH + hybridPlotWorld.ROAD_WIDTH;</span>
+<span class="source-line-no">399</span><span id="line-399">        relativeX = Math.floorMod(relativeX, size);</span>
+<span class="source-line-no">400</span><span id="line-400">        relativeZ = Math.floorMod(relativeZ, size);</span>
+<span class="source-line-no">401</span><span id="line-401">        BiomeType biome = hybridPlotWorld.G_SCH_B.get(MathMan.pair((short) relativeX, (short) relativeZ));</span>
+<span class="source-line-no">402</span><span id="line-402">        return biome == null ? hybridPlotWorld.getPlotBiome() : biome;</span>
+<span class="source-line-no">403</span><span id="line-403">    }</span>
+<span class="source-line-no">404</span><span id="line-404"></span>
+<span class="source-line-no">405</span><span id="line-405">    private enum SchematicFeature {</span>
+<span class="source-line-no">406</span><span id="line-406">        BIOMES,</span>
+<span class="source-line-no">407</span><span id="line-407">        ROAD,</span>
+<span class="source-line-no">408</span><span id="line-408">        POPULATING</span>
+<span class="source-line-no">409</span><span id="line-409">    }</span>
+<span class="source-line-no">410</span><span id="line-410"></span>
+<span class="source-line-no">411</span><span id="line-411">    /**</span>
+<span class="source-line-no">412</span><span id="line-412">     * Wrapper to allow a WorldEdit {@link Entity} to effectively have a mutable location as the location in its NBT should be changed</span>
+<span class="source-line-no">413</span><span id="line-413">     * when set to the world.</span>
+<span class="source-line-no">414</span><span id="line-414">     *</span>
+<span class="source-line-no">415</span><span id="line-415">     * @since 6.9.0</span>
+<span class="source-line-no">416</span><span id="line-416">     */</span>
+<span class="source-line-no">417</span><span id="line-417">    private static final class PopulatingEntity implements Entity {</span>
+<span class="source-line-no">418</span><span id="line-418"></span>
+<span class="source-line-no">419</span><span id="line-419">        private final Entity parent;</span>
+<span class="source-line-no">420</span><span id="line-420">        private com.sk89q.worldedit.util.Location location;</span>
+<span class="source-line-no">421</span><span id="line-421"></span>
+<span class="source-line-no">422</span><span id="line-422">        /**</span>
+<span class="source-line-no">423</span><span id="line-423">         * @since 6.9.0</span>
+<span class="source-line-no">424</span><span id="line-424">         */</span>
+<span class="source-line-no">425</span><span id="line-425">        private PopulatingEntity(Entity parent, com.sk89q.worldedit.util.Location location) {</span>
+<span class="source-line-no">426</span><span id="line-426">            this.parent = parent;</span>
+<span class="source-line-no">427</span><span id="line-427">            this.location = location;</span>
+<span class="source-line-no">428</span><span id="line-428">        }</span>
+<span class="source-line-no">429</span><span id="line-429"></span>
+<span class="source-line-no">430</span><span id="line-430">        @Nullable</span>
+<span class="source-line-no">431</span><span id="line-431">        @Override</span>
+<span class="source-line-no">432</span><span id="line-432">        public BaseEntity getState() {</span>
+<span class="source-line-no">433</span><span id="line-433">            return parent.getState();</span>
+<span class="source-line-no">434</span><span id="line-434">        }</span>
+<span class="source-line-no">435</span><span id="line-435"></span>
+<span class="source-line-no">436</span><span id="line-436">        @Override</span>
+<span class="source-line-no">437</span><span id="line-437">        public boolean remove() {</span>
+<span class="source-line-no">438</span><span id="line-438">            return parent.remove();</span>
+<span class="source-line-no">439</span><span id="line-439">        }</span>
+<span class="source-line-no">440</span><span id="line-440"></span>
+<span class="source-line-no">441</span><span id="line-441">        @Override</span>
+<span class="source-line-no">442</span><span id="line-442">        public com.sk89q.worldedit.util.Location getLocation() {</span>
+<span class="source-line-no">443</span><span id="line-443">            return location;</span>
+<span class="source-line-no">444</span><span id="line-444">        }</span>
+<span class="source-line-no">445</span><span id="line-445"></span>
+<span class="source-line-no">446</span><span id="line-446">        @Override</span>
+<span class="source-line-no">447</span><span id="line-447">        public boolean setLocation(final com.sk89q.worldedit.util.Location location) {</span>
+<span class="source-line-no">448</span><span id="line-448">            this.location = location;</span>
+<span class="source-line-no">449</span><span id="line-449">            return true;</span>
+<span class="source-line-no">450</span><span id="line-450">        }</span>
+<span class="source-line-no">451</span><span id="line-451"></span>
+<span class="source-line-no">452</span><span id="line-452">        @Override</span>
+<span class="source-line-no">453</span><span id="line-453">        public Extent getExtent() {</span>
+<span class="source-line-no">454</span><span id="line-454">            return parent.getExtent();</span>
+<span class="source-line-no">455</span><span id="line-455">        }</span>
+<span class="source-line-no">456</span><span id="line-456"></span>
+<span class="source-line-no">457</span><span id="line-457">        @Nullable</span>
+<span class="source-line-no">458</span><span id="line-458">        @Override</span>
+<span class="source-line-no">459</span><span id="line-459">        public &lt;T&gt; T getFacet(final Class&lt;? extends T&gt; cls) {</span>
+<span class="source-line-no">460</span><span id="line-460">            return parent.getFacet(cls);</span>
+<span class="source-line-no">461</span><span id="line-461">        }</span>
+<span class="source-line-no">462</span><span id="line-462"></span>
+<span class="source-line-no">463</span><span id="line-463">    }</span>
+<span class="source-line-no">464</span><span id="line-464"></span>
+<span class="source-line-no">465</span><span id="line-465">}</span>
 
 
 

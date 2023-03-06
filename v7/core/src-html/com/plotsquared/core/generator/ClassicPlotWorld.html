@@ -51,128 +51,129 @@
 <span class="source-line-no">038</span><span id="line-38"></span>
 <span class="source-line-no">039</span><span id="line-39">@SuppressWarnings("WeakerAccess")</span>
 <span class="source-line-no">040</span><span id="line-40">public abstract class ClassicPlotWorld extends SquarePlotWorld {</span>
-<span class="source-line-no">041</span><span id="line-41">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + ClassicPlotWorld.class.getSimpleName());</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">    public int ROAD_HEIGHT = 62;</span>
-<span class="source-line-no">044</span><span id="line-44">    public int PLOT_HEIGHT = 62;</span>
-<span class="source-line-no">045</span><span id="line-45">    public int WALL_HEIGHT = 62;</span>
-<span class="source-line-no">046</span><span id="line-46">    public BlockBucket MAIN_BLOCK = new BlockBucket(BlockTypes.STONE);</span>
-<span class="source-line-no">047</span><span id="line-47">    public BlockBucket TOP_BLOCK = new BlockBucket(BlockTypes.GRASS_BLOCK);</span>
-<span class="source-line-no">048</span><span id="line-48">    public BlockBucket WALL_BLOCK = new BlockBucket(BlockTypes.STONE_SLAB);</span>
-<span class="source-line-no">049</span><span id="line-49">    public BlockBucket CLAIMED_WALL_BLOCK = new BlockBucket(BlockTypes.SANDSTONE_SLAB);</span>
-<span class="source-line-no">050</span><span id="line-50">    public BlockBucket WALL_FILLING = new BlockBucket(BlockTypes.STONE);</span>
-<span class="source-line-no">051</span><span id="line-51">    public BlockBucket ROAD_BLOCK = new BlockBucket(BlockTypes.QUARTZ_BLOCK);</span>
-<span class="source-line-no">052</span><span id="line-52">    public boolean PLOT_BEDROCK = true;</span>
-<span class="source-line-no">053</span><span id="line-53">    public boolean PLACE_TOP_BLOCK = true;</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">    public ClassicPlotWorld(</span>
-<span class="source-line-no">056</span><span id="line-56">            final @NonNull String worldName,</span>
-<span class="source-line-no">057</span><span id="line-57">            final @Nullable String id,</span>
-<span class="source-line-no">058</span><span id="line-58">            final @NonNull IndependentPlotGenerator generator,</span>
-<span class="source-line-no">059</span><span id="line-59">            final @Nullable PlotId min,</span>
-<span class="source-line-no">060</span><span id="line-60">            final @Nullable PlotId max,</span>
-<span class="source-line-no">061</span><span id="line-61">            @WorldConfig final @NonNull YamlConfiguration worldConfiguration,</span>
-<span class="source-line-no">062</span><span id="line-62">            final @NonNull GlobalBlockQueue blockQueue</span>
-<span class="source-line-no">063</span><span id="line-63">    ) {</span>
-<span class="source-line-no">064</span><span id="line-64">        super(worldName, id, generator, min, max, worldConfiguration, blockQueue);</span>
-<span class="source-line-no">065</span><span id="line-65">    }</span>
-<span class="source-line-no">066</span><span id="line-66"></span>
-<span class="source-line-no">067</span><span id="line-67">    /**</span>
-<span class="source-line-no">068</span><span id="line-68">     * CONFIG NODE | DEFAULT VALUE | DESCRIPTION | CONFIGURATION TYPE | REQUIRED FOR INITIAL SETUP.</span>
-<span class="source-line-no">069</span><span id="line-69">     *</span>
-<span class="source-line-no">070</span><span id="line-70">     * &lt;p&gt;Set the last boolean to false if you do not check a specific config node to be set while using the setup</span>
-<span class="source-line-no">071</span><span id="line-71">     * command - this may be useful if a config value can be changed at a later date, and has no impact on the actual</span>
-<span class="source-line-no">072</span><span id="line-72">     * world generation&lt;/p&gt;</span>
-<span class="source-line-no">073</span><span id="line-73">     */</span>
-<span class="source-line-no">074</span><span id="line-74">    @NonNull</span>
-<span class="source-line-no">075</span><span id="line-75">    @Override</span>
-<span class="source-line-no">076</span><span id="line-76">    public ConfigurationNode[] getSettingNodes() {</span>
-<span class="source-line-no">077</span><span id="line-77">        return new ConfigurationNode[]{</span>
-<span class="source-line-no">078</span><span id="line-78">                new ConfigurationNode("plot.height", this.PLOT_HEIGHT, TranslatableCaption.of("setup.plot_height"),</span>
-<span class="source-line-no">079</span><span id="line-79">                        ConfigurationUtil.INTEGER</span>
-<span class="source-line-no">080</span><span id="line-80">                ),</span>
-<span class="source-line-no">081</span><span id="line-81">                new ConfigurationNode("plot.size", this.PLOT_WIDTH, TranslatableCaption.of("setup.plot_width"),</span>
-<span class="source-line-no">082</span><span id="line-82">                        ConfigurationUtil.INTEGER</span>
-<span class="source-line-no">083</span><span id="line-83">                ),</span>
-<span class="source-line-no">084</span><span id="line-84">                new ConfigurationNode("plot.filling", this.MAIN_BLOCK, TranslatableCaption.of("setup.plot_block"),</span>
-<span class="source-line-no">085</span><span id="line-85">                        ConfigurationUtil.BLOCK_BUCKET</span>
-<span class="source-line-no">086</span><span id="line-86">                ),</span>
-<span class="source-line-no">087</span><span id="line-87">                new ConfigurationNode("wall.place_top_block", this.PLACE_TOP_BLOCK,</span>
-<span class="source-line-no">088</span><span id="line-88">                        TranslatableCaption.of("setup.top_block_boolean"), ConfigurationUtil.BOOLEAN</span>
-<span class="source-line-no">089</span><span id="line-89">                ),</span>
-<span class="source-line-no">090</span><span id="line-90">                new ConfigurationNode("plot.floor", this.TOP_BLOCK, TranslatableCaption.of("setup.plot_block_floor"),</span>
-<span class="source-line-no">091</span><span id="line-91">                        ConfigurationUtil.BLOCK_BUCKET</span>
-<span class="source-line-no">092</span><span id="line-92">                ),</span>
-<span class="source-line-no">093</span><span id="line-93">                new ConfigurationNode("wall.block", this.WALL_BLOCK, TranslatableCaption.of("setup.top_wall_block"),</span>
-<span class="source-line-no">094</span><span id="line-94">                        ConfigurationUtil.BLOCK_BUCKET</span>
-<span class="source-line-no">095</span><span id="line-95">                ),</span>
-<span class="source-line-no">096</span><span id="line-96">                new ConfigurationNode("wall.block_claimed", this.CLAIMED_WALL_BLOCK,</span>
-<span class="source-line-no">097</span><span id="line-97">                        TranslatableCaption.of("setup.wall_block_claimed"), ConfigurationUtil.BLOCK_BUCKET</span>
-<span class="source-line-no">098</span><span id="line-98">                ),</span>
-<span class="source-line-no">099</span><span id="line-99">                new ConfigurationNode("road.width", this.ROAD_WIDTH, TranslatableCaption.of("setup.road_width"),</span>
-<span class="source-line-no">100</span><span id="line-100">                        ConfigurationUtil.INTEGER</span>
-<span class="source-line-no">101</span><span id="line-101">                ),</span>
-<span class="source-line-no">102</span><span id="line-102">                new ConfigurationNode("road.height", this.ROAD_HEIGHT, TranslatableCaption.of("setup.road_height"),</span>
-<span class="source-line-no">103</span><span id="line-103">                        ConfigurationUtil.INTEGER</span>
-<span class="source-line-no">104</span><span id="line-104">                ),</span>
-<span class="source-line-no">105</span><span id="line-105">                new ConfigurationNode("road.block", this.ROAD_BLOCK, TranslatableCaption.of("setup.road_block"),</span>
-<span class="source-line-no">106</span><span id="line-106">                        ConfigurationUtil.BLOCK_BUCKET</span>
-<span class="source-line-no">107</span><span id="line-107">                ),</span>
-<span class="source-line-no">108</span><span id="line-108">                new ConfigurationNode("wall.filling", this.WALL_FILLING, TranslatableCaption.of("setup.wall_filling_block"),</span>
-<span class="source-line-no">109</span><span id="line-109">                        ConfigurationUtil.BLOCK_BUCKET</span>
-<span class="source-line-no">110</span><span id="line-110">                ),</span>
-<span class="source-line-no">111</span><span id="line-111">                new ConfigurationNode("wall.height", this.WALL_HEIGHT, TranslatableCaption.of("setup.wall_height"),</span>
-<span class="source-line-no">112</span><span id="line-112">                        ConfigurationUtil.INTEGER</span>
-<span class="source-line-no">113</span><span id="line-113">                ),</span>
-<span class="source-line-no">114</span><span id="line-114">                new ConfigurationNode("plot.bedrock", this.PLOT_BEDROCK, TranslatableCaption.of("setup.bedrock_boolean"),</span>
-<span class="source-line-no">115</span><span id="line-115">                        ConfigurationUtil.BOOLEAN</span>
-<span class="source-line-no">116</span><span id="line-116">                )};</span>
-<span class="source-line-no">117</span><span id="line-117">    }</span>
-<span class="source-line-no">118</span><span id="line-118"></span>
-<span class="source-line-no">119</span><span id="line-119">    /**</span>
-<span class="source-line-no">120</span><span id="line-120">     * This method is called when a world loads. Make sure you set all your constants here. You are provided with the</span>
-<span class="source-line-no">121</span><span id="line-121">     * configuration section for that specific world.</span>
-<span class="source-line-no">122</span><span id="line-122">     */</span>
-<span class="source-line-no">123</span><span id="line-123">    @Override</span>
-<span class="source-line-no">124</span><span id="line-124">    public void loadConfiguration(ConfigurationSection config) {</span>
-<span class="source-line-no">125</span><span id="line-125">        super.loadConfiguration(config);</span>
-<span class="source-line-no">126</span><span id="line-126">        this.PLOT_BEDROCK = config.getBoolean("plot.bedrock");</span>
-<span class="source-line-no">127</span><span id="line-127">        this.PLOT_HEIGHT = Math.min(getMaxGenHeight(), config.getInt("plot.height"));</span>
-<span class="source-line-no">128</span><span id="line-128">        this.MAIN_BLOCK = createCheckedBlockBucket(config.getString("plot.filling"), MAIN_BLOCK);</span>
-<span class="source-line-no">129</span><span id="line-129">        this.TOP_BLOCK = createCheckedBlockBucket(config.getString("plot.floor"), TOP_BLOCK);</span>
-<span class="source-line-no">130</span><span id="line-130">        this.WALL_BLOCK = createCheckedBlockBucket(config.getString("wall.block"), WALL_BLOCK);</span>
-<span class="source-line-no">131</span><span id="line-131">        this.ROAD_HEIGHT = Math.min(getMaxGenHeight(), config.getInt("road.height"));</span>
-<span class="source-line-no">132</span><span id="line-132">        this.ROAD_BLOCK = createCheckedBlockBucket(config.getString("road.block"), ROAD_BLOCK);</span>
-<span class="source-line-no">133</span><span id="line-133">        this.WALL_FILLING = createCheckedBlockBucket(config.getString("wall.filling"), WALL_FILLING);</span>
-<span class="source-line-no">134</span><span id="line-134">        this.PLACE_TOP_BLOCK = config.getBoolean("wall.place_top_block");</span>
-<span class="source-line-no">135</span><span id="line-135">        this.WALL_HEIGHT = Math.min(getMaxGenHeight() - (PLACE_TOP_BLOCK ? 1 : 0), config.getInt("wall.height"));</span>
-<span class="source-line-no">136</span><span id="line-136">        this.CLAIMED_WALL_BLOCK = createCheckedBlockBucket(config.getString("wall.block_claimed"), CLAIMED_WALL_BLOCK);</span>
-<span class="source-line-no">137</span><span id="line-137">    }</span>
-<span class="source-line-no">138</span><span id="line-138"></span>
-<span class="source-line-no">139</span><span id="line-139">    int schematicStartHeight() {</span>
-<span class="source-line-no">140</span><span id="line-140">        int plotRoadMin = Math.min(PLOT_HEIGHT, ROAD_HEIGHT);</span>
-<span class="source-line-no">141</span><span id="line-141">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
-<span class="source-line-no">142</span><span id="line-142">            return plotRoadMin;</span>
-<span class="source-line-no">143</span><span id="line-143">        }</span>
-<span class="source-line-no">144</span><span id="line-144">        return Math.min(WALL_HEIGHT, plotRoadMin);</span>
-<span class="source-line-no">145</span><span id="line-145">    }</span>
-<span class="source-line-no">146</span><span id="line-146"></span>
-<span class="source-line-no">147</span><span id="line-147">    private static BlockBucket createCheckedBlockBucket(String input, BlockBucket def) {</span>
-<span class="source-line-no">148</span><span id="line-148">        final BlockBucket bucket = new BlockBucket(input);</span>
-<span class="source-line-no">149</span><span id="line-149">        Pattern pattern = null;</span>
-<span class="source-line-no">150</span><span id="line-150">        try {</span>
-<span class="source-line-no">151</span><span id="line-151">            pattern = bucket.toPattern();</span>
-<span class="source-line-no">152</span><span id="line-152">        } catch (Exception ignore) {</span>
-<span class="source-line-no">153</span><span id="line-153">        }</span>
-<span class="source-line-no">154</span><span id="line-154">        if (pattern == null) {</span>
-<span class="source-line-no">155</span><span id="line-155">            LOGGER.error("Failed to parse pattern '{}', check your worlds.yml", input);</span>
-<span class="source-line-no">156</span><span id="line-156">            LOGGER.error("Falling back to {}", def);</span>
-<span class="source-line-no">157</span><span id="line-157">            return def;</span>
-<span class="source-line-no">158</span><span id="line-158">        }</span>
-<span class="source-line-no">159</span><span id="line-159">        return bucket;</span>
-<span class="source-line-no">160</span><span id="line-160">    }</span>
-<span class="source-line-no">161</span><span id="line-161"></span>
-<span class="source-line-no">162</span><span id="line-162">}</span>
+<span class="source-line-no">041</span><span id="line-41"></span>
+<span class="source-line-no">042</span><span id="line-42">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + ClassicPlotWorld.class.getSimpleName());</span>
+<span class="source-line-no">043</span><span id="line-43"></span>
+<span class="source-line-no">044</span><span id="line-44">    public int ROAD_HEIGHT = 62;</span>
+<span class="source-line-no">045</span><span id="line-45">    public int PLOT_HEIGHT = 62;</span>
+<span class="source-line-no">046</span><span id="line-46">    public int WALL_HEIGHT = 62;</span>
+<span class="source-line-no">047</span><span id="line-47">    public BlockBucket MAIN_BLOCK = new BlockBucket(BlockTypes.STONE);</span>
+<span class="source-line-no">048</span><span id="line-48">    public BlockBucket TOP_BLOCK = new BlockBucket(BlockTypes.GRASS_BLOCK);</span>
+<span class="source-line-no">049</span><span id="line-49">    public BlockBucket WALL_BLOCK = new BlockBucket(BlockTypes.STONE_SLAB);</span>
+<span class="source-line-no">050</span><span id="line-50">    public BlockBucket CLAIMED_WALL_BLOCK = new BlockBucket(BlockTypes.SANDSTONE_SLAB);</span>
+<span class="source-line-no">051</span><span id="line-51">    public BlockBucket WALL_FILLING = new BlockBucket(BlockTypes.STONE);</span>
+<span class="source-line-no">052</span><span id="line-52">    public BlockBucket ROAD_BLOCK = new BlockBucket(BlockTypes.QUARTZ_BLOCK);</span>
+<span class="source-line-no">053</span><span id="line-53">    public boolean PLOT_BEDROCK = true;</span>
+<span class="source-line-no">054</span><span id="line-54">    public boolean PLACE_TOP_BLOCK = true;</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">    public ClassicPlotWorld(</span>
+<span class="source-line-no">057</span><span id="line-57">            final @NonNull String worldName,</span>
+<span class="source-line-no">058</span><span id="line-58">            final @Nullable String id,</span>
+<span class="source-line-no">059</span><span id="line-59">            final @NonNull IndependentPlotGenerator generator,</span>
+<span class="source-line-no">060</span><span id="line-60">            final @Nullable PlotId min,</span>
+<span class="source-line-no">061</span><span id="line-61">            final @Nullable PlotId max,</span>
+<span class="source-line-no">062</span><span id="line-62">            @WorldConfig final @NonNull YamlConfiguration worldConfiguration,</span>
+<span class="source-line-no">063</span><span id="line-63">            final @NonNull GlobalBlockQueue blockQueue</span>
+<span class="source-line-no">064</span><span id="line-64">    ) {</span>
+<span class="source-line-no">065</span><span id="line-65">        super(worldName, id, generator, min, max, worldConfiguration, blockQueue);</span>
+<span class="source-line-no">066</span><span id="line-66">    }</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    private static BlockBucket createCheckedBlockBucket(String input, BlockBucket def) {</span>
+<span class="source-line-no">069</span><span id="line-69">        final BlockBucket bucket = new BlockBucket(input);</span>
+<span class="source-line-no">070</span><span id="line-70">        Pattern pattern = null;</span>
+<span class="source-line-no">071</span><span id="line-71">        try {</span>
+<span class="source-line-no">072</span><span id="line-72">            pattern = bucket.toPattern();</span>
+<span class="source-line-no">073</span><span id="line-73">        } catch (Exception ignore) {</span>
+<span class="source-line-no">074</span><span id="line-74">        }</span>
+<span class="source-line-no">075</span><span id="line-75">        if (pattern == null) {</span>
+<span class="source-line-no">076</span><span id="line-76">            LOGGER.error("Failed to parse pattern '{}', check your worlds.yml", input);</span>
+<span class="source-line-no">077</span><span id="line-77">            LOGGER.error("Falling back to {}", def);</span>
+<span class="source-line-no">078</span><span id="line-78">            return def;</span>
+<span class="source-line-no">079</span><span id="line-79">        }</span>
+<span class="source-line-no">080</span><span id="line-80">        return bucket;</span>
+<span class="source-line-no">081</span><span id="line-81">    }</span>
+<span class="source-line-no">082</span><span id="line-82"></span>
+<span class="source-line-no">083</span><span id="line-83">    /**</span>
+<span class="source-line-no">084</span><span id="line-84">     * CONFIG NODE | DEFAULT VALUE | DESCRIPTION | CONFIGURATION TYPE | REQUIRED FOR INITIAL SETUP.</span>
+<span class="source-line-no">085</span><span id="line-85">     *</span>
+<span class="source-line-no">086</span><span id="line-86">     * &lt;p&gt;Set the last boolean to false if you do not check a specific config node to be set while using the setup</span>
+<span class="source-line-no">087</span><span id="line-87">     * command - this may be useful if a config value can be changed at a later date, and has no impact on the actual</span>
+<span class="source-line-no">088</span><span id="line-88">     * world generation&lt;/p&gt;</span>
+<span class="source-line-no">089</span><span id="line-89">     */</span>
+<span class="source-line-no">090</span><span id="line-90">    @NonNull</span>
+<span class="source-line-no">091</span><span id="line-91">    @Override</span>
+<span class="source-line-no">092</span><span id="line-92">    public ConfigurationNode[] getSettingNodes() {</span>
+<span class="source-line-no">093</span><span id="line-93">        return new ConfigurationNode[]{</span>
+<span class="source-line-no">094</span><span id="line-94">                new ConfigurationNode("plot.height", this.PLOT_HEIGHT, TranslatableCaption.of("setup.plot_height"),</span>
+<span class="source-line-no">095</span><span id="line-95">                        ConfigurationUtil.INTEGER</span>
+<span class="source-line-no">096</span><span id="line-96">                ),</span>
+<span class="source-line-no">097</span><span id="line-97">                new ConfigurationNode("plot.size", this.PLOT_WIDTH, TranslatableCaption.of("setup.plot_width"),</span>
+<span class="source-line-no">098</span><span id="line-98">                        ConfigurationUtil.INTEGER</span>
+<span class="source-line-no">099</span><span id="line-99">                ),</span>
+<span class="source-line-no">100</span><span id="line-100">                new ConfigurationNode("plot.filling", this.MAIN_BLOCK, TranslatableCaption.of("setup.plot_block"),</span>
+<span class="source-line-no">101</span><span id="line-101">                        ConfigurationUtil.BLOCK_BUCKET</span>
+<span class="source-line-no">102</span><span id="line-102">                ),</span>
+<span class="source-line-no">103</span><span id="line-103">                new ConfigurationNode("wall.place_top_block", this.PLACE_TOP_BLOCK,</span>
+<span class="source-line-no">104</span><span id="line-104">                        TranslatableCaption.of("setup.top_block_boolean"), ConfigurationUtil.BOOLEAN</span>
+<span class="source-line-no">105</span><span id="line-105">                ),</span>
+<span class="source-line-no">106</span><span id="line-106">                new ConfigurationNode("plot.floor", this.TOP_BLOCK, TranslatableCaption.of("setup.plot_block_floor"),</span>
+<span class="source-line-no">107</span><span id="line-107">                        ConfigurationUtil.BLOCK_BUCKET</span>
+<span class="source-line-no">108</span><span id="line-108">                ),</span>
+<span class="source-line-no">109</span><span id="line-109">                new ConfigurationNode("wall.block", this.WALL_BLOCK, TranslatableCaption.of("setup.top_wall_block"),</span>
+<span class="source-line-no">110</span><span id="line-110">                        ConfigurationUtil.BLOCK_BUCKET</span>
+<span class="source-line-no">111</span><span id="line-111">                ),</span>
+<span class="source-line-no">112</span><span id="line-112">                new ConfigurationNode("wall.block_claimed", this.CLAIMED_WALL_BLOCK,</span>
+<span class="source-line-no">113</span><span id="line-113">                        TranslatableCaption.of("setup.wall_block_claimed"), ConfigurationUtil.BLOCK_BUCKET</span>
+<span class="source-line-no">114</span><span id="line-114">                ),</span>
+<span class="source-line-no">115</span><span id="line-115">                new ConfigurationNode("road.width", this.ROAD_WIDTH, TranslatableCaption.of("setup.road_width"),</span>
+<span class="source-line-no">116</span><span id="line-116">                        ConfigurationUtil.INTEGER</span>
+<span class="source-line-no">117</span><span id="line-117">                ),</span>
+<span class="source-line-no">118</span><span id="line-118">                new ConfigurationNode("road.height", this.ROAD_HEIGHT, TranslatableCaption.of("setup.road_height"),</span>
+<span class="source-line-no">119</span><span id="line-119">                        ConfigurationUtil.INTEGER</span>
+<span class="source-line-no">120</span><span id="line-120">                ),</span>
+<span class="source-line-no">121</span><span id="line-121">                new ConfigurationNode("road.block", this.ROAD_BLOCK, TranslatableCaption.of("setup.road_block"),</span>
+<span class="source-line-no">122</span><span id="line-122">                        ConfigurationUtil.BLOCK_BUCKET</span>
+<span class="source-line-no">123</span><span id="line-123">                ),</span>
+<span class="source-line-no">124</span><span id="line-124">                new ConfigurationNode("wall.filling", this.WALL_FILLING, TranslatableCaption.of("setup.wall_filling_block"),</span>
+<span class="source-line-no">125</span><span id="line-125">                        ConfigurationUtil.BLOCK_BUCKET</span>
+<span class="source-line-no">126</span><span id="line-126">                ),</span>
+<span class="source-line-no">127</span><span id="line-127">                new ConfigurationNode("wall.height", this.WALL_HEIGHT, TranslatableCaption.of("setup.wall_height"),</span>
+<span class="source-line-no">128</span><span id="line-128">                        ConfigurationUtil.INTEGER</span>
+<span class="source-line-no">129</span><span id="line-129">                ),</span>
+<span class="source-line-no">130</span><span id="line-130">                new ConfigurationNode("plot.bedrock", this.PLOT_BEDROCK, TranslatableCaption.of("setup.bedrock_boolean"),</span>
+<span class="source-line-no">131</span><span id="line-131">                        ConfigurationUtil.BOOLEAN</span>
+<span class="source-line-no">132</span><span id="line-132">                )};</span>
+<span class="source-line-no">133</span><span id="line-133">    }</span>
+<span class="source-line-no">134</span><span id="line-134"></span>
+<span class="source-line-no">135</span><span id="line-135">    /**</span>
+<span class="source-line-no">136</span><span id="line-136">     * This method is called when a world loads. Make sure you set all your constants here. You are provided with the</span>
+<span class="source-line-no">137</span><span id="line-137">     * configuration section for that specific world.</span>
+<span class="source-line-no">138</span><span id="line-138">     */</span>
+<span class="source-line-no">139</span><span id="line-139">    @Override</span>
+<span class="source-line-no">140</span><span id="line-140">    public void loadConfiguration(ConfigurationSection config) {</span>
+<span class="source-line-no">141</span><span id="line-141">        super.loadConfiguration(config);</span>
+<span class="source-line-no">142</span><span id="line-142">        this.PLOT_BEDROCK = config.getBoolean("plot.bedrock");</span>
+<span class="source-line-no">143</span><span id="line-143">        this.PLOT_HEIGHT = Math.min(getMaxGenHeight(), config.getInt("plot.height"));</span>
+<span class="source-line-no">144</span><span id="line-144">        this.MAIN_BLOCK = createCheckedBlockBucket(config.getString("plot.filling"), MAIN_BLOCK);</span>
+<span class="source-line-no">145</span><span id="line-145">        this.TOP_BLOCK = createCheckedBlockBucket(config.getString("plot.floor"), TOP_BLOCK);</span>
+<span class="source-line-no">146</span><span id="line-146">        this.WALL_BLOCK = createCheckedBlockBucket(config.getString("wall.block"), WALL_BLOCK);</span>
+<span class="source-line-no">147</span><span id="line-147">        this.ROAD_HEIGHT = Math.min(getMaxGenHeight(), config.getInt("road.height"));</span>
+<span class="source-line-no">148</span><span id="line-148">        this.ROAD_BLOCK = createCheckedBlockBucket(config.getString("road.block"), ROAD_BLOCK);</span>
+<span class="source-line-no">149</span><span id="line-149">        this.WALL_FILLING = createCheckedBlockBucket(config.getString("wall.filling"), WALL_FILLING);</span>
+<span class="source-line-no">150</span><span id="line-150">        this.PLACE_TOP_BLOCK = config.getBoolean("wall.place_top_block");</span>
+<span class="source-line-no">151</span><span id="line-151">        this.WALL_HEIGHT = Math.min(getMaxGenHeight() - (PLACE_TOP_BLOCK ? 1 : 0), config.getInt("wall.height"));</span>
+<span class="source-line-no">152</span><span id="line-152">        this.CLAIMED_WALL_BLOCK = createCheckedBlockBucket(config.getString("wall.block_claimed"), CLAIMED_WALL_BLOCK);</span>
+<span class="source-line-no">153</span><span id="line-153">    }</span>
+<span class="source-line-no">154</span><span id="line-154"></span>
+<span class="source-line-no">155</span><span id="line-155">    int schematicStartHeight() {</span>
+<span class="source-line-no">156</span><span id="line-156">        int plotRoadMin = Math.min(PLOT_HEIGHT, ROAD_HEIGHT);</span>
+<span class="source-line-no">157</span><span id="line-157">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
+<span class="source-line-no">158</span><span id="line-158">            return plotRoadMin;</span>
+<span class="source-line-no">159</span><span id="line-159">        }</span>
+<span class="source-line-no">160</span><span id="line-160">        return Math.min(WALL_HEIGHT, plotRoadMin);</span>
+<span class="source-line-no">161</span><span id="line-161">    }</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">}</span>
 
 
 

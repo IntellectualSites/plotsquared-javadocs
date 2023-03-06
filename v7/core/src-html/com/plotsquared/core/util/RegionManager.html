@@ -285,151 +285,152 @@
 <span class="source-line-no">272</span><span id="line-272">        fromQueue1.addReadChunks(new CuboidRegion(pos1.getBlockVector3(), pos2.getBlockVector3()).getChunks());</span>
 <span class="source-line-no">273</span><span id="line-273">        fromQueue2.addReadChunks(new CuboidRegion(</span>
 <span class="source-line-no">274</span><span id="line-274">                swapPos.getBlockVector3(),</span>
-<span class="source-line-no">275</span><span id="line-275">                BlockVector3.at(swapPos.getX() + pos2.getX() - pos1.getX(),</span>
-<span class="source-line-no">276</span><span id="line-276">                        pos1.getY(),</span>
-<span class="source-line-no">277</span><span id="line-277">                        swapPos.getZ() + pos2.getZ() - pos1.getZ()</span>
-<span class="source-line-no">278</span><span id="line-278">                )</span>
-<span class="source-line-no">279</span><span id="line-279">        ).getChunks());</span>
-<span class="source-line-no">280</span><span id="line-280">        QueueCoordinator toQueue1 = blockQueue.getNewQueue(world1);</span>
-<span class="source-line-no">281</span><span id="line-281">        QueueCoordinator toQueue2 = blockQueue.getNewQueue(world2);</span>
-<span class="source-line-no">282</span><span id="line-282"></span>
-<span class="source-line-no">283</span><span id="line-283">        setCopyFromToConsumer(pos1, pos2, relX, relZ, world1, fromQueue1, toQueue2, true);</span>
-<span class="source-line-no">284</span><span id="line-284">        setCopyFromToConsumer(pos1.add(relX, 0, relZ), pos2.add(relX, 0, relZ), -relX, -relZ, world1, fromQueue2, toQueue1,</span>
-<span class="source-line-no">285</span><span id="line-285">                true</span>
-<span class="source-line-no">286</span><span id="line-286">        );</span>
-<span class="source-line-no">287</span><span id="line-287"></span>
-<span class="source-line-no">288</span><span id="line-288">        toQueue2.setCompleteTask(whenDone);</span>
-<span class="source-line-no">289</span><span id="line-289">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
-<span class="source-line-no">290</span><span id="line-290">            toQueue2.addProgressSubscriber(subscriberFactory.createFull(</span>
-<span class="source-line-no">291</span><span id="line-291">                    actor,</span>
-<span class="source-line-no">292</span><span id="line-292">                    Settings.QUEUE.NOTIFY_INTERVAL,</span>
-<span class="source-line-no">293</span><span id="line-293">                    Settings.QUEUE.NOTIFY_WAIT,</span>
-<span class="source-line-no">294</span><span id="line-294">                    TranslatableCaption.of("swap.progress_region2_paste")</span>
-<span class="source-line-no">295</span><span id="line-295">            ));</span>
-<span class="source-line-no">296</span><span id="line-296">        }</span>
-<span class="source-line-no">297</span><span id="line-297"></span>
-<span class="source-line-no">298</span><span id="line-298">        toQueue1.setCompleteTask(toQueue2::enqueue);</span>
-<span class="source-line-no">299</span><span id="line-299">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
-<span class="source-line-no">300</span><span id="line-300">            toQueue1.addProgressSubscriber(subscriberFactory.createFull(</span>
-<span class="source-line-no">301</span><span id="line-301">                    actor,</span>
-<span class="source-line-no">302</span><span id="line-302">                    Settings.QUEUE.NOTIFY_INTERVAL,</span>
-<span class="source-line-no">303</span><span id="line-303">                    Settings.QUEUE.NOTIFY_WAIT,</span>
-<span class="source-line-no">304</span><span id="line-304">                    TranslatableCaption.of("swap.progress_region1_paste")</span>
-<span class="source-line-no">305</span><span id="line-305">            ));</span>
-<span class="source-line-no">306</span><span id="line-306">        }</span>
-<span class="source-line-no">307</span><span id="line-307"></span>
-<span class="source-line-no">308</span><span id="line-308">        fromQueue2.setCompleteTask(toQueue1::enqueue);</span>
-<span class="source-line-no">309</span><span id="line-309">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
-<span class="source-line-no">310</span><span id="line-310">            fromQueue2.addProgressSubscriber(subscriberFactory</span>
-<span class="source-line-no">311</span><span id="line-311">                    .createFull(</span>
-<span class="source-line-no">312</span><span id="line-312">                            actor,</span>
-<span class="source-line-no">313</span><span id="line-313">                            Settings.QUEUE.NOTIFY_INTERVAL,</span>
-<span class="source-line-no">314</span><span id="line-314">                            Settings.QUEUE.NOTIFY_WAIT,</span>
-<span class="source-line-no">315</span><span id="line-315">                            TranslatableCaption.of("swap.progress_region2_copy")</span>
-<span class="source-line-no">316</span><span id="line-316">                    ));</span>
-<span class="source-line-no">317</span><span id="line-317">        }</span>
-<span class="source-line-no">318</span><span id="line-318"></span>
-<span class="source-line-no">319</span><span id="line-319">        fromQueue1.setCompleteTask(fromQueue2::enqueue);</span>
-<span class="source-line-no">320</span><span id="line-320">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
-<span class="source-line-no">321</span><span id="line-321">            fromQueue1.addProgressSubscriber(subscriberFactory</span>
-<span class="source-line-no">322</span><span id="line-322">                    .createFull(</span>
-<span class="source-line-no">323</span><span id="line-323">                            actor,</span>
-<span class="source-line-no">324</span><span id="line-324">                            Settings.QUEUE.NOTIFY_INTERVAL,</span>
-<span class="source-line-no">325</span><span id="line-325">                            Settings.QUEUE.NOTIFY_WAIT,</span>
-<span class="source-line-no">326</span><span id="line-326">                            TranslatableCaption.of("swap.progress_region1_copy")</span>
-<span class="source-line-no">327</span><span id="line-327">                    ));</span>
-<span class="source-line-no">328</span><span id="line-328">        }</span>
-<span class="source-line-no">329</span><span id="line-329">        fromQueue1.enqueue();</span>
-<span class="source-line-no">330</span><span id="line-330">    }</span>
-<span class="source-line-no">331</span><span id="line-331"></span>
-<span class="source-line-no">332</span><span id="line-332">    private void setCopyFromToConsumer(</span>
-<span class="source-line-no">333</span><span id="line-333">            final Location pos1,</span>
-<span class="source-line-no">334</span><span id="line-334">            final Location pos2,</span>
-<span class="source-line-no">335</span><span id="line-335">            int relX,</span>
-<span class="source-line-no">336</span><span id="line-336">            int relZ,</span>
-<span class="source-line-no">337</span><span id="line-337">            final World world1,</span>
-<span class="source-line-no">338</span><span id="line-338">            final QueueCoordinator fromQueue,</span>
-<span class="source-line-no">339</span><span id="line-339">            final QueueCoordinator toQueue,</span>
-<span class="source-line-no">340</span><span id="line-340">            boolean removeEntities</span>
-<span class="source-line-no">341</span><span id="line-341">    ) {</span>
-<span class="source-line-no">342</span><span id="line-342">        fromQueue.setChunkConsumer(chunk -&gt; {</span>
-<span class="source-line-no">343</span><span id="line-343">            int cx = chunk.getX();</span>
-<span class="source-line-no">344</span><span id="line-344">            int cz = chunk.getZ();</span>
-<span class="source-line-no">345</span><span id="line-345">            int cbx = cx &lt;&lt; 4;</span>
-<span class="source-line-no">346</span><span id="line-346">            int cbz = cz &lt;&lt; 4;</span>
-<span class="source-line-no">347</span><span id="line-347">            int bx = Math.max(pos1.getX(), cbx) &amp; 15;</span>
-<span class="source-line-no">348</span><span id="line-348">            int bz = Math.max(pos1.getZ(), cbz) &amp; 15;</span>
-<span class="source-line-no">349</span><span id="line-349">            int tx = Math.min(pos2.getX(), cbx + 15) &amp; 15;</span>
-<span class="source-line-no">350</span><span id="line-350">            int tz = Math.min(pos2.getZ(), cbz + 15) &amp; 15;</span>
-<span class="source-line-no">351</span><span id="line-351">            for (int y = world1.getMinY(); y &lt;= world1.getMaxY(); y++) {</span>
-<span class="source-line-no">352</span><span id="line-352">                for (int x = bx; x &lt;= tx; x++) {</span>
-<span class="source-line-no">353</span><span id="line-353">                    for (int z = bz; z &lt;= tz; z++) {</span>
-<span class="source-line-no">354</span><span id="line-354">                        int rx = cbx + x;</span>
-<span class="source-line-no">355</span><span id="line-355">                        int rz = cbz + z;</span>
-<span class="source-line-no">356</span><span id="line-356">                        BlockVector3 loc = BlockVector3.at(rx, y, rz);</span>
-<span class="source-line-no">357</span><span id="line-357">                        toQueue.setBlock(rx + relX, y, rz + relZ, world1.getFullBlock(loc));</span>
-<span class="source-line-no">358</span><span id="line-358">                        toQueue.setBiome(rx + relX, y, rz + relZ, world1.getBiome(loc));</span>
-<span class="source-line-no">359</span><span id="line-359">                    }</span>
-<span class="source-line-no">360</span><span id="line-360">                }</span>
-<span class="source-line-no">361</span><span id="line-361">            }</span>
-<span class="source-line-no">362</span><span id="line-362">            Region region = new CuboidRegion(</span>
-<span class="source-line-no">363</span><span id="line-363">                    BlockVector3.at(cbx + bx, world1.getMinY(), cbz + bz),</span>
-<span class="source-line-no">364</span><span id="line-364">                    BlockVector3.at(cbx + tx, world1.getMaxY(), cbz + tz)</span>
-<span class="source-line-no">365</span><span id="line-365">            );</span>
-<span class="source-line-no">366</span><span id="line-366">            toQueue.addEntities(world1.getEntities(region));</span>
-<span class="source-line-no">367</span><span id="line-367">            if (removeEntities) {</span>
-<span class="source-line-no">368</span><span id="line-368">                for (Entity entity : world1.getEntities(region)) {</span>
-<span class="source-line-no">369</span><span id="line-369">                    entity.remove();</span>
-<span class="source-line-no">370</span><span id="line-370">                }</span>
-<span class="source-line-no">371</span><span id="line-371">            }</span>
-<span class="source-line-no">372</span><span id="line-372">        });</span>
-<span class="source-line-no">373</span><span id="line-373">    }</span>
-<span class="source-line-no">374</span><span id="line-374"></span>
-<span class="source-line-no">375</span><span id="line-375">    /**</span>
-<span class="source-line-no">376</span><span id="line-376">     * Set a region to a biome type.</span>
-<span class="source-line-no">377</span><span id="line-377">     *</span>
-<span class="source-line-no">378</span><span id="line-378">     * @param region      region to set</span>
-<span class="source-line-no">379</span><span id="line-379">     * @param extendBiome how far outside the region to extent setting the biome too account for 3D biomes being 4x4</span>
-<span class="source-line-no">380</span><span id="line-380">     * @param biome       biome to set</span>
-<span class="source-line-no">381</span><span id="line-381">     * @param area        {@link PlotArea} in which the biome is being set</span>
-<span class="source-line-no">382</span><span id="line-382">     * @param whenDone    task to run when complete</span>
-<span class="source-line-no">383</span><span id="line-383">     * @since 6.6.0</span>
-<span class="source-line-no">384</span><span id="line-384">     */</span>
-<span class="source-line-no">385</span><span id="line-385">    public void setBiome(</span>
-<span class="source-line-no">386</span><span id="line-386">            final CuboidRegion region,</span>
-<span class="source-line-no">387</span><span id="line-387">            final int extendBiome,</span>
-<span class="source-line-no">388</span><span id="line-388">            final BiomeType biome,</span>
-<span class="source-line-no">389</span><span id="line-389">            final PlotArea area,</span>
-<span class="source-line-no">390</span><span id="line-390">            final Runnable whenDone</span>
-<span class="source-line-no">391</span><span id="line-391">    ) {</span>
-<span class="source-line-no">392</span><span id="line-392">        final QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
-<span class="source-line-no">393</span><span id="line-393">        queue.addReadChunks(region.getChunks());</span>
-<span class="source-line-no">394</span><span id="line-394">        final BlockVector3 regionMin = region.getMinimumPoint();</span>
-<span class="source-line-no">395</span><span id="line-395">        final BlockVector3 regionMax = region.getMaximumPoint();</span>
-<span class="source-line-no">396</span><span id="line-396">        queue.setChunkConsumer(chunkPos -&gt; {</span>
-<span class="source-line-no">397</span><span id="line-397">            BlockVector3 chunkMin = BlockVector3.at(</span>
-<span class="source-line-no">398</span><span id="line-398">                    Math.max(chunkPos.getX() &lt;&lt; 4, regionMin.getBlockX()),</span>
-<span class="source-line-no">399</span><span id="line-399">                    regionMin.getBlockY(),</span>
-<span class="source-line-no">400</span><span id="line-400">                    Math.max(chunkPos.getZ() &lt;&lt; 4, regionMin.getBlockZ())</span>
-<span class="source-line-no">401</span><span id="line-401">            );</span>
-<span class="source-line-no">402</span><span id="line-402">            BlockVector3 chunkMax = BlockVector3.at(</span>
-<span class="source-line-no">403</span><span id="line-403">                    Math.min((chunkPos.getX() &lt;&lt; 4) + 15, regionMax.getBlockX()),</span>
-<span class="source-line-no">404</span><span id="line-404">                    regionMax.getBlockY(),</span>
-<span class="source-line-no">405</span><span id="line-405">                    Math.min((chunkPos.getZ() &lt;&lt; 4) + 15, regionMax.getBlockZ())</span>
-<span class="source-line-no">406</span><span id="line-406">            );</span>
-<span class="source-line-no">407</span><span id="line-407">            CuboidRegion chunkRegion = new CuboidRegion(region.getWorld(), chunkMin, chunkMax);</span>
-<span class="source-line-no">408</span><span id="line-408">            WorldUtil.setBiome(</span>
-<span class="source-line-no">409</span><span id="line-409">                    area.getWorldName(),</span>
-<span class="source-line-no">410</span><span id="line-410">                    chunkRegion,</span>
-<span class="source-line-no">411</span><span id="line-411">                    biome</span>
-<span class="source-line-no">412</span><span id="line-412">            );</span>
-<span class="source-line-no">413</span><span id="line-413">            worldUtil.refreshChunk(chunkPos.getBlockX(), chunkPos.getBlockZ(), area.getWorldName());</span>
-<span class="source-line-no">414</span><span id="line-414">        });</span>
-<span class="source-line-no">415</span><span id="line-415">        queue.setCompleteTask(whenDone);</span>
-<span class="source-line-no">416</span><span id="line-416">        queue.enqueue();</span>
-<span class="source-line-no">417</span><span id="line-417">    }</span>
-<span class="source-line-no">418</span><span id="line-418"></span>
-<span class="source-line-no">419</span><span id="line-419">}</span>
+<span class="source-line-no">275</span><span id="line-275">                BlockVector3.at(</span>
+<span class="source-line-no">276</span><span id="line-276">                        swapPos.getX() + pos2.getX() - pos1.getX(),</span>
+<span class="source-line-no">277</span><span id="line-277">                        pos1.getY(),</span>
+<span class="source-line-no">278</span><span id="line-278">                        swapPos.getZ() + pos2.getZ() - pos1.getZ()</span>
+<span class="source-line-no">279</span><span id="line-279">                )</span>
+<span class="source-line-no">280</span><span id="line-280">        ).getChunks());</span>
+<span class="source-line-no">281</span><span id="line-281">        QueueCoordinator toQueue1 = blockQueue.getNewQueue(world1);</span>
+<span class="source-line-no">282</span><span id="line-282">        QueueCoordinator toQueue2 = blockQueue.getNewQueue(world2);</span>
+<span class="source-line-no">283</span><span id="line-283"></span>
+<span class="source-line-no">284</span><span id="line-284">        setCopyFromToConsumer(pos1, pos2, relX, relZ, world1, fromQueue1, toQueue2, true);</span>
+<span class="source-line-no">285</span><span id="line-285">        setCopyFromToConsumer(pos1.add(relX, 0, relZ), pos2.add(relX, 0, relZ), -relX, -relZ, world1, fromQueue2, toQueue1,</span>
+<span class="source-line-no">286</span><span id="line-286">                true</span>
+<span class="source-line-no">287</span><span id="line-287">        );</span>
+<span class="source-line-no">288</span><span id="line-288"></span>
+<span class="source-line-no">289</span><span id="line-289">        toQueue2.setCompleteTask(whenDone);</span>
+<span class="source-line-no">290</span><span id="line-290">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
+<span class="source-line-no">291</span><span id="line-291">            toQueue2.addProgressSubscriber(subscriberFactory.createFull(</span>
+<span class="source-line-no">292</span><span id="line-292">                    actor,</span>
+<span class="source-line-no">293</span><span id="line-293">                    Settings.QUEUE.NOTIFY_INTERVAL,</span>
+<span class="source-line-no">294</span><span id="line-294">                    Settings.QUEUE.NOTIFY_WAIT,</span>
+<span class="source-line-no">295</span><span id="line-295">                    TranslatableCaption.of("swap.progress_region2_paste")</span>
+<span class="source-line-no">296</span><span id="line-296">            ));</span>
+<span class="source-line-no">297</span><span id="line-297">        }</span>
+<span class="source-line-no">298</span><span id="line-298"></span>
+<span class="source-line-no">299</span><span id="line-299">        toQueue1.setCompleteTask(toQueue2::enqueue);</span>
+<span class="source-line-no">300</span><span id="line-300">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
+<span class="source-line-no">301</span><span id="line-301">            toQueue1.addProgressSubscriber(subscriberFactory.createFull(</span>
+<span class="source-line-no">302</span><span id="line-302">                    actor,</span>
+<span class="source-line-no">303</span><span id="line-303">                    Settings.QUEUE.NOTIFY_INTERVAL,</span>
+<span class="source-line-no">304</span><span id="line-304">                    Settings.QUEUE.NOTIFY_WAIT,</span>
+<span class="source-line-no">305</span><span id="line-305">                    TranslatableCaption.of("swap.progress_region1_paste")</span>
+<span class="source-line-no">306</span><span id="line-306">            ));</span>
+<span class="source-line-no">307</span><span id="line-307">        }</span>
+<span class="source-line-no">308</span><span id="line-308"></span>
+<span class="source-line-no">309</span><span id="line-309">        fromQueue2.setCompleteTask(toQueue1::enqueue);</span>
+<span class="source-line-no">310</span><span id="line-310">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
+<span class="source-line-no">311</span><span id="line-311">            fromQueue2.addProgressSubscriber(subscriberFactory</span>
+<span class="source-line-no">312</span><span id="line-312">                    .createFull(</span>
+<span class="source-line-no">313</span><span id="line-313">                            actor,</span>
+<span class="source-line-no">314</span><span id="line-314">                            Settings.QUEUE.NOTIFY_INTERVAL,</span>
+<span class="source-line-no">315</span><span id="line-315">                            Settings.QUEUE.NOTIFY_WAIT,</span>
+<span class="source-line-no">316</span><span id="line-316">                            TranslatableCaption.of("swap.progress_region2_copy")</span>
+<span class="source-line-no">317</span><span id="line-317">                    ));</span>
+<span class="source-line-no">318</span><span id="line-318">        }</span>
+<span class="source-line-no">319</span><span id="line-319"></span>
+<span class="source-line-no">320</span><span id="line-320">        fromQueue1.setCompleteTask(fromQueue2::enqueue);</span>
+<span class="source-line-no">321</span><span id="line-321">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
+<span class="source-line-no">322</span><span id="line-322">            fromQueue1.addProgressSubscriber(subscriberFactory</span>
+<span class="source-line-no">323</span><span id="line-323">                    .createFull(</span>
+<span class="source-line-no">324</span><span id="line-324">                            actor,</span>
+<span class="source-line-no">325</span><span id="line-325">                            Settings.QUEUE.NOTIFY_INTERVAL,</span>
+<span class="source-line-no">326</span><span id="line-326">                            Settings.QUEUE.NOTIFY_WAIT,</span>
+<span class="source-line-no">327</span><span id="line-327">                            TranslatableCaption.of("swap.progress_region1_copy")</span>
+<span class="source-line-no">328</span><span id="line-328">                    ));</span>
+<span class="source-line-no">329</span><span id="line-329">        }</span>
+<span class="source-line-no">330</span><span id="line-330">        fromQueue1.enqueue();</span>
+<span class="source-line-no">331</span><span id="line-331">    }</span>
+<span class="source-line-no">332</span><span id="line-332"></span>
+<span class="source-line-no">333</span><span id="line-333">    private void setCopyFromToConsumer(</span>
+<span class="source-line-no">334</span><span id="line-334">            final Location pos1,</span>
+<span class="source-line-no">335</span><span id="line-335">            final Location pos2,</span>
+<span class="source-line-no">336</span><span id="line-336">            int relX,</span>
+<span class="source-line-no">337</span><span id="line-337">            int relZ,</span>
+<span class="source-line-no">338</span><span id="line-338">            final World world1,</span>
+<span class="source-line-no">339</span><span id="line-339">            final QueueCoordinator fromQueue,</span>
+<span class="source-line-no">340</span><span id="line-340">            final QueueCoordinator toQueue,</span>
+<span class="source-line-no">341</span><span id="line-341">            boolean removeEntities</span>
+<span class="source-line-no">342</span><span id="line-342">    ) {</span>
+<span class="source-line-no">343</span><span id="line-343">        fromQueue.setChunkConsumer(chunk -&gt; {</span>
+<span class="source-line-no">344</span><span id="line-344">            int cx = chunk.getX();</span>
+<span class="source-line-no">345</span><span id="line-345">            int cz = chunk.getZ();</span>
+<span class="source-line-no">346</span><span id="line-346">            int cbx = cx &lt;&lt; 4;</span>
+<span class="source-line-no">347</span><span id="line-347">            int cbz = cz &lt;&lt; 4;</span>
+<span class="source-line-no">348</span><span id="line-348">            int bx = Math.max(pos1.getX(), cbx) &amp; 15;</span>
+<span class="source-line-no">349</span><span id="line-349">            int bz = Math.max(pos1.getZ(), cbz) &amp; 15;</span>
+<span class="source-line-no">350</span><span id="line-350">            int tx = Math.min(pos2.getX(), cbx + 15) &amp; 15;</span>
+<span class="source-line-no">351</span><span id="line-351">            int tz = Math.min(pos2.getZ(), cbz + 15) &amp; 15;</span>
+<span class="source-line-no">352</span><span id="line-352">            for (int y = world1.getMinY(); y &lt;= world1.getMaxY(); y++) {</span>
+<span class="source-line-no">353</span><span id="line-353">                for (int x = bx; x &lt;= tx; x++) {</span>
+<span class="source-line-no">354</span><span id="line-354">                    for (int z = bz; z &lt;= tz; z++) {</span>
+<span class="source-line-no">355</span><span id="line-355">                        int rx = cbx + x;</span>
+<span class="source-line-no">356</span><span id="line-356">                        int rz = cbz + z;</span>
+<span class="source-line-no">357</span><span id="line-357">                        BlockVector3 loc = BlockVector3.at(rx, y, rz);</span>
+<span class="source-line-no">358</span><span id="line-358">                        toQueue.setBlock(rx + relX, y, rz + relZ, world1.getFullBlock(loc));</span>
+<span class="source-line-no">359</span><span id="line-359">                        toQueue.setBiome(rx + relX, y, rz + relZ, world1.getBiome(loc));</span>
+<span class="source-line-no">360</span><span id="line-360">                    }</span>
+<span class="source-line-no">361</span><span id="line-361">                }</span>
+<span class="source-line-no">362</span><span id="line-362">            }</span>
+<span class="source-line-no">363</span><span id="line-363">            Region region = new CuboidRegion(</span>
+<span class="source-line-no">364</span><span id="line-364">                    BlockVector3.at(cbx + bx, world1.getMinY(), cbz + bz),</span>
+<span class="source-line-no">365</span><span id="line-365">                    BlockVector3.at(cbx + tx, world1.getMaxY(), cbz + tz)</span>
+<span class="source-line-no">366</span><span id="line-366">            );</span>
+<span class="source-line-no">367</span><span id="line-367">            toQueue.addEntities(world1.getEntities(region));</span>
+<span class="source-line-no">368</span><span id="line-368">            if (removeEntities) {</span>
+<span class="source-line-no">369</span><span id="line-369">                for (Entity entity : world1.getEntities(region)) {</span>
+<span class="source-line-no">370</span><span id="line-370">                    entity.remove();</span>
+<span class="source-line-no">371</span><span id="line-371">                }</span>
+<span class="source-line-no">372</span><span id="line-372">            }</span>
+<span class="source-line-no">373</span><span id="line-373">        });</span>
+<span class="source-line-no">374</span><span id="line-374">    }</span>
+<span class="source-line-no">375</span><span id="line-375"></span>
+<span class="source-line-no">376</span><span id="line-376">    /**</span>
+<span class="source-line-no">377</span><span id="line-377">     * Set a region to a biome type.</span>
+<span class="source-line-no">378</span><span id="line-378">     *</span>
+<span class="source-line-no">379</span><span id="line-379">     * @param region      region to set</span>
+<span class="source-line-no">380</span><span id="line-380">     * @param extendBiome how far outside the region to extent setting the biome too account for 3D biomes being 4x4</span>
+<span class="source-line-no">381</span><span id="line-381">     * @param biome       biome to set</span>
+<span class="source-line-no">382</span><span id="line-382">     * @param area        {@link PlotArea} in which the biome is being set</span>
+<span class="source-line-no">383</span><span id="line-383">     * @param whenDone    task to run when complete</span>
+<span class="source-line-no">384</span><span id="line-384">     * @since 6.6.0</span>
+<span class="source-line-no">385</span><span id="line-385">     */</span>
+<span class="source-line-no">386</span><span id="line-386">    public void setBiome(</span>
+<span class="source-line-no">387</span><span id="line-387">            final CuboidRegion region,</span>
+<span class="source-line-no">388</span><span id="line-388">            final int extendBiome,</span>
+<span class="source-line-no">389</span><span id="line-389">            final BiomeType biome,</span>
+<span class="source-line-no">390</span><span id="line-390">            final PlotArea area,</span>
+<span class="source-line-no">391</span><span id="line-391">            final Runnable whenDone</span>
+<span class="source-line-no">392</span><span id="line-392">    ) {</span>
+<span class="source-line-no">393</span><span id="line-393">        final QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
+<span class="source-line-no">394</span><span id="line-394">        queue.addReadChunks(region.getChunks());</span>
+<span class="source-line-no">395</span><span id="line-395">        final BlockVector3 regionMin = region.getMinimumPoint();</span>
+<span class="source-line-no">396</span><span id="line-396">        final BlockVector3 regionMax = region.getMaximumPoint();</span>
+<span class="source-line-no">397</span><span id="line-397">        queue.setChunkConsumer(chunkPos -&gt; {</span>
+<span class="source-line-no">398</span><span id="line-398">            BlockVector3 chunkMin = BlockVector3.at(</span>
+<span class="source-line-no">399</span><span id="line-399">                    Math.max(chunkPos.getX() &lt;&lt; 4, regionMin.getBlockX()),</span>
+<span class="source-line-no">400</span><span id="line-400">                    regionMin.getBlockY(),</span>
+<span class="source-line-no">401</span><span id="line-401">                    Math.max(chunkPos.getZ() &lt;&lt; 4, regionMin.getBlockZ())</span>
+<span class="source-line-no">402</span><span id="line-402">            );</span>
+<span class="source-line-no">403</span><span id="line-403">            BlockVector3 chunkMax = BlockVector3.at(</span>
+<span class="source-line-no">404</span><span id="line-404">                    Math.min((chunkPos.getX() &lt;&lt; 4) + 15, regionMax.getBlockX()),</span>
+<span class="source-line-no">405</span><span id="line-405">                    regionMax.getBlockY(),</span>
+<span class="source-line-no">406</span><span id="line-406">                    Math.min((chunkPos.getZ() &lt;&lt; 4) + 15, regionMax.getBlockZ())</span>
+<span class="source-line-no">407</span><span id="line-407">            );</span>
+<span class="source-line-no">408</span><span id="line-408">            CuboidRegion chunkRegion = new CuboidRegion(region.getWorld(), chunkMin, chunkMax);</span>
+<span class="source-line-no">409</span><span id="line-409">            WorldUtil.setBiome(</span>
+<span class="source-line-no">410</span><span id="line-410">                    area.getWorldName(),</span>
+<span class="source-line-no">411</span><span id="line-411">                    chunkRegion,</span>
+<span class="source-line-no">412</span><span id="line-412">                    biome</span>
+<span class="source-line-no">413</span><span id="line-413">            );</span>
+<span class="source-line-no">414</span><span id="line-414">            worldUtil.refreshChunk(chunkPos.getBlockX(), chunkPos.getBlockZ(), area.getWorldName());</span>
+<span class="source-line-no">415</span><span id="line-415">        });</span>
+<span class="source-line-no">416</span><span id="line-416">        queue.setCompleteTask(whenDone);</span>
+<span class="source-line-no">417</span><span id="line-417">        queue.enqueue();</span>
+<span class="source-line-no">418</span><span id="line-418">    }</span>
+<span class="source-line-no">419</span><span id="line-419"></span>
+<span class="source-line-no">420</span><span id="line-420">}</span>
 
 
 

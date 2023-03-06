@@ -450,7 +450,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(com.sk89q.worldedit.world.World)">
 <h3>QueueCoordinator</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-60">QueueCoordinator</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/World.html" title="class or interface in com.sk89q.worldedit.world" class="external-link">World</a>&nbsp;world)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-59">QueueCoordinator</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/World.html" title="class or interface in com.sk89q.worldedit.world" class="external-link">World</a>&nbsp;world)</span></div>
 <div class="block">Default constructor requires world to indicate any extents given to <a href="QueueCoordinator.html" title="class in com.plotsquared.core.queue"><code>QueueCoordinator</code></a> also need this constructor.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -469,7 +469,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getForChunk(int,int,int,int)">
 <h3>getForChunk</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ZeroedDelegateScopedQueueCoordinator.html" title="class in com.plotsquared.core.queue">ZeroedDelegateScopedQueueCoordinator</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-72">getForChunk</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ZeroedDelegateScopedQueueCoordinator.html" title="class in com.plotsquared.core.queue">ZeroedDelegateScopedQueueCoordinator</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-71">getForChunk</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;z,
  int&nbsp;minY,
  int&nbsp;maxY)</span></div>
@@ -488,7 +488,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="size()">
 <h3>size</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-85">size</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-84">size</a></span>()</div>
 <div class="block">Get the size of the queue in chunks</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -499,7 +499,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setModified(long)">
 <h3>setModified</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-92">setModified</a></span><wbr><span class="parameters">(long&nbsp;modified)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-91">setModified</a></span><wbr><span class="parameters">(long&nbsp;modified)</span></div>
 <div class="block">Set when the queue was last modified</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -510,7 +510,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isForceSync()">
 <h3>isForceSync</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-100">isForceSync</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-99">isForceSync</a></span>()</div>
 <div class="block">Returns true if the queue should be forced to be synchronous when enqueued. This is not necessarily synchronous to the
  server, and simply effectively makes <a href="#enqueue()"><code>enqueue()</code></a> a blocking operation.</div>
 <dl class="notes">
@@ -522,7 +522,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setForceSync(boolean)">
 <h3>setForceSync</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-110">setForceSync</a></span><wbr><span class="parameters">(boolean&nbsp;forceSync)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-109">setForceSync</a></span><wbr><span class="parameters">(boolean&nbsp;forceSync)</span></div>
 <div class="block">Set whether the queue should be forced to be synchronous. This is not necessarily synchronous to the server, and simply
  effectively makes <a href="#enqueue()"><code>enqueue()</code></a> a blocking operation.</div>
 <dl class="notes">
@@ -534,7 +534,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChunkObject()">
 <h3>getChunkObject</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-119">getChunkObject</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-118">getChunkObject</a></span>()</div>
 <div class="block">Get the Chunk Object set to the queue</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -545,7 +545,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setChunkObject(java.lang.Object)">
 <h3>setChunkObject</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-129">setChunkObject</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;chunkObject)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-128">setChunkObject</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;chunkObject)</span></div>
 <div class="block">Set a chunk object (e.g. the Bukkit Chunk object) to the queue. This will be used as fallback in case of WNA failure.
  Should ONLY be used in specific cases (i.e. generation, where a chunk is being populated)</div>
 <dl class="notes">
@@ -557,7 +557,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBlock(int,int,int,com.sk89q.worldedit.world.block.BlockState)">
 <h3>setBlock</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-142">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-141">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&nbsp;id)</span></div>
@@ -576,7 +576,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBlock(int,int,int,com.sk89q.worldedit.world.block.BaseBlock)">
 <h3>setBlock</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-153">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-152">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BaseBlock.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BaseBlock</a>&nbsp;id)</span></div>
@@ -595,7 +595,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBlock(int,int,int,com.sk89q.worldedit.function.pattern.Pattern)">
 <h3>setBlock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-164">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-163">setBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/function/pattern/Pattern.html" title="class or interface in com.sk89q.worldedit.function.pattern" class="external-link">Pattern</a>&nbsp;pattern)</span></div>
@@ -614,7 +614,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setTile(int,int,int,com.sk89q.jnbt.CompoundTag)">
 <h3>setTile</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-177">setTile</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-176">setTile</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/jnbt/CompoundTag.html" title="class or interface in com.sk89q.jnbt" class="external-link">CompoundTag</a>&nbsp;tag)</span></div>
@@ -633,7 +633,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isSettingTiles()">
 <h3>isSettingTiles</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-184">isSettingTiles</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-183">isSettingTiles</a></span>()</div>
 <div class="block">Whether the queue has any tiles being set</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -644,7 +644,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getBlock(int,int,int)">
 <h3>getBlock</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-194">getBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-193">getBlock</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z)</span></div>
 <div class="block">Get a block at the given coordinates.</div>
@@ -663,7 +663,7 @@ loadScripts(document, 'script');</script>
 <h3>setBiome</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
             <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.0.0")
-</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-208">setBiome</a></span><wbr><span class="parameters">(int&nbsp;x,
+</span><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-207">setBiome</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span>
@@ -685,7 +685,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBiome(int,int,int,com.sk89q.worldedit.world.biome.BiomeType)">
 <h3>setBiome</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-220">setBiome</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-219">setBiome</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;y,
  int&nbsp;z,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
@@ -704,7 +704,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isSettingBiomes()">
 <h3>isSettingBiomes</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-227">isSettingBiomes</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-226">isSettingBiomes</a></span>()</div>
 <div class="block">Whether the queue has any biomes to be set</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -715,7 +715,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBiomesEnabled(boolean)">
 <h3>setBiomesEnabled</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-235">setBiomesEnabled</a></span><wbr><span class="parameters">(boolean&nbsp;enabled)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-234">setBiomesEnabled</a></span><wbr><span class="parameters">(boolean&nbsp;enabled)</span></div>
 <div class="block">If the queue should accept biome placement</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -728,7 +728,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addEntities(java.util.List)">
 <h3>addEntities</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-242">addEntities</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/entity/Entity.html" title="class or interface in com.sk89q.worldedit.entity" class="external-link">Entity</a>&gt;&nbsp;entities)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-241">addEntities</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/entity/Entity.html" title="class or interface in com.sk89q.worldedit.entity" class="external-link">Entity</a>&gt;&nbsp;entities)</span></div>
 <div class="block">Add entities to be created</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -739,7 +739,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setEntity(com.sk89q.worldedit.entity.Entity)">
 <h3>setEntity</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-254">setEntity</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/entity/Entity.html" title="class or interface in com.sk89q.worldedit.entity" class="external-link">Entity</a>&nbsp;entity)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-253">setEntity</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/entity/Entity.html" title="class or interface in com.sk89q.worldedit.entity" class="external-link">Entity</a>&nbsp;entity)</span></div>
 <div class="block">Add an entity to be created</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -752,7 +752,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getReadChunks()">
 <h3>getReadChunks</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-261">getReadChunks</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-260">getReadChunks</a></span>()</div>
 <div class="block">Get the list of chunks that are added manually. This usually indicated the queue is "read only".</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -763,7 +763,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addReadChunks(java.util.Set)">
 <h3>addReadChunks</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-269">addReadChunks</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;&nbsp;readChunks)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-268">addReadChunks</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;&nbsp;readChunks)</span></div>
 <div class="block">Add a set of <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link"><code>BlockVector2</code></a> Chunk coordinates to the Read Chunks list</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -774,7 +774,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addReadChunk(com.sk89q.worldedit.math.BlockVector2)">
 <h3>addReadChunk</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-276">addReadChunk</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&nbsp;chunk)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-275">addReadChunk</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&nbsp;chunk)</span></div>
 <div class="block">Add a <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link"><code>BlockVector2</code></a> Chunk coordinate to the Read Chunks list</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -785,7 +785,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isUnloadAfter()">
 <h3>isUnloadAfter</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-283">isUnloadAfter</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-282">isUnloadAfter</a></span>()</div>
 <div class="block">Whether chunks should be unloaded after being accessed</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -796,7 +796,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setUnloadAfter(boolean)">
 <h3>setUnloadAfter</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-290">setUnloadAfter</a></span><wbr><span class="parameters">(boolean&nbsp;unloadAfter)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-289">setUnloadAfter</a></span><wbr><span class="parameters">(boolean&nbsp;unloadAfter)</span></div>
 <div class="block">Set whether chunks should be unloaded after being accessed</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -807,7 +807,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getRegenRegion()">
 <h3>getRegenRegion</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-297">getRegenRegion</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-296">getRegenRegion</a></span>()</div>
 <div class="block">Get the <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link"><code>CuboidRegion</code></a> designated for direct regeneration</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -818,7 +818,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setRegenRegion(com.sk89q.worldedit.regions.CuboidRegion)">
 <h3>setRegenRegion</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-305">setRegenRegion</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a>&nbsp;regenRegion)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-304">setRegenRegion</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link">CuboidRegion</a>&nbsp;regenRegion)</span></div>
 <div class="block">Set the <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/regions/CuboidRegion.html" title="class or interface in com.sk89q.worldedit.regions" class="external-link"><code>CuboidRegion</code></a> designated for direct regeneration</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -829,7 +829,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="regenChunk(int,int)">
 <h3>regenChunk</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-313">regenChunk</a></span><wbr><span class="parameters">(int&nbsp;x,
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-312">regenChunk</a></span><wbr><span class="parameters">(int&nbsp;x,
  int&nbsp;z)</span></div>
 <div class="block">Set a specific chunk at the chunk coordinates XZ to be regenerated.</div>
 <dl class="notes">
@@ -842,7 +842,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getWorld()">
 <h3>getWorld</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/World.html" title="class or interface in com.sk89q.worldedit.world" class="external-link">World</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-320">getWorld</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/World.html" title="class or interface in com.sk89q.worldedit.world" class="external-link">World</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-319">getWorld</a></span>()</div>
 <div class="block">Get the world the queue is writing to</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -853,14 +853,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setModified()">
 <h3>setModified</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-326">setModified</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-325">setModified</a></span>()</div>
 <div class="block">Set the queue as having been modified now</div>
 </section>
 </li>
 <li>
 <section class="detail" id="enqueue()">
 <h3>enqueue</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-336">enqueue</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-335">enqueue</a></span>()</div>
 <div class="block">Enqueue the queue to start it</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -873,21 +873,21 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="start()">
 <h3>start</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-348">start</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-347">start</a></span>()</div>
 <div class="block">Start the queue</div>
 </section>
 </li>
 <li>
 <section class="detail" id="cancel()">
 <h3>cancel</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-353">cancel</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-352">cancel</a></span>()</div>
 <div class="block">Cancel the queue</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCompleteTask()">
 <h3>getCompleteTask</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-360">getCompleteTask</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-359">getCompleteTask</a></span>()</div>
 <div class="block">Get the task to be run when all chunks have been accessed</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -898,7 +898,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setCompleteTask(java.lang.Runnable)">
 <h3>setCompleteTask</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-367">setCompleteTask</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-366">setCompleteTask</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;whenDone)</span></div>
 <div class="block">Set the task to be run when all chunks have been accessed</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -909,7 +909,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getChunkConsumer()">
 <h3>getChunkConsumer</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-374">getChunkConsumer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-373">getChunkConsumer</a></span>()</div>
 <div class="block">Return the chunk consumer set to the queue or null if one is not set</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -920,7 +920,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setChunkConsumer(java.util.function.Consumer)">
 <h3>setChunkConsumer</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-382">setChunkConsumer</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;&nbsp;consumer)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-381">setChunkConsumer</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/math/BlockVector2.html" title="class or interface in com.sk89q.worldedit.math" class="external-link">BlockVector2</a>&gt;&nbsp;consumer)</span></div>
 <div class="block">Set the Consumer that will be executed on each chunk in queue</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -931,21 +931,21 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="addProgressSubscriber(com.plotsquared.core.queue.subscriber.ProgressSubscriber)">
 <h3>addProgressSubscriber</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-387">addProgressSubscriber</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="subscriber/ProgressSubscriber.html" title="interface in com.plotsquared.core.queue.subscriber">ProgressSubscriber</a>&nbsp;progressSubscriber)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-386">addProgressSubscriber</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="subscriber/ProgressSubscriber.html" title="interface in com.plotsquared.core.queue.subscriber">ProgressSubscriber</a>&nbsp;progressSubscriber)</span></div>
 <div class="block">Add a <a href="subscriber/ProgressSubscriber.html" title="interface in com.plotsquared.core.queue.subscriber"><code>ProgressSubscriber</code></a> to the Queue to subscribe to the relevant Chunk Processor</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLightingMode()">
 <h3>getLightingMode</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="LightingMode.html" title="enum class in com.plotsquared.core.queue">LightingMode</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-392">getLightingMode</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="LightingMode.html" title="enum class in com.plotsquared.core.queue">LightingMode</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-391">getLightingMode</a></span>()</div>
 <div class="block">Get the <a href="LightingMode.html" title="enum class in com.plotsquared.core.queue"><code>LightingMode</code></a> to be used when setting blocks</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setLightingMode(com.plotsquared.core.queue.LightingMode)">
 <h3>setLightingMode</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-400">setLightingMode</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="LightingMode.html" title="enum class in com.plotsquared.core.queue">LightingMode</a>&nbsp;mode)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-399">setLightingMode</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="LightingMode.html" title="enum class in com.plotsquared.core.queue">LightingMode</a>&nbsp;mode)</span></div>
 <div class="block">Set the <a href="LightingMode.html" title="enum class in com.plotsquared.core.queue"><code>LightingMode</code></a> to be used when setting blocks</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -956,7 +956,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSideEffectSet()">
 <h3>getSideEffectSet</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/util/SideEffectSet.html" title="class or interface in com.sk89q.worldedit.util" class="external-link">SideEffectSet</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-407">getSideEffectSet</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/util/SideEffectSet.html" title="class or interface in com.sk89q.worldedit.util" class="external-link">SideEffectSet</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-406">getSideEffectSet</a></span>()</div>
 <div class="block">Get the overriding <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/util/SideEffectSet.html" title="class or interface in com.sk89q.worldedit.util" class="external-link"><code>SideEffectSet</code></a> to be used by the queue if it exists, else null</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -967,7 +967,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setSideEffectSet(com.sk89q.worldedit.util.SideEffectSet)">
 <h3>setSideEffectSet</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-414">setSideEffectSet</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/util/SideEffectSet.html" title="class or interface in com.sk89q.worldedit.util" class="external-link">SideEffectSet</a>&nbsp;sideEffectSet)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-413">setSideEffectSet</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/util/SideEffectSet.html" title="class or interface in com.sk89q.worldedit.util" class="external-link">SideEffectSet</a>&nbsp;sideEffectSet)</span></div>
 <div class="block">Set the overriding <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/util/SideEffectSet.html" title="class or interface in com.sk89q.worldedit.util" class="external-link"><code>SideEffectSet</code></a> to be used by the queue. Null to use default side effects.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -978,7 +978,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setCuboid(com.plotsquared.core.location.Location,com.plotsquared.core.location.Location,com.sk89q.worldedit.world.block.BlockState)">
 <h3>setCuboid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-423">setCuboid</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos1,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-422">setCuboid</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos1,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos2,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/block/BlockState.html" title="class or interface in com.sk89q.worldedit.world.block" class="external-link">BlockState</a>&nbsp;block)</span></div>
 <div class="block">Fill a cuboid between two positions with a BlockState</div>
@@ -993,7 +993,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setCuboid(com.plotsquared.core.location.Location,com.plotsquared.core.location.Location,com.sk89q.worldedit.function.pattern.Pattern)">
 <h3>setCuboid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-446">setCuboid</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos1,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-445">setCuboid</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos1,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos2,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/function/pattern/Pattern.html" title="class or interface in com.sk89q.worldedit.function.pattern" class="external-link">Pattern</a>&nbsp;blocks)</span></div>
 <div class="block">Fill a cuboid between two positions with a Pattern</div>
@@ -1008,7 +1008,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setBiomeCuboid(com.plotsquared.core.location.Location,com.plotsquared.core.location.Location,com.sk89q.worldedit.world.biome.BiomeType)">
 <h3>setBiomeCuboid</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-469">setBiomeCuboid</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos1,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-468">setBiomeCuboid</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos1,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../location/Location.html" title="class in com.plotsquared.core.location">Location</a>&nbsp;pos2,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.enginehub.org/javadoc/com.sk89q.worldedit/worldedit-core/7.2.13/com/sk89q/worldedit/world/biome/BiomeType.html" title="class or interface in com.sk89q.worldedit.world.biome" class="external-link">BiomeType</a>&nbsp;biome)</span></div>
 <div class="block">Fill a cuboid between two positions with a BiomeType</div>
@@ -1023,28 +1023,28 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getMinY()">
 <h3>getMinY</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-488">getMinY</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-487">getMinY</a></span>()</div>
 <div class="block">Get the min Y limit associated with the queue</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMaxY()">
 <h3>getMaxY</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-495">getMaxY</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-494">getMaxY</a></span>()</div>
 <div class="block">Get the max Y limit associated with the queue</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMinLayer()">
 <h3>getMinLayer</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-502">getMinLayer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-501">getMinLayer</a></span>()</div>
 <div class="block">Get the min chunk layer associated with the queue. Usually 0 or -4;</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getMaxLayer()">
 <h3>getMaxLayer</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-509">getMaxLayer</a></span>()</div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/core/queue/QueueCoordinator.html#line-508">getMaxLayer</a></span>()</div>
 <div class="block">Get the max chunk layer associated with the queue. Usually 15 or 19</div>
 </section>
 </li>
@@ -1057,7 +1057,7 @@ loadScripts(document, 'script');</script>
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+<p class="legal-copy"><small>Javadocs generated for<a href="https://github.com/IntellectualSites/PlotSquared/" rel="noopener nofollow noreferrer" target="_blank"> PlotSquared</a> |<a href="https://intellectualsites.github.io/plotsquared-documentation/" rel="noopener nofollow noreferrer"> Documentation </a> |Visit us on our <a href="https://discord.gg/intellectualsites" rel="noopener nofollow noreferrer"> Discord server</a> :)</small></p>
 </footer>
 </div>
 </div>

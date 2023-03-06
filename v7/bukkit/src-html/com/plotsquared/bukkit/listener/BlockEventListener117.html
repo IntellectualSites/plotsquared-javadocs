@@ -105,101 +105,105 @@
 <span class="source-line-no">092</span><span id="line-92">        }</span>
 <span class="source-line-no">093</span><span id="line-93"></span>
 <span class="source-line-no">094</span><span id="line-94">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">095</span><span id="line-95">        if (plot == null &amp;&amp; !PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, MiscInteractFlag.class, true) || plot != null &amp;&amp; !plot.getFlag(</span>
-<span class="source-line-no">096</span><span id="line-96">                MiscInteractFlag.class)) {</span>
-<span class="source-line-no">097</span><span id="line-97">            if (plotPlayer != null) {</span>
-<span class="source-line-no">098</span><span id="line-98">                if (plot != null) {</span>
-<span class="source-line-no">099</span><span id="line-99">                    if (!plot.isAdded(plotPlayer.getUUID())) {</span>
-<span class="source-line-no">100</span><span id="line-100">                        plot.debug(plotPlayer.getName() + " couldn't trigger sculk sensors because misc-interact = false");</span>
-<span class="source-line-no">101</span><span id="line-101">                        event.setCancelled(true);</span>
-<span class="source-line-no">102</span><span id="line-102">                    }</span>
-<span class="source-line-no">103</span><span id="line-103">                }</span>
-<span class="source-line-no">104</span><span id="line-104">                return;</span>
-<span class="source-line-no">105</span><span id="line-105">            }</span>
-<span class="source-line-no">106</span><span id="line-106">            if (entity instanceof Item item) {</span>
-<span class="source-line-no">107</span><span id="line-107">                UUID itemThrower = item.getThrower();</span>
-<span class="source-line-no">108</span><span id="line-108">                if (plot != null) {</span>
-<span class="source-line-no">109</span><span id="line-109">                    if (itemThrower == null &amp;&amp; (itemThrower = item.getOwner()) == null) {</span>
-<span class="source-line-no">110</span><span id="line-110">                        plot.debug(</span>
-<span class="source-line-no">111</span><span id="line-111">                                "A thrown item couldn't trigger sculk sensors because misc-interact = false and the item's owner could not be resolved.");</span>
-<span class="source-line-no">112</span><span id="line-112">                        event.setCancelled(true);</span>
-<span class="source-line-no">113</span><span id="line-113">                        return;</span>
-<span class="source-line-no">114</span><span id="line-114">                    }</span>
-<span class="source-line-no">115</span><span id="line-115">                    if (!plot.isAdded(itemThrower)) {</span>
-<span class="source-line-no">116</span><span id="line-116">                        if (!plot.isAdded(itemThrower)) {</span>
-<span class="source-line-no">117</span><span id="line-117">                            plot.debug("A thrown item couldn't trigger sculk sensors because misc-interact = false");</span>
-<span class="source-line-no">118</span><span id="line-118">                            event.setCancelled(true);</span>
-<span class="source-line-no">119</span><span id="line-119">                        }</span>
-<span class="source-line-no">120</span><span id="line-120">                    }</span>
-<span class="source-line-no">121</span><span id="line-121">                }</span>
-<span class="source-line-no">122</span><span id="line-122">            }</span>
-<span class="source-line-no">123</span><span id="line-123">        }</span>
-<span class="source-line-no">124</span><span id="line-124">    }</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">127</span><span id="line-127">    public void onBlockFertilize(BlockFertilizeEvent event) {</span>
-<span class="source-line-no">128</span><span id="line-128">        Block block = event.getBlock();</span>
-<span class="source-line-no">129</span><span id="line-129">        List&lt;org.bukkit.block.BlockState&gt; blocks = event.getBlocks();</span>
-<span class="source-line-no">130</span><span id="line-130">        Location location = BukkitUtil.adapt(blocks.get(0).getLocation());</span>
-<span class="source-line-no">131</span><span id="line-131"></span>
-<span class="source-line-no">132</span><span id="line-132">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">133</span><span id="line-133">        if (area == null) {</span>
-<span class="source-line-no">134</span><span id="line-134">            for (int i = blocks.size() - 1; i &gt;= 0; i--) {</span>
-<span class="source-line-no">135</span><span id="line-135">                Location blockLocation = BukkitUtil.adapt(blocks.get(i).getLocation());</span>
-<span class="source-line-no">136</span><span id="line-136">                blockLocation = BukkitUtil.adapt(blocks.get(i).getLocation());</span>
-<span class="source-line-no">137</span><span id="line-137">                if (blockLocation.isPlotArea()) {</span>
-<span class="source-line-no">138</span><span id="line-138">                    blocks.remove(i);</span>
-<span class="source-line-no">139</span><span id="line-139">                }</span>
-<span class="source-line-no">140</span><span id="line-140">            }</span>
-<span class="source-line-no">141</span><span id="line-141">        } else {</span>
-<span class="source-line-no">142</span><span id="line-142">            Plot origin = area.getOwnedPlot(location);</span>
-<span class="source-line-no">143</span><span id="line-143">            if (origin == null) {</span>
-<span class="source-line-no">144</span><span id="line-144">                event.setCancelled(true);</span>
-<span class="source-line-no">145</span><span id="line-145">                return;</span>
-<span class="source-line-no">146</span><span id="line-146">            }</span>
-<span class="source-line-no">147</span><span id="line-147">            for (int i = blocks.size() - 1; i &gt;= 0; i--) {</span>
-<span class="source-line-no">148</span><span id="line-148">                Location blockLocation = BukkitUtil.adapt(blocks.get(i).getLocation());</span>
-<span class="source-line-no">149</span><span id="line-149">                if (!area.contains(blockLocation.getX(), blockLocation.getZ())) {</span>
-<span class="source-line-no">150</span><span id="line-150">                    blocks.remove(i);</span>
-<span class="source-line-no">151</span><span id="line-151">                    continue;</span>
-<span class="source-line-no">152</span><span id="line-152">                }</span>
-<span class="source-line-no">153</span><span id="line-153">                Plot plot = area.getOwnedPlot(blockLocation);</span>
-<span class="source-line-no">154</span><span id="line-154">                if (!Objects.equals(plot, origin)) {</span>
-<span class="source-line-no">155</span><span id="line-155">                    event.getBlocks().remove(i);</span>
-<span class="source-line-no">156</span><span id="line-156">                    continue;</span>
-<span class="source-line-no">157</span><span id="line-157">                }</span>
-<span class="source-line-no">158</span><span id="line-158">                if (!area.buildRangeContainsY(location.getY())) {</span>
+<span class="source-line-no">095</span><span id="line-95">        if (plot == null &amp;&amp; !PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(</span>
+<span class="source-line-no">096</span><span id="line-96">                area,</span>
+<span class="source-line-no">097</span><span id="line-97">                MiscInteractFlag.class,</span>
+<span class="source-line-no">098</span><span id="line-98">                true</span>
+<span class="source-line-no">099</span><span id="line-99">        ) || plot != null &amp;&amp; !plot.getFlag(</span>
+<span class="source-line-no">100</span><span id="line-100">                MiscInteractFlag.class)) {</span>
+<span class="source-line-no">101</span><span id="line-101">            if (plotPlayer != null) {</span>
+<span class="source-line-no">102</span><span id="line-102">                if (plot != null) {</span>
+<span class="source-line-no">103</span><span id="line-103">                    if (!plot.isAdded(plotPlayer.getUUID())) {</span>
+<span class="source-line-no">104</span><span id="line-104">                        plot.debug(plotPlayer.getName() + " couldn't trigger sculk sensors because misc-interact = false");</span>
+<span class="source-line-no">105</span><span id="line-105">                        event.setCancelled(true);</span>
+<span class="source-line-no">106</span><span id="line-106">                    }</span>
+<span class="source-line-no">107</span><span id="line-107">                }</span>
+<span class="source-line-no">108</span><span id="line-108">                return;</span>
+<span class="source-line-no">109</span><span id="line-109">            }</span>
+<span class="source-line-no">110</span><span id="line-110">            if (entity instanceof Item item) {</span>
+<span class="source-line-no">111</span><span id="line-111">                UUID itemThrower = item.getThrower();</span>
+<span class="source-line-no">112</span><span id="line-112">                if (plot != null) {</span>
+<span class="source-line-no">113</span><span id="line-113">                    if (itemThrower == null &amp;&amp; (itemThrower = item.getOwner()) == null) {</span>
+<span class="source-line-no">114</span><span id="line-114">                        plot.debug(</span>
+<span class="source-line-no">115</span><span id="line-115">                                "A thrown item couldn't trigger sculk sensors because misc-interact = false and the item's owner could not be resolved.");</span>
+<span class="source-line-no">116</span><span id="line-116">                        event.setCancelled(true);</span>
+<span class="source-line-no">117</span><span id="line-117">                        return;</span>
+<span class="source-line-no">118</span><span id="line-118">                    }</span>
+<span class="source-line-no">119</span><span id="line-119">                    if (!plot.isAdded(itemThrower)) {</span>
+<span class="source-line-no">120</span><span id="line-120">                        if (!plot.isAdded(itemThrower)) {</span>
+<span class="source-line-no">121</span><span id="line-121">                            plot.debug("A thrown item couldn't trigger sculk sensors because misc-interact = false");</span>
+<span class="source-line-no">122</span><span id="line-122">                            event.setCancelled(true);</span>
+<span class="source-line-no">123</span><span id="line-123">                        }</span>
+<span class="source-line-no">124</span><span id="line-124">                    }</span>
+<span class="source-line-no">125</span><span id="line-125">                }</span>
+<span class="source-line-no">126</span><span id="line-126">            }</span>
+<span class="source-line-no">127</span><span id="line-127">        }</span>
+<span class="source-line-no">128</span><span id="line-128">    }</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">131</span><span id="line-131">    public void onBlockFertilize(BlockFertilizeEvent event) {</span>
+<span class="source-line-no">132</span><span id="line-132">        Block block = event.getBlock();</span>
+<span class="source-line-no">133</span><span id="line-133">        List&lt;org.bukkit.block.BlockState&gt; blocks = event.getBlocks();</span>
+<span class="source-line-no">134</span><span id="line-134">        Location location = BukkitUtil.adapt(blocks.get(0).getLocation());</span>
+<span class="source-line-no">135</span><span id="line-135"></span>
+<span class="source-line-no">136</span><span id="line-136">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">137</span><span id="line-137">        if (area == null) {</span>
+<span class="source-line-no">138</span><span id="line-138">            for (int i = blocks.size() - 1; i &gt;= 0; i--) {</span>
+<span class="source-line-no">139</span><span id="line-139">                Location blockLocation = BukkitUtil.adapt(blocks.get(i).getLocation());</span>
+<span class="source-line-no">140</span><span id="line-140">                blockLocation = BukkitUtil.adapt(blocks.get(i).getLocation());</span>
+<span class="source-line-no">141</span><span id="line-141">                if (blockLocation.isPlotArea()) {</span>
+<span class="source-line-no">142</span><span id="line-142">                    blocks.remove(i);</span>
+<span class="source-line-no">143</span><span id="line-143">                }</span>
+<span class="source-line-no">144</span><span id="line-144">            }</span>
+<span class="source-line-no">145</span><span id="line-145">        } else {</span>
+<span class="source-line-no">146</span><span id="line-146">            Plot origin = area.getOwnedPlot(location);</span>
+<span class="source-line-no">147</span><span id="line-147">            if (origin == null) {</span>
+<span class="source-line-no">148</span><span id="line-148">                event.setCancelled(true);</span>
+<span class="source-line-no">149</span><span id="line-149">                return;</span>
+<span class="source-line-no">150</span><span id="line-150">            }</span>
+<span class="source-line-no">151</span><span id="line-151">            for (int i = blocks.size() - 1; i &gt;= 0; i--) {</span>
+<span class="source-line-no">152</span><span id="line-152">                Location blockLocation = BukkitUtil.adapt(blocks.get(i).getLocation());</span>
+<span class="source-line-no">153</span><span id="line-153">                if (!area.contains(blockLocation.getX(), blockLocation.getZ())) {</span>
+<span class="source-line-no">154</span><span id="line-154">                    blocks.remove(i);</span>
+<span class="source-line-no">155</span><span id="line-155">                    continue;</span>
+<span class="source-line-no">156</span><span id="line-156">                }</span>
+<span class="source-line-no">157</span><span id="line-157">                Plot plot = area.getOwnedPlot(blockLocation);</span>
+<span class="source-line-no">158</span><span id="line-158">                if (!Objects.equals(plot, origin)) {</span>
 <span class="source-line-no">159</span><span id="line-159">                    event.getBlocks().remove(i);</span>
-<span class="source-line-no">160</span><span id="line-160">                }</span>
-<span class="source-line-no">161</span><span id="line-161">            }</span>
-<span class="source-line-no">162</span><span id="line-162">        }</span>
-<span class="source-line-no">163</span><span id="line-163">    }</span>
-<span class="source-line-no">164</span><span id="line-164"></span>
-<span class="source-line-no">165</span><span id="line-165">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">166</span><span id="line-166">    public void onBlockForm(BlockFormEvent event) {</span>
-<span class="source-line-no">167</span><span id="line-167">        Block block = event.getBlock();</span>
-<span class="source-line-no">168</span><span id="line-168">        Location location = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">169</span><span id="line-169">        if (location.isPlotRoad()) {</span>
-<span class="source-line-no">170</span><span id="line-170">            event.setCancelled(true);</span>
-<span class="source-line-no">171</span><span id="line-171">            return;</span>
-<span class="source-line-no">172</span><span id="line-172">        }</span>
-<span class="source-line-no">173</span><span id="line-173">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">174</span><span id="line-174">        if (area == null) {</span>
+<span class="source-line-no">160</span><span id="line-160">                    continue;</span>
+<span class="source-line-no">161</span><span id="line-161">                }</span>
+<span class="source-line-no">162</span><span id="line-162">                if (!area.buildRangeContainsY(location.getY())) {</span>
+<span class="source-line-no">163</span><span id="line-163">                    event.getBlocks().remove(i);</span>
+<span class="source-line-no">164</span><span id="line-164">                }</span>
+<span class="source-line-no">165</span><span id="line-165">            }</span>
+<span class="source-line-no">166</span><span id="line-166">        }</span>
+<span class="source-line-no">167</span><span id="line-167">    }</span>
+<span class="source-line-no">168</span><span id="line-168"></span>
+<span class="source-line-no">169</span><span id="line-169">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">170</span><span id="line-170">    public void onBlockForm(BlockFormEvent event) {</span>
+<span class="source-line-no">171</span><span id="line-171">        Block block = event.getBlock();</span>
+<span class="source-line-no">172</span><span id="line-172">        Location location = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">173</span><span id="line-173">        if (location.isPlotRoad()) {</span>
+<span class="source-line-no">174</span><span id="line-174">            event.setCancelled(true);</span>
 <span class="source-line-no">175</span><span id="line-175">            return;</span>
 <span class="source-line-no">176</span><span id="line-176">        }</span>
-<span class="source-line-no">177</span><span id="line-177">        Plot plot = area.getOwnedPlot(location);</span>
-<span class="source-line-no">178</span><span id="line-178">        if (plot == null) {</span>
+<span class="source-line-no">177</span><span id="line-177">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">178</span><span id="line-178">        if (area == null) {</span>
 <span class="source-line-no">179</span><span id="line-179">            return;</span>
 <span class="source-line-no">180</span><span id="line-180">        }</span>
-<span class="source-line-no">181</span><span id="line-181">        if (COPPER_OXIDIZING.contains(event.getNewState().getType())) {</span>
-<span class="source-line-no">182</span><span id="line-182">            if (!plot.getFlag(CopperOxideFlag.class)) {</span>
-<span class="source-line-no">183</span><span id="line-183">                plot.debug("Copper could not oxide because copper-oxide = false");</span>
-<span class="source-line-no">184</span><span id="line-184">                event.setCancelled(true);</span>
-<span class="source-line-no">185</span><span id="line-185">            }</span>
-<span class="source-line-no">186</span><span id="line-186">        }</span>
-<span class="source-line-no">187</span><span id="line-187">    }</span>
-<span class="source-line-no">188</span><span id="line-188"></span>
-<span class="source-line-no">189</span><span id="line-189">}</span>
+<span class="source-line-no">181</span><span id="line-181">        Plot plot = area.getOwnedPlot(location);</span>
+<span class="source-line-no">182</span><span id="line-182">        if (plot == null) {</span>
+<span class="source-line-no">183</span><span id="line-183">            return;</span>
+<span class="source-line-no">184</span><span id="line-184">        }</span>
+<span class="source-line-no">185</span><span id="line-185">        if (COPPER_OXIDIZING.contains(event.getNewState().getType())) {</span>
+<span class="source-line-no">186</span><span id="line-186">            if (!plot.getFlag(CopperOxideFlag.class)) {</span>
+<span class="source-line-no">187</span><span id="line-187">                plot.debug("Copper could not oxide because copper-oxide = false");</span>
+<span class="source-line-no">188</span><span id="line-188">                event.setCancelled(true);</span>
+<span class="source-line-no">189</span><span id="line-189">            }</span>
+<span class="source-line-no">190</span><span id="line-190">        }</span>
+<span class="source-line-no">191</span><span id="line-191">    }</span>
+<span class="source-line-no">192</span><span id="line-192"></span>
+<span class="source-line-no">193</span><span id="line-193">}</span>
 
 
 

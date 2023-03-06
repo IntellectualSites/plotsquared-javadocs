@@ -56,10 +56,10 @@
 <span class="source-line-no">043</span><span id="line-43">import com.plotsquared.core.plot.flag.implementations.ProjectilesFlag;</span>
 <span class="source-line-no">044</span><span id="line-44">import com.plotsquared.core.plot.flag.types.BooleanFlag;</span>
 <span class="source-line-no">045</span><span id="line-45">import com.plotsquared.core.plot.world.PlotAreaManager;</span>
-<span class="source-line-no">046</span><span id="line-46">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">047</span><span id="line-47">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">048</span><span id="line-48">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">049</span><span id="line-49">import com.plotsquared.core.util.PlotFlagUtil;</span>
+<span class="source-line-no">046</span><span id="line-46">import com.plotsquared.core.util.PlotFlagUtil;</span>
+<span class="source-line-no">047</span><span id="line-47">import net.kyori.adventure.text.Component;</span>
+<span class="source-line-no">048</span><span id="line-48">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">049</span><span id="line-49">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
 <span class="source-line-no">050</span><span id="line-50">import org.bukkit.Chunk;</span>
 <span class="source-line-no">051</span><span id="line-51">import org.bukkit.block.Block;</span>
 <span class="source-line-no">052</span><span id="line-52">import org.bukkit.block.TileState;</span>
@@ -452,14 +452,16 @@
 <span class="source-line-no">439</span><span id="line-439">        }</span>
 <span class="source-line-no">440</span><span id="line-440">    }</span>
 <span class="source-line-no">441</span><span id="line-441"></span>
-<span class="source-line-no">442</span><span id="line-442">    private boolean getBooleanFlagValue(@NonNull FlagContainer container,</span>
-<span class="source-line-no">443</span><span id="line-443">                                        @NonNull Class&lt;? extends BooleanFlag&lt;?&gt;&gt; flagClass,</span>
-<span class="source-line-no">444</span><span id="line-444">                                        boolean defaultValue) {</span>
-<span class="source-line-no">445</span><span id="line-445">        BooleanFlag&lt;?&gt; flag = container.getFlag(flagClass);</span>
-<span class="source-line-no">446</span><span id="line-446">        return flag == null ? defaultValue : flag.getValue();</span>
-<span class="source-line-no">447</span><span id="line-447">    }</span>
-<span class="source-line-no">448</span><span id="line-448"></span>
-<span class="source-line-no">449</span><span id="line-449">}</span>
+<span class="source-line-no">442</span><span id="line-442">    private boolean getBooleanFlagValue(</span>
+<span class="source-line-no">443</span><span id="line-443">            @NonNull FlagContainer container,</span>
+<span class="source-line-no">444</span><span id="line-444">            @NonNull Class&lt;? extends BooleanFlag&lt;?&gt;&gt; flagClass,</span>
+<span class="source-line-no">445</span><span id="line-445">            boolean defaultValue</span>
+<span class="source-line-no">446</span><span id="line-446">    ) {</span>
+<span class="source-line-no">447</span><span id="line-447">        BooleanFlag&lt;?&gt; flag = container.getFlag(flagClass);</span>
+<span class="source-line-no">448</span><span id="line-448">        return flag == null ? defaultValue : flag.getValue();</span>
+<span class="source-line-no">449</span><span id="line-449">    }</span>
+<span class="source-line-no">450</span><span id="line-450"></span>
+<span class="source-line-no">451</span><span id="line-451">}</span>
 
 
 

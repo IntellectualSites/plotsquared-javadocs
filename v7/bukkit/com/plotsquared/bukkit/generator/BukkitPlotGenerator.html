@@ -14,7 +14,6 @@
 <meta name="keywords" content="getPlotGenerator()">
 <meta name="keywords" content="getPlatformGenerator()">
 <meta name="keywords" content="getDefaultPopulators()">
-<meta name="keywords" content="generateNoise()">
 <meta name="keywords" content="generateSurface()">
 <meta name="keywords" content="generateBedrock()">
 <meta name="keywords" content="generateCaves()">
@@ -201,71 +200,62 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#generateNoise(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)" class="member-name-link">generateNoise</a><wbr>(@NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#generateSurface(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)" class="member-name-link">generateSurface</a><wbr>(@NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
  int&nbsp;chunkX,
  int&nbsp;chunkZ,
  @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.ChunkData.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator.ChunkData</a>&nbsp;chunkData)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#generateSurface(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)" class="member-name-link">generateSurface</a><wbr>(@NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
- int&nbsp;chunkX,
- int&nbsp;chunkZ,
- @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.ChunkData.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator.ChunkData</a>&nbsp;chunkData)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseHeight(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.HeightMap)" class="member-name-link">getBaseHeight</a><wbr>(@NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBaseHeight(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.HeightMap)" class="member-name-link">getBaseHeight</a><wbr>(@NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
  int&nbsp;x,
  int&nbsp;z,
  @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/HeightMap.html" title="class or interface in org.bukkit" class="external-link">HeightMap</a>&nbsp;heightMap)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/BiomeProvider.html" title="class or interface in org.bukkit.generator" class="external-link">BiomeProvider</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultBiomeProvider(org.bukkit.generator.WorldInfo)" class="member-name-link">getDefaultBiomeProvider</a><wbr>(@NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/BlockPopulator.html" title="class or interface in org.bukkit.generator" class="external-link">BlockPopulator</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultPopulators(org.bukkit.World)" class="member-name-link">getDefaultPopulators</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>@Nullable <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/BiomeProvider.html" title="class or interface in org.bukkit.generator" class="external-link">BiomeProvider</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultBiomeProvider(org.bukkit.generator.WorldInfo)" class="member-name-link">getDefaultBiomeProvider</a><wbr>(@NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevelName()" class="member-name-link">getLevelName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlatformGenerator()" class="member-name-link">getPlatformGenerator</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/generator/IndependentPlotGenerator.html" title="class or interface in com.plotsquared.core.generator" class="external-link">IndependentPlotGenerator</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlotGenerator()" class="member-name-link">getPlotGenerator</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFull()" class="member-name-link">isFull</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isParallelCapable()" class="member-name-link">isParallelCapable</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateCaves()" class="member-name-link">shouldGenerateCaves</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateDecorations()" class="member-name-link">shouldGenerateDecorations</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateMobs()" class="member-name-link">shouldGenerateMobs</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateStructures()" class="member-name-link">shouldGenerateStructures</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/BlockPopulator.html" title="class or interface in org.bukkit.generator" class="external-link">BlockPopulator</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDefaultPopulators(org.bukkit.World)" class="member-name-link">getDefaultPopulators</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLevelName()" class="member-name-link">getLevelName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlatformGenerator()" class="member-name-link">getPlatformGenerator</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/generator/IndependentPlotGenerator.html" title="class or interface in com.plotsquared.core.generator" class="external-link">IndependentPlotGenerator</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlotGenerator()" class="member-name-link">getPlotGenerator</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFull()" class="member-name-link">isFull</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isParallelCapable()" class="member-name-link">isParallelCapable</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateCaves()" class="member-name-link">shouldGenerateCaves</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateDecorations()" class="member-name-link">shouldGenerateDecorations</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateMobs()" class="member-name-link">shouldGenerateMobs</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#shouldGenerateStructures()" class="member-name-link">shouldGenerateStructures</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.bukkit.generator.ChunkGenerator">Methods inherited from class&nbsp;org.bukkit.generator.<a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></h3>
-<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#createChunkData(org.bukkit.World)" title="class or interface in org.bukkit.generator" class="external-link">createChunkData</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#createVanillaChunkData(org.bukkit.World,int,int)" title="class or interface in org.bukkit.generator" class="external-link">createVanillaChunkData</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#getFixedSpawnLocation(org.bukkit.World,java.util.Random)" title="class or interface in org.bukkit.generator" class="external-link">getFixedSpawnLocation</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateBedrock()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateBedrock</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateCaves(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateCaves</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateDecorations(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateDecorations</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateMobs(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateMobs</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateNoise()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateNoise</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateNoise(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateNoise</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateStructures(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateStructures</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateSurface()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateSurface</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateSurface(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateSurface</a></code></div>
+<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#createChunkData(org.bukkit.World)" title="class or interface in org.bukkit.generator" class="external-link">createChunkData</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#createVanillaChunkData(org.bukkit.World,int,int)" title="class or interface in org.bukkit.generator" class="external-link">createVanillaChunkData</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#generateNoise(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)" title="class or interface in org.bukkit.generator" class="external-link">generateNoise</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#getFixedSpawnLocation(org.bukkit.World,java.util.Random)" title="class or interface in org.bukkit.generator" class="external-link">getFixedSpawnLocation</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateBedrock()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateBedrock</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateCaves(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateCaves</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateDecorations(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateDecorations</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateMobs(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateMobs</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateNoise()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateNoise</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateNoise(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateNoise</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateStructures(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateStructures</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateSurface()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateSurface</a>, <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateSurface(org.bukkit.generator.WorldInfo,java.util.Random,int,int)" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateSurface</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -377,32 +367,9 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 </section>
 </li>
 <li>
-<section class="detail" id="generateNoise(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)">
-<h3>generateNoise</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#forRemoval()" title="class or interface in java.lang" class="external-link">forRemoval</a>=true,
-            <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="6.11.0")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-193">generateNoise</a></span><wbr><span class="parameters">(@NotNull
- @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
- @NotNull
- @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
- int&nbsp;chunkX,
- int&nbsp;chunkZ,
- @NotNull
- @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.ChunkData.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator.ChunkData</a>&nbsp;chunkData)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
-<div class="block">The entire method is deprecated, but kept for compatibility with versions lower than or equal to 1.16.2.
- The method will be removed in future versions, because WorldEdit and FastAsyncWorldEdit only support the latest point
- release.</div>
-<dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#generateNoise(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)" title="class or interface in org.bukkit.generator" class="external-link">generateNoise</a></code>&nbsp;in class&nbsp;<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="generateSurface(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)">
 <h3>generateSurface</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-223">generateSurface</a></span><wbr><span class="parameters">(@NotNull
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-188">generateSurface</a></span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
  @NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
@@ -419,7 +386,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="generateBedrock(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)">
 <h3>generateBedrock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-236">generateBedrock</a></span><wbr><span class="parameters">(@NotNull
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-201">generateBedrock</a></span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
  @NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
@@ -436,7 +403,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="generateCaves(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.ChunkData)">
 <h3>generateCaves</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-249">generateCaves</a></span><wbr><span class="parameters">(@NotNull
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-214">generateCaves</a></span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
  @NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
@@ -454,7 +421,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <section class="detail" id="getDefaultBiomeProvider(org.bukkit.generator.WorldInfo)">
 <h3>getDefaultBiomeProvider</h3>
 <div class="member-signature"><span class="annotations">@Nullable
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/BiomeProvider.html" title="class or interface in org.bukkit.generator" class="external-link">BiomeProvider</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-262">getDefaultBiomeProvider</a></span><wbr><span class="parameters">(@NotNull
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">@Nullable <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/BiomeProvider.html" title="class or interface in org.bukkit.generator" class="external-link">BiomeProvider</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-227">getDefaultBiomeProvider</a></span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
@@ -465,7 +432,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getBaseHeight(org.bukkit.generator.WorldInfo,java.util.Random,int,int,org.bukkit.HeightMap)">
 <h3>getBaseHeight</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-270">getBaseHeight</a></span><wbr><span class="parameters">(@NotNull
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-235">getBaseHeight</a></span><wbr><span class="parameters">(@NotNull
  @NotNull <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/WorldInfo.html" title="class or interface in org.bukkit.generator" class="external-link">WorldInfo</a>&nbsp;worldInfo,
  @NotNull
  @NotNull <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
@@ -483,7 +450,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <section class="detail" id="generateChunkData(org.bukkit.World,java.util.Random,int,int,org.bukkit.generator.ChunkGenerator.BiomeGrid)">
 <h3>generateChunkData</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html#since()" title="class or interface in java.lang" class="external-link">since</a>="TODO")
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.ChunkData.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator.ChunkData</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-286">generateChunkData</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world,
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.ChunkData.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator.ChunkData</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-251">generateChunkData</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Random.html" title="class or interface in java.util" class="external-link">Random</a>&nbsp;random,
  int&nbsp;x,
  int&nbsp;z,
@@ -498,7 +465,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="canSpawn(org.bukkit.World,int,int)">
 <h3>canSpawn</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-359">canSpawn</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-324">canSpawn</a></span><wbr><span class="parameters">(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="https://jd.papermc.io/paper/1.19/org/bukkit/World.html" title="class or interface in org.bukkit" class="external-link">World</a>&nbsp;world,
  int&nbsp;x,
  int&nbsp;z)</span></div>
 <dl class="notes">
@@ -510,7 +477,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="shouldGenerateCaves()">
 <h3>shouldGenerateCaves</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-364">shouldGenerateCaves</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-329">shouldGenerateCaves</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateCaves()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateCaves</a></code>&nbsp;in class&nbsp;<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></dd>
@@ -520,7 +487,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="shouldGenerateDecorations()">
 <h3>shouldGenerateDecorations</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-368">shouldGenerateDecorations</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-333">shouldGenerateDecorations</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateDecorations()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateDecorations</a></code>&nbsp;in class&nbsp;<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></dd>
@@ -530,7 +497,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="isParallelCapable()">
 <h3>isParallelCapable</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-372">isParallelCapable</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-337">isParallelCapable</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#isParallelCapable()" title="class or interface in org.bukkit.generator" class="external-link">isParallelCapable</a></code>&nbsp;in class&nbsp;<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></dd>
@@ -540,7 +507,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="shouldGenerateMobs()">
 <h3>shouldGenerateMobs</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-376">shouldGenerateMobs</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-341">shouldGenerateMobs</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateMobs()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateMobs</a></code>&nbsp;in class&nbsp;<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></dd>
@@ -550,7 +517,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="shouldGenerateStructures()">
 <h3>shouldGenerateStructures</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-380">shouldGenerateStructures</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-345">shouldGenerateStructures</a></span>()</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html#shouldGenerateStructures()" title="class or interface in org.bukkit.generator" class="external-link">shouldGenerateStructures</a></code>&nbsp;in class&nbsp;<code><a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a></code></dd>
@@ -560,7 +527,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="toString()">
 <h3>toString</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-384">toString</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-349">toString</a></span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/generator/GeneratorWrapper.html#toString()" title="class or interface in com.plotsquared.core.generator" class="external-link">toString</a></code>&nbsp;in interface&nbsp;<code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/generator/GeneratorWrapper.html" title="class or interface in com.plotsquared.core.generator" class="external-link">GeneratorWrapper</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a>&gt;</code></dd>
@@ -572,7 +539,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="equals(java.lang.Object)">
 <h3>equals</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-396">equals</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-361">equals</a></span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;obj)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/generator/GeneratorWrapper.html#equals(java.lang.Object)" title="class or interface in com.plotsquared.core.generator" class="external-link">equals</a></code>&nbsp;in interface&nbsp;<code><a href="https://intellectualsites.github.io/plotsquared-javadocs/core/com/plotsquared/core/generator/GeneratorWrapper.html" title="class or interface in com.plotsquared.core.generator" class="external-link">GeneratorWrapper</a>&lt;<a href="https://jd.papermc.io/paper/1.19/org/bukkit/generator/ChunkGenerator.html" title="class or interface in org.bukkit.generator" class="external-link">ChunkGenerator</a>&gt;</code></dd>
@@ -584,7 +551,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 <li>
 <section class="detail" id="getLevelName()">
 <h3>getLevelName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-404">getLevelName</a></span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name"><a href="../../../../src-html/com/plotsquared/bukkit/generator/BukkitPlotGenerator.html#line-369">getLevelName</a></span>()</div>
 </section>
 </li>
 </ul>
@@ -596,7 +563,7 @@ implements <a href="https://intellectualsites.github.io/plotsquared-javadocs/cor
 </main>
 <footer role="contentinfo">
 <hr>
-<p class="legal-copy"><small>Javadocs generated for<a rel="noopener nofollow noreferrer" href="https://github.com/IntellectualSites/PlotSquared/" target="_blank"> PlotSquared</a> |<a rel="noopener nofollow noreferrer" href="https://intellectualsites.github.io/plotsquared-documentation/"> Documentation </a> |Visit us on our <a rel="noopener nofollow noreferrer" href="https://discord.gg/intellectualsites"> Discord server</a> :)</small></p>
+<p class="legal-copy"><small>Javadocs generated for<a href="https://github.com/IntellectualSites/PlotSquared/" rel="noopener nofollow noreferrer" target="_blank"> PlotSquared</a> |<a href="https://intellectualsites.github.io/plotsquared-documentation/" rel="noopener nofollow noreferrer"> Documentation </a> |Visit us on our <a href="https://discord.gg/intellectualsites" rel="noopener nofollow noreferrer"> Discord server</a> :)</small></p>
 </footer>
 </div>
 </div>

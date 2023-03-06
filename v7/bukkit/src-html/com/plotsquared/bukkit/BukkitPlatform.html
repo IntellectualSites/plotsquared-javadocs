@@ -62,8 +62,8 @@
 <span class="source-line-no">049</span><span id="line-49">import com.plotsquared.bukkit.util.BukkitUtil;</span>
 <span class="source-line-no">050</span><span id="line-50">import com.plotsquared.bukkit.util.BukkitWorld;</span>
 <span class="source-line-no">051</span><span id="line-51">import com.plotsquared.bukkit.util.SetGenCB;</span>
-<span class="source-line-no">052</span><span id="line-52">import com.plotsquared.bukkit.util.UpdateUtility;</span>
-<span class="source-line-no">053</span><span id="line-53">import com.plotsquared.bukkit.util.TranslationUpdateManager;</span>
+<span class="source-line-no">052</span><span id="line-52">import com.plotsquared.bukkit.util.TranslationUpdateManager;</span>
+<span class="source-line-no">053</span><span id="line-53">import com.plotsquared.bukkit.util.UpdateUtility;</span>
 <span class="source-line-no">054</span><span id="line-54">import com.plotsquared.bukkit.util.task.BukkitTaskManager;</span>
 <span class="source-line-no">055</span><span id="line-55">import com.plotsquared.bukkit.util.task.PaperTimeConverter;</span>
 <span class="source-line-no">056</span><span id="line-56">import com.plotsquared.bukkit.util.task.SpigotTimeConverter;</span>
@@ -379,7 +379,7 @@
 <span class="source-line-no">366</span><span id="line-366">            getServer().getPluginManager().registerEvents(injector().getInstance(ServerListener.class), this);</span>
 <span class="source-line-no">367</span><span id="line-367">            getServer().getPluginManager().registerEvents(injector().getInstance(EntitySpawnListener.class), this);</span>
 <span class="source-line-no">368</span><span id="line-368">            if (PaperLib.isPaper() &amp;&amp; Settings.Paper_Components.PAPER_LISTENERS) {</span>
-<span class="source-line-no">369</span><span id="line-369">                    getServer().getPluginManager().registerEvents(injector().getInstance(PaperListener.class), this);</span>
+<span class="source-line-no">369</span><span id="line-369">                getServer().getPluginManager().registerEvents(injector().getInstance(PaperListener.class), this);</span>
 <span class="source-line-no">370</span><span id="line-370">            } else {</span>
 <span class="source-line-no">371</span><span id="line-371">                getServer().getPluginManager().registerEvents(injector().getInstance(SpigotListener.class), this);</span>
 <span class="source-line-no">372</span><span id="line-372">            }</span>
@@ -1198,93 +1198,101 @@
 <span class="source-line-no">1185</span><span id="line-1185">    public @NonNull String worldEditImplementations() {</span>
 <span class="source-line-no">1186</span><span id="line-1186">        StringBuilder msg = new StringBuilder();</span>
 <span class="source-line-no">1187</span><span id="line-1187">        if (Bukkit.getPluginManager().getPlugin("FastAsyncWorldEdit") != null) {</span>
-<span class="source-line-no">1188</span><span id="line-1188">            msg.append("FastAsyncWorldEdit: ").append(Bukkit.getPluginManager().getPlugin("FastAsyncWorldEdit").getDescription().getVersion());</span>
-<span class="source-line-no">1189</span><span id="line-1189">        } else if (Bukkit.getPluginManager().getPlugin("AsyncWorldEdit") != null) {</span>
-<span class="source-line-no">1190</span><span id="line-1190">            msg.append("AsyncWorldEdit: ").append(Bukkit.getPluginManager().getPlugin("AsyncWorldEdit").getDescription().getVersion()).append("\n");</span>
-<span class="source-line-no">1191</span><span id="line-1191">            msg.append("WorldEdit: ").append(Bukkit.getPluginManager().getPlugin("WorldEdit").getDescription().getVersion());</span>
-<span class="source-line-no">1192</span><span id="line-1192">        } else {</span>
-<span class="source-line-no">1193</span><span id="line-1193">            msg.append("WorldEdit: ").append(Bukkit.getPluginManager().getPlugin("WorldEdit").getDescription().getVersion());</span>
-<span class="source-line-no">1194</span><span id="line-1194">        }</span>
-<span class="source-line-no">1195</span><span id="line-1195">        return msg.toString();</span>
-<span class="source-line-no">1196</span><span id="line-1196">    }</span>
-<span class="source-line-no">1197</span><span id="line-1197"></span>
-<span class="source-line-no">1198</span><span id="line-1198">    @Override</span>
-<span class="source-line-no">1199</span><span id="line-1199">    public com.plotsquared.core.location.@NonNull World&lt;?&gt; getPlatformWorld(final @NonNull String worldName) {</span>
-<span class="source-line-no">1200</span><span id="line-1200">        return BukkitWorld.of(worldName);</span>
-<span class="source-line-no">1201</span><span id="line-1201">    }</span>
-<span class="source-line-no">1202</span><span id="line-1202"></span>
-<span class="source-line-no">1203</span><span id="line-1203">    @Override</span>
-<span class="source-line-no">1204</span><span id="line-1204">    public @NonNull Audience consoleAudience() {</span>
-<span class="source-line-no">1205</span><span id="line-1205">        return BukkitUtil.BUKKIT_AUDIENCES.console();</span>
-<span class="source-line-no">1206</span><span id="line-1206">    }</span>
-<span class="source-line-no">1207</span><span id="line-1207"></span>
-<span class="source-line-no">1208</span><span id="line-1208">    @Override</span>
-<span class="source-line-no">1209</span><span id="line-1209">    public @NonNull String pluginName() {</span>
-<span class="source-line-no">1210</span><span id="line-1210">        return this.pluginName;</span>
-<span class="source-line-no">1211</span><span id="line-1211">    }</span>
-<span class="source-line-no">1212</span><span id="line-1212"></span>
-<span class="source-line-no">1213</span><span id="line-1213">    public SingleWorldListener getSingleWorldListener() {</span>
-<span class="source-line-no">1214</span><span id="line-1214">        return this.singleWorldListener;</span>
-<span class="source-line-no">1215</span><span id="line-1215">    }</span>
-<span class="source-line-no">1216</span><span id="line-1216"></span>
-<span class="source-line-no">1217</span><span id="line-1217">    @Override</span>
-<span class="source-line-no">1218</span><span id="line-1218">    public @NonNull Injector injector() {</span>
-<span class="source-line-no">1219</span><span id="line-1219">        return this.injector;</span>
-<span class="source-line-no">1220</span><span id="line-1220">    }</span>
-<span class="source-line-no">1221</span><span id="line-1221"></span>
-<span class="source-line-no">1222</span><span id="line-1222">    @Override</span>
-<span class="source-line-no">1223</span><span id="line-1223">    public @NonNull PlotAreaManager plotAreaManager() {</span>
-<span class="source-line-no">1224</span><span id="line-1224">        return this.plotAreaManager;</span>
-<span class="source-line-no">1225</span><span id="line-1225">    }</span>
-<span class="source-line-no">1226</span><span id="line-1226"></span>
-<span class="source-line-no">1227</span><span id="line-1227">    @NonNull</span>
-<span class="source-line-no">1228</span><span id="line-1228">    @Override</span>
-<span class="source-line-no">1229</span><span id="line-1229">    public Locale getLocale() {</span>
-<span class="source-line-no">1230</span><span id="line-1230">        return this.serverLocale;</span>
-<span class="source-line-no">1231</span><span id="line-1231">    }</span>
-<span class="source-line-no">1232</span><span id="line-1232"></span>
-<span class="source-line-no">1233</span><span id="line-1233">    @Override</span>
-<span class="source-line-no">1234</span><span id="line-1234">    public void setLocale(final @NonNull Locale locale) {</span>
-<span class="source-line-no">1235</span><span id="line-1235">        throw new UnsupportedOperationException("Cannot replace server locale");</span>
-<span class="source-line-no">1236</span><span id="line-1236">    }</span>
-<span class="source-line-no">1237</span><span id="line-1237"></span>
-<span class="source-line-no">1238</span><span id="line-1238">    @Override</span>
-<span class="source-line-no">1239</span><span id="line-1239">    public @NonNull PlatformWorldManager&lt;?&gt; worldManager() {</span>
-<span class="source-line-no">1240</span><span id="line-1240">        return injector().getInstance(Key.get(new TypeLiteral&lt;PlatformWorldManager&lt;World&gt;&gt;() {</span>
-<span class="source-line-no">1241</span><span id="line-1241">        }));</span>
-<span class="source-line-no">1242</span><span id="line-1242">    }</span>
-<span class="source-line-no">1243</span><span id="line-1243"></span>
-<span class="source-line-no">1244</span><span id="line-1244">    @Override</span>
-<span class="source-line-no">1245</span><span id="line-1245">    @NonNull</span>
-<span class="source-line-no">1246</span><span id="line-1246">    @SuppressWarnings("unchecked")</span>
-<span class="source-line-no">1247</span><span id="line-1247">    public PlayerManager&lt;? extends PlotPlayer&lt;Player&gt;, ? extends Player&gt; playerManager() {</span>
-<span class="source-line-no">1248</span><span id="line-1248">        return (PlayerManager&lt;BukkitPlayer, Player&gt;) injector().getInstance(PlayerManager.class);</span>
-<span class="source-line-no">1249</span><span id="line-1249">    }</span>
-<span class="source-line-no">1250</span><span id="line-1250"></span>
-<span class="source-line-no">1251</span><span id="line-1251">    @Override</span>
-<span class="source-line-no">1252</span><span id="line-1252">    public void copyCaptionMaps() {</span>
-<span class="source-line-no">1253</span><span id="line-1253">        /* Make this prettier at some point */</span>
-<span class="source-line-no">1254</span><span id="line-1254">        final String[] languages = new String[]{"en"};</span>
-<span class="source-line-no">1255</span><span id="line-1255">        for (final String language : languages) {</span>
-<span class="source-line-no">1256</span><span id="line-1256">            if (!new File(new File(this.getDataFolder(), "lang"), String.format("messages_%s.json", language)).exists()) {</span>
-<span class="source-line-no">1257</span><span id="line-1257">                this.saveResource(String.format("lang/messages_%s.json", language), false);</span>
-<span class="source-line-no">1258</span><span id="line-1258">                LOGGER.info("Copied language file 'messages_{}.json'", language);</span>
-<span class="source-line-no">1259</span><span id="line-1259">            }</span>
-<span class="source-line-no">1260</span><span id="line-1260">        }</span>
-<span class="source-line-no">1261</span><span id="line-1261">    }</span>
-<span class="source-line-no">1262</span><span id="line-1262"></span>
-<span class="source-line-no">1263</span><span id="line-1263">    @NonNull</span>
-<span class="source-line-no">1264</span><span id="line-1264">    @Override</span>
-<span class="source-line-no">1265</span><span id="line-1265">    public String toLegacyPlatformString(final @NonNull Component component) {</span>
-<span class="source-line-no">1266</span><span id="line-1266">        return LegacyComponentSerializer.legacyAmpersand().serialize(component);</span>
-<span class="source-line-no">1267</span><span id="line-1267">    }</span>
-<span class="source-line-no">1268</span><span id="line-1268"></span>
-<span class="source-line-no">1269</span><span id="line-1269">    @Override</span>
-<span class="source-line-no">1270</span><span id="line-1270">    public boolean isFaweHooking() {</span>
-<span class="source-line-no">1271</span><span id="line-1271">        return faweHook;</span>
-<span class="source-line-no">1272</span><span id="line-1272">    }</span>
-<span class="source-line-no">1273</span><span id="line-1273"></span>
-<span class="source-line-no">1274</span><span id="line-1274">}</span>
+<span class="source-line-no">1188</span><span id="line-1188">            msg.append("FastAsyncWorldEdit: ").append(Bukkit</span>
+<span class="source-line-no">1189</span><span id="line-1189">                    .getPluginManager()</span>
+<span class="source-line-no">1190</span><span id="line-1190">                    .getPlugin("FastAsyncWorldEdit")</span>
+<span class="source-line-no">1191</span><span id="line-1191">                    .getDescription()</span>
+<span class="source-line-no">1192</span><span id="line-1192">                    .getVersion());</span>
+<span class="source-line-no">1193</span><span id="line-1193">        } else if (Bukkit.getPluginManager().getPlugin("AsyncWorldEdit") != null) {</span>
+<span class="source-line-no">1194</span><span id="line-1194">            msg.append("AsyncWorldEdit: ").append(Bukkit</span>
+<span class="source-line-no">1195</span><span id="line-1195">                    .getPluginManager()</span>
+<span class="source-line-no">1196</span><span id="line-1196">                    .getPlugin("AsyncWorldEdit")</span>
+<span class="source-line-no">1197</span><span id="line-1197">                    .getDescription()</span>
+<span class="source-line-no">1198</span><span id="line-1198">                    .getVersion()).append("\n");</span>
+<span class="source-line-no">1199</span><span id="line-1199">            msg.append("WorldEdit: ").append(Bukkit.getPluginManager().getPlugin("WorldEdit").getDescription().getVersion());</span>
+<span class="source-line-no">1200</span><span id="line-1200">        } else {</span>
+<span class="source-line-no">1201</span><span id="line-1201">            msg.append("WorldEdit: ").append(Bukkit.getPluginManager().getPlugin("WorldEdit").getDescription().getVersion());</span>
+<span class="source-line-no">1202</span><span id="line-1202">        }</span>
+<span class="source-line-no">1203</span><span id="line-1203">        return msg.toString();</span>
+<span class="source-line-no">1204</span><span id="line-1204">    }</span>
+<span class="source-line-no">1205</span><span id="line-1205"></span>
+<span class="source-line-no">1206</span><span id="line-1206">    @Override</span>
+<span class="source-line-no">1207</span><span id="line-1207">    public com.plotsquared.core.location.@NonNull World&lt;?&gt; getPlatformWorld(final @NonNull String worldName) {</span>
+<span class="source-line-no">1208</span><span id="line-1208">        return BukkitWorld.of(worldName);</span>
+<span class="source-line-no">1209</span><span id="line-1209">    }</span>
+<span class="source-line-no">1210</span><span id="line-1210"></span>
+<span class="source-line-no">1211</span><span id="line-1211">    @Override</span>
+<span class="source-line-no">1212</span><span id="line-1212">    public @NonNull Audience consoleAudience() {</span>
+<span class="source-line-no">1213</span><span id="line-1213">        return BukkitUtil.BUKKIT_AUDIENCES.console();</span>
+<span class="source-line-no">1214</span><span id="line-1214">    }</span>
+<span class="source-line-no">1215</span><span id="line-1215"></span>
+<span class="source-line-no">1216</span><span id="line-1216">    @Override</span>
+<span class="source-line-no">1217</span><span id="line-1217">    public @NonNull String pluginName() {</span>
+<span class="source-line-no">1218</span><span id="line-1218">        return this.pluginName;</span>
+<span class="source-line-no">1219</span><span id="line-1219">    }</span>
+<span class="source-line-no">1220</span><span id="line-1220"></span>
+<span class="source-line-no">1221</span><span id="line-1221">    public SingleWorldListener getSingleWorldListener() {</span>
+<span class="source-line-no">1222</span><span id="line-1222">        return this.singleWorldListener;</span>
+<span class="source-line-no">1223</span><span id="line-1223">    }</span>
+<span class="source-line-no">1224</span><span id="line-1224"></span>
+<span class="source-line-no">1225</span><span id="line-1225">    @Override</span>
+<span class="source-line-no">1226</span><span id="line-1226">    public @NonNull Injector injector() {</span>
+<span class="source-line-no">1227</span><span id="line-1227">        return this.injector;</span>
+<span class="source-line-no">1228</span><span id="line-1228">    }</span>
+<span class="source-line-no">1229</span><span id="line-1229"></span>
+<span class="source-line-no">1230</span><span id="line-1230">    @Override</span>
+<span class="source-line-no">1231</span><span id="line-1231">    public @NonNull PlotAreaManager plotAreaManager() {</span>
+<span class="source-line-no">1232</span><span id="line-1232">        return this.plotAreaManager;</span>
+<span class="source-line-no">1233</span><span id="line-1233">    }</span>
+<span class="source-line-no">1234</span><span id="line-1234"></span>
+<span class="source-line-no">1235</span><span id="line-1235">    @NonNull</span>
+<span class="source-line-no">1236</span><span id="line-1236">    @Override</span>
+<span class="source-line-no">1237</span><span id="line-1237">    public Locale getLocale() {</span>
+<span class="source-line-no">1238</span><span id="line-1238">        return this.serverLocale;</span>
+<span class="source-line-no">1239</span><span id="line-1239">    }</span>
+<span class="source-line-no">1240</span><span id="line-1240"></span>
+<span class="source-line-no">1241</span><span id="line-1241">    @Override</span>
+<span class="source-line-no">1242</span><span id="line-1242">    public void setLocale(final @NonNull Locale locale) {</span>
+<span class="source-line-no">1243</span><span id="line-1243">        throw new UnsupportedOperationException("Cannot replace server locale");</span>
+<span class="source-line-no">1244</span><span id="line-1244">    }</span>
+<span class="source-line-no">1245</span><span id="line-1245"></span>
+<span class="source-line-no">1246</span><span id="line-1246">    @Override</span>
+<span class="source-line-no">1247</span><span id="line-1247">    public @NonNull PlatformWorldManager&lt;?&gt; worldManager() {</span>
+<span class="source-line-no">1248</span><span id="line-1248">        return injector().getInstance(Key.get(new TypeLiteral&lt;PlatformWorldManager&lt;World&gt;&gt;() {</span>
+<span class="source-line-no">1249</span><span id="line-1249">        }));</span>
+<span class="source-line-no">1250</span><span id="line-1250">    }</span>
+<span class="source-line-no">1251</span><span id="line-1251"></span>
+<span class="source-line-no">1252</span><span id="line-1252">    @Override</span>
+<span class="source-line-no">1253</span><span id="line-1253">    @NonNull</span>
+<span class="source-line-no">1254</span><span id="line-1254">    @SuppressWarnings("unchecked")</span>
+<span class="source-line-no">1255</span><span id="line-1255">    public PlayerManager&lt;? extends PlotPlayer&lt;Player&gt;, ? extends Player&gt; playerManager() {</span>
+<span class="source-line-no">1256</span><span id="line-1256">        return (PlayerManager&lt;BukkitPlayer, Player&gt;) injector().getInstance(PlayerManager.class);</span>
+<span class="source-line-no">1257</span><span id="line-1257">    }</span>
+<span class="source-line-no">1258</span><span id="line-1258"></span>
+<span class="source-line-no">1259</span><span id="line-1259">    @Override</span>
+<span class="source-line-no">1260</span><span id="line-1260">    public void copyCaptionMaps() {</span>
+<span class="source-line-no">1261</span><span id="line-1261">        /* Make this prettier at some point */</span>
+<span class="source-line-no">1262</span><span id="line-1262">        final String[] languages = new String[]{"en"};</span>
+<span class="source-line-no">1263</span><span id="line-1263">        for (final String language : languages) {</span>
+<span class="source-line-no">1264</span><span id="line-1264">            if (!new File(new File(this.getDataFolder(), "lang"), String.format("messages_%s.json", language)).exists()) {</span>
+<span class="source-line-no">1265</span><span id="line-1265">                this.saveResource(String.format("lang/messages_%s.json", language), false);</span>
+<span class="source-line-no">1266</span><span id="line-1266">                LOGGER.info("Copied language file 'messages_{}.json'", language);</span>
+<span class="source-line-no">1267</span><span id="line-1267">            }</span>
+<span class="source-line-no">1268</span><span id="line-1268">        }</span>
+<span class="source-line-no">1269</span><span id="line-1269">    }</span>
+<span class="source-line-no">1270</span><span id="line-1270"></span>
+<span class="source-line-no">1271</span><span id="line-1271">    @NonNull</span>
+<span class="source-line-no">1272</span><span id="line-1272">    @Override</span>
+<span class="source-line-no">1273</span><span id="line-1273">    public String toLegacyPlatformString(final @NonNull Component component) {</span>
+<span class="source-line-no">1274</span><span id="line-1274">        return LegacyComponentSerializer.legacyAmpersand().serialize(component);</span>
+<span class="source-line-no">1275</span><span id="line-1275">    }</span>
+<span class="source-line-no">1276</span><span id="line-1276"></span>
+<span class="source-line-no">1277</span><span id="line-1277">    @Override</span>
+<span class="source-line-no">1278</span><span id="line-1278">    public boolean isFaweHooking() {</span>
+<span class="source-line-no">1279</span><span id="line-1279">        return faweHook;</span>
+<span class="source-line-no">1280</span><span id="line-1280">    }</span>
+<span class="source-line-no">1281</span><span id="line-1281"></span>
+<span class="source-line-no">1282</span><span id="line-1282">}</span>
 
 
 

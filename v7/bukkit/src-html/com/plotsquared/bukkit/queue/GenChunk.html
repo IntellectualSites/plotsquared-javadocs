@@ -75,226 +75,225 @@
 <span class="source-line-no">062</span><span id="line-62">    /**</span>
 <span class="source-line-no">063</span><span id="line-63">     * @param minY minimum world Y, inclusive</span>
 <span class="source-line-no">064</span><span id="line-64">     * @param maxY maximum world Y, inclusive</span>
-<span class="source-line-no">065</span><span id="line-65">     *</span>
-<span class="source-line-no">066</span><span id="line-66">     * @since 6.6.0</span>
-<span class="source-line-no">067</span><span id="line-67">     */</span>
-<span class="source-line-no">068</span><span id="line-68">    public GenChunk(int minY, int maxY) {</span>
-<span class="source-line-no">069</span><span id="line-69">        super(null, Location.at("", 0, minY, 0), Location.at("", 15, maxY, 15));</span>
-<span class="source-line-no">070</span><span id="line-70">        this.biomes = Biome.values();</span>
-<span class="source-line-no">071</span><span id="line-71">    }</span>
-<span class="source-line-no">072</span><span id="line-72"></span>
-<span class="source-line-no">073</span><span id="line-73">    public @Nullable ChunkData getChunkData() {</span>
-<span class="source-line-no">074</span><span id="line-74">        return this.chunkData;</span>
-<span class="source-line-no">075</span><span id="line-75">    }</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    /**</span>
-<span class="source-line-no">078</span><span id="line-78">     * Set the internal Bukkit chunk data</span>
-<span class="source-line-no">079</span><span id="line-79">     *</span>
-<span class="source-line-no">080</span><span id="line-80">     * @param chunkData Bukkit ChunkData</span>
-<span class="source-line-no">081</span><span id="line-81">     */</span>
-<span class="source-line-no">082</span><span id="line-82">    public void setChunkData(@NonNull ChunkData chunkData) {</span>
-<span class="source-line-no">083</span><span id="line-83">        this.chunkData = chunkData;</span>
-<span class="source-line-no">084</span><span id="line-84">    }</span>
-<span class="source-line-no">085</span><span id="line-85"></span>
-<span class="source-line-no">086</span><span id="line-86">    public @NonNull Chunk getChunk() {</span>
-<span class="source-line-no">087</span><span id="line-87">        if (chunk == null) {</span>
-<span class="source-line-no">088</span><span id="line-88">            World worldObj = BukkitUtil.getWorld(world);</span>
-<span class="source-line-no">089</span><span id="line-89">            if (worldObj != null) {</span>
-<span class="source-line-no">090</span><span id="line-90">                this.chunk = worldObj.getChunkAt(chunkX, chunkZ);</span>
-<span class="source-line-no">091</span><span id="line-91">            }</span>
-<span class="source-line-no">092</span><span id="line-92">        }</span>
-<span class="source-line-no">093</span><span id="line-93">        return chunk;</span>
-<span class="source-line-no">094</span><span id="line-94">    }</span>
-<span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">    /**</span>
-<span class="source-line-no">097</span><span id="line-97">     * Set the chunk being represented</span>
-<span class="source-line-no">098</span><span id="line-98">     *</span>
-<span class="source-line-no">099</span><span id="line-99">     * @param chunk Bukkit Chunk</span>
-<span class="source-line-no">100</span><span id="line-100">     */</span>
-<span class="source-line-no">101</span><span id="line-101">    public void setChunk(@NonNull Chunk chunk) {</span>
-<span class="source-line-no">102</span><span id="line-102">        this.chunk = chunk;</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
+<span class="source-line-no">065</span><span id="line-65">     * @since 6.6.0</span>
+<span class="source-line-no">066</span><span id="line-66">     */</span>
+<span class="source-line-no">067</span><span id="line-67">    public GenChunk(int minY, int maxY) {</span>
+<span class="source-line-no">068</span><span id="line-68">        super(null, Location.at("", 0, minY, 0), Location.at("", 15, maxY, 15));</span>
+<span class="source-line-no">069</span><span id="line-69">        this.biomes = Biome.values();</span>
+<span class="source-line-no">070</span><span id="line-70">    }</span>
+<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">072</span><span id="line-72">    public @Nullable ChunkData getChunkData() {</span>
+<span class="source-line-no">073</span><span id="line-73">        return this.chunkData;</span>
+<span class="source-line-no">074</span><span id="line-74">    }</span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76">    /**</span>
+<span class="source-line-no">077</span><span id="line-77">     * Set the internal Bukkit chunk data</span>
+<span class="source-line-no">078</span><span id="line-78">     *</span>
+<span class="source-line-no">079</span><span id="line-79">     * @param chunkData Bukkit ChunkData</span>
+<span class="source-line-no">080</span><span id="line-80">     */</span>
+<span class="source-line-no">081</span><span id="line-81">    public void setChunkData(@NonNull ChunkData chunkData) {</span>
+<span class="source-line-no">082</span><span id="line-82">        this.chunkData = chunkData;</span>
+<span class="source-line-no">083</span><span id="line-83">    }</span>
+<span class="source-line-no">084</span><span id="line-84"></span>
+<span class="source-line-no">085</span><span id="line-85">    public @NonNull Chunk getChunk() {</span>
+<span class="source-line-no">086</span><span id="line-86">        if (chunk == null) {</span>
+<span class="source-line-no">087</span><span id="line-87">            World worldObj = BukkitUtil.getWorld(world);</span>
+<span class="source-line-no">088</span><span id="line-88">            if (worldObj != null) {</span>
+<span class="source-line-no">089</span><span id="line-89">                this.chunk = worldObj.getChunkAt(chunkX, chunkZ);</span>
+<span class="source-line-no">090</span><span id="line-90">            }</span>
+<span class="source-line-no">091</span><span id="line-91">        }</span>
+<span class="source-line-no">092</span><span id="line-92">        return chunk;</span>
+<span class="source-line-no">093</span><span id="line-93">    }</span>
+<span class="source-line-no">094</span><span id="line-94"></span>
+<span class="source-line-no">095</span><span id="line-95">    /**</span>
+<span class="source-line-no">096</span><span id="line-96">     * Set the chunk being represented</span>
+<span class="source-line-no">097</span><span id="line-97">     *</span>
+<span class="source-line-no">098</span><span id="line-98">     * @param chunk Bukkit Chunk</span>
+<span class="source-line-no">099</span><span id="line-99">     */</span>
+<span class="source-line-no">100</span><span id="line-100">    public void setChunk(@NonNull Chunk chunk) {</span>
+<span class="source-line-no">101</span><span id="line-101">        this.chunk = chunk;</span>
+<span class="source-line-no">102</span><span id="line-102">    }</span>
+<span class="source-line-no">103</span><span id="line-103"></span>
 <span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105"></span>
-<span class="source-line-no">106</span><span id="line-106">    /**</span>
-<span class="source-line-no">107</span><span id="line-107">     * Set the world and XZ of the chunk being represented via {@link ChunkWrapper}</span>
-<span class="source-line-no">108</span><span id="line-108">     *</span>
-<span class="source-line-no">109</span><span id="line-109">     * @param wrap PlotSquared ChunkWrapper</span>
-<span class="source-line-no">110</span><span id="line-110">     */</span>
-<span class="source-line-no">111</span><span id="line-111">    public void setChunk(@NonNull ChunkWrapper wrap) {</span>
-<span class="source-line-no">112</span><span id="line-112">        chunk = null;</span>
-<span class="source-line-no">113</span><span id="line-113">        world = wrap.world();</span>
-<span class="source-line-no">114</span><span id="line-114">        chunkX = wrap.x();</span>
-<span class="source-line-no">115</span><span id="line-115">        chunkZ = wrap.z();</span>
-<span class="source-line-no">116</span><span id="line-116">    }</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">    @Override</span>
-<span class="source-line-no">119</span><span id="line-119">    public void fillBiome(@NonNull BiomeType biomeType) {</span>
-<span class="source-line-no">120</span><span id="line-120">        if (biomeGrid == null) {</span>
-<span class="source-line-no">121</span><span id="line-121">            return;</span>
-<span class="source-line-no">122</span><span id="line-122">        }</span>
-<span class="source-line-no">123</span><span id="line-123">        Biome biome = BukkitAdapter.adapt(biomeType);</span>
-<span class="source-line-no">124</span><span id="line-124">        for (int y = getMin().getY(); y &lt;= getMax().getY(); y++) {</span>
-<span class="source-line-no">125</span><span id="line-125">            for (int x = 0; x &lt; 16; x++) {</span>
-<span class="source-line-no">126</span><span id="line-126">                for (int z = 0; z &lt; 16; z++) {</span>
-<span class="source-line-no">127</span><span id="line-127">                    this.biomeGrid.setBiome(x, y, z, biome);</span>
-<span class="source-line-no">128</span><span id="line-128">                }</span>
-<span class="source-line-no">129</span><span id="line-129">            }</span>
-<span class="source-line-no">130</span><span id="line-130">        }</span>
-<span class="source-line-no">131</span><span id="line-131">    }</span>
-<span class="source-line-no">132</span><span id="line-132"></span>
-<span class="source-line-no">133</span><span id="line-133">    @Override</span>
-<span class="source-line-no">134</span><span id="line-134">    public void setCuboid(@NonNull Location pos1, @NonNull Location pos2, @NonNull BlockState block) {</span>
-<span class="source-line-no">135</span><span id="line-135">        if (result != null &amp;&amp; pos1.getX() == 0 &amp;&amp; pos1.getZ() == 0 &amp;&amp; pos2.getX() == 15 &amp;&amp; pos2.getZ() == 15) {</span>
-<span class="source-line-no">136</span><span id="line-136">            for (int y = pos1.getY(); y &lt;= pos2.getY(); y++) {</span>
-<span class="source-line-no">137</span><span id="line-137">                int layer = getLayerIndex(y);</span>
-<span class="source-line-no">138</span><span id="line-138">                BlockState[] data = result[layer];</span>
-<span class="source-line-no">139</span><span id="line-139">                if (data == null) {</span>
-<span class="source-line-no">140</span><span id="line-140">                    result[layer] = data = new BlockState[4096];</span>
-<span class="source-line-no">141</span><span id="line-141">                }</span>
-<span class="source-line-no">142</span><span id="line-142">                int start = y &lt;&lt; 8;</span>
-<span class="source-line-no">143</span><span id="line-143">                int end = start + 256;</span>
-<span class="source-line-no">144</span><span id="line-144">                Arrays.fill(data, start, end, block);</span>
-<span class="source-line-no">145</span><span id="line-145">            }</span>
-<span class="source-line-no">146</span><span id="line-146">        }</span>
-<span class="source-line-no">147</span><span id="line-147">        int minX = Math.min(pos1.getX(), pos2.getX());</span>
-<span class="source-line-no">148</span><span id="line-148">        int minY = Math.min(pos1.getY(), pos2.getY());</span>
-<span class="source-line-no">149</span><span id="line-149">        int minZ = Math.min(pos1.getZ(), pos2.getZ());</span>
-<span class="source-line-no">150</span><span id="line-150">        int maxX = Math.max(pos1.getX(), pos2.getX());</span>
-<span class="source-line-no">151</span><span id="line-151">        int maxY = Math.max(pos1.getY(), pos2.getY());</span>
-<span class="source-line-no">152</span><span id="line-152">        int maxZ = Math.max(pos1.getZ(), pos2.getZ());</span>
-<span class="source-line-no">153</span><span id="line-153">        chunkData.setRegion(minX, minY, minZ, maxX + 1, maxY + 1, maxZ + 1, BukkitAdapter.adapt(block));</span>
-<span class="source-line-no">154</span><span id="line-154">    }</span>
-<span class="source-line-no">155</span><span id="line-155"></span>
-<span class="source-line-no">156</span><span id="line-156">    @Override</span>
-<span class="source-line-no">157</span><span id="line-157">    public boolean setBiome(int x, int z, @NonNull BiomeType biomeType) {</span>
-<span class="source-line-no">158</span><span id="line-158">        return setBiome(x, z, BukkitAdapter.adapt(biomeType));</span>
-<span class="source-line-no">159</span><span id="line-159">    }</span>
-<span class="source-line-no">160</span><span id="line-160"></span>
-<span class="source-line-no">161</span><span id="line-161">    /**</span>
-<span class="source-line-no">162</span><span id="line-162">     * Set the in the whole column of XZ</span>
-<span class="source-line-no">163</span><span id="line-163">     *</span>
-<span class="source-line-no">164</span><span id="line-164">     * @param x     Relative x location within the chunk (0 - 15)</span>
-<span class="source-line-no">165</span><span id="line-165">     * @param z     Relative z location within the chunk (0 - 15)</span>
-<span class="source-line-no">166</span><span id="line-166">     * @param biome Bukkit biome to set</span>
-<span class="source-line-no">167</span><span id="line-167">     * @return if successful</span>
-<span class="source-line-no">168</span><span id="line-168">     */</span>
-<span class="source-line-no">169</span><span id="line-169">    public boolean setBiome(int x, int z, @NonNull Biome biome) {</span>
-<span class="source-line-no">170</span><span id="line-170">        if (this.biomeGrid != null) {</span>
-<span class="source-line-no">171</span><span id="line-171">            for (int y = getMin().getY(); y &lt;= getMax().getY(); y++) {</span>
-<span class="source-line-no">172</span><span id="line-172">                this.setBiome(x, y, z, biome);</span>
-<span class="source-line-no">173</span><span id="line-173">            }</span>
-<span class="source-line-no">174</span><span id="line-174">            return true;</span>
-<span class="source-line-no">175</span><span id="line-175">        }</span>
-<span class="source-line-no">176</span><span id="line-176">        return false;</span>
-<span class="source-line-no">177</span><span id="line-177">    }</span>
-<span class="source-line-no">178</span><span id="line-178"></span>
-<span class="source-line-no">179</span><span id="line-179">    public boolean setBiome(int x, int y, int z, @NonNull Biome biome) {</span>
-<span class="source-line-no">180</span><span id="line-180">        if (this.biomeGrid != null) {</span>
-<span class="source-line-no">181</span><span id="line-181">            this.biomeGrid.setBiome(x, y, z, biome);</span>
-<span class="source-line-no">182</span><span id="line-182">            return true;</span>
-<span class="source-line-no">183</span><span id="line-183">        }</span>
-<span class="source-line-no">184</span><span id="line-184">        return false;</span>
-<span class="source-line-no">185</span><span id="line-185">    }</span>
-<span class="source-line-no">186</span><span id="line-186"></span>
-<span class="source-line-no">187</span><span id="line-187">    @Override</span>
-<span class="source-line-no">188</span><span id="line-188">    public boolean setBlock(int x, int y, int z, @NonNull Pattern pattern) {</span>
-<span class="source-line-no">189</span><span id="line-189">        final BaseBlock block = PatternUtil.apply(Preconditions.checkNotNull(</span>
-<span class="source-line-no">190</span><span id="line-190">                pattern,</span>
-<span class="source-line-no">191</span><span id="line-191">                "Pattern may not be null"</span>
-<span class="source-line-no">192</span><span id="line-192">        ), x + (chunkX &lt;&lt; 4), y, z + (chunkZ &lt;&lt; 4));</span>
-<span class="source-line-no">193</span><span id="line-193">        return setBlock(x, y, z, block);</span>
-<span class="source-line-no">194</span><span id="line-194">    }</span>
-<span class="source-line-no">195</span><span id="line-195"></span>
-<span class="source-line-no">196</span><span id="line-196">    @Override</span>
-<span class="source-line-no">197</span><span id="line-197">    public boolean setBlock(int x, int y, int z, @NonNull BlockState id) {</span>
-<span class="source-line-no">198</span><span id="line-198">        if (this.result == null) {</span>
-<span class="source-line-no">199</span><span id="line-199">            this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
-<span class="source-line-no">200</span><span id="line-200">            return true;</span>
-<span class="source-line-no">201</span><span id="line-201">        }</span>
-<span class="source-line-no">202</span><span id="line-202">        this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
-<span class="source-line-no">203</span><span id="line-203">        this.storeCache(x, y, z, id);</span>
-<span class="source-line-no">204</span><span id="line-204">        return true;</span>
-<span class="source-line-no">205</span><span id="line-205">    }</span>
-<span class="source-line-no">206</span><span id="line-206"></span>
-<span class="source-line-no">207</span><span id="line-207">    private void storeCache(final int x, final int y, final int z, final @NonNull BlockState id) {</span>
-<span class="source-line-no">208</span><span id="line-208">        int i = getLayerIndex(y);</span>
-<span class="source-line-no">209</span><span id="line-209">        BlockState[] v = this.result[i];</span>
-<span class="source-line-no">210</span><span id="line-210">        if (v == null) {</span>
-<span class="source-line-no">211</span><span id="line-211">            this.result[i] = v = new BlockState[4096];</span>
-<span class="source-line-no">212</span><span id="line-212">        }</span>
-<span class="source-line-no">213</span><span id="line-213">        int j = ChunkUtil.getJ(x, y, z);</span>
-<span class="source-line-no">214</span><span id="line-214">        v[j] = id;</span>
-<span class="source-line-no">215</span><span id="line-215">    }</span>
-<span class="source-line-no">216</span><span id="line-216"></span>
-<span class="source-line-no">217</span><span id="line-217">    @Override</span>
-<span class="source-line-no">218</span><span id="line-218">    public boolean setBlock(int x, int y, int z, @NonNull BaseBlock id) {</span>
-<span class="source-line-no">219</span><span id="line-219">        if (this.result == null) {</span>
-<span class="source-line-no">220</span><span id="line-220">            this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
-<span class="source-line-no">221</span><span id="line-221">            return true;</span>
-<span class="source-line-no">222</span><span id="line-222">        }</span>
-<span class="source-line-no">223</span><span id="line-223">        this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
-<span class="source-line-no">224</span><span id="line-224">        this.storeCache(x, y, z, id.toImmutableState());</span>
-<span class="source-line-no">225</span><span id="line-225">        return true;</span>
-<span class="source-line-no">226</span><span id="line-226">    }</span>
-<span class="source-line-no">227</span><span id="line-227"></span>
-<span class="source-line-no">228</span><span id="line-228">    @Override</span>
-<span class="source-line-no">229</span><span id="line-229">    public @Nullable BlockState getBlock(int x, int y, int z) {</span>
-<span class="source-line-no">230</span><span id="line-230">        int i = getLayerIndex(y);</span>
-<span class="source-line-no">231</span><span id="line-231">        if (result == null) {</span>
-<span class="source-line-no">232</span><span id="line-232">            return BukkitBlockUtil.get(chunkData.getType(x, y, z));</span>
-<span class="source-line-no">233</span><span id="line-233">        }</span>
-<span class="source-line-no">234</span><span id="line-234">        BlockState[] array = result[i];</span>
-<span class="source-line-no">235</span><span id="line-235">        if (array == null) {</span>
-<span class="source-line-no">236</span><span id="line-236">            return BlockTypes.AIR.getDefaultState();</span>
-<span class="source-line-no">237</span><span id="line-237">        }</span>
-<span class="source-line-no">238</span><span id="line-238">        int j = ChunkUtil.getJ(x, y, z);</span>
-<span class="source-line-no">239</span><span id="line-239">        return array[j];</span>
-<span class="source-line-no">240</span><span id="line-240">    }</span>
-<span class="source-line-no">241</span><span id="line-241"></span>
-<span class="source-line-no">242</span><span id="line-242">    public int getX() {</span>
-<span class="source-line-no">243</span><span id="line-243">        return chunk == null ? chunkX : chunk.getX();</span>
-<span class="source-line-no">244</span><span id="line-244">    }</span>
-<span class="source-line-no">245</span><span id="line-245"></span>
-<span class="source-line-no">246</span><span id="line-246">    public int getZ() {</span>
-<span class="source-line-no">247</span><span id="line-247">        return chunk == null ? chunkZ : chunk.getZ();</span>
-<span class="source-line-no">248</span><span id="line-248">    }</span>
-<span class="source-line-no">249</span><span id="line-249"></span>
-<span class="source-line-no">250</span><span id="line-250">    @Override</span>
-<span class="source-line-no">251</span><span id="line-251">    public com.sk89q.worldedit.world.@NonNull World getWorld() {</span>
-<span class="source-line-no">252</span><span id="line-252">        return chunk == null ? BukkitAdapter.adapt(Bukkit.getWorld(world)) : BukkitAdapter.adapt(chunk.getWorld());</span>
-<span class="source-line-no">253</span><span id="line-253">    }</span>
-<span class="source-line-no">254</span><span id="line-254"></span>
-<span class="source-line-no">255</span><span id="line-255">    @Override</span>
-<span class="source-line-no">256</span><span id="line-256">    public @NonNull Location getMax() {</span>
-<span class="source-line-no">257</span><span id="line-257">        return Location.at(getWorld().getName(), 15 + (getX() &lt;&lt; 4), super.getMax().getY(), 15 + (getZ() &lt;&lt; 4));</span>
-<span class="source-line-no">258</span><span id="line-258">    }</span>
-<span class="source-line-no">259</span><span id="line-259"></span>
-<span class="source-line-no">260</span><span id="line-260">    @Override</span>
-<span class="source-line-no">261</span><span id="line-261">    public @NonNull Location getMin() {</span>
-<span class="source-line-no">262</span><span id="line-262">        return Location.at(getWorld().getName(), getX() &lt;&lt; 4, super.getMin().getY(), getZ() &lt;&lt; 4);</span>
-<span class="source-line-no">263</span><span id="line-263">    }</span>
-<span class="source-line-no">264</span><span id="line-264"></span>
-<span class="source-line-no">265</span><span id="line-265">    public @NonNull GenChunk clone() {</span>
-<span class="source-line-no">266</span><span id="line-266">        GenChunk toReturn = new GenChunk(getMin().getY(), getMax().getY());</span>
-<span class="source-line-no">267</span><span id="line-267">        if (this.result != null) {</span>
-<span class="source-line-no">268</span><span id="line-268">            for (int i = 0; i &lt; this.result.length; i++) {</span>
-<span class="source-line-no">269</span><span id="line-269">                BlockState[] matrix = this.result[i];</span>
-<span class="source-line-no">270</span><span id="line-270">                if (matrix != null) {</span>
-<span class="source-line-no">271</span><span id="line-271">                    toReturn.result[i] = new BlockState[matrix.length];</span>
-<span class="source-line-no">272</span><span id="line-272">                    System.arraycopy(matrix, 0, toReturn.result[i], 0, matrix.length);</span>
-<span class="source-line-no">273</span><span id="line-273">                }</span>
-<span class="source-line-no">274</span><span id="line-274">            }</span>
-<span class="source-line-no">275</span><span id="line-275">        }</span>
-<span class="source-line-no">276</span><span id="line-276">        toReturn.chunkData = this.chunkData;</span>
-<span class="source-line-no">277</span><span id="line-277">        return toReturn;</span>
-<span class="source-line-no">278</span><span id="line-278">    }</span>
-<span class="source-line-no">279</span><span id="line-279"></span>
-<span class="source-line-no">280</span><span id="line-280">    private int getLayerIndex(int y) {</span>
-<span class="source-line-no">281</span><span id="line-281">        return (y - getMin().getY()) &gt;&gt; 4;</span>
-<span class="source-line-no">282</span><span id="line-282">    }</span>
-<span class="source-line-no">283</span><span id="line-283"></span>
-<span class="source-line-no">284</span><span id="line-284">}</span>
+<span class="source-line-no">105</span><span id="line-105">    /**</span>
+<span class="source-line-no">106</span><span id="line-106">     * Set the world and XZ of the chunk being represented via {@link ChunkWrapper}</span>
+<span class="source-line-no">107</span><span id="line-107">     *</span>
+<span class="source-line-no">108</span><span id="line-108">     * @param wrap PlotSquared ChunkWrapper</span>
+<span class="source-line-no">109</span><span id="line-109">     */</span>
+<span class="source-line-no">110</span><span id="line-110">    public void setChunk(@NonNull ChunkWrapper wrap) {</span>
+<span class="source-line-no">111</span><span id="line-111">        chunk = null;</span>
+<span class="source-line-no">112</span><span id="line-112">        world = wrap.world();</span>
+<span class="source-line-no">113</span><span id="line-113">        chunkX = wrap.x();</span>
+<span class="source-line-no">114</span><span id="line-114">        chunkZ = wrap.z();</span>
+<span class="source-line-no">115</span><span id="line-115">    }</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">    @Override</span>
+<span class="source-line-no">118</span><span id="line-118">    public void fillBiome(@NonNull BiomeType biomeType) {</span>
+<span class="source-line-no">119</span><span id="line-119">        if (biomeGrid == null) {</span>
+<span class="source-line-no">120</span><span id="line-120">            return;</span>
+<span class="source-line-no">121</span><span id="line-121">        }</span>
+<span class="source-line-no">122</span><span id="line-122">        Biome biome = BukkitAdapter.adapt(biomeType);</span>
+<span class="source-line-no">123</span><span id="line-123">        for (int y = getMin().getY(); y &lt;= getMax().getY(); y++) {</span>
+<span class="source-line-no">124</span><span id="line-124">            for (int x = 0; x &lt; 16; x++) {</span>
+<span class="source-line-no">125</span><span id="line-125">                for (int z = 0; z &lt; 16; z++) {</span>
+<span class="source-line-no">126</span><span id="line-126">                    this.biomeGrid.setBiome(x, y, z, biome);</span>
+<span class="source-line-no">127</span><span id="line-127">                }</span>
+<span class="source-line-no">128</span><span id="line-128">            }</span>
+<span class="source-line-no">129</span><span id="line-129">        }</span>
+<span class="source-line-no">130</span><span id="line-130">    }</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">    @Override</span>
+<span class="source-line-no">133</span><span id="line-133">    public void setCuboid(@NonNull Location pos1, @NonNull Location pos2, @NonNull BlockState block) {</span>
+<span class="source-line-no">134</span><span id="line-134">        if (result != null &amp;&amp; pos1.getX() == 0 &amp;&amp; pos1.getZ() == 0 &amp;&amp; pos2.getX() == 15 &amp;&amp; pos2.getZ() == 15) {</span>
+<span class="source-line-no">135</span><span id="line-135">            for (int y = pos1.getY(); y &lt;= pos2.getY(); y++) {</span>
+<span class="source-line-no">136</span><span id="line-136">                int layer = getLayerIndex(y);</span>
+<span class="source-line-no">137</span><span id="line-137">                BlockState[] data = result[layer];</span>
+<span class="source-line-no">138</span><span id="line-138">                if (data == null) {</span>
+<span class="source-line-no">139</span><span id="line-139">                    result[layer] = data = new BlockState[4096];</span>
+<span class="source-line-no">140</span><span id="line-140">                }</span>
+<span class="source-line-no">141</span><span id="line-141">                int start = y &lt;&lt; 8;</span>
+<span class="source-line-no">142</span><span id="line-142">                int end = start + 256;</span>
+<span class="source-line-no">143</span><span id="line-143">                Arrays.fill(data, start, end, block);</span>
+<span class="source-line-no">144</span><span id="line-144">            }</span>
+<span class="source-line-no">145</span><span id="line-145">        }</span>
+<span class="source-line-no">146</span><span id="line-146">        int minX = Math.min(pos1.getX(), pos2.getX());</span>
+<span class="source-line-no">147</span><span id="line-147">        int minY = Math.min(pos1.getY(), pos2.getY());</span>
+<span class="source-line-no">148</span><span id="line-148">        int minZ = Math.min(pos1.getZ(), pos2.getZ());</span>
+<span class="source-line-no">149</span><span id="line-149">        int maxX = Math.max(pos1.getX(), pos2.getX());</span>
+<span class="source-line-no">150</span><span id="line-150">        int maxY = Math.max(pos1.getY(), pos2.getY());</span>
+<span class="source-line-no">151</span><span id="line-151">        int maxZ = Math.max(pos1.getZ(), pos2.getZ());</span>
+<span class="source-line-no">152</span><span id="line-152">        chunkData.setRegion(minX, minY, minZ, maxX + 1, maxY + 1, maxZ + 1, BukkitAdapter.adapt(block));</span>
+<span class="source-line-no">153</span><span id="line-153">    }</span>
+<span class="source-line-no">154</span><span id="line-154"></span>
+<span class="source-line-no">155</span><span id="line-155">    @Override</span>
+<span class="source-line-no">156</span><span id="line-156">    public boolean setBiome(int x, int z, @NonNull BiomeType biomeType) {</span>
+<span class="source-line-no">157</span><span id="line-157">        return setBiome(x, z, BukkitAdapter.adapt(biomeType));</span>
+<span class="source-line-no">158</span><span id="line-158">    }</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">    /**</span>
+<span class="source-line-no">161</span><span id="line-161">     * Set the in the whole column of XZ</span>
+<span class="source-line-no">162</span><span id="line-162">     *</span>
+<span class="source-line-no">163</span><span id="line-163">     * @param x     Relative x location within the chunk (0 - 15)</span>
+<span class="source-line-no">164</span><span id="line-164">     * @param z     Relative z location within the chunk (0 - 15)</span>
+<span class="source-line-no">165</span><span id="line-165">     * @param biome Bukkit biome to set</span>
+<span class="source-line-no">166</span><span id="line-166">     * @return if successful</span>
+<span class="source-line-no">167</span><span id="line-167">     */</span>
+<span class="source-line-no">168</span><span id="line-168">    public boolean setBiome(int x, int z, @NonNull Biome biome) {</span>
+<span class="source-line-no">169</span><span id="line-169">        if (this.biomeGrid != null) {</span>
+<span class="source-line-no">170</span><span id="line-170">            for (int y = getMin().getY(); y &lt;= getMax().getY(); y++) {</span>
+<span class="source-line-no">171</span><span id="line-171">                this.setBiome(x, y, z, biome);</span>
+<span class="source-line-no">172</span><span id="line-172">            }</span>
+<span class="source-line-no">173</span><span id="line-173">            return true;</span>
+<span class="source-line-no">174</span><span id="line-174">        }</span>
+<span class="source-line-no">175</span><span id="line-175">        return false;</span>
+<span class="source-line-no">176</span><span id="line-176">    }</span>
+<span class="source-line-no">177</span><span id="line-177"></span>
+<span class="source-line-no">178</span><span id="line-178">    public boolean setBiome(int x, int y, int z, @NonNull Biome biome) {</span>
+<span class="source-line-no">179</span><span id="line-179">        if (this.biomeGrid != null) {</span>
+<span class="source-line-no">180</span><span id="line-180">            this.biomeGrid.setBiome(x, y, z, biome);</span>
+<span class="source-line-no">181</span><span id="line-181">            return true;</span>
+<span class="source-line-no">182</span><span id="line-182">        }</span>
+<span class="source-line-no">183</span><span id="line-183">        return false;</span>
+<span class="source-line-no">184</span><span id="line-184">    }</span>
+<span class="source-line-no">185</span><span id="line-185"></span>
+<span class="source-line-no">186</span><span id="line-186">    @Override</span>
+<span class="source-line-no">187</span><span id="line-187">    public boolean setBlock(int x, int y, int z, @NonNull Pattern pattern) {</span>
+<span class="source-line-no">188</span><span id="line-188">        final BaseBlock block = PatternUtil.apply(Preconditions.checkNotNull(</span>
+<span class="source-line-no">189</span><span id="line-189">                pattern,</span>
+<span class="source-line-no">190</span><span id="line-190">                "Pattern may not be null"</span>
+<span class="source-line-no">191</span><span id="line-191">        ), x + (chunkX &lt;&lt; 4), y, z + (chunkZ &lt;&lt; 4));</span>
+<span class="source-line-no">192</span><span id="line-192">        return setBlock(x, y, z, block);</span>
+<span class="source-line-no">193</span><span id="line-193">    }</span>
+<span class="source-line-no">194</span><span id="line-194"></span>
+<span class="source-line-no">195</span><span id="line-195">    @Override</span>
+<span class="source-line-no">196</span><span id="line-196">    public boolean setBlock(int x, int y, int z, @NonNull BlockState id) {</span>
+<span class="source-line-no">197</span><span id="line-197">        if (this.result == null) {</span>
+<span class="source-line-no">198</span><span id="line-198">            this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
+<span class="source-line-no">199</span><span id="line-199">            return true;</span>
+<span class="source-line-no">200</span><span id="line-200">        }</span>
+<span class="source-line-no">201</span><span id="line-201">        this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
+<span class="source-line-no">202</span><span id="line-202">        this.storeCache(x, y, z, id);</span>
+<span class="source-line-no">203</span><span id="line-203">        return true;</span>
+<span class="source-line-no">204</span><span id="line-204">    }</span>
+<span class="source-line-no">205</span><span id="line-205"></span>
+<span class="source-line-no">206</span><span id="line-206">    private void storeCache(final int x, final int y, final int z, final @NonNull BlockState id) {</span>
+<span class="source-line-no">207</span><span id="line-207">        int i = getLayerIndex(y);</span>
+<span class="source-line-no">208</span><span id="line-208">        BlockState[] v = this.result[i];</span>
+<span class="source-line-no">209</span><span id="line-209">        if (v == null) {</span>
+<span class="source-line-no">210</span><span id="line-210">            this.result[i] = v = new BlockState[4096];</span>
+<span class="source-line-no">211</span><span id="line-211">        }</span>
+<span class="source-line-no">212</span><span id="line-212">        int j = ChunkUtil.getJ(x, y, z);</span>
+<span class="source-line-no">213</span><span id="line-213">        v[j] = id;</span>
+<span class="source-line-no">214</span><span id="line-214">    }</span>
+<span class="source-line-no">215</span><span id="line-215"></span>
+<span class="source-line-no">216</span><span id="line-216">    @Override</span>
+<span class="source-line-no">217</span><span id="line-217">    public boolean setBlock(int x, int y, int z, @NonNull BaseBlock id) {</span>
+<span class="source-line-no">218</span><span id="line-218">        if (this.result == null) {</span>
+<span class="source-line-no">219</span><span id="line-219">            this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
+<span class="source-line-no">220</span><span id="line-220">            return true;</span>
+<span class="source-line-no">221</span><span id="line-221">        }</span>
+<span class="source-line-no">222</span><span id="line-222">        this.chunkData.setBlock(x, y, z, BukkitAdapter.adapt(id));</span>
+<span class="source-line-no">223</span><span id="line-223">        this.storeCache(x, y, z, id.toImmutableState());</span>
+<span class="source-line-no">224</span><span id="line-224">        return true;</span>
+<span class="source-line-no">225</span><span id="line-225">    }</span>
+<span class="source-line-no">226</span><span id="line-226"></span>
+<span class="source-line-no">227</span><span id="line-227">    @Override</span>
+<span class="source-line-no">228</span><span id="line-228">    public @Nullable BlockState getBlock(int x, int y, int z) {</span>
+<span class="source-line-no">229</span><span id="line-229">        int i = getLayerIndex(y);</span>
+<span class="source-line-no">230</span><span id="line-230">        if (result == null) {</span>
+<span class="source-line-no">231</span><span id="line-231">            return BukkitBlockUtil.get(chunkData.getType(x, y, z));</span>
+<span class="source-line-no">232</span><span id="line-232">        }</span>
+<span class="source-line-no">233</span><span id="line-233">        BlockState[] array = result[i];</span>
+<span class="source-line-no">234</span><span id="line-234">        if (array == null) {</span>
+<span class="source-line-no">235</span><span id="line-235">            return BlockTypes.AIR.getDefaultState();</span>
+<span class="source-line-no">236</span><span id="line-236">        }</span>
+<span class="source-line-no">237</span><span id="line-237">        int j = ChunkUtil.getJ(x, y, z);</span>
+<span class="source-line-no">238</span><span id="line-238">        return array[j];</span>
+<span class="source-line-no">239</span><span id="line-239">    }</span>
+<span class="source-line-no">240</span><span id="line-240"></span>
+<span class="source-line-no">241</span><span id="line-241">    public int getX() {</span>
+<span class="source-line-no">242</span><span id="line-242">        return chunk == null ? chunkX : chunk.getX();</span>
+<span class="source-line-no">243</span><span id="line-243">    }</span>
+<span class="source-line-no">244</span><span id="line-244"></span>
+<span class="source-line-no">245</span><span id="line-245">    public int getZ() {</span>
+<span class="source-line-no">246</span><span id="line-246">        return chunk == null ? chunkZ : chunk.getZ();</span>
+<span class="source-line-no">247</span><span id="line-247">    }</span>
+<span class="source-line-no">248</span><span id="line-248"></span>
+<span class="source-line-no">249</span><span id="line-249">    @Override</span>
+<span class="source-line-no">250</span><span id="line-250">    public com.sk89q.worldedit.world.@NonNull World getWorld() {</span>
+<span class="source-line-no">251</span><span id="line-251">        return chunk == null ? BukkitAdapter.adapt(Bukkit.getWorld(world)) : BukkitAdapter.adapt(chunk.getWorld());</span>
+<span class="source-line-no">252</span><span id="line-252">    }</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">    @Override</span>
+<span class="source-line-no">255</span><span id="line-255">    public @NonNull Location getMax() {</span>
+<span class="source-line-no">256</span><span id="line-256">        return Location.at(getWorld().getName(), 15 + (getX() &lt;&lt; 4), super.getMax().getY(), 15 + (getZ() &lt;&lt; 4));</span>
+<span class="source-line-no">257</span><span id="line-257">    }</span>
+<span class="source-line-no">258</span><span id="line-258"></span>
+<span class="source-line-no">259</span><span id="line-259">    @Override</span>
+<span class="source-line-no">260</span><span id="line-260">    public @NonNull Location getMin() {</span>
+<span class="source-line-no">261</span><span id="line-261">        return Location.at(getWorld().getName(), getX() &lt;&lt; 4, super.getMin().getY(), getZ() &lt;&lt; 4);</span>
+<span class="source-line-no">262</span><span id="line-262">    }</span>
+<span class="source-line-no">263</span><span id="line-263"></span>
+<span class="source-line-no">264</span><span id="line-264">    public @NonNull GenChunk clone() {</span>
+<span class="source-line-no">265</span><span id="line-265">        GenChunk toReturn = new GenChunk(getMin().getY(), getMax().getY());</span>
+<span class="source-line-no">266</span><span id="line-266">        if (this.result != null) {</span>
+<span class="source-line-no">267</span><span id="line-267">            for (int i = 0; i &lt; this.result.length; i++) {</span>
+<span class="source-line-no">268</span><span id="line-268">                BlockState[] matrix = this.result[i];</span>
+<span class="source-line-no">269</span><span id="line-269">                if (matrix != null) {</span>
+<span class="source-line-no">270</span><span id="line-270">                    toReturn.result[i] = new BlockState[matrix.length];</span>
+<span class="source-line-no">271</span><span id="line-271">                    System.arraycopy(matrix, 0, toReturn.result[i], 0, matrix.length);</span>
+<span class="source-line-no">272</span><span id="line-272">                }</span>
+<span class="source-line-no">273</span><span id="line-273">            }</span>
+<span class="source-line-no">274</span><span id="line-274">        }</span>
+<span class="source-line-no">275</span><span id="line-275">        toReturn.chunkData = this.chunkData;</span>
+<span class="source-line-no">276</span><span id="line-276">        return toReturn;</span>
+<span class="source-line-no">277</span><span id="line-277">    }</span>
+<span class="source-line-no">278</span><span id="line-278"></span>
+<span class="source-line-no">279</span><span id="line-279">    private int getLayerIndex(int y) {</span>
+<span class="source-line-no">280</span><span id="line-280">        return (y - getMin().getY()) &gt;&gt; 4;</span>
+<span class="source-line-no">281</span><span id="line-281">    }</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">}</span>
 
 
 

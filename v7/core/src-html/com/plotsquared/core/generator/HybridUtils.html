@@ -393,362 +393,366 @@
 <span class="source-line-no">380</span><span id="line-380">        run.run();</span>
 <span class="source-line-no">381</span><span id="line-381">    }</span>
 <span class="source-line-no">382</span><span id="line-382"></span>
-<span class="source-line-no">383</span><span id="line-383">    public int checkModified(QueueCoordinator queue, int x1, int x2, int y1, int y2, int z1, int z2, BlockState[] blocks) {</span>
-<span class="source-line-no">384</span><span id="line-384">        int count = 0;</span>
-<span class="source-line-no">385</span><span id="line-385">        for (int y = y1; y &lt;= y2; y++) {</span>
-<span class="source-line-no">386</span><span id="line-386">            for (int x = x1; x &lt;= x2; x++) {</span>
-<span class="source-line-no">387</span><span id="line-387">                for (int z = z1; z &lt;= z2; z++) {</span>
-<span class="source-line-no">388</span><span id="line-388">                    BlockState block = queue.getBlock(x, y, z);</span>
-<span class="source-line-no">389</span><span id="line-389">                    boolean same = Arrays.stream(blocks).anyMatch(p -&gt; this.worldUtil.isBlockSame(block, p));</span>
-<span class="source-line-no">390</span><span id="line-390">                    if (!same) {</span>
-<span class="source-line-no">391</span><span id="line-391">                        count++;</span>
-<span class="source-line-no">392</span><span id="line-392">                    }</span>
-<span class="source-line-no">393</span><span id="line-393">                }</span>
-<span class="source-line-no">394</span><span id="line-394">            }</span>
-<span class="source-line-no">395</span><span id="line-395">        }</span>
-<span class="source-line-no">396</span><span id="line-396">        return count;</span>
-<span class="source-line-no">397</span><span id="line-397">    }</span>
-<span class="source-line-no">398</span><span id="line-398"></span>
-<span class="source-line-no">399</span><span id="line-399">    public final ArrayList&lt;BlockVector2&gt; getChunks(BlockVector2 region) {</span>
-<span class="source-line-no">400</span><span id="line-400">        ArrayList&lt;BlockVector2&gt; chunks = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">401</span><span id="line-401">        int sx = region.getX() &lt;&lt; 5;</span>
-<span class="source-line-no">402</span><span id="line-402">        int sz = region.getZ() &lt;&lt; 5;</span>
-<span class="source-line-no">403</span><span id="line-403">        for (int x = sx; x &lt; sx + 32; x++) {</span>
-<span class="source-line-no">404</span><span id="line-404">            for (int z = sz; z &lt; sz + 32; z++) {</span>
-<span class="source-line-no">405</span><span id="line-405">                chunks.add(BlockVector2.at(x, z));</span>
-<span class="source-line-no">406</span><span id="line-406">            }</span>
-<span class="source-line-no">407</span><span id="line-407">        }</span>
-<span class="source-line-no">408</span><span id="line-408">        return chunks;</span>
-<span class="source-line-no">409</span><span id="line-409">    }</span>
-<span class="source-line-no">410</span><span id="line-410"></span>
-<span class="source-line-no">411</span><span id="line-411">    public boolean scheduleRoadUpdate(PlotArea area, int extend) {</span>
-<span class="source-line-no">412</span><span id="line-412">        if (HybridUtils.UPDATE) {</span>
-<span class="source-line-no">413</span><span id="line-413">            return false;</span>
-<span class="source-line-no">414</span><span id="line-414">        }</span>
-<span class="source-line-no">415</span><span id="line-415">        HybridUtils.UPDATE = true;</span>
-<span class="source-line-no">416</span><span id="line-416">        Set&lt;BlockVector2&gt; regions = this.worldUtil.getChunkChunks(area.getWorldName());</span>
-<span class="source-line-no">417</span><span id="line-417">        return scheduleRoadUpdate(area, regions, extend, new LinkedHashSet&lt;&gt;());</span>
-<span class="source-line-no">418</span><span id="line-418">    }</span>
-<span class="source-line-no">419</span><span id="line-419"></span>
-<span class="source-line-no">420</span><span id="line-420">    public boolean scheduleSingleRegionRoadUpdate(Plot plot, int extend) {</span>
-<span class="source-line-no">421</span><span id="line-421">        if (HybridUtils.UPDATE) {</span>
-<span class="source-line-no">422</span><span id="line-422">            return false;</span>
-<span class="source-line-no">423</span><span id="line-423">        }</span>
-<span class="source-line-no">424</span><span id="line-424">        HybridUtils.UPDATE = true;</span>
-<span class="source-line-no">425</span><span id="line-425">        Set&lt;BlockVector2&gt; regions = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">426</span><span id="line-426">        regions.add(RegionManager.getRegion(plot.getCenterSynchronous()));</span>
-<span class="source-line-no">427</span><span id="line-427">        return scheduleRoadUpdate(plot.getArea(), regions, extend, new LinkedHashSet&lt;&gt;());</span>
-<span class="source-line-no">428</span><span id="line-428">    }</span>
-<span class="source-line-no">429</span><span id="line-429"></span>
-<span class="source-line-no">430</span><span id="line-430">    public boolean scheduleRoadUpdate(</span>
-<span class="source-line-no">431</span><span id="line-431">            final PlotArea area,</span>
-<span class="source-line-no">432</span><span id="line-432">            Set&lt;BlockVector2&gt; regions,</span>
-<span class="source-line-no">433</span><span id="line-433">            final int extend,</span>
-<span class="source-line-no">434</span><span id="line-434">            Set&lt;BlockVector2&gt; chunks</span>
-<span class="source-line-no">435</span><span id="line-435">    ) {</span>
-<span class="source-line-no">436</span><span id="line-436">        HybridUtils.regions = regions;</span>
-<span class="source-line-no">437</span><span id="line-437">        HybridUtils.area = area;</span>
-<span class="source-line-no">438</span><span id="line-438">        HybridUtils.height = extend;</span>
-<span class="source-line-no">439</span><span id="line-439">        HybridUtils.chunks = chunks;</span>
-<span class="source-line-no">440</span><span id="line-440">        final int initial = 1024 * regions.size() + chunks.size();</span>
-<span class="source-line-no">441</span><span id="line-441">        final AtomicInteger count = new AtomicInteger(0);</span>
-<span class="source-line-no">442</span><span id="line-442">        TaskManager.runTask(new Runnable() {</span>
-<span class="source-line-no">443</span><span id="line-443">            @Override</span>
-<span class="source-line-no">444</span><span id="line-444">            public void run() {</span>
-<span class="source-line-no">445</span><span id="line-445">                if (!UPDATE) {</span>
-<span class="source-line-no">446</span><span id="line-446">                    Iterator&lt;BlockVector2&gt; iter = chunks.iterator();</span>
-<span class="source-line-no">447</span><span id="line-447">                    QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
-<span class="source-line-no">448</span><span id="line-448">                    while (iter.hasNext()) {</span>
-<span class="source-line-no">449</span><span id="line-449">                        BlockVector2 chunk = iter.next();</span>
-<span class="source-line-no">450</span><span id="line-450">                        iter.remove();</span>
-<span class="source-line-no">451</span><span id="line-451">                        boolean regenedRoad = regenerateRoad(area, chunk, extend, queue);</span>
-<span class="source-line-no">452</span><span id="line-452">                        if (!regenedRoad) {</span>
-<span class="source-line-no">453</span><span id="line-453">                            LOGGER.info("Failed to regenerate roads in chunk {}", chunk);</span>
-<span class="source-line-no">454</span><span id="line-454">                        }</span>
-<span class="source-line-no">455</span><span id="line-455">                    }</span>
-<span class="source-line-no">456</span><span id="line-456">                    queue.enqueue();</span>
-<span class="source-line-no">457</span><span id="line-457">                    LOGGER.info("Cancelled road task");</span>
-<span class="source-line-no">458</span><span id="line-458">                    return;</span>
-<span class="source-line-no">459</span><span id="line-459">                }</span>
-<span class="source-line-no">460</span><span id="line-460">                count.incrementAndGet();</span>
-<span class="source-line-no">461</span><span id="line-461">                if (count.intValue() % 10 == 0) {</span>
-<span class="source-line-no">462</span><span id="line-462">                    LOGGER.info("Progress: {}%", 100 * (initial - (chunks.size() + 1024 * regions.size())) / initial);</span>
+<span class="source-line-no">383</span><span id="line-383">    /**</span>
+<span class="source-line-no">384</span><span id="line-384">     * @deprecated Unused internally and poor implementation. Scheduled for removal in next major release.</span>
+<span class="source-line-no">385</span><span id="line-385">     */</span>
+<span class="source-line-no">386</span><span id="line-386">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
+<span class="source-line-no">387</span><span id="line-387">    public int checkModified(QueueCoordinator queue, int x1, int x2, int y1, int y2, int z1, int z2, BlockState[] blocks) {</span>
+<span class="source-line-no">388</span><span id="line-388">        int count = 0;</span>
+<span class="source-line-no">389</span><span id="line-389">        for (int y = y1; y &lt;= y2; y++) {</span>
+<span class="source-line-no">390</span><span id="line-390">            for (int x = x1; x &lt;= x2; x++) {</span>
+<span class="source-line-no">391</span><span id="line-391">                for (int z = z1; z &lt;= z2; z++) {</span>
+<span class="source-line-no">392</span><span id="line-392">                    BlockState block = queue.getBlock(x, y, z);</span>
+<span class="source-line-no">393</span><span id="line-393">                    boolean same = Arrays.stream(blocks).anyMatch(p -&gt; this.worldUtil.isBlockSame(block, p));</span>
+<span class="source-line-no">394</span><span id="line-394">                    if (!same) {</span>
+<span class="source-line-no">395</span><span id="line-395">                        count++;</span>
+<span class="source-line-no">396</span><span id="line-396">                    }</span>
+<span class="source-line-no">397</span><span id="line-397">                }</span>
+<span class="source-line-no">398</span><span id="line-398">            }</span>
+<span class="source-line-no">399</span><span id="line-399">        }</span>
+<span class="source-line-no">400</span><span id="line-400">        return count;</span>
+<span class="source-line-no">401</span><span id="line-401">    }</span>
+<span class="source-line-no">402</span><span id="line-402"></span>
+<span class="source-line-no">403</span><span id="line-403">    public final ArrayList&lt;BlockVector2&gt; getChunks(BlockVector2 region) {</span>
+<span class="source-line-no">404</span><span id="line-404">        ArrayList&lt;BlockVector2&gt; chunks = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">405</span><span id="line-405">        int sx = region.getX() &lt;&lt; 5;</span>
+<span class="source-line-no">406</span><span id="line-406">        int sz = region.getZ() &lt;&lt; 5;</span>
+<span class="source-line-no">407</span><span id="line-407">        for (int x = sx; x &lt; sx + 32; x++) {</span>
+<span class="source-line-no">408</span><span id="line-408">            for (int z = sz; z &lt; sz + 32; z++) {</span>
+<span class="source-line-no">409</span><span id="line-409">                chunks.add(BlockVector2.at(x, z));</span>
+<span class="source-line-no">410</span><span id="line-410">            }</span>
+<span class="source-line-no">411</span><span id="line-411">        }</span>
+<span class="source-line-no">412</span><span id="line-412">        return chunks;</span>
+<span class="source-line-no">413</span><span id="line-413">    }</span>
+<span class="source-line-no">414</span><span id="line-414"></span>
+<span class="source-line-no">415</span><span id="line-415">    public boolean scheduleRoadUpdate(PlotArea area, int extend) {</span>
+<span class="source-line-no">416</span><span id="line-416">        if (HybridUtils.UPDATE) {</span>
+<span class="source-line-no">417</span><span id="line-417">            return false;</span>
+<span class="source-line-no">418</span><span id="line-418">        }</span>
+<span class="source-line-no">419</span><span id="line-419">        HybridUtils.UPDATE = true;</span>
+<span class="source-line-no">420</span><span id="line-420">        Set&lt;BlockVector2&gt; regions = this.worldUtil.getChunkChunks(area.getWorldName());</span>
+<span class="source-line-no">421</span><span id="line-421">        return scheduleRoadUpdate(area, regions, extend, new LinkedHashSet&lt;&gt;());</span>
+<span class="source-line-no">422</span><span id="line-422">    }</span>
+<span class="source-line-no">423</span><span id="line-423"></span>
+<span class="source-line-no">424</span><span id="line-424">    public boolean scheduleSingleRegionRoadUpdate(Plot plot, int extend) {</span>
+<span class="source-line-no">425</span><span id="line-425">        if (HybridUtils.UPDATE) {</span>
+<span class="source-line-no">426</span><span id="line-426">            return false;</span>
+<span class="source-line-no">427</span><span id="line-427">        }</span>
+<span class="source-line-no">428</span><span id="line-428">        HybridUtils.UPDATE = true;</span>
+<span class="source-line-no">429</span><span id="line-429">        Set&lt;BlockVector2&gt; regions = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">430</span><span id="line-430">        regions.add(RegionManager.getRegion(plot.getCenterSynchronous()));</span>
+<span class="source-line-no">431</span><span id="line-431">        return scheduleRoadUpdate(plot.getArea(), regions, extend, new LinkedHashSet&lt;&gt;());</span>
+<span class="source-line-no">432</span><span id="line-432">    }</span>
+<span class="source-line-no">433</span><span id="line-433"></span>
+<span class="source-line-no">434</span><span id="line-434">    public boolean scheduleRoadUpdate(</span>
+<span class="source-line-no">435</span><span id="line-435">            final PlotArea area,</span>
+<span class="source-line-no">436</span><span id="line-436">            Set&lt;BlockVector2&gt; regions,</span>
+<span class="source-line-no">437</span><span id="line-437">            final int extend,</span>
+<span class="source-line-no">438</span><span id="line-438">            Set&lt;BlockVector2&gt; chunks</span>
+<span class="source-line-no">439</span><span id="line-439">    ) {</span>
+<span class="source-line-no">440</span><span id="line-440">        HybridUtils.regions = regions;</span>
+<span class="source-line-no">441</span><span id="line-441">        HybridUtils.area = area;</span>
+<span class="source-line-no">442</span><span id="line-442">        HybridUtils.height = extend;</span>
+<span class="source-line-no">443</span><span id="line-443">        HybridUtils.chunks = chunks;</span>
+<span class="source-line-no">444</span><span id="line-444">        final int initial = 1024 * regions.size() + chunks.size();</span>
+<span class="source-line-no">445</span><span id="line-445">        final AtomicInteger count = new AtomicInteger(0);</span>
+<span class="source-line-no">446</span><span id="line-446">        TaskManager.runTask(new Runnable() {</span>
+<span class="source-line-no">447</span><span id="line-447">            @Override</span>
+<span class="source-line-no">448</span><span id="line-448">            public void run() {</span>
+<span class="source-line-no">449</span><span id="line-449">                if (!UPDATE) {</span>
+<span class="source-line-no">450</span><span id="line-450">                    Iterator&lt;BlockVector2&gt; iter = chunks.iterator();</span>
+<span class="source-line-no">451</span><span id="line-451">                    QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
+<span class="source-line-no">452</span><span id="line-452">                    while (iter.hasNext()) {</span>
+<span class="source-line-no">453</span><span id="line-453">                        BlockVector2 chunk = iter.next();</span>
+<span class="source-line-no">454</span><span id="line-454">                        iter.remove();</span>
+<span class="source-line-no">455</span><span id="line-455">                        boolean regenedRoad = regenerateRoad(area, chunk, extend, queue);</span>
+<span class="source-line-no">456</span><span id="line-456">                        if (!regenedRoad) {</span>
+<span class="source-line-no">457</span><span id="line-457">                            LOGGER.info("Failed to regenerate roads in chunk {}", chunk);</span>
+<span class="source-line-no">458</span><span id="line-458">                        }</span>
+<span class="source-line-no">459</span><span id="line-459">                    }</span>
+<span class="source-line-no">460</span><span id="line-460">                    queue.enqueue();</span>
+<span class="source-line-no">461</span><span id="line-461">                    LOGGER.info("Cancelled road task");</span>
+<span class="source-line-no">462</span><span id="line-462">                    return;</span>
 <span class="source-line-no">463</span><span id="line-463">                }</span>
-<span class="source-line-no">464</span><span id="line-464">                if (HybridUtils.regions.isEmpty() &amp;&amp; chunks.isEmpty()) {</span>
-<span class="source-line-no">465</span><span id="line-465">                    regeneratePlotWalls(area);</span>
-<span class="source-line-no">466</span><span id="line-466"></span>
-<span class="source-line-no">467</span><span id="line-467">                    HybridUtils.UPDATE = false;</span>
-<span class="source-line-no">468</span><span id="line-468">                    LOGGER.info("Finished road conversion");</span>
-<span class="source-line-no">469</span><span id="line-469">                    // CANCEL TASK</span>
-<span class="source-line-no">470</span><span id="line-470">                } else {</span>
-<span class="source-line-no">471</span><span id="line-471">                    final Runnable task = this;</span>
-<span class="source-line-no">472</span><span id="line-472">                    TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">473</span><span id="line-473">                        try {</span>
-<span class="source-line-no">474</span><span id="line-474">                            if (chunks.size() &lt; 64) {</span>
-<span class="source-line-no">475</span><span id="line-475">                                if (!HybridUtils.regions.isEmpty()) {</span>
-<span class="source-line-no">476</span><span id="line-476">                                    Iterator&lt;BlockVector2&gt; iterator = HybridUtils.regions.iterator();</span>
-<span class="source-line-no">477</span><span id="line-477">                                    BlockVector2 loc = iterator.next();</span>
-<span class="source-line-no">478</span><span id="line-478">                                    iterator.remove();</span>
-<span class="source-line-no">479</span><span id="line-479">                                    LOGGER.info("Updating .mcr: {}, {} (approx 1024 chunks)", loc.getX(), loc.getZ());</span>
-<span class="source-line-no">480</span><span id="line-480">                                    LOGGER.info("- Remaining: {}", HybridUtils.regions.size());</span>
-<span class="source-line-no">481</span><span id="line-481">                                    chunks.addAll(getChunks(loc));</span>
-<span class="source-line-no">482</span><span id="line-482">                                    System.gc();</span>
-<span class="source-line-no">483</span><span id="line-483">                                }</span>
-<span class="source-line-no">484</span><span id="line-484">                            }</span>
-<span class="source-line-no">485</span><span id="line-485">                            if (!chunks.isEmpty()) {</span>
-<span class="source-line-no">486</span><span id="line-486">                                TaskManager.getPlatformImplementation().sync(() -&gt; {</span>
-<span class="source-line-no">487</span><span id="line-487">                                    Iterator&lt;BlockVector2&gt; iterator = chunks.iterator();</span>
-<span class="source-line-no">488</span><span id="line-488">                                    if (chunks.size() &gt;= 32) {</span>
-<span class="source-line-no">489</span><span id="line-489">                                        QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
-<span class="source-line-no">490</span><span id="line-490">                                        for (int i = 0; i &lt; 32; i++) {</span>
-<span class="source-line-no">491</span><span id="line-491">                                            final BlockVector2 chunk = iterator.next();</span>
-<span class="source-line-no">492</span><span id="line-492">                                            iterator.remove();</span>
-<span class="source-line-no">493</span><span id="line-493">                                            boolean regenedRoads = regenerateRoad(area, chunk, extend, queue);</span>
-<span class="source-line-no">494</span><span id="line-494">                                            if (!regenedRoads) {</span>
-<span class="source-line-no">495</span><span id="line-495">                                                LOGGER.info("Failed to regenerate the road in chunk {}", chunk);</span>
-<span class="source-line-no">496</span><span id="line-496">                                            }</span>
-<span class="source-line-no">497</span><span id="line-497">                                        }</span>
-<span class="source-line-no">498</span><span id="line-498">                                        queue.setCompleteTask(task);</span>
-<span class="source-line-no">499</span><span id="line-499">                                        queue.enqueue();</span>
-<span class="source-line-no">500</span><span id="line-500">                                        return null;</span>
-<span class="source-line-no">501</span><span id="line-501">                                    }</span>
-<span class="source-line-no">502</span><span id="line-502">                                    QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
-<span class="source-line-no">503</span><span id="line-503">                                    while (!chunks.isEmpty()) {</span>
-<span class="source-line-no">504</span><span id="line-504">                                        final BlockVector2 chunk = iterator.next();</span>
-<span class="source-line-no">505</span><span id="line-505">                                        iterator.remove();</span>
-<span class="source-line-no">506</span><span id="line-506">                                        boolean regenedRoads = regenerateRoad(area, chunk, extend, queue);</span>
-<span class="source-line-no">507</span><span id="line-507">                                        if (!regenedRoads) {</span>
-<span class="source-line-no">508</span><span id="line-508">                                            LOGGER.info("Failed to regenerate road in chunk {}", chunk);</span>
-<span class="source-line-no">509</span><span id="line-509">                                        }</span>
-<span class="source-line-no">510</span><span id="line-510">                                    }</span>
-<span class="source-line-no">511</span><span id="line-511">                                    queue.setCompleteTask(task);</span>
-<span class="source-line-no">512</span><span id="line-512">                                    queue.enqueue();</span>
-<span class="source-line-no">513</span><span id="line-513">                                    return null;</span>
-<span class="source-line-no">514</span><span id="line-514">                                });</span>
-<span class="source-line-no">515</span><span id="line-515">                                return;</span>
-<span class="source-line-no">516</span><span id="line-516">                            }</span>
-<span class="source-line-no">517</span><span id="line-517">                        } catch (Exception e) {</span>
-<span class="source-line-no">518</span><span id="line-518">                            e.printStackTrace();</span>
-<span class="source-line-no">519</span><span id="line-519">                            Iterator&lt;BlockVector2&gt; iterator = HybridUtils.regions.iterator();</span>
-<span class="source-line-no">520</span><span id="line-520">                            BlockVector2 loc = iterator.next();</span>
-<span class="source-line-no">521</span><span id="line-521">                            iterator.remove();</span>
-<span class="source-line-no">522</span><span id="line-522">                            LOGGER.error(</span>
-<span class="source-line-no">523</span><span id="line-523">                                    "Error! Could not update '{}/region/r.{}.{}.mca' (Corrupt chunk?)",</span>
-<span class="source-line-no">524</span><span id="line-524">                                    area.getWorldHash(),</span>
-<span class="source-line-no">525</span><span id="line-525">                                    loc.getX(),</span>
-<span class="source-line-no">526</span><span id="line-526">                                    loc.getZ()</span>
-<span class="source-line-no">527</span><span id="line-527">                            );</span>
-<span class="source-line-no">528</span><span id="line-528">                        }</span>
-<span class="source-line-no">529</span><span id="line-529">                        TaskManager.runTaskLater(task, TaskTime.seconds(1L));</span>
-<span class="source-line-no">530</span><span id="line-530">                    });</span>
-<span class="source-line-no">531</span><span id="line-531">                }</span>
-<span class="source-line-no">532</span><span id="line-532">            }</span>
-<span class="source-line-no">533</span><span id="line-533">        });</span>
-<span class="source-line-no">534</span><span id="line-534">        return true;</span>
-<span class="source-line-no">535</span><span id="line-535">    }</span>
-<span class="source-line-no">536</span><span id="line-536"></span>
-<span class="source-line-no">537</span><span id="line-537">    public boolean setupRoadSchematic(Plot plot) {</span>
-<span class="source-line-no">538</span><span id="line-538">        final String world = plot.getWorldName();</span>
-<span class="source-line-no">539</span><span id="line-539">        final QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(world));</span>
-<span class="source-line-no">540</span><span id="line-540">        Location bot = plot.getBottomAbs().subtract(1, 0, 1);</span>
-<span class="source-line-no">541</span><span id="line-541">        Location top = plot.getTopAbs();</span>
-<span class="source-line-no">542</span><span id="line-542">        final HybridPlotWorld plotworld = (HybridPlotWorld) plot.getArea();</span>
-<span class="source-line-no">543</span><span id="line-543">        // Do not use plotworld#schematicStartHeight() here as we want to restore the pre 6.1.4 way of doing it if</span>
-<span class="source-line-no">544</span><span id="line-544">        //  USE_WALL_IN_ROAD_SCHEM_HEIGHT is false</span>
-<span class="source-line-no">545</span><span id="line-545">        int schemY = Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT ?</span>
-<span class="source-line-no">546</span><span id="line-546">                Math.min(plotworld.PLOT_HEIGHT, Math.min(plotworld.WALL_HEIGHT, plotworld.ROAD_HEIGHT)) : plotworld.ROAD_HEIGHT;</span>
-<span class="source-line-no">547</span><span id="line-547">        int sx = bot.getX() - plotworld.ROAD_WIDTH + 1;</span>
-<span class="source-line-no">548</span><span id="line-548">        int sz = bot.getZ() + 1;</span>
-<span class="source-line-no">549</span><span id="line-549">        int sy = Settings.Schematics.PASTE_ROAD_ON_TOP ? schemY : plot.getArea().getMinBuildHeight();</span>
-<span class="source-line-no">550</span><span id="line-550">        int ex = bot.getX();</span>
-<span class="source-line-no">551</span><span id="line-551">        int ez = top.getZ();</span>
-<span class="source-line-no">552</span><span id="line-552">        int ey = get_ey(plotworld, queue, sx, ex, sz, ez, sy);</span>
-<span class="source-line-no">553</span><span id="line-553">        int bz = sz - plotworld.ROAD_WIDTH;</span>
-<span class="source-line-no">554</span><span id="line-554">        int tz = sz - 1;</span>
-<span class="source-line-no">555</span><span id="line-555">        int ty = get_ey(plotworld, queue, sx, ex, bz, tz, sy);</span>
-<span class="source-line-no">556</span><span id="line-556"></span>
-<span class="source-line-no">557</span><span id="line-557">        final Set&lt;CuboidRegion&gt; sideRoad = Collections.singleton(RegionUtil.createRegion(sx, ex, sy, ey, sz, ez));</span>
-<span class="source-line-no">558</span><span id="line-558">        final Set&lt;CuboidRegion&gt; intersection = Collections.singleton(RegionUtil.createRegion(sx, ex, sy, ty, bz, tz));</span>
-<span class="source-line-no">559</span><span id="line-559"></span>
-<span class="source-line-no">560</span><span id="line-560">        final String dir = Settings.Paths.SCHEMATICS + File.separator + "GEN_ROAD_SCHEMATIC" + File.separator + plot</span>
-<span class="source-line-no">561</span><span id="line-561">                .getArea()</span>
-<span class="source-line-no">562</span><span id="line-562">                .toString() + File.separator;</span>
+<span class="source-line-no">464</span><span id="line-464">                count.incrementAndGet();</span>
+<span class="source-line-no">465</span><span id="line-465">                if (count.intValue() % 10 == 0) {</span>
+<span class="source-line-no">466</span><span id="line-466">                    LOGGER.info("Progress: {}%", 100 * (initial - (chunks.size() + 1024 * regions.size())) / initial);</span>
+<span class="source-line-no">467</span><span id="line-467">                }</span>
+<span class="source-line-no">468</span><span id="line-468">                if (HybridUtils.regions.isEmpty() &amp;&amp; chunks.isEmpty()) {</span>
+<span class="source-line-no">469</span><span id="line-469">                    regeneratePlotWalls(area);</span>
+<span class="source-line-no">470</span><span id="line-470"></span>
+<span class="source-line-no">471</span><span id="line-471">                    HybridUtils.UPDATE = false;</span>
+<span class="source-line-no">472</span><span id="line-472">                    LOGGER.info("Finished road conversion");</span>
+<span class="source-line-no">473</span><span id="line-473">                    // CANCEL TASK</span>
+<span class="source-line-no">474</span><span id="line-474">                } else {</span>
+<span class="source-line-no">475</span><span id="line-475">                    final Runnable task = this;</span>
+<span class="source-line-no">476</span><span id="line-476">                    TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">477</span><span id="line-477">                        try {</span>
+<span class="source-line-no">478</span><span id="line-478">                            if (chunks.size() &lt; 64) {</span>
+<span class="source-line-no">479</span><span id="line-479">                                if (!HybridUtils.regions.isEmpty()) {</span>
+<span class="source-line-no">480</span><span id="line-480">                                    Iterator&lt;BlockVector2&gt; iterator = HybridUtils.regions.iterator();</span>
+<span class="source-line-no">481</span><span id="line-481">                                    BlockVector2 loc = iterator.next();</span>
+<span class="source-line-no">482</span><span id="line-482">                                    iterator.remove();</span>
+<span class="source-line-no">483</span><span id="line-483">                                    LOGGER.info("Updating .mcr: {}, {} (approx 1024 chunks)", loc.getX(), loc.getZ());</span>
+<span class="source-line-no">484</span><span id="line-484">                                    LOGGER.info("- Remaining: {}", HybridUtils.regions.size());</span>
+<span class="source-line-no">485</span><span id="line-485">                                    chunks.addAll(getChunks(loc));</span>
+<span class="source-line-no">486</span><span id="line-486">                                    System.gc();</span>
+<span class="source-line-no">487</span><span id="line-487">                                }</span>
+<span class="source-line-no">488</span><span id="line-488">                            }</span>
+<span class="source-line-no">489</span><span id="line-489">                            if (!chunks.isEmpty()) {</span>
+<span class="source-line-no">490</span><span id="line-490">                                TaskManager.getPlatformImplementation().sync(() -&gt; {</span>
+<span class="source-line-no">491</span><span id="line-491">                                    Iterator&lt;BlockVector2&gt; iterator = chunks.iterator();</span>
+<span class="source-line-no">492</span><span id="line-492">                                    if (chunks.size() &gt;= 32) {</span>
+<span class="source-line-no">493</span><span id="line-493">                                        QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
+<span class="source-line-no">494</span><span id="line-494">                                        for (int i = 0; i &lt; 32; i++) {</span>
+<span class="source-line-no">495</span><span id="line-495">                                            final BlockVector2 chunk = iterator.next();</span>
+<span class="source-line-no">496</span><span id="line-496">                                            iterator.remove();</span>
+<span class="source-line-no">497</span><span id="line-497">                                            boolean regenedRoads = regenerateRoad(area, chunk, extend, queue);</span>
+<span class="source-line-no">498</span><span id="line-498">                                            if (!regenedRoads) {</span>
+<span class="source-line-no">499</span><span id="line-499">                                                LOGGER.info("Failed to regenerate the road in chunk {}", chunk);</span>
+<span class="source-line-no">500</span><span id="line-500">                                            }</span>
+<span class="source-line-no">501</span><span id="line-501">                                        }</span>
+<span class="source-line-no">502</span><span id="line-502">                                        queue.setCompleteTask(task);</span>
+<span class="source-line-no">503</span><span id="line-503">                                        queue.enqueue();</span>
+<span class="source-line-no">504</span><span id="line-504">                                        return null;</span>
+<span class="source-line-no">505</span><span id="line-505">                                    }</span>
+<span class="source-line-no">506</span><span id="line-506">                                    QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(area.getWorldName()));</span>
+<span class="source-line-no">507</span><span id="line-507">                                    while (!chunks.isEmpty()) {</span>
+<span class="source-line-no">508</span><span id="line-508">                                        final BlockVector2 chunk = iterator.next();</span>
+<span class="source-line-no">509</span><span id="line-509">                                        iterator.remove();</span>
+<span class="source-line-no">510</span><span id="line-510">                                        boolean regenedRoads = regenerateRoad(area, chunk, extend, queue);</span>
+<span class="source-line-no">511</span><span id="line-511">                                        if (!regenedRoads) {</span>
+<span class="source-line-no">512</span><span id="line-512">                                            LOGGER.info("Failed to regenerate road in chunk {}", chunk);</span>
+<span class="source-line-no">513</span><span id="line-513">                                        }</span>
+<span class="source-line-no">514</span><span id="line-514">                                    }</span>
+<span class="source-line-no">515</span><span id="line-515">                                    queue.setCompleteTask(task);</span>
+<span class="source-line-no">516</span><span id="line-516">                                    queue.enqueue();</span>
+<span class="source-line-no">517</span><span id="line-517">                                    return null;</span>
+<span class="source-line-no">518</span><span id="line-518">                                });</span>
+<span class="source-line-no">519</span><span id="line-519">                                return;</span>
+<span class="source-line-no">520</span><span id="line-520">                            }</span>
+<span class="source-line-no">521</span><span id="line-521">                        } catch (Exception e) {</span>
+<span class="source-line-no">522</span><span id="line-522">                            e.printStackTrace();</span>
+<span class="source-line-no">523</span><span id="line-523">                            Iterator&lt;BlockVector2&gt; iterator = HybridUtils.regions.iterator();</span>
+<span class="source-line-no">524</span><span id="line-524">                            BlockVector2 loc = iterator.next();</span>
+<span class="source-line-no">525</span><span id="line-525">                            iterator.remove();</span>
+<span class="source-line-no">526</span><span id="line-526">                            LOGGER.error(</span>
+<span class="source-line-no">527</span><span id="line-527">                                    "Error! Could not update '{}/region/r.{}.{}.mca' (Corrupt chunk?)",</span>
+<span class="source-line-no">528</span><span id="line-528">                                    area.getWorldHash(),</span>
+<span class="source-line-no">529</span><span id="line-529">                                    loc.getX(),</span>
+<span class="source-line-no">530</span><span id="line-530">                                    loc.getZ()</span>
+<span class="source-line-no">531</span><span id="line-531">                            );</span>
+<span class="source-line-no">532</span><span id="line-532">                        }</span>
+<span class="source-line-no">533</span><span id="line-533">                        TaskManager.runTaskLater(task, TaskTime.seconds(1L));</span>
+<span class="source-line-no">534</span><span id="line-534">                    });</span>
+<span class="source-line-no">535</span><span id="line-535">                }</span>
+<span class="source-line-no">536</span><span id="line-536">            }</span>
+<span class="source-line-no">537</span><span id="line-537">        });</span>
+<span class="source-line-no">538</span><span id="line-538">        return true;</span>
+<span class="source-line-no">539</span><span id="line-539">    }</span>
+<span class="source-line-no">540</span><span id="line-540"></span>
+<span class="source-line-no">541</span><span id="line-541">    public boolean setupRoadSchematic(Plot plot) {</span>
+<span class="source-line-no">542</span><span id="line-542">        final String world = plot.getWorldName();</span>
+<span class="source-line-no">543</span><span id="line-543">        final QueueCoordinator queue = blockQueue.getNewQueue(worldUtil.getWeWorld(world));</span>
+<span class="source-line-no">544</span><span id="line-544">        Location bot = plot.getBottomAbs().subtract(1, 0, 1);</span>
+<span class="source-line-no">545</span><span id="line-545">        Location top = plot.getTopAbs();</span>
+<span class="source-line-no">546</span><span id="line-546">        final HybridPlotWorld plotworld = (HybridPlotWorld) plot.getArea();</span>
+<span class="source-line-no">547</span><span id="line-547">        // Do not use plotworld#schematicStartHeight() here as we want to restore the pre 6.1.4 way of doing it if</span>
+<span class="source-line-no">548</span><span id="line-548">        //  USE_WALL_IN_ROAD_SCHEM_HEIGHT is false</span>
+<span class="source-line-no">549</span><span id="line-549">        int schemY = Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT ?</span>
+<span class="source-line-no">550</span><span id="line-550">                Math.min(plotworld.PLOT_HEIGHT, Math.min(plotworld.WALL_HEIGHT, plotworld.ROAD_HEIGHT)) : plotworld.ROAD_HEIGHT;</span>
+<span class="source-line-no">551</span><span id="line-551">        int sx = bot.getX() - plotworld.ROAD_WIDTH + 1;</span>
+<span class="source-line-no">552</span><span id="line-552">        int sz = bot.getZ() + 1;</span>
+<span class="source-line-no">553</span><span id="line-553">        int sy = Settings.Schematics.PASTE_ROAD_ON_TOP ? schemY : plot.getArea().getMinBuildHeight();</span>
+<span class="source-line-no">554</span><span id="line-554">        int ex = bot.getX();</span>
+<span class="source-line-no">555</span><span id="line-555">        int ez = top.getZ();</span>
+<span class="source-line-no">556</span><span id="line-556">        int ey = get_ey(plotworld, queue, sx, ex, sz, ez, sy);</span>
+<span class="source-line-no">557</span><span id="line-557">        int bz = sz - plotworld.ROAD_WIDTH;</span>
+<span class="source-line-no">558</span><span id="line-558">        int tz = sz - 1;</span>
+<span class="source-line-no">559</span><span id="line-559">        int ty = get_ey(plotworld, queue, sx, ex, bz, tz, sy);</span>
+<span class="source-line-no">560</span><span id="line-560"></span>
+<span class="source-line-no">561</span><span id="line-561">        final Set&lt;CuboidRegion&gt; sideRoad = Collections.singleton(RegionUtil.createRegion(sx, ex, sy, ey, sz, ez));</span>
+<span class="source-line-no">562</span><span id="line-562">        final Set&lt;CuboidRegion&gt; intersection = Collections.singleton(RegionUtil.createRegion(sx, ex, sy, ty, bz, tz));</span>
 <span class="source-line-no">563</span><span id="line-563"></span>
-<span class="source-line-no">564</span><span id="line-564">        this.schematicHandler.getCompoundTag(world, sideRoad)</span>
-<span class="source-line-no">565</span><span id="line-565">                .whenComplete((compoundTag, throwable) -&gt; {</span>
-<span class="source-line-no">566</span><span id="line-566">                    schematicHandler.save(compoundTag, dir + "sideroad.schem");</span>
-<span class="source-line-no">567</span><span id="line-567">                    schematicHandler.getCompoundTag(world, intersection)</span>
-<span class="source-line-no">568</span><span id="line-568">                            .whenComplete((c, t) -&gt; {</span>
-<span class="source-line-no">569</span><span id="line-569">                                schematicHandler.save(c, dir + "intersection.schem");</span>
-<span class="source-line-no">570</span><span id="line-570">                                plotworld.ROAD_SCHEMATIC_ENABLED = true;</span>
-<span class="source-line-no">571</span><span id="line-571">                                try {</span>
-<span class="source-line-no">572</span><span id="line-572">                                    plotworld.setupSchematics();</span>
-<span class="source-line-no">573</span><span id="line-573">                                } catch (SchematicHandler.UnsupportedFormatException e) {</span>
-<span class="source-line-no">574</span><span id="line-574">                                    e.printStackTrace();</span>
-<span class="source-line-no">575</span><span id="line-575">                                }</span>
-<span class="source-line-no">576</span><span id="line-576">                            });</span>
-<span class="source-line-no">577</span><span id="line-577">                });</span>
-<span class="source-line-no">578</span><span id="line-578">        return true;</span>
-<span class="source-line-no">579</span><span id="line-579">    }</span>
-<span class="source-line-no">580</span><span id="line-580"></span>
-<span class="source-line-no">581</span><span id="line-581">    private int get_ey(final HybridPlotWorld hpw, QueueCoordinator queue, int sx, int ex, int sz, int ez, int sy) {</span>
-<span class="source-line-no">582</span><span id="line-582">        int ey = sy;</span>
-<span class="source-line-no">583</span><span id="line-583">        for (int x = sx; x &lt;= ex; x++) {</span>
-<span class="source-line-no">584</span><span id="line-584">            for (int z = sz; z &lt;= ez; z++) {</span>
-<span class="source-line-no">585</span><span id="line-585">                for (int y = sy; y &lt;= hpw.getMaxGenHeight(); y++) {</span>
-<span class="source-line-no">586</span><span id="line-586">                    if (y &gt; ey) {</span>
-<span class="source-line-no">587</span><span id="line-587">                        BlockState block = queue.getBlock(x, y, z);</span>
-<span class="source-line-no">588</span><span id="line-588">                        if (!block.getBlockType().getMaterial().isAir()) {</span>
-<span class="source-line-no">589</span><span id="line-589">                            ey = y;</span>
-<span class="source-line-no">590</span><span id="line-590">                        }</span>
-<span class="source-line-no">591</span><span id="line-591">                    }</span>
-<span class="source-line-no">592</span><span id="line-592">                }</span>
-<span class="source-line-no">593</span><span id="line-593">            }</span>
-<span class="source-line-no">594</span><span id="line-594">        }</span>
-<span class="source-line-no">595</span><span id="line-595">        return ey;</span>
-<span class="source-line-no">596</span><span id="line-596">    }</span>
-<span class="source-line-no">597</span><span id="line-597"></span>
-<span class="source-line-no">598</span><span id="line-598">    /**</span>
-<span class="source-line-no">599</span><span id="line-599">     * Regenerate the road in a chunk in a plot area.</span>
-<span class="source-line-no">600</span><span id="line-600">     *</span>
-<span class="source-line-no">601</span><span id="line-601">     * @param area             Plot area to regenerate road for</span>
-<span class="source-line-no">602</span><span id="line-602">     * @param chunk            Chunk location to regenerate</span>
-<span class="source-line-no">603</span><span id="line-603">     * @param extend           How far to extend setting air above the road</span>
-<span class="source-line-no">604</span><span id="line-604">     * @param queueCoordinator {@link QueueCoordinator} to use to set the blocks. Null if one should be created and enqueued</span>
-<span class="source-line-no">605</span><span id="line-605">     * @return if successful</span>
-<span class="source-line-no">606</span><span id="line-606">     * @since 6.6.0</span>
-<span class="source-line-no">607</span><span id="line-607">     */</span>
-<span class="source-line-no">608</span><span id="line-608">    public boolean regenerateRoad(</span>
-<span class="source-line-no">609</span><span id="line-609">            final PlotArea area,</span>
-<span class="source-line-no">610</span><span id="line-610">            final BlockVector2 chunk,</span>
-<span class="source-line-no">611</span><span id="line-611">            int extend,</span>
-<span class="source-line-no">612</span><span id="line-612">            @Nullable QueueCoordinator queueCoordinator</span>
-<span class="source-line-no">613</span><span id="line-613">    ) {</span>
-<span class="source-line-no">614</span><span id="line-614">        int x = chunk.getX() &lt;&lt; 4;</span>
-<span class="source-line-no">615</span><span id="line-615">        int z = chunk.getZ() &lt;&lt; 4;</span>
-<span class="source-line-no">616</span><span id="line-616">        int ex = x + 15;</span>
-<span class="source-line-no">617</span><span id="line-617">        int ez = z + 15;</span>
-<span class="source-line-no">618</span><span id="line-618">        HybridPlotWorld plotWorld = (HybridPlotWorld) area;</span>
-<span class="source-line-no">619</span><span id="line-619">        if (!plotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
-<span class="source-line-no">620</span><span id="line-620">            return false;</span>
-<span class="source-line-no">621</span><span id="line-621">        }</span>
-<span class="source-line-no">622</span><span id="line-622">        AtomicBoolean toCheck = new AtomicBoolean(false);</span>
-<span class="source-line-no">623</span><span id="line-623">        if (plotWorld.getType() == PlotAreaType.PARTIAL) {</span>
-<span class="source-line-no">624</span><span id="line-624">            boolean chunk1 = area.contains(x, z);</span>
-<span class="source-line-no">625</span><span id="line-625">            boolean chunk2 = area.contains(ex, ez);</span>
-<span class="source-line-no">626</span><span id="line-626">            if (!chunk1 &amp;&amp; !chunk2) {</span>
-<span class="source-line-no">627</span><span id="line-627">                return false;</span>
-<span class="source-line-no">628</span><span id="line-628">            } else {</span>
-<span class="source-line-no">629</span><span id="line-629">                toCheck.set(chunk1 ^ chunk2);</span>
-<span class="source-line-no">630</span><span id="line-630">            }</span>
-<span class="source-line-no">631</span><span id="line-631">        }</span>
-<span class="source-line-no">632</span><span id="line-632">        PlotManager manager = area.getPlotManager();</span>
-<span class="source-line-no">633</span><span id="line-633">        PlotId id1 = manager.getPlotId(x, 0, z);</span>
-<span class="source-line-no">634</span><span id="line-634">        PlotId id2 = manager.getPlotId(ex, 0, ez);</span>
-<span class="source-line-no">635</span><span id="line-635">        x = x - plotWorld.ROAD_OFFSET_X;</span>
-<span class="source-line-no">636</span><span id="line-636">        z -= plotWorld.ROAD_OFFSET_Z;</span>
-<span class="source-line-no">637</span><span id="line-637">        final int finalX = x;</span>
-<span class="source-line-no">638</span><span id="line-638">        final int finalZ = z;</span>
-<span class="source-line-no">639</span><span id="line-639">        final boolean enqueue;</span>
-<span class="source-line-no">640</span><span id="line-640">        final QueueCoordinator queue;</span>
-<span class="source-line-no">641</span><span id="line-641">        if (queueCoordinator == null) {</span>
-<span class="source-line-no">642</span><span id="line-642">            queue = this.blockQueue.getNewQueue(worldUtil.getWeWorld(plotWorld.getWorldName()));</span>
-<span class="source-line-no">643</span><span id="line-643">            enqueue = true;</span>
-<span class="source-line-no">644</span><span id="line-644">        } else {</span>
-<span class="source-line-no">645</span><span id="line-645">            queue = queueCoordinator;</span>
-<span class="source-line-no">646</span><span id="line-646">            enqueue = false;</span>
-<span class="source-line-no">647</span><span id="line-647">        }</span>
-<span class="source-line-no">648</span><span id="line-648">        if (id1 == null || id2 == null || id1 != id2) {</span>
-<span class="source-line-no">649</span><span id="line-649">            if (id1 != null) {</span>
-<span class="source-line-no">650</span><span id="line-650">                Plot p1 = area.getPlotAbs(id1);</span>
-<span class="source-line-no">651</span><span id="line-651">                if (p1 != null &amp;&amp; p1.hasOwner() &amp;&amp; p1.isMerged()) {</span>
-<span class="source-line-no">652</span><span id="line-652">                    toCheck.set(true);</span>
-<span class="source-line-no">653</span><span id="line-653">                }</span>
-<span class="source-line-no">654</span><span id="line-654">            }</span>
-<span class="source-line-no">655</span><span id="line-655">            if (id2 != null &amp;&amp; !toCheck.get()) {</span>
-<span class="source-line-no">656</span><span id="line-656">                Plot p2 = area.getPlotAbs(id2);</span>
-<span class="source-line-no">657</span><span id="line-657">                if (p2 != null &amp;&amp; p2.hasOwner() &amp;&amp; p2.isMerged()) {</span>
-<span class="source-line-no">658</span><span id="line-658">                    toCheck.set(true);</span>
-<span class="source-line-no">659</span><span id="line-659">                }</span>
-<span class="source-line-no">660</span><span id="line-660">            }</span>
-<span class="source-line-no">661</span><span id="line-661">            short size = plotWorld.SIZE;</span>
-<span class="source-line-no">662</span><span id="line-662">            for (int X = 0; X &lt; 16; X++) {</span>
-<span class="source-line-no">663</span><span id="line-663">                short absX = (short) ((finalX + X) % size);</span>
-<span class="source-line-no">664</span><span id="line-664">                for (int Z = 0; Z &lt; 16; Z++) {</span>
-<span class="source-line-no">665</span><span id="line-665">                    short absZ = (short) ((finalZ + Z) % size);</span>
-<span class="source-line-no">666</span><span id="line-666">                    if (absX &lt; 0) {</span>
-<span class="source-line-no">667</span><span id="line-667">                        absX += size;</span>
-<span class="source-line-no">668</span><span id="line-668">                    }</span>
-<span class="source-line-no">669</span><span id="line-669">                    if (absZ &lt; 0) {</span>
-<span class="source-line-no">670</span><span id="line-670">                        absZ += size;</span>
-<span class="source-line-no">671</span><span id="line-671">                    }</span>
-<span class="source-line-no">672</span><span id="line-672">                    boolean condition;</span>
-<span class="source-line-no">673</span><span id="line-673">                    if (toCheck.get()) {</span>
-<span class="source-line-no">674</span><span id="line-674">                        condition = manager.getPlotId(</span>
-<span class="source-line-no">675</span><span id="line-675">                                finalX + X + plotWorld.ROAD_OFFSET_X,</span>
-<span class="source-line-no">676</span><span id="line-676">                                1,</span>
-<span class="source-line-no">677</span><span id="line-677">                                finalZ + Z + plotWorld.ROAD_OFFSET_Z</span>
-<span class="source-line-no">678</span><span id="line-678">                        ) == null;</span>
-<span class="source-line-no">679</span><span id="line-679">                    } else {</span>
-<span class="source-line-no">680</span><span id="line-680">                        boolean gx = absX &gt; plotWorld.PATH_WIDTH_LOWER;</span>
-<span class="source-line-no">681</span><span id="line-681">                        boolean gz = absZ &gt; plotWorld.PATH_WIDTH_LOWER;</span>
-<span class="source-line-no">682</span><span id="line-682">                        boolean lx = absX &lt; plotWorld.PATH_WIDTH_UPPER;</span>
-<span class="source-line-no">683</span><span id="line-683">                        boolean lz = absZ &lt; plotWorld.PATH_WIDTH_UPPER;</span>
-<span class="source-line-no">684</span><span id="line-684">                        condition = !gx || !gz || !lx || !lz;</span>
-<span class="source-line-no">685</span><span id="line-685">                    }</span>
-<span class="source-line-no">686</span><span id="line-686">                    if (condition) {</span>
-<span class="source-line-no">687</span><span id="line-687">                        BaseBlock[] blocks = plotWorld.G_SCH.get(MathMan.pair(absX, absZ));</span>
-<span class="source-line-no">688</span><span id="line-688">                        int minY = Settings.Schematics.PASTE_ROAD_ON_TOP ? plotWorld.SCHEM_Y : area.getMinGenHeight() + 1;</span>
-<span class="source-line-no">689</span><span id="line-689">                        int maxDy = Math.max(extend, blocks.length);</span>
-<span class="source-line-no">690</span><span id="line-690">                        for (int dy = 0; dy &lt; maxDy; dy++) {</span>
-<span class="source-line-no">691</span><span id="line-691">                            if (dy &gt; blocks.length - 1) {</span>
-<span class="source-line-no">692</span><span id="line-692">                                queue.setBlock(</span>
-<span class="source-line-no">693</span><span id="line-693">                                        finalX + X + plotWorld.ROAD_OFFSET_X,</span>
-<span class="source-line-no">694</span><span id="line-694">                                        minY + dy,</span>
-<span class="source-line-no">695</span><span id="line-695">                                        finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
-<span class="source-line-no">696</span><span id="line-696">                                        WEExtent.AIRBASE</span>
-<span class="source-line-no">697</span><span id="line-697">                                );</span>
-<span class="source-line-no">698</span><span id="line-698">                            } else {</span>
-<span class="source-line-no">699</span><span id="line-699">                                BaseBlock block = blocks[dy];</span>
-<span class="source-line-no">700</span><span id="line-700">                                if (block != null) {</span>
-<span class="source-line-no">701</span><span id="line-701">                                    queue.setBlock(</span>
-<span class="source-line-no">702</span><span id="line-702">                                            finalX + X + plotWorld.ROAD_OFFSET_X,</span>
-<span class="source-line-no">703</span><span id="line-703">                                            minY + dy,</span>
-<span class="source-line-no">704</span><span id="line-704">                                            finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
-<span class="source-line-no">705</span><span id="line-705">                                            block</span>
-<span class="source-line-no">706</span><span id="line-706">                                    );</span>
-<span class="source-line-no">707</span><span id="line-707">                                } else {</span>
-<span class="source-line-no">708</span><span id="line-708">                                    queue.setBlock(</span>
-<span class="source-line-no">709</span><span id="line-709">                                            finalX + X + plotWorld.ROAD_OFFSET_X,</span>
-<span class="source-line-no">710</span><span id="line-710">                                            minY + dy,</span>
-<span class="source-line-no">711</span><span id="line-711">                                            finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
-<span class="source-line-no">712</span><span id="line-712">                                            WEExtent.AIRBASE</span>
-<span class="source-line-no">713</span><span id="line-713">                                    );</span>
-<span class="source-line-no">714</span><span id="line-714">                                }</span>
-<span class="source-line-no">715</span><span id="line-715">                            }</span>
-<span class="source-line-no">716</span><span id="line-716">                        }</span>
-<span class="source-line-no">717</span><span id="line-717">                        BiomeType biome = plotWorld.G_SCH_B.get(MathMan.pair(absX, absZ));</span>
-<span class="source-line-no">718</span><span id="line-718">                        if (biome != null) {</span>
-<span class="source-line-no">719</span><span id="line-719">                            queue.setBiome(finalX + X + plotWorld.ROAD_OFFSET_X, finalZ + Z + plotWorld.ROAD_OFFSET_Z, biome);</span>
-<span class="source-line-no">720</span><span id="line-720">                        } else {</span>
-<span class="source-line-no">721</span><span id="line-721">                            queue.setBiome(</span>
-<span class="source-line-no">722</span><span id="line-722">                                    finalX + X + plotWorld.ROAD_OFFSET_X,</span>
-<span class="source-line-no">723</span><span id="line-723">                                    finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
-<span class="source-line-no">724</span><span id="line-724">                                    plotWorld.getPlotBiome()</span>
-<span class="source-line-no">725</span><span id="line-725">                            );</span>
-<span class="source-line-no">726</span><span id="line-726">                        }</span>
-<span class="source-line-no">727</span><span id="line-727">                    }</span>
-<span class="source-line-no">728</span><span id="line-728">                }</span>
-<span class="source-line-no">729</span><span id="line-729">            }</span>
-<span class="source-line-no">730</span><span id="line-730">            if (enqueue) {</span>
-<span class="source-line-no">731</span><span id="line-731">                queue.enqueue();</span>
-<span class="source-line-no">732</span><span id="line-732">            }</span>
-<span class="source-line-no">733</span><span id="line-733">            return true;</span>
-<span class="source-line-no">734</span><span id="line-734">        }</span>
-<span class="source-line-no">735</span><span id="line-735">        return false;</span>
-<span class="source-line-no">736</span><span id="line-736">    }</span>
-<span class="source-line-no">737</span><span id="line-737"></span>
-<span class="source-line-no">738</span><span id="line-738">}</span>
+<span class="source-line-no">564</span><span id="line-564">        final String dir = Settings.Paths.SCHEMATICS + File.separator + "GEN_ROAD_SCHEMATIC" + File.separator + plot</span>
+<span class="source-line-no">565</span><span id="line-565">                .getArea()</span>
+<span class="source-line-no">566</span><span id="line-566">                .toString() + File.separator;</span>
+<span class="source-line-no">567</span><span id="line-567"></span>
+<span class="source-line-no">568</span><span id="line-568">        this.schematicHandler.getCompoundTag(world, sideRoad)</span>
+<span class="source-line-no">569</span><span id="line-569">                .whenComplete((compoundTag, throwable) -&gt; {</span>
+<span class="source-line-no">570</span><span id="line-570">                    schematicHandler.save(compoundTag, dir + "sideroad.schem");</span>
+<span class="source-line-no">571</span><span id="line-571">                    schematicHandler.getCompoundTag(world, intersection)</span>
+<span class="source-line-no">572</span><span id="line-572">                            .whenComplete((c, t) -&gt; {</span>
+<span class="source-line-no">573</span><span id="line-573">                                schematicHandler.save(c, dir + "intersection.schem");</span>
+<span class="source-line-no">574</span><span id="line-574">                                plotworld.ROAD_SCHEMATIC_ENABLED = true;</span>
+<span class="source-line-no">575</span><span id="line-575">                                try {</span>
+<span class="source-line-no">576</span><span id="line-576">                                    plotworld.setupSchematics();</span>
+<span class="source-line-no">577</span><span id="line-577">                                } catch (SchematicHandler.UnsupportedFormatException e) {</span>
+<span class="source-line-no">578</span><span id="line-578">                                    e.printStackTrace();</span>
+<span class="source-line-no">579</span><span id="line-579">                                }</span>
+<span class="source-line-no">580</span><span id="line-580">                            });</span>
+<span class="source-line-no">581</span><span id="line-581">                });</span>
+<span class="source-line-no">582</span><span id="line-582">        return true;</span>
+<span class="source-line-no">583</span><span id="line-583">    }</span>
+<span class="source-line-no">584</span><span id="line-584"></span>
+<span class="source-line-no">585</span><span id="line-585">    private int get_ey(final HybridPlotWorld hpw, QueueCoordinator queue, int sx, int ex, int sz, int ez, int sy) {</span>
+<span class="source-line-no">586</span><span id="line-586">        int ey = sy;</span>
+<span class="source-line-no">587</span><span id="line-587">        for (int x = sx; x &lt;= ex; x++) {</span>
+<span class="source-line-no">588</span><span id="line-588">            for (int z = sz; z &lt;= ez; z++) {</span>
+<span class="source-line-no">589</span><span id="line-589">                for (int y = sy; y &lt;= hpw.getMaxGenHeight(); y++) {</span>
+<span class="source-line-no">590</span><span id="line-590">                    if (y &gt; ey) {</span>
+<span class="source-line-no">591</span><span id="line-591">                        BlockState block = queue.getBlock(x, y, z);</span>
+<span class="source-line-no">592</span><span id="line-592">                        if (!block.getBlockType().getMaterial().isAir()) {</span>
+<span class="source-line-no">593</span><span id="line-593">                            ey = y;</span>
+<span class="source-line-no">594</span><span id="line-594">                        }</span>
+<span class="source-line-no">595</span><span id="line-595">                    }</span>
+<span class="source-line-no">596</span><span id="line-596">                }</span>
+<span class="source-line-no">597</span><span id="line-597">            }</span>
+<span class="source-line-no">598</span><span id="line-598">        }</span>
+<span class="source-line-no">599</span><span id="line-599">        return ey;</span>
+<span class="source-line-no">600</span><span id="line-600">    }</span>
+<span class="source-line-no">601</span><span id="line-601"></span>
+<span class="source-line-no">602</span><span id="line-602">    /**</span>
+<span class="source-line-no">603</span><span id="line-603">     * Regenerate the road in a chunk in a plot area.</span>
+<span class="source-line-no">604</span><span id="line-604">     *</span>
+<span class="source-line-no">605</span><span id="line-605">     * @param area             Plot area to regenerate road for</span>
+<span class="source-line-no">606</span><span id="line-606">     * @param chunk            Chunk location to regenerate</span>
+<span class="source-line-no">607</span><span id="line-607">     * @param extend           How far to extend setting air above the road</span>
+<span class="source-line-no">608</span><span id="line-608">     * @param queueCoordinator {@link QueueCoordinator} to use to set the blocks. Null if one should be created and enqueued</span>
+<span class="source-line-no">609</span><span id="line-609">     * @return if successful</span>
+<span class="source-line-no">610</span><span id="line-610">     * @since 6.6.0</span>
+<span class="source-line-no">611</span><span id="line-611">     */</span>
+<span class="source-line-no">612</span><span id="line-612">    public boolean regenerateRoad(</span>
+<span class="source-line-no">613</span><span id="line-613">            final PlotArea area,</span>
+<span class="source-line-no">614</span><span id="line-614">            final BlockVector2 chunk,</span>
+<span class="source-line-no">615</span><span id="line-615">            int extend,</span>
+<span class="source-line-no">616</span><span id="line-616">            @Nullable QueueCoordinator queueCoordinator</span>
+<span class="source-line-no">617</span><span id="line-617">    ) {</span>
+<span class="source-line-no">618</span><span id="line-618">        int x = chunk.getX() &lt;&lt; 4;</span>
+<span class="source-line-no">619</span><span id="line-619">        int z = chunk.getZ() &lt;&lt; 4;</span>
+<span class="source-line-no">620</span><span id="line-620">        int ex = x + 15;</span>
+<span class="source-line-no">621</span><span id="line-621">        int ez = z + 15;</span>
+<span class="source-line-no">622</span><span id="line-622">        HybridPlotWorld plotWorld = (HybridPlotWorld) area;</span>
+<span class="source-line-no">623</span><span id="line-623">        if (!plotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
+<span class="source-line-no">624</span><span id="line-624">            return false;</span>
+<span class="source-line-no">625</span><span id="line-625">        }</span>
+<span class="source-line-no">626</span><span id="line-626">        AtomicBoolean toCheck = new AtomicBoolean(false);</span>
+<span class="source-line-no">627</span><span id="line-627">        if (plotWorld.getType() == PlotAreaType.PARTIAL) {</span>
+<span class="source-line-no">628</span><span id="line-628">            boolean chunk1 = area.contains(x, z);</span>
+<span class="source-line-no">629</span><span id="line-629">            boolean chunk2 = area.contains(ex, ez);</span>
+<span class="source-line-no">630</span><span id="line-630">            if (!chunk1 &amp;&amp; !chunk2) {</span>
+<span class="source-line-no">631</span><span id="line-631">                return false;</span>
+<span class="source-line-no">632</span><span id="line-632">            } else {</span>
+<span class="source-line-no">633</span><span id="line-633">                toCheck.set(chunk1 ^ chunk2);</span>
+<span class="source-line-no">634</span><span id="line-634">            }</span>
+<span class="source-line-no">635</span><span id="line-635">        }</span>
+<span class="source-line-no">636</span><span id="line-636">        PlotManager manager = area.getPlotManager();</span>
+<span class="source-line-no">637</span><span id="line-637">        PlotId id1 = manager.getPlotId(x, 0, z);</span>
+<span class="source-line-no">638</span><span id="line-638">        PlotId id2 = manager.getPlotId(ex, 0, ez);</span>
+<span class="source-line-no">639</span><span id="line-639">        x = x - plotWorld.ROAD_OFFSET_X;</span>
+<span class="source-line-no">640</span><span id="line-640">        z -= plotWorld.ROAD_OFFSET_Z;</span>
+<span class="source-line-no">641</span><span id="line-641">        final int finalX = x;</span>
+<span class="source-line-no">642</span><span id="line-642">        final int finalZ = z;</span>
+<span class="source-line-no">643</span><span id="line-643">        final boolean enqueue;</span>
+<span class="source-line-no">644</span><span id="line-644">        final QueueCoordinator queue;</span>
+<span class="source-line-no">645</span><span id="line-645">        if (queueCoordinator == null) {</span>
+<span class="source-line-no">646</span><span id="line-646">            queue = this.blockQueue.getNewQueue(worldUtil.getWeWorld(plotWorld.getWorldName()));</span>
+<span class="source-line-no">647</span><span id="line-647">            enqueue = true;</span>
+<span class="source-line-no">648</span><span id="line-648">        } else {</span>
+<span class="source-line-no">649</span><span id="line-649">            queue = queueCoordinator;</span>
+<span class="source-line-no">650</span><span id="line-650">            enqueue = false;</span>
+<span class="source-line-no">651</span><span id="line-651">        }</span>
+<span class="source-line-no">652</span><span id="line-652">        if (id1 == null || id2 == null || id1 != id2) {</span>
+<span class="source-line-no">653</span><span id="line-653">            if (id1 != null) {</span>
+<span class="source-line-no">654</span><span id="line-654">                Plot p1 = area.getPlotAbs(id1);</span>
+<span class="source-line-no">655</span><span id="line-655">                if (p1 != null &amp;&amp; p1.hasOwner() &amp;&amp; p1.isMerged()) {</span>
+<span class="source-line-no">656</span><span id="line-656">                    toCheck.set(true);</span>
+<span class="source-line-no">657</span><span id="line-657">                }</span>
+<span class="source-line-no">658</span><span id="line-658">            }</span>
+<span class="source-line-no">659</span><span id="line-659">            if (id2 != null &amp;&amp; !toCheck.get()) {</span>
+<span class="source-line-no">660</span><span id="line-660">                Plot p2 = area.getPlotAbs(id2);</span>
+<span class="source-line-no">661</span><span id="line-661">                if (p2 != null &amp;&amp; p2.hasOwner() &amp;&amp; p2.isMerged()) {</span>
+<span class="source-line-no">662</span><span id="line-662">                    toCheck.set(true);</span>
+<span class="source-line-no">663</span><span id="line-663">                }</span>
+<span class="source-line-no">664</span><span id="line-664">            }</span>
+<span class="source-line-no">665</span><span id="line-665">            short size = plotWorld.SIZE;</span>
+<span class="source-line-no">666</span><span id="line-666">            for (int X = 0; X &lt; 16; X++) {</span>
+<span class="source-line-no">667</span><span id="line-667">                short absX = (short) ((finalX + X) % size);</span>
+<span class="source-line-no">668</span><span id="line-668">                for (int Z = 0; Z &lt; 16; Z++) {</span>
+<span class="source-line-no">669</span><span id="line-669">                    short absZ = (short) ((finalZ + Z) % size);</span>
+<span class="source-line-no">670</span><span id="line-670">                    if (absX &lt; 0) {</span>
+<span class="source-line-no">671</span><span id="line-671">                        absX += size;</span>
+<span class="source-line-no">672</span><span id="line-672">                    }</span>
+<span class="source-line-no">673</span><span id="line-673">                    if (absZ &lt; 0) {</span>
+<span class="source-line-no">674</span><span id="line-674">                        absZ += size;</span>
+<span class="source-line-no">675</span><span id="line-675">                    }</span>
+<span class="source-line-no">676</span><span id="line-676">                    boolean condition;</span>
+<span class="source-line-no">677</span><span id="line-677">                    if (toCheck.get()) {</span>
+<span class="source-line-no">678</span><span id="line-678">                        condition = manager.getPlotId(</span>
+<span class="source-line-no">679</span><span id="line-679">                                finalX + X + plotWorld.ROAD_OFFSET_X,</span>
+<span class="source-line-no">680</span><span id="line-680">                                1,</span>
+<span class="source-line-no">681</span><span id="line-681">                                finalZ + Z + plotWorld.ROAD_OFFSET_Z</span>
+<span class="source-line-no">682</span><span id="line-682">                        ) == null;</span>
+<span class="source-line-no">683</span><span id="line-683">                    } else {</span>
+<span class="source-line-no">684</span><span id="line-684">                        boolean gx = absX &gt; plotWorld.PATH_WIDTH_LOWER;</span>
+<span class="source-line-no">685</span><span id="line-685">                        boolean gz = absZ &gt; plotWorld.PATH_WIDTH_LOWER;</span>
+<span class="source-line-no">686</span><span id="line-686">                        boolean lx = absX &lt; plotWorld.PATH_WIDTH_UPPER;</span>
+<span class="source-line-no">687</span><span id="line-687">                        boolean lz = absZ &lt; plotWorld.PATH_WIDTH_UPPER;</span>
+<span class="source-line-no">688</span><span id="line-688">                        condition = !gx || !gz || !lx || !lz;</span>
+<span class="source-line-no">689</span><span id="line-689">                    }</span>
+<span class="source-line-no">690</span><span id="line-690">                    if (condition) {</span>
+<span class="source-line-no">691</span><span id="line-691">                        BaseBlock[] blocks = plotWorld.G_SCH.get(MathMan.pair(absX, absZ));</span>
+<span class="source-line-no">692</span><span id="line-692">                        int minY = Settings.Schematics.PASTE_ROAD_ON_TOP ? plotWorld.SCHEM_Y : area.getMinGenHeight() + 1;</span>
+<span class="source-line-no">693</span><span id="line-693">                        int maxDy = Math.max(extend, blocks.length);</span>
+<span class="source-line-no">694</span><span id="line-694">                        for (int dy = 0; dy &lt; maxDy; dy++) {</span>
+<span class="source-line-no">695</span><span id="line-695">                            if (dy &gt; blocks.length - 1) {</span>
+<span class="source-line-no">696</span><span id="line-696">                                queue.setBlock(</span>
+<span class="source-line-no">697</span><span id="line-697">                                        finalX + X + plotWorld.ROAD_OFFSET_X,</span>
+<span class="source-line-no">698</span><span id="line-698">                                        minY + dy,</span>
+<span class="source-line-no">699</span><span id="line-699">                                        finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
+<span class="source-line-no">700</span><span id="line-700">                                        WEExtent.AIRBASE</span>
+<span class="source-line-no">701</span><span id="line-701">                                );</span>
+<span class="source-line-no">702</span><span id="line-702">                            } else {</span>
+<span class="source-line-no">703</span><span id="line-703">                                BaseBlock block = blocks[dy];</span>
+<span class="source-line-no">704</span><span id="line-704">                                if (block != null) {</span>
+<span class="source-line-no">705</span><span id="line-705">                                    queue.setBlock(</span>
+<span class="source-line-no">706</span><span id="line-706">                                            finalX + X + plotWorld.ROAD_OFFSET_X,</span>
+<span class="source-line-no">707</span><span id="line-707">                                            minY + dy,</span>
+<span class="source-line-no">708</span><span id="line-708">                                            finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
+<span class="source-line-no">709</span><span id="line-709">                                            block</span>
+<span class="source-line-no">710</span><span id="line-710">                                    );</span>
+<span class="source-line-no">711</span><span id="line-711">                                } else {</span>
+<span class="source-line-no">712</span><span id="line-712">                                    queue.setBlock(</span>
+<span class="source-line-no">713</span><span id="line-713">                                            finalX + X + plotWorld.ROAD_OFFSET_X,</span>
+<span class="source-line-no">714</span><span id="line-714">                                            minY + dy,</span>
+<span class="source-line-no">715</span><span id="line-715">                                            finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
+<span class="source-line-no">716</span><span id="line-716">                                            WEExtent.AIRBASE</span>
+<span class="source-line-no">717</span><span id="line-717">                                    );</span>
+<span class="source-line-no">718</span><span id="line-718">                                }</span>
+<span class="source-line-no">719</span><span id="line-719">                            }</span>
+<span class="source-line-no">720</span><span id="line-720">                        }</span>
+<span class="source-line-no">721</span><span id="line-721">                        BiomeType biome = plotWorld.G_SCH_B.get(MathMan.pair(absX, absZ));</span>
+<span class="source-line-no">722</span><span id="line-722">                        if (biome != null) {</span>
+<span class="source-line-no">723</span><span id="line-723">                            queue.setBiome(finalX + X + plotWorld.ROAD_OFFSET_X, finalZ + Z + plotWorld.ROAD_OFFSET_Z, biome);</span>
+<span class="source-line-no">724</span><span id="line-724">                        } else {</span>
+<span class="source-line-no">725</span><span id="line-725">                            queue.setBiome(</span>
+<span class="source-line-no">726</span><span id="line-726">                                    finalX + X + plotWorld.ROAD_OFFSET_X,</span>
+<span class="source-line-no">727</span><span id="line-727">                                    finalZ + Z + plotWorld.ROAD_OFFSET_Z,</span>
+<span class="source-line-no">728</span><span id="line-728">                                    plotWorld.getPlotBiome()</span>
+<span class="source-line-no">729</span><span id="line-729">                            );</span>
+<span class="source-line-no">730</span><span id="line-730">                        }</span>
+<span class="source-line-no">731</span><span id="line-731">                    }</span>
+<span class="source-line-no">732</span><span id="line-732">                }</span>
+<span class="source-line-no">733</span><span id="line-733">            }</span>
+<span class="source-line-no">734</span><span id="line-734">            if (enqueue) {</span>
+<span class="source-line-no">735</span><span id="line-735">                queue.enqueue();</span>
+<span class="source-line-no">736</span><span id="line-736">            }</span>
+<span class="source-line-no">737</span><span id="line-737">            return true;</span>
+<span class="source-line-no">738</span><span id="line-738">        }</span>
+<span class="source-line-no">739</span><span id="line-739">        return false;</span>
+<span class="source-line-no">740</span><span id="line-740">    }</span>
+<span class="source-line-no">741</span><span id="line-741"></span>
+<span class="source-line-no">742</span><span id="line-742">}</span>
 
 
 

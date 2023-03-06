@@ -2413,13 +2413,13 @@
 <span class="source-line-no">2400</span><span id="line-2400">                if (plot != null) {</span>
 <span class="source-line-no">2401</span><span id="line-2401">                    statement.setString(1, plot.getArea().toString());</span>
 <span class="source-line-no">2402</span><span id="line-2402">                    statement.setInt(2, plot.getId().hashCode());</span>
-<span class="source-line-no">2403</span><span id="line-2403">                    statement.setString(3, comment.comment);</span>
-<span class="source-line-no">2404</span><span id="line-2404">                    statement.setString(4, comment.inbox);</span>
-<span class="source-line-no">2405</span><span id="line-2405">                    statement.setString(5, comment.senderName);</span>
+<span class="source-line-no">2403</span><span id="line-2403">                    statement.setString(3, comment.comment());</span>
+<span class="source-line-no">2404</span><span id="line-2404">                    statement.setString(4, comment.inbox());</span>
+<span class="source-line-no">2405</span><span id="line-2405">                    statement.setString(5, comment.senderName());</span>
 <span class="source-line-no">2406</span><span id="line-2406">                } else {</span>
-<span class="source-line-no">2407</span><span id="line-2407">                    statement.setString(1, comment.comment);</span>
-<span class="source-line-no">2408</span><span id="line-2408">                    statement.setString(2, comment.inbox);</span>
-<span class="source-line-no">2409</span><span id="line-2409">                    statement.setString(3, comment.senderName);</span>
+<span class="source-line-no">2407</span><span id="line-2407">                    statement.setString(1, comment.comment());</span>
+<span class="source-line-no">2408</span><span id="line-2408">                    statement.setString(2, comment.inbox());</span>
+<span class="source-line-no">2409</span><span id="line-2409">                    statement.setString(3, comment.senderName());</span>
 <span class="source-line-no">2410</span><span id="line-2410">                }</span>
 <span class="source-line-no">2411</span><span id="line-2411">            }</span>
 <span class="source-line-no">2412</span><span id="line-2412"></span>
@@ -2531,10 +2531,10 @@
 <span class="source-line-no">2518</span><span id="line-2518">            public void set(PreparedStatement statement) throws SQLException {</span>
 <span class="source-line-no">2519</span><span id="line-2519">                statement.setString(1, plot.getArea().toString());</span>
 <span class="source-line-no">2520</span><span id="line-2520">                statement.setInt(2, plot.getId().hashCode());</span>
-<span class="source-line-no">2521</span><span id="line-2521">                statement.setString(3, comment.comment);</span>
-<span class="source-line-no">2522</span><span id="line-2522">                statement.setString(4, comment.inbox);</span>
-<span class="source-line-no">2523</span><span id="line-2523">                statement.setInt(5, (int) (comment.timestamp / 1000));</span>
-<span class="source-line-no">2524</span><span id="line-2524">                statement.setString(6, comment.senderName);</span>
+<span class="source-line-no">2521</span><span id="line-2521">                statement.setString(3, comment.comment());</span>
+<span class="source-line-no">2522</span><span id="line-2522">                statement.setString(4, comment.inbox());</span>
+<span class="source-line-no">2523</span><span id="line-2523">                statement.setInt(5, (int) (comment.timestamp() / 1000));</span>
+<span class="source-line-no">2524</span><span id="line-2524">                statement.setString(6, comment.senderName());</span>
 <span class="source-line-no">2525</span><span id="line-2525">            }</span>
 <span class="source-line-no">2526</span><span id="line-2526"></span>
 <span class="source-line-no">2527</span><span id="line-2527">            @Override</span>
@@ -3427,45 +3427,40 @@
 <span class="source-line-no">3414</span><span id="line-3414">        }</span>
 <span class="source-line-no">3415</span><span id="line-3415">    }</span>
 <span class="source-line-no">3416</span><span id="line-3416"></span>
-<span class="source-line-no">3417</span><span id="line-3417">    private static class LegacySettings {</span>
-<span class="source-line-no">3418</span><span id="line-3418"></span>
-<span class="source-line-no">3419</span><span id="line-3419">        public final int id;</span>
-<span class="source-line-no">3420</span><span id="line-3420">        public final PlotSettings settings;</span>
+<span class="source-line-no">3417</span><span id="line-3417">    private record LegacySettings(</span>
+<span class="source-line-no">3418</span><span id="line-3418">            int id,</span>
+<span class="source-line-no">3419</span><span id="line-3419">            PlotSettings settings</span>
+<span class="source-line-no">3420</span><span id="line-3420">    ) {</span>
 <span class="source-line-no">3421</span><span id="line-3421"></span>
-<span class="source-line-no">3422</span><span id="line-3422">        public LegacySettings(int id, PlotSettings settings) {</span>
-<span class="source-line-no">3423</span><span id="line-3423">            this.id = id;</span>
-<span class="source-line-no">3424</span><span id="line-3424">            this.settings = settings;</span>
-<span class="source-line-no">3425</span><span id="line-3425">        }</span>
-<span class="source-line-no">3426</span><span id="line-3426"></span>
-<span class="source-line-no">3427</span><span id="line-3427">    }</span>
-<span class="source-line-no">3428</span><span id="line-3428"></span>
-<span class="source-line-no">3429</span><span id="line-3429">    public abstract static class UniqueStatement {</span>
-<span class="source-line-no">3430</span><span id="line-3430"></span>
-<span class="source-line-no">3431</span><span id="line-3431">        public final String method;</span>
-<span class="source-line-no">3432</span><span id="line-3432"></span>
-<span class="source-line-no">3433</span><span id="line-3433">        public UniqueStatement(String method) {</span>
-<span class="source-line-no">3434</span><span id="line-3434">            this.method = method;</span>
-<span class="source-line-no">3435</span><span id="line-3435">        }</span>
-<span class="source-line-no">3436</span><span id="line-3436"></span>
-<span class="source-line-no">3437</span><span id="line-3437">        public void addBatch(PreparedStatement statement) throws SQLException {</span>
-<span class="source-line-no">3438</span><span id="line-3438">            statement.addBatch();</span>
-<span class="source-line-no">3439</span><span id="line-3439">        }</span>
-<span class="source-line-no">3440</span><span id="line-3440"></span>
-<span class="source-line-no">3441</span><span id="line-3441">        public void execute(PreparedStatement statement) throws SQLException {</span>
-<span class="source-line-no">3442</span><span id="line-3442">            statement.executeBatch();</span>
-<span class="source-line-no">3443</span><span id="line-3443">        }</span>
-<span class="source-line-no">3444</span><span id="line-3444"></span>
-<span class="source-line-no">3445</span><span id="line-3445">        public abstract PreparedStatement get() throws SQLException;</span>
-<span class="source-line-no">3446</span><span id="line-3446"></span>
-<span class="source-line-no">3447</span><span id="line-3447">        public abstract void set(PreparedStatement statement) throws SQLException;</span>
-<span class="source-line-no">3448</span><span id="line-3448"></span>
-<span class="source-line-no">3449</span><span id="line-3449">    }</span>
-<span class="source-line-no">3450</span><span id="line-3450"></span>
-<span class="source-line-no">3451</span><span id="line-3451">    private record UUIDPair(int id, UUID uuid) {</span>
-<span class="source-line-no">3452</span><span id="line-3452"></span>
-<span class="source-line-no">3453</span><span id="line-3453">    }</span>
-<span class="source-line-no">3454</span><span id="line-3454"></span>
-<span class="source-line-no">3455</span><span id="line-3455">}</span>
+<span class="source-line-no">3422</span><span id="line-3422">    }</span>
+<span class="source-line-no">3423</span><span id="line-3423"></span>
+<span class="source-line-no">3424</span><span id="line-3424">    public abstract static class UniqueStatement {</span>
+<span class="source-line-no">3425</span><span id="line-3425"></span>
+<span class="source-line-no">3426</span><span id="line-3426">        public final String method;</span>
+<span class="source-line-no">3427</span><span id="line-3427"></span>
+<span class="source-line-no">3428</span><span id="line-3428">        public UniqueStatement(String method) {</span>
+<span class="source-line-no">3429</span><span id="line-3429">            this.method = method;</span>
+<span class="source-line-no">3430</span><span id="line-3430">        }</span>
+<span class="source-line-no">3431</span><span id="line-3431"></span>
+<span class="source-line-no">3432</span><span id="line-3432">        public void addBatch(PreparedStatement statement) throws SQLException {</span>
+<span class="source-line-no">3433</span><span id="line-3433">            statement.addBatch();</span>
+<span class="source-line-no">3434</span><span id="line-3434">        }</span>
+<span class="source-line-no">3435</span><span id="line-3435"></span>
+<span class="source-line-no">3436</span><span id="line-3436">        public void execute(PreparedStatement statement) throws SQLException {</span>
+<span class="source-line-no">3437</span><span id="line-3437">            statement.executeBatch();</span>
+<span class="source-line-no">3438</span><span id="line-3438">        }</span>
+<span class="source-line-no">3439</span><span id="line-3439"></span>
+<span class="source-line-no">3440</span><span id="line-3440">        public abstract PreparedStatement get() throws SQLException;</span>
+<span class="source-line-no">3441</span><span id="line-3441"></span>
+<span class="source-line-no">3442</span><span id="line-3442">        public abstract void set(PreparedStatement statement) throws SQLException;</span>
+<span class="source-line-no">3443</span><span id="line-3443"></span>
+<span class="source-line-no">3444</span><span id="line-3444">    }</span>
+<span class="source-line-no">3445</span><span id="line-3445"></span>
+<span class="source-line-no">3446</span><span id="line-3446">    private record UUIDPair(int id, UUID uuid) {</span>
+<span class="source-line-no">3447</span><span id="line-3447"></span>
+<span class="source-line-no">3448</span><span id="line-3448">    }</span>
+<span class="source-line-no">3449</span><span id="line-3449"></span>
+<span class="source-line-no">3450</span><span id="line-3450">}</span>
 
 
 

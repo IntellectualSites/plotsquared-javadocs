@@ -61,10 +61,10 @@
 <span class="source-line-no">048</span><span id="line-48">    ) {</span>
 <span class="source-line-no">049</span><span id="line-49">        this.configurationNode = configurationNode;</span>
 <span class="source-line-no">050</span><span id="line-50">        this.id = id;</span>
-<span class="source-line-no">051</span><span id="line-51">        if (wrapper.getSettingsNodes().length &gt; id + 1) {</span>
-<span class="source-line-no">052</span><span id="line-52">            this.next = new SettingsNodeStep(wrapper.getSettingsNodes()[id + 1], id + 1, wrapper);</span>
+<span class="source-line-no">051</span><span id="line-51">        if (wrapper.settingsNodes().length &gt; id + 1) {</span>
+<span class="source-line-no">052</span><span id="line-52">            this.next = new SettingsNodeStep(wrapper.settingsNodes()[id + 1], id + 1, wrapper);</span>
 <span class="source-line-no">053</span><span id="line-53">        } else {</span>
-<span class="source-line-no">054</span><span id="line-54">            this.next = wrapper.getAfterwards();</span>
+<span class="source-line-no">054</span><span id="line-54">            this.next = wrapper.afterwards();</span>
 <span class="source-line-no">055</span><span id="line-55">        }</span>
 <span class="source-line-no">056</span><span id="line-56">    }</span>
 <span class="source-line-no">057</span><span id="line-57"></span>

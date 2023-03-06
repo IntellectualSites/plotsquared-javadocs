@@ -372,180 +372,183 @@
 <span class="source-line-no">359</span><span id="line-359">            }</span>
 <span class="source-line-no">360</span><span id="line-360">        }</span>
 <span class="source-line-no">361</span><span id="line-361">        switch (type) {</span>
-<span class="source-line-no">362</span><span id="line-362">            case TELEPORT_OBJECT:</span>
+<span class="source-line-no">362</span><span id="line-362">            case TELEPORT_OBJECT -&gt; {</span>
 <span class="source-line-no">363</span><span id="line-363">                return false;</span>
-<span class="source-line-no">364</span><span id="line-364">            case READ:</span>
-<span class="source-line-no">365</span><span id="line-365">                return true;</span>
-<span class="source-line-no">366</span><span id="line-366">            case INTERACT_BLOCK: {</span>
-<span class="source-line-no">367</span><span id="line-367">                if (plot == null) {</span>
-<span class="source-line-no">368</span><span id="line-368">                    final List&lt;BlockTypeWrapper&gt; use = area.getRoadFlag(UseFlag.class);</span>
-<span class="source-line-no">369</span><span id="line-369">                    for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
-<span class="source-line-no">370</span><span id="line-370">                        if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper.accepts(blockType)) {</span>
-<span class="source-line-no">371</span><span id="line-371">                            return true;</span>
-<span class="source-line-no">372</span><span id="line-372">                        }</span>
-<span class="source-line-no">373</span><span id="line-373">                    }</span>
-<span class="source-line-no">374</span><span id="line-374">                    return player.hasPermission(</span>
-<span class="source-line-no">375</span><span id="line-375">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
-<span class="source-line-no">376</span><span id="line-376">                    );</span>
-<span class="source-line-no">377</span><span id="line-377">                }</span>
-<span class="source-line-no">378</span><span id="line-378">                if (!plot.hasOwner()) {</span>
-<span class="source-line-no">379</span><span id="line-379">                    return player.hasPermission(</span>
-<span class="source-line-no">380</span><span id="line-380">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
-<span class="source-line-no">381</span><span id="line-381">                    );</span>
-<span class="source-line-no">382</span><span id="line-382">                }</span>
-<span class="source-line-no">383</span><span id="line-383">                final List&lt;BlockTypeWrapper&gt; use = plot.getFlag(UseFlag.class);</span>
-<span class="source-line-no">384</span><span id="line-384">                for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
-<span class="source-line-no">385</span><span id="line-385">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
-<span class="source-line-no">386</span><span id="line-386">                            .accepts(blockType)) {</span>
-<span class="source-line-no">387</span><span id="line-387">                        return true;</span>
-<span class="source-line-no">388</span><span id="line-388">                    }</span>
-<span class="source-line-no">389</span><span id="line-389">                }</span>
-<span class="source-line-no">390</span><span id="line-390">                if (player.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(), false)) {</span>
-<span class="source-line-no">391</span><span id="line-391">                    return true;</span>
-<span class="source-line-no">392</span><span id="line-392">                }</span>
-<span class="source-line-no">393</span><span id="line-393">                if (notifyPerms) {</span>
-<span class="source-line-no">394</span><span id="line-394">                    player.sendMessage(</span>
-<span class="source-line-no">395</span><span id="line-395">                            TranslatableCaption.of("commandconfig.flag_tutorial_usage"),</span>
-<span class="source-line-no">396</span><span id="line-396">                            TagResolver.resolver("flag", Tag.inserting(PlaceFlag.getFlagNameComponent(UseFlag.class)))</span>
-<span class="source-line-no">397</span><span id="line-397">                    );</span>
-<span class="source-line-no">398</span><span id="line-398">                }</span>
-<span class="source-line-no">399</span><span id="line-399">                return false;</span>
-<span class="source-line-no">400</span><span id="line-400">            }</span>
-<span class="source-line-no">401</span><span id="line-401">            case TRIGGER_PHYSICAL: {</span>
-<span class="source-line-no">402</span><span id="line-402">                if (plot == null) {</span>
-<span class="source-line-no">403</span><span id="line-403">                    final List&lt;BlockTypeWrapper&gt; use = area.getRoadFlag(UseFlag.class);</span>
-<span class="source-line-no">404</span><span id="line-404">                    for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
-<span class="source-line-no">405</span><span id="line-405">                        if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper.accepts(blockType)) {</span>
-<span class="source-line-no">406</span><span id="line-406">                            return true;</span>
-<span class="source-line-no">407</span><span id="line-407">                        }</span>
-<span class="source-line-no">408</span><span id="line-408">                    }</span>
-<span class="source-line-no">409</span><span id="line-409">                    return player.hasPermission(</span>
-<span class="source-line-no">410</span><span id="line-410">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), false</span>
-<span class="source-line-no">411</span><span id="line-411">                    );</span>
-<span class="source-line-no">412</span><span id="line-412">                }</span>
-<span class="source-line-no">413</span><span id="line-413">                if (!plot.hasOwner()) {</span>
-<span class="source-line-no">414</span><span id="line-414">                    return player.hasPermission(</span>
-<span class="source-line-no">415</span><span id="line-415">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), false</span>
-<span class="source-line-no">416</span><span id="line-416">                    );</span>
-<span class="source-line-no">417</span><span id="line-417">                }</span>
-<span class="source-line-no">418</span><span id="line-418">                if (plot.getFlag(DeviceInteractFlag.class)) {</span>
-<span class="source-line-no">419</span><span id="line-419">                    return true;</span>
-<span class="source-line-no">420</span><span id="line-420">                }</span>
-<span class="source-line-no">421</span><span id="line-421">                List&lt;BlockTypeWrapper&gt; use = plot.getFlag(UseFlag.class);</span>
-<span class="source-line-no">422</span><span id="line-422">                for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
-<span class="source-line-no">423</span><span id="line-423">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
-<span class="source-line-no">424</span><span id="line-424">                            .accepts(blockType)) {</span>
-<span class="source-line-no">425</span><span id="line-425">                        return true;</span>
-<span class="source-line-no">426</span><span id="line-426">                    }</span>
-<span class="source-line-no">427</span><span id="line-427">                }</span>
-<span class="source-line-no">428</span><span id="line-428">                return player.hasPermission(</span>
-<span class="source-line-no">429</span><span id="line-429">                        Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(),</span>
-<span class="source-line-no">430</span><span id="line-430">                        false</span>
-<span class="source-line-no">431</span><span id="line-431">                );</span>
-<span class="source-line-no">432</span><span id="line-432">            }</span>
-<span class="source-line-no">433</span><span id="line-433">            case SPAWN_MOB: {</span>
-<span class="source-line-no">434</span><span id="line-434">                if (plot == null) {</span>
-<span class="source-line-no">435</span><span id="line-435">                    return player.hasPermission(</span>
-<span class="source-line-no">436</span><span id="line-436">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
-<span class="source-line-no">437</span><span id="line-437">                    );</span>
-<span class="source-line-no">438</span><span id="line-438">                }</span>
-<span class="source-line-no">439</span><span id="line-439">                if (!plot.hasOwner()) {</span>
-<span class="source-line-no">440</span><span id="line-440">                    return player.hasPermission(</span>
-<span class="source-line-no">441</span><span id="line-441">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
-<span class="source-line-no">442</span><span id="line-442">                    );</span>
-<span class="source-line-no">443</span><span id="line-443">                }</span>
-<span class="source-line-no">444</span><span id="line-444">                if (plot.getFlag(MobPlaceFlag.class)) {</span>
-<span class="source-line-no">445</span><span id="line-445">                    return true;</span>
-<span class="source-line-no">446</span><span id="line-446">                }</span>
-<span class="source-line-no">447</span><span id="line-447">                List&lt;BlockTypeWrapper&gt; place = plot.getFlag(PlaceFlag.class);</span>
-<span class="source-line-no">448</span><span id="line-448">                for (final BlockTypeWrapper blockTypeWrapper : place) {</span>
-<span class="source-line-no">449</span><span id="line-449">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
-<span class="source-line-no">450</span><span id="line-450">                            .accepts(blockType)) {</span>
-<span class="source-line-no">451</span><span id="line-451">                        return true;</span>
-<span class="source-line-no">452</span><span id="line-452">                    }</span>
-<span class="source-line-no">453</span><span id="line-453">                }</span>
-<span class="source-line-no">454</span><span id="line-454">                if (player.hasPermission(</span>
-<span class="source-line-no">455</span><span id="line-455">                        Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(),</span>
-<span class="source-line-no">456</span><span id="line-456">                        false</span>
-<span class="source-line-no">457</span><span id="line-457">                )) {</span>
-<span class="source-line-no">458</span><span id="line-458">                    return true;</span>
-<span class="source-line-no">459</span><span id="line-459">                }</span>
-<span class="source-line-no">460</span><span id="line-460">                if (notifyPerms) {</span>
-<span class="source-line-no">461</span><span id="line-461">                    player.sendMessage(</span>
-<span class="source-line-no">462</span><span id="line-462">                            TranslatableCaption.of("commandconfig.flag_tutorial_usage"),</span>
-<span class="source-line-no">463</span><span id="line-463">                            TagResolver.resolver(</span>
-<span class="source-line-no">464</span><span id="line-464">                                    "flag",</span>
-<span class="source-line-no">465</span><span id="line-465">                                    Tag.inserting(</span>
-<span class="source-line-no">466</span><span id="line-466">                                            PlotFlag.getFlagNameComponent(MobPlaceFlag.class)</span>
-<span class="source-line-no">467</span><span id="line-467">                                                    .append(Component.text("/"))</span>
-<span class="source-line-no">468</span><span id="line-468">                                                    .append(PlotFlag.getFlagNameComponent(PlaceFlag.class))</span>
-<span class="source-line-no">469</span><span id="line-469">                                    )</span>
-<span class="source-line-no">470</span><span id="line-470">                            )</span>
-<span class="source-line-no">471</span><span id="line-471">                    );</span>
-<span class="source-line-no">472</span><span id="line-472">                }</span>
-<span class="source-line-no">473</span><span id="line-473">                return false;</span>
-<span class="source-line-no">474</span><span id="line-474">            }</span>
-<span class="source-line-no">475</span><span id="line-475">            case PLACE_MISC: {</span>
-<span class="source-line-no">476</span><span id="line-476">                if (plot == null) {</span>
-<span class="source-line-no">477</span><span id="line-477">                    return player.hasPermission(</span>
-<span class="source-line-no">478</span><span id="line-478">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
-<span class="source-line-no">479</span><span id="line-479">                    );</span>
-<span class="source-line-no">480</span><span id="line-480">                }</span>
-<span class="source-line-no">481</span><span id="line-481">                if (!plot.hasOwner()) {</span>
-<span class="source-line-no">482</span><span id="line-482">                    return player.hasPermission(</span>
-<span class="source-line-no">483</span><span id="line-483">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
-<span class="source-line-no">484</span><span id="line-484">                    );</span>
-<span class="source-line-no">485</span><span id="line-485">                }</span>
-<span class="source-line-no">486</span><span id="line-486">                if (plot.getFlag(MiscPlaceFlag.class)) {</span>
-<span class="source-line-no">487</span><span id="line-487">                    return true;</span>
-<span class="source-line-no">488</span><span id="line-488">                }</span>
-<span class="source-line-no">489</span><span id="line-489">                List&lt;BlockTypeWrapper&gt; place = plot.getFlag(PlaceFlag.class);</span>
-<span class="source-line-no">490</span><span id="line-490">                for (final BlockTypeWrapper blockTypeWrapper : place) {</span>
-<span class="source-line-no">491</span><span id="line-491">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
-<span class="source-line-no">492</span><span id="line-492">                            .accepts(blockType)) {</span>
-<span class="source-line-no">493</span><span id="line-493">                        return true;</span>
-<span class="source-line-no">494</span><span id="line-494">                    }</span>
-<span class="source-line-no">495</span><span id="line-495">                }</span>
-<span class="source-line-no">496</span><span id="line-496">                if (player.hasPermission(</span>
-<span class="source-line-no">497</span><span id="line-497">                        Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(),</span>
-<span class="source-line-no">498</span><span id="line-498">                        false</span>
-<span class="source-line-no">499</span><span id="line-499">                )) {</span>
-<span class="source-line-no">500</span><span id="line-500">                    return true;</span>
-<span class="source-line-no">501</span><span id="line-501">                }</span>
-<span class="source-line-no">502</span><span id="line-502">                if (notifyPerms) {</span>
-<span class="source-line-no">503</span><span id="line-503">                    player.sendMessage(</span>
-<span class="source-line-no">504</span><span id="line-504">                            TranslatableCaption.of("commandconfig.flag_tutorial_usage"),</span>
-<span class="source-line-no">505</span><span id="line-505">                            TagResolver.resolver(</span>
-<span class="source-line-no">506</span><span id="line-506">                                    "flag",</span>
-<span class="source-line-no">507</span><span id="line-507">                                    Tag.inserting(</span>
-<span class="source-line-no">508</span><span id="line-508">                                            PlotFlag.getFlagNameComponent(MiscPlaceFlag.class)</span>
-<span class="source-line-no">509</span><span id="line-509">                                                    .append(Component.text("/"))</span>
-<span class="source-line-no">510</span><span id="line-510">                                                    .append(PlotFlag.getFlagNameComponent(PlaceFlag.class))</span>
-<span class="source-line-no">511</span><span id="line-511">                                    )</span>
-<span class="source-line-no">512</span><span id="line-512">                            )</span>
-<span class="source-line-no">513</span><span id="line-513">                    );</span>
-<span class="source-line-no">514</span><span id="line-514">                }</span>
-<span class="source-line-no">515</span><span id="line-515">                return false;</span>
-<span class="source-line-no">516</span><span id="line-516">            }</span>
-<span class="source-line-no">517</span><span id="line-517">            case PLACE_VEHICLE:</span>
-<span class="source-line-no">518</span><span id="line-518">                if (plot == null) {</span>
-<span class="source-line-no">519</span><span id="line-519">                    return player.hasPermission(</span>
-<span class="source-line-no">520</span><span id="line-520">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
-<span class="source-line-no">521</span><span id="line-521">                    );</span>
-<span class="source-line-no">522</span><span id="line-522">                }</span>
-<span class="source-line-no">523</span><span id="line-523">                if (!plot.hasOwner()) {</span>
-<span class="source-line-no">524</span><span id="line-524">                    return player.hasPermission(</span>
-<span class="source-line-no">525</span><span id="line-525">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
-<span class="source-line-no">526</span><span id="line-526">                    );</span>
-<span class="source-line-no">527</span><span id="line-527">                }</span>
-<span class="source-line-no">528</span><span id="line-528">                return plot.getFlag(VehiclePlaceFlag.class);</span>
-<span class="source-line-no">529</span><span id="line-529">            default:</span>
-<span class="source-line-no">530</span><span id="line-530">                break;</span>
-<span class="source-line-no">531</span><span id="line-531">        }</span>
-<span class="source-line-no">532</span><span id="line-532">        return true;</span>
-<span class="source-line-no">533</span><span id="line-533">    }</span>
-<span class="source-line-no">534</span><span id="line-534"></span>
-<span class="source-line-no">535</span><span id="line-535">}</span>
+<span class="source-line-no">364</span><span id="line-364">            }</span>
+<span class="source-line-no">365</span><span id="line-365">            case READ -&gt; {</span>
+<span class="source-line-no">366</span><span id="line-366">                return true;</span>
+<span class="source-line-no">367</span><span id="line-367">            }</span>
+<span class="source-line-no">368</span><span id="line-368">            case INTERACT_BLOCK -&gt; {</span>
+<span class="source-line-no">369</span><span id="line-369">                if (plot == null) {</span>
+<span class="source-line-no">370</span><span id="line-370">                    final List&lt;BlockTypeWrapper&gt; use = area.getRoadFlag(UseFlag.class);</span>
+<span class="source-line-no">371</span><span id="line-371">                    for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
+<span class="source-line-no">372</span><span id="line-372">                        if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper.accepts(blockType)) {</span>
+<span class="source-line-no">373</span><span id="line-373">                            return true;</span>
+<span class="source-line-no">374</span><span id="line-374">                        }</span>
+<span class="source-line-no">375</span><span id="line-375">                    }</span>
+<span class="source-line-no">376</span><span id="line-376">                    return player.hasPermission(</span>
+<span class="source-line-no">377</span><span id="line-377">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
+<span class="source-line-no">378</span><span id="line-378">                    );</span>
+<span class="source-line-no">379</span><span id="line-379">                }</span>
+<span class="source-line-no">380</span><span id="line-380">                if (!plot.hasOwner()) {</span>
+<span class="source-line-no">381</span><span id="line-381">                    return player.hasPermission(</span>
+<span class="source-line-no">382</span><span id="line-382">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
+<span class="source-line-no">383</span><span id="line-383">                    );</span>
+<span class="source-line-no">384</span><span id="line-384">                }</span>
+<span class="source-line-no">385</span><span id="line-385">                final List&lt;BlockTypeWrapper&gt; use = plot.getFlag(UseFlag.class);</span>
+<span class="source-line-no">386</span><span id="line-386">                for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
+<span class="source-line-no">387</span><span id="line-387">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
+<span class="source-line-no">388</span><span id="line-388">                            .accepts(blockType)) {</span>
+<span class="source-line-no">389</span><span id="line-389">                        return true;</span>
+<span class="source-line-no">390</span><span id="line-390">                    }</span>
+<span class="source-line-no">391</span><span id="line-391">                }</span>
+<span class="source-line-no">392</span><span id="line-392">                if (player.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(), false)) {</span>
+<span class="source-line-no">393</span><span id="line-393">                    return true;</span>
+<span class="source-line-no">394</span><span id="line-394">                }</span>
+<span class="source-line-no">395</span><span id="line-395">                if (notifyPerms) {</span>
+<span class="source-line-no">396</span><span id="line-396">                    player.sendMessage(</span>
+<span class="source-line-no">397</span><span id="line-397">                            TranslatableCaption.of("commandconfig.flag_tutorial_usage"),</span>
+<span class="source-line-no">398</span><span id="line-398">                            TagResolver.resolver("flag", Tag.inserting(PlaceFlag.getFlagNameComponent(UseFlag.class)))</span>
+<span class="source-line-no">399</span><span id="line-399">                    );</span>
+<span class="source-line-no">400</span><span id="line-400">                }</span>
+<span class="source-line-no">401</span><span id="line-401">                return false;</span>
+<span class="source-line-no">402</span><span id="line-402">            }</span>
+<span class="source-line-no">403</span><span id="line-403">            case TRIGGER_PHYSICAL -&gt; {</span>
+<span class="source-line-no">404</span><span id="line-404">                if (plot == null) {</span>
+<span class="source-line-no">405</span><span id="line-405">                    final List&lt;BlockTypeWrapper&gt; use = area.getRoadFlag(UseFlag.class);</span>
+<span class="source-line-no">406</span><span id="line-406">                    for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
+<span class="source-line-no">407</span><span id="line-407">                        if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper.accepts(blockType)) {</span>
+<span class="source-line-no">408</span><span id="line-408">                            return true;</span>
+<span class="source-line-no">409</span><span id="line-409">                        }</span>
+<span class="source-line-no">410</span><span id="line-410">                    }</span>
+<span class="source-line-no">411</span><span id="line-411">                    return player.hasPermission(</span>
+<span class="source-line-no">412</span><span id="line-412">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), false</span>
+<span class="source-line-no">413</span><span id="line-413">                    );</span>
+<span class="source-line-no">414</span><span id="line-414">                }</span>
+<span class="source-line-no">415</span><span id="line-415">                if (!plot.hasOwner()) {</span>
+<span class="source-line-no">416</span><span id="line-416">                    return player.hasPermission(</span>
+<span class="source-line-no">417</span><span id="line-417">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), false</span>
+<span class="source-line-no">418</span><span id="line-418">                    );</span>
+<span class="source-line-no">419</span><span id="line-419">                }</span>
+<span class="source-line-no">420</span><span id="line-420">                if (plot.getFlag(DeviceInteractFlag.class)) {</span>
+<span class="source-line-no">421</span><span id="line-421">                    return true;</span>
+<span class="source-line-no">422</span><span id="line-422">                }</span>
+<span class="source-line-no">423</span><span id="line-423">                List&lt;BlockTypeWrapper&gt; use = plot.getFlag(UseFlag.class);</span>
+<span class="source-line-no">424</span><span id="line-424">                for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
+<span class="source-line-no">425</span><span id="line-425">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
+<span class="source-line-no">426</span><span id="line-426">                            .accepts(blockType)) {</span>
+<span class="source-line-no">427</span><span id="line-427">                        return true;</span>
+<span class="source-line-no">428</span><span id="line-428">                    }</span>
+<span class="source-line-no">429</span><span id="line-429">                }</span>
+<span class="source-line-no">430</span><span id="line-430">                return player.hasPermission(</span>
+<span class="source-line-no">431</span><span id="line-431">                        Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(),</span>
+<span class="source-line-no">432</span><span id="line-432">                        false</span>
+<span class="source-line-no">433</span><span id="line-433">                );</span>
+<span class="source-line-no">434</span><span id="line-434">            }</span>
+<span class="source-line-no">435</span><span id="line-435">            case SPAWN_MOB -&gt; {</span>
+<span class="source-line-no">436</span><span id="line-436">                if (plot == null) {</span>
+<span class="source-line-no">437</span><span id="line-437">                    return player.hasPermission(</span>
+<span class="source-line-no">438</span><span id="line-438">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
+<span class="source-line-no">439</span><span id="line-439">                    );</span>
+<span class="source-line-no">440</span><span id="line-440">                }</span>
+<span class="source-line-no">441</span><span id="line-441">                if (!plot.hasOwner()) {</span>
+<span class="source-line-no">442</span><span id="line-442">                    return player.hasPermission(</span>
+<span class="source-line-no">443</span><span id="line-443">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
+<span class="source-line-no">444</span><span id="line-444">                    );</span>
+<span class="source-line-no">445</span><span id="line-445">                }</span>
+<span class="source-line-no">446</span><span id="line-446">                if (plot.getFlag(MobPlaceFlag.class)) {</span>
+<span class="source-line-no">447</span><span id="line-447">                    return true;</span>
+<span class="source-line-no">448</span><span id="line-448">                }</span>
+<span class="source-line-no">449</span><span id="line-449">                List&lt;BlockTypeWrapper&gt; place = plot.getFlag(PlaceFlag.class);</span>
+<span class="source-line-no">450</span><span id="line-450">                for (final BlockTypeWrapper blockTypeWrapper : place) {</span>
+<span class="source-line-no">451</span><span id="line-451">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
+<span class="source-line-no">452</span><span id="line-452">                            .accepts(blockType)) {</span>
+<span class="source-line-no">453</span><span id="line-453">                        return true;</span>
+<span class="source-line-no">454</span><span id="line-454">                    }</span>
+<span class="source-line-no">455</span><span id="line-455">                }</span>
+<span class="source-line-no">456</span><span id="line-456">                if (player.hasPermission(</span>
+<span class="source-line-no">457</span><span id="line-457">                        Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(),</span>
+<span class="source-line-no">458</span><span id="line-458">                        false</span>
+<span class="source-line-no">459</span><span id="line-459">                )) {</span>
+<span class="source-line-no">460</span><span id="line-460">                    return true;</span>
+<span class="source-line-no">461</span><span id="line-461">                }</span>
+<span class="source-line-no">462</span><span id="line-462">                if (notifyPerms) {</span>
+<span class="source-line-no">463</span><span id="line-463">                    player.sendMessage(</span>
+<span class="source-line-no">464</span><span id="line-464">                            TranslatableCaption.of("commandconfig.flag_tutorial_usage"),</span>
+<span class="source-line-no">465</span><span id="line-465">                            TagResolver.resolver(</span>
+<span class="source-line-no">466</span><span id="line-466">                                    "flag",</span>
+<span class="source-line-no">467</span><span id="line-467">                                    Tag.inserting(</span>
+<span class="source-line-no">468</span><span id="line-468">                                            PlotFlag.getFlagNameComponent(MobPlaceFlag.class)</span>
+<span class="source-line-no">469</span><span id="line-469">                                                    .append(Component.text("/"))</span>
+<span class="source-line-no">470</span><span id="line-470">                                                    .append(PlotFlag.getFlagNameComponent(PlaceFlag.class))</span>
+<span class="source-line-no">471</span><span id="line-471">                                    )</span>
+<span class="source-line-no">472</span><span id="line-472">                            )</span>
+<span class="source-line-no">473</span><span id="line-473">                    );</span>
+<span class="source-line-no">474</span><span id="line-474">                }</span>
+<span class="source-line-no">475</span><span id="line-475">                return false;</span>
+<span class="source-line-no">476</span><span id="line-476">            }</span>
+<span class="source-line-no">477</span><span id="line-477">            case PLACE_MISC -&gt; {</span>
+<span class="source-line-no">478</span><span id="line-478">                if (plot == null) {</span>
+<span class="source-line-no">479</span><span id="line-479">                    return player.hasPermission(</span>
+<span class="source-line-no">480</span><span id="line-480">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
+<span class="source-line-no">481</span><span id="line-481">                    );</span>
+<span class="source-line-no">482</span><span id="line-482">                }</span>
+<span class="source-line-no">483</span><span id="line-483">                if (!plot.hasOwner()) {</span>
+<span class="source-line-no">484</span><span id="line-484">                    return player.hasPermission(</span>
+<span class="source-line-no">485</span><span id="line-485">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
+<span class="source-line-no">486</span><span id="line-486">                    );</span>
+<span class="source-line-no">487</span><span id="line-487">                }</span>
+<span class="source-line-no">488</span><span id="line-488">                if (plot.getFlag(MiscPlaceFlag.class)) {</span>
+<span class="source-line-no">489</span><span id="line-489">                    return true;</span>
+<span class="source-line-no">490</span><span id="line-490">                }</span>
+<span class="source-line-no">491</span><span id="line-491">                List&lt;BlockTypeWrapper&gt; place = plot.getFlag(PlaceFlag.class);</span>
+<span class="source-line-no">492</span><span id="line-492">                for (final BlockTypeWrapper blockTypeWrapper : place) {</span>
+<span class="source-line-no">493</span><span id="line-493">                    if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
+<span class="source-line-no">494</span><span id="line-494">                            .accepts(blockType)) {</span>
+<span class="source-line-no">495</span><span id="line-495">                        return true;</span>
+<span class="source-line-no">496</span><span id="line-496">                    }</span>
+<span class="source-line-no">497</span><span id="line-497">                }</span>
+<span class="source-line-no">498</span><span id="line-498">                if (player.hasPermission(</span>
+<span class="source-line-no">499</span><span id="line-499">                        Permission.PERMISSION_ADMIN_INTERACT_OTHER.toString(),</span>
+<span class="source-line-no">500</span><span id="line-500">                        false</span>
+<span class="source-line-no">501</span><span id="line-501">                )) {</span>
+<span class="source-line-no">502</span><span id="line-502">                    return true;</span>
+<span class="source-line-no">503</span><span id="line-503">                }</span>
+<span class="source-line-no">504</span><span id="line-504">                if (notifyPerms) {</span>
+<span class="source-line-no">505</span><span id="line-505">                    player.sendMessage(</span>
+<span class="source-line-no">506</span><span id="line-506">                            TranslatableCaption.of("commandconfig.flag_tutorial_usage"),</span>
+<span class="source-line-no">507</span><span id="line-507">                            TagResolver.resolver(</span>
+<span class="source-line-no">508</span><span id="line-508">                                    "flag",</span>
+<span class="source-line-no">509</span><span id="line-509">                                    Tag.inserting(</span>
+<span class="source-line-no">510</span><span id="line-510">                                            PlotFlag.getFlagNameComponent(MiscPlaceFlag.class)</span>
+<span class="source-line-no">511</span><span id="line-511">                                                    .append(Component.text("/"))</span>
+<span class="source-line-no">512</span><span id="line-512">                                                    .append(PlotFlag.getFlagNameComponent(PlaceFlag.class))</span>
+<span class="source-line-no">513</span><span id="line-513">                                    )</span>
+<span class="source-line-no">514</span><span id="line-514">                            )</span>
+<span class="source-line-no">515</span><span id="line-515">                    );</span>
+<span class="source-line-no">516</span><span id="line-516">                }</span>
+<span class="source-line-no">517</span><span id="line-517">                return false;</span>
+<span class="source-line-no">518</span><span id="line-518">            }</span>
+<span class="source-line-no">519</span><span id="line-519">            case PLACE_VEHICLE -&gt; {</span>
+<span class="source-line-no">520</span><span id="line-520">                if (plot == null) {</span>
+<span class="source-line-no">521</span><span id="line-521">                    return player.hasPermission(</span>
+<span class="source-line-no">522</span><span id="line-522">                            Permission.PERMISSION_ADMIN_INTERACT_ROAD.toString(), notifyPerms</span>
+<span class="source-line-no">523</span><span id="line-523">                    );</span>
+<span class="source-line-no">524</span><span id="line-524">                }</span>
+<span class="source-line-no">525</span><span id="line-525">                if (!plot.hasOwner()) {</span>
+<span class="source-line-no">526</span><span id="line-526">                    return player.hasPermission(</span>
+<span class="source-line-no">527</span><span id="line-527">                            Permission.PERMISSION_ADMIN_INTERACT_UNOWNED.toString(), notifyPerms</span>
+<span class="source-line-no">528</span><span id="line-528">                    );</span>
+<span class="source-line-no">529</span><span id="line-529">                }</span>
+<span class="source-line-no">530</span><span id="line-530">                return plot.getFlag(VehiclePlaceFlag.class);</span>
+<span class="source-line-no">531</span><span id="line-531">            }</span>
+<span class="source-line-no">532</span><span id="line-532">            default -&gt; {</span>
+<span class="source-line-no">533</span><span id="line-533">            }</span>
+<span class="source-line-no">534</span><span id="line-534">        }</span>
+<span class="source-line-no">535</span><span id="line-535">        return true;</span>
+<span class="source-line-no">536</span><span id="line-536">    }</span>
+<span class="source-line-no">537</span><span id="line-537"></span>
+<span class="source-line-no">538</span><span id="line-538">}</span>
 
 
 

@@ -98,24 +98,24 @@
 <span class="source-line-no">085</span><span id="line-85">        for (int x = page * 12; x &lt; max; x++) {</span>
 <span class="source-line-no">086</span><span id="line-86">            PlotComment comment = comments[x];</span>
 <span class="source-line-no">087</span><span id="line-87">            Component commentColored;</span>
-<span class="source-line-no">088</span><span id="line-88">            if (player.getName().equals(comment.senderName)) {</span>
+<span class="source-line-no">088</span><span id="line-88">            if (player.getName().equals(comment.senderName())) {</span>
 <span class="source-line-no">089</span><span id="line-89">                commentColored = MINI_MESSAGE</span>
 <span class="source-line-no">090</span><span id="line-90">                        .deserialize(</span>
 <span class="source-line-no">091</span><span id="line-91">                                TranslatableCaption.of("list.comment_list_by_lister").getComponent(player),</span>
-<span class="source-line-no">092</span><span id="line-92">                                TagResolver.resolver("comment", Tag.inserting(Component.text(comment.comment)))</span>
+<span class="source-line-no">092</span><span id="line-92">                                TagResolver.resolver("comment", Tag.inserting(Component.text(comment.comment())))</span>
 <span class="source-line-no">093</span><span id="line-93">                        );</span>
 <span class="source-line-no">094</span><span id="line-94">            } else {</span>
 <span class="source-line-no">095</span><span id="line-95">                commentColored = MINI_MESSAGE</span>
 <span class="source-line-no">096</span><span id="line-96">                        .deserialize(</span>
 <span class="source-line-no">097</span><span id="line-97">                                TranslatableCaption.of("list.comment_list_by_other").getComponent(player),</span>
-<span class="source-line-no">098</span><span id="line-98">                                TagResolver.resolver("comment", Tag.inserting(Component.text(comment.comment)))</span>
+<span class="source-line-no">098</span><span id="line-98">                                TagResolver.resolver("comment", Tag.inserting(Component.text(comment.comment())))</span>
 <span class="source-line-no">099</span><span id="line-99">                        );</span>
 <span class="source-line-no">100</span><span id="line-100">            }</span>
 <span class="source-line-no">101</span><span id="line-101">            TagResolver resolver = TagResolver.builder()</span>
 <span class="source-line-no">102</span><span id="line-102">                    .tag("number", Tag.inserting(Component.text(x)))</span>
-<span class="source-line-no">103</span><span id="line-103">                    .tag("world", Tag.inserting(Component.text(comment.world)))</span>
-<span class="source-line-no">104</span><span id="line-104">                    .tag("plot_id", Tag.inserting(Component.text(comment.id.getX() + ";" + comment.id.getY())))</span>
-<span class="source-line-no">105</span><span id="line-105">                    .tag("commenter", Tag.inserting(Component.text(comment.senderName)))</span>
+<span class="source-line-no">103</span><span id="line-103">                    .tag("world", Tag.inserting(Component.text(comment.world())))</span>
+<span class="source-line-no">104</span><span id="line-104">                    .tag("plot_id", Tag.inserting(Component.text(comment.id().getX() + ";" + comment.id().getY())))</span>
+<span class="source-line-no">105</span><span id="line-105">                    .tag("commenter", Tag.inserting(Component.text(comment.senderName())))</span>
 <span class="source-line-no">106</span><span id="line-106">                    .tag("comment", Tag.inserting(commentColored))</span>
 <span class="source-line-no">107</span><span id="line-107">                    .build();</span>
 <span class="source-line-no">108</span><span id="line-108">            builder.append(MINI_MESSAGE</span>
@@ -150,7 +150,7 @@
 <span class="source-line-no">137</span><span id="line-137">                                int unread = 0;</span>
 <span class="source-line-no">138</span><span id="line-138">                                for (PlotComment comment : value) {</span>
 <span class="source-line-no">139</span><span id="line-139">                                    total++;</span>
-<span class="source-line-no">140</span><span id="line-140">                                    if (comment.timestamp &gt; CommentManager</span>
+<span class="source-line-no">140</span><span id="line-140">                                    if (comment.timestamp() &gt; CommentManager</span>
 <span class="source-line-no">141</span><span id="line-141">                                            .getTimestamp(player, inbox.toString())) {</span>
 <span class="source-line-no">142</span><span id="line-142">                                        unread++;</span>
 <span class="source-line-no">143</span><span id="line-143">                                    }</span>
@@ -203,7 +203,7 @@
 <span class="source-line-no">190</span><span id="line-190">        final int page;</span>
 <span class="source-line-no">191</span><span id="line-191">        if (args.length &gt; 1) {</span>
 <span class="source-line-no">192</span><span id="line-192">            switch (args[1].toLowerCase()) {</span>
-<span class="source-line-no">193</span><span id="line-193">                case "delete":</span>
+<span class="source-line-no">193</span><span id="line-193">                case "delete" -&gt; {</span>
 <span class="source-line-no">194</span><span id="line-194">                    if (!inbox.canModify(plot, player)) {</span>
 <span class="source-line-no">195</span><span id="line-195">                        player.sendMessage(TranslatableCaption.of("comment.no_perm_inbox_modify"));</span>
 <span class="source-line-no">196</span><span id="line-196">                        return false;</span>
@@ -238,36 +238,36 @@
 <span class="source-line-no">225</span><span id="line-225">                        );</span>
 <span class="source-line-no">226</span><span id="line-226">                        return false;</span>
 <span class="source-line-no">227</span><span id="line-227">                    }</span>
-<span class="source-line-no">228</span><span id="line-228"></span>
-<span class="source-line-no">229</span><span id="line-229">                    if (!inbox.getComments(plot, new RunnableVal&lt;&gt;() {</span>
-<span class="source-line-no">230</span><span id="line-230">                        @Override</span>
-<span class="source-line-no">231</span><span id="line-231">                        public void run(List&lt;PlotComment&gt; value) {</span>
-<span class="source-line-no">232</span><span id="line-232">                            if (index &gt; value.size()) {</span>
-<span class="source-line-no">233</span><span id="line-233">                                player.sendMessage(</span>
-<span class="source-line-no">234</span><span id="line-234">                                        TranslatableCaption.of("comment.not_valid_inbox_index"),</span>
-<span class="source-line-no">235</span><span id="line-235">                                        TagResolver.resolver("number", Tag.inserting(Component.text(index)))</span>
-<span class="source-line-no">236</span><span id="line-236">                                );</span>
-<span class="source-line-no">237</span><span id="line-237">                                return;</span>
-<span class="source-line-no">238</span><span id="line-238">                            }</span>
-<span class="source-line-no">239</span><span id="line-239">                            PlotComment comment = value.get(index - 1);</span>
-<span class="source-line-no">240</span><span id="line-240">                            inbox.removeComment(plot, comment);</span>
-<span class="source-line-no">241</span><span id="line-241">                            boolean success = plot.getPlotCommentContainer().removeComment(comment);</span>
-<span class="source-line-no">242</span><span id="line-242">                            if (success) {</span>
-<span class="source-line-no">243</span><span id="line-243">                                player.sendMessage(</span>
-<span class="source-line-no">244</span><span id="line-244">                                        TranslatableCaption.of("comment.comment_removed_success"),</span>
-<span class="source-line-no">245</span><span id="line-245">                                        TagResolver.resolver("value", Tag.inserting(Component.text(comment.comment)))</span>
-<span class="source-line-no">246</span><span id="line-246">                                );</span>
-<span class="source-line-no">247</span><span id="line-247">                            } else {</span>
-<span class="source-line-no">248</span><span id="line-248">                                player.sendMessage(</span>
-<span class="source-line-no">249</span><span id="line-249">                                        TranslatableCaption.of("comment.comment_removed_failure"));</span>
-<span class="source-line-no">250</span><span id="line-250">                            }</span>
-<span class="source-line-no">251</span><span id="line-251">                        }</span>
-<span class="source-line-no">252</span><span id="line-252">                    })) {</span>
-<span class="source-line-no">253</span><span id="line-253">                        player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">254</span><span id="line-254">                        return false;</span>
-<span class="source-line-no">255</span><span id="line-255">                    }</span>
-<span class="source-line-no">256</span><span id="line-256">                    return true;</span>
-<span class="source-line-no">257</span><span id="line-257">                case "clear":</span>
+<span class="source-line-no">228</span><span id="line-228">                    if (!inbox.getComments(plot, new RunnableVal&lt;&gt;() {</span>
+<span class="source-line-no">229</span><span id="line-229">                        @Override</span>
+<span class="source-line-no">230</span><span id="line-230">                        public void run(List&lt;PlotComment&gt; value) {</span>
+<span class="source-line-no">231</span><span id="line-231">                            if (index &gt; value.size()) {</span>
+<span class="source-line-no">232</span><span id="line-232">                                player.sendMessage(</span>
+<span class="source-line-no">233</span><span id="line-233">                                        TranslatableCaption.of("comment.not_valid_inbox_index"),</span>
+<span class="source-line-no">234</span><span id="line-234">                                        TagResolver.resolver("number", Tag.inserting(Component.text(index)))</span>
+<span class="source-line-no">235</span><span id="line-235">                                );</span>
+<span class="source-line-no">236</span><span id="line-236">                                return;</span>
+<span class="source-line-no">237</span><span id="line-237">                            }</span>
+<span class="source-line-no">238</span><span id="line-238">                            PlotComment comment = value.get(index - 1);</span>
+<span class="source-line-no">239</span><span id="line-239">                            inbox.removeComment(plot, comment);</span>
+<span class="source-line-no">240</span><span id="line-240">                            boolean success = plot.getPlotCommentContainer().removeComment(comment);</span>
+<span class="source-line-no">241</span><span id="line-241">                            if (success) {</span>
+<span class="source-line-no">242</span><span id="line-242">                                player.sendMessage(</span>
+<span class="source-line-no">243</span><span id="line-243">                                        TranslatableCaption.of("comment.comment_removed_success"),</span>
+<span class="source-line-no">244</span><span id="line-244">                                        TagResolver.resolver("value", Tag.inserting(Component.text(comment.comment())))</span>
+<span class="source-line-no">245</span><span id="line-245">                                );</span>
+<span class="source-line-no">246</span><span id="line-246">                            } else {</span>
+<span class="source-line-no">247</span><span id="line-247">                                player.sendMessage(</span>
+<span class="source-line-no">248</span><span id="line-248">                                        TranslatableCaption.of("comment.comment_removed_failure"));</span>
+<span class="source-line-no">249</span><span id="line-249">                            }</span>
+<span class="source-line-no">250</span><span id="line-250">                        }</span>
+<span class="source-line-no">251</span><span id="line-251">                    })) {</span>
+<span class="source-line-no">252</span><span id="line-252">                        player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
+<span class="source-line-no">253</span><span id="line-253">                        return false;</span>
+<span class="source-line-no">254</span><span id="line-254">                    }</span>
+<span class="source-line-no">255</span><span id="line-255">                    return true;</span>
+<span class="source-line-no">256</span><span id="line-256">                }</span>
+<span class="source-line-no">257</span><span id="line-257">                case "clear" -&gt; {</span>
 <span class="source-line-no">258</span><span id="line-258">                    if (!inbox.canModify(plot, player)) {</span>
 <span class="source-line-no">259</span><span id="line-259">                        player.sendMessage(TranslatableCaption.of("comment.no_perm_inbox_modify"));</span>
 <span class="source-line-no">260</span><span id="line-260">                    }</span>
@@ -281,60 +281,62 @@
 <span class="source-line-no">268</span><span id="line-268">                        plot.getPlotCommentContainer().removeComments(comments);</span>
 <span class="source-line-no">269</span><span id="line-269">                    }</span>
 <span class="source-line-no">270</span><span id="line-270">                    return true;</span>
-<span class="source-line-no">271</span><span id="line-271">                default:</span>
-<span class="source-line-no">272</span><span id="line-272">                    try {</span>
-<span class="source-line-no">273</span><span id="line-273">                        page = Integer.parseInt(args[1]);</span>
-<span class="source-line-no">274</span><span id="line-274">                    } catch (NumberFormatException ignored) {</span>
-<span class="source-line-no">275</span><span id="line-275">                        sendUsage(player);</span>
-<span class="source-line-no">276</span><span id="line-276">                        return false;</span>
-<span class="source-line-no">277</span><span id="line-277">                    }</span>
-<span class="source-line-no">278</span><span id="line-278">            }</span>
-<span class="source-line-no">279</span><span id="line-279">        } else {</span>
-<span class="source-line-no">280</span><span id="line-280">            page = 1;</span>
-<span class="source-line-no">281</span><span id="line-281">        }</span>
-<span class="source-line-no">282</span><span id="line-282">        if (!inbox.canRead(plot, player)) {</span>
-<span class="source-line-no">283</span><span id="line-283">            player.sendMessage(TranslatableCaption.of("comment.no_perm_inbox"));</span>
-<span class="source-line-no">284</span><span id="line-284">            return false;</span>
-<span class="source-line-no">285</span><span id="line-285">        }</span>
-<span class="source-line-no">286</span><span id="line-286">        if (!inbox.getComments(plot, new RunnableVal&lt;&gt;() {</span>
-<span class="source-line-no">287</span><span id="line-287">            @Override</span>
-<span class="source-line-no">288</span><span id="line-288">            public void run(List&lt;PlotComment&gt; value) {</span>
-<span class="source-line-no">289</span><span id="line-289">                displayComments(player, value, page);</span>
-<span class="source-line-no">290</span><span id="line-290">            }</span>
-<span class="source-line-no">291</span><span id="line-291">        })) {</span>
-<span class="source-line-no">292</span><span id="line-292">            player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
-<span class="source-line-no">293</span><span id="line-293">            return false;</span>
-<span class="source-line-no">294</span><span id="line-294">        }</span>
-<span class="source-line-no">295</span><span id="line-295">        return true;</span>
-<span class="source-line-no">296</span><span id="line-296">    }</span>
-<span class="source-line-no">297</span><span id="line-297"></span>
-<span class="source-line-no">298</span><span id="line-298">    @Override</span>
-<span class="source-line-no">299</span><span id="line-299">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
-<span class="source-line-no">300</span><span id="line-300">        if (args.length == 1) {</span>
-<span class="source-line-no">301</span><span id="line-301">            final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
-<span class="source-line-no">302</span><span id="line-302">            if (player.hasPermission(Permission.PERMISSION_INBOX_READ_OWNER)) {</span>
-<span class="source-line-no">303</span><span id="line-303">                completions.add("owner");</span>
-<span class="source-line-no">304</span><span id="line-304">            }</span>
-<span class="source-line-no">305</span><span id="line-305">            if (player.hasPermission(Permission.PERMISSION_INBOX_READ_PUBLIC)) {</span>
-<span class="source-line-no">306</span><span id="line-306">                completions.add("public");</span>
-<span class="source-line-no">307</span><span id="line-307">            }</span>
-<span class="source-line-no">308</span><span id="line-308">            if (player.hasPermission(Permission.PERMISSION_INBOX_READ_REPORT)) {</span>
-<span class="source-line-no">309</span><span id="line-309">                completions.add("report");</span>
-<span class="source-line-no">310</span><span id="line-310">            }</span>
-<span class="source-line-no">311</span><span id="line-311">            final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
-<span class="source-line-no">312</span><span id="line-312">                            .toLowerCase()</span>
-<span class="source-line-no">313</span><span id="line-313">                            .startsWith(args[0].toLowerCase()))</span>
-<span class="source-line-no">314</span><span id="line-314">                    .map(completion -&gt; new Command(null, true, completion, "", RequiredType.PLAYER, CommandCategory.CHAT) {</span>
-<span class="source-line-no">315</span><span id="line-315">                    }).collect(Collectors.toCollection(LinkedList::new));</span>
-<span class="source-line-no">316</span><span id="line-316">            if (player.hasPermission(Permission.PERMISSION_INBOX) &amp;&amp; args[0].length() &gt; 0) {</span>
-<span class="source-line-no">317</span><span id="line-317">                commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
-<span class="source-line-no">318</span><span id="line-318">            }</span>
-<span class="source-line-no">319</span><span id="line-319">            return commands;</span>
-<span class="source-line-no">320</span><span id="line-320">        }</span>
-<span class="source-line-no">321</span><span id="line-321">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
-<span class="source-line-no">322</span><span id="line-322">    }</span>
-<span class="source-line-no">323</span><span id="line-323"></span>
-<span class="source-line-no">324</span><span id="line-324">}</span>
+<span class="source-line-no">271</span><span id="line-271">                }</span>
+<span class="source-line-no">272</span><span id="line-272">                default -&gt; {</span>
+<span class="source-line-no">273</span><span id="line-273">                    try {</span>
+<span class="source-line-no">274</span><span id="line-274">                        page = Integer.parseInt(args[1]);</span>
+<span class="source-line-no">275</span><span id="line-275">                    } catch (NumberFormatException ignored) {</span>
+<span class="source-line-no">276</span><span id="line-276">                        sendUsage(player);</span>
+<span class="source-line-no">277</span><span id="line-277">                        return false;</span>
+<span class="source-line-no">278</span><span id="line-278">                    }</span>
+<span class="source-line-no">279</span><span id="line-279">                }</span>
+<span class="source-line-no">280</span><span id="line-280">            }</span>
+<span class="source-line-no">281</span><span id="line-281">        } else {</span>
+<span class="source-line-no">282</span><span id="line-282">            page = 1;</span>
+<span class="source-line-no">283</span><span id="line-283">        }</span>
+<span class="source-line-no">284</span><span id="line-284">        if (!inbox.canRead(plot, player)) {</span>
+<span class="source-line-no">285</span><span id="line-285">            player.sendMessage(TranslatableCaption.of("comment.no_perm_inbox"));</span>
+<span class="source-line-no">286</span><span id="line-286">            return false;</span>
+<span class="source-line-no">287</span><span id="line-287">        }</span>
+<span class="source-line-no">288</span><span id="line-288">        if (!inbox.getComments(plot, new RunnableVal&lt;&gt;() {</span>
+<span class="source-line-no">289</span><span id="line-289">            @Override</span>
+<span class="source-line-no">290</span><span id="line-290">            public void run(List&lt;PlotComment&gt; value) {</span>
+<span class="source-line-no">291</span><span id="line-291">                displayComments(player, value, page);</span>
+<span class="source-line-no">292</span><span id="line-292">            }</span>
+<span class="source-line-no">293</span><span id="line-293">        })) {</span>
+<span class="source-line-no">294</span><span id="line-294">            player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
+<span class="source-line-no">295</span><span id="line-295">            return false;</span>
+<span class="source-line-no">296</span><span id="line-296">        }</span>
+<span class="source-line-no">297</span><span id="line-297">        return true;</span>
+<span class="source-line-no">298</span><span id="line-298">    }</span>
+<span class="source-line-no">299</span><span id="line-299"></span>
+<span class="source-line-no">300</span><span id="line-300">    @Override</span>
+<span class="source-line-no">301</span><span id="line-301">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
+<span class="source-line-no">302</span><span id="line-302">        if (args.length == 1) {</span>
+<span class="source-line-no">303</span><span id="line-303">            final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
+<span class="source-line-no">304</span><span id="line-304">            if (player.hasPermission(Permission.PERMISSION_INBOX_READ_OWNER)) {</span>
+<span class="source-line-no">305</span><span id="line-305">                completions.add("owner");</span>
+<span class="source-line-no">306</span><span id="line-306">            }</span>
+<span class="source-line-no">307</span><span id="line-307">            if (player.hasPermission(Permission.PERMISSION_INBOX_READ_PUBLIC)) {</span>
+<span class="source-line-no">308</span><span id="line-308">                completions.add("public");</span>
+<span class="source-line-no">309</span><span id="line-309">            }</span>
+<span class="source-line-no">310</span><span id="line-310">            if (player.hasPermission(Permission.PERMISSION_INBOX_READ_REPORT)) {</span>
+<span class="source-line-no">311</span><span id="line-311">                completions.add("report");</span>
+<span class="source-line-no">312</span><span id="line-312">            }</span>
+<span class="source-line-no">313</span><span id="line-313">            final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
+<span class="source-line-no">314</span><span id="line-314">                            .toLowerCase()</span>
+<span class="source-line-no">315</span><span id="line-315">                            .startsWith(args[0].toLowerCase()))</span>
+<span class="source-line-no">316</span><span id="line-316">                    .map(completion -&gt; new Command(null, true, completion, "", RequiredType.PLAYER, CommandCategory.CHAT) {</span>
+<span class="source-line-no">317</span><span id="line-317">                    }).collect(Collectors.toCollection(LinkedList::new));</span>
+<span class="source-line-no">318</span><span id="line-318">            if (player.hasPermission(Permission.PERMISSION_INBOX) &amp;&amp; args[0].length() &gt; 0) {</span>
+<span class="source-line-no">319</span><span id="line-319">                commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
+<span class="source-line-no">320</span><span id="line-320">            }</span>
+<span class="source-line-no">321</span><span id="line-321">            return commands;</span>
+<span class="source-line-no">322</span><span id="line-322">        }</span>
+<span class="source-line-no">323</span><span id="line-323">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
+<span class="source-line-no">324</span><span id="line-324">    }</span>
+<span class="source-line-no">325</span><span id="line-325"></span>
+<span class="source-line-no">326</span><span id="line-326">}</span>
 
 
 

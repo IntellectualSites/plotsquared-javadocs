@@ -127,18 +127,20 @@
 <span class="source-line-no">114</span><span id="line-114">     * @param pos2  Region maximum point</span>
 <span class="source-line-no">115</span><span id="line-115">     * @param chunk BlockVector2 of chunk coordinates</span>
 <span class="source-line-no">116</span><span id="line-116">     * @return {@code true} if the region pos1-pos2 contains the chunk</span>
-<span class="source-line-no">117</span><span id="line-117">     */</span>
-<span class="source-line-no">118</span><span id="line-118">    public static boolean isWholeChunk(@NonNull Location pos1, @NonNull Location pos2, @NonNull BlockVector2 chunk) {</span>
-<span class="source-line-no">119</span><span id="line-119">        int x1 = pos1.getX();</span>
-<span class="source-line-no">120</span><span id="line-120">        int z1 = pos1.getZ();</span>
-<span class="source-line-no">121</span><span id="line-121">        int x2 = pos2.getX();</span>
-<span class="source-line-no">122</span><span id="line-122">        int z2 = pos2.getZ();</span>
-<span class="source-line-no">123</span><span id="line-123">        int cx = chunk.getX() &lt;&lt; 4;</span>
-<span class="source-line-no">124</span><span id="line-124">        int cz = chunk.getZ() &lt;&lt; 4;</span>
-<span class="source-line-no">125</span><span id="line-125">        return cx &gt; x1 &amp;&amp; cz &gt; z1 &amp;&amp; cx &lt; x2 &amp;&amp; cz &lt; z2;</span>
-<span class="source-line-no">126</span><span id="line-126">    }</span>
-<span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">}</span>
+<span class="source-line-no">117</span><span id="line-117">     * @deprecated Unused internally. Scheduled for removal in next major release.</span>
+<span class="source-line-no">118</span><span id="line-118">     */</span>
+<span class="source-line-no">119</span><span id="line-119">    @Deprecated(forRemoval = true, since = "6.11.1")</span>
+<span class="source-line-no">120</span><span id="line-120">    public static boolean isWholeChunk(@NonNull Location pos1, @NonNull Location pos2, @NonNull BlockVector2 chunk) {</span>
+<span class="source-line-no">121</span><span id="line-121">        int x1 = pos1.getX();</span>
+<span class="source-line-no">122</span><span id="line-122">        int z1 = pos1.getZ();</span>
+<span class="source-line-no">123</span><span id="line-123">        int x2 = pos2.getX();</span>
+<span class="source-line-no">124</span><span id="line-124">        int z2 = pos2.getZ();</span>
+<span class="source-line-no">125</span><span id="line-125">        int cx = chunk.getX() &lt;&lt; 4;</span>
+<span class="source-line-no">126</span><span id="line-126">        int cz = chunk.getZ() &lt;&lt; 4;</span>
+<span class="source-line-no">127</span><span id="line-127">        return cx &gt; x1 &amp;&amp; cz &gt; z1 &amp;&amp; cx &lt; x2 &amp;&amp; cz &lt; z2;</span>
+<span class="source-line-no">128</span><span id="line-128">    }</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">}</span>
 
 
 

@@ -169,9 +169,9 @@
 <span class="source-line-no">156</span><span id="line-156">             ZipOutputStream zos = new ZipOutputStream(fos)) {</span>
 <span class="source-line-no">157</span><span id="line-157"></span>
 <span class="source-line-no">158</span><span id="line-158">            for (FileBytes file : files) {</span>
-<span class="source-line-no">159</span><span id="line-159">                ZipEntry ze = new ZipEntry(file.path);</span>
+<span class="source-line-no">159</span><span id="line-159">                ZipEntry ze = new ZipEntry(file.path());</span>
 <span class="source-line-no">160</span><span id="line-160">                zos.putNextEntry(ze);</span>
-<span class="source-line-no">161</span><span id="line-161">                zos.write(file.data);</span>
+<span class="source-line-no">161</span><span id="line-161">                zos.write(file.data());</span>
 <span class="source-line-no">162</span><span id="line-162">            }</span>
 <span class="source-line-no">163</span><span id="line-163">            zos.closeEntry();</span>
 <span class="source-line-no">164</span><span id="line-164">        }</span>

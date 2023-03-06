@@ -198,52 +198,60 @@
 <span class="source-line-no">185</span><span id="line-185">                return null;</span>
 <span class="source-line-no">186</span><span id="line-186">            }</span>
 <span class="source-line-no">187</span><span id="line-187">            switch (hash) {</span>
-<span class="source-line-no">188</span><span id="line-188">                case 8:</span>
+<span class="source-line-no">188</span><span id="line-188">                case 8 -&gt; {</span>
 <span class="source-line-no">189</span><span id="line-189">                    // north</span>
 <span class="source-line-no">190</span><span id="line-190">                    return plot.isMerged(Direction.NORTH) ? id : null;</span>
-<span class="source-line-no">191</span><span id="line-191">                case 4:</span>
-<span class="source-line-no">192</span><span id="line-192">                    // east</span>
-<span class="source-line-no">193</span><span id="line-193">                    return plot.isMerged(Direction.EAST) ? id : null;</span>
-<span class="source-line-no">194</span><span id="line-194">                case 2:</span>
-<span class="source-line-no">195</span><span id="line-195">                    // south</span>
-<span class="source-line-no">196</span><span id="line-196">                    return plot.isMerged(Direction.SOUTH) ? id : null;</span>
-<span class="source-line-no">197</span><span id="line-197">                case 1:</span>
-<span class="source-line-no">198</span><span id="line-198">                    // west</span>
-<span class="source-line-no">199</span><span id="line-199">                    return plot.isMerged(Direction.WEST) ? id : null;</span>
-<span class="source-line-no">200</span><span id="line-200">                case 12:</span>
-<span class="source-line-no">201</span><span id="line-201">                    // northeast</span>
-<span class="source-line-no">202</span><span id="line-202">                    return plot.isMerged(Direction.NORTHEAST) ? id : null;</span>
-<span class="source-line-no">203</span><span id="line-203">                case 6:</span>
-<span class="source-line-no">204</span><span id="line-204">                    // southeast</span>
-<span class="source-line-no">205</span><span id="line-205">                    return plot.isMerged(Direction.SOUTHEAST) ? id : null;</span>
-<span class="source-line-no">206</span><span id="line-206">                case 3:</span>
-<span class="source-line-no">207</span><span id="line-207">                    // southwest</span>
-<span class="source-line-no">208</span><span id="line-208">                    return plot.isMerged(Direction.SOUTHWEST) ? id : null;</span>
-<span class="source-line-no">209</span><span id="line-209">                case 9:</span>
-<span class="source-line-no">210</span><span id="line-210">                    // northwest</span>
-<span class="source-line-no">211</span><span id="line-211">                    return plot.isMerged(Direction.NORTHWEST) ? id : null;</span>
-<span class="source-line-no">212</span><span id="line-212">            }</span>
-<span class="source-line-no">213</span><span id="line-213">        } catch (Exception ignored) {</span>
-<span class="source-line-no">214</span><span id="line-214">            LOGGER.error("Invalid plot / road width in settings.yml for world: {}", squarePlotWorld.getWorldName());</span>
-<span class="source-line-no">215</span><span id="line-215">        }</span>
-<span class="source-line-no">216</span><span id="line-216">        return null;</span>
-<span class="source-line-no">217</span><span id="line-217">    }</span>
-<span class="source-line-no">218</span><span id="line-218"></span>
-<span class="source-line-no">219</span><span id="line-219">    /**</span>
-<span class="source-line-no">220</span><span id="line-220">     * Get the bottom plot loc (some basic math).</span>
-<span class="source-line-no">221</span><span id="line-221">     */</span>
-<span class="source-line-no">222</span><span id="line-222">    @Override</span>
-<span class="source-line-no">223</span><span id="line-223">    public Location getPlotBottomLocAbs(@NonNull PlotId plotId) {</span>
-<span class="source-line-no">224</span><span id="line-224">        int px = plotId.getX();</span>
-<span class="source-line-no">225</span><span id="line-225">        int pz = plotId.getY();</span>
-<span class="source-line-no">226</span><span id="line-226">        int x = (squarePlotWorld.ROAD_OFFSET_X + (px * (squarePlotWorld.ROAD_WIDTH + squarePlotWorld.PLOT_WIDTH))) - squarePlotWorld.PLOT_WIDTH</span>
-<span class="source-line-no">227</span><span id="line-227">                - (int) Math.floor(squarePlotWorld.ROAD_WIDTH / 2);</span>
-<span class="source-line-no">228</span><span id="line-228">        int z = (squarePlotWorld.ROAD_OFFSET_Z + (pz * (squarePlotWorld.ROAD_WIDTH + squarePlotWorld.PLOT_WIDTH))) - squarePlotWorld.PLOT_WIDTH</span>
-<span class="source-line-no">229</span><span id="line-229">                - (int) Math.floor(squarePlotWorld.ROAD_WIDTH / 2);</span>
-<span class="source-line-no">230</span><span id="line-230">        return Location.at(squarePlotWorld.getWorldName(), x, squarePlotWorld.getMinGenHeight(), z);</span>
-<span class="source-line-no">231</span><span id="line-231">    }</span>
-<span class="source-line-no">232</span><span id="line-232"></span>
-<span class="source-line-no">233</span><span id="line-233">}</span>
+<span class="source-line-no">191</span><span id="line-191">                }</span>
+<span class="source-line-no">192</span><span id="line-192">                case 4 -&gt; {</span>
+<span class="source-line-no">193</span><span id="line-193">                    // east</span>
+<span class="source-line-no">194</span><span id="line-194">                    return plot.isMerged(Direction.EAST) ? id : null;</span>
+<span class="source-line-no">195</span><span id="line-195">                }</span>
+<span class="source-line-no">196</span><span id="line-196">                case 2 -&gt; {</span>
+<span class="source-line-no">197</span><span id="line-197">                    // south</span>
+<span class="source-line-no">198</span><span id="line-198">                    return plot.isMerged(Direction.SOUTH) ? id : null;</span>
+<span class="source-line-no">199</span><span id="line-199">                }</span>
+<span class="source-line-no">200</span><span id="line-200">                case 1 -&gt; {</span>
+<span class="source-line-no">201</span><span id="line-201">                    // west</span>
+<span class="source-line-no">202</span><span id="line-202">                    return plot.isMerged(Direction.WEST) ? id : null;</span>
+<span class="source-line-no">203</span><span id="line-203">                }</span>
+<span class="source-line-no">204</span><span id="line-204">                case 12 -&gt; {</span>
+<span class="source-line-no">205</span><span id="line-205">                    // northeast</span>
+<span class="source-line-no">206</span><span id="line-206">                    return plot.isMerged(Direction.NORTHEAST) ? id : null;</span>
+<span class="source-line-no">207</span><span id="line-207">                }</span>
+<span class="source-line-no">208</span><span id="line-208">                case 6 -&gt; {</span>
+<span class="source-line-no">209</span><span id="line-209">                    // southeast</span>
+<span class="source-line-no">210</span><span id="line-210">                    return plot.isMerged(Direction.SOUTHEAST) ? id : null;</span>
+<span class="source-line-no">211</span><span id="line-211">                }</span>
+<span class="source-line-no">212</span><span id="line-212">                case 3 -&gt; {</span>
+<span class="source-line-no">213</span><span id="line-213">                    // southwest</span>
+<span class="source-line-no">214</span><span id="line-214">                    return plot.isMerged(Direction.SOUTHWEST) ? id : null;</span>
+<span class="source-line-no">215</span><span id="line-215">                }</span>
+<span class="source-line-no">216</span><span id="line-216">                case 9 -&gt; {</span>
+<span class="source-line-no">217</span><span id="line-217">                    // northwest</span>
+<span class="source-line-no">218</span><span id="line-218">                    return plot.isMerged(Direction.NORTHWEST) ? id : null;</span>
+<span class="source-line-no">219</span><span id="line-219">                }</span>
+<span class="source-line-no">220</span><span id="line-220">            }</span>
+<span class="source-line-no">221</span><span id="line-221">        } catch (Exception ignored) {</span>
+<span class="source-line-no">222</span><span id="line-222">            LOGGER.error("Invalid plot / road width in settings.yml for world: {}", squarePlotWorld.getWorldName());</span>
+<span class="source-line-no">223</span><span id="line-223">        }</span>
+<span class="source-line-no">224</span><span id="line-224">        return null;</span>
+<span class="source-line-no">225</span><span id="line-225">    }</span>
+<span class="source-line-no">226</span><span id="line-226"></span>
+<span class="source-line-no">227</span><span id="line-227">    /**</span>
+<span class="source-line-no">228</span><span id="line-228">     * Get the bottom plot loc (some basic math).</span>
+<span class="source-line-no">229</span><span id="line-229">     */</span>
+<span class="source-line-no">230</span><span id="line-230">    @Override</span>
+<span class="source-line-no">231</span><span id="line-231">    public Location getPlotBottomLocAbs(@NonNull PlotId plotId) {</span>
+<span class="source-line-no">232</span><span id="line-232">        int px = plotId.getX();</span>
+<span class="source-line-no">233</span><span id="line-233">        int pz = plotId.getY();</span>
+<span class="source-line-no">234</span><span id="line-234">        int x = (squarePlotWorld.ROAD_OFFSET_X + (px * (squarePlotWorld.ROAD_WIDTH + squarePlotWorld.PLOT_WIDTH))) - squarePlotWorld.PLOT_WIDTH</span>
+<span class="source-line-no">235</span><span id="line-235">                - (int) Math.floor(squarePlotWorld.ROAD_WIDTH / 2);</span>
+<span class="source-line-no">236</span><span id="line-236">        int z = (squarePlotWorld.ROAD_OFFSET_Z + (pz * (squarePlotWorld.ROAD_WIDTH + squarePlotWorld.PLOT_WIDTH))) - squarePlotWorld.PLOT_WIDTH</span>
+<span class="source-line-no">237</span><span id="line-237">                - (int) Math.floor(squarePlotWorld.ROAD_WIDTH / 2);</span>
+<span class="source-line-no">238</span><span id="line-238">        return Location.at(squarePlotWorld.getWorldName(), x, squarePlotWorld.getMinGenHeight(), z);</span>
+<span class="source-line-no">239</span><span id="line-239">    }</span>
+<span class="source-line-no">240</span><span id="line-240"></span>
+<span class="source-line-no">241</span><span id="line-241">}</span>
 
 
 

@@ -354,14 +354,14 @@
 <span class="source-line-no">341</span><span id="line-341">            }</span>
 <span class="source-line-no">342</span><span id="line-342"></span>
 <span class="source-line-no">343</span><span id="line-343">            TimedFlag.Timed&lt;Integer&gt; feed = plot.getFlag(FeedFlag.class);</span>
-<span class="source-line-no">344</span><span id="line-344">            if (feed.getInterval() != 0 &amp;&amp; feed.getValue() != 0) {</span>
+<span class="source-line-no">344</span><span id="line-344">            if (feed.interval() != 0 &amp;&amp; feed.value() != 0) {</span>
 <span class="source-line-no">345</span><span id="line-345">                feedRunnable</span>
-<span class="source-line-no">346</span><span id="line-346">                        .put(player.getUUID(), new Interval(feed.getInterval(), feed.getValue(), 20));</span>
+<span class="source-line-no">346</span><span id="line-346">                        .put(player.getUUID(), new Interval(feed.interval(), feed.value(), 20));</span>
 <span class="source-line-no">347</span><span id="line-347">            }</span>
 <span class="source-line-no">348</span><span id="line-348">            TimedFlag.Timed&lt;Integer&gt; heal = plot.getFlag(HealFlag.class);</span>
-<span class="source-line-no">349</span><span id="line-349">            if (heal.getInterval() != 0 &amp;&amp; heal.getValue() != 0) {</span>
+<span class="source-line-no">349</span><span id="line-349">            if (heal.interval() != 0 &amp;&amp; heal.value() != 0) {</span>
 <span class="source-line-no">350</span><span id="line-350">                healRunnable</span>
-<span class="source-line-no">351</span><span id="line-351">                        .put(player.getUUID(), new Interval(heal.getInterval(), heal.getValue(), 20));</span>
+<span class="source-line-no">351</span><span id="line-351">                        .put(player.getUUID(), new Interval(heal.interval(), heal.value(), 20));</span>
 <span class="source-line-no">352</span><span id="line-352">            }</span>
 <span class="source-line-no">353</span><span id="line-353">            return true;</span>
 <span class="source-line-no">354</span><span id="line-354">        }</span>

@@ -795,14 +795,16 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="com.plotsquared.core.plot.comment">
 <h2>Uses of <a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a> in <a href="../comment/package-summary.html">com.plotsquared.core.plot.comment</a></h2>
-<div class="caption"><span>Fields in <a href="../comment/package-summary.html">com.plotsquared.core.plot.comment</a> declared as <a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></span></div>
+<div class="caption"><span>Methods in <a href="../comment/package-summary.html">com.plotsquared.core.plot.comment</a> that return <a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
+<div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>final <a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PlotComment.</span><code><a href="../comment/PlotComment.html#id" class="member-name-link">id</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PlotComment.</span><code><a href="../comment/PlotComment.html#id()" class="member-name-link">id</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the value of the <code>id</code> record component.</div>
+</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../comment/package-summary.html">com.plotsquared.core.plot.comment</a> with parameters of type <a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></span></div>
 <div class="summary-table three-column-summary">
@@ -816,7 +818,9 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;senderName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;inbox,
  long&nbsp;timestamp)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates an instance of a <code>PlotComment</code> record class.</div>
+</div>
 </div>
 </section>
 </li>
@@ -936,7 +940,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AutoService.AutoQuery.</span><code><a href="../../services/plots/AutoService.AutoQuery.html#getStartId()" class="member-name-link">getStartId</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AutoQuery.</span><code><a href="../../services/plots/AutoQuery.html#startId()" class="member-name-link">startId</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Get the plot ID to start searching from</div>
 </div>
@@ -947,13 +951,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../services/plots/AutoService.AutoQuery.html#%3Cinit%3E(com.plotsquared.core.player.PlotPlayer,com.plotsquared.core.plot.PlotId,int,int,com.plotsquared.core.plot.PlotArea)" class="member-name-link">AutoQuery</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
+<div class="col-second even-row-color"><code><a href="../../services/plots/AutoQuery.html#%3Cinit%3E(com.plotsquared.core.player.PlotPlayer,com.plotsquared.core.plot.PlotId,int,int,com.plotsquared.core.plot.PlotArea)" class="member-name-link">AutoQuery</a><wbr>(<a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../../player/PlotPlayer.html" title="class in com.plotsquared.core.player">PlotPlayer</a>&lt;?&gt;&nbsp;player,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/Nullable.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@Nullable</a> <a href="../PlotId.html" title="class in com.plotsquared.core.plot">PlotId</a>&nbsp;startId,
  int&nbsp;sizeX,
  int&nbsp;sizeZ,
  <a href="https://checkerframework.org/api/org/checkerframework/checker/nullness/qual/NonNull.html" title="class or interface in org.checkerframework.checker.nullness.qual" class="external-link">@NonNull</a> <a href="../PlotArea.html" title="class in com.plotsquared.core.plot">PlotArea</a>&nbsp;plotArea)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Crate a new auto query</div>
+<div class="block">Creates an instance of a <code>AutoQuery</code> record class.</div>
 </div>
 </div>
 </section>

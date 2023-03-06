@@ -487,20 +487,20 @@
 <span class="source-line-no">474</span><span id="line-474">                        final List&lt;UUIDMapping&gt; names = PlotSquared.get().getImpromptuUUIDPipeline().getNames(plot.getOwners())</span>
 <span class="source-line-no">475</span><span id="line-475">                                .get(Settings.UUID.BLOCKING_TIMEOUT, TimeUnit.MILLISECONDS);</span>
 <span class="source-line-no">476</span><span id="line-476">                        for (final UUIDMapping uuidMapping : names) {</span>
-<span class="source-line-no">477</span><span id="line-477">                            PlotPlayer&lt;?&gt; pp = PlotSquared.platform().playerManager().getPlayerIfExists(uuidMapping.getUuid());</span>
+<span class="source-line-no">477</span><span id="line-477">                            PlotPlayer&lt;?&gt; pp = PlotSquared.platform().playerManager().getPlayerIfExists(uuidMapping.uuid());</span>
 <span class="source-line-no">478</span><span id="line-478">                            TagResolver resolver = TagResolver.builder()</span>
 <span class="source-line-no">479</span><span id="line-479">                                .tag("prefix", Tag.inserting(Component.text(prefix)))</span>
-<span class="source-line-no">480</span><span id="line-480">                                .tag("player", Tag.inserting(Component.text(uuidMapping.getUsername())))</span>
+<span class="source-line-no">480</span><span id="line-480">                                .tag("player", Tag.inserting(Component.text(uuidMapping.username())))</span>
 <span class="source-line-no">481</span><span id="line-481">                                .build();</span>
 <span class="source-line-no">482</span><span id="line-482">                        if (pp != null) {</span>
 <span class="source-line-no">483</span><span id="line-483">                            builder.append(MINI_MESSAGE.deserialize(online, resolver));</span>
-<span class="source-line-no">484</span><span id="line-484">                            } else if (uuidMapping.getUsername().equalsIgnoreCase("unknown")) {</span>
+<span class="source-line-no">484</span><span id="line-484">                            } else if (uuidMapping.username().equalsIgnoreCase("unknown")) {</span>
 <span class="source-line-no">485</span><span id="line-485">                                TagResolver unknownResolver = TagResolver.resolver(</span>
 <span class="source-line-no">486</span><span id="line-486">                                        "info.unknown",</span>
 <span class="source-line-no">487</span><span id="line-487">                                        Tag.inserting(TranslatableCaption.of("info.unknown").toComponent(player))</span>
 <span class="source-line-no">488</span><span id="line-488">                                );</span>
 <span class="source-line-no">489</span><span id="line-489">                                builder.append(MINI_MESSAGE.deserialize(unknown, unknownResolver));</span>
-<span class="source-line-no">490</span><span id="line-490">                            } else if (uuidMapping.getUuid().equals(DBFunc.EVERYONE)) {</span>
+<span class="source-line-no">490</span><span id="line-490">                            } else if (uuidMapping.uuid().equals(DBFunc.EVERYONE)) {</span>
 <span class="source-line-no">491</span><span id="line-491">                                TagResolver everyoneResolver = TagResolver.resolver(</span>
 <span class="source-line-no">492</span><span id="line-492">                                        "info.everyone",</span>
 <span class="source-line-no">493</span><span id="line-493">                                        Tag.inserting(TranslatableCaption.of("info.everyone").toComponent(player))</span>

@@ -251,8 +251,8 @@
 <span class="source-line-no">238</span><span id="line-238">                        PlotSquared.get().getImpromptuUUIDPipeline().getAllImmediately();</span>
 <span class="source-line-no">239</span><span id="line-239">                players = new ArrayList&lt;&gt;(mappings.size());</span>
 <span class="source-line-no">240</span><span id="line-240">                for (final UUIDMapping mapping : mappings) {</span>
-<span class="source-line-no">241</span><span id="line-241">                    if (uuidFilter.test(mapping.getUuid())) {</span>
-<span class="source-line-no">242</span><span id="line-242">                        players.add(mapping.getUsername());</span>
+<span class="source-line-no">241</span><span id="line-241">                    if (uuidFilter.test(mapping.uuid())) {</span>
+<span class="source-line-no">242</span><span id="line-242">                        players.add(mapping.username());</span>
 <span class="source-line-no">243</span><span id="line-243">                    }</span>
 <span class="source-line-no">244</span><span id="line-244">                }</span>
 <span class="source-line-no">245</span><span id="line-245">                cachedCompletionValues.put(cacheIdentifier, players);</span>

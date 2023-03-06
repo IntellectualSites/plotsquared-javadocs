@@ -178,8 +178,8 @@
 <span class="source-line-no">165</span><span id="line-165"></span>
 <span class="source-line-no">166</span><span id="line-166">        final List&lt;ComponentPreset&gt; allowedPresets = new ArrayList&lt;&gt;(this.presets.size());</span>
 <span class="source-line-no">167</span><span id="line-167">        for (final ComponentPreset componentPreset : this.presets) {</span>
-<span class="source-line-no">168</span><span id="line-168">            if (!componentPreset.getPermission().isEmpty() &amp;&amp; !player.hasPermission(</span>
-<span class="source-line-no">169</span><span id="line-169">                    componentPreset.getPermission()</span>
+<span class="source-line-no">168</span><span id="line-168">            if (!componentPreset.permission().isEmpty() &amp;&amp; !player.hasPermission(</span>
+<span class="source-line-no">169</span><span id="line-169">                    componentPreset.permission()</span>
 <span class="source-line-no">170</span><span id="line-170">            )) {</span>
 <span class="source-line-no">171</span><span id="line-171">                continue;</span>
 <span class="source-line-no">172</span><span id="line-172">            }</span>
@@ -213,30 +213,30 @@
 <span class="source-line-no">200</span><span id="line-200">                    return false;</span>
 <span class="source-line-no">201</span><span id="line-201">                }</span>
 <span class="source-line-no">202</span><span id="line-202"></span>
-<span class="source-line-no">203</span><span id="line-203">                final Pattern pattern = PatternUtil.parse(null, componentPreset.getPattern(), false);</span>
+<span class="source-line-no">203</span><span id="line-203">                final Pattern pattern = PatternUtil.parse(null, componentPreset.pattern(), false);</span>
 <span class="source-line-no">204</span><span id="line-204">                if (pattern == null) {</span>
 <span class="source-line-no">205</span><span id="line-205">                    getPlayer().sendMessage(TranslatableCaption.of("preset.preset_invalid"));</span>
 <span class="source-line-no">206</span><span id="line-206">                    return false;</span>
 <span class="source-line-no">207</span><span id="line-207">                }</span>
 <span class="source-line-no">208</span><span id="line-208"></span>
-<span class="source-line-no">209</span><span id="line-209">                if (componentPreset.getCost() &gt; 0.0D) {</span>
+<span class="source-line-no">209</span><span id="line-209">                if (componentPreset.cost() &gt; 0.0D) {</span>
 <span class="source-line-no">210</span><span id="line-210">                    if (!econHandler.isEnabled(plot.getArea())) {</span>
 <span class="source-line-no">211</span><span id="line-211">                        getPlayer().sendMessage(</span>
 <span class="source-line-no">212</span><span id="line-212">                                TranslatableCaption.of("preset.economy_disabled"),</span>
-<span class="source-line-no">213</span><span id="line-213">                                TagResolver.resolver("preset", Tag.inserting(Component.text(componentPreset.getDisplayName())))</span>
+<span class="source-line-no">213</span><span id="line-213">                                TagResolver.resolver("preset", Tag.inserting(Component.text(componentPreset.displayName())))</span>
 <span class="source-line-no">214</span><span id="line-214">                        );</span>
 <span class="source-line-no">215</span><span id="line-215">                        return false;</span>
 <span class="source-line-no">216</span><span id="line-216">                    }</span>
-<span class="source-line-no">217</span><span id="line-217">                    if (econHandler.getMoney(getPlayer()) &lt; componentPreset.getCost()) {</span>
+<span class="source-line-no">217</span><span id="line-217">                    if (econHandler.getMoney(getPlayer()) &lt; componentPreset.cost()) {</span>
 <span class="source-line-no">218</span><span id="line-218">                        getPlayer().sendMessage(TranslatableCaption.of("preset.preset_cannot_afford"));</span>
 <span class="source-line-no">219</span><span id="line-219">                        return false;</span>
 <span class="source-line-no">220</span><span id="line-220">                    } else {</span>
-<span class="source-line-no">221</span><span id="line-221">                        econHandler.withdrawMoney(getPlayer(), componentPreset.getCost());</span>
+<span class="source-line-no">221</span><span id="line-221">                        econHandler.withdrawMoney(getPlayer(), componentPreset.cost());</span>
 <span class="source-line-no">222</span><span id="line-222">                        getPlayer().sendMessage(</span>
 <span class="source-line-no">223</span><span id="line-223">                                TranslatableCaption.of("economy.removed_balance"),</span>
 <span class="source-line-no">224</span><span id="line-224">                                TagResolver.resolver(</span>
 <span class="source-line-no">225</span><span id="line-225">                                        "money",</span>
-<span class="source-line-no">226</span><span id="line-226">                                        Tag.inserting(Component.text(econHandler.format(componentPreset.getCost())))</span>
+<span class="source-line-no">226</span><span id="line-226">                                        Tag.inserting(Component.text(econHandler.format(componentPreset.cost())))</span>
 <span class="source-line-no">227</span><span id="line-227">                                )</span>
 <span class="source-line-no">228</span><span id="line-228">                        );</span>
 <span class="source-line-no">229</span><span id="line-229">                    }</span>
@@ -248,7 +248,7 @@
 <span class="source-line-no">235</span><span id="line-235">                    queue.setCompleteTask(plot::removeRunning);</span>
 <span class="source-line-no">236</span><span id="line-236">                    for (Plot current : plot.getConnectedPlots()) {</span>
 <span class="source-line-no">237</span><span id="line-237">                        current.getPlotModificationManager().setComponent(</span>
-<span class="source-line-no">238</span><span id="line-238">                                componentPreset.getComponent().name(),</span>
+<span class="source-line-no">238</span><span id="line-238">                                componentPreset.component().name(),</span>
 <span class="source-line-no">239</span><span id="line-239">                                pattern,</span>
 <span class="source-line-no">240</span><span id="line-240">                                player,</span>
 <span class="source-line-no">241</span><span id="line-241">                                queue</span>
@@ -265,32 +265,32 @@
 <span class="source-line-no">252</span><span id="line-252">        for (int i = 0; i &lt; allowedPresets.size(); i++) {</span>
 <span class="source-line-no">253</span><span id="line-253">            final ComponentPreset preset = allowedPresets.get(i);</span>
 <span class="source-line-no">254</span><span id="line-254">            final List&lt;String&gt; lore = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">255</span><span id="line-255">            if (preset.getCost() &gt; 0) {</span>
+<span class="source-line-no">255</span><span id="line-255">            if (preset.cost() &gt; 0) {</span>
 <span class="source-line-no">256</span><span id="line-256">                if (!this.econHandler.isEnabled(plot.getArea())) {</span>
 <span class="source-line-no">257</span><span id="line-257">                    lore.add(MINI_MESSAGE.serialize(MINI_MESSAGE.deserialize(</span>
 <span class="source-line-no">258</span><span id="line-258">                            TranslatableCaption.of("preset.preset_lore_economy_disabled").getComponent(player))));</span>
 <span class="source-line-no">259</span><span id="line-259">                } else {</span>
 <span class="source-line-no">260</span><span id="line-260">                    lore.add(MINI_MESSAGE.serialize(MINI_MESSAGE.deserialize(</span>
 <span class="source-line-no">261</span><span id="line-261">                            TranslatableCaption.of("preset.preset_lore_cost").getComponent(player),</span>
-<span class="source-line-no">262</span><span id="line-262">                            TagResolver.resolver("cost", Tag.inserting(Component.text(String.format("%.2f", preset.getCost()))))</span>
+<span class="source-line-no">262</span><span id="line-262">                            TagResolver.resolver("cost", Tag.inserting(Component.text(String.format("%.2f", preset.cost()))))</span>
 <span class="source-line-no">263</span><span id="line-263">                    )));</span>
 <span class="source-line-no">264</span><span id="line-264">                }</span>
 <span class="source-line-no">265</span><span id="line-265">            }</span>
 <span class="source-line-no">266</span><span id="line-266">            lore.add(MINI_MESSAGE.serialize(MINI_MESSAGE.deserialize(</span>
 <span class="source-line-no">267</span><span id="line-267">                    TranslatableCaption.of("preset.preset_lore_component").getComponent(player),</span>
 <span class="source-line-no">268</span><span id="line-268">                    TagResolver.builder()</span>
-<span class="source-line-no">269</span><span id="line-269">                            .tag("component", Tag.inserting(Component.text(preset.getComponent().name().toLowerCase())))</span>
+<span class="source-line-no">269</span><span id="line-269">                            .tag("component", Tag.inserting(Component.text(preset.component().name().toLowerCase())))</span>
 <span class="source-line-no">270</span><span id="line-270">                            .tag("prefix", Tag.inserting(TranslatableCaption.of("core.prefix").toComponent(player)))</span>
 <span class="source-line-no">271</span><span id="line-271">                            .build()</span>
 <span class="source-line-no">272</span><span id="line-272">            )));</span>
 <span class="source-line-no">273</span><span id="line-273">            lore.removeIf(String::isEmpty);</span>
-<span class="source-line-no">274</span><span id="line-274">            lore.addAll(preset.getDescription());</span>
+<span class="source-line-no">274</span><span id="line-274">            lore.addAll(preset.description());</span>
 <span class="source-line-no">275</span><span id="line-275">            plotInventory.setItem(</span>
 <span class="source-line-no">276</span><span id="line-276">                    i,</span>
 <span class="source-line-no">277</span><span id="line-277">                    new PlotItemStack(</span>
-<span class="source-line-no">278</span><span id="line-278">                            preset.getIcon().getId().replace("minecraft:", ""),</span>
+<span class="source-line-no">278</span><span id="line-278">                            preset.icon().getId().replace("minecraft:", ""),</span>
 <span class="source-line-no">279</span><span id="line-279">                            1,</span>
-<span class="source-line-no">280</span><span id="line-280">                            preset.getDisplayName(),</span>
+<span class="source-line-no">280</span><span id="line-280">                            preset.displayName(),</span>
 <span class="source-line-no">281</span><span id="line-281">                            lore.toArray(new String[0])</span>
 <span class="source-line-no">282</span><span id="line-282">                    )</span>
 <span class="source-line-no">283</span><span id="line-283">            );</span>

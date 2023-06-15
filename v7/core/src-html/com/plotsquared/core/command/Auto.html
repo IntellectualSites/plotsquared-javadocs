@@ -309,75 +309,78 @@
 <span class="source-line-no">296</span><span id="line-296">        }</span>
 <span class="source-line-no">297</span><span id="line-297">        if (this.econHandler != null &amp;&amp; plotarea.useEconomy()) {</span>
 <span class="source-line-no">298</span><span id="line-298">            PlotExpression costExp = plotarea.getPrices().get("claim");</span>
-<span class="source-line-no">299</span><span id="line-299">            double cost = costExp.evaluate(Settings.Limit.GLOBAL ?</span>
-<span class="source-line-no">300</span><span id="line-300">                    player.getPlotCount() :</span>
-<span class="source-line-no">301</span><span id="line-301">                    player.getPlotCount(plotarea.getWorldName()));</span>
-<span class="source-line-no">302</span><span id="line-302">            cost = (sizeX * sizeZ) * cost;</span>
-<span class="source-line-no">303</span><span id="line-303">            if (cost &gt; 0d) {</span>
-<span class="source-line-no">304</span><span id="line-304">                if (!this.econHandler.isSupported()) {</span>
-<span class="source-line-no">305</span><span id="line-305">                    player.sendMessage(TranslatableCaption.of("economy.vault_or_consumer_null"));</span>
-<span class="source-line-no">306</span><span id="line-306">                    return false;</span>
-<span class="source-line-no">307</span><span id="line-307">                }</span>
-<span class="source-line-no">308</span><span id="line-308">                if (!force &amp;&amp; this.econHandler.getMoney(player) &lt; cost) {</span>
-<span class="source-line-no">309</span><span id="line-309">                    player.sendMessage(</span>
-<span class="source-line-no">310</span><span id="line-310">                            TranslatableCaption.of("economy.cannot_afford_plot"),</span>
-<span class="source-line-no">311</span><span id="line-311">                            TagResolver.builder()</span>
-<span class="source-line-no">312</span><span id="line-312">                                    .tag("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
-<span class="source-line-no">313</span><span id="line-313">                                    .tag(</span>
-<span class="source-line-no">314</span><span id="line-314">                                            "balance",</span>
-<span class="source-line-no">315</span><span id="line-315">                                            Tag.inserting(Component.text(this.econHandler.format(this.econHandler.getMoney(player))))</span>
-<span class="source-line-no">316</span><span id="line-316">                                    )</span>
-<span class="source-line-no">317</span><span id="line-317">                                    .build()</span>
-<span class="source-line-no">318</span><span id="line-318">                    );</span>
-<span class="source-line-no">319</span><span id="line-319">                    return false;</span>
-<span class="source-line-no">320</span><span id="line-320">                }</span>
-<span class="source-line-no">321</span><span id="line-321">                this.econHandler.withdrawMoney(player, cost);</span>
-<span class="source-line-no">322</span><span id="line-322">                player.sendMessage(</span>
-<span class="source-line-no">323</span><span id="line-323">                        TranslatableCaption.of("economy.removed_balance"),</span>
-<span class="source-line-no">324</span><span id="line-324">                        TagResolver.resolver("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
-<span class="source-line-no">325</span><span id="line-325">                );</span>
-<span class="source-line-no">326</span><span id="line-326">            }</span>
-<span class="source-line-no">327</span><span id="line-327">        }</span>
-<span class="source-line-no">328</span><span id="line-328"></span>
-<span class="source-line-no">329</span><span id="line-329">        List&lt;Plot&gt; plots = this.servicePipeline</span>
-<span class="source-line-no">330</span><span id="line-330">                .pump(new AutoQuery(player, null, sizeX, sizeZ, plotarea))</span>
-<span class="source-line-no">331</span><span id="line-331">                .through(AutoService.class)</span>
-<span class="source-line-no">332</span><span id="line-332">                .getResult();</span>
-<span class="source-line-no">333</span><span id="line-333"></span>
-<span class="source-line-no">334</span><span id="line-334">        plots = this.eventDispatcher.callAutoPlotsChosen(player, plots).getPlots();</span>
-<span class="source-line-no">335</span><span id="line-335"></span>
-<span class="source-line-no">336</span><span id="line-336">        if (plots.isEmpty()) {</span>
-<span class="source-line-no">337</span><span id="line-337">            player.sendMessage(TranslatableCaption.of("errors.no_free_plots"));</span>
-<span class="source-line-no">338</span><span id="line-338">            return false;</span>
-<span class="source-line-no">339</span><span id="line-339">        } else if (plots.size() == 1) {</span>
-<span class="source-line-no">340</span><span id="line-340">            this.claimSingle(player, plots.get(0), plotarea, schematic);</span>
-<span class="source-line-no">341</span><span id="line-341">        } else {</span>
-<span class="source-line-no">342</span><span id="line-342">            final Iterator&lt;Plot&gt; plotIterator = plots.iterator();</span>
-<span class="source-line-no">343</span><span id="line-343">            while (plotIterator.hasNext()) {</span>
-<span class="source-line-no">344</span><span id="line-344">                Plot plot = plotIterator.next();</span>
-<span class="source-line-no">345</span><span id="line-345">                if (!plot.canClaim(player)) {</span>
-<span class="source-line-no">346</span><span id="line-346">                    continue;</span>
-<span class="source-line-no">347</span><span id="line-347">                }</span>
-<span class="source-line-no">348</span><span id="line-348">                plot.claim(player, !plotIterator.hasNext(), null, true, true);</span>
-<span class="source-line-no">349</span><span id="line-349">                eventDispatcher.callPostAuto(player, plot);</span>
-<span class="source-line-no">350</span><span id="line-350">            }</span>
-<span class="source-line-no">351</span><span id="line-351">            final PlotAutoMergeEvent mergeEvent = this.eventDispatcher.callAutoMerge(</span>
-<span class="source-line-no">352</span><span id="line-352">                    plots.get(0),</span>
-<span class="source-line-no">353</span><span id="line-353">                    plots.stream().map(Plot::getId).collect(Collectors.toList())</span>
-<span class="source-line-no">354</span><span id="line-354">            );</span>
-<span class="source-line-no">355</span><span id="line-355">            if (!force &amp;&amp; mergeEvent.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">356</span><span id="line-356">                player.sendMessage(</span>
-<span class="source-line-no">357</span><span id="line-357">                        TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">358</span><span id="line-358">                        TagResolver.resolver("value", Tag.inserting(Component.text("Auto merge")))</span>
-<span class="source-line-no">359</span><span id="line-359">                );</span>
-<span class="source-line-no">360</span><span id="line-360">                return false;</span>
-<span class="source-line-no">361</span><span id="line-361">            }</span>
-<span class="source-line-no">362</span><span id="line-362">            return plotarea.mergePlots(mergeEvent.getPlots(), true);</span>
-<span class="source-line-no">363</span><span id="line-363">        }</span>
-<span class="source-line-no">364</span><span id="line-364">        return true;</span>
-<span class="source-line-no">365</span><span id="line-365">    }</span>
-<span class="source-line-no">366</span><span id="line-366"></span>
-<span class="source-line-no">367</span><span id="line-367">}</span>
+<span class="source-line-no">299</span><span id="line-299">            PlotExpression mergeCostExp = plotarea.getPrices().get("merge");</span>
+<span class="source-line-no">300</span><span id="line-300">            int size = sizeX * sizeZ;</span>
+<span class="source-line-no">301</span><span id="line-301">            double mergeCost = size &gt; 1 &amp;&amp; mergeCostExp == null ? 0d : mergeCostExp.evaluate(size);</span>
+<span class="source-line-no">302</span><span id="line-302">            double cost = costExp.evaluate(Settings.Limit.GLOBAL ?</span>
+<span class="source-line-no">303</span><span id="line-303">                    player.getPlotCount() :</span>
+<span class="source-line-no">304</span><span id="line-304">                    player.getPlotCount(plotarea.getWorldName()));</span>
+<span class="source-line-no">305</span><span id="line-305">            cost = size * cost + mergeCost;</span>
+<span class="source-line-no">306</span><span id="line-306">            if (cost &gt; 0d) {</span>
+<span class="source-line-no">307</span><span id="line-307">                if (!this.econHandler.isSupported()) {</span>
+<span class="source-line-no">308</span><span id="line-308">                    player.sendMessage(TranslatableCaption.of("economy.vault_or_consumer_null"));</span>
+<span class="source-line-no">309</span><span id="line-309">                    return false;</span>
+<span class="source-line-no">310</span><span id="line-310">                }</span>
+<span class="source-line-no">311</span><span id="line-311">                if (!force &amp;&amp; this.econHandler.getMoney(player) &lt; cost) {</span>
+<span class="source-line-no">312</span><span id="line-312">                    player.sendMessage(</span>
+<span class="source-line-no">313</span><span id="line-313">                            TranslatableCaption.of("economy.cannot_afford_plot"),</span>
+<span class="source-line-no">314</span><span id="line-314">                            TagResolver.builder()</span>
+<span class="source-line-no">315</span><span id="line-315">                                    .tag("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
+<span class="source-line-no">316</span><span id="line-316">                                    .tag(</span>
+<span class="source-line-no">317</span><span id="line-317">                                            "balance",</span>
+<span class="source-line-no">318</span><span id="line-318">                                            Tag.inserting(Component.text(this.econHandler.format(this.econHandler.getMoney(player))))</span>
+<span class="source-line-no">319</span><span id="line-319">                                    )</span>
+<span class="source-line-no">320</span><span id="line-320">                                    .build()</span>
+<span class="source-line-no">321</span><span id="line-321">                    );</span>
+<span class="source-line-no">322</span><span id="line-322">                    return false;</span>
+<span class="source-line-no">323</span><span id="line-323">                }</span>
+<span class="source-line-no">324</span><span id="line-324">                this.econHandler.withdrawMoney(player, cost);</span>
+<span class="source-line-no">325</span><span id="line-325">                player.sendMessage(</span>
+<span class="source-line-no">326</span><span id="line-326">                        TranslatableCaption.of("economy.removed_balance"),</span>
+<span class="source-line-no">327</span><span id="line-327">                        TagResolver.resolver("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
+<span class="source-line-no">328</span><span id="line-328">                );</span>
+<span class="source-line-no">329</span><span id="line-329">            }</span>
+<span class="source-line-no">330</span><span id="line-330">        }</span>
+<span class="source-line-no">331</span><span id="line-331"></span>
+<span class="source-line-no">332</span><span id="line-332">        List&lt;Plot&gt; plots = this.servicePipeline</span>
+<span class="source-line-no">333</span><span id="line-333">                .pump(new AutoQuery(player, null, sizeX, sizeZ, plotarea))</span>
+<span class="source-line-no">334</span><span id="line-334">                .through(AutoService.class)</span>
+<span class="source-line-no">335</span><span id="line-335">                .getResult();</span>
+<span class="source-line-no">336</span><span id="line-336"></span>
+<span class="source-line-no">337</span><span id="line-337">        plots = this.eventDispatcher.callAutoPlotsChosen(player, plots).getPlots();</span>
+<span class="source-line-no">338</span><span id="line-338"></span>
+<span class="source-line-no">339</span><span id="line-339">        if (plots.isEmpty()) {</span>
+<span class="source-line-no">340</span><span id="line-340">            player.sendMessage(TranslatableCaption.of("errors.no_free_plots"));</span>
+<span class="source-line-no">341</span><span id="line-341">            return false;</span>
+<span class="source-line-no">342</span><span id="line-342">        } else if (plots.size() == 1) {</span>
+<span class="source-line-no">343</span><span id="line-343">            this.claimSingle(player, plots.get(0), plotarea, schematic);</span>
+<span class="source-line-no">344</span><span id="line-344">        } else {</span>
+<span class="source-line-no">345</span><span id="line-345">            final Iterator&lt;Plot&gt; plotIterator = plots.iterator();</span>
+<span class="source-line-no">346</span><span id="line-346">            while (plotIterator.hasNext()) {</span>
+<span class="source-line-no">347</span><span id="line-347">                Plot plot = plotIterator.next();</span>
+<span class="source-line-no">348</span><span id="line-348">                if (!plot.canClaim(player)) {</span>
+<span class="source-line-no">349</span><span id="line-349">                    continue;</span>
+<span class="source-line-no">350</span><span id="line-350">                }</span>
+<span class="source-line-no">351</span><span id="line-351">                plot.claim(player, !plotIterator.hasNext(), null, true, true);</span>
+<span class="source-line-no">352</span><span id="line-352">                eventDispatcher.callPostAuto(player, plot);</span>
+<span class="source-line-no">353</span><span id="line-353">            }</span>
+<span class="source-line-no">354</span><span id="line-354">            final PlotAutoMergeEvent mergeEvent = this.eventDispatcher.callAutoMerge(</span>
+<span class="source-line-no">355</span><span id="line-355">                    plots.get(0),</span>
+<span class="source-line-no">356</span><span id="line-356">                    plots.stream().map(Plot::getId).collect(Collectors.toList())</span>
+<span class="source-line-no">357</span><span id="line-357">            );</span>
+<span class="source-line-no">358</span><span id="line-358">            if (!force &amp;&amp; mergeEvent.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">359</span><span id="line-359">                player.sendMessage(</span>
+<span class="source-line-no">360</span><span id="line-360">                        TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">361</span><span id="line-361">                        TagResolver.resolver("value", Tag.inserting(Component.text("Auto merge")))</span>
+<span class="source-line-no">362</span><span id="line-362">                );</span>
+<span class="source-line-no">363</span><span id="line-363">                return false;</span>
+<span class="source-line-no">364</span><span id="line-364">            }</span>
+<span class="source-line-no">365</span><span id="line-365">            return plotarea.mergePlots(mergeEvent.getPlots(), true);</span>
+<span class="source-line-no">366</span><span id="line-366">        }</span>
+<span class="source-line-no">367</span><span id="line-367">        return true;</span>
+<span class="source-line-no">368</span><span id="line-368">    }</span>
+<span class="source-line-no">369</span><span id="line-369"></span>
+<span class="source-line-no">370</span><span id="line-370">}</span>
 
 
 

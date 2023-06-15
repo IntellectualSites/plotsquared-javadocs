@@ -301,58 +301,72 @@
 <span class="source-line-no">288</span><span id="line-288">            queue.setCompleteTask(whenDone);</span>
 <span class="source-line-no">289</span><span id="line-289">        }</span>
 <span class="source-line-no">290</span><span id="line-290">        if (!canRegen) {</span>
-<span class="source-line-no">291</span><span id="line-291">            queue.setCuboid(</span>
-<span class="source-line-no">292</span><span id="line-292">                    pos1.withY(hybridPlotWorld.getMinGenHeight()),</span>
-<span class="source-line-no">293</span><span id="line-293">                    pos2.withY(hybridPlotWorld.getMinGenHeight()),</span>
-<span class="source-line-no">294</span><span id="line-294">                    hybridPlotWorld.PLOT_BEDROCK ? bedrock : filling</span>
-<span class="source-line-no">295</span><span id="line-295">            );</span>
-<span class="source-line-no">296</span><span id="line-296">            // Each component has a different layer</span>
-<span class="source-line-no">297</span><span id="line-297">            queue.setCuboid(</span>
-<span class="source-line-no">298</span><span id="line-298">                    pos1.withY(hybridPlotWorld.getMinGenHeight() + 1),</span>
-<span class="source-line-no">299</span><span id="line-299">                    pos2.withY(hybridPlotWorld.PLOT_HEIGHT - 1),</span>
-<span class="source-line-no">300</span><span id="line-300">                    filling</span>
-<span class="source-line-no">301</span><span id="line-301">            );</span>
-<span class="source-line-no">302</span><span id="line-302">            queue.setCuboid(pos1.withY(hybridPlotWorld.PLOT_HEIGHT), pos2.withY(hybridPlotWorld.PLOT_HEIGHT), plotfloor);</span>
-<span class="source-line-no">303</span><span id="line-303">            queue.setCuboid(</span>
-<span class="source-line-no">304</span><span id="line-304">                    pos1.withY(hybridPlotWorld.PLOT_HEIGHT + 1),</span>
-<span class="source-line-no">305</span><span id="line-305">                    pos2.withY(hybridPlotWorld.getMaxGenHeight()),</span>
-<span class="source-line-no">306</span><span id="line-306">                    BlockTypes.AIR.getDefaultState()</span>
-<span class="source-line-no">307</span><span id="line-307">            );</span>
-<span class="source-line-no">308</span><span id="line-308">            queue.setBiomeCuboid(pos1, pos2, biome);</span>
-<span class="source-line-no">309</span><span id="line-309">        } else {</span>
-<span class="source-line-no">310</span><span id="line-310">            queue.setRegenRegion(new CuboidRegion(pos1.getBlockVector3(), pos2.getBlockVector3()));</span>
-<span class="source-line-no">311</span><span id="line-311">        }</span>
-<span class="source-line-no">312</span><span id="line-312">        pastePlotSchematic(queue, pos1, pos2);</span>
-<span class="source-line-no">313</span><span id="line-313">        return !enqueue || queue.enqueue();</span>
-<span class="source-line-no">314</span><span id="line-314">    }</span>
-<span class="source-line-no">315</span><span id="line-315"></span>
-<span class="source-line-no">316</span><span id="line-316">    public void pastePlotSchematic(</span>
-<span class="source-line-no">317</span><span id="line-317">            final @NonNull QueueCoordinator queue,</span>
-<span class="source-line-no">318</span><span id="line-318">            final @NonNull Location bottom,</span>
-<span class="source-line-no">319</span><span id="line-319">            final @NonNull Location top</span>
-<span class="source-line-no">320</span><span id="line-320">    ) {</span>
-<span class="source-line-no">321</span><span id="line-321">        if (!hybridPlotWorld.PLOT_SCHEMATIC) {</span>
-<span class="source-line-no">322</span><span id="line-322">            return;</span>
-<span class="source-line-no">323</span><span id="line-323">        }</span>
-<span class="source-line-no">324</span><span id="line-324">        createSchemAbs(queue, bottom, top, false);</span>
-<span class="source-line-no">325</span><span id="line-325">    }</span>
-<span class="source-line-no">326</span><span id="line-326"></span>
-<span class="source-line-no">327</span><span id="line-327">    /**</span>
-<span class="source-line-no">328</span><span id="line-328">     * Retrieves the location of where a sign should be for a plot.</span>
-<span class="source-line-no">329</span><span id="line-329">     *</span>
-<span class="source-line-no">330</span><span id="line-330">     * @param plot The plot</span>
-<span class="source-line-no">331</span><span id="line-331">     * @return The location where a sign should be</span>
-<span class="source-line-no">332</span><span id="line-332">     */</span>
-<span class="source-line-no">333</span><span id="line-333">    @Override</span>
-<span class="source-line-no">334</span><span id="line-334">    public Location getSignLoc(final @NonNull Plot plot) {</span>
-<span class="source-line-no">335</span><span id="line-335">        return hybridPlotWorld.getSignLocation(plot);</span>
-<span class="source-line-no">336</span><span id="line-336">    }</span>
-<span class="source-line-no">337</span><span id="line-337"></span>
-<span class="source-line-no">338</span><span id="line-338">    public HybridPlotWorld getHybridPlotWorld() {</span>
-<span class="source-line-no">339</span><span id="line-339">        return this.hybridPlotWorld;</span>
-<span class="source-line-no">340</span><span id="line-340">    }</span>
-<span class="source-line-no">341</span><span id="line-341"></span>
-<span class="source-line-no">342</span><span id="line-342">}</span>
+<span class="source-line-no">291</span><span id="line-291">            if (hybridPlotWorld.getMinBuildHeight() &lt; hybridPlotWorld.getMinGenHeight()) {</span>
+<span class="source-line-no">292</span><span id="line-292">                queue.setCuboid(</span>
+<span class="source-line-no">293</span><span id="line-293">                        pos1.withY(hybridPlotWorld.getMinBuildHeight()),</span>
+<span class="source-line-no">294</span><span id="line-294">                        pos2.withY(hybridPlotWorld.getMinGenHeight()),</span>
+<span class="source-line-no">295</span><span id="line-295">                        BlockTypes.AIR.getDefaultState()</span>
+<span class="source-line-no">296</span><span id="line-296">                );</span>
+<span class="source-line-no">297</span><span id="line-297">            }</span>
+<span class="source-line-no">298</span><span id="line-298">            queue.setCuboid(</span>
+<span class="source-line-no">299</span><span id="line-299">                    pos1.withY(hybridPlotWorld.getMinGenHeight()),</span>
+<span class="source-line-no">300</span><span id="line-300">                    pos2.withY(hybridPlotWorld.getMinGenHeight()),</span>
+<span class="source-line-no">301</span><span id="line-301">                    hybridPlotWorld.PLOT_BEDROCK ? bedrock : filling</span>
+<span class="source-line-no">302</span><span id="line-302">            );</span>
+<span class="source-line-no">303</span><span id="line-303">            // Each component has a different layer</span>
+<span class="source-line-no">304</span><span id="line-304">            queue.setCuboid(</span>
+<span class="source-line-no">305</span><span id="line-305">                    pos1.withY(hybridPlotWorld.getMinGenHeight() + 1),</span>
+<span class="source-line-no">306</span><span id="line-306">                    pos2.withY(hybridPlotWorld.PLOT_HEIGHT - 1),</span>
+<span class="source-line-no">307</span><span id="line-307">                    filling</span>
+<span class="source-line-no">308</span><span id="line-308">            );</span>
+<span class="source-line-no">309</span><span id="line-309">            queue.setCuboid(pos1.withY(hybridPlotWorld.PLOT_HEIGHT), pos2.withY(hybridPlotWorld.PLOT_HEIGHT), plotfloor);</span>
+<span class="source-line-no">310</span><span id="line-310">            queue.setCuboid(</span>
+<span class="source-line-no">311</span><span id="line-311">                    pos1.withY(hybridPlotWorld.PLOT_HEIGHT + 1),</span>
+<span class="source-line-no">312</span><span id="line-312">                    pos2.withY(hybridPlotWorld.getMaxGenHeight()),</span>
+<span class="source-line-no">313</span><span id="line-313">                    BlockTypes.AIR.getDefaultState()</span>
+<span class="source-line-no">314</span><span id="line-314">            );</span>
+<span class="source-line-no">315</span><span id="line-315">            if (hybridPlotWorld.getMaxGenHeight() &lt; hybridPlotWorld.getMaxBuildHeight() - 1) {</span>
+<span class="source-line-no">316</span><span id="line-316">                queue.setCuboid(</span>
+<span class="source-line-no">317</span><span id="line-317">                        pos1.withY(hybridPlotWorld.getMaxGenHeight()),</span>
+<span class="source-line-no">318</span><span id="line-318">                        pos2.withY(hybridPlotWorld.getMaxBuildHeight() - 1),</span>
+<span class="source-line-no">319</span><span id="line-319">                        BlockTypes.AIR.getDefaultState()</span>
+<span class="source-line-no">320</span><span id="line-320">                );</span>
+<span class="source-line-no">321</span><span id="line-321">            }</span>
+<span class="source-line-no">322</span><span id="line-322">            queue.setBiomeCuboid(pos1, pos2, biome);</span>
+<span class="source-line-no">323</span><span id="line-323">        } else {</span>
+<span class="source-line-no">324</span><span id="line-324">            queue.setRegenRegion(new CuboidRegion(pos1.getBlockVector3(), pos2.getBlockVector3()));</span>
+<span class="source-line-no">325</span><span id="line-325">        }</span>
+<span class="source-line-no">326</span><span id="line-326">        pastePlotSchematic(queue, pos1, pos2);</span>
+<span class="source-line-no">327</span><span id="line-327">        return !enqueue || queue.enqueue();</span>
+<span class="source-line-no">328</span><span id="line-328">    }</span>
+<span class="source-line-no">329</span><span id="line-329"></span>
+<span class="source-line-no">330</span><span id="line-330">    public void pastePlotSchematic(</span>
+<span class="source-line-no">331</span><span id="line-331">            final @NonNull QueueCoordinator queue,</span>
+<span class="source-line-no">332</span><span id="line-332">            final @NonNull Location bottom,</span>
+<span class="source-line-no">333</span><span id="line-333">            final @NonNull Location top</span>
+<span class="source-line-no">334</span><span id="line-334">    ) {</span>
+<span class="source-line-no">335</span><span id="line-335">        if (!hybridPlotWorld.PLOT_SCHEMATIC) {</span>
+<span class="source-line-no">336</span><span id="line-336">            return;</span>
+<span class="source-line-no">337</span><span id="line-337">        }</span>
+<span class="source-line-no">338</span><span id="line-338">        createSchemAbs(queue, bottom, top, false);</span>
+<span class="source-line-no">339</span><span id="line-339">    }</span>
+<span class="source-line-no">340</span><span id="line-340"></span>
+<span class="source-line-no">341</span><span id="line-341">    /**</span>
+<span class="source-line-no">342</span><span id="line-342">     * Retrieves the location of where a sign should be for a plot.</span>
+<span class="source-line-no">343</span><span id="line-343">     *</span>
+<span class="source-line-no">344</span><span id="line-344">     * @param plot The plot</span>
+<span class="source-line-no">345</span><span id="line-345">     * @return The location where a sign should be</span>
+<span class="source-line-no">346</span><span id="line-346">     */</span>
+<span class="source-line-no">347</span><span id="line-347">    @Override</span>
+<span class="source-line-no">348</span><span id="line-348">    public Location getSignLoc(final @NonNull Plot plot) {</span>
+<span class="source-line-no">349</span><span id="line-349">        return hybridPlotWorld.getSignLocation(plot);</span>
+<span class="source-line-no">350</span><span id="line-350">    }</span>
+<span class="source-line-no">351</span><span id="line-351"></span>
+<span class="source-line-no">352</span><span id="line-352">    public HybridPlotWorld getHybridPlotWorld() {</span>
+<span class="source-line-no">353</span><span id="line-353">        return this.hybridPlotWorld;</span>
+<span class="source-line-no">354</span><span id="line-354">    }</span>
+<span class="source-line-no">355</span><span id="line-355"></span>
+<span class="source-line-no">356</span><span id="line-356">}</span>
 
 
 

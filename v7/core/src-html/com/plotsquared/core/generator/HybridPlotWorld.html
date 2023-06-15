@@ -336,7 +336,7 @@
 <span class="source-line-no">323</span><span id="line-323">            short w3 = (short) d3.getX();</span>
 <span class="source-line-no">324</span><span id="line-324">            short l3 = (short) d3.getZ();</span>
 <span class="source-line-no">325</span><span id="line-325">            short h3 = (short) d3.getY();</span>
-<span class="source-line-no">326</span><span id="line-326">            if (w3 &gt; PLOT_WIDTH || h3 &gt; PLOT_WIDTH) {</span>
+<span class="source-line-no">326</span><span id="line-326">            if (w3 &gt; PLOT_WIDTH || l3 &gt; PLOT_WIDTH) {</span>
 <span class="source-line-no">327</span><span id="line-327">                this.ROAD_SCHEMATIC_ENABLED = true;</span>
 <span class="source-line-no">328</span><span id="line-328">            }</span>
 <span class="source-line-no">329</span><span id="line-329">            int centerShiftZ;</span>
@@ -391,7 +391,7 @@
 <span class="source-line-no">378</span><span id="line-378">        }</span>
 <span class="source-line-no">379</span><span id="line-379">        if ((schematic1 == null &amp;&amp; schematic2 == null) || this.ROAD_WIDTH == 0) {</span>
 <span class="source-line-no">380</span><span id="line-380">            if (Settings.DEBUG) {</span>
-<span class="source-line-no">381</span><span id="line-381">                LOGGER.info("- schematic: false");</span>
+<span class="source-line-no">381</span><span id="line-381">                LOGGER.info("- road schematic: false");</span>
 <span class="source-line-no">382</span><span id="line-382">            }</span>
 <span class="source-line-no">383</span><span id="line-383">            return;</span>
 <span class="source-line-no">384</span><span id="line-384">        }</span>

@@ -31,273 +31,335 @@
 <span class="source-line-no">018</span><span id="line-18"> */</span>
 <span class="source-line-no">019</span><span id="line-19">package com.plotsquared.bukkit.schematic;</span>
 <span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">import com.plotsquared.bukkit.util.BukkitUtil;</span>
-<span class="source-line-no">022</span><span id="line-22">import com.sk89q.jnbt.ByteTag;</span>
-<span class="source-line-no">023</span><span id="line-23">import com.sk89q.jnbt.CompoundTag;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.sk89q.jnbt.ListTag;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.sk89q.jnbt.ShortTag;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.sk89q.jnbt.StringTag;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.sk89q.jnbt.Tag;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.sk89q.worldedit.blocks.BaseItemStack;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.sk89q.worldedit.bukkit.BukkitAdapter;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.sk89q.worldedit.world.item.ItemType;</span>
-<span class="source-line-no">031</span><span id="line-31">import org.bukkit.Bukkit;</span>
-<span class="source-line-no">032</span><span id="line-32">import org.bukkit.ChatColor;</span>
-<span class="source-line-no">033</span><span id="line-33">import org.bukkit.World;</span>
-<span class="source-line-no">034</span><span id="line-34">import org.bukkit.block.Block;</span>
-<span class="source-line-no">035</span><span id="line-35">import org.bukkit.block.Container;</span>
-<span class="source-line-no">036</span><span id="line-36">import org.bukkit.block.Sign;</span>
-<span class="source-line-no">037</span><span id="line-37">import org.bukkit.block.Skull;</span>
-<span class="source-line-no">038</span><span id="line-38">import org.bukkit.enchantments.Enchantment;</span>
-<span class="source-line-no">039</span><span id="line-39">import org.bukkit.inventory.Inventory;</span>
-<span class="source-line-no">040</span><span id="line-40">import org.bukkit.inventory.ItemStack;</span>
-<span class="source-line-no">041</span><span id="line-41">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">import java.util.ArrayList;</span>
-<span class="source-line-no">044</span><span id="line-44">import java.util.HashMap;</span>
-<span class="source-line-no">045</span><span id="line-45">import java.util.List;</span>
-<span class="source-line-no">046</span><span id="line-46">import java.util.Map;</span>
-<span class="source-line-no">047</span><span id="line-47">import java.util.Map.Entry;</span>
-<span class="source-line-no">048</span><span id="line-48"></span>
-<span class="source-line-no">049</span><span id="line-49">public class StateWrapper {</span>
-<span class="source-line-no">050</span><span id="line-50"></span>
-<span class="source-line-no">051</span><span id="line-51">    public org.bukkit.block.BlockState state = null;</span>
-<span class="source-line-no">052</span><span id="line-52">    public CompoundTag tag = null;</span>
-<span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">    public StateWrapper(CompoundTag tag) {</span>
-<span class="source-line-no">055</span><span id="line-55">        this.tag = tag;</span>
-<span class="source-line-no">056</span><span id="line-56">    }</span>
-<span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58">    public static String jsonToColourCode(String str) {</span>
-<span class="source-line-no">059</span><span id="line-59">        str = str.replace("{\"extra\":", "").replace("],\"text\":\"\"}", "]")</span>
-<span class="source-line-no">060</span><span id="line-60">                .replace("[{\"color\":\"black\",\"text\":\"", "&amp;0")</span>
-<span class="source-line-no">061</span><span id="line-61">                .replace("[{\"color\":\"dark_blue\",\"text\":\"", "&amp;1")</span>
-<span class="source-line-no">062</span><span id="line-62">                .replace("[{\"color\":\"dark_green\",\"text\":\"", "&amp;2")</span>
-<span class="source-line-no">063</span><span id="line-63">                .replace("[{\"color\":\"dark_aqua\",\"text\":\"", "&amp;3")</span>
-<span class="source-line-no">064</span><span id="line-64">                .replace("[{\"color\":\"dark_red\",\"text\":\"", "&amp;4")</span>
-<span class="source-line-no">065</span><span id="line-65">                .replace("[{\"color\":\"dark_purple\",\"text\":\"", "&amp;5")</span>
-<span class="source-line-no">066</span><span id="line-66">                .replace("[{\"color\":\"gold\",\"text\":\"", "&amp;6")</span>
-<span class="source-line-no">067</span><span id="line-67">                .replace("[{\"color\":\"gray\",\"text\":\"", "&amp;7")</span>
-<span class="source-line-no">068</span><span id="line-68">                .replace("[{\"color\":\"dark_gray\",\"text\":\"", "&amp;8")</span>
-<span class="source-line-no">069</span><span id="line-69">                .replace("[{\"color\":\"blue\",\"text\":\"", "&amp;9")</span>
-<span class="source-line-no">070</span><span id="line-70">                .replace("[{\"color\":\"green\",\"text\":\"", "&amp;a")</span>
-<span class="source-line-no">071</span><span id="line-71">                .replace("[{\"color\":\"aqua\",\"text\":\"", "&amp;b")</span>
-<span class="source-line-no">072</span><span id="line-72">                .replace("[{\"color\":\"red\",\"text\":\"", "&amp;c")</span>
-<span class="source-line-no">073</span><span id="line-73">                .replace("[{\"color\":\"light_purple\",\"text\":\"", "&amp;d")</span>
-<span class="source-line-no">074</span><span id="line-74">                .replace("[{\"color\":\"yellow\",\"text\":\"", "&amp;e")</span>
-<span class="source-line-no">075</span><span id="line-75">                .replace("[{\"color\":\"white\",\"text\":\"", "&amp;f")</span>
-<span class="source-line-no">076</span><span id="line-76">                .replace("[{\"obfuscated\":true,\"text\":\"", "&amp;k")</span>
-<span class="source-line-no">077</span><span id="line-77">                .replace("[{\"bold\":true,\"text\":\"", "&amp;l")</span>
-<span class="source-line-no">078</span><span id="line-78">                .replace("[{\"strikethrough\":true,\"text\":\"", "&amp;m")</span>
-<span class="source-line-no">079</span><span id="line-79">                .replace("[{\"underlined\":true,\"text\":\"", "&amp;n")</span>
-<span class="source-line-no">080</span><span id="line-80">                .replace("[{\"italic\":true,\"text\":\"", "&amp;o").replace("[{\"color\":\"black\",", "&amp;0")</span>
-<span class="source-line-no">081</span><span id="line-81">                .replace("[{\"color\":\"dark_blue\",", "&amp;1")</span>
-<span class="source-line-no">082</span><span id="line-82">                .replace("[{\"color\":\"dark_green\",", "&amp;2")</span>
-<span class="source-line-no">083</span><span id="line-83">                .replace("[{\"color\":\"dark_aqua\",", "&amp;3").replace("[{\"color\":\"dark_red\",", "&amp;4")</span>
-<span class="source-line-no">084</span><span id="line-84">                .replace("[{\"color\":\"dark_purple\",", "&amp;5").replace("[{\"color\":\"gold\",", "&amp;6")</span>
-<span class="source-line-no">085</span><span id="line-85">                .replace("[{\"color\":\"gray\",", "&amp;7").replace("[{\"color\":\"dark_gray\",", "&amp;8")</span>
-<span class="source-line-no">086</span><span id="line-86">                .replace("[{\"color\":\"blue\",", "&amp;9").replace("[{\"color\":\"green\",", "&amp;a")</span>
-<span class="source-line-no">087</span><span id="line-87">                .replace("[{\"color\":\"aqua\",", "&amp;b").replace("[{\"color\":\"red\",", "&amp;c")</span>
-<span class="source-line-no">088</span><span id="line-88">                .replace("[{\"color\":\"light_purple\",", "&amp;d").replace("[{\"color\":\"yellow\",", "&amp;e")</span>
-<span class="source-line-no">089</span><span id="line-89">                .replace("[{\"color\":\"white\",", "&amp;f").replace("[{\"obfuscated\":true,", "&amp;k")</span>
-<span class="source-line-no">090</span><span id="line-90">                .replace("[{\"bold\":true,", "&amp;l").replace("[{\"strikethrough\":true,", "&amp;m")</span>
-<span class="source-line-no">091</span><span id="line-91">                .replace("[{\"underlined\":true,", "&amp;n").replace("[{\"italic\":true,", "&amp;o")</span>
-<span class="source-line-no">092</span><span id="line-92">                .replace("{\"color\":\"black\",\"text\":\"", "&amp;0")</span>
-<span class="source-line-no">093</span><span id="line-93">                .replace("{\"color\":\"dark_blue\",\"text\":\"", "&amp;1")</span>
-<span class="source-line-no">094</span><span id="line-94">                .replace("{\"color\":\"dark_green\",\"text\":\"", "&amp;2")</span>
-<span class="source-line-no">095</span><span id="line-95">                .replace("{\"color\":\"dark_aqua\",\"text\":\"", "&amp;3")</span>
-<span class="source-line-no">096</span><span id="line-96">                .replace("{\"color\":\"dark_red\",\"text\":\"", "&amp;4")</span>
-<span class="source-line-no">097</span><span id="line-97">                .replace("{\"color\":\"dark_purple\",\"text\":\"", "&amp;5")</span>
-<span class="source-line-no">098</span><span id="line-98">                .replace("{\"color\":\"gold\",\"text\":\"", "&amp;6")</span>
-<span class="source-line-no">099</span><span id="line-99">                .replace("{\"color\":\"gray\",\"text\":\"", "&amp;7")</span>
-<span class="source-line-no">100</span><span id="line-100">                .replace("{\"color\":\"dark_gray\",\"text\":\"", "&amp;8")</span>
-<span class="source-line-no">101</span><span id="line-101">                .replace("{\"color\":\"blue\",\"text\":\"", "&amp;9")</span>
-<span class="source-line-no">102</span><span id="line-102">                .replace("{\"color\":\"green\",\"text\":\"", "&amp;a")</span>
-<span class="source-line-no">103</span><span id="line-103">                .replace("{\"color\":\"aqua\",\"text\":\"", "&amp;b")</span>
-<span class="source-line-no">104</span><span id="line-104">                .replace("{\"color\":\"red\",\"text\":\"", "&amp;c")</span>
-<span class="source-line-no">105</span><span id="line-105">                .replace("{\"color\":\"light_purple\",\"text\":\"", "&amp;d")</span>
-<span class="source-line-no">106</span><span id="line-106">                .replace("{\"color\":\"yellow\",\"text\":\"", "&amp;e")</span>
-<span class="source-line-no">107</span><span id="line-107">                .replace("{\"color\":\"white\",\"text\":\"", "&amp;f")</span>
-<span class="source-line-no">108</span><span id="line-108">                .replace("{\"obfuscated\":true,\"text\":\"", "&amp;k")</span>
-<span class="source-line-no">109</span><span id="line-109">                .replace("{\"bold\":true,\"text\":\"", "&amp;l")</span>
-<span class="source-line-no">110</span><span id="line-110">                .replace("{\"strikethrough\":true,\"text\":\"", "&amp;m")</span>
-<span class="source-line-no">111</span><span id="line-111">                .replace("{\"underlined\":true,\"text\":\"", "&amp;n")</span>
-<span class="source-line-no">112</span><span id="line-112">                .replace("{\"italic\":true,\"text\":\"", "&amp;o").replace("{\"color\":\"black\",", "&amp;0")</span>
-<span class="source-line-no">113</span><span id="line-113">                .replace("{\"color\":\"dark_blue\",", "&amp;1").replace("{\"color\":\"dark_green\",", "&amp;2")</span>
-<span class="source-line-no">114</span><span id="line-114">                .replace("{\"color\":\"dark_aqua\",", "&amp;3").replace("{\"color\":\"dark_red\",", "&amp;4")</span>
-<span class="source-line-no">115</span><span id="line-115">                .replace("{\"color\":\"dark_purple\",", "&amp;5").replace("{\"color\":\"gold\",", "&amp;6")</span>
-<span class="source-line-no">116</span><span id="line-116">                .replace("{\"color\":\"gray\",", "&amp;7").replace("{\"color\":\"dark_gray\",", "&amp;8")</span>
-<span class="source-line-no">117</span><span id="line-117">                .replace("{\"color\":\"blue\",", "&amp;9").replace("{\"color\":\"green\",", "&amp;a")</span>
-<span class="source-line-no">118</span><span id="line-118">                .replace("{\"color\":\"aqua\",", "&amp;b").replace("{\"color\":\"red\",", "&amp;c")</span>
-<span class="source-line-no">119</span><span id="line-119">                .replace("{\"color\":\"light_purple\",", "&amp;d").replace("{\"color\":\"yellow\",", "&amp;e")</span>
-<span class="source-line-no">120</span><span id="line-120">                .replace("{\"color\":\"white\",", "&amp;f").replace("{\"obfuscated\":true,", "&amp;k")</span>
-<span class="source-line-no">121</span><span id="line-121">                .replace("{\"bold\":true,", "&amp;l").replace("{\"strikethrough\":true,", "&amp;m")</span>
-<span class="source-line-no">122</span><span id="line-122">                .replace("{\"underlined\":true,", "&amp;n").replace("{\"italic\":true,", "&amp;o")</span>
-<span class="source-line-no">123</span><span id="line-123">                .replace("\"color\":\"black\",\"text\":\"", "&amp;0")</span>
-<span class="source-line-no">124</span><span id="line-124">                .replace("\"color\":\"dark_blue\",\"text\":\"", "&amp;1")</span>
-<span class="source-line-no">125</span><span id="line-125">                .replace("\"color\":\"dark_green\",\"text\":\"", "&amp;2")</span>
-<span class="source-line-no">126</span><span id="line-126">                .replace("\"color\":\"dark_aqua\",\"text\":\"", "&amp;3")</span>
-<span class="source-line-no">127</span><span id="line-127">                .replace("\"color\":\"dark_red\",\"text\":\"", "&amp;4")</span>
-<span class="source-line-no">128</span><span id="line-128">                .replace("\"color\":\"dark_purple\",\"text\":\"", "&amp;5")</span>
-<span class="source-line-no">129</span><span id="line-129">                .replace("\"color\":\"gold\",\"text\":\"", "&amp;6")</span>
-<span class="source-line-no">130</span><span id="line-130">                .replace("\"color\":\"gray\",\"text\":\"", "&amp;7")</span>
-<span class="source-line-no">131</span><span id="line-131">                .replace("\"color\":\"dark_gray\",\"text\":\"", "&amp;8")</span>
-<span class="source-line-no">132</span><span id="line-132">                .replace("\"color\":\"blue\",\"text\":\"", "&amp;9")</span>
-<span class="source-line-no">133</span><span id="line-133">                .replace("\"color\":\"green\",\"text\":\"", "&amp;a")</span>
-<span class="source-line-no">134</span><span id="line-134">                .replace("\"color\":\"aqua\",\"text\":\"", "&amp;b")</span>
-<span class="source-line-no">135</span><span id="line-135">                .replace("\"color\":\"red\",\"text\":\"", "&amp;c")</span>
-<span class="source-line-no">136</span><span id="line-136">                .replace("\"color\":\"light_purple\",\"text\":\"", "&amp;d")</span>
-<span class="source-line-no">137</span><span id="line-137">                .replace("\"color\":\"yellow\",\"text\":\"", "&amp;e")</span>
-<span class="source-line-no">138</span><span id="line-138">                .replace("\"color\":\"white\",\"text\":\"", "&amp;f")</span>
-<span class="source-line-no">139</span><span id="line-139">                .replace("\"obfuscated\":true,\"text\":\"", "&amp;k")</span>
-<span class="source-line-no">140</span><span id="line-140">                .replace("\"bold\":true,\"text\":\"", "&amp;l")</span>
-<span class="source-line-no">141</span><span id="line-141">                .replace("\"strikethrough\":true,\"text\":\"", "&amp;m")</span>
-<span class="source-line-no">142</span><span id="line-142">                .replace("\"underlined\":true,\"text\":\"", "&amp;n")</span>
-<span class="source-line-no">143</span><span id="line-143">                .replace("\"italic\":true,\"text\":\"", "&amp;o").replace("\"color\":\"black\",", "&amp;0")</span>
-<span class="source-line-no">144</span><span id="line-144">                .replace("\"color\":\"dark_blue\",", "&amp;1").replace("\"color\":\"dark_green\",", "&amp;2")</span>
-<span class="source-line-no">145</span><span id="line-145">                .replace("\"color\":\"dark_aqua\",", "&amp;3").replace("\"color\":\"dark_red\",", "&amp;4")</span>
-<span class="source-line-no">146</span><span id="line-146">                .replace("\"color\":\"dark_purple\",", "&amp;5").replace("\"color\":\"gold\",", "&amp;6")</span>
-<span class="source-line-no">147</span><span id="line-147">                .replace("\"color\":\"gray\",", "&amp;7").replace("\"color\":\"dark_gray\",", "&amp;8")</span>
-<span class="source-line-no">148</span><span id="line-148">                .replace("\"color\":\"blue\",", "&amp;9").replace("\"color\":\"green\",", "&amp;a")</span>
-<span class="source-line-no">149</span><span id="line-149">                .replace("\"color\":\"aqua\",", "&amp;b").replace("\"color\":\"red\",", "&amp;c")</span>
-<span class="source-line-no">150</span><span id="line-150">                .replace("\"color\":\"light_purple\",", "&amp;d").replace("\"color\":\"yellow\",", "&amp;e")</span>
-<span class="source-line-no">151</span><span id="line-151">                .replace("\"color\":\"white\",", "&amp;f").replace("\"obfuscated\":true,", "&amp;k")</span>
-<span class="source-line-no">152</span><span id="line-152">                .replace("\"bold\":true,", "&amp;l").replace("\"strikethrough\":true,", "&amp;m")</span>
-<span class="source-line-no">153</span><span id="line-153">                .replace("\"underlined\":true,", "&amp;n").replace("\"italic\":true,", "&amp;o")</span>
-<span class="source-line-no">154</span><span id="line-154">                .replace("[{\"text\":\"", "&amp;0").replace("{\"text\":\"", "&amp;0").replace("\"},", "")</span>
-<span class="source-line-no">155</span><span id="line-155">                .replace("\"}]", "").replace("\"}", "");</span>
-<span class="source-line-no">156</span><span id="line-156">        str = ChatColor.translateAlternateColorCodes('&amp;', str);</span>
-<span class="source-line-no">157</span><span id="line-157">        return str;</span>
-<span class="source-line-no">158</span><span id="line-158">    }</span>
-<span class="source-line-no">159</span><span id="line-159"></span>
-<span class="source-line-no">160</span><span id="line-160">    /**</span>
-<span class="source-line-no">161</span><span id="line-161">     * Restore the TileEntity data to the given world at the given coordinates.</span>
-<span class="source-line-no">162</span><span id="line-162">     *</span>
-<span class="source-line-no">163</span><span id="line-163">     * @param worldName World name</span>
-<span class="source-line-no">164</span><span id="line-164">     * @param x         x position</span>
-<span class="source-line-no">165</span><span id="line-165">     * @param y         y position</span>
-<span class="source-line-no">166</span><span id="line-166">     * @param z         z position</span>
-<span class="source-line-no">167</span><span id="line-167">     * @return true if successful</span>
-<span class="source-line-no">168</span><span id="line-168">     */</span>
-<span class="source-line-no">169</span><span id="line-169">    public boolean restoreTag(String worldName, int x, int y, int z) {</span>
-<span class="source-line-no">170</span><span id="line-170">        World world = BukkitUtil.getWorld(worldName);</span>
-<span class="source-line-no">171</span><span id="line-171">        if (world == null) {</span>
-<span class="source-line-no">172</span><span id="line-172">            return false;</span>
-<span class="source-line-no">173</span><span id="line-173">        }</span>
-<span class="source-line-no">174</span><span id="line-174">        return restoreTag(world.getBlockAt(x, y, z));</span>
-<span class="source-line-no">175</span><span id="line-175">    }</span>
-<span class="source-line-no">176</span><span id="line-176"></span>
-<span class="source-line-no">177</span><span id="line-177">    /**</span>
-<span class="source-line-no">178</span><span id="line-178">     * Restore the TileEntity data to the given block</span>
-<span class="source-line-no">179</span><span id="line-179">     *</span>
-<span class="source-line-no">180</span><span id="line-180">     * @param block Block to restore to</span>
-<span class="source-line-no">181</span><span id="line-181">     * @return true if successful</span>
-<span class="source-line-no">182</span><span id="line-182">     */</span>
-<span class="source-line-no">183</span><span id="line-183">    @SuppressWarnings("deprecation") // #setLine is needed for Spigot compatibility</span>
-<span class="source-line-no">184</span><span id="line-184">    public boolean restoreTag(@NonNull Block block) {</span>
-<span class="source-line-no">185</span><span id="line-185">        if (this.tag == null) {</span>
-<span class="source-line-no">186</span><span id="line-186">            return false;</span>
-<span class="source-line-no">187</span><span id="line-187">        }</span>
-<span class="source-line-no">188</span><span id="line-188">        org.bukkit.block.BlockState state = block.getState();</span>
-<span class="source-line-no">189</span><span id="line-189">        switch (getId()) {</span>
-<span class="source-line-no">190</span><span id="line-190">            case "chest", "beacon", "brewingstand", "dispenser", "dropper", "furnace", "hopper", "shulkerbox" -&gt; {</span>
-<span class="source-line-no">191</span><span id="line-191">                if (!(state instanceof Container container)) {</span>
-<span class="source-line-no">192</span><span id="line-192">                    return false;</span>
-<span class="source-line-no">193</span><span id="line-193">                }</span>
-<span class="source-line-no">194</span><span id="line-194">                List&lt;Tag&gt; itemsTag = this.tag.getListTag("Items").getValue();</span>
-<span class="source-line-no">195</span><span id="line-195">                Inventory inv = container.getSnapshotInventory();</span>
-<span class="source-line-no">196</span><span id="line-196">                for (Tag itemTag : itemsTag) {</span>
-<span class="source-line-no">197</span><span id="line-197">                    CompoundTag itemComp = (CompoundTag) itemTag;</span>
-<span class="source-line-no">198</span><span id="line-198">                    ItemType type = ItemType.REGISTRY.get(itemComp.getString("id").toLowerCase());</span>
-<span class="source-line-no">199</span><span id="line-199">                    if (type == null) {</span>
-<span class="source-line-no">200</span><span id="line-200">                        continue;</span>
-<span class="source-line-no">201</span><span id="line-201">                    }</span>
-<span class="source-line-no">202</span><span id="line-202">                    int count = itemComp.getByte("Count");</span>
-<span class="source-line-no">203</span><span id="line-203">                    int slot = itemComp.getByte("Slot");</span>
-<span class="source-line-no">204</span><span id="line-204">                    CompoundTag tag = (CompoundTag) itemComp.getValue().get("tag");</span>
-<span class="source-line-no">205</span><span id="line-205">                    BaseItemStack baseItemStack = new BaseItemStack(type, tag, count);</span>
-<span class="source-line-no">206</span><span id="line-206">                    ItemStack itemStack = BukkitAdapter.adapt(baseItemStack);</span>
-<span class="source-line-no">207</span><span id="line-207">                    inv.setItem(slot, itemStack);</span>
-<span class="source-line-no">208</span><span id="line-208">                }</span>
-<span class="source-line-no">209</span><span id="line-209">                container.update(true, false);</span>
-<span class="source-line-no">210</span><span id="line-210">                return true;</span>
-<span class="source-line-no">211</span><span id="line-211">            }</span>
-<span class="source-line-no">212</span><span id="line-212">            case "sign" -&gt; {</span>
-<span class="source-line-no">213</span><span id="line-213">                if (state instanceof Sign sign) {</span>
-<span class="source-line-no">214</span><span id="line-214">                    sign.setLine(0, jsonToColourCode(tag.getString("Text1")));</span>
-<span class="source-line-no">215</span><span id="line-215">                    sign.setLine(1, jsonToColourCode(tag.getString("Text2")));</span>
-<span class="source-line-no">216</span><span id="line-216">                    sign.setLine(2, jsonToColourCode(tag.getString("Text3")));</span>
-<span class="source-line-no">217</span><span id="line-217">                    sign.setLine(3, jsonToColourCode(tag.getString("Text4")));</span>
-<span class="source-line-no">218</span><span id="line-218">                    state.update(true);</span>
-<span class="source-line-no">219</span><span id="line-219">                    return true;</span>
-<span class="source-line-no">220</span><span id="line-220">                }</span>
-<span class="source-line-no">221</span><span id="line-221">                return false;</span>
-<span class="source-line-no">222</span><span id="line-222">            }</span>
-<span class="source-line-no">223</span><span id="line-223">            case "skull" -&gt; {</span>
-<span class="source-line-no">224</span><span id="line-224">                if (state instanceof Skull skull) {</span>
-<span class="source-line-no">225</span><span id="line-225">                    CompoundTag skullOwner = ((CompoundTag) this.tag.getValue().get("SkullOwner"));</span>
-<span class="source-line-no">226</span><span id="line-226">                    if (skullOwner == null) {</span>
-<span class="source-line-no">227</span><span id="line-227">                        return true;</span>
-<span class="source-line-no">228</span><span id="line-228">                    }</span>
-<span class="source-line-no">229</span><span id="line-229">                    String player = skullOwner.getString("Name");</span>
-<span class="source-line-no">230</span><span id="line-230">                    if (player == null || player.isEmpty()) {</span>
-<span class="source-line-no">231</span><span id="line-231">                        return false;</span>
-<span class="source-line-no">232</span><span id="line-232">                    }</span>
-<span class="source-line-no">233</span><span id="line-233">                    try {</span>
-<span class="source-line-no">234</span><span id="line-234">                        skull.setOwningPlayer(Bukkit.getOfflinePlayer(player));</span>
-<span class="source-line-no">235</span><span id="line-235">                        skull.update(true);</span>
-<span class="source-line-no">236</span><span id="line-236">                    } catch (Exception e) {</span>
-<span class="source-line-no">237</span><span id="line-237">                        e.printStackTrace();</span>
-<span class="source-line-no">238</span><span id="line-238">                    }</span>
-<span class="source-line-no">239</span><span id="line-239">                    return true;</span>
-<span class="source-line-no">240</span><span id="line-240">                }</span>
-<span class="source-line-no">241</span><span id="line-241">                return false;</span>
-<span class="source-line-no">242</span><span id="line-242">            }</span>
-<span class="source-line-no">243</span><span id="line-243">        }</span>
-<span class="source-line-no">244</span><span id="line-244">        return false;</span>
-<span class="source-line-no">245</span><span id="line-245">    }</span>
-<span class="source-line-no">246</span><span id="line-246"></span>
-<span class="source-line-no">247</span><span id="line-247">    public String getId() {</span>
-<span class="source-line-no">248</span><span id="line-248">        String tileid = this.tag.getString("id").toLowerCase();</span>
-<span class="source-line-no">249</span><span id="line-249">        if (tileid.startsWith("minecraft:")) {</span>
-<span class="source-line-no">250</span><span id="line-250">            tileid = tileid.replace("minecraft:", "");</span>
-<span class="source-line-no">251</span><span id="line-251">        }</span>
-<span class="source-line-no">252</span><span id="line-252">        return tileid;</span>
-<span class="source-line-no">253</span><span id="line-253">    }</span>
-<span class="source-line-no">254</span><span id="line-254"></span>
-<span class="source-line-no">255</span><span id="line-255">    public List&lt;CompoundTag&gt; serializeInventory(ItemStack[] items) {</span>
-<span class="source-line-no">256</span><span id="line-256">        List&lt;CompoundTag&gt; tags = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">257</span><span id="line-257">        for (int i = 0; i &lt; items.length; ++i) {</span>
-<span class="source-line-no">258</span><span id="line-258">            if (items[i] != null) {</span>
-<span class="source-line-no">259</span><span id="line-259">                Map&lt;String, Tag&gt; tagData = serializeItem(items[i]);</span>
-<span class="source-line-no">260</span><span id="line-260">                tagData.put("Slot", new ByteTag((byte) i));</span>
-<span class="source-line-no">261</span><span id="line-261">                tags.add(new CompoundTag(tagData));</span>
-<span class="source-line-no">262</span><span id="line-262">            }</span>
-<span class="source-line-no">263</span><span id="line-263">        }</span>
-<span class="source-line-no">264</span><span id="line-264">        return tags;</span>
-<span class="source-line-no">265</span><span id="line-265">    }</span>
-<span class="source-line-no">266</span><span id="line-266"></span>
-<span class="source-line-no">267</span><span id="line-267">    public Map&lt;String, Tag&gt; serializeItem(ItemStack item) {</span>
-<span class="source-line-no">268</span><span id="line-268">        Map&lt;String, Tag&gt; data = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">269</span><span id="line-269">        data.put("id", new StringTag(item.getType().name()));</span>
-<span class="source-line-no">270</span><span id="line-270">        data.put("Damage", new ShortTag(item.getDurability()));</span>
-<span class="source-line-no">271</span><span id="line-271">        data.put("Count", new ByteTag((byte) item.getAmount()));</span>
-<span class="source-line-no">272</span><span id="line-272">        if (!item.getEnchantments().isEmpty()) {</span>
-<span class="source-line-no">273</span><span id="line-273">            List&lt;CompoundTag&gt; enchantmentList = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">274</span><span id="line-274">            for (Entry&lt;Enchantment, Integer&gt; entry : item.getEnchantments().entrySet()) {</span>
-<span class="source-line-no">275</span><span id="line-275">                Map&lt;String, Tag&gt; enchantment = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">276</span><span id="line-276">                enchantment.put("id", new StringTag(entry.getKey().toString()));</span>
-<span class="source-line-no">277</span><span id="line-277">                enchantment.put("lvl", new ShortTag(entry.getValue().shortValue()));</span>
-<span class="source-line-no">278</span><span id="line-278">                enchantmentList.add(new CompoundTag(enchantment));</span>
-<span class="source-line-no">279</span><span id="line-279">            }</span>
-<span class="source-line-no">280</span><span id="line-280">            Map&lt;String, Tag&gt; auxData = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">281</span><span id="line-281">            auxData.put("ench", new ListTag(CompoundTag.class, enchantmentList));</span>
-<span class="source-line-no">282</span><span id="line-282">            data.put("tag", new CompoundTag(auxData));</span>
-<span class="source-line-no">283</span><span id="line-283">        }</span>
-<span class="source-line-no">284</span><span id="line-284">        return data;</span>
-<span class="source-line-no">285</span><span id="line-285">    }</span>
-<span class="source-line-no">286</span><span id="line-286"></span>
-<span class="source-line-no">287</span><span id="line-287">}</span>
+<span class="source-line-no">021</span><span id="line-21">import com.destroystokyo.paper.profile.PlayerProfile;</span>
+<span class="source-line-no">022</span><span id="line-22">import com.destroystokyo.paper.profile.ProfileProperty;</span>
+<span class="source-line-no">023</span><span id="line-23">import com.plotsquared.bukkit.util.BukkitUtil;</span>
+<span class="source-line-no">024</span><span id="line-24">import com.sk89q.jnbt.ByteTag;</span>
+<span class="source-line-no">025</span><span id="line-25">import com.sk89q.jnbt.CompoundTag;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.sk89q.jnbt.ListTag;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.sk89q.jnbt.ShortTag;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.sk89q.jnbt.StringTag;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.sk89q.jnbt.Tag;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.sk89q.worldedit.blocks.BaseItemStack;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.sk89q.worldedit.bukkit.BukkitAdapter;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.sk89q.worldedit.world.item.ItemType;</span>
+<span class="source-line-no">033</span><span id="line-33">import io.papermc.lib.PaperLib;</span>
+<span class="source-line-no">034</span><span id="line-34">import org.apache.logging.log4j.LogManager;</span>
+<span class="source-line-no">035</span><span id="line-35">import org.apache.logging.log4j.Logger;</span>
+<span class="source-line-no">036</span><span id="line-36">import org.bukkit.Bukkit;</span>
+<span class="source-line-no">037</span><span id="line-37">import org.bukkit.ChatColor;</span>
+<span class="source-line-no">038</span><span id="line-38">import org.bukkit.DyeColor;</span>
+<span class="source-line-no">039</span><span id="line-39">import org.bukkit.World;</span>
+<span class="source-line-no">040</span><span id="line-40">import org.bukkit.block.Banner;</span>
+<span class="source-line-no">041</span><span id="line-41">import org.bukkit.block.Block;</span>
+<span class="source-line-no">042</span><span id="line-42">import org.bukkit.block.Container;</span>
+<span class="source-line-no">043</span><span id="line-43">import org.bukkit.block.Sign;</span>
+<span class="source-line-no">044</span><span id="line-44">import org.bukkit.block.Skull;</span>
+<span class="source-line-no">045</span><span id="line-45">import org.bukkit.block.banner.Pattern;</span>
+<span class="source-line-no">046</span><span id="line-46">import org.bukkit.block.banner.PatternType;</span>
+<span class="source-line-no">047</span><span id="line-47">import org.bukkit.enchantments.Enchantment;</span>
+<span class="source-line-no">048</span><span id="line-48">import org.bukkit.inventory.Inventory;</span>
+<span class="source-line-no">049</span><span id="line-49">import org.bukkit.inventory.ItemStack;</span>
+<span class="source-line-no">050</span><span id="line-50">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">051</span><span id="line-51"></span>
+<span class="source-line-no">052</span><span id="line-52">import java.util.ArrayList;</span>
+<span class="source-line-no">053</span><span id="line-53">import java.util.HashMap;</span>
+<span class="source-line-no">054</span><span id="line-54">import java.util.List;</span>
+<span class="source-line-no">055</span><span id="line-55">import java.util.Map;</span>
+<span class="source-line-no">056</span><span id="line-56">import java.util.Map.Entry;</span>
+<span class="source-line-no">057</span><span id="line-57">import java.util.Objects;</span>
+<span class="source-line-no">058</span><span id="line-58">import java.util.UUID;</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">public class StateWrapper {</span>
+<span class="source-line-no">061</span><span id="line-61"></span>
+<span class="source-line-no">062</span><span id="line-62">    public CompoundTag tag;</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    private boolean paperErrorTextureSent = false;</span>
+<span class="source-line-no">065</span><span id="line-65">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + StateWrapper.class.getSimpleName());</span>
+<span class="source-line-no">066</span><span id="line-66"></span>
+<span class="source-line-no">067</span><span id="line-67">    public StateWrapper(CompoundTag tag) {</span>
+<span class="source-line-no">068</span><span id="line-68">        this.tag = tag;</span>
+<span class="source-line-no">069</span><span id="line-69">    }</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">    public static String jsonToColourCode(String str) {</span>
+<span class="source-line-no">072</span><span id="line-72">        str = str.replace("{\"extra\":", "").replace("],\"text\":\"\"}", "]")</span>
+<span class="source-line-no">073</span><span id="line-73">                .replace("[{\"color\":\"black\",\"text\":\"", "&amp;0")</span>
+<span class="source-line-no">074</span><span id="line-74">                .replace("[{\"color\":\"dark_blue\",\"text\":\"", "&amp;1")</span>
+<span class="source-line-no">075</span><span id="line-75">                .replace("[{\"color\":\"dark_green\",\"text\":\"", "&amp;2")</span>
+<span class="source-line-no">076</span><span id="line-76">                .replace("[{\"color\":\"dark_aqua\",\"text\":\"", "&amp;3")</span>
+<span class="source-line-no">077</span><span id="line-77">                .replace("[{\"color\":\"dark_red\",\"text\":\"", "&amp;4")</span>
+<span class="source-line-no">078</span><span id="line-78">                .replace("[{\"color\":\"dark_purple\",\"text\":\"", "&amp;5")</span>
+<span class="source-line-no">079</span><span id="line-79">                .replace("[{\"color\":\"gold\",\"text\":\"", "&amp;6")</span>
+<span class="source-line-no">080</span><span id="line-80">                .replace("[{\"color\":\"gray\",\"text\":\"", "&amp;7")</span>
+<span class="source-line-no">081</span><span id="line-81">                .replace("[{\"color\":\"dark_gray\",\"text\":\"", "&amp;8")</span>
+<span class="source-line-no">082</span><span id="line-82">                .replace("[{\"color\":\"blue\",\"text\":\"", "&amp;9")</span>
+<span class="source-line-no">083</span><span id="line-83">                .replace("[{\"color\":\"green\",\"text\":\"", "&amp;a")</span>
+<span class="source-line-no">084</span><span id="line-84">                .replace("[{\"color\":\"aqua\",\"text\":\"", "&amp;b")</span>
+<span class="source-line-no">085</span><span id="line-85">                .replace("[{\"color\":\"red\",\"text\":\"", "&amp;c")</span>
+<span class="source-line-no">086</span><span id="line-86">                .replace("[{\"color\":\"light_purple\",\"text\":\"", "&amp;d")</span>
+<span class="source-line-no">087</span><span id="line-87">                .replace("[{\"color\":\"yellow\",\"text\":\"", "&amp;e")</span>
+<span class="source-line-no">088</span><span id="line-88">                .replace("[{\"color\":\"white\",\"text\":\"", "&amp;f")</span>
+<span class="source-line-no">089</span><span id="line-89">                .replace("[{\"obfuscated\":true,\"text\":\"", "&amp;k")</span>
+<span class="source-line-no">090</span><span id="line-90">                .replace("[{\"bold\":true,\"text\":\"", "&amp;l")</span>
+<span class="source-line-no">091</span><span id="line-91">                .replace("[{\"strikethrough\":true,\"text\":\"", "&amp;m")</span>
+<span class="source-line-no">092</span><span id="line-92">                .replace("[{\"underlined\":true,\"text\":\"", "&amp;n")</span>
+<span class="source-line-no">093</span><span id="line-93">                .replace("[{\"italic\":true,\"text\":\"", "&amp;o").replace("[{\"color\":\"black\",", "&amp;0")</span>
+<span class="source-line-no">094</span><span id="line-94">                .replace("[{\"color\":\"dark_blue\",", "&amp;1")</span>
+<span class="source-line-no">095</span><span id="line-95">                .replace("[{\"color\":\"dark_green\",", "&amp;2")</span>
+<span class="source-line-no">096</span><span id="line-96">                .replace("[{\"color\":\"dark_aqua\",", "&amp;3").replace("[{\"color\":\"dark_red\",", "&amp;4")</span>
+<span class="source-line-no">097</span><span id="line-97">                .replace("[{\"color\":\"dark_purple\",", "&amp;5").replace("[{\"color\":\"gold\",", "&amp;6")</span>
+<span class="source-line-no">098</span><span id="line-98">                .replace("[{\"color\":\"gray\",", "&amp;7").replace("[{\"color\":\"dark_gray\",", "&amp;8")</span>
+<span class="source-line-no">099</span><span id="line-99">                .replace("[{\"color\":\"blue\",", "&amp;9").replace("[{\"color\":\"green\",", "&amp;a")</span>
+<span class="source-line-no">100</span><span id="line-100">                .replace("[{\"color\":\"aqua\",", "&amp;b").replace("[{\"color\":\"red\",", "&amp;c")</span>
+<span class="source-line-no">101</span><span id="line-101">                .replace("[{\"color\":\"light_purple\",", "&amp;d").replace("[{\"color\":\"yellow\",", "&amp;e")</span>
+<span class="source-line-no">102</span><span id="line-102">                .replace("[{\"color\":\"white\",", "&amp;f").replace("[{\"obfuscated\":true,", "&amp;k")</span>
+<span class="source-line-no">103</span><span id="line-103">                .replace("[{\"bold\":true,", "&amp;l").replace("[{\"strikethrough\":true,", "&amp;m")</span>
+<span class="source-line-no">104</span><span id="line-104">                .replace("[{\"underlined\":true,", "&amp;n").replace("[{\"italic\":true,", "&amp;o")</span>
+<span class="source-line-no">105</span><span id="line-105">                .replace("{\"color\":\"black\",\"text\":\"", "&amp;0")</span>
+<span class="source-line-no">106</span><span id="line-106">                .replace("{\"color\":\"dark_blue\",\"text\":\"", "&amp;1")</span>
+<span class="source-line-no">107</span><span id="line-107">                .replace("{\"color\":\"dark_green\",\"text\":\"", "&amp;2")</span>
+<span class="source-line-no">108</span><span id="line-108">                .replace("{\"color\":\"dark_aqua\",\"text\":\"", "&amp;3")</span>
+<span class="source-line-no">109</span><span id="line-109">                .replace("{\"color\":\"dark_red\",\"text\":\"", "&amp;4")</span>
+<span class="source-line-no">110</span><span id="line-110">                .replace("{\"color\":\"dark_purple\",\"text\":\"", "&amp;5")</span>
+<span class="source-line-no">111</span><span id="line-111">                .replace("{\"color\":\"gold\",\"text\":\"", "&amp;6")</span>
+<span class="source-line-no">112</span><span id="line-112">                .replace("{\"color\":\"gray\",\"text\":\"", "&amp;7")</span>
+<span class="source-line-no">113</span><span id="line-113">                .replace("{\"color\":\"dark_gray\",\"text\":\"", "&amp;8")</span>
+<span class="source-line-no">114</span><span id="line-114">                .replace("{\"color\":\"blue\",\"text\":\"", "&amp;9")</span>
+<span class="source-line-no">115</span><span id="line-115">                .replace("{\"color\":\"green\",\"text\":\"", "&amp;a")</span>
+<span class="source-line-no">116</span><span id="line-116">                .replace("{\"color\":\"aqua\",\"text\":\"", "&amp;b")</span>
+<span class="source-line-no">117</span><span id="line-117">                .replace("{\"color\":\"red\",\"text\":\"", "&amp;c")</span>
+<span class="source-line-no">118</span><span id="line-118">                .replace("{\"color\":\"light_purple\",\"text\":\"", "&amp;d")</span>
+<span class="source-line-no">119</span><span id="line-119">                .replace("{\"color\":\"yellow\",\"text\":\"", "&amp;e")</span>
+<span class="source-line-no">120</span><span id="line-120">                .replace("{\"color\":\"white\",\"text\":\"", "&amp;f")</span>
+<span class="source-line-no">121</span><span id="line-121">                .replace("{\"obfuscated\":true,\"text\":\"", "&amp;k")</span>
+<span class="source-line-no">122</span><span id="line-122">                .replace("{\"bold\":true,\"text\":\"", "&amp;l")</span>
+<span class="source-line-no">123</span><span id="line-123">                .replace("{\"strikethrough\":true,\"text\":\"", "&amp;m")</span>
+<span class="source-line-no">124</span><span id="line-124">                .replace("{\"underlined\":true,\"text\":\"", "&amp;n")</span>
+<span class="source-line-no">125</span><span id="line-125">                .replace("{\"italic\":true,\"text\":\"", "&amp;o").replace("{\"color\":\"black\",", "&amp;0")</span>
+<span class="source-line-no">126</span><span id="line-126">                .replace("{\"color\":\"dark_blue\",", "&amp;1").replace("{\"color\":\"dark_green\",", "&amp;2")</span>
+<span class="source-line-no">127</span><span id="line-127">                .replace("{\"color\":\"dark_aqua\",", "&amp;3").replace("{\"color\":\"dark_red\",", "&amp;4")</span>
+<span class="source-line-no">128</span><span id="line-128">                .replace("{\"color\":\"dark_purple\",", "&amp;5").replace("{\"color\":\"gold\",", "&amp;6")</span>
+<span class="source-line-no">129</span><span id="line-129">                .replace("{\"color\":\"gray\",", "&amp;7").replace("{\"color\":\"dark_gray\",", "&amp;8")</span>
+<span class="source-line-no">130</span><span id="line-130">                .replace("{\"color\":\"blue\",", "&amp;9").replace("{\"color\":\"green\",", "&amp;a")</span>
+<span class="source-line-no">131</span><span id="line-131">                .replace("{\"color\":\"aqua\",", "&amp;b").replace("{\"color\":\"red\",", "&amp;c")</span>
+<span class="source-line-no">132</span><span id="line-132">                .replace("{\"color\":\"light_purple\",", "&amp;d").replace("{\"color\":\"yellow\",", "&amp;e")</span>
+<span class="source-line-no">133</span><span id="line-133">                .replace("{\"color\":\"white\",", "&amp;f").replace("{\"obfuscated\":true,", "&amp;k")</span>
+<span class="source-line-no">134</span><span id="line-134">                .replace("{\"bold\":true,", "&amp;l").replace("{\"strikethrough\":true,", "&amp;m")</span>
+<span class="source-line-no">135</span><span id="line-135">                .replace("{\"underlined\":true,", "&amp;n").replace("{\"italic\":true,", "&amp;o")</span>
+<span class="source-line-no">136</span><span id="line-136">                .replace("\"color\":\"black\",\"text\":\"", "&amp;0")</span>
+<span class="source-line-no">137</span><span id="line-137">                .replace("\"color\":\"dark_blue\",\"text\":\"", "&amp;1")</span>
+<span class="source-line-no">138</span><span id="line-138">                .replace("\"color\":\"dark_green\",\"text\":\"", "&amp;2")</span>
+<span class="source-line-no">139</span><span id="line-139">                .replace("\"color\":\"dark_aqua\",\"text\":\"", "&amp;3")</span>
+<span class="source-line-no">140</span><span id="line-140">                .replace("\"color\":\"dark_red\",\"text\":\"", "&amp;4")</span>
+<span class="source-line-no">141</span><span id="line-141">                .replace("\"color\":\"dark_purple\",\"text\":\"", "&amp;5")</span>
+<span class="source-line-no">142</span><span id="line-142">                .replace("\"color\":\"gold\",\"text\":\"", "&amp;6")</span>
+<span class="source-line-no">143</span><span id="line-143">                .replace("\"color\":\"gray\",\"text\":\"", "&amp;7")</span>
+<span class="source-line-no">144</span><span id="line-144">                .replace("\"color\":\"dark_gray\",\"text\":\"", "&amp;8")</span>
+<span class="source-line-no">145</span><span id="line-145">                .replace("\"color\":\"blue\",\"text\":\"", "&amp;9")</span>
+<span class="source-line-no">146</span><span id="line-146">                .replace("\"color\":\"green\",\"text\":\"", "&amp;a")</span>
+<span class="source-line-no">147</span><span id="line-147">                .replace("\"color\":\"aqua\",\"text\":\"", "&amp;b")</span>
+<span class="source-line-no">148</span><span id="line-148">                .replace("\"color\":\"red\",\"text\":\"", "&amp;c")</span>
+<span class="source-line-no">149</span><span id="line-149">                .replace("\"color\":\"light_purple\",\"text\":\"", "&amp;d")</span>
+<span class="source-line-no">150</span><span id="line-150">                .replace("\"color\":\"yellow\",\"text\":\"", "&amp;e")</span>
+<span class="source-line-no">151</span><span id="line-151">                .replace("\"color\":\"white\",\"text\":\"", "&amp;f")</span>
+<span class="source-line-no">152</span><span id="line-152">                .replace("\"obfuscated\":true,\"text\":\"", "&amp;k")</span>
+<span class="source-line-no">153</span><span id="line-153">                .replace("\"bold\":true,\"text\":\"", "&amp;l")</span>
+<span class="source-line-no">154</span><span id="line-154">                .replace("\"strikethrough\":true,\"text\":\"", "&amp;m")</span>
+<span class="source-line-no">155</span><span id="line-155">                .replace("\"underlined\":true,\"text\":\"", "&amp;n")</span>
+<span class="source-line-no">156</span><span id="line-156">                .replace("\"italic\":true,\"text\":\"", "&amp;o").replace("\"color\":\"black\",", "&amp;0")</span>
+<span class="source-line-no">157</span><span id="line-157">                .replace("\"color\":\"dark_blue\",", "&amp;1").replace("\"color\":\"dark_green\",", "&amp;2")</span>
+<span class="source-line-no">158</span><span id="line-158">                .replace("\"color\":\"dark_aqua\",", "&amp;3").replace("\"color\":\"dark_red\",", "&amp;4")</span>
+<span class="source-line-no">159</span><span id="line-159">                .replace("\"color\":\"dark_purple\",", "&amp;5").replace("\"color\":\"gold\",", "&amp;6")</span>
+<span class="source-line-no">160</span><span id="line-160">                .replace("\"color\":\"gray\",", "&amp;7").replace("\"color\":\"dark_gray\",", "&amp;8")</span>
+<span class="source-line-no">161</span><span id="line-161">                .replace("\"color\":\"blue\",", "&amp;9").replace("\"color\":\"green\",", "&amp;a")</span>
+<span class="source-line-no">162</span><span id="line-162">                .replace("\"color\":\"aqua\",", "&amp;b").replace("\"color\":\"red\",", "&amp;c")</span>
+<span class="source-line-no">163</span><span id="line-163">                .replace("\"color\":\"light_purple\",", "&amp;d").replace("\"color\":\"yellow\",", "&amp;e")</span>
+<span class="source-line-no">164</span><span id="line-164">                .replace("\"color\":\"white\",", "&amp;f").replace("\"obfuscated\":true,", "&amp;k")</span>
+<span class="source-line-no">165</span><span id="line-165">                .replace("\"bold\":true,", "&amp;l").replace("\"strikethrough\":true,", "&amp;m")</span>
+<span class="source-line-no">166</span><span id="line-166">                .replace("\"underlined\":true,", "&amp;n").replace("\"italic\":true,", "&amp;o")</span>
+<span class="source-line-no">167</span><span id="line-167">                .replace("[{\"text\":\"", "&amp;0").replace("{\"text\":\"", "&amp;0").replace("\"},", "")</span>
+<span class="source-line-no">168</span><span id="line-168">                .replace("\"}]", "").replace("\"}", "");</span>
+<span class="source-line-no">169</span><span id="line-169">        str = ChatColor.translateAlternateColorCodes('&amp;', str);</span>
+<span class="source-line-no">170</span><span id="line-170">        return str;</span>
+<span class="source-line-no">171</span><span id="line-171">    }</span>
+<span class="source-line-no">172</span><span id="line-172"></span>
+<span class="source-line-no">173</span><span id="line-173">    /**</span>
+<span class="source-line-no">174</span><span id="line-174">     * Restore the TileEntity data to the given world at the given coordinates.</span>
+<span class="source-line-no">175</span><span id="line-175">     *</span>
+<span class="source-line-no">176</span><span id="line-176">     * @param worldName World name</span>
+<span class="source-line-no">177</span><span id="line-177">     * @param x         x position</span>
+<span class="source-line-no">178</span><span id="line-178">     * @param y         y position</span>
+<span class="source-line-no">179</span><span id="line-179">     * @param z         z position</span>
+<span class="source-line-no">180</span><span id="line-180">     * @return true if successful</span>
+<span class="source-line-no">181</span><span id="line-181">     */</span>
+<span class="source-line-no">182</span><span id="line-182">    public boolean restoreTag(String worldName, int x, int y, int z) {</span>
+<span class="source-line-no">183</span><span id="line-183">        World world = BukkitUtil.getWorld(worldName);</span>
+<span class="source-line-no">184</span><span id="line-184">        if (world == null) {</span>
+<span class="source-line-no">185</span><span id="line-185">            return false;</span>
+<span class="source-line-no">186</span><span id="line-186">        }</span>
+<span class="source-line-no">187</span><span id="line-187">        return restoreTag(world.getBlockAt(x, y, z));</span>
+<span class="source-line-no">188</span><span id="line-188">    }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">    /**</span>
+<span class="source-line-no">191</span><span id="line-191">     * Restore the TileEntity data to the given block</span>
+<span class="source-line-no">192</span><span id="line-192">     *</span>
+<span class="source-line-no">193</span><span id="line-193">     * @param block Block to restore to</span>
+<span class="source-line-no">194</span><span id="line-194">     * @return true if successful</span>
+<span class="source-line-no">195</span><span id="line-195">     */</span>
+<span class="source-line-no">196</span><span id="line-196">    @SuppressWarnings("deprecation") // #setLine is needed for Spigot compatibility</span>
+<span class="source-line-no">197</span><span id="line-197">    public boolean restoreTag(@NonNull Block block) {</span>
+<span class="source-line-no">198</span><span id="line-198">        if (this.tag == null) {</span>
+<span class="source-line-no">199</span><span id="line-199">            return false;</span>
+<span class="source-line-no">200</span><span id="line-200">        }</span>
+<span class="source-line-no">201</span><span id="line-201">        org.bukkit.block.BlockState state = block.getState();</span>
+<span class="source-line-no">202</span><span id="line-202">        switch (getId()) {</span>
+<span class="source-line-no">203</span><span id="line-203">            case "chest", "beacon", "brewingstand", "dispenser", "dropper", "furnace", "hopper", "shulkerbox" -&gt; {</span>
+<span class="source-line-no">204</span><span id="line-204">                if (!(state instanceof Container container)) {</span>
+<span class="source-line-no">205</span><span id="line-205">                    return false;</span>
+<span class="source-line-no">206</span><span id="line-206">                }</span>
+<span class="source-line-no">207</span><span id="line-207">                List&lt;Tag&gt; itemsTag = this.tag.getListTag("Items").getValue();</span>
+<span class="source-line-no">208</span><span id="line-208">                Inventory inv = container.getSnapshotInventory();</span>
+<span class="source-line-no">209</span><span id="line-209">                for (Tag itemTag : itemsTag) {</span>
+<span class="source-line-no">210</span><span id="line-210">                    CompoundTag itemComp = (CompoundTag) itemTag;</span>
+<span class="source-line-no">211</span><span id="line-211">                    ItemType type = ItemType.REGISTRY.get(itemComp.getString("id").toLowerCase());</span>
+<span class="source-line-no">212</span><span id="line-212">                    if (type == null) {</span>
+<span class="source-line-no">213</span><span id="line-213">                        continue;</span>
+<span class="source-line-no">214</span><span id="line-214">                    }</span>
+<span class="source-line-no">215</span><span id="line-215">                    int count = itemComp.getByte("Count");</span>
+<span class="source-line-no">216</span><span id="line-216">                    int slot = itemComp.getByte("Slot");</span>
+<span class="source-line-no">217</span><span id="line-217">                    CompoundTag tag = (CompoundTag) itemComp.getValue().get("tag");</span>
+<span class="source-line-no">218</span><span id="line-218">                    BaseItemStack baseItemStack = new BaseItemStack(type, tag, count);</span>
+<span class="source-line-no">219</span><span id="line-219">                    ItemStack itemStack = BukkitAdapter.adapt(baseItemStack);</span>
+<span class="source-line-no">220</span><span id="line-220">                    inv.setItem(slot, itemStack);</span>
+<span class="source-line-no">221</span><span id="line-221">                }</span>
+<span class="source-line-no">222</span><span id="line-222">                container.update(true, false);</span>
+<span class="source-line-no">223</span><span id="line-223">                return true;</span>
+<span class="source-line-no">224</span><span id="line-224">            }</span>
+<span class="source-line-no">225</span><span id="line-225">            case "sign" -&gt; {</span>
+<span class="source-line-no">226</span><span id="line-226">                if (state instanceof Sign sign) {</span>
+<span class="source-line-no">227</span><span id="line-227">                    sign.setLine(0, jsonToColourCode(tag.getString("Text1")));</span>
+<span class="source-line-no">228</span><span id="line-228">                    sign.setLine(1, jsonToColourCode(tag.getString("Text2")));</span>
+<span class="source-line-no">229</span><span id="line-229">                    sign.setLine(2, jsonToColourCode(tag.getString("Text3")));</span>
+<span class="source-line-no">230</span><span id="line-230">                    sign.setLine(3, jsonToColourCode(tag.getString("Text4")));</span>
+<span class="source-line-no">231</span><span id="line-231">                    state.update(true);</span>
+<span class="source-line-no">232</span><span id="line-232">                    return true;</span>
+<span class="source-line-no">233</span><span id="line-233">                }</span>
+<span class="source-line-no">234</span><span id="line-234">                return false;</span>
+<span class="source-line-no">235</span><span id="line-235">            }</span>
+<span class="source-line-no">236</span><span id="line-236">            case "skull" -&gt; {</span>
+<span class="source-line-no">237</span><span id="line-237">                if (state instanceof Skull skull) {</span>
+<span class="source-line-no">238</span><span id="line-238">                    CompoundTag skullOwner = ((CompoundTag) this.tag.getValue().get("SkullOwner"));</span>
+<span class="source-line-no">239</span><span id="line-239">                    if (skullOwner == null) {</span>
+<span class="source-line-no">240</span><span id="line-240">                        return true;</span>
+<span class="source-line-no">241</span><span id="line-241">                    }</span>
+<span class="source-line-no">242</span><span id="line-242">                    String player = skullOwner.getString("Name");</span>
+<span class="source-line-no">243</span><span id="line-243"></span>
+<span class="source-line-no">244</span><span id="line-244">                    if (player != null &amp;&amp; !player.isEmpty()) {</span>
+<span class="source-line-no">245</span><span id="line-245">                        try {</span>
+<span class="source-line-no">246</span><span id="line-246">                            skull.setOwningPlayer(Bukkit.getOfflinePlayer(player));</span>
+<span class="source-line-no">247</span><span id="line-247">                            skull.update(true);</span>
+<span class="source-line-no">248</span><span id="line-248">                        } catch (Exception e) {</span>
+<span class="source-line-no">249</span><span id="line-249">                            e.printStackTrace();</span>
+<span class="source-line-no">250</span><span id="line-250">                        }</span>
+<span class="source-line-no">251</span><span id="line-251">                        return true;</span>
+<span class="source-line-no">252</span><span id="line-252">                    }</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">                    final CompoundTag properties = (CompoundTag) skullOwner.getValue().get("Properties");</span>
+<span class="source-line-no">255</span><span id="line-255">                    if (properties == null) {</span>
+<span class="source-line-no">256</span><span id="line-256">                        return false;</span>
+<span class="source-line-no">257</span><span id="line-257">                    }</span>
+<span class="source-line-no">258</span><span id="line-258">                    final ListTag textures = properties.getListTag("textures");</span>
+<span class="source-line-no">259</span><span id="line-259">                    if (textures.getValue().isEmpty()) {</span>
+<span class="source-line-no">260</span><span id="line-260">                        return false;</span>
+<span class="source-line-no">261</span><span id="line-261">                    }</span>
+<span class="source-line-no">262</span><span id="line-262">                    final CompoundTag textureCompound = (CompoundTag) textures.getValue().get(0);</span>
+<span class="source-line-no">263</span><span id="line-263">                    if (textureCompound == null) {</span>
+<span class="source-line-no">264</span><span id="line-264">                        return false;</span>
+<span class="source-line-no">265</span><span id="line-265">                    }</span>
+<span class="source-line-no">266</span><span id="line-266">                    String textureValue = textureCompound.getString("Value");</span>
+<span class="source-line-no">267</span><span id="line-267">                    if (textureValue == null) {</span>
+<span class="source-line-no">268</span><span id="line-268">                        return false;</span>
+<span class="source-line-no">269</span><span id="line-269">                    }</span>
+<span class="source-line-no">270</span><span id="line-270">                    if (!PaperLib.isPaper()) {</span>
+<span class="source-line-no">271</span><span id="line-271">                        if (!paperErrorTextureSent) {</span>
+<span class="source-line-no">272</span><span id="line-272">                            paperErrorTextureSent = true;</span>
+<span class="source-line-no">273</span><span id="line-273">                            LOGGER.error("Failed to populate skull data in your road schematic - This is a Spigot limitation.");</span>
+<span class="source-line-no">274</span><span id="line-274">                        }</span>
+<span class="source-line-no">275</span><span id="line-275">                        return false;</span>
+<span class="source-line-no">276</span><span id="line-276">                    }</span>
+<span class="source-line-no">277</span><span id="line-277">                    final PlayerProfile profile = Bukkit.createProfile(UUID.randomUUID());</span>
+<span class="source-line-no">278</span><span id="line-278">                    profile.setProperty(new ProfileProperty("textures", textureValue));</span>
+<span class="source-line-no">279</span><span id="line-279">                    skull.setPlayerProfile(profile);</span>
+<span class="source-line-no">280</span><span id="line-280">                    skull.update(true);</span>
+<span class="source-line-no">281</span><span id="line-281">                    return true;</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">                }</span>
+<span class="source-line-no">284</span><span id="line-284">                return false;</span>
+<span class="source-line-no">285</span><span id="line-285">            }</span>
+<span class="source-line-no">286</span><span id="line-286">            case "banner" -&gt; {</span>
+<span class="source-line-no">287</span><span id="line-287">                if (state instanceof Banner banner) {</span>
+<span class="source-line-no">288</span><span id="line-288">                    List&lt;Tag&gt; patterns = this.tag.getListTag("Patterns").getValue();</span>
+<span class="source-line-no">289</span><span id="line-289">                    if (patterns == null || patterns.isEmpty()) {</span>
+<span class="source-line-no">290</span><span id="line-290">                        return false;</span>
+<span class="source-line-no">291</span><span id="line-291">                    }</span>
+<span class="source-line-no">292</span><span id="line-292">                    banner.setPatterns(patterns.stream().map(t -&gt; (CompoundTag) t).map(compoundTag -&gt; {</span>
+<span class="source-line-no">293</span><span id="line-293">                        DyeColor color = DyeColor.getByWoolData((byte) compoundTag.getInt("Color"));</span>
+<span class="source-line-no">294</span><span id="line-294">                        PatternType patternType = PatternType.getByIdentifier(compoundTag.getString("Pattern"));</span>
+<span class="source-line-no">295</span><span id="line-295">                        if (color == null || patternType == null) {</span>
+<span class="source-line-no">296</span><span id="line-296">                            return null;</span>
+<span class="source-line-no">297</span><span id="line-297">                        }</span>
+<span class="source-line-no">298</span><span id="line-298">                        return new Pattern(color, patternType);</span>
+<span class="source-line-no">299</span><span id="line-299">                    }).filter(Objects::nonNull).toList());</span>
+<span class="source-line-no">300</span><span id="line-300">                    banner.update(true);</span>
+<span class="source-line-no">301</span><span id="line-301">                    return true;</span>
+<span class="source-line-no">302</span><span id="line-302">                }</span>
+<span class="source-line-no">303</span><span id="line-303">                return false;</span>
+<span class="source-line-no">304</span><span id="line-304">            }</span>
+<span class="source-line-no">305</span><span id="line-305">        }</span>
+<span class="source-line-no">306</span><span id="line-306">        return false;</span>
+<span class="source-line-no">307</span><span id="line-307">    }</span>
+<span class="source-line-no">308</span><span id="line-308"></span>
+<span class="source-line-no">309</span><span id="line-309">    public String getId() {</span>
+<span class="source-line-no">310</span><span id="line-310">        String tileid = this.tag.getString("id").toLowerCase();</span>
+<span class="source-line-no">311</span><span id="line-311">        if (tileid.startsWith("minecraft:")) {</span>
+<span class="source-line-no">312</span><span id="line-312">            tileid = tileid.replace("minecraft:", "");</span>
+<span class="source-line-no">313</span><span id="line-313">        }</span>
+<span class="source-line-no">314</span><span id="line-314">        return tileid;</span>
+<span class="source-line-no">315</span><span id="line-315">    }</span>
+<span class="source-line-no">316</span><span id="line-316"></span>
+<span class="source-line-no">317</span><span id="line-317">    public List&lt;CompoundTag&gt; serializeInventory(ItemStack[] items) {</span>
+<span class="source-line-no">318</span><span id="line-318">        List&lt;CompoundTag&gt; tags = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">319</span><span id="line-319">        for (int i = 0; i &lt; items.length; ++i) {</span>
+<span class="source-line-no">320</span><span id="line-320">            if (items[i] != null) {</span>
+<span class="source-line-no">321</span><span id="line-321">                Map&lt;String, Tag&gt; tagData = serializeItem(items[i]);</span>
+<span class="source-line-no">322</span><span id="line-322">                tagData.put("Slot", new ByteTag((byte) i));</span>
+<span class="source-line-no">323</span><span id="line-323">                tags.add(new CompoundTag(tagData));</span>
+<span class="source-line-no">324</span><span id="line-324">            }</span>
+<span class="source-line-no">325</span><span id="line-325">        }</span>
+<span class="source-line-no">326</span><span id="line-326">        return tags;</span>
+<span class="source-line-no">327</span><span id="line-327">    }</span>
+<span class="source-line-no">328</span><span id="line-328"></span>
+<span class="source-line-no">329</span><span id="line-329">    public Map&lt;String, Tag&gt; serializeItem(ItemStack item) {</span>
+<span class="source-line-no">330</span><span id="line-330">        Map&lt;String, Tag&gt; data = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">331</span><span id="line-331">        data.put("id", new StringTag(item.getType().name()));</span>
+<span class="source-line-no">332</span><span id="line-332">        data.put("Damage", new ShortTag(item.getDurability()));</span>
+<span class="source-line-no">333</span><span id="line-333">        data.put("Count", new ByteTag((byte) item.getAmount()));</span>
+<span class="source-line-no">334</span><span id="line-334">        if (!item.getEnchantments().isEmpty()) {</span>
+<span class="source-line-no">335</span><span id="line-335">            List&lt;CompoundTag&gt; enchantmentList = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">336</span><span id="line-336">            for (Entry&lt;Enchantment, Integer&gt; entry : item.getEnchantments().entrySet()) {</span>
+<span class="source-line-no">337</span><span id="line-337">                Map&lt;String, Tag&gt; enchantment = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">338</span><span id="line-338">                enchantment.put("id", new StringTag(entry.getKey().toString()));</span>
+<span class="source-line-no">339</span><span id="line-339">                enchantment.put("lvl", new ShortTag(entry.getValue().shortValue()));</span>
+<span class="source-line-no">340</span><span id="line-340">                enchantmentList.add(new CompoundTag(enchantment));</span>
+<span class="source-line-no">341</span><span id="line-341">            }</span>
+<span class="source-line-no">342</span><span id="line-342">            Map&lt;String, Tag&gt; auxData = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">343</span><span id="line-343">            auxData.put("ench", new ListTag(CompoundTag.class, enchantmentList));</span>
+<span class="source-line-no">344</span><span id="line-344">            data.put("tag", new CompoundTag(auxData));</span>
+<span class="source-line-no">345</span><span id="line-345">        }</span>
+<span class="source-line-no">346</span><span id="line-346">        return data;</span>
+<span class="source-line-no">347</span><span id="line-347">    }</span>
+<span class="source-line-no">348</span><span id="line-348"></span>
+<span class="source-line-no">349</span><span id="line-349">}</span>
 
 
 

@@ -41,7 +41,7 @@
 <span class="source-line-no">028</span><span id="line-28">import java.util.stream.Stream;</span>
 <span class="source-line-no">029</span><span id="line-29"></span>
 <span class="source-line-no">030</span><span id="line-30">/**</span>
-<span class="source-line-no">031</span><span id="line-31"> * This is a helper class which replaces occurrences of 'suggest_command' with 'run_command' in messages_%.json.</span>
+<span class="source-line-no">031</span><span id="line-31"> * This is a helper class which replaces older syntax no longer supported by MiniMessage with replacements in messages_%.json.</span>
 <span class="source-line-no">032</span><span id="line-32"> * MiniMessage changed the syntax between major releases. To warrant a smooth upgrade, we attempt to replace any occurrences</span>
 <span class="source-line-no">033</span><span id="line-33"> * while loading PlotSquared.</span>
 <span class="source-line-no">034</span><span id="line-34"> *</span>
@@ -51,30 +51,38 @@
 <span class="source-line-no">038</span><span id="line-38">public class TranslationUpdateManager {</span>
 <span class="source-line-no">039</span><span id="line-39"></span>
 <span class="source-line-no">040</span><span id="line-40">    public static void upgradeTranslationFile() throws IOException {</span>
-<span class="source-line-no">041</span><span id="line-41">        String searchText = "suggest_command";</span>
-<span class="source-line-no">042</span><span id="line-42">        String replacementText = "run_command";</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">        try (Stream&lt;Path&gt; paths = Files.walk(Paths.get(PlotSquared.platform().getDirectory().toPath().resolve("lang").toUri()))) {</span>
-<span class="source-line-no">045</span><span id="line-45">            paths</span>
-<span class="source-line-no">046</span><span id="line-46">                    .filter(Files::isRegularFile)</span>
-<span class="source-line-no">047</span><span id="line-47">                    .filter(p -&gt; p.getFileName().toString().matches("messages_[a-z]{2}\\.json"))</span>
-<span class="source-line-no">048</span><span id="line-48">                    .forEach(p -&gt; replaceInFile(p, searchText, replacementText));</span>
-<span class="source-line-no">049</span><span id="line-49">        }</span>
-<span class="source-line-no">050</span><span id="line-50">    }</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">    private static void replaceInFile(Path path, String searchText, String replacementText) {</span>
-<span class="source-line-no">053</span><span id="line-53">        try {</span>
-<span class="source-line-no">054</span><span id="line-54">            String content = Files.readString(path);</span>
-<span class="source-line-no">055</span><span id="line-55">            if (content.contains(searchText)) {</span>
-<span class="source-line-no">056</span><span id="line-56">                content = content.replaceAll(searchText, replacementText);</span>
-<span class="source-line-no">057</span><span id="line-57">                Files.writeString(path, content);</span>
-<span class="source-line-no">058</span><span id="line-58">            }</span>
-<span class="source-line-no">059</span><span id="line-59">        } catch (IOException e) {</span>
-<span class="source-line-no">060</span><span id="line-60">            e.printStackTrace();</span>
-<span class="source-line-no">061</span><span id="line-61">        }</span>
-<span class="source-line-no">062</span><span id="line-62">    }</span>
-<span class="source-line-no">063</span><span id="line-63"></span>
-<span class="source-line-no">064</span><span id="line-64">}</span>
+<span class="source-line-no">041</span><span id="line-41">        String suggestCommand = "suggest_command";</span>
+<span class="source-line-no">042</span><span id="line-42">        String suggestCommandReplacement = "run_command";</span>
+<span class="source-line-no">043</span><span id="line-43">        String minHeight = "minHeight";</span>
+<span class="source-line-no">044</span><span id="line-44">        String minheightReplacement = "minheight";</span>
+<span class="source-line-no">045</span><span id="line-45">        String maxHeight = "maxHeight";</span>
+<span class="source-line-no">046</span><span id="line-46">        String maxheightReplacement = "maxheight";</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">        try (Stream&lt;Path&gt; paths = Files.walk(Paths.get(PlotSquared.platform().getDirectory().toPath().resolve("lang").toUri()))) {</span>
+<span class="source-line-no">049</span><span id="line-49">            paths</span>
+<span class="source-line-no">050</span><span id="line-50">                    .filter(Files::isRegularFile)</span>
+<span class="source-line-no">051</span><span id="line-51">                    .filter(p -&gt; p.getFileName().toString().matches("messages_[a-z]{2}\\.json"))</span>
+<span class="source-line-no">052</span><span id="line-52">                    .forEach(p -&gt; {</span>
+<span class="source-line-no">053</span><span id="line-53">                        replaceInFile(p, suggestCommand, suggestCommandReplacement);</span>
+<span class="source-line-no">054</span><span id="line-54">                        replaceInFile(p, minHeight, minheightReplacement);</span>
+<span class="source-line-no">055</span><span id="line-55">                        replaceInFile(p, maxHeight, maxheightReplacement);</span>
+<span class="source-line-no">056</span><span id="line-56">                    });</span>
+<span class="source-line-no">057</span><span id="line-57">        }</span>
+<span class="source-line-no">058</span><span id="line-58">    }</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    private static void replaceInFile(Path path, String searchText, String replacementText) {</span>
+<span class="source-line-no">061</span><span id="line-61">        try {</span>
+<span class="source-line-no">062</span><span id="line-62">            String content = Files.readString(path);</span>
+<span class="source-line-no">063</span><span id="line-63">            if (content.contains(searchText)) {</span>
+<span class="source-line-no">064</span><span id="line-64">                content = content.replaceAll(searchText, replacementText);</span>
+<span class="source-line-no">065</span><span id="line-65">                Files.writeString(path, content);</span>
+<span class="source-line-no">066</span><span id="line-66">            }</span>
+<span class="source-line-no">067</span><span id="line-67">        } catch (IOException e) {</span>
+<span class="source-line-no">068</span><span id="line-68">            e.printStackTrace();</span>
+<span class="source-line-no">069</span><span id="line-69">        }</span>
+<span class="source-line-no">070</span><span id="line-70">    }</span>
+<span class="source-line-no">071</span><span id="line-71"></span>
+<span class="source-line-no">072</span><span id="line-72">}</span>
 
 
 

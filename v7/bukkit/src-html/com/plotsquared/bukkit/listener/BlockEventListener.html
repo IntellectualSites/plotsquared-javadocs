@@ -1129,238 +1129,239 @@
 <span class="source-line-no">1116</span><span id="line-1116">            if (plot != null) {</span>
 <span class="source-line-no">1117</span><span id="line-1117">                plot.debug("Explosion was cancelled because explosion = false");</span>
 <span class="source-line-no">1118</span><span id="line-1118">            }</span>
-<span class="source-line-no">1119</span><span id="line-1119">        }</span>
-<span class="source-line-no">1120</span><span id="line-1120">        event.blockList().removeIf(blox -&gt; !plot.equals(area.getOwnedPlot(BukkitUtil.adapt(blox.getLocation()))));</span>
-<span class="source-line-no">1121</span><span id="line-1121">    }</span>
-<span class="source-line-no">1122</span><span id="line-1122"></span>
-<span class="source-line-no">1123</span><span id="line-1123">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1124</span><span id="line-1124">    public void onBlockBurn(BlockBurnEvent event) {</span>
-<span class="source-line-no">1125</span><span id="line-1125">        Block block = event.getBlock();</span>
-<span class="source-line-no">1126</span><span id="line-1126">        Location location = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">1127</span><span id="line-1127"></span>
-<span class="source-line-no">1128</span><span id="line-1128">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1129</span><span id="line-1129">        if (area == null) {</span>
-<span class="source-line-no">1130</span><span id="line-1130">            return;</span>
-<span class="source-line-no">1131</span><span id="line-1131">        }</span>
-<span class="source-line-no">1132</span><span id="line-1132"></span>
-<span class="source-line-no">1133</span><span id="line-1133">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">1134</span><span id="line-1134">        if (plot == null || !plot.getFlag(BlockBurnFlag.class)) {</span>
-<span class="source-line-no">1135</span><span id="line-1135">            if (plot != null) {</span>
-<span class="source-line-no">1136</span><span id="line-1136">                plot.debug("Block burning was cancelled because block-burn = false");</span>
-<span class="source-line-no">1137</span><span id="line-1137">            }</span>
-<span class="source-line-no">1138</span><span id="line-1138">            event.setCancelled(true);</span>
-<span class="source-line-no">1139</span><span id="line-1139">        }</span>
-<span class="source-line-no">1140</span><span id="line-1140"></span>
-<span class="source-line-no">1141</span><span id="line-1141">    }</span>
-<span class="source-line-no">1142</span><span id="line-1142"></span>
-<span class="source-line-no">1143</span><span id="line-1143">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1144</span><span id="line-1144">    public void onBlockIgnite(BlockIgniteEvent event) {</span>
-<span class="source-line-no">1145</span><span id="line-1145">        Player player = event.getPlayer();</span>
-<span class="source-line-no">1146</span><span id="line-1146">        Entity ignitingEntity = event.getIgnitingEntity();</span>
-<span class="source-line-no">1147</span><span id="line-1147">        Block block = event.getBlock();</span>
-<span class="source-line-no">1148</span><span id="line-1148">        BlockIgniteEvent.IgniteCause igniteCause = event.getCause();</span>
-<span class="source-line-no">1149</span><span id="line-1149">        Location location1 = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">1150</span><span id="line-1150">        PlotArea area = location1.getPlotArea();</span>
-<span class="source-line-no">1151</span><span id="line-1151">        if (area == null) {</span>
-<span class="source-line-no">1152</span><span id="line-1152">            return;</span>
-<span class="source-line-no">1153</span><span id="line-1153">        }</span>
-<span class="source-line-no">1154</span><span id="line-1154">        if (igniteCause == BlockIgniteEvent.IgniteCause.LIGHTNING) {</span>
-<span class="source-line-no">1155</span><span id="line-1155">            event.setCancelled(true);</span>
-<span class="source-line-no">1156</span><span id="line-1156">            return;</span>
-<span class="source-line-no">1157</span><span id="line-1157">        }</span>
-<span class="source-line-no">1158</span><span id="line-1158"></span>
-<span class="source-line-no">1159</span><span id="line-1159">        Plot plot = area.getOwnedPlot(location1);</span>
-<span class="source-line-no">1160</span><span id="line-1160">        if (player != null) {</span>
-<span class="source-line-no">1161</span><span id="line-1161">            BukkitPlayer pp = BukkitUtil.adapt(player);</span>
-<span class="source-line-no">1162</span><span id="line-1162">            if (area.notifyIfOutsideBuildArea(pp, location1.getY())) {</span>
-<span class="source-line-no">1163</span><span id="line-1163">                event.setCancelled(true);</span>
-<span class="source-line-no">1164</span><span id="line-1164">                return;</span>
-<span class="source-line-no">1165</span><span id="line-1165">            }</span>
-<span class="source-line-no">1166</span><span id="line-1166">            if (plot == null) {</span>
-<span class="source-line-no">1167</span><span id="line-1167">                if (!PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, BlockIgnitionFlag.class, true) &amp;&amp; !pp.hasPermission(</span>
-<span class="source-line-no">1168</span><span id="line-1168">                        Permission.PERMISSION_ADMIN_BUILD_ROAD</span>
-<span class="source-line-no">1169</span><span id="line-1169">                )) {</span>
-<span class="source-line-no">1170</span><span id="line-1170">                    pp.sendMessage(</span>
-<span class="source-line-no">1171</span><span id="line-1171">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1172</span><span id="line-1172">                            TagResolver.resolver(</span>
-<span class="source-line-no">1173</span><span id="line-1173">                                    "node",</span>
-<span class="source-line-no">1174</span><span id="line-1174">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD)</span>
-<span class="source-line-no">1175</span><span id="line-1175">                            )</span>
-<span class="source-line-no">1176</span><span id="line-1176">                    );</span>
-<span class="source-line-no">1177</span><span id="line-1177">                    event.setCancelled(true);</span>
-<span class="source-line-no">1178</span><span id="line-1178">                }</span>
-<span class="source-line-no">1179</span><span id="line-1179">            } else if (!plot.hasOwner()) {</span>
-<span class="source-line-no">1180</span><span id="line-1180">                if (!PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, BlockIgnitionFlag.class, true) &amp;&amp; !pp.hasPermission(</span>
-<span class="source-line-no">1181</span><span id="line-1181">                        Permission.PERMISSION_ADMIN_BUILD_UNOWNED</span>
-<span class="source-line-no">1182</span><span id="line-1182">                )) {</span>
-<span class="source-line-no">1183</span><span id="line-1183">                    pp.sendMessage(</span>
-<span class="source-line-no">1184</span><span id="line-1184">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1185</span><span id="line-1185">                            TagResolver.resolver(</span>
-<span class="source-line-no">1186</span><span id="line-1186">                                    "node",</span>
-<span class="source-line-no">1187</span><span id="line-1187">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
-<span class="source-line-no">1188</span><span id="line-1188">                            )</span>
-<span class="source-line-no">1189</span><span id="line-1189">                    );</span>
-<span class="source-line-no">1190</span><span id="line-1190">                    event.setCancelled(true);</span>
-<span class="source-line-no">1191</span><span id="line-1191">                }</span>
-<span class="source-line-no">1192</span><span id="line-1192">            } else if (!plot.isAdded(pp.getUUID())) {</span>
-<span class="source-line-no">1193</span><span id="line-1193">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
-<span class="source-line-no">1194</span><span id="line-1194">                    pp.sendMessage(</span>
-<span class="source-line-no">1195</span><span id="line-1195">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1196</span><span id="line-1196">                            TagResolver.resolver(</span>
-<span class="source-line-no">1197</span><span id="line-1197">                                    "node",</span>
-<span class="source-line-no">1198</span><span id="line-1198">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
-<span class="source-line-no">1199</span><span id="line-1199">                            )</span>
-<span class="source-line-no">1200</span><span id="line-1200">                    );</span>
-<span class="source-line-no">1201</span><span id="line-1201">                    event.setCancelled(true);</span>
-<span class="source-line-no">1202</span><span id="line-1202">                }</span>
-<span class="source-line-no">1203</span><span id="line-1203">            } else if (!plot.getFlag(BlockIgnitionFlag.class)) {</span>
-<span class="source-line-no">1204</span><span id="line-1204">                event.setCancelled(true);</span>
-<span class="source-line-no">1205</span><span id="line-1205">                plot.debug("Block ignition was cancelled because block-ignition = false");</span>
-<span class="source-line-no">1206</span><span id="line-1206">            }</span>
-<span class="source-line-no">1207</span><span id="line-1207">        } else {</span>
-<span class="source-line-no">1208</span><span id="line-1208">            if (plot == null) {</span>
-<span class="source-line-no">1209</span><span id="line-1209">                event.setCancelled(true);</span>
-<span class="source-line-no">1210</span><span id="line-1210">                return;</span>
-<span class="source-line-no">1211</span><span id="line-1211">            }</span>
-<span class="source-line-no">1212</span><span id="line-1212">            if (ignitingEntity != null) {</span>
-<span class="source-line-no">1213</span><span id="line-1213">                if (!plot.getFlag(BlockIgnitionFlag.class)) {</span>
-<span class="source-line-no">1214</span><span id="line-1214">                    event.setCancelled(true);</span>
-<span class="source-line-no">1215</span><span id="line-1215">                    plot.debug("Block ignition was cancelled because block-ignition = false");</span>
-<span class="source-line-no">1216</span><span id="line-1216">                    return;</span>
-<span class="source-line-no">1217</span><span id="line-1217">                }</span>
-<span class="source-line-no">1218</span><span id="line-1218">                if (igniteCause == BlockIgniteEvent.IgniteCause.FIREBALL) {</span>
-<span class="source-line-no">1219</span><span id="line-1219">                    if (ignitingEntity instanceof Fireball) {</span>
-<span class="source-line-no">1220</span><span id="line-1220">                        Projectile fireball = (Projectile) ignitingEntity;</span>
-<span class="source-line-no">1221</span><span id="line-1221">                        Location location = null;</span>
-<span class="source-line-no">1222</span><span id="line-1222">                        if (fireball.getShooter() instanceof Entity shooter) {</span>
-<span class="source-line-no">1223</span><span id="line-1223">                            location = BukkitUtil.adapt(shooter.getLocation());</span>
-<span class="source-line-no">1224</span><span id="line-1224">                        } else if (fireball.getShooter() instanceof BlockProjectileSource) {</span>
-<span class="source-line-no">1225</span><span id="line-1225">                            Block shooter =</span>
-<span class="source-line-no">1226</span><span id="line-1226">                                    ((BlockProjectileSource) fireball.getShooter()).getBlock();</span>
-<span class="source-line-no">1227</span><span id="line-1227">                            location = BukkitUtil.adapt(shooter.getLocation());</span>
-<span class="source-line-no">1228</span><span id="line-1228">                        }</span>
-<span class="source-line-no">1229</span><span id="line-1229">                        if (location != null &amp;&amp; !plot.equals(location.getPlot())) {</span>
-<span class="source-line-no">1230</span><span id="line-1230">                            event.setCancelled(true);</span>
-<span class="source-line-no">1231</span><span id="line-1231">                        }</span>
-<span class="source-line-no">1232</span><span id="line-1232">                    }</span>
-<span class="source-line-no">1233</span><span id="line-1233">                }</span>
-<span class="source-line-no">1234</span><span id="line-1234"></span>
-<span class="source-line-no">1235</span><span id="line-1235">            } else if (event.getIgnitingBlock() != null) {</span>
-<span class="source-line-no">1236</span><span id="line-1236">                Block ignitingBlock = event.getIgnitingBlock();</span>
-<span class="source-line-no">1237</span><span id="line-1237">                Plot plotIgnited = BukkitUtil.adapt(ignitingBlock.getLocation()).getPlot();</span>
-<span class="source-line-no">1238</span><span id="line-1238">                if (igniteCause == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL &amp;&amp; (</span>
-<span class="source-line-no">1239</span><span id="line-1239">                        !plot.getFlag(BlockIgnitionFlag.class) || plotIgnited == null || !plotIgnited</span>
-<span class="source-line-no">1240</span><span id="line-1240">                                .equals(plot)) || (igniteCause == BlockIgniteEvent.IgniteCause.SPREAD</span>
-<span class="source-line-no">1241</span><span id="line-1241">                        || igniteCause == BlockIgniteEvent.IgniteCause.LAVA) &amp;&amp; (</span>
-<span class="source-line-no">1242</span><span id="line-1242">                        !plot.getFlag(BlockIgnitionFlag.class) || plotIgnited == null || !plotIgnited</span>
-<span class="source-line-no">1243</span><span id="line-1243">                                .equals(plot))) {</span>
-<span class="source-line-no">1244</span><span id="line-1244">                    event.setCancelled(true);</span>
-<span class="source-line-no">1245</span><span id="line-1245">                }</span>
-<span class="source-line-no">1246</span><span id="line-1246">            }</span>
-<span class="source-line-no">1247</span><span id="line-1247">        }</span>
-<span class="source-line-no">1248</span><span id="line-1248">    }</span>
-<span class="source-line-no">1249</span><span id="line-1249"></span>
-<span class="source-line-no">1250</span><span id="line-1250">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1251</span><span id="line-1251">    public void onLeavesDecay(LeavesDecayEvent event) {</span>
-<span class="source-line-no">1252</span><span id="line-1252">        Block block = event.getBlock();</span>
-<span class="source-line-no">1253</span><span id="line-1253">        Location location = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">1254</span><span id="line-1254"></span>
-<span class="source-line-no">1255</span><span id="line-1255">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1256</span><span id="line-1256">        if (area == null) {</span>
-<span class="source-line-no">1257</span><span id="line-1257">            return;</span>
-<span class="source-line-no">1258</span><span id="line-1258">        }</span>
-<span class="source-line-no">1259</span><span id="line-1259"></span>
-<span class="source-line-no">1260</span><span id="line-1260">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">1261</span><span id="line-1261">        if (plot == null || !plot.getFlag(LeafDecayFlag.class)) {</span>
-<span class="source-line-no">1262</span><span id="line-1262">            if (plot != null) {</span>
-<span class="source-line-no">1263</span><span id="line-1263">                plot.debug("Leaf decaying was cancelled because leaf-decay = false");</span>
-<span class="source-line-no">1264</span><span id="line-1264">            }</span>
-<span class="source-line-no">1265</span><span id="line-1265">            event.setCancelled(true);</span>
-<span class="source-line-no">1266</span><span id="line-1266">        }</span>
-<span class="source-line-no">1267</span><span id="line-1267"></span>
-<span class="source-line-no">1268</span><span id="line-1268">    }</span>
-<span class="source-line-no">1269</span><span id="line-1269"></span>
-<span class="source-line-no">1270</span><span id="line-1270">    @EventHandler(ignoreCancelled = true)</span>
-<span class="source-line-no">1271</span><span id="line-1271">    public void onSpongeAbsorb(SpongeAbsorbEvent event) {</span>
-<span class="source-line-no">1272</span><span id="line-1272">        Block sponge = event.getBlock();</span>
-<span class="source-line-no">1273</span><span id="line-1273">        Location location = BukkitUtil.adapt(sponge.getLocation());</span>
-<span class="source-line-no">1274</span><span id="line-1274">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1275</span><span id="line-1275">        List&lt;org.bukkit.block.BlockState&gt; blocks = event.getBlocks();</span>
-<span class="source-line-no">1276</span><span id="line-1276">        if (area == null) {</span>
-<span class="source-line-no">1277</span><span id="line-1277">            blocks.removeIf(block -&gt; BukkitUtil.adapt(block.getLocation()).isPlotArea());</span>
-<span class="source-line-no">1278</span><span id="line-1278">        } else {</span>
-<span class="source-line-no">1279</span><span id="line-1279">            Plot origin = area.getOwnedPlot(location);</span>
-<span class="source-line-no">1280</span><span id="line-1280">            blocks.removeIf(block -&gt; {</span>
-<span class="source-line-no">1281</span><span id="line-1281">                Location blockLocation = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">1282</span><span id="line-1282">                if (!area.contains(blockLocation.getX(), blockLocation.getZ())) {</span>
-<span class="source-line-no">1283</span><span id="line-1283">                    return true;</span>
-<span class="source-line-no">1284</span><span id="line-1284">                }</span>
-<span class="source-line-no">1285</span><span id="line-1285">                Plot plot = area.getOwnedPlot(blockLocation);</span>
-<span class="source-line-no">1286</span><span id="line-1286">                if (!Objects.equals(plot, origin)) {</span>
-<span class="source-line-no">1287</span><span id="line-1287">                    return true;</span>
-<span class="source-line-no">1288</span><span id="line-1288">                }</span>
-<span class="source-line-no">1289</span><span id="line-1289">                return !area.buildRangeContainsY(location.getY());</span>
-<span class="source-line-no">1290</span><span id="line-1290">            });</span>
-<span class="source-line-no">1291</span><span id="line-1291">        }</span>
-<span class="source-line-no">1292</span><span id="line-1292">        if (blocks.isEmpty()) {</span>
-<span class="source-line-no">1293</span><span id="line-1293">            // Cancel event so the sponge block doesn't turn into a wet sponge</span>
-<span class="source-line-no">1294</span><span id="line-1294">            // if no water is being absorbed</span>
-<span class="source-line-no">1295</span><span id="line-1295">            event.setCancelled(true);</span>
-<span class="source-line-no">1296</span><span id="line-1296">        }</span>
-<span class="source-line-no">1297</span><span id="line-1297">    }</span>
-<span class="source-line-no">1298</span><span id="line-1298"></span>
-<span class="source-line-no">1299</span><span id="line-1299">    /*</span>
-<span class="source-line-no">1300</span><span id="line-1300">     * BlockMultiPlaceEvent is called unrelated to the BlockPlaceEvent itself and therefore doesn't respect the cancellation.</span>
-<span class="source-line-no">1301</span><span id="line-1301">     */</span>
-<span class="source-line-no">1302</span><span id="line-1302">    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)</span>
-<span class="source-line-no">1303</span><span id="line-1303">    public void onBlockMultiPlace(BlockMultiPlaceEvent event) {</span>
-<span class="source-line-no">1304</span><span id="line-1304">        // Check if the generic block place event would be cancelled</span>
-<span class="source-line-no">1305</span><span id="line-1305">        blockCreate(event);</span>
-<span class="source-line-no">1306</span><span id="line-1306">        if (event.isCancelled()) {</span>
-<span class="source-line-no">1307</span><span id="line-1307">            return;</span>
-<span class="source-line-no">1308</span><span id="line-1308">        }</span>
-<span class="source-line-no">1309</span><span id="line-1309"></span>
-<span class="source-line-no">1310</span><span id="line-1310">        BukkitPlayer pp = BukkitUtil.adapt(event.getPlayer());</span>
-<span class="source-line-no">1311</span><span id="line-1311">        Location placedLocation = BukkitUtil.adapt(event.getBlockReplacedState().getLocation());</span>
-<span class="source-line-no">1312</span><span id="line-1312">        PlotArea area = placedLocation.getPlotArea();</span>
-<span class="source-line-no">1313</span><span id="line-1313">        if (area == null) {</span>
-<span class="source-line-no">1314</span><span id="line-1314">            return;</span>
-<span class="source-line-no">1315</span><span id="line-1315">        }</span>
-<span class="source-line-no">1316</span><span id="line-1316">        Plot plot = placedLocation.getPlot();</span>
-<span class="source-line-no">1317</span><span id="line-1317"></span>
-<span class="source-line-no">1318</span><span id="line-1318">        for (final BlockState state : event.getReplacedBlockStates()) {</span>
-<span class="source-line-no">1319</span><span id="line-1319">            Location currentLocation = BukkitUtil.adapt(state.getLocation());</span>
-<span class="source-line-no">1320</span><span id="line-1320">            if (!pp.hasPermission(</span>
-<span class="source-line-no">1321</span><span id="line-1321">                    Permission.PERMISSION_ADMIN_BUILD_ROAD</span>
-<span class="source-line-no">1322</span><span id="line-1322">            ) &amp;&amp; !(Objects.equals(currentLocation.getPlot(), plot))) {</span>
-<span class="source-line-no">1323</span><span id="line-1323">                pp.sendMessage(</span>
-<span class="source-line-no">1324</span><span id="line-1324">                        TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1325</span><span id="line-1325">                        TagResolver.resolver("node", Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD))</span>
-<span class="source-line-no">1326</span><span id="line-1326">                );</span>
-<span class="source-line-no">1327</span><span id="line-1327">                event.setCancelled(true);</span>
-<span class="source-line-no">1328</span><span id="line-1328">                break;</span>
-<span class="source-line-no">1329</span><span id="line-1329">            }</span>
-<span class="source-line-no">1330</span><span id="line-1330">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_HEIGHT_LIMIT)) {</span>
-<span class="source-line-no">1331</span><span id="line-1331">                continue;</span>
-<span class="source-line-no">1332</span><span id="line-1332">            }</span>
-<span class="source-line-no">1333</span><span id="line-1333">            if (currentLocation.getY() &gt;= area.getMaxBuildHeight() || currentLocation.getY() &lt; area.getMinBuildHeight()) {</span>
-<span class="source-line-no">1334</span><span id="line-1334">                pp.sendMessage(</span>
-<span class="source-line-no">1335</span><span id="line-1335">                        TranslatableCaption.of("height.height_limit"),</span>
-<span class="source-line-no">1336</span><span id="line-1336">                        TagResolver.builder()</span>
-<span class="source-line-no">1337</span><span id="line-1337">                                .tag("minheight", Tag.inserting(Component.text(area.getMinBuildHeight())))</span>
-<span class="source-line-no">1338</span><span id="line-1338">                                .tag("maxheight", Tag.inserting(Component.text(area.getMaxBuildHeight())))</span>
-<span class="source-line-no">1339</span><span id="line-1339">                                .build()</span>
-<span class="source-line-no">1340</span><span id="line-1340">                );</span>
-<span class="source-line-no">1341</span><span id="line-1341">                if (area.notifyIfOutsideBuildArea(pp, currentLocation.getY())) {</span>
-<span class="source-line-no">1342</span><span id="line-1342">                    event.setCancelled(true);</span>
-<span class="source-line-no">1343</span><span id="line-1343">                    break;</span>
-<span class="source-line-no">1344</span><span id="line-1344">                }</span>
-<span class="source-line-no">1345</span><span id="line-1345">            }</span>
-<span class="source-line-no">1346</span><span id="line-1346">        }</span>
-<span class="source-line-no">1347</span><span id="line-1347"></span>
-<span class="source-line-no">1348</span><span id="line-1348">    }</span>
-<span class="source-line-no">1349</span><span id="line-1349"></span>
-<span class="source-line-no">1350</span><span id="line-1350">}</span>
+<span class="source-line-no">1119</span><span id="line-1119">            return;</span>
+<span class="source-line-no">1120</span><span id="line-1120">        }</span>
+<span class="source-line-no">1121</span><span id="line-1121">        event.blockList().removeIf(blox -&gt; !plot.equals(area.getOwnedPlot(BukkitUtil.adapt(blox.getLocation()))));</span>
+<span class="source-line-no">1122</span><span id="line-1122">    }</span>
+<span class="source-line-no">1123</span><span id="line-1123"></span>
+<span class="source-line-no">1124</span><span id="line-1124">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1125</span><span id="line-1125">    public void onBlockBurn(BlockBurnEvent event) {</span>
+<span class="source-line-no">1126</span><span id="line-1126">        Block block = event.getBlock();</span>
+<span class="source-line-no">1127</span><span id="line-1127">        Location location = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">1128</span><span id="line-1128"></span>
+<span class="source-line-no">1129</span><span id="line-1129">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1130</span><span id="line-1130">        if (area == null) {</span>
+<span class="source-line-no">1131</span><span id="line-1131">            return;</span>
+<span class="source-line-no">1132</span><span id="line-1132">        }</span>
+<span class="source-line-no">1133</span><span id="line-1133"></span>
+<span class="source-line-no">1134</span><span id="line-1134">        Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">1135</span><span id="line-1135">        if (plot == null || !plot.getFlag(BlockBurnFlag.class)) {</span>
+<span class="source-line-no">1136</span><span id="line-1136">            if (plot != null) {</span>
+<span class="source-line-no">1137</span><span id="line-1137">                plot.debug("Block burning was cancelled because block-burn = false");</span>
+<span class="source-line-no">1138</span><span id="line-1138">            }</span>
+<span class="source-line-no">1139</span><span id="line-1139">            event.setCancelled(true);</span>
+<span class="source-line-no">1140</span><span id="line-1140">        }</span>
+<span class="source-line-no">1141</span><span id="line-1141"></span>
+<span class="source-line-no">1142</span><span id="line-1142">    }</span>
+<span class="source-line-no">1143</span><span id="line-1143"></span>
+<span class="source-line-no">1144</span><span id="line-1144">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1145</span><span id="line-1145">    public void onBlockIgnite(BlockIgniteEvent event) {</span>
+<span class="source-line-no">1146</span><span id="line-1146">        Player player = event.getPlayer();</span>
+<span class="source-line-no">1147</span><span id="line-1147">        Entity ignitingEntity = event.getIgnitingEntity();</span>
+<span class="source-line-no">1148</span><span id="line-1148">        Block block = event.getBlock();</span>
+<span class="source-line-no">1149</span><span id="line-1149">        BlockIgniteEvent.IgniteCause igniteCause = event.getCause();</span>
+<span class="source-line-no">1150</span><span id="line-1150">        Location location1 = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">1151</span><span id="line-1151">        PlotArea area = location1.getPlotArea();</span>
+<span class="source-line-no">1152</span><span id="line-1152">        if (area == null) {</span>
+<span class="source-line-no">1153</span><span id="line-1153">            return;</span>
+<span class="source-line-no">1154</span><span id="line-1154">        }</span>
+<span class="source-line-no">1155</span><span id="line-1155">        if (igniteCause == BlockIgniteEvent.IgniteCause.LIGHTNING) {</span>
+<span class="source-line-no">1156</span><span id="line-1156">            event.setCancelled(true);</span>
+<span class="source-line-no">1157</span><span id="line-1157">            return;</span>
+<span class="source-line-no">1158</span><span id="line-1158">        }</span>
+<span class="source-line-no">1159</span><span id="line-1159"></span>
+<span class="source-line-no">1160</span><span id="line-1160">        Plot plot = area.getOwnedPlot(location1);</span>
+<span class="source-line-no">1161</span><span id="line-1161">        if (player != null) {</span>
+<span class="source-line-no">1162</span><span id="line-1162">            BukkitPlayer pp = BukkitUtil.adapt(player);</span>
+<span class="source-line-no">1163</span><span id="line-1163">            if (area.notifyIfOutsideBuildArea(pp, location1.getY())) {</span>
+<span class="source-line-no">1164</span><span id="line-1164">                event.setCancelled(true);</span>
+<span class="source-line-no">1165</span><span id="line-1165">                return;</span>
+<span class="source-line-no">1166</span><span id="line-1166">            }</span>
+<span class="source-line-no">1167</span><span id="line-1167">            if (plot == null) {</span>
+<span class="source-line-no">1168</span><span id="line-1168">                if (!PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, BlockIgnitionFlag.class, true) &amp;&amp; !pp.hasPermission(</span>
+<span class="source-line-no">1169</span><span id="line-1169">                        Permission.PERMISSION_ADMIN_BUILD_ROAD</span>
+<span class="source-line-no">1170</span><span id="line-1170">                )) {</span>
+<span class="source-line-no">1171</span><span id="line-1171">                    pp.sendMessage(</span>
+<span class="source-line-no">1172</span><span id="line-1172">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1173</span><span id="line-1173">                            TagResolver.resolver(</span>
+<span class="source-line-no">1174</span><span id="line-1174">                                    "node",</span>
+<span class="source-line-no">1175</span><span id="line-1175">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD)</span>
+<span class="source-line-no">1176</span><span id="line-1176">                            )</span>
+<span class="source-line-no">1177</span><span id="line-1177">                    );</span>
+<span class="source-line-no">1178</span><span id="line-1178">                    event.setCancelled(true);</span>
+<span class="source-line-no">1179</span><span id="line-1179">                }</span>
+<span class="source-line-no">1180</span><span id="line-1180">            } else if (!plot.hasOwner()) {</span>
+<span class="source-line-no">1181</span><span id="line-1181">                if (!PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, BlockIgnitionFlag.class, true) &amp;&amp; !pp.hasPermission(</span>
+<span class="source-line-no">1182</span><span id="line-1182">                        Permission.PERMISSION_ADMIN_BUILD_UNOWNED</span>
+<span class="source-line-no">1183</span><span id="line-1183">                )) {</span>
+<span class="source-line-no">1184</span><span id="line-1184">                    pp.sendMessage(</span>
+<span class="source-line-no">1185</span><span id="line-1185">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1186</span><span id="line-1186">                            TagResolver.resolver(</span>
+<span class="source-line-no">1187</span><span id="line-1187">                                    "node",</span>
+<span class="source-line-no">1188</span><span id="line-1188">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
+<span class="source-line-no">1189</span><span id="line-1189">                            )</span>
+<span class="source-line-no">1190</span><span id="line-1190">                    );</span>
+<span class="source-line-no">1191</span><span id="line-1191">                    event.setCancelled(true);</span>
+<span class="source-line-no">1192</span><span id="line-1192">                }</span>
+<span class="source-line-no">1193</span><span id="line-1193">            } else if (!plot.isAdded(pp.getUUID())) {</span>
+<span class="source-line-no">1194</span><span id="line-1194">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
+<span class="source-line-no">1195</span><span id="line-1195">                    pp.sendMessage(</span>
+<span class="source-line-no">1196</span><span id="line-1196">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1197</span><span id="line-1197">                            TagResolver.resolver(</span>
+<span class="source-line-no">1198</span><span id="line-1198">                                    "node",</span>
+<span class="source-line-no">1199</span><span id="line-1199">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
+<span class="source-line-no">1200</span><span id="line-1200">                            )</span>
+<span class="source-line-no">1201</span><span id="line-1201">                    );</span>
+<span class="source-line-no">1202</span><span id="line-1202">                    event.setCancelled(true);</span>
+<span class="source-line-no">1203</span><span id="line-1203">                }</span>
+<span class="source-line-no">1204</span><span id="line-1204">            } else if (!plot.getFlag(BlockIgnitionFlag.class)) {</span>
+<span class="source-line-no">1205</span><span id="line-1205">                event.setCancelled(true);</span>
+<span class="source-line-no">1206</span><span id="line-1206">                plot.debug("Block ignition was cancelled because block-ignition = false");</span>
+<span class="source-line-no">1207</span><span id="line-1207">            }</span>
+<span class="source-line-no">1208</span><span id="line-1208">        } else {</span>
+<span class="source-line-no">1209</span><span id="line-1209">            if (plot == null) {</span>
+<span class="source-line-no">1210</span><span id="line-1210">                event.setCancelled(true);</span>
+<span class="source-line-no">1211</span><span id="line-1211">                return;</span>
+<span class="source-line-no">1212</span><span id="line-1212">            }</span>
+<span class="source-line-no">1213</span><span id="line-1213">            if (ignitingEntity != null) {</span>
+<span class="source-line-no">1214</span><span id="line-1214">                if (!plot.getFlag(BlockIgnitionFlag.class)) {</span>
+<span class="source-line-no">1215</span><span id="line-1215">                    event.setCancelled(true);</span>
+<span class="source-line-no">1216</span><span id="line-1216">                    plot.debug("Block ignition was cancelled because block-ignition = false");</span>
+<span class="source-line-no">1217</span><span id="line-1217">                    return;</span>
+<span class="source-line-no">1218</span><span id="line-1218">                }</span>
+<span class="source-line-no">1219</span><span id="line-1219">                if (igniteCause == BlockIgniteEvent.IgniteCause.FIREBALL) {</span>
+<span class="source-line-no">1220</span><span id="line-1220">                    if (ignitingEntity instanceof Fireball) {</span>
+<span class="source-line-no">1221</span><span id="line-1221">                        Projectile fireball = (Projectile) ignitingEntity;</span>
+<span class="source-line-no">1222</span><span id="line-1222">                        Location location = null;</span>
+<span class="source-line-no">1223</span><span id="line-1223">                        if (fireball.getShooter() instanceof Entity shooter) {</span>
+<span class="source-line-no">1224</span><span id="line-1224">                            location = BukkitUtil.adapt(shooter.getLocation());</span>
+<span class="source-line-no">1225</span><span id="line-1225">                        } else if (fireball.getShooter() instanceof BlockProjectileSource) {</span>
+<span class="source-line-no">1226</span><span id="line-1226">                            Block shooter =</span>
+<span class="source-line-no">1227</span><span id="line-1227">                                    ((BlockProjectileSource) fireball.getShooter()).getBlock();</span>
+<span class="source-line-no">1228</span><span id="line-1228">                            location = BukkitUtil.adapt(shooter.getLocation());</span>
+<span class="source-line-no">1229</span><span id="line-1229">                        }</span>
+<span class="source-line-no">1230</span><span id="line-1230">                        if (location != null &amp;&amp; !plot.equals(location.getPlot())) {</span>
+<span class="source-line-no">1231</span><span id="line-1231">                            event.setCancelled(true);</span>
+<span class="source-line-no">1232</span><span id="line-1232">                        }</span>
+<span class="source-line-no">1233</span><span id="line-1233">                    }</span>
+<span class="source-line-no">1234</span><span id="line-1234">                }</span>
+<span class="source-line-no">1235</span><span id="line-1235"></span>
+<span class="source-line-no">1236</span><span id="line-1236">            } else if (event.getIgnitingBlock() != null) {</span>
+<span class="source-line-no">1237</span><span id="line-1237">                Block ignitingBlock = event.getIgnitingBlock();</span>
+<span class="source-line-no">1238</span><span id="line-1238">                Plot plotIgnited = BukkitUtil.adapt(ignitingBlock.getLocation()).getPlot();</span>
+<span class="source-line-no">1239</span><span id="line-1239">                if (igniteCause == BlockIgniteEvent.IgniteCause.FLINT_AND_STEEL &amp;&amp; (</span>
+<span class="source-line-no">1240</span><span id="line-1240">                        !plot.getFlag(BlockIgnitionFlag.class) || plotIgnited == null || !plotIgnited</span>
+<span class="source-line-no">1241</span><span id="line-1241">                                .equals(plot)) || (igniteCause == BlockIgniteEvent.IgniteCause.SPREAD</span>
+<span class="source-line-no">1242</span><span id="line-1242">                        || igniteCause == BlockIgniteEvent.IgniteCause.LAVA) &amp;&amp; (</span>
+<span class="source-line-no">1243</span><span id="line-1243">                        !plot.getFlag(BlockIgnitionFlag.class) || plotIgnited == null || !plotIgnited</span>
+<span class="source-line-no">1244</span><span id="line-1244">                                .equals(plot))) {</span>
+<span class="source-line-no">1245</span><span id="line-1245">                    event.setCancelled(true);</span>
+<span class="source-line-no">1246</span><span id="line-1246">                }</span>
+<span class="source-line-no">1247</span><span id="line-1247">            }</span>
+<span class="source-line-no">1248</span><span id="line-1248">        }</span>
+<span class="source-line-no">1249</span><span id="line-1249">    }</span>
+<span class="source-line-no">1250</span><span id="line-1250"></span>
+<span class="source-line-no">1251</span><span id="line-1251">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1252</span><span id="line-1252">    public void onLeavesDecay(LeavesDecayEvent event) {</span>
+<span class="source-line-no">1253</span><span id="line-1253">        Block block = event.getBlock();</span>
+<span class="source-line-no">1254</span><span id="line-1254">        Location location = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">1255</span><span id="line-1255"></span>
+<span class="source-line-no">1256</span><span id="line-1256">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1257</span><span id="line-1257">        if (area == null) {</span>
+<span class="source-line-no">1258</span><span id="line-1258">            return;</span>
+<span class="source-line-no">1259</span><span id="line-1259">        }</span>
+<span class="source-line-no">1260</span><span id="line-1260"></span>
+<span class="source-line-no">1261</span><span id="line-1261">        Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">1262</span><span id="line-1262">        if (plot == null || !plot.getFlag(LeafDecayFlag.class)) {</span>
+<span class="source-line-no">1263</span><span id="line-1263">            if (plot != null) {</span>
+<span class="source-line-no">1264</span><span id="line-1264">                plot.debug("Leaf decaying was cancelled because leaf-decay = false");</span>
+<span class="source-line-no">1265</span><span id="line-1265">            }</span>
+<span class="source-line-no">1266</span><span id="line-1266">            event.setCancelled(true);</span>
+<span class="source-line-no">1267</span><span id="line-1267">        }</span>
+<span class="source-line-no">1268</span><span id="line-1268"></span>
+<span class="source-line-no">1269</span><span id="line-1269">    }</span>
+<span class="source-line-no">1270</span><span id="line-1270"></span>
+<span class="source-line-no">1271</span><span id="line-1271">    @EventHandler(ignoreCancelled = true)</span>
+<span class="source-line-no">1272</span><span id="line-1272">    public void onSpongeAbsorb(SpongeAbsorbEvent event) {</span>
+<span class="source-line-no">1273</span><span id="line-1273">        Block sponge = event.getBlock();</span>
+<span class="source-line-no">1274</span><span id="line-1274">        Location location = BukkitUtil.adapt(sponge.getLocation());</span>
+<span class="source-line-no">1275</span><span id="line-1275">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1276</span><span id="line-1276">        List&lt;org.bukkit.block.BlockState&gt; blocks = event.getBlocks();</span>
+<span class="source-line-no">1277</span><span id="line-1277">        if (area == null) {</span>
+<span class="source-line-no">1278</span><span id="line-1278">            blocks.removeIf(block -&gt; BukkitUtil.adapt(block.getLocation()).isPlotArea());</span>
+<span class="source-line-no">1279</span><span id="line-1279">        } else {</span>
+<span class="source-line-no">1280</span><span id="line-1280">            Plot origin = area.getOwnedPlot(location);</span>
+<span class="source-line-no">1281</span><span id="line-1281">            blocks.removeIf(block -&gt; {</span>
+<span class="source-line-no">1282</span><span id="line-1282">                Location blockLocation = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">1283</span><span id="line-1283">                if (!area.contains(blockLocation.getX(), blockLocation.getZ())) {</span>
+<span class="source-line-no">1284</span><span id="line-1284">                    return true;</span>
+<span class="source-line-no">1285</span><span id="line-1285">                }</span>
+<span class="source-line-no">1286</span><span id="line-1286">                Plot plot = area.getOwnedPlot(blockLocation);</span>
+<span class="source-line-no">1287</span><span id="line-1287">                if (!Objects.equals(plot, origin)) {</span>
+<span class="source-line-no">1288</span><span id="line-1288">                    return true;</span>
+<span class="source-line-no">1289</span><span id="line-1289">                }</span>
+<span class="source-line-no">1290</span><span id="line-1290">                return !area.buildRangeContainsY(location.getY());</span>
+<span class="source-line-no">1291</span><span id="line-1291">            });</span>
+<span class="source-line-no">1292</span><span id="line-1292">        }</span>
+<span class="source-line-no">1293</span><span id="line-1293">        if (blocks.isEmpty()) {</span>
+<span class="source-line-no">1294</span><span id="line-1294">            // Cancel event so the sponge block doesn't turn into a wet sponge</span>
+<span class="source-line-no">1295</span><span id="line-1295">            // if no water is being absorbed</span>
+<span class="source-line-no">1296</span><span id="line-1296">            event.setCancelled(true);</span>
+<span class="source-line-no">1297</span><span id="line-1297">        }</span>
+<span class="source-line-no">1298</span><span id="line-1298">    }</span>
+<span class="source-line-no">1299</span><span id="line-1299"></span>
+<span class="source-line-no">1300</span><span id="line-1300">    /*</span>
+<span class="source-line-no">1301</span><span id="line-1301">     * BlockMultiPlaceEvent is called unrelated to the BlockPlaceEvent itself and therefore doesn't respect the cancellation.</span>
+<span class="source-line-no">1302</span><span id="line-1302">     */</span>
+<span class="source-line-no">1303</span><span id="line-1303">    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)</span>
+<span class="source-line-no">1304</span><span id="line-1304">    public void onBlockMultiPlace(BlockMultiPlaceEvent event) {</span>
+<span class="source-line-no">1305</span><span id="line-1305">        // Check if the generic block place event would be cancelled</span>
+<span class="source-line-no">1306</span><span id="line-1306">        blockCreate(event);</span>
+<span class="source-line-no">1307</span><span id="line-1307">        if (event.isCancelled()) {</span>
+<span class="source-line-no">1308</span><span id="line-1308">            return;</span>
+<span class="source-line-no">1309</span><span id="line-1309">        }</span>
+<span class="source-line-no">1310</span><span id="line-1310"></span>
+<span class="source-line-no">1311</span><span id="line-1311">        BukkitPlayer pp = BukkitUtil.adapt(event.getPlayer());</span>
+<span class="source-line-no">1312</span><span id="line-1312">        Location placedLocation = BukkitUtil.adapt(event.getBlockReplacedState().getLocation());</span>
+<span class="source-line-no">1313</span><span id="line-1313">        PlotArea area = placedLocation.getPlotArea();</span>
+<span class="source-line-no">1314</span><span id="line-1314">        if (area == null) {</span>
+<span class="source-line-no">1315</span><span id="line-1315">            return;</span>
+<span class="source-line-no">1316</span><span id="line-1316">        }</span>
+<span class="source-line-no">1317</span><span id="line-1317">        Plot plot = placedLocation.getPlot();</span>
+<span class="source-line-no">1318</span><span id="line-1318"></span>
+<span class="source-line-no">1319</span><span id="line-1319">        for (final BlockState state : event.getReplacedBlockStates()) {</span>
+<span class="source-line-no">1320</span><span id="line-1320">            Location currentLocation = BukkitUtil.adapt(state.getLocation());</span>
+<span class="source-line-no">1321</span><span id="line-1321">            if (!pp.hasPermission(</span>
+<span class="source-line-no">1322</span><span id="line-1322">                    Permission.PERMISSION_ADMIN_BUILD_ROAD</span>
+<span class="source-line-no">1323</span><span id="line-1323">            ) &amp;&amp; !(Objects.equals(currentLocation.getPlot(), plot))) {</span>
+<span class="source-line-no">1324</span><span id="line-1324">                pp.sendMessage(</span>
+<span class="source-line-no">1325</span><span id="line-1325">                        TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1326</span><span id="line-1326">                        TagResolver.resolver("node", Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD))</span>
+<span class="source-line-no">1327</span><span id="line-1327">                );</span>
+<span class="source-line-no">1328</span><span id="line-1328">                event.setCancelled(true);</span>
+<span class="source-line-no">1329</span><span id="line-1329">                break;</span>
+<span class="source-line-no">1330</span><span id="line-1330">            }</span>
+<span class="source-line-no">1331</span><span id="line-1331">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_HEIGHT_LIMIT)) {</span>
+<span class="source-line-no">1332</span><span id="line-1332">                continue;</span>
+<span class="source-line-no">1333</span><span id="line-1333">            }</span>
+<span class="source-line-no">1334</span><span id="line-1334">            if (currentLocation.getY() &gt;= area.getMaxBuildHeight() || currentLocation.getY() &lt; area.getMinBuildHeight()) {</span>
+<span class="source-line-no">1335</span><span id="line-1335">                pp.sendMessage(</span>
+<span class="source-line-no">1336</span><span id="line-1336">                        TranslatableCaption.of("height.height_limit"),</span>
+<span class="source-line-no">1337</span><span id="line-1337">                        TagResolver.builder()</span>
+<span class="source-line-no">1338</span><span id="line-1338">                                .tag("minheight", Tag.inserting(Component.text(area.getMinBuildHeight())))</span>
+<span class="source-line-no">1339</span><span id="line-1339">                                .tag("maxheight", Tag.inserting(Component.text(area.getMaxBuildHeight())))</span>
+<span class="source-line-no">1340</span><span id="line-1340">                                .build()</span>
+<span class="source-line-no">1341</span><span id="line-1341">                );</span>
+<span class="source-line-no">1342</span><span id="line-1342">                if (area.notifyIfOutsideBuildArea(pp, currentLocation.getY())) {</span>
+<span class="source-line-no">1343</span><span id="line-1343">                    event.setCancelled(true);</span>
+<span class="source-line-no">1344</span><span id="line-1344">                    break;</span>
+<span class="source-line-no">1345</span><span id="line-1345">                }</span>
+<span class="source-line-no">1346</span><span id="line-1346">            }</span>
+<span class="source-line-no">1347</span><span id="line-1347">        }</span>
+<span class="source-line-no">1348</span><span id="line-1348"></span>
+<span class="source-line-no">1349</span><span id="line-1349">    }</span>
+<span class="source-line-no">1350</span><span id="line-1350"></span>
+<span class="source-line-no">1351</span><span id="line-1351">}</span>
 
 
 

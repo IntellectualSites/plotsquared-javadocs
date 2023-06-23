@@ -311,7 +311,7 @@
 <span class="source-line-no">298</span><span id="line-298">            PlotExpression costExp = plotarea.getPrices().get("claim");</span>
 <span class="source-line-no">299</span><span id="line-299">            PlotExpression mergeCostExp = plotarea.getPrices().get("merge");</span>
 <span class="source-line-no">300</span><span id="line-300">            int size = sizeX * sizeZ;</span>
-<span class="source-line-no">301</span><span id="line-301">            double mergeCost = size &gt; 1 &amp;&amp; mergeCostExp == null ? 0d : mergeCostExp.evaluate(size);</span>
+<span class="source-line-no">301</span><span id="line-301">            double mergeCost = size &lt;= 1 || mergeCostExp == null ? 0d : mergeCostExp.evaluate(size);</span>
 <span class="source-line-no">302</span><span id="line-302">            double cost = costExp.evaluate(Settings.Limit.GLOBAL ?</span>
 <span class="source-line-no">303</span><span id="line-303">                    player.getPlotCount() :</span>
 <span class="source-line-no">304</span><span id="line-304">                    player.getPlotCount(plotarea.getWorldName()));</span>

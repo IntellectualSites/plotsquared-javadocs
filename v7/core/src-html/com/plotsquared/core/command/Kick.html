@@ -125,15 +125,15 @@
 <span class="source-line-no">112</span><span id="line-112">                for (PlotPlayer&lt;?&gt; player2 : players) {</span>
 <span class="source-line-no">113</span><span id="line-113">                    if (!plot.equals(player2.getCurrentPlot())) {</span>
 <span class="source-line-no">114</span><span id="line-114">                        player.sendMessage(</span>
-<span class="source-line-no">115</span><span id="line-115">                                TranslatableCaption.of("errors.invalid_player"),</span>
-<span class="source-line-no">116</span><span id="line-116">                                TagResolver.resolver("value", Tag.inserting(Component.text(args[0])))</span>
+<span class="source-line-no">115</span><span id="line-115">                                TranslatableCaption.of("kick.player_not_in_plot"),</span>
+<span class="source-line-no">116</span><span id="line-116">                                TagResolver.resolver("player", Tag.inserting(Component.text(player2.getName())))</span>
 <span class="source-line-no">117</span><span id="line-117">                        );</span>
 <span class="source-line-no">118</span><span id="line-118">                        return;</span>
 <span class="source-line-no">119</span><span id="line-119">                    }</span>
 <span class="source-line-no">120</span><span id="line-120">                    if (player2.hasPermission(Permission.PERMISSION_ADMIN_ENTRY_DENIED)) {</span>
 <span class="source-line-no">121</span><span id="line-121">                        player.sendMessage(</span>
-<span class="source-line-no">122</span><span id="line-122">                                TranslatableCaption.of("cluster.cannot_kick_player"),</span>
-<span class="source-line-no">123</span><span id="line-123">                                TagResolver.resolver("name", Tag.inserting(Component.text(player2.getName())))</span>
+<span class="source-line-no">122</span><span id="line-122">                                TranslatableCaption.of("kick.cannot_kick_player"),</span>
+<span class="source-line-no">123</span><span id="line-123">                                TagResolver.resolver("player", Tag.inserting(Component.text(player2.getName())))</span>
 <span class="source-line-no">124</span><span id="line-124">                        );</span>
 <span class="source-line-no">125</span><span id="line-125">                        return;</span>
 <span class="source-line-no">126</span><span id="line-126">                    }</span>

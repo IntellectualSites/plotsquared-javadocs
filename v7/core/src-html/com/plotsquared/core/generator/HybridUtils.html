@@ -681,7 +681,7 @@
 <span class="source-line-no">668</span><span id="line-668">                    }</span>
 <span class="source-line-no">669</span><span id="line-669">                    if (condition) {</span>
 <span class="source-line-no">670</span><span id="line-670">                        BaseBlock[] blocks = plotWorld.G_SCH.get(MathMan.pair(absX, absZ));</span>
-<span class="source-line-no">671</span><span id="line-671">                        int minY = Settings.Schematics.PASTE_ROAD_ON_TOP ? plotWorld.SCHEM_Y : area.getMinGenHeight() + 1;</span>
+<span class="source-line-no">671</span><span id="line-671">                        int minY = plotWorld.getRoadYStart();</span>
 <span class="source-line-no">672</span><span id="line-672">                        int maxDy = Math.max(extend, blocks.length);</span>
 <span class="source-line-no">673</span><span id="line-673">                        for (int dy = 0; dy &lt; maxDy; dy++) {</span>
 <span class="source-line-no">674</span><span id="line-674">                            if (dy &gt; blocks.length - 1) {</span>

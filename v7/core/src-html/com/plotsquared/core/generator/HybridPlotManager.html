@@ -175,198 +175,203 @@
 <span class="source-line-no">162</span><span id="line-162">        } else {</span>
 <span class="source-line-no">163</span><span id="line-163">            minY = hybridPlotWorld.getMinBuildHeight();</span>
 <span class="source-line-no">164</span><span id="line-164">        }</span>
-<span class="source-line-no">165</span><span id="line-165">        BaseBlock airBlock = BlockTypes.AIR.getDefaultState().toBaseBlock();</span>
-<span class="source-line-no">166</span><span id="line-166">        for (int x = pos1.getX(); x &lt;= pos2.getX(); x++) {</span>
-<span class="source-line-no">167</span><span id="line-167">            short absX = (short) ((x - hybridPlotWorld.ROAD_OFFSET_X) % size);</span>
-<span class="source-line-no">168</span><span id="line-168">            if (absX &lt; 0) {</span>
-<span class="source-line-no">169</span><span id="line-169">                absX += size;</span>
-<span class="source-line-no">170</span><span id="line-170">            }</span>
-<span class="source-line-no">171</span><span id="line-171">            for (int z = pos1.getZ(); z &lt;= pos2.getZ(); z++) {</span>
-<span class="source-line-no">172</span><span id="line-172">                short absZ = (short) ((z - hybridPlotWorld.ROAD_OFFSET_Z) % size);</span>
-<span class="source-line-no">173</span><span id="line-173">                if (absZ &lt; 0) {</span>
-<span class="source-line-no">174</span><span id="line-174">                    absZ += size;</span>
-<span class="source-line-no">175</span><span id="line-175">                }</span>
-<span class="source-line-no">176</span><span id="line-176">                BaseBlock[] blocks = hybridPlotWorld.G_SCH.get(MathMan.pair(absX, absZ));</span>
-<span class="source-line-no">177</span><span id="line-177">                if (blocks != null) {</span>
-<span class="source-line-no">178</span><span id="line-178">                    for (int y = 0; y &lt; blocks.length; y++) {</span>
-<span class="source-line-no">179</span><span id="line-179">                        if (blocks[y] != null) {</span>
-<span class="source-line-no">180</span><span id="line-180">                            queue.setBlock(x, minY + y, z, blocks[y]);</span>
-<span class="source-line-no">181</span><span id="line-181">                        } else if (!isRoad) {</span>
-<span class="source-line-no">182</span><span id="line-182">                            // This is necessary, otherwise any blocks not specified in the schematic will remain after a clear</span>
-<span class="source-line-no">183</span><span id="line-183">                            //  Do not set air for road as this may cause cavernous roads when debugroadregen is used</span>
-<span class="source-line-no">184</span><span id="line-184">                            queue.setBlock(x, minY + y, z, airBlock);</span>
-<span class="source-line-no">185</span><span id="line-185">                        }</span>
-<span class="source-line-no">186</span><span id="line-186">                    }</span>
-<span class="source-line-no">187</span><span id="line-187">                }</span>
-<span class="source-line-no">188</span><span id="line-188">                BiomeType biome = hybridPlotWorld.G_SCH_B.get(MathMan.pair(absX, absZ));</span>
-<span class="source-line-no">189</span><span id="line-189">                if (biome != null) {</span>
-<span class="source-line-no">190</span><span id="line-190">                    queue.setBiome(x, z, biome);</span>
-<span class="source-line-no">191</span><span id="line-191">                } else {</span>
-<span class="source-line-no">192</span><span id="line-192">                    queue.setBiome(x, z, hybridPlotWorld.getPlotBiome());</span>
-<span class="source-line-no">193</span><span id="line-193">                }</span>
-<span class="source-line-no">194</span><span id="line-194">            }</span>
-<span class="source-line-no">195</span><span id="line-195">        }</span>
-<span class="source-line-no">196</span><span id="line-196">    }</span>
-<span class="source-line-no">197</span><span id="line-197"></span>
-<span class="source-line-no">198</span><span id="line-198">    @Override</span>
-<span class="source-line-no">199</span><span id="line-199">    public boolean createRoadSouth(final @NonNull Plot plot, @Nullable QueueCoordinator queue) {</span>
-<span class="source-line-no">200</span><span id="line-200">        boolean enqueue = false;</span>
-<span class="source-line-no">201</span><span id="line-201">        if (queue == null) {</span>
-<span class="source-line-no">202</span><span id="line-202">            enqueue = true;</span>
-<span class="source-line-no">203</span><span id="line-203">            queue = hybridPlotWorld.getQueue();</span>
-<span class="source-line-no">204</span><span id="line-204">        }</span>
-<span class="source-line-no">205</span><span id="line-205">        super.createRoadSouth(plot, queue);</span>
-<span class="source-line-no">206</span><span id="line-206">        PlotId id = plot.getId();</span>
-<span class="source-line-no">207</span><span id="line-207">        PlotId id2 = PlotId.of(id.getX(), id.getY() + 1);</span>
-<span class="source-line-no">208</span><span id="line-208">        Location bot = getPlotBottomLocAbs(id2);</span>
-<span class="source-line-no">209</span><span id="line-209">        Location top = getPlotTopLocAbs(id);</span>
-<span class="source-line-no">210</span><span id="line-210">        Location pos1 = Location.at(</span>
-<span class="source-line-no">211</span><span id="line-211">                hybridPlotWorld.getWorldName(),</span>
-<span class="source-line-no">212</span><span id="line-212">                bot.getX() - 1,</span>
-<span class="source-line-no">213</span><span id="line-213">                hybridPlotWorld.getMinGenHeight(),</span>
-<span class="source-line-no">214</span><span id="line-214">                top.getZ() + 1</span>
-<span class="source-line-no">215</span><span id="line-215">        );</span>
-<span class="source-line-no">216</span><span id="line-216">        Location pos2 = Location.at(</span>
-<span class="source-line-no">217</span><span id="line-217">                hybridPlotWorld.getWorldName(),</span>
-<span class="source-line-no">218</span><span id="line-218">                top.getX() + 1,</span>
-<span class="source-line-no">219</span><span id="line-219">                hybridPlotWorld.getMaxGenHeight(),</span>
-<span class="source-line-no">220</span><span id="line-220">                bot.getZ()</span>
-<span class="source-line-no">221</span><span id="line-221">        );</span>
-<span class="source-line-no">222</span><span id="line-222">        this.resetBiome(hybridPlotWorld, pos1, pos2);</span>
-<span class="source-line-no">223</span><span id="line-223">        if (!hybridPlotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
-<span class="source-line-no">224</span><span id="line-224">            return true;</span>
-<span class="source-line-no">225</span><span id="line-225">        }</span>
-<span class="source-line-no">226</span><span id="line-226">        createSchemAbs(queue, pos1, pos2, true);</span>
-<span class="source-line-no">227</span><span id="line-227">        return !enqueue || queue.enqueue();</span>
-<span class="source-line-no">228</span><span id="line-228">    }</span>
-<span class="source-line-no">229</span><span id="line-229"></span>
-<span class="source-line-no">230</span><span id="line-230">    @Override</span>
-<span class="source-line-no">231</span><span id="line-231">    public boolean createRoadSouthEast(final @NonNull Plot plot, @Nullable QueueCoordinator queue) {</span>
-<span class="source-line-no">232</span><span id="line-232">        boolean enqueue = false;</span>
-<span class="source-line-no">233</span><span id="line-233">        if (queue == null) {</span>
-<span class="source-line-no">234</span><span id="line-234">            enqueue = true;</span>
-<span class="source-line-no">235</span><span id="line-235">            queue = hybridPlotWorld.getQueue();</span>
-<span class="source-line-no">236</span><span id="line-236">        }</span>
-<span class="source-line-no">237</span><span id="line-237">        super.createRoadSouthEast(plot, queue);</span>
-<span class="source-line-no">238</span><span id="line-238">        PlotId id = plot.getId();</span>
-<span class="source-line-no">239</span><span id="line-239">        PlotId id2 = PlotId.of(id.getX() + 1, id.getY() + 1);</span>
-<span class="source-line-no">240</span><span id="line-240">        Location pos1 = getPlotTopLocAbs(id).add(1, 0, 1);</span>
-<span class="source-line-no">241</span><span id="line-241">        Location pos2 = getPlotBottomLocAbs(id2);</span>
-<span class="source-line-no">242</span><span id="line-242">        createSchemAbs(queue, pos1, pos2, true);</span>
-<span class="source-line-no">243</span><span id="line-243">        if (hybridPlotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
-<span class="source-line-no">244</span><span id="line-244">            createSchemAbs(queue, pos1, pos2, true);</span>
-<span class="source-line-no">245</span><span id="line-245">        }</span>
-<span class="source-line-no">246</span><span id="line-246">        return !enqueue || queue.enqueue();</span>
-<span class="source-line-no">247</span><span id="line-247">    }</span>
-<span class="source-line-no">248</span><span id="line-248"></span>
-<span class="source-line-no">249</span><span id="line-249">    @Override</span>
-<span class="source-line-no">250</span><span id="line-250">    public boolean clearPlot(</span>
-<span class="source-line-no">251</span><span id="line-251">            final @NonNull Plot plot,</span>
-<span class="source-line-no">252</span><span id="line-252">            final @Nullable Runnable whenDone,</span>
-<span class="source-line-no">253</span><span id="line-253">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
-<span class="source-line-no">254</span><span id="line-254">            @Nullable QueueCoordinator queue</span>
-<span class="source-line-no">255</span><span id="line-255">    ) {</span>
-<span class="source-line-no">256</span><span id="line-256">        if (this.regionManager.notifyClear(this)) {</span>
-<span class="source-line-no">257</span><span id="line-257">            //If this returns false, the clear didn't work</span>
-<span class="source-line-no">258</span><span id="line-258">            if (this.regionManager.handleClear(plot, whenDone, this, actor)) {</span>
-<span class="source-line-no">259</span><span id="line-259">                return true;</span>
-<span class="source-line-no">260</span><span id="line-260">            }</span>
-<span class="source-line-no">261</span><span id="line-261">        }</span>
-<span class="source-line-no">262</span><span id="line-262">        final Location pos1 = plot.getBottomAbs();</span>
-<span class="source-line-no">263</span><span id="line-263">        final Location pos2 = plot.getExtendedTopAbs();</span>
-<span class="source-line-no">264</span><span id="line-264">        // If augmented</span>
-<span class="source-line-no">265</span><span id="line-265">        final boolean canRegen =</span>
-<span class="source-line-no">266</span><span id="line-266">                (hybridPlotWorld.getType() == PlotAreaType.AUGMENTED) &amp;&amp; (hybridPlotWorld.getTerrain() != PlotAreaTerrainType.NONE) &amp;&amp; REGENERATIVE_CLEAR;</span>
-<span class="source-line-no">267</span><span id="line-267">        // The component blocks</span>
-<span class="source-line-no">268</span><span id="line-268">        final Pattern plotfloor = hybridPlotWorld.TOP_BLOCK.toPattern();</span>
-<span class="source-line-no">269</span><span id="line-269">        final Pattern filling = hybridPlotWorld.MAIN_BLOCK.toPattern();</span>
-<span class="source-line-no">270</span><span id="line-270"></span>
-<span class="source-line-no">271</span><span id="line-271">        final Pattern bedrock;</span>
-<span class="source-line-no">272</span><span id="line-272">        if (hybridPlotWorld.PLOT_BEDROCK) {</span>
-<span class="source-line-no">273</span><span id="line-273">            bedrock = BlockTypes.BEDROCK.getDefaultState();</span>
-<span class="source-line-no">274</span><span id="line-274">        } else {</span>
-<span class="source-line-no">275</span><span id="line-275">            bedrock = hybridPlotWorld.MAIN_BLOCK.toPattern();</span>
-<span class="source-line-no">276</span><span id="line-276">        }</span>
-<span class="source-line-no">277</span><span id="line-277"></span>
-<span class="source-line-no">278</span><span id="line-278">        final BiomeType biome = hybridPlotWorld.getPlotBiome();</span>
-<span class="source-line-no">279</span><span id="line-279">        boolean enqueue = false;</span>
-<span class="source-line-no">280</span><span id="line-280">        if (queue == null) {</span>
-<span class="source-line-no">281</span><span id="line-281">            enqueue = true;</span>
-<span class="source-line-no">282</span><span id="line-282">            queue = hybridPlotWorld.getQueue();</span>
-<span class="source-line-no">283</span><span id="line-283">        }</span>
-<span class="source-line-no">284</span><span id="line-284">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
-<span class="source-line-no">285</span><span id="line-285">            queue.addProgressSubscriber(subscriberFactory.createWithActor(actor));</span>
-<span class="source-line-no">286</span><span id="line-286">        }</span>
-<span class="source-line-no">287</span><span id="line-287">        if (whenDone != null) {</span>
-<span class="source-line-no">288</span><span id="line-288">            queue.setCompleteTask(whenDone);</span>
-<span class="source-line-no">289</span><span id="line-289">        }</span>
-<span class="source-line-no">290</span><span id="line-290">        if (!canRegen) {</span>
-<span class="source-line-no">291</span><span id="line-291">            if (hybridPlotWorld.getMinBuildHeight() &lt; hybridPlotWorld.getMinGenHeight()) {</span>
-<span class="source-line-no">292</span><span id="line-292">                queue.setCuboid(</span>
-<span class="source-line-no">293</span><span id="line-293">                        pos1.withY(hybridPlotWorld.getMinBuildHeight()),</span>
-<span class="source-line-no">294</span><span id="line-294">                        pos2.withY(hybridPlotWorld.getMinGenHeight()),</span>
-<span class="source-line-no">295</span><span id="line-295">                        BlockTypes.AIR.getDefaultState()</span>
-<span class="source-line-no">296</span><span id="line-296">                );</span>
-<span class="source-line-no">297</span><span id="line-297">            }</span>
-<span class="source-line-no">298</span><span id="line-298">            queue.setCuboid(</span>
-<span class="source-line-no">299</span><span id="line-299">                    pos1.withY(hybridPlotWorld.getMinGenHeight()),</span>
-<span class="source-line-no">300</span><span id="line-300">                    pos2.withY(hybridPlotWorld.getMinGenHeight()),</span>
-<span class="source-line-no">301</span><span id="line-301">                    hybridPlotWorld.PLOT_BEDROCK ? bedrock : filling</span>
-<span class="source-line-no">302</span><span id="line-302">            );</span>
-<span class="source-line-no">303</span><span id="line-303">            // Each component has a different layer</span>
-<span class="source-line-no">304</span><span id="line-304">            queue.setCuboid(</span>
-<span class="source-line-no">305</span><span id="line-305">                    pos1.withY(hybridPlotWorld.getMinGenHeight() + 1),</span>
-<span class="source-line-no">306</span><span id="line-306">                    pos2.withY(hybridPlotWorld.PLOT_HEIGHT - 1),</span>
-<span class="source-line-no">307</span><span id="line-307">                    filling</span>
-<span class="source-line-no">308</span><span id="line-308">            );</span>
-<span class="source-line-no">309</span><span id="line-309">            queue.setCuboid(pos1.withY(hybridPlotWorld.PLOT_HEIGHT), pos2.withY(hybridPlotWorld.PLOT_HEIGHT), plotfloor);</span>
-<span class="source-line-no">310</span><span id="line-310">            queue.setCuboid(</span>
-<span class="source-line-no">311</span><span id="line-311">                    pos1.withY(hybridPlotWorld.PLOT_HEIGHT + 1),</span>
-<span class="source-line-no">312</span><span id="line-312">                    pos2.withY(hybridPlotWorld.getMaxGenHeight()),</span>
-<span class="source-line-no">313</span><span id="line-313">                    BlockTypes.AIR.getDefaultState()</span>
-<span class="source-line-no">314</span><span id="line-314">            );</span>
-<span class="source-line-no">315</span><span id="line-315">            if (hybridPlotWorld.getMaxGenHeight() &lt; hybridPlotWorld.getMaxBuildHeight() - 1) {</span>
-<span class="source-line-no">316</span><span id="line-316">                queue.setCuboid(</span>
-<span class="source-line-no">317</span><span id="line-317">                        pos1.withY(hybridPlotWorld.getMaxGenHeight()),</span>
-<span class="source-line-no">318</span><span id="line-318">                        pos2.withY(hybridPlotWorld.getMaxBuildHeight() - 1),</span>
-<span class="source-line-no">319</span><span id="line-319">                        BlockTypes.AIR.getDefaultState()</span>
-<span class="source-line-no">320</span><span id="line-320">                );</span>
-<span class="source-line-no">321</span><span id="line-321">            }</span>
-<span class="source-line-no">322</span><span id="line-322">            queue.setBiomeCuboid(pos1, pos2, biome);</span>
-<span class="source-line-no">323</span><span id="line-323">        } else {</span>
-<span class="source-line-no">324</span><span id="line-324">            queue.setRegenRegion(new CuboidRegion(pos1.getBlockVector3(), pos2.getBlockVector3()));</span>
-<span class="source-line-no">325</span><span id="line-325">        }</span>
-<span class="source-line-no">326</span><span id="line-326">        pastePlotSchematic(queue, pos1, pos2);</span>
-<span class="source-line-no">327</span><span id="line-327">        return !enqueue || queue.enqueue();</span>
-<span class="source-line-no">328</span><span id="line-328">    }</span>
-<span class="source-line-no">329</span><span id="line-329"></span>
-<span class="source-line-no">330</span><span id="line-330">    public void pastePlotSchematic(</span>
-<span class="source-line-no">331</span><span id="line-331">            final @NonNull QueueCoordinator queue,</span>
-<span class="source-line-no">332</span><span id="line-332">            final @NonNull Location bottom,</span>
-<span class="source-line-no">333</span><span id="line-333">            final @NonNull Location top</span>
-<span class="source-line-no">334</span><span id="line-334">    ) {</span>
-<span class="source-line-no">335</span><span id="line-335">        if (!hybridPlotWorld.PLOT_SCHEMATIC) {</span>
-<span class="source-line-no">336</span><span id="line-336">            return;</span>
-<span class="source-line-no">337</span><span id="line-337">        }</span>
-<span class="source-line-no">338</span><span id="line-338">        createSchemAbs(queue, bottom, top, false);</span>
-<span class="source-line-no">339</span><span id="line-339">    }</span>
-<span class="source-line-no">340</span><span id="line-340"></span>
-<span class="source-line-no">341</span><span id="line-341">    /**</span>
-<span class="source-line-no">342</span><span id="line-342">     * Retrieves the location of where a sign should be for a plot.</span>
-<span class="source-line-no">343</span><span id="line-343">     *</span>
-<span class="source-line-no">344</span><span id="line-344">     * @param plot The plot</span>
-<span class="source-line-no">345</span><span id="line-345">     * @return The location where a sign should be</span>
-<span class="source-line-no">346</span><span id="line-346">     */</span>
-<span class="source-line-no">347</span><span id="line-347">    @Override</span>
-<span class="source-line-no">348</span><span id="line-348">    public Location getSignLoc(final @NonNull Plot plot) {</span>
-<span class="source-line-no">349</span><span id="line-349">        return hybridPlotWorld.getSignLocation(plot);</span>
-<span class="source-line-no">350</span><span id="line-350">    }</span>
-<span class="source-line-no">351</span><span id="line-351"></span>
-<span class="source-line-no">352</span><span id="line-352">    public HybridPlotWorld getHybridPlotWorld() {</span>
-<span class="source-line-no">353</span><span id="line-353">        return this.hybridPlotWorld;</span>
-<span class="source-line-no">354</span><span id="line-354">    }</span>
-<span class="source-line-no">355</span><span id="line-355"></span>
-<span class="source-line-no">356</span><span id="line-356">}</span>
+<span class="source-line-no">165</span><span id="line-165">        int schemYDiff = (isRoad ? hybridPlotWorld.getRoadYStart() : hybridPlotWorld.getPlotYStart()) - minY;</span>
+<span class="source-line-no">166</span><span id="line-166">        BaseBlock airBlock = BlockTypes.AIR.getDefaultState().toBaseBlock();</span>
+<span class="source-line-no">167</span><span id="line-167">        for (int x = pos1.getX(); x &lt;= pos2.getX(); x++) {</span>
+<span class="source-line-no">168</span><span id="line-168">            short absX = (short) ((x - hybridPlotWorld.ROAD_OFFSET_X) % size);</span>
+<span class="source-line-no">169</span><span id="line-169">            if (absX &lt; 0) {</span>
+<span class="source-line-no">170</span><span id="line-170">                absX += size;</span>
+<span class="source-line-no">171</span><span id="line-171">            }</span>
+<span class="source-line-no">172</span><span id="line-172">            for (int z = pos1.getZ(); z &lt;= pos2.getZ(); z++) {</span>
+<span class="source-line-no">173</span><span id="line-173">                short absZ = (short) ((z - hybridPlotWorld.ROAD_OFFSET_Z) % size);</span>
+<span class="source-line-no">174</span><span id="line-174">                if (absZ &lt; 0) {</span>
+<span class="source-line-no">175</span><span id="line-175">                    absZ += size;</span>
+<span class="source-line-no">176</span><span id="line-176">                }</span>
+<span class="source-line-no">177</span><span id="line-177">                BaseBlock[] blocks = hybridPlotWorld.G_SCH.get(MathMan.pair(absX, absZ));</span>
+<span class="source-line-no">178</span><span id="line-178">                if (blocks != null) {</span>
+<span class="source-line-no">179</span><span id="line-179">                    for (int y = 0; y &lt; blocks.length; y++) {</span>
+<span class="source-line-no">180</span><span id="line-180">                        if (blocks[y] != null) {</span>
+<span class="source-line-no">181</span><span id="line-181">                            queue.setBlock(x, minY + y, z, blocks[y]);</span>
+<span class="source-line-no">182</span><span id="line-182">                        } else if (y &gt; schemYDiff) {</span>
+<span class="source-line-no">183</span><span id="line-183">                            // This is necessary, otherwise any blocks not specified in the schematic will remain after a clear.</span>
+<span class="source-line-no">184</span><span id="line-184">                            // This should only be done where the schematic has actually "started"</span>
+<span class="source-line-no">185</span><span id="line-185">                            queue.setBlock(x, minY + y, z, airBlock);</span>
+<span class="source-line-no">186</span><span id="line-186">                        } else if (isRoad) {</span>
+<span class="source-line-no">187</span><span id="line-187">                            queue.setBlock(x, minY + y, z, hybridPlotWorld.ROAD_BLOCK.toPattern());</span>
+<span class="source-line-no">188</span><span id="line-188">                        } else {</span>
+<span class="source-line-no">189</span><span id="line-189">                            queue.setBlock(x, minY + y, z, hybridPlotWorld.MAIN_BLOCK.toPattern());</span>
+<span class="source-line-no">190</span><span id="line-190">                        }</span>
+<span class="source-line-no">191</span><span id="line-191">                    }</span>
+<span class="source-line-no">192</span><span id="line-192">                }</span>
+<span class="source-line-no">193</span><span id="line-193">                BiomeType biome = hybridPlotWorld.G_SCH_B.get(MathMan.pair(absX, absZ));</span>
+<span class="source-line-no">194</span><span id="line-194">                if (biome != null) {</span>
+<span class="source-line-no">195</span><span id="line-195">                    queue.setBiome(x, z, biome);</span>
+<span class="source-line-no">196</span><span id="line-196">                } else {</span>
+<span class="source-line-no">197</span><span id="line-197">                    queue.setBiome(x, z, hybridPlotWorld.getPlotBiome());</span>
+<span class="source-line-no">198</span><span id="line-198">                }</span>
+<span class="source-line-no">199</span><span id="line-199">            }</span>
+<span class="source-line-no">200</span><span id="line-200">        }</span>
+<span class="source-line-no">201</span><span id="line-201">    }</span>
+<span class="source-line-no">202</span><span id="line-202"></span>
+<span class="source-line-no">203</span><span id="line-203">    @Override</span>
+<span class="source-line-no">204</span><span id="line-204">    public boolean createRoadSouth(final @NonNull Plot plot, @Nullable QueueCoordinator queue) {</span>
+<span class="source-line-no">205</span><span id="line-205">        boolean enqueue = false;</span>
+<span class="source-line-no">206</span><span id="line-206">        if (queue == null) {</span>
+<span class="source-line-no">207</span><span id="line-207">            enqueue = true;</span>
+<span class="source-line-no">208</span><span id="line-208">            queue = hybridPlotWorld.getQueue();</span>
+<span class="source-line-no">209</span><span id="line-209">        }</span>
+<span class="source-line-no">210</span><span id="line-210">        super.createRoadSouth(plot, queue);</span>
+<span class="source-line-no">211</span><span id="line-211">        PlotId id = plot.getId();</span>
+<span class="source-line-no">212</span><span id="line-212">        PlotId id2 = PlotId.of(id.getX(), id.getY() + 1);</span>
+<span class="source-line-no">213</span><span id="line-213">        Location bot = getPlotBottomLocAbs(id2);</span>
+<span class="source-line-no">214</span><span id="line-214">        Location top = getPlotTopLocAbs(id);</span>
+<span class="source-line-no">215</span><span id="line-215">        Location pos1 = Location.at(</span>
+<span class="source-line-no">216</span><span id="line-216">                hybridPlotWorld.getWorldName(),</span>
+<span class="source-line-no">217</span><span id="line-217">                bot.getX() - 1,</span>
+<span class="source-line-no">218</span><span id="line-218">                hybridPlotWorld.getMinGenHeight(),</span>
+<span class="source-line-no">219</span><span id="line-219">                top.getZ() + 1</span>
+<span class="source-line-no">220</span><span id="line-220">        );</span>
+<span class="source-line-no">221</span><span id="line-221">        Location pos2 = Location.at(</span>
+<span class="source-line-no">222</span><span id="line-222">                hybridPlotWorld.getWorldName(),</span>
+<span class="source-line-no">223</span><span id="line-223">                top.getX() + 1,</span>
+<span class="source-line-no">224</span><span id="line-224">                hybridPlotWorld.getMaxGenHeight(),</span>
+<span class="source-line-no">225</span><span id="line-225">                bot.getZ()</span>
+<span class="source-line-no">226</span><span id="line-226">        );</span>
+<span class="source-line-no">227</span><span id="line-227">        this.resetBiome(hybridPlotWorld, pos1, pos2);</span>
+<span class="source-line-no">228</span><span id="line-228">        if (!hybridPlotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
+<span class="source-line-no">229</span><span id="line-229">            return true;</span>
+<span class="source-line-no">230</span><span id="line-230">        }</span>
+<span class="source-line-no">231</span><span id="line-231">        createSchemAbs(queue, pos1, pos2, true);</span>
+<span class="source-line-no">232</span><span id="line-232">        return !enqueue || queue.enqueue();</span>
+<span class="source-line-no">233</span><span id="line-233">    }</span>
+<span class="source-line-no">234</span><span id="line-234"></span>
+<span class="source-line-no">235</span><span id="line-235">    @Override</span>
+<span class="source-line-no">236</span><span id="line-236">    public boolean createRoadSouthEast(final @NonNull Plot plot, @Nullable QueueCoordinator queue) {</span>
+<span class="source-line-no">237</span><span id="line-237">        boolean enqueue = false;</span>
+<span class="source-line-no">238</span><span id="line-238">        if (queue == null) {</span>
+<span class="source-line-no">239</span><span id="line-239">            enqueue = true;</span>
+<span class="source-line-no">240</span><span id="line-240">            queue = hybridPlotWorld.getQueue();</span>
+<span class="source-line-no">241</span><span id="line-241">        }</span>
+<span class="source-line-no">242</span><span id="line-242">        super.createRoadSouthEast(plot, queue);</span>
+<span class="source-line-no">243</span><span id="line-243">        PlotId id = plot.getId();</span>
+<span class="source-line-no">244</span><span id="line-244">        PlotId id2 = PlotId.of(id.getX() + 1, id.getY() + 1);</span>
+<span class="source-line-no">245</span><span id="line-245">        Location pos1 = getPlotTopLocAbs(id).add(1, 0, 1);</span>
+<span class="source-line-no">246</span><span id="line-246">        Location pos2 = getPlotBottomLocAbs(id2);</span>
+<span class="source-line-no">247</span><span id="line-247">        createSchemAbs(queue, pos1, pos2, true);</span>
+<span class="source-line-no">248</span><span id="line-248">        if (hybridPlotWorld.ROAD_SCHEMATIC_ENABLED) {</span>
+<span class="source-line-no">249</span><span id="line-249">            createSchemAbs(queue, pos1, pos2, true);</span>
+<span class="source-line-no">250</span><span id="line-250">        }</span>
+<span class="source-line-no">251</span><span id="line-251">        return !enqueue || queue.enqueue();</span>
+<span class="source-line-no">252</span><span id="line-252">    }</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">    @Override</span>
+<span class="source-line-no">255</span><span id="line-255">    public boolean clearPlot(</span>
+<span class="source-line-no">256</span><span id="line-256">            final @NonNull Plot plot,</span>
+<span class="source-line-no">257</span><span id="line-257">            final @Nullable Runnable whenDone,</span>
+<span class="source-line-no">258</span><span id="line-258">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
+<span class="source-line-no">259</span><span id="line-259">            @Nullable QueueCoordinator queue</span>
+<span class="source-line-no">260</span><span id="line-260">    ) {</span>
+<span class="source-line-no">261</span><span id="line-261">        if (this.regionManager.notifyClear(this)) {</span>
+<span class="source-line-no">262</span><span id="line-262">            //If this returns false, the clear didn't work</span>
+<span class="source-line-no">263</span><span id="line-263">            if (this.regionManager.handleClear(plot, whenDone, this, actor)) {</span>
+<span class="source-line-no">264</span><span id="line-264">                return true;</span>
+<span class="source-line-no">265</span><span id="line-265">            }</span>
+<span class="source-line-no">266</span><span id="line-266">        }</span>
+<span class="source-line-no">267</span><span id="line-267">        final Location pos1 = plot.getBottomAbs();</span>
+<span class="source-line-no">268</span><span id="line-268">        final Location pos2 = plot.getExtendedTopAbs();</span>
+<span class="source-line-no">269</span><span id="line-269">        // If augmented</span>
+<span class="source-line-no">270</span><span id="line-270">        final boolean canRegen =</span>
+<span class="source-line-no">271</span><span id="line-271">                (hybridPlotWorld.getType() == PlotAreaType.AUGMENTED) &amp;&amp; (hybridPlotWorld.getTerrain() != PlotAreaTerrainType.NONE) &amp;&amp; REGENERATIVE_CLEAR;</span>
+<span class="source-line-no">272</span><span id="line-272">        // The component blocks</span>
+<span class="source-line-no">273</span><span id="line-273">        final Pattern plotfloor = hybridPlotWorld.TOP_BLOCK.toPattern();</span>
+<span class="source-line-no">274</span><span id="line-274">        final Pattern filling = hybridPlotWorld.MAIN_BLOCK.toPattern();</span>
+<span class="source-line-no">275</span><span id="line-275"></span>
+<span class="source-line-no">276</span><span id="line-276">        final Pattern bedrock;</span>
+<span class="source-line-no">277</span><span id="line-277">        if (hybridPlotWorld.PLOT_BEDROCK) {</span>
+<span class="source-line-no">278</span><span id="line-278">            bedrock = BlockTypes.BEDROCK.getDefaultState();</span>
+<span class="source-line-no">279</span><span id="line-279">        } else {</span>
+<span class="source-line-no">280</span><span id="line-280">            bedrock = hybridPlotWorld.MAIN_BLOCK.toPattern();</span>
+<span class="source-line-no">281</span><span id="line-281">        }</span>
+<span class="source-line-no">282</span><span id="line-282"></span>
+<span class="source-line-no">283</span><span id="line-283">        final BiomeType biome = hybridPlotWorld.getPlotBiome();</span>
+<span class="source-line-no">284</span><span id="line-284">        boolean enqueue = false;</span>
+<span class="source-line-no">285</span><span id="line-285">        if (queue == null) {</span>
+<span class="source-line-no">286</span><span id="line-286">            enqueue = true;</span>
+<span class="source-line-no">287</span><span id="line-287">            queue = hybridPlotWorld.getQueue();</span>
+<span class="source-line-no">288</span><span id="line-288">        }</span>
+<span class="source-line-no">289</span><span id="line-289">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
+<span class="source-line-no">290</span><span id="line-290">            queue.addProgressSubscriber(subscriberFactory.createWithActor(actor));</span>
+<span class="source-line-no">291</span><span id="line-291">        }</span>
+<span class="source-line-no">292</span><span id="line-292">        if (whenDone != null) {</span>
+<span class="source-line-no">293</span><span id="line-293">            queue.setCompleteTask(whenDone);</span>
+<span class="source-line-no">294</span><span id="line-294">        }</span>
+<span class="source-line-no">295</span><span id="line-295">        if (!canRegen) {</span>
+<span class="source-line-no">296</span><span id="line-296">            if (hybridPlotWorld.getMinBuildHeight() &lt; hybridPlotWorld.getMinGenHeight()) {</span>
+<span class="source-line-no">297</span><span id="line-297">                queue.setCuboid(</span>
+<span class="source-line-no">298</span><span id="line-298">                        pos1.withY(hybridPlotWorld.getMinBuildHeight()),</span>
+<span class="source-line-no">299</span><span id="line-299">                        pos2.withY(hybridPlotWorld.getMinGenHeight()),</span>
+<span class="source-line-no">300</span><span id="line-300">                        BlockTypes.AIR.getDefaultState()</span>
+<span class="source-line-no">301</span><span id="line-301">                );</span>
+<span class="source-line-no">302</span><span id="line-302">            }</span>
+<span class="source-line-no">303</span><span id="line-303">            queue.setCuboid(</span>
+<span class="source-line-no">304</span><span id="line-304">                    pos1.withY(hybridPlotWorld.getMinGenHeight()),</span>
+<span class="source-line-no">305</span><span id="line-305">                    pos2.withY(hybridPlotWorld.getMinGenHeight()),</span>
+<span class="source-line-no">306</span><span id="line-306">                    hybridPlotWorld.PLOT_BEDROCK ? bedrock : filling</span>
+<span class="source-line-no">307</span><span id="line-307">            );</span>
+<span class="source-line-no">308</span><span id="line-308">            // Each component has a different layer</span>
+<span class="source-line-no">309</span><span id="line-309">            queue.setCuboid(</span>
+<span class="source-line-no">310</span><span id="line-310">                    pos1.withY(hybridPlotWorld.getMinGenHeight() + 1),</span>
+<span class="source-line-no">311</span><span id="line-311">                    pos2.withY(hybridPlotWorld.PLOT_HEIGHT - 1),</span>
+<span class="source-line-no">312</span><span id="line-312">                    filling</span>
+<span class="source-line-no">313</span><span id="line-313">            );</span>
+<span class="source-line-no">314</span><span id="line-314">            queue.setCuboid(pos1.withY(hybridPlotWorld.PLOT_HEIGHT), pos2.withY(hybridPlotWorld.PLOT_HEIGHT), plotfloor);</span>
+<span class="source-line-no">315</span><span id="line-315">            queue.setCuboid(</span>
+<span class="source-line-no">316</span><span id="line-316">                    pos1.withY(hybridPlotWorld.PLOT_HEIGHT + 1),</span>
+<span class="source-line-no">317</span><span id="line-317">                    pos2.withY(hybridPlotWorld.getMaxGenHeight()),</span>
+<span class="source-line-no">318</span><span id="line-318">                    BlockTypes.AIR.getDefaultState()</span>
+<span class="source-line-no">319</span><span id="line-319">            );</span>
+<span class="source-line-no">320</span><span id="line-320">            if (hybridPlotWorld.getMaxGenHeight() &lt; hybridPlotWorld.getMaxBuildHeight() - 1) {</span>
+<span class="source-line-no">321</span><span id="line-321">                queue.setCuboid(</span>
+<span class="source-line-no">322</span><span id="line-322">                        pos1.withY(hybridPlotWorld.getMaxGenHeight()),</span>
+<span class="source-line-no">323</span><span id="line-323">                        pos2.withY(hybridPlotWorld.getMaxBuildHeight() - 1),</span>
+<span class="source-line-no">324</span><span id="line-324">                        BlockTypes.AIR.getDefaultState()</span>
+<span class="source-line-no">325</span><span id="line-325">                );</span>
+<span class="source-line-no">326</span><span id="line-326">            }</span>
+<span class="source-line-no">327</span><span id="line-327">            queue.setBiomeCuboid(pos1, pos2, biome);</span>
+<span class="source-line-no">328</span><span id="line-328">        } else {</span>
+<span class="source-line-no">329</span><span id="line-329">            queue.setRegenRegion(new CuboidRegion(pos1.getBlockVector3(), pos2.getBlockVector3()));</span>
+<span class="source-line-no">330</span><span id="line-330">        }</span>
+<span class="source-line-no">331</span><span id="line-331">        pastePlotSchematic(queue, pos1, pos2);</span>
+<span class="source-line-no">332</span><span id="line-332">        return !enqueue || queue.enqueue();</span>
+<span class="source-line-no">333</span><span id="line-333">    }</span>
+<span class="source-line-no">334</span><span id="line-334"></span>
+<span class="source-line-no">335</span><span id="line-335">    public void pastePlotSchematic(</span>
+<span class="source-line-no">336</span><span id="line-336">            final @NonNull QueueCoordinator queue,</span>
+<span class="source-line-no">337</span><span id="line-337">            final @NonNull Location bottom,</span>
+<span class="source-line-no">338</span><span id="line-338">            final @NonNull Location top</span>
+<span class="source-line-no">339</span><span id="line-339">    ) {</span>
+<span class="source-line-no">340</span><span id="line-340">        if (!hybridPlotWorld.PLOT_SCHEMATIC) {</span>
+<span class="source-line-no">341</span><span id="line-341">            return;</span>
+<span class="source-line-no">342</span><span id="line-342">        }</span>
+<span class="source-line-no">343</span><span id="line-343">        createSchemAbs(queue, bottom, top, false);</span>
+<span class="source-line-no">344</span><span id="line-344">    }</span>
+<span class="source-line-no">345</span><span id="line-345"></span>
+<span class="source-line-no">346</span><span id="line-346">    /**</span>
+<span class="source-line-no">347</span><span id="line-347">     * Retrieves the location of where a sign should be for a plot.</span>
+<span class="source-line-no">348</span><span id="line-348">     *</span>
+<span class="source-line-no">349</span><span id="line-349">     * @param plot The plot</span>
+<span class="source-line-no">350</span><span id="line-350">     * @return The location where a sign should be</span>
+<span class="source-line-no">351</span><span id="line-351">     */</span>
+<span class="source-line-no">352</span><span id="line-352">    @Override</span>
+<span class="source-line-no">353</span><span id="line-353">    public Location getSignLoc(final @NonNull Plot plot) {</span>
+<span class="source-line-no">354</span><span id="line-354">        return hybridPlotWorld.getSignLocation(plot);</span>
+<span class="source-line-no">355</span><span id="line-355">    }</span>
+<span class="source-line-no">356</span><span id="line-356"></span>
+<span class="source-line-no">357</span><span id="line-357">    public HybridPlotWorld getHybridPlotWorld() {</span>
+<span class="source-line-no">358</span><span id="line-358">        return this.hybridPlotWorld;</span>
+<span class="source-line-no">359</span><span id="line-359">    }</span>
+<span class="source-line-no">360</span><span id="line-360"></span>
+<span class="source-line-no">361</span><span id="line-361">}</span>
 
 
 

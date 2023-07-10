@@ -89,485 +89,509 @@
 <span class="source-line-no">076</span><span id="line-76">     * The Y level at which schematic generation will start, lowest of either road or plot schematic generation.</span>
 <span class="source-line-no">077</span><span id="line-77">     */</span>
 <span class="source-line-no">078</span><span id="line-78">    public int SCHEM_Y;</span>
-<span class="source-line-no">079</span><span id="line-79">    private Location SIGN_LOCATION;</span>
-<span class="source-line-no">080</span><span id="line-80">    private File root = null;</span>
-<span class="source-line-no">081</span><span id="line-81">    private int lastOverlayHeightError = Integer.MIN_VALUE;</span>
-<span class="source-line-no">082</span><span id="line-82">    private List&lt;Entity&gt; schem3Entities = null;</span>
-<span class="source-line-no">083</span><span id="line-83">    private BlockVector3 schem3MinPoint = null;</span>
-<span class="source-line-no">084</span><span id="line-84">    private boolean schem1PopulationNeeded = false;</span>
-<span class="source-line-no">085</span><span id="line-85">    private boolean schem2PopulationNeeded = false;</span>
-<span class="source-line-no">086</span><span id="line-86">    private boolean schem3PopulationNeeded = false;</span>
-<span class="source-line-no">087</span><span id="line-87"></span>
-<span class="source-line-no">088</span><span id="line-88">    @Inject</span>
-<span class="source-line-no">089</span><span id="line-89">    private SchematicHandler schematicHandler;</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">    private int plotY;</span>
+<span class="source-line-no">081</span><span id="line-81">    private int roadY;</span>
+<span class="source-line-no">082</span><span id="line-82">    private Location SIGN_LOCATION;</span>
+<span class="source-line-no">083</span><span id="line-83">    private File root = null;</span>
+<span class="source-line-no">084</span><span id="line-84">    private int lastOverlayHeightError = Integer.MIN_VALUE;</span>
+<span class="source-line-no">085</span><span id="line-85">    private List&lt;Entity&gt; schem3Entities = null;</span>
+<span class="source-line-no">086</span><span id="line-86">    private BlockVector3 schem3MinPoint = null;</span>
+<span class="source-line-no">087</span><span id="line-87">    private boolean schem1PopulationNeeded = false;</span>
+<span class="source-line-no">088</span><span id="line-88">    private boolean schem2PopulationNeeded = false;</span>
+<span class="source-line-no">089</span><span id="line-89">    private boolean schem3PopulationNeeded = false;</span>
 <span class="source-line-no">090</span><span id="line-90"></span>
 <span class="source-line-no">091</span><span id="line-91">    @Inject</span>
-<span class="source-line-no">092</span><span id="line-92">    public HybridPlotWorld(</span>
-<span class="source-line-no">093</span><span id="line-93">            @Assisted("world") final String worldName,</span>
-<span class="source-line-no">094</span><span id="line-94">            @javax.annotation.Nullable @Assisted("id") final String id,</span>
-<span class="source-line-no">095</span><span id="line-95">            @Assisted final @NonNull IndependentPlotGenerator generator,</span>
-<span class="source-line-no">096</span><span id="line-96">            @javax.annotation.Nullable @Assisted("min") final PlotId min,</span>
-<span class="source-line-no">097</span><span id="line-97">            @javax.annotation.Nullable @Assisted("max") final PlotId max,</span>
-<span class="source-line-no">098</span><span id="line-98">            @WorldConfig final @NonNull YamlConfiguration worldConfiguration,</span>
-<span class="source-line-no">099</span><span id="line-99">            final @NonNull GlobalBlockQueue blockQueue</span>
-<span class="source-line-no">100</span><span id="line-100">    ) {</span>
-<span class="source-line-no">101</span><span id="line-101">        super(worldName, id, generator, min, max, worldConfiguration, blockQueue);</span>
-<span class="source-line-no">102</span><span id="line-102">        PlotSquared.platform().injector().injectMembers(this);</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">    public static BaseBlock rotate(BaseBlock id) {</span>
-<span class="source-line-no">106</span><span id="line-106"></span>
-<span class="source-line-no">107</span><span id="line-107">        CompoundTag tag = id.getNbtData();</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">        if (tag != null) {</span>
-<span class="source-line-no">110</span><span id="line-110">            // Handle blocks which store their rotation in NBT</span>
-<span class="source-line-no">111</span><span id="line-111">            if (tag.containsKey("Rot")) {</span>
-<span class="source-line-no">112</span><span id="line-112">                int rot = tag.asInt("Rot");</span>
-<span class="source-line-no">113</span><span id="line-113"></span>
-<span class="source-line-no">114</span><span id="line-114">                Direction direction = MCDirections.fromRotation(rot);</span>
-<span class="source-line-no">115</span><span id="line-115"></span>
-<span class="source-line-no">116</span><span id="line-116">                if (direction != null) {</span>
-<span class="source-line-no">117</span><span id="line-117">                    Vector3 vector = transform.apply(direction.toVector()).subtract(transform.apply(Vector3.ZERO)).normalize();</span>
-<span class="source-line-no">118</span><span id="line-118">                    Direction newDirection =</span>
-<span class="source-line-no">119</span><span id="line-119">                            Direction.findClosest(</span>
-<span class="source-line-no">120</span><span id="line-120">                                    vector,</span>
-<span class="source-line-no">121</span><span id="line-121">                                    Direction.Flag.CARDINAL | Direction.Flag.ORDINAL | Direction.Flag.SECONDARY_ORDINAL</span>
-<span class="source-line-no">122</span><span id="line-122">                            );</span>
-<span class="source-line-no">123</span><span id="line-123"></span>
-<span class="source-line-no">124</span><span id="line-124">                    if (newDirection != null) {</span>
-<span class="source-line-no">125</span><span id="line-125">                        CompoundTagBuilder builder = tag.createBuilder();</span>
+<span class="source-line-no">092</span><span id="line-92">    private SchematicHandler schematicHandler;</span>
+<span class="source-line-no">093</span><span id="line-93"></span>
+<span class="source-line-no">094</span><span id="line-94">    @Inject</span>
+<span class="source-line-no">095</span><span id="line-95">    public HybridPlotWorld(</span>
+<span class="source-line-no">096</span><span id="line-96">            @Assisted("world") final String worldName,</span>
+<span class="source-line-no">097</span><span id="line-97">            @javax.annotation.Nullable @Assisted("id") final String id,</span>
+<span class="source-line-no">098</span><span id="line-98">            @Assisted final @NonNull IndependentPlotGenerator generator,</span>
+<span class="source-line-no">099</span><span id="line-99">            @javax.annotation.Nullable @Assisted("min") final PlotId min,</span>
+<span class="source-line-no">100</span><span id="line-100">            @javax.annotation.Nullable @Assisted("max") final PlotId max,</span>
+<span class="source-line-no">101</span><span id="line-101">            @WorldConfig final @NonNull YamlConfiguration worldConfiguration,</span>
+<span class="source-line-no">102</span><span id="line-102">            final @NonNull GlobalBlockQueue blockQueue</span>
+<span class="source-line-no">103</span><span id="line-103">    ) {</span>
+<span class="source-line-no">104</span><span id="line-104">        super(worldName, id, generator, min, max, worldConfiguration, blockQueue);</span>
+<span class="source-line-no">105</span><span id="line-105">        PlotSquared.platform().injector().injectMembers(this);</span>
+<span class="source-line-no">106</span><span id="line-106">    }</span>
+<span class="source-line-no">107</span><span id="line-107"></span>
+<span class="source-line-no">108</span><span id="line-108">    public static BaseBlock rotate(BaseBlock id) {</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">        CompoundTag tag = id.getNbtData();</span>
+<span class="source-line-no">111</span><span id="line-111"></span>
+<span class="source-line-no">112</span><span id="line-112">        if (tag != null) {</span>
+<span class="source-line-no">113</span><span id="line-113">            // Handle blocks which store their rotation in NBT</span>
+<span class="source-line-no">114</span><span id="line-114">            if (tag.containsKey("Rot")) {</span>
+<span class="source-line-no">115</span><span id="line-115">                int rot = tag.asInt("Rot");</span>
+<span class="source-line-no">116</span><span id="line-116"></span>
+<span class="source-line-no">117</span><span id="line-117">                Direction direction = MCDirections.fromRotation(rot);</span>
+<span class="source-line-no">118</span><span id="line-118"></span>
+<span class="source-line-no">119</span><span id="line-119">                if (direction != null) {</span>
+<span class="source-line-no">120</span><span id="line-120">                    Vector3 vector = transform.apply(direction.toVector()).subtract(transform.apply(Vector3.ZERO)).normalize();</span>
+<span class="source-line-no">121</span><span id="line-121">                    Direction newDirection =</span>
+<span class="source-line-no">122</span><span id="line-122">                            Direction.findClosest(</span>
+<span class="source-line-no">123</span><span id="line-123">                                    vector,</span>
+<span class="source-line-no">124</span><span id="line-124">                                    Direction.Flag.CARDINAL | Direction.Flag.ORDINAL | Direction.Flag.SECONDARY_ORDINAL</span>
+<span class="source-line-no">125</span><span id="line-125">                            );</span>
 <span class="source-line-no">126</span><span id="line-126"></span>
-<span class="source-line-no">127</span><span id="line-127">                        builder.putByte("Rot", (byte) MCDirections.toRotation(newDirection));</span>
-<span class="source-line-no">128</span><span id="line-128"></span>
-<span class="source-line-no">129</span><span id="line-129">                        id.setNbtData(builder.build());</span>
-<span class="source-line-no">130</span><span id="line-130">                    }</span>
-<span class="source-line-no">131</span><span id="line-131">                }</span>
-<span class="source-line-no">132</span><span id="line-132">            }</span>
-<span class="source-line-no">133</span><span id="line-133">        }</span>
-<span class="source-line-no">134</span><span id="line-134">        return BlockTransformExtent.transform(id, transform);</span>
-<span class="source-line-no">135</span><span id="line-135">    }</span>
-<span class="source-line-no">136</span><span id="line-136"></span>
-<span class="source-line-no">137</span><span id="line-137">    @NonNull</span>
-<span class="source-line-no">138</span><span id="line-138">    @Override</span>
-<span class="source-line-no">139</span><span id="line-139">    protected PlotManager createManager() {</span>
-<span class="source-line-no">140</span><span id="line-140">        return new HybridPlotManager(this, PlotSquared.platform().regionManager(),</span>
-<span class="source-line-no">141</span><span id="line-141">                PlotSquared.platform().injector().getInstance(ProgressSubscriberFactory.class)</span>
-<span class="source-line-no">142</span><span id="line-142">        );</span>
-<span class="source-line-no">143</span><span id="line-143">    }</span>
-<span class="source-line-no">144</span><span id="line-144"></span>
-<span class="source-line-no">145</span><span id="line-145">    public Location getSignLocation(@NonNull Plot plot) {</span>
-<span class="source-line-no">146</span><span id="line-146">        plot = plot.getBasePlot(false);</span>
-<span class="source-line-no">147</span><span id="line-147">        final Location bot = plot.getBottomAbs();</span>
-<span class="source-line-no">148</span><span id="line-148">        if (SIGN_LOCATION == null) {</span>
-<span class="source-line-no">149</span><span id="line-149">            return bot.withY(ROAD_HEIGHT + 1).add(-1, 0, -2);</span>
-<span class="source-line-no">150</span><span id="line-150">        } else {</span>
-<span class="source-line-no">151</span><span id="line-151">            return bot.withY(0).add(SIGN_LOCATION.getX(), SIGN_LOCATION.getY(), SIGN_LOCATION.getZ());</span>
-<span class="source-line-no">152</span><span id="line-152">        }</span>
-<span class="source-line-no">153</span><span id="line-153">    }</span>
-<span class="source-line-no">154</span><span id="line-154"></span>
-<span class="source-line-no">155</span><span id="line-155">    /**</span>
-<span class="source-line-no">156</span><span id="line-156">     * &lt;p&gt;This method is called when a world loads. Make sure you set all your constants here. You are provided with the</span>
-<span class="source-line-no">157</span><span id="line-157">     * configuration section for that specific world.&lt;/p&gt;</span>
-<span class="source-line-no">158</span><span id="line-158">     */</span>
-<span class="source-line-no">159</span><span id="line-159">    @Override</span>
-<span class="source-line-no">160</span><span id="line-160">    public void loadConfiguration(ConfigurationSection config) {</span>
-<span class="source-line-no">161</span><span id="line-161">        super.loadConfiguration(config);</span>
-<span class="source-line-no">162</span><span id="line-162">        if ((this.ROAD_WIDTH &amp; 1) == 0) {</span>
-<span class="source-line-no">163</span><span id="line-163">            this.PATH_WIDTH_LOWER = (short) (Math.floor(this.ROAD_WIDTH / 2f) - 1);</span>
-<span class="source-line-no">164</span><span id="line-164">        } else {</span>
-<span class="source-line-no">165</span><span id="line-165">            this.PATH_WIDTH_LOWER = (short) Math.floor(this.ROAD_WIDTH / 2f);</span>
-<span class="source-line-no">166</span><span id="line-166">        }</span>
-<span class="source-line-no">167</span><span id="line-167">        if (this.ROAD_WIDTH == 0) {</span>
-<span class="source-line-no">168</span><span id="line-168">            this.PATH_WIDTH_UPPER = (short) (this.SIZE + 1);</span>
-<span class="source-line-no">169</span><span id="line-169">        } else {</span>
-<span class="source-line-no">170</span><span id="line-170">            this.PATH_WIDTH_UPPER = (short) (this.PATH_WIDTH_LOWER + this.PLOT_WIDTH + 1);</span>
-<span class="source-line-no">171</span><span id="line-171">        }</span>
-<span class="source-line-no">172</span><span id="line-172">        try {</span>
-<span class="source-line-no">173</span><span id="line-173">            setupSchematics();</span>
-<span class="source-line-no">174</span><span id="line-174">        } catch (Exception event) {</span>
-<span class="source-line-no">175</span><span id="line-175">            event.printStackTrace();</span>
-<span class="source-line-no">176</span><span id="line-176">        }</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">        // Dump world settings</span>
-<span class="source-line-no">179</span><span id="line-179">        if (Settings.DEBUG) {</span>
-<span class="source-line-no">180</span><span id="line-180">            LOGGER.info("- Dumping settings for ClassicPlotWorld with name {}", this.getWorldName());</span>
-<span class="source-line-no">181</span><span id="line-181">            final Field[] fields = this.getClass().getFields();</span>
-<span class="source-line-no">182</span><span id="line-182">            for (final Field field : fields) {</span>
-<span class="source-line-no">183</span><span id="line-183">                final String name = field.getName().toLowerCase(Locale.ENGLISH);</span>
-<span class="source-line-no">184</span><span id="line-184">                if (name.contains("g_sch")) {</span>
-<span class="source-line-no">185</span><span id="line-185">                    continue;</span>
-<span class="source-line-no">186</span><span id="line-186">                }</span>
-<span class="source-line-no">187</span><span id="line-187">                Object value;</span>
-<span class="source-line-no">188</span><span id="line-188">                try {</span>
-<span class="source-line-no">189</span><span id="line-189">                    final boolean accessible = field.isAccessible();</span>
-<span class="source-line-no">190</span><span id="line-190">                    field.setAccessible(true);</span>
-<span class="source-line-no">191</span><span id="line-191">                    value = field.get(this);</span>
-<span class="source-line-no">192</span><span id="line-192">                    field.setAccessible(accessible);</span>
-<span class="source-line-no">193</span><span id="line-193">                } catch (final IllegalAccessException e) {</span>
-<span class="source-line-no">194</span><span id="line-194">                    value = String.format("Failed to parse: %s", e.getMessage());</span>
-<span class="source-line-no">195</span><span id="line-195">                }</span>
-<span class="source-line-no">196</span><span id="line-196">                LOGGER.info("-- {} = {}", name, value);</span>
-<span class="source-line-no">197</span><span id="line-197">            }</span>
-<span class="source-line-no">198</span><span id="line-198">        }</span>
-<span class="source-line-no">199</span><span id="line-199">    }</span>
-<span class="source-line-no">200</span><span id="line-200"></span>
-<span class="source-line-no">201</span><span id="line-201">    @Override</span>
-<span class="source-line-no">202</span><span id="line-202">    public boolean isCompatible(final @NonNull PlotArea plotArea) {</span>
-<span class="source-line-no">203</span><span id="line-203">        if (!(plotArea instanceof SquarePlotWorld)) {</span>
-<span class="source-line-no">204</span><span id="line-204">            return false;</span>
-<span class="source-line-no">205</span><span id="line-205">        }</span>
-<span class="source-line-no">206</span><span id="line-206">        return ((SquarePlotWorld) plotArea).PLOT_WIDTH == this.PLOT_WIDTH;</span>
-<span class="source-line-no">207</span><span id="line-207">    }</span>
-<span class="source-line-no">208</span><span id="line-208"></span>
-<span class="source-line-no">209</span><span id="line-209">    public void setupSchematics() throws SchematicHandler.UnsupportedFormatException {</span>
-<span class="source-line-no">210</span><span id="line-210">        this.G_SCH = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">211</span><span id="line-211">        this.G_SCH_B = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">212</span><span id="line-212"></span>
-<span class="source-line-no">213</span><span id="line-213">        // Try to determine root. This means that plot areas can have separate schematic</span>
-<span class="source-line-no">214</span><span id="line-214">        // directories</span>
-<span class="source-line-no">215</span><span id="line-215">        if (!(root =</span>
-<span class="source-line-no">216</span><span id="line-216">                FileUtils.getFile(</span>
-<span class="source-line-no">217</span><span id="line-217">                        PlotSquared.platform().getDirectory(),</span>
-<span class="source-line-no">218</span><span id="line-218">                        "schematics/GEN_ROAD_SCHEMATIC/" + this.getWorldName() + "/" + this.getId()</span>
-<span class="source-line-no">219</span><span id="line-219">                ))</span>
-<span class="source-line-no">220</span><span id="line-220">                .exists()) {</span>
-<span class="source-line-no">221</span><span id="line-221">            root = FileUtils.getFile(</span>
-<span class="source-line-no">222</span><span id="line-222">                    PlotSquared.platform().getDirectory(),</span>
-<span class="source-line-no">223</span><span id="line-223">                    "schematics/GEN_ROAD_SCHEMATIC/" + this.getWorldName()</span>
-<span class="source-line-no">224</span><span id="line-224">            );</span>
-<span class="source-line-no">225</span><span id="line-225">        }</span>
-<span class="source-line-no">226</span><span id="line-226"></span>
-<span class="source-line-no">227</span><span id="line-227">        File schematic1File = new File(root, "sideroad.schem");</span>
-<span class="source-line-no">228</span><span id="line-228">        if (!schematic1File.exists()) {</span>
-<span class="source-line-no">229</span><span id="line-229">            schematic1File = new File(root, "sideroad.schematic");</span>
-<span class="source-line-no">230</span><span id="line-230">        }</span>
-<span class="source-line-no">231</span><span id="line-231">        File schematic2File = new File(root, "intersection.schem");</span>
-<span class="source-line-no">232</span><span id="line-232">        if (!schematic2File.exists()) {</span>
-<span class="source-line-no">233</span><span id="line-233">            schematic2File = new File(root, "intersection.schematic");</span>
-<span class="source-line-no">234</span><span id="line-234">        }</span>
-<span class="source-line-no">235</span><span id="line-235">        File schematic3File = new File(root, "plot.schem");</span>
-<span class="source-line-no">236</span><span id="line-236">        if (!schematic3File.exists()) {</span>
-<span class="source-line-no">237</span><span id="line-237">            schematic3File = new File(root, "plot.schematic");</span>
-<span class="source-line-no">238</span><span id="line-238">        }</span>
-<span class="source-line-no">239</span><span id="line-239">        Schematic schematic1 = this.schematicHandler.getSchematic(schematic1File);</span>
-<span class="source-line-no">240</span><span id="line-240">        Schematic schematic2 = this.schematicHandler.getSchematic(schematic2File);</span>
-<span class="source-line-no">241</span><span id="line-241">        Schematic schematic3 = this.schematicHandler.getSchematic(schematic3File);</span>
-<span class="source-line-no">242</span><span id="line-242"></span>
-<span class="source-line-no">243</span><span id="line-243">        // If the plot schematic contains entities, then they need to be populated upon generation.</span>
-<span class="source-line-no">244</span><span id="line-244">        if (schematic3 != null &amp;&amp; !schematic3.getClipboard().getEntities().isEmpty()) {</span>
-<span class="source-line-no">245</span><span id="line-245">            this.schem3Entities = new ArrayList&lt;&gt;(schematic3.getClipboard().getEntities());</span>
-<span class="source-line-no">246</span><span id="line-246">            this.schem3MinPoint = schematic3.getClipboard().getMinimumPoint();</span>
-<span class="source-line-no">247</span><span id="line-247">            this.schem3PopulationNeeded = true;</span>
-<span class="source-line-no">248</span><span id="line-248">        }</span>
-<span class="source-line-no">249</span><span id="line-249"></span>
-<span class="source-line-no">250</span><span id="line-250">        int shift = this.ROAD_WIDTH / 2;</span>
-<span class="source-line-no">251</span><span id="line-251">        int oddshift = (this.ROAD_WIDTH &amp; 1);</span>
+<span class="source-line-no">127</span><span id="line-127">                    if (newDirection != null) {</span>
+<span class="source-line-no">128</span><span id="line-128">                        CompoundTagBuilder builder = tag.createBuilder();</span>
+<span class="source-line-no">129</span><span id="line-129"></span>
+<span class="source-line-no">130</span><span id="line-130">                        builder.putByte("Rot", (byte) MCDirections.toRotation(newDirection));</span>
+<span class="source-line-no">131</span><span id="line-131"></span>
+<span class="source-line-no">132</span><span id="line-132">                        id.setNbtData(builder.build());</span>
+<span class="source-line-no">133</span><span id="line-133">                    }</span>
+<span class="source-line-no">134</span><span id="line-134">                }</span>
+<span class="source-line-no">135</span><span id="line-135">            }</span>
+<span class="source-line-no">136</span><span id="line-136">        }</span>
+<span class="source-line-no">137</span><span id="line-137">        return BlockTransformExtent.transform(id, transform);</span>
+<span class="source-line-no">138</span><span id="line-138">    }</span>
+<span class="source-line-no">139</span><span id="line-139"></span>
+<span class="source-line-no">140</span><span id="line-140">    @NonNull</span>
+<span class="source-line-no">141</span><span id="line-141">    @Override</span>
+<span class="source-line-no">142</span><span id="line-142">    protected PlotManager createManager() {</span>
+<span class="source-line-no">143</span><span id="line-143">        return new HybridPlotManager(this, PlotSquared.platform().regionManager(),</span>
+<span class="source-line-no">144</span><span id="line-144">                PlotSquared.platform().injector().getInstance(ProgressSubscriberFactory.class)</span>
+<span class="source-line-no">145</span><span id="line-145">        );</span>
+<span class="source-line-no">146</span><span id="line-146">    }</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">    public Location getSignLocation(@NonNull Plot plot) {</span>
+<span class="source-line-no">149</span><span id="line-149">        plot = plot.getBasePlot(false);</span>
+<span class="source-line-no">150</span><span id="line-150">        final Location bot = plot.getBottomAbs();</span>
+<span class="source-line-no">151</span><span id="line-151">        if (SIGN_LOCATION == null) {</span>
+<span class="source-line-no">152</span><span id="line-152">            return bot.withY(ROAD_HEIGHT + 1).add(-1, 0, -2);</span>
+<span class="source-line-no">153</span><span id="line-153">        } else {</span>
+<span class="source-line-no">154</span><span id="line-154">            return bot.withY(0).add(SIGN_LOCATION.getX(), SIGN_LOCATION.getY(), SIGN_LOCATION.getZ());</span>
+<span class="source-line-no">155</span><span id="line-155">        }</span>
+<span class="source-line-no">156</span><span id="line-156">    }</span>
+<span class="source-line-no">157</span><span id="line-157"></span>
+<span class="source-line-no">158</span><span id="line-158">    /**</span>
+<span class="source-line-no">159</span><span id="line-159">     * &lt;p&gt;This method is called when a world loads. Make sure you set all your constants here. You are provided with the</span>
+<span class="source-line-no">160</span><span id="line-160">     * configuration section for that specific world.&lt;/p&gt;</span>
+<span class="source-line-no">161</span><span id="line-161">     */</span>
+<span class="source-line-no">162</span><span id="line-162">    @Override</span>
+<span class="source-line-no">163</span><span id="line-163">    public void loadConfiguration(ConfigurationSection config) {</span>
+<span class="source-line-no">164</span><span id="line-164">        super.loadConfiguration(config);</span>
+<span class="source-line-no">165</span><span id="line-165">        if ((this.ROAD_WIDTH &amp; 1) == 0) {</span>
+<span class="source-line-no">166</span><span id="line-166">            this.PATH_WIDTH_LOWER = (short) (Math.floor(this.ROAD_WIDTH / 2f) - 1);</span>
+<span class="source-line-no">167</span><span id="line-167">        } else {</span>
+<span class="source-line-no">168</span><span id="line-168">            this.PATH_WIDTH_LOWER = (short) Math.floor(this.ROAD_WIDTH / 2f);</span>
+<span class="source-line-no">169</span><span id="line-169">        }</span>
+<span class="source-line-no">170</span><span id="line-170">        if (this.ROAD_WIDTH == 0) {</span>
+<span class="source-line-no">171</span><span id="line-171">            this.PATH_WIDTH_UPPER = (short) (this.SIZE + 1);</span>
+<span class="source-line-no">172</span><span id="line-172">        } else {</span>
+<span class="source-line-no">173</span><span id="line-173">            this.PATH_WIDTH_UPPER = (short) (this.PATH_WIDTH_LOWER + this.PLOT_WIDTH + 1);</span>
+<span class="source-line-no">174</span><span id="line-174">        }</span>
+<span class="source-line-no">175</span><span id="line-175">        try {</span>
+<span class="source-line-no">176</span><span id="line-176">            setupSchematics();</span>
+<span class="source-line-no">177</span><span id="line-177">        } catch (Exception event) {</span>
+<span class="source-line-no">178</span><span id="line-178">            event.printStackTrace();</span>
+<span class="source-line-no">179</span><span id="line-179">        }</span>
+<span class="source-line-no">180</span><span id="line-180"></span>
+<span class="source-line-no">181</span><span id="line-181">        // Dump world settings</span>
+<span class="source-line-no">182</span><span id="line-182">        if (Settings.DEBUG) {</span>
+<span class="source-line-no">183</span><span id="line-183">            LOGGER.info("- Dumping settings for ClassicPlotWorld with name {}", this.getWorldName());</span>
+<span class="source-line-no">184</span><span id="line-184">            final Field[] fields = this.getClass().getFields();</span>
+<span class="source-line-no">185</span><span id="line-185">            for (final Field field : fields) {</span>
+<span class="source-line-no">186</span><span id="line-186">                final String name = field.getName().toLowerCase(Locale.ENGLISH);</span>
+<span class="source-line-no">187</span><span id="line-187">                if (name.contains("g_sch")) {</span>
+<span class="source-line-no">188</span><span id="line-188">                    continue;</span>
+<span class="source-line-no">189</span><span id="line-189">                }</span>
+<span class="source-line-no">190</span><span id="line-190">                Object value;</span>
+<span class="source-line-no">191</span><span id="line-191">                try {</span>
+<span class="source-line-no">192</span><span id="line-192">                    final boolean accessible = field.isAccessible();</span>
+<span class="source-line-no">193</span><span id="line-193">                    field.setAccessible(true);</span>
+<span class="source-line-no">194</span><span id="line-194">                    value = field.get(this);</span>
+<span class="source-line-no">195</span><span id="line-195">                    field.setAccessible(accessible);</span>
+<span class="source-line-no">196</span><span id="line-196">                } catch (final IllegalAccessException e) {</span>
+<span class="source-line-no">197</span><span id="line-197">                    value = String.format("Failed to parse: %s", e.getMessage());</span>
+<span class="source-line-no">198</span><span id="line-198">                }</span>
+<span class="source-line-no">199</span><span id="line-199">                LOGGER.info("-- {} = {}", name, value);</span>
+<span class="source-line-no">200</span><span id="line-200">            }</span>
+<span class="source-line-no">201</span><span id="line-201">        }</span>
+<span class="source-line-no">202</span><span id="line-202">    }</span>
+<span class="source-line-no">203</span><span id="line-203"></span>
+<span class="source-line-no">204</span><span id="line-204">    @Override</span>
+<span class="source-line-no">205</span><span id="line-205">    public boolean isCompatible(final @NonNull PlotArea plotArea) {</span>
+<span class="source-line-no">206</span><span id="line-206">        if (!(plotArea instanceof SquarePlotWorld)) {</span>
+<span class="source-line-no">207</span><span id="line-207">            return false;</span>
+<span class="source-line-no">208</span><span id="line-208">        }</span>
+<span class="source-line-no">209</span><span id="line-209">        return ((SquarePlotWorld) plotArea).PLOT_WIDTH == this.PLOT_WIDTH;</span>
+<span class="source-line-no">210</span><span id="line-210">    }</span>
+<span class="source-line-no">211</span><span id="line-211"></span>
+<span class="source-line-no">212</span><span id="line-212">    public void setupSchematics() throws SchematicHandler.UnsupportedFormatException {</span>
+<span class="source-line-no">213</span><span id="line-213">        this.G_SCH = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">214</span><span id="line-214">        this.G_SCH_B = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">215</span><span id="line-215"></span>
+<span class="source-line-no">216</span><span id="line-216">        // Try to determine root. This means that plot areas can have separate schematic</span>
+<span class="source-line-no">217</span><span id="line-217">        // directories</span>
+<span class="source-line-no">218</span><span id="line-218">        if (!(root =</span>
+<span class="source-line-no">219</span><span id="line-219">                FileUtils.getFile(</span>
+<span class="source-line-no">220</span><span id="line-220">                        PlotSquared.platform().getDirectory(),</span>
+<span class="source-line-no">221</span><span id="line-221">                        "schematics/GEN_ROAD_SCHEMATIC/" + this.getWorldName() + "/" + this.getId()</span>
+<span class="source-line-no">222</span><span id="line-222">                ))</span>
+<span class="source-line-no">223</span><span id="line-223">                .exists()) {</span>
+<span class="source-line-no">224</span><span id="line-224">            root = FileUtils.getFile(</span>
+<span class="source-line-no">225</span><span id="line-225">                    PlotSquared.platform().getDirectory(),</span>
+<span class="source-line-no">226</span><span id="line-226">                    "schematics/GEN_ROAD_SCHEMATIC/" + this.getWorldName()</span>
+<span class="source-line-no">227</span><span id="line-227">            );</span>
+<span class="source-line-no">228</span><span id="line-228">        }</span>
+<span class="source-line-no">229</span><span id="line-229"></span>
+<span class="source-line-no">230</span><span id="line-230">        File schematic1File = new File(root, "sideroad.schem");</span>
+<span class="source-line-no">231</span><span id="line-231">        if (!schematic1File.exists()) {</span>
+<span class="source-line-no">232</span><span id="line-232">            schematic1File = new File(root, "sideroad.schematic");</span>
+<span class="source-line-no">233</span><span id="line-233">        }</span>
+<span class="source-line-no">234</span><span id="line-234">        File schematic2File = new File(root, "intersection.schem");</span>
+<span class="source-line-no">235</span><span id="line-235">        if (!schematic2File.exists()) {</span>
+<span class="source-line-no">236</span><span id="line-236">            schematic2File = new File(root, "intersection.schematic");</span>
+<span class="source-line-no">237</span><span id="line-237">        }</span>
+<span class="source-line-no">238</span><span id="line-238">        File schematic3File = new File(root, "plot.schem");</span>
+<span class="source-line-no">239</span><span id="line-239">        if (!schematic3File.exists()) {</span>
+<span class="source-line-no">240</span><span id="line-240">            schematic3File = new File(root, "plot.schematic");</span>
+<span class="source-line-no">241</span><span id="line-241">        }</span>
+<span class="source-line-no">242</span><span id="line-242">        Schematic schematic1 = this.schematicHandler.getSchematic(schematic1File);</span>
+<span class="source-line-no">243</span><span id="line-243">        Schematic schematic2 = this.schematicHandler.getSchematic(schematic2File);</span>
+<span class="source-line-no">244</span><span id="line-244">        Schematic schematic3 = this.schematicHandler.getSchematic(schematic3File);</span>
+<span class="source-line-no">245</span><span id="line-245"></span>
+<span class="source-line-no">246</span><span id="line-246">        // If the plot schematic contains entities, then they need to be populated upon generation.</span>
+<span class="source-line-no">247</span><span id="line-247">        if (schematic3 != null &amp;&amp; !schematic3.getClipboard().getEntities().isEmpty()) {</span>
+<span class="source-line-no">248</span><span id="line-248">            this.schem3Entities = new ArrayList&lt;&gt;(schematic3.getClipboard().getEntities());</span>
+<span class="source-line-no">249</span><span id="line-249">            this.schem3MinPoint = schematic3.getClipboard().getMinimumPoint();</span>
+<span class="source-line-no">250</span><span id="line-250">            this.schem3PopulationNeeded = true;</span>
+<span class="source-line-no">251</span><span id="line-251">        }</span>
 <span class="source-line-no">252</span><span id="line-252"></span>
-<span class="source-line-no">253</span><span id="line-253">        SCHEM_Y = schematicStartHeight();</span>
-<span class="source-line-no">254</span><span id="line-254"></span>
-<span class="source-line-no">255</span><span id="line-255">        // plotY and roadY are important to allow plot and/or road schematic "overflow" into each other without causing AIOOB</span>
-<span class="source-line-no">256</span><span id="line-256">        //  exceptions when attempting either to set blocks to, or get block from G_SCH</span>
-<span class="source-line-no">257</span><span id="line-257">        // Default plot schematic start height, normalized to the minimum height schematics are pasted from.</span>
-<span class="source-line-no">258</span><span id="line-258">        int plotY = PLOT_HEIGHT - SCHEM_Y;</span>
-<span class="source-line-no">259</span><span id="line-259">        int minRoadWall = Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT ? Math.min(ROAD_HEIGHT, WALL_HEIGHT) : ROAD_HEIGHT;</span>
-<span class="source-line-no">260</span><span id="line-260">        // Default road schematic start height, normalized to the minimum height schematics are pasted from.</span>
-<span class="source-line-no">261</span><span id="line-261">        int roadY = minRoadWall - SCHEM_Y;</span>
-<span class="source-line-no">262</span><span id="line-262"></span>
-<span class="source-line-no">263</span><span id="line-263">        int worldGenHeight = getMaxGenHeight() - getMinGenHeight() + 1;</span>
-<span class="source-line-no">264</span><span id="line-264"></span>
-<span class="source-line-no">265</span><span id="line-265">        int maxSchematicHeight = 0;</span>
-<span class="source-line-no">266</span><span id="line-266">        int plotSchemHeight = 0;</span>
+<span class="source-line-no">253</span><span id="line-253">        int shift = this.ROAD_WIDTH / 2;</span>
+<span class="source-line-no">254</span><span id="line-254">        int oddshift = (this.ROAD_WIDTH &amp; 1);</span>
+<span class="source-line-no">255</span><span id="line-255"></span>
+<span class="source-line-no">256</span><span id="line-256">        SCHEM_Y = schematicStartHeight();</span>
+<span class="source-line-no">257</span><span id="line-257"></span>
+<span class="source-line-no">258</span><span id="line-258">        // plotY and roadY are important to allow plot and/or road schematic "overflow" into each other</span>
+<span class="source-line-no">259</span><span id="line-259">        // without causing AIOOB exceptions when attempting either to set blocks to, or get block from G_SCH</span>
+<span class="source-line-no">260</span><span id="line-260">        // Default plot schematic start height, normalized to the minimum height schematics are pasted from.</span>
+<span class="source-line-no">261</span><span id="line-261">        plotY = PLOT_HEIGHT - SCHEM_Y;</span>
+<span class="source-line-no">262</span><span id="line-262">        int minRoadWall = Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT ? Math.min(ROAD_HEIGHT, WALL_HEIGHT) : ROAD_HEIGHT;</span>
+<span class="source-line-no">263</span><span id="line-263">        // Default road schematic start height, normalized to the minimum height schematics are pasted from.</span>
+<span class="source-line-no">264</span><span id="line-264">        roadY = minRoadWall - SCHEM_Y;</span>
+<span class="source-line-no">265</span><span id="line-265"></span>
+<span class="source-line-no">266</span><span id="line-266">        int worldGenHeight = getMaxGenHeight() - getMinGenHeight() + 1;</span>
 <span class="source-line-no">267</span><span id="line-267"></span>
-<span class="source-line-no">268</span><span id="line-268">        // SCHEM_Y should be normalised to the plot "start" height</span>
-<span class="source-line-no">269</span><span id="line-269">        if (schematic3 != null) {</span>
-<span class="source-line-no">270</span><span id="line-270">            plotSchemHeight = maxSchematicHeight = schematic3.getClipboard().getDimensions().getY();</span>
-<span class="source-line-no">271</span><span id="line-271">            if (maxSchematicHeight == worldGenHeight) {</span>
-<span class="source-line-no">272</span><span id="line-272">                SCHEM_Y = getMinGenHeight();</span>
-<span class="source-line-no">273</span><span id="line-273">                plotY = 0;</span>
-<span class="source-line-no">274</span><span id="line-274">            } else if (!Settings.Schematics.PASTE_ON_TOP) {</span>
-<span class="source-line-no">275</span><span id="line-275">                SCHEM_Y = getMinBuildHeight();</span>
+<span class="source-line-no">268</span><span id="line-268">        int maxSchematicHeight = 0;</span>
+<span class="source-line-no">269</span><span id="line-269">        int plotSchemHeight = 0;</span>
+<span class="source-line-no">270</span><span id="line-270"></span>
+<span class="source-line-no">271</span><span id="line-271">        // SCHEM_Y should be normalised to the plot "start" height</span>
+<span class="source-line-no">272</span><span id="line-272">        if (schematic3 != null) {</span>
+<span class="source-line-no">273</span><span id="line-273">            plotSchemHeight = schematic3.getClipboard().getDimensions().getY();</span>
+<span class="source-line-no">274</span><span id="line-274">            if (plotSchemHeight == worldGenHeight) {</span>
+<span class="source-line-no">275</span><span id="line-275">                SCHEM_Y = getMinGenHeight();</span>
 <span class="source-line-no">276</span><span id="line-276">                plotY = 0;</span>
-<span class="source-line-no">277</span><span id="line-277">            }</span>
-<span class="source-line-no">278</span><span id="line-278">        }</span>
-<span class="source-line-no">279</span><span id="line-279"></span>
-<span class="source-line-no">280</span><span id="line-280">        int roadSchemHeight;</span>
-<span class="source-line-no">281</span><span id="line-281"></span>
-<span class="source-line-no">282</span><span id="line-282">        if (schematic1 != null) {</span>
-<span class="source-line-no">283</span><span id="line-283">            roadSchemHeight = Math.max(</span>
-<span class="source-line-no">284</span><span id="line-284">                    schematic1.getClipboard().getDimensions().getY(),</span>
-<span class="source-line-no">285</span><span id="line-285">                    schematic2.getClipboard().getDimensions().getY()</span>
-<span class="source-line-no">286</span><span id="line-286">            );</span>
-<span class="source-line-no">287</span><span id="line-287">            maxSchematicHeight = Math.max(roadSchemHeight, maxSchematicHeight);</span>
-<span class="source-line-no">288</span><span id="line-288">            if (maxSchematicHeight == worldGenHeight) {</span>
-<span class="source-line-no">289</span><span id="line-289">                SCHEM_Y = getMinGenHeight();</span>
-<span class="source-line-no">290</span><span id="line-290">                roadY = 0; // Road is the lowest schematic</span>
-<span class="source-line-no">291</span><span id="line-291">                if (schematic3 != null &amp;&amp; schematic3.getClipboard().getDimensions().getY() != worldGenHeight) {</span>
-<span class="source-line-no">292</span><span id="line-292">                    // Road is the lowest schematic. Normalize plotY to it.</span>
-<span class="source-line-no">293</span><span id="line-293">                    if (Settings.Schematics.PASTE_ON_TOP) {</span>
-<span class="source-line-no">294</span><span id="line-294">                        plotY = PLOT_HEIGHT - getMinGenHeight();</span>
-<span class="source-line-no">295</span><span id="line-295">                    } else {</span>
-<span class="source-line-no">296</span><span id="line-296">                        plotY = getMinBuildHeight() - getMinGenHeight();</span>
-<span class="source-line-no">297</span><span id="line-297">                    }</span>
-<span class="source-line-no">298</span><span id="line-298">                }</span>
-<span class="source-line-no">299</span><span id="line-299">            } else if (!Settings.Schematics.PASTE_ROAD_ON_TOP) {</span>
-<span class="source-line-no">300</span><span id="line-300">                if (SCHEM_Y == getMinGenHeight()) { // Only possible if plot schematic is enabled</span>
-<span class="source-line-no">301</span><span id="line-301">                    // Plot is still the lowest schematic, normalize roadY to it</span>
-<span class="source-line-no">302</span><span id="line-302">                    roadY = getMinBuildHeight() - getMinGenHeight();</span>
-<span class="source-line-no">303</span><span id="line-303">                } else if (schematic3 != null) {</span>
-<span class="source-line-no">304</span><span id="line-304">                    SCHEM_Y = getMinBuildHeight();</span>
-<span class="source-line-no">305</span><span id="line-305">                    roadY = 0;// Road is the lowest schematic</span>
-<span class="source-line-no">306</span><span id="line-306">                    if (Settings.Schematics.PASTE_ON_TOP) {</span>
-<span class="source-line-no">307</span><span id="line-307">                        // Road is the lowest schematic. Normalize plotY to it.</span>
-<span class="source-line-no">308</span><span id="line-308">                        plotY = PLOT_HEIGHT - getMinBuildHeight();</span>
-<span class="source-line-no">309</span><span id="line-309">                    }</span>
-<span class="source-line-no">310</span><span id="line-310">                    maxSchematicHeight = Math.max(maxSchematicHeight, plotY + plotSchemHeight);</span>
-<span class="source-line-no">311</span><span id="line-311">                }</span>
-<span class="source-line-no">312</span><span id="line-312">            } else {</span>
-<span class="source-line-no">313</span><span id="line-313">                roadY = minRoadWall - SCHEM_Y;</span>
-<span class="source-line-no">314</span><span id="line-314">                maxSchematicHeight = Math.max(maxSchematicHeight, roadY + roadSchemHeight);</span>
-<span class="source-line-no">315</span><span id="line-315">            }</span>
-<span class="source-line-no">316</span><span id="line-316">        }</span>
-<span class="source-line-no">317</span><span id="line-317"></span>
-<span class="source-line-no">318</span><span id="line-318">        if (schematic3 != null) {</span>
-<span class="source-line-no">319</span><span id="line-319">            this.PLOT_SCHEMATIC = true;</span>
-<span class="source-line-no">320</span><span id="line-320">            Clipboard blockArrayClipboard3 = schematic3.getClipboard();</span>
+<span class="source-line-no">277</span><span id="line-277">            } else if (!Settings.Schematics.PASTE_ON_TOP) {</span>
+<span class="source-line-no">278</span><span id="line-278">                SCHEM_Y = getMinBuildHeight();</span>
+<span class="source-line-no">279</span><span id="line-279">                plotY = 0;</span>
+<span class="source-line-no">280</span><span id="line-280">            }</span>
+<span class="source-line-no">281</span><span id="line-281">            maxSchematicHeight = plotY + plotSchemHeight;</span>
+<span class="source-line-no">282</span><span id="line-282">        }</span>
+<span class="source-line-no">283</span><span id="line-283"></span>
+<span class="source-line-no">284</span><span id="line-284">        int roadSchemHeight;</span>
+<span class="source-line-no">285</span><span id="line-285"></span>
+<span class="source-line-no">286</span><span id="line-286">        if (schematic1 != null) {</span>
+<span class="source-line-no">287</span><span id="line-287">            roadSchemHeight = Math.max(</span>
+<span class="source-line-no">288</span><span id="line-288">                    schematic1.getClipboard().getDimensions().getY(),</span>
+<span class="source-line-no">289</span><span id="line-289">                    schematic2.getClipboard().getDimensions().getY()</span>
+<span class="source-line-no">290</span><span id="line-290">            );</span>
+<span class="source-line-no">291</span><span id="line-291">            maxSchematicHeight = Math.max(roadSchemHeight, maxSchematicHeight);</span>
+<span class="source-line-no">292</span><span id="line-292">            if (maxSchematicHeight == worldGenHeight) {</span>
+<span class="source-line-no">293</span><span id="line-293">                SCHEM_Y = getMinGenHeight();</span>
+<span class="source-line-no">294</span><span id="line-294">                roadY = 0; // Road is the lowest schematic</span>
+<span class="source-line-no">295</span><span id="line-295">                if (schematic3 != null &amp;&amp; schematic3.getClipboard().getDimensions().getY() != worldGenHeight) {</span>
+<span class="source-line-no">296</span><span id="line-296">                    // Road is the lowest schematic. Normalize plotY to it.</span>
+<span class="source-line-no">297</span><span id="line-297">                    if (Settings.Schematics.PASTE_ON_TOP) {</span>
+<span class="source-line-no">298</span><span id="line-298">                        plotY = PLOT_HEIGHT - getMinGenHeight();</span>
+<span class="source-line-no">299</span><span id="line-299">                    } else {</span>
+<span class="source-line-no">300</span><span id="line-300">                        plotY = getMinBuildHeight() - getMinGenHeight();</span>
+<span class="source-line-no">301</span><span id="line-301">                    }</span>
+<span class="source-line-no">302</span><span id="line-302">                }</span>
+<span class="source-line-no">303</span><span id="line-303">            } else if (!Settings.Schematics.PASTE_ROAD_ON_TOP) {</span>
+<span class="source-line-no">304</span><span id="line-304">                if (SCHEM_Y == getMinGenHeight()) { // Only possible if plot schematic is enabled</span>
+<span class="source-line-no">305</span><span id="line-305">                    // Plot is still the lowest schematic, normalize roadY to it</span>
+<span class="source-line-no">306</span><span id="line-306">                    roadY = getMinBuildHeight() - getMinGenHeight();</span>
+<span class="source-line-no">307</span><span id="line-307">                } else if (schematic3 != null) {</span>
+<span class="source-line-no">308</span><span id="line-308">                    SCHEM_Y = getMinBuildHeight();</span>
+<span class="source-line-no">309</span><span id="line-309">                    roadY = 0;// Road is the lowest schematic</span>
+<span class="source-line-no">310</span><span id="line-310">                    if (Settings.Schematics.PASTE_ON_TOP) {</span>
+<span class="source-line-no">311</span><span id="line-311">                        // Road is the lowest schematic. Normalize plotY to it.</span>
+<span class="source-line-no">312</span><span id="line-312">                        plotY = PLOT_HEIGHT - getMinBuildHeight();</span>
+<span class="source-line-no">313</span><span id="line-313">                    }</span>
+<span class="source-line-no">314</span><span id="line-314">                    maxSchematicHeight = Math.max(maxSchematicHeight, plotY + plotSchemHeight);</span>
+<span class="source-line-no">315</span><span id="line-315">                }</span>
+<span class="source-line-no">316</span><span id="line-316">            } else {</span>
+<span class="source-line-no">317</span><span id="line-317">                roadY = minRoadWall - SCHEM_Y;</span>
+<span class="source-line-no">318</span><span id="line-318">                maxSchematicHeight = Math.max(maxSchematicHeight, roadY + roadSchemHeight);</span>
+<span class="source-line-no">319</span><span id="line-319">            }</span>
+<span class="source-line-no">320</span><span id="line-320">        }</span>
 <span class="source-line-no">321</span><span id="line-321"></span>
-<span class="source-line-no">322</span><span id="line-322">            BlockVector3 d3 = blockArrayClipboard3.getDimensions();</span>
-<span class="source-line-no">323</span><span id="line-323">            short w3 = (short) d3.getX();</span>
-<span class="source-line-no">324</span><span id="line-324">            short l3 = (short) d3.getZ();</span>
-<span class="source-line-no">325</span><span id="line-325">            short h3 = (short) d3.getY();</span>
-<span class="source-line-no">326</span><span id="line-326">            if (w3 &gt; PLOT_WIDTH || l3 &gt; PLOT_WIDTH) {</span>
-<span class="source-line-no">327</span><span id="line-327">                this.ROAD_SCHEMATIC_ENABLED = true;</span>
-<span class="source-line-no">328</span><span id="line-328">            }</span>
-<span class="source-line-no">329</span><span id="line-329">            int centerShiftZ;</span>
-<span class="source-line-no">330</span><span id="line-330">            if (l3 &lt; this.PLOT_WIDTH) {</span>
-<span class="source-line-no">331</span><span id="line-331">                centerShiftZ = (this.PLOT_WIDTH - l3) / 2;</span>
-<span class="source-line-no">332</span><span id="line-332">            } else {</span>
-<span class="source-line-no">333</span><span id="line-333">                centerShiftZ = (PLOT_WIDTH - l3) / 2;</span>
-<span class="source-line-no">334</span><span id="line-334">            }</span>
-<span class="source-line-no">335</span><span id="line-335">            int centerShiftX;</span>
-<span class="source-line-no">336</span><span id="line-336">            if (w3 &lt; this.PLOT_WIDTH) {</span>
-<span class="source-line-no">337</span><span id="line-337">                centerShiftX = (this.PLOT_WIDTH - w3) / 2;</span>
-<span class="source-line-no">338</span><span id="line-338">            } else {</span>
-<span class="source-line-no">339</span><span id="line-339">                centerShiftX = (PLOT_WIDTH - w3) / 2;</span>
-<span class="source-line-no">340</span><span id="line-340">            }</span>
-<span class="source-line-no">341</span><span id="line-341"></span>
-<span class="source-line-no">342</span><span id="line-342">            BlockVector3 min = blockArrayClipboard3.getMinimumPoint();</span>
-<span class="source-line-no">343</span><span id="line-343">            for (short x = 0; x &lt; w3; x++) {</span>
-<span class="source-line-no">344</span><span id="line-344">                for (short z = 0; z &lt; l3; z++) {</span>
-<span class="source-line-no">345</span><span id="line-345">                    for (short y = 0; y &lt; h3; y++) {</span>
-<span class="source-line-no">346</span><span id="line-346">                        BaseBlock id = blockArrayClipboard3.getFullBlock(BlockVector3.at(</span>
-<span class="source-line-no">347</span><span id="line-347">                                x + min.getBlockX(),</span>
-<span class="source-line-no">348</span><span id="line-348">                                y + min.getBlockY(),</span>
-<span class="source-line-no">349</span><span id="line-349">                                z + min.getBlockZ()</span>
-<span class="source-line-no">350</span><span id="line-350">                        ));</span>
-<span class="source-line-no">351</span><span id="line-351">                        schem3PopulationNeeded |= id.hasNbtData();</span>
-<span class="source-line-no">352</span><span id="line-352">                        addOverlayBlock(</span>
-<span class="source-line-no">353</span><span id="line-353">                                (short) (x + shift + oddshift + centerShiftX),</span>
-<span class="source-line-no">354</span><span id="line-354">                                (short) (y + plotY),</span>
-<span class="source-line-no">355</span><span id="line-355">                                (short) (z + shift + oddshift + centerShiftZ),</span>
-<span class="source-line-no">356</span><span id="line-356">                                id,</span>
-<span class="source-line-no">357</span><span id="line-357">                                false,</span>
-<span class="source-line-no">358</span><span id="line-358">                                maxSchematicHeight</span>
-<span class="source-line-no">359</span><span id="line-359">                        );</span>
-<span class="source-line-no">360</span><span id="line-360">                    }</span>
-<span class="source-line-no">361</span><span id="line-361">                    if (blockArrayClipboard3.hasBiomes()) {</span>
-<span class="source-line-no">362</span><span id="line-362">                        BiomeType biome = blockArrayClipboard3.getBiome(BlockVector2.at(</span>
-<span class="source-line-no">363</span><span id="line-363">                                x + min.getBlockX(),</span>
-<span class="source-line-no">364</span><span id="line-364">                                z + min.getBlockZ()</span>
-<span class="source-line-no">365</span><span id="line-365">                        ));</span>
-<span class="source-line-no">366</span><span id="line-366">                        addOverlayBiome(</span>
-<span class="source-line-no">367</span><span id="line-367">                                (short) (x + shift + oddshift + centerShiftX),</span>
-<span class="source-line-no">368</span><span id="line-368">                                (short) (z + shift + oddshift + centerShiftZ),</span>
-<span class="source-line-no">369</span><span id="line-369">                                biome</span>
-<span class="source-line-no">370</span><span id="line-370">                        );</span>
-<span class="source-line-no">371</span><span id="line-371">                    }</span>
-<span class="source-line-no">372</span><span id="line-372">                }</span>
-<span class="source-line-no">373</span><span id="line-373">            }</span>
-<span class="source-line-no">374</span><span id="line-374"></span>
-<span class="source-line-no">375</span><span id="line-375">            if (Settings.DEBUG) {</span>
-<span class="source-line-no">376</span><span id="line-376">                LOGGER.info("- plot schematic: {}", schematic3File.getPath());</span>
+<span class="source-line-no">322</span><span id="line-322">        if (schematic3 != null) {</span>
+<span class="source-line-no">323</span><span id="line-323">            this.PLOT_SCHEMATIC = true;</span>
+<span class="source-line-no">324</span><span id="line-324">            Clipboard blockArrayClipboard3 = schematic3.getClipboard();</span>
+<span class="source-line-no">325</span><span id="line-325"></span>
+<span class="source-line-no">326</span><span id="line-326">            BlockVector3 d3 = blockArrayClipboard3.getDimensions();</span>
+<span class="source-line-no">327</span><span id="line-327">            short w3 = (short) d3.getX();</span>
+<span class="source-line-no">328</span><span id="line-328">            short l3 = (short) d3.getZ();</span>
+<span class="source-line-no">329</span><span id="line-329">            short h3 = (short) d3.getY();</span>
+<span class="source-line-no">330</span><span id="line-330">            if (w3 &gt; PLOT_WIDTH || l3 &gt; PLOT_WIDTH) {</span>
+<span class="source-line-no">331</span><span id="line-331">                this.ROAD_SCHEMATIC_ENABLED = true;</span>
+<span class="source-line-no">332</span><span id="line-332">            }</span>
+<span class="source-line-no">333</span><span id="line-333">            int centerShiftZ;</span>
+<span class="source-line-no">334</span><span id="line-334">            if (l3 &lt; this.PLOT_WIDTH) {</span>
+<span class="source-line-no">335</span><span id="line-335">                centerShiftZ = (this.PLOT_WIDTH - l3) / 2;</span>
+<span class="source-line-no">336</span><span id="line-336">            } else {</span>
+<span class="source-line-no">337</span><span id="line-337">                centerShiftZ = (PLOT_WIDTH - l3) / 2;</span>
+<span class="source-line-no">338</span><span id="line-338">            }</span>
+<span class="source-line-no">339</span><span id="line-339">            int centerShiftX;</span>
+<span class="source-line-no">340</span><span id="line-340">            if (w3 &lt; this.PLOT_WIDTH) {</span>
+<span class="source-line-no">341</span><span id="line-341">                centerShiftX = (this.PLOT_WIDTH - w3) / 2;</span>
+<span class="source-line-no">342</span><span id="line-342">            } else {</span>
+<span class="source-line-no">343</span><span id="line-343">                centerShiftX = (PLOT_WIDTH - w3) / 2;</span>
+<span class="source-line-no">344</span><span id="line-344">            }</span>
+<span class="source-line-no">345</span><span id="line-345"></span>
+<span class="source-line-no">346</span><span id="line-346">            BlockVector3 min = blockArrayClipboard3.getMinimumPoint();</span>
+<span class="source-line-no">347</span><span id="line-347">            for (short x = 0; x &lt; w3; x++) {</span>
+<span class="source-line-no">348</span><span id="line-348">                for (short z = 0; z &lt; l3; z++) {</span>
+<span class="source-line-no">349</span><span id="line-349">                    for (short y = 0; y &lt; h3; y++) {</span>
+<span class="source-line-no">350</span><span id="line-350">                        BaseBlock id = blockArrayClipboard3.getFullBlock(BlockVector3.at(</span>
+<span class="source-line-no">351</span><span id="line-351">                                x + min.getBlockX(),</span>
+<span class="source-line-no">352</span><span id="line-352">                                y + min.getBlockY(),</span>
+<span class="source-line-no">353</span><span id="line-353">                                z + min.getBlockZ()</span>
+<span class="source-line-no">354</span><span id="line-354">                        ));</span>
+<span class="source-line-no">355</span><span id="line-355">                        schem3PopulationNeeded |= id.hasNbtData();</span>
+<span class="source-line-no">356</span><span id="line-356">                        addOverlayBlock(</span>
+<span class="source-line-no">357</span><span id="line-357">                                (short) (x + shift + oddshift + centerShiftX),</span>
+<span class="source-line-no">358</span><span id="line-358">                                (short) (y + plotY),</span>
+<span class="source-line-no">359</span><span id="line-359">                                (short) (z + shift + oddshift + centerShiftZ),</span>
+<span class="source-line-no">360</span><span id="line-360">                                id,</span>
+<span class="source-line-no">361</span><span id="line-361">                                false,</span>
+<span class="source-line-no">362</span><span id="line-362">                                maxSchematicHeight</span>
+<span class="source-line-no">363</span><span id="line-363">                        );</span>
+<span class="source-line-no">364</span><span id="line-364">                    }</span>
+<span class="source-line-no">365</span><span id="line-365">                    if (blockArrayClipboard3.hasBiomes()) {</span>
+<span class="source-line-no">366</span><span id="line-366">                        BiomeType biome = blockArrayClipboard3.getBiome(BlockVector2.at(</span>
+<span class="source-line-no">367</span><span id="line-367">                                x + min.getBlockX(),</span>
+<span class="source-line-no">368</span><span id="line-368">                                z + min.getBlockZ()</span>
+<span class="source-line-no">369</span><span id="line-369">                        ));</span>
+<span class="source-line-no">370</span><span id="line-370">                        addOverlayBiome(</span>
+<span class="source-line-no">371</span><span id="line-371">                                (short) (x + shift + oddshift + centerShiftX),</span>
+<span class="source-line-no">372</span><span id="line-372">                                (short) (z + shift + oddshift + centerShiftZ),</span>
+<span class="source-line-no">373</span><span id="line-373">                                biome</span>
+<span class="source-line-no">374</span><span id="line-374">                        );</span>
+<span class="source-line-no">375</span><span id="line-375">                    }</span>
+<span class="source-line-no">376</span><span id="line-376">                }</span>
 <span class="source-line-no">377</span><span id="line-377">            }</span>
-<span class="source-line-no">378</span><span id="line-378">        }</span>
-<span class="source-line-no">379</span><span id="line-379">        if ((schematic1 == null &amp;&amp; schematic2 == null) || this.ROAD_WIDTH == 0) {</span>
-<span class="source-line-no">380</span><span id="line-380">            if (Settings.DEBUG) {</span>
-<span class="source-line-no">381</span><span id="line-381">                LOGGER.info("- road schematic: false");</span>
-<span class="source-line-no">382</span><span id="line-382">            }</span>
-<span class="source-line-no">383</span><span id="line-383">            return;</span>
-<span class="source-line-no">384</span><span id="line-384">        }</span>
-<span class="source-line-no">385</span><span id="line-385">        this.ROAD_SCHEMATIC_ENABLED = true;</span>
-<span class="source-line-no">386</span><span id="line-386">        // Do not populate road if using schematic population</span>
-<span class="source-line-no">387</span><span id="line-387">        // TODO: What? this.ROAD_BLOCK = BlockBucket.empty(); // BlockState.getEmptyData(this.ROAD_BLOCK); // BlockUtil.get(this.ROAD_BLOCK.id, (byte) 0);</span>
-<span class="source-line-no">388</span><span id="line-388"></span>
-<span class="source-line-no">389</span><span id="line-389">        Clipboard blockArrayClipboard1 = schematic1.getClipboard();</span>
-<span class="source-line-no">390</span><span id="line-390"></span>
-<span class="source-line-no">391</span><span id="line-391">        BlockVector3 d1 = blockArrayClipboard1.getDimensions();</span>
-<span class="source-line-no">392</span><span id="line-392">        short w1 = (short) d1.getX();</span>
-<span class="source-line-no">393</span><span id="line-393">        short l1 = (short) d1.getZ();</span>
-<span class="source-line-no">394</span><span id="line-394">        short h1 = (short) d1.getY();</span>
-<span class="source-line-no">395</span><span id="line-395">        // Workaround for schematic height issue if proper calculation of road schematic height is disabled</span>
-<span class="source-line-no">396</span><span id="line-396">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
-<span class="source-line-no">397</span><span id="line-397">            h1 += Math.max(ROAD_HEIGHT - WALL_HEIGHT, 0);</span>
-<span class="source-line-no">398</span><span id="line-398">        }</span>
-<span class="source-line-no">399</span><span id="line-399"></span>
-<span class="source-line-no">400</span><span id="line-400">        BlockVector3 min = blockArrayClipboard1.getMinimumPoint();</span>
-<span class="source-line-no">401</span><span id="line-401">        for (short x = 0; x &lt; w1; x++) {</span>
-<span class="source-line-no">402</span><span id="line-402">            for (short z = 0; z &lt; l1; z++) {</span>
-<span class="source-line-no">403</span><span id="line-403">                for (short y = 0; y &lt; h1; y++) {</span>
-<span class="source-line-no">404</span><span id="line-404">                    BaseBlock id = blockArrayClipboard1.getFullBlock(BlockVector3.at(</span>
-<span class="source-line-no">405</span><span id="line-405">                            x + min.getBlockX(),</span>
-<span class="source-line-no">406</span><span id="line-406">                            y + min.getBlockY(),</span>
-<span class="source-line-no">407</span><span id="line-407">                            z + min.getBlockZ()</span>
-<span class="source-line-no">408</span><span id="line-408">                    ));</span>
-<span class="source-line-no">409</span><span id="line-409">                    schem1PopulationNeeded |= id.hasNbtData();</span>
-<span class="source-line-no">410</span><span id="line-410">                    addOverlayBlock(</span>
-<span class="source-line-no">411</span><span id="line-411">                            (short) (x - shift),</span>
-<span class="source-line-no">412</span><span id="line-412">                            (short) (y + roadY),</span>
-<span class="source-line-no">413</span><span id="line-413">                            (short) (z + shift + oddshift),</span>
-<span class="source-line-no">414</span><span id="line-414">                            id,</span>
-<span class="source-line-no">415</span><span id="line-415">                            false,</span>
-<span class="source-line-no">416</span><span id="line-416">                            maxSchematicHeight</span>
-<span class="source-line-no">417</span><span id="line-417">                    );</span>
-<span class="source-line-no">418</span><span id="line-418">                    addOverlayBlock(</span>
-<span class="source-line-no">419</span><span id="line-419">                            (short) (z + shift + oddshift),</span>
-<span class="source-line-no">420</span><span id="line-420">                            (short) (y + roadY),</span>
-<span class="source-line-no">421</span><span id="line-421">                            (short) (shift - x + (oddshift - 1)),</span>
-<span class="source-line-no">422</span><span id="line-422">                            id,</span>
-<span class="source-line-no">423</span><span id="line-423">                            true,</span>
-<span class="source-line-no">424</span><span id="line-424">                            maxSchematicHeight</span>
-<span class="source-line-no">425</span><span id="line-425">                    );</span>
-<span class="source-line-no">426</span><span id="line-426">                }</span>
-<span class="source-line-no">427</span><span id="line-427">                if (blockArrayClipboard1.hasBiomes()) {</span>
-<span class="source-line-no">428</span><span id="line-428">                    BiomeType biome = blockArrayClipboard1.getBiome(BlockVector2.at(x + min.getBlockX(), z + min.getBlockZ()));</span>
-<span class="source-line-no">429</span><span id="line-429">                    addOverlayBiome((short) (x - shift), (short) (z + shift + oddshift), biome);</span>
-<span class="source-line-no">430</span><span id="line-430">                    addOverlayBiome((short) (z + shift + oddshift), (short) (shift - x + (oddshift - 1)), biome);</span>
-<span class="source-line-no">431</span><span id="line-431">                }</span>
-<span class="source-line-no">432</span><span id="line-432">            }</span>
-<span class="source-line-no">433</span><span id="line-433">        }</span>
-<span class="source-line-no">434</span><span id="line-434"></span>
-<span class="source-line-no">435</span><span id="line-435">        Clipboard blockArrayClipboard2 = schematic2.getClipboard();</span>
-<span class="source-line-no">436</span><span id="line-436">        BlockVector3 d2 = blockArrayClipboard2.getDimensions();</span>
-<span class="source-line-no">437</span><span id="line-437">        short w2 = (short) d2.getX();</span>
-<span class="source-line-no">438</span><span id="line-438">        short l2 = (short) d2.getZ();</span>
-<span class="source-line-no">439</span><span id="line-439">        short h2 = (short) d2.getY();</span>
-<span class="source-line-no">440</span><span id="line-440">        // Workaround for schematic height issue if proper calculation of road schematic height is disabled</span>
-<span class="source-line-no">441</span><span id="line-441">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
-<span class="source-line-no">442</span><span id="line-442">            h2 += Math.max(ROAD_HEIGHT - WALL_HEIGHT, 0);</span>
-<span class="source-line-no">443</span><span id="line-443">        }</span>
-<span class="source-line-no">444</span><span id="line-444">        min = blockArrayClipboard2.getMinimumPoint();</span>
-<span class="source-line-no">445</span><span id="line-445">        for (short x = 0; x &lt; w2; x++) {</span>
-<span class="source-line-no">446</span><span id="line-446">            for (short z = 0; z &lt; l2; z++) {</span>
-<span class="source-line-no">447</span><span id="line-447">                for (short y = 0; y &lt; h2; y++) {</span>
-<span class="source-line-no">448</span><span id="line-448">                    BaseBlock id = blockArrayClipboard2.getFullBlock(BlockVector3.at(</span>
-<span class="source-line-no">449</span><span id="line-449">                            x + min.getBlockX(),</span>
-<span class="source-line-no">450</span><span id="line-450">                            y + min.getBlockY(),</span>
-<span class="source-line-no">451</span><span id="line-451">                            z + min.getBlockZ()</span>
-<span class="source-line-no">452</span><span id="line-452">                    ));</span>
-<span class="source-line-no">453</span><span id="line-453">                    schem2PopulationNeeded |= id.hasNbtData();</span>
-<span class="source-line-no">454</span><span id="line-454">                    addOverlayBlock(</span>
-<span class="source-line-no">455</span><span id="line-455">                            (short) (x - shift),</span>
-<span class="source-line-no">456</span><span id="line-456">                            (short) (y + roadY),</span>
-<span class="source-line-no">457</span><span id="line-457">                            (short) (z - shift),</span>
-<span class="source-line-no">458</span><span id="line-458">                            id,</span>
-<span class="source-line-no">459</span><span id="line-459">                            false,</span>
-<span class="source-line-no">460</span><span id="line-460">                            maxSchematicHeight</span>
-<span class="source-line-no">461</span><span id="line-461">                    );</span>
-<span class="source-line-no">462</span><span id="line-462">                }</span>
-<span class="source-line-no">463</span><span id="line-463">                if (blockArrayClipboard2.hasBiomes()) {</span>
-<span class="source-line-no">464</span><span id="line-464">                    BiomeType biome = blockArrayClipboard2.getBiome(BlockVector2.at(x + min.getBlockX(), z + min.getBlockZ()));</span>
-<span class="source-line-no">465</span><span id="line-465">                    addOverlayBiome((short) (x - shift), (short) (z - shift), biome);</span>
+<span class="source-line-no">378</span><span id="line-378"></span>
+<span class="source-line-no">379</span><span id="line-379">            if (Settings.DEBUG) {</span>
+<span class="source-line-no">380</span><span id="line-380">                LOGGER.info("- plot schematic: {}", schematic3File.getPath());</span>
+<span class="source-line-no">381</span><span id="line-381">            }</span>
+<span class="source-line-no">382</span><span id="line-382">        }</span>
+<span class="source-line-no">383</span><span id="line-383">        if ((schematic1 == null &amp;&amp; schematic2 == null) || this.ROAD_WIDTH == 0) {</span>
+<span class="source-line-no">384</span><span id="line-384">            if (Settings.DEBUG) {</span>
+<span class="source-line-no">385</span><span id="line-385">                LOGGER.info("- road schematic: false");</span>
+<span class="source-line-no">386</span><span id="line-386">            }</span>
+<span class="source-line-no">387</span><span id="line-387">            return;</span>
+<span class="source-line-no">388</span><span id="line-388">        }</span>
+<span class="source-line-no">389</span><span id="line-389">        this.ROAD_SCHEMATIC_ENABLED = true;</span>
+<span class="source-line-no">390</span><span id="line-390">        // Do not populate road if using schematic population</span>
+<span class="source-line-no">391</span><span id="line-391">        // TODO: What? this.ROAD_BLOCK = BlockBucket.empty(); // BlockState.getEmptyData(this.ROAD_BLOCK); // BlockUtil.get(this.ROAD_BLOCK.id, (byte) 0);</span>
+<span class="source-line-no">392</span><span id="line-392"></span>
+<span class="source-line-no">393</span><span id="line-393">        Clipboard blockArrayClipboard1 = schematic1.getClipboard();</span>
+<span class="source-line-no">394</span><span id="line-394"></span>
+<span class="source-line-no">395</span><span id="line-395">        BlockVector3 d1 = blockArrayClipboard1.getDimensions();</span>
+<span class="source-line-no">396</span><span id="line-396">        short w1 = (short) d1.getX();</span>
+<span class="source-line-no">397</span><span id="line-397">        short l1 = (short) d1.getZ();</span>
+<span class="source-line-no">398</span><span id="line-398">        short h1 = (short) d1.getY();</span>
+<span class="source-line-no">399</span><span id="line-399">        // Workaround for schematic height issue if proper calculation of road schematic height is disabled</span>
+<span class="source-line-no">400</span><span id="line-400">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
+<span class="source-line-no">401</span><span id="line-401">            h1 += Math.max(ROAD_HEIGHT - WALL_HEIGHT, 0);</span>
+<span class="source-line-no">402</span><span id="line-402">        }</span>
+<span class="source-line-no">403</span><span id="line-403"></span>
+<span class="source-line-no">404</span><span id="line-404">        BlockVector3 min = blockArrayClipboard1.getMinimumPoint();</span>
+<span class="source-line-no">405</span><span id="line-405">        for (short x = 0; x &lt; w1; x++) {</span>
+<span class="source-line-no">406</span><span id="line-406">            for (short z = 0; z &lt; l1; z++) {</span>
+<span class="source-line-no">407</span><span id="line-407">                for (short y = 0; y &lt; h1; y++) {</span>
+<span class="source-line-no">408</span><span id="line-408">                    BaseBlock id = blockArrayClipboard1.getFullBlock(BlockVector3.at(</span>
+<span class="source-line-no">409</span><span id="line-409">                            x + min.getBlockX(),</span>
+<span class="source-line-no">410</span><span id="line-410">                            y + min.getBlockY(),</span>
+<span class="source-line-no">411</span><span id="line-411">                            z + min.getBlockZ()</span>
+<span class="source-line-no">412</span><span id="line-412">                    ));</span>
+<span class="source-line-no">413</span><span id="line-413">                    schem1PopulationNeeded |= id.hasNbtData();</span>
+<span class="source-line-no">414</span><span id="line-414">                    addOverlayBlock(</span>
+<span class="source-line-no">415</span><span id="line-415">                            (short) (x - shift),</span>
+<span class="source-line-no">416</span><span id="line-416">                            (short) (y + roadY),</span>
+<span class="source-line-no">417</span><span id="line-417">                            (short) (z + shift + oddshift),</span>
+<span class="source-line-no">418</span><span id="line-418">                            id,</span>
+<span class="source-line-no">419</span><span id="line-419">                            false,</span>
+<span class="source-line-no">420</span><span id="line-420">                            maxSchematicHeight</span>
+<span class="source-line-no">421</span><span id="line-421">                    );</span>
+<span class="source-line-no">422</span><span id="line-422">                    addOverlayBlock(</span>
+<span class="source-line-no">423</span><span id="line-423">                            (short) (z + shift + oddshift),</span>
+<span class="source-line-no">424</span><span id="line-424">                            (short) (y + roadY),</span>
+<span class="source-line-no">425</span><span id="line-425">                            (short) (shift - x + (oddshift - 1)),</span>
+<span class="source-line-no">426</span><span id="line-426">                            id,</span>
+<span class="source-line-no">427</span><span id="line-427">                            true,</span>
+<span class="source-line-no">428</span><span id="line-428">                            maxSchematicHeight</span>
+<span class="source-line-no">429</span><span id="line-429">                    );</span>
+<span class="source-line-no">430</span><span id="line-430">                }</span>
+<span class="source-line-no">431</span><span id="line-431">                if (blockArrayClipboard1.hasBiomes()) {</span>
+<span class="source-line-no">432</span><span id="line-432">                    BiomeType biome = blockArrayClipboard1.getBiome(BlockVector2.at(x + min.getBlockX(), z + min.getBlockZ()));</span>
+<span class="source-line-no">433</span><span id="line-433">                    addOverlayBiome((short) (x - shift), (short) (z + shift + oddshift), biome);</span>
+<span class="source-line-no">434</span><span id="line-434">                    addOverlayBiome((short) (z + shift + oddshift), (short) (shift - x + (oddshift - 1)), biome);</span>
+<span class="source-line-no">435</span><span id="line-435">                }</span>
+<span class="source-line-no">436</span><span id="line-436">            }</span>
+<span class="source-line-no">437</span><span id="line-437">        }</span>
+<span class="source-line-no">438</span><span id="line-438"></span>
+<span class="source-line-no">439</span><span id="line-439">        Clipboard blockArrayClipboard2 = schematic2.getClipboard();</span>
+<span class="source-line-no">440</span><span id="line-440">        BlockVector3 d2 = blockArrayClipboard2.getDimensions();</span>
+<span class="source-line-no">441</span><span id="line-441">        short w2 = (short) d2.getX();</span>
+<span class="source-line-no">442</span><span id="line-442">        short l2 = (short) d2.getZ();</span>
+<span class="source-line-no">443</span><span id="line-443">        short h2 = (short) d2.getY();</span>
+<span class="source-line-no">444</span><span id="line-444">        // Workaround for schematic height issue if proper calculation of road schematic height is disabled</span>
+<span class="source-line-no">445</span><span id="line-445">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
+<span class="source-line-no">446</span><span id="line-446">            h2 += Math.max(ROAD_HEIGHT - WALL_HEIGHT, 0);</span>
+<span class="source-line-no">447</span><span id="line-447">        }</span>
+<span class="source-line-no">448</span><span id="line-448">        min = blockArrayClipboard2.getMinimumPoint();</span>
+<span class="source-line-no">449</span><span id="line-449">        for (short x = 0; x &lt; w2; x++) {</span>
+<span class="source-line-no">450</span><span id="line-450">            for (short z = 0; z &lt; l2; z++) {</span>
+<span class="source-line-no">451</span><span id="line-451">                for (short y = 0; y &lt; h2; y++) {</span>
+<span class="source-line-no">452</span><span id="line-452">                    BaseBlock id = blockArrayClipboard2.getFullBlock(BlockVector3.at(</span>
+<span class="source-line-no">453</span><span id="line-453">                            x + min.getBlockX(),</span>
+<span class="source-line-no">454</span><span id="line-454">                            y + min.getBlockY(),</span>
+<span class="source-line-no">455</span><span id="line-455">                            z + min.getBlockZ()</span>
+<span class="source-line-no">456</span><span id="line-456">                    ));</span>
+<span class="source-line-no">457</span><span id="line-457">                    schem2PopulationNeeded |= id.hasNbtData();</span>
+<span class="source-line-no">458</span><span id="line-458">                    addOverlayBlock(</span>
+<span class="source-line-no">459</span><span id="line-459">                            (short) (x - shift),</span>
+<span class="source-line-no">460</span><span id="line-460">                            (short) (y + roadY),</span>
+<span class="source-line-no">461</span><span id="line-461">                            (short) (z - shift),</span>
+<span class="source-line-no">462</span><span id="line-462">                            id,</span>
+<span class="source-line-no">463</span><span id="line-463">                            false,</span>
+<span class="source-line-no">464</span><span id="line-464">                            maxSchematicHeight</span>
+<span class="source-line-no">465</span><span id="line-465">                    );</span>
 <span class="source-line-no">466</span><span id="line-466">                }</span>
-<span class="source-line-no">467</span><span id="line-467">            }</span>
-<span class="source-line-no">468</span><span id="line-468">        }</span>
-<span class="source-line-no">469</span><span id="line-469">    }</span>
-<span class="source-line-no">470</span><span id="line-470"></span>
-<span class="source-line-no">471</span><span id="line-471">    private void addOverlayBlock(short x, short y, short z, BaseBlock id, boolean rotate, int height) {</span>
-<span class="source-line-no">472</span><span id="line-472">        if (z &lt; 0) {</span>
-<span class="source-line-no">473</span><span id="line-473">            z += this.SIZE;</span>
-<span class="source-line-no">474</span><span id="line-474">        } else if (z &gt;= this.SIZE) {</span>
-<span class="source-line-no">475</span><span id="line-475">            z -= this.SIZE;</span>
-<span class="source-line-no">476</span><span id="line-476">        }</span>
-<span class="source-line-no">477</span><span id="line-477">        if (x &lt; 0) {</span>
-<span class="source-line-no">478</span><span id="line-478">            x += this.SIZE;</span>
-<span class="source-line-no">479</span><span id="line-479">        } else if (x &gt;= this.SIZE) {</span>
-<span class="source-line-no">480</span><span id="line-480">            x -= this.SIZE;</span>
-<span class="source-line-no">481</span><span id="line-481">        }</span>
-<span class="source-line-no">482</span><span id="line-482">        if (rotate) {</span>
-<span class="source-line-no">483</span><span id="line-483">            id = rotate(id);</span>
-<span class="source-line-no">484</span><span id="line-484">        }</span>
-<span class="source-line-no">485</span><span id="line-485">        int pair = MathMan.pair(x, z);</span>
-<span class="source-line-no">486</span><span id="line-486">        BaseBlock[] existing = this.G_SCH.computeIfAbsent(pair, k -&gt; new BaseBlock[height]);</span>
-<span class="source-line-no">487</span><span id="line-487">        if (y &gt;= height) {</span>
-<span class="source-line-no">488</span><span id="line-488">            if (y &gt; lastOverlayHeightError) {</span>
-<span class="source-line-no">489</span><span id="line-489">                lastOverlayHeightError = y;</span>
-<span class="source-line-no">490</span><span id="line-490">                LOGGER.error(</span>
-<span class="source-line-no">491</span><span id="line-491">                        "Error adding overlay block in world {}. `y &gt; height`. y={}, height={}",</span>
-<span class="source-line-no">492</span><span id="line-492">                        getWorldName(),</span>
-<span class="source-line-no">493</span><span id="line-493">                        y,</span>
-<span class="source-line-no">494</span><span id="line-494">                        height</span>
-<span class="source-line-no">495</span><span id="line-495">                );</span>
-<span class="source-line-no">496</span><span id="line-496">            }</span>
-<span class="source-line-no">497</span><span id="line-497">            return;</span>
-<span class="source-line-no">498</span><span id="line-498">        }</span>
-<span class="source-line-no">499</span><span id="line-499">        existing[y] = id;</span>
-<span class="source-line-no">500</span><span id="line-500">    }</span>
-<span class="source-line-no">501</span><span id="line-501"></span>
-<span class="source-line-no">502</span><span id="line-502">    private void addOverlayBiome(short x, short z, BiomeType id) {</span>
-<span class="source-line-no">503</span><span id="line-503">        if (z &lt; 0) {</span>
-<span class="source-line-no">504</span><span id="line-504">            z += this.SIZE;</span>
-<span class="source-line-no">505</span><span id="line-505">        } else if (z &gt;= this.SIZE) {</span>
-<span class="source-line-no">506</span><span id="line-506">            z -= this.SIZE;</span>
-<span class="source-line-no">507</span><span id="line-507">        }</span>
-<span class="source-line-no">508</span><span id="line-508">        if (x &lt; 0) {</span>
-<span class="source-line-no">509</span><span id="line-509">            x += this.SIZE;</span>
-<span class="source-line-no">510</span><span id="line-510">        } else if (x &gt;= this.SIZE) {</span>
-<span class="source-line-no">511</span><span id="line-511">            x -= this.SIZE;</span>
-<span class="source-line-no">512</span><span id="line-512">        }</span>
-<span class="source-line-no">513</span><span id="line-513">        int pair = MathMan.pair(x, z);</span>
-<span class="source-line-no">514</span><span id="line-514">        this.G_SCH_B.put(pair, id);</span>
-<span class="source-line-no">515</span><span id="line-515">    }</span>
-<span class="source-line-no">516</span><span id="line-516"></span>
-<span class="source-line-no">517</span><span id="line-517">    /**</span>
-<span class="source-line-no">518</span><span id="line-518">     * Get the entities contained within the plot schematic for generation. Intended for internal use only.</span>
-<span class="source-line-no">519</span><span id="line-519">     *</span>
-<span class="source-line-no">520</span><span id="line-520">     * @since 6.9.0</span>
-<span class="source-line-no">521</span><span id="line-521">     */</span>
-<span class="source-line-no">522</span><span id="line-522">    @DoNotUse</span>
-<span class="source-line-no">523</span><span id="line-523">    public @Nullable List&lt;Entity&gt; getPlotSchematicEntities() {</span>
-<span class="source-line-no">524</span><span id="line-524">        return schem3Entities;</span>
-<span class="source-line-no">525</span><span id="line-525">    }</span>
-<span class="source-line-no">526</span><span id="line-526"></span>
-<span class="source-line-no">527</span><span id="line-527">    /**</span>
-<span class="source-line-no">528</span><span id="line-528">     * Get the minimum point of the plot schematic for generation. Intended for internal use only.</span>
-<span class="source-line-no">529</span><span id="line-529">     *</span>
-<span class="source-line-no">530</span><span id="line-530">     * @since 6.9.0</span>
-<span class="source-line-no">531</span><span id="line-531">     */</span>
-<span class="source-line-no">532</span><span id="line-532">    @DoNotUse</span>
-<span class="source-line-no">533</span><span id="line-533">    public @Nullable BlockVector3 getPlotSchematicMinPoint() {</span>
-<span class="source-line-no">534</span><span id="line-534">        return schem3MinPoint;</span>
-<span class="source-line-no">535</span><span id="line-535">    }</span>
-<span class="source-line-no">536</span><span id="line-536"></span>
-<span class="source-line-no">537</span><span id="line-537">    /**</span>
-<span class="source-line-no">538</span><span id="line-538">     * Get if post-generation population of chunks with tiles/entities is needed for this world. Not for public API use.</span>
-<span class="source-line-no">539</span><span id="line-539">     *</span>
-<span class="source-line-no">540</span><span id="line-540">     * @since 6.9.0</span>
-<span class="source-line-no">541</span><span id="line-541">     */</span>
-<span class="source-line-no">542</span><span id="line-542">    @DoNotUse</span>
-<span class="source-line-no">543</span><span id="line-543">    public boolean populationNeeded() {</span>
-<span class="source-line-no">544</span><span id="line-544">        return schem1PopulationNeeded || schem2PopulationNeeded || schem3PopulationNeeded;</span>
-<span class="source-line-no">545</span><span id="line-545">    }</span>
-<span class="source-line-no">546</span><span id="line-546"></span>
-<span class="source-line-no">547</span><span id="line-547">    /**</span>
-<span class="source-line-no">548</span><span id="line-548">     * Get the root folder for this world's generation schematics. May be null if schematics not initialised via</span>
-<span class="source-line-no">549</span><span id="line-549">     * {@link HybridPlotWorld#setupSchematics()}</span>
-<span class="source-line-no">550</span><span id="line-550">     *</span>
-<span class="source-line-no">551</span><span id="line-551">     * @since 6.9.0</span>
-<span class="source-line-no">552</span><span id="line-552">     */</span>
-<span class="source-line-no">553</span><span id="line-553">    public @Nullable File getSchematicRoot() {</span>
-<span class="source-line-no">554</span><span id="line-554">        return this.root;</span>
-<span class="source-line-no">555</span><span id="line-555">    }</span>
-<span class="source-line-no">556</span><span id="line-556"></span>
-<span class="source-line-no">557</span><span id="line-557">}</span>
+<span class="source-line-no">467</span><span id="line-467">                if (blockArrayClipboard2.hasBiomes()) {</span>
+<span class="source-line-no">468</span><span id="line-468">                    BiomeType biome = blockArrayClipboard2.getBiome(BlockVector2.at(x + min.getBlockX(), z + min.getBlockZ()));</span>
+<span class="source-line-no">469</span><span id="line-469">                    addOverlayBiome((short) (x - shift), (short) (z - shift), biome);</span>
+<span class="source-line-no">470</span><span id="line-470">                }</span>
+<span class="source-line-no">471</span><span id="line-471">            }</span>
+<span class="source-line-no">472</span><span id="line-472">        }</span>
+<span class="source-line-no">473</span><span id="line-473">    }</span>
+<span class="source-line-no">474</span><span id="line-474"></span>
+<span class="source-line-no">475</span><span id="line-475">    private void addOverlayBlock(short x, short y, short z, BaseBlock id, boolean rotate, int height) {</span>
+<span class="source-line-no">476</span><span id="line-476">        if (z &lt; 0) {</span>
+<span class="source-line-no">477</span><span id="line-477">            z += this.SIZE;</span>
+<span class="source-line-no">478</span><span id="line-478">        } else if (z &gt;= this.SIZE) {</span>
+<span class="source-line-no">479</span><span id="line-479">            z -= this.SIZE;</span>
+<span class="source-line-no">480</span><span id="line-480">        }</span>
+<span class="source-line-no">481</span><span id="line-481">        if (x &lt; 0) {</span>
+<span class="source-line-no">482</span><span id="line-482">            x += this.SIZE;</span>
+<span class="source-line-no">483</span><span id="line-483">        } else if (x &gt;= this.SIZE) {</span>
+<span class="source-line-no">484</span><span id="line-484">            x -= this.SIZE;</span>
+<span class="source-line-no">485</span><span id="line-485">        }</span>
+<span class="source-line-no">486</span><span id="line-486">        if (rotate) {</span>
+<span class="source-line-no">487</span><span id="line-487">            id = rotate(id);</span>
+<span class="source-line-no">488</span><span id="line-488">        }</span>
+<span class="source-line-no">489</span><span id="line-489">        int pair = MathMan.pair(x, z);</span>
+<span class="source-line-no">490</span><span id="line-490">        BaseBlock[] existing = this.G_SCH.computeIfAbsent(pair, k -&gt; new BaseBlock[height]);</span>
+<span class="source-line-no">491</span><span id="line-491">        if (y &gt;= height) {</span>
+<span class="source-line-no">492</span><span id="line-492">            if (y &gt; lastOverlayHeightError) {</span>
+<span class="source-line-no">493</span><span id="line-493">                lastOverlayHeightError = y;</span>
+<span class="source-line-no">494</span><span id="line-494">                LOGGER.error(</span>
+<span class="source-line-no">495</span><span id="line-495">                        "Error adding overlay block in world {}. `y &gt; height`. y={}, height={}",</span>
+<span class="source-line-no">496</span><span id="line-496">                        getWorldName(),</span>
+<span class="source-line-no">497</span><span id="line-497">                        y,</span>
+<span class="source-line-no">498</span><span id="line-498">                        height</span>
+<span class="source-line-no">499</span><span id="line-499">                );</span>
+<span class="source-line-no">500</span><span id="line-500">            }</span>
+<span class="source-line-no">501</span><span id="line-501">            return;</span>
+<span class="source-line-no">502</span><span id="line-502">        }</span>
+<span class="source-line-no">503</span><span id="line-503">        existing[y] = id;</span>
+<span class="source-line-no">504</span><span id="line-504">    }</span>
+<span class="source-line-no">505</span><span id="line-505"></span>
+<span class="source-line-no">506</span><span id="line-506">    private void addOverlayBiome(short x, short z, BiomeType id) {</span>
+<span class="source-line-no">507</span><span id="line-507">        if (z &lt; 0) {</span>
+<span class="source-line-no">508</span><span id="line-508">            z += this.SIZE;</span>
+<span class="source-line-no">509</span><span id="line-509">        } else if (z &gt;= this.SIZE) {</span>
+<span class="source-line-no">510</span><span id="line-510">            z -= this.SIZE;</span>
+<span class="source-line-no">511</span><span id="line-511">        }</span>
+<span class="source-line-no">512</span><span id="line-512">        if (x &lt; 0) {</span>
+<span class="source-line-no">513</span><span id="line-513">            x += this.SIZE;</span>
+<span class="source-line-no">514</span><span id="line-514">        } else if (x &gt;= this.SIZE) {</span>
+<span class="source-line-no">515</span><span id="line-515">            x -= this.SIZE;</span>
+<span class="source-line-no">516</span><span id="line-516">        }</span>
+<span class="source-line-no">517</span><span id="line-517">        int pair = MathMan.pair(x, z);</span>
+<span class="source-line-no">518</span><span id="line-518">        this.G_SCH_B.put(pair, id);</span>
+<span class="source-line-no">519</span><span id="line-519">    }</span>
+<span class="source-line-no">520</span><span id="line-520"></span>
+<span class="source-line-no">521</span><span id="line-521">    /**</span>
+<span class="source-line-no">522</span><span id="line-522">     * Get the entities contained within the plot schematic for generation. Intended for internal use only.</span>
+<span class="source-line-no">523</span><span id="line-523">     *</span>
+<span class="source-line-no">524</span><span id="line-524">     * @since 6.9.0</span>
+<span class="source-line-no">525</span><span id="line-525">     */</span>
+<span class="source-line-no">526</span><span id="line-526">    @DoNotUse</span>
+<span class="source-line-no">527</span><span id="line-527">    public @Nullable List&lt;Entity&gt; getPlotSchematicEntities() {</span>
+<span class="source-line-no">528</span><span id="line-528">        return schem3Entities;</span>
+<span class="source-line-no">529</span><span id="line-529">    }</span>
+<span class="source-line-no">530</span><span id="line-530"></span>
+<span class="source-line-no">531</span><span id="line-531">    /**</span>
+<span class="source-line-no">532</span><span id="line-532">     * Get the minimum point of the plot schematic for generation. Intended for internal use only.</span>
+<span class="source-line-no">533</span><span id="line-533">     *</span>
+<span class="source-line-no">534</span><span id="line-534">     * @since 6.9.0</span>
+<span class="source-line-no">535</span><span id="line-535">     */</span>
+<span class="source-line-no">536</span><span id="line-536">    @DoNotUse</span>
+<span class="source-line-no">537</span><span id="line-537">    public @Nullable BlockVector3 getPlotSchematicMinPoint() {</span>
+<span class="source-line-no">538</span><span id="line-538">        return schem3MinPoint;</span>
+<span class="source-line-no">539</span><span id="line-539">    }</span>
+<span class="source-line-no">540</span><span id="line-540"></span>
+<span class="source-line-no">541</span><span id="line-541">    /**</span>
+<span class="source-line-no">542</span><span id="line-542">     * Get if post-generation population of chunks with tiles/entities is needed for this world. Not for public API use.</span>
+<span class="source-line-no">543</span><span id="line-543">     *</span>
+<span class="source-line-no">544</span><span id="line-544">     * @since 6.9.0</span>
+<span class="source-line-no">545</span><span id="line-545">     */</span>
+<span class="source-line-no">546</span><span id="line-546">    @DoNotUse</span>
+<span class="source-line-no">547</span><span id="line-547">    public boolean populationNeeded() {</span>
+<span class="source-line-no">548</span><span id="line-548">        return schem1PopulationNeeded || schem2PopulationNeeded || schem3PopulationNeeded;</span>
+<span class="source-line-no">549</span><span id="line-549">    }</span>
+<span class="source-line-no">550</span><span id="line-550"></span>
+<span class="source-line-no">551</span><span id="line-551">    /**</span>
+<span class="source-line-no">552</span><span id="line-552">     * Get the root folder for this world's generation schematics. May be null if schematics not initialised via</span>
+<span class="source-line-no">553</span><span id="line-553">     * {@link HybridPlotWorld#setupSchematics()}</span>
+<span class="source-line-no">554</span><span id="line-554">     *</span>
+<span class="source-line-no">555</span><span id="line-555">     * @since 6.9.0</span>
+<span class="source-line-no">556</span><span id="line-556">     */</span>
+<span class="source-line-no">557</span><span id="line-557">    public @Nullable File getSchematicRoot() {</span>
+<span class="source-line-no">558</span><span id="line-558">        return this.root;</span>
+<span class="source-line-no">559</span><span id="line-559">    }</span>
+<span class="source-line-no">560</span><span id="line-560"></span>
+<span class="source-line-no">561</span><span id="line-561">    /**</span>
+<span class="source-line-no">562</span><span id="line-562">     * Get the y value where the plot schematic should be pasted from.</span>
+<span class="source-line-no">563</span><span id="line-563">     *</span>
+<span class="source-line-no">564</span><span id="line-564">     * @return plot schematic y start value</span>
+<span class="source-line-no">565</span><span id="line-565">     * @since TODO</span>
+<span class="source-line-no">566</span><span id="line-566">     */</span>
+<span class="source-line-no">567</span><span id="line-567">    public int getPlotYStart() {</span>
+<span class="source-line-no">568</span><span id="line-568">        return SCHEM_Y + plotY;</span>
+<span class="source-line-no">569</span><span id="line-569">    }</span>
+<span class="source-line-no">570</span><span id="line-570"></span>
+<span class="source-line-no">571</span><span id="line-571">    /**</span>
+<span class="source-line-no">572</span><span id="line-572">     * Get the y value where the road schematic should be pasted from.</span>
+<span class="source-line-no">573</span><span id="line-573">     *</span>
+<span class="source-line-no">574</span><span id="line-574">     * @return road schematic y start value</span>
+<span class="source-line-no">575</span><span id="line-575">     * @since TODO</span>
+<span class="source-line-no">576</span><span id="line-576">     */</span>
+<span class="source-line-no">577</span><span id="line-577">    public int getRoadYStart() {</span>
+<span class="source-line-no">578</span><span id="line-578">        return SCHEM_Y + roadY;</span>
+<span class="source-line-no">579</span><span id="line-579">    }</span>
+<span class="source-line-no">580</span><span id="line-580"></span>
+<span class="source-line-no">581</span><span id="line-581">}</span>
 
 
 

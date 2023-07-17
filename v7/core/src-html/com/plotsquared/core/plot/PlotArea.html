@@ -193,33 +193,33 @@
 <span class="source-line-no">180</span><span id="line-180">        this.worldConfiguration = worldConfiguration;</span>
 <span class="source-line-no">181</span><span id="line-181">    }</span>
 <span class="source-line-no">182</span><span id="line-182"></span>
-<span class="source-line-no">183</span><span id="line-183">    private static Collection&lt;PlotFlag&lt;?, ?&gt;&gt; parseFlags(List&lt;String&gt; flagStrings) {</span>
-<span class="source-line-no">184</span><span id="line-184">        final Collection&lt;PlotFlag&lt;?, ?&gt;&gt; flags = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">185</span><span id="line-185">        for (final String key : flagStrings) {</span>
-<span class="source-line-no">186</span><span id="line-186">            final String[] split;</span>
-<span class="source-line-no">187</span><span id="line-187">            if (key.contains(";")) {</span>
-<span class="source-line-no">188</span><span id="line-188">                split = key.split(";");</span>
-<span class="source-line-no">189</span><span id="line-189">            } else {</span>
-<span class="source-line-no">190</span><span id="line-190">                split = key.split(":");</span>
-<span class="source-line-no">191</span><span id="line-191">            }</span>
-<span class="source-line-no">192</span><span id="line-192">            final PlotFlag&lt;?, ?&gt; flagInstance =</span>
-<span class="source-line-no">193</span><span id="line-193">                    GlobalFlagContainer.getInstance().getFlagFromString(split[0]);</span>
-<span class="source-line-no">194</span><span id="line-194">            if (flagInstance != null) {</span>
-<span class="source-line-no">195</span><span id="line-195">                try {</span>
-<span class="source-line-no">196</span><span id="line-196">                    flags.add(flagInstance.parse(split[1]));</span>
-<span class="source-line-no">197</span><span id="line-197">                } catch (final FlagParseException e) {</span>
-<span class="source-line-no">198</span><span id="line-198">                    LOGGER.warn(</span>
-<span class="source-line-no">199</span><span id="line-199">                            "Failed to parse default flag with key '{}' and value '{}'. "</span>
-<span class="source-line-no">200</span><span id="line-200">                                    + "Reason: {}. This flag will not be added as a default flag.",</span>
-<span class="source-line-no">201</span><span id="line-201">                            e.getFlag().getName(),</span>
-<span class="source-line-no">202</span><span id="line-202">                            e.getValue(),</span>
-<span class="source-line-no">203</span><span id="line-203">                            e.getErrorMessage()</span>
-<span class="source-line-no">204</span><span id="line-204">                    );</span>
-<span class="source-line-no">205</span><span id="line-205">                    e.printStackTrace();</span>
-<span class="source-line-no">206</span><span id="line-206">                }</span>
-<span class="source-line-no">207</span><span id="line-207">            }</span>
-<span class="source-line-no">208</span><span id="line-208">        }</span>
-<span class="source-line-no">209</span><span id="line-209">        return flags;</span>
+<span class="source-line-no">183</span><span id="line-183">    private static void parseFlags(FlagContainer flagContainer, List&lt;String&gt; flagStrings) {</span>
+<span class="source-line-no">184</span><span id="line-184">        for (final String key : flagStrings) {</span>
+<span class="source-line-no">185</span><span id="line-185">            final String[] split;</span>
+<span class="source-line-no">186</span><span id="line-186">            if (key.contains(";")) {</span>
+<span class="source-line-no">187</span><span id="line-187">                split = key.split(";");</span>
+<span class="source-line-no">188</span><span id="line-188">            } else {</span>
+<span class="source-line-no">189</span><span id="line-189">                split = key.split(":");</span>
+<span class="source-line-no">190</span><span id="line-190">            }</span>
+<span class="source-line-no">191</span><span id="line-191">            final PlotFlag&lt;?, ?&gt; flagInstance =</span>
+<span class="source-line-no">192</span><span id="line-192">                    GlobalFlagContainer.getInstance().getFlagFromString(split[0]);</span>
+<span class="source-line-no">193</span><span id="line-193">            if (flagInstance != null) {</span>
+<span class="source-line-no">194</span><span id="line-194">                try {</span>
+<span class="source-line-no">195</span><span id="line-195">                    flagContainer.addFlag(flagInstance.parse(split[1]));</span>
+<span class="source-line-no">196</span><span id="line-196">                } catch (final FlagParseException e) {</span>
+<span class="source-line-no">197</span><span id="line-197">                    LOGGER.warn(</span>
+<span class="source-line-no">198</span><span id="line-198">                            "Failed to parse default flag with key '{}' and value '{}'. "</span>
+<span class="source-line-no">199</span><span id="line-199">                                    + "Reason: {}. This flag will not be added as a default flag.",</span>
+<span class="source-line-no">200</span><span id="line-200">                            e.getFlag().getName(),</span>
+<span class="source-line-no">201</span><span id="line-201">                            e.getValue(),</span>
+<span class="source-line-no">202</span><span id="line-202">                            e.getErrorMessage()</span>
+<span class="source-line-no">203</span><span id="line-203">                    );</span>
+<span class="source-line-no">204</span><span id="line-204">                    e.printStackTrace();</span>
+<span class="source-line-no">205</span><span id="line-205">                }</span>
+<span class="source-line-no">206</span><span id="line-206">            } else {</span>
+<span class="source-line-no">207</span><span id="line-207">                flagContainer.addUnknownFlag(split[0], split[1]);</span>
+<span class="source-line-no">208</span><span id="line-208">            }</span>
+<span class="source-line-no">209</span><span id="line-209">        }</span>
 <span class="source-line-no">210</span><span id="line-210">    }</span>
 <span class="source-line-no">211</span><span id="line-211"></span>
 <span class="source-line-no">212</span><span id="line-212">    @NonNull</span>
@@ -418,7 +418,7 @@
 <span class="source-line-no">405</span><span id="line-405">                }</span>
 <span class="source-line-no">406</span><span id="line-406">            }</span>
 <span class="source-line-no">407</span><span id="line-407">        }</span>
-<span class="source-line-no">408</span><span id="line-408">        this.getFlagContainer().addAll(parseFlags(flags));</span>
+<span class="source-line-no">408</span><span id="line-408">        parseFlags(this.getFlagContainer(), flags);</span>
 <span class="source-line-no">409</span><span id="line-409">        ConsolePlayer.getConsole().sendMessage(</span>
 <span class="source-line-no">410</span><span id="line-410">                TranslatableCaption.of("flags.area_flags"),</span>
 <span class="source-line-no">411</span><span id="line-411">                TagResolver.resolver("flags", Tag.inserting(Component.text(flags.toString())))</span>
@@ -440,7 +440,7 @@
 <span class="source-line-no">427</span><span id="line-427">            }</span>
 <span class="source-line-no">428</span><span id="line-428">        }</span>
 <span class="source-line-no">429</span><span id="line-429">        this.roadFlags = roadflags.size() &gt; 0;</span>
-<span class="source-line-no">430</span><span id="line-430">        this.getRoadFlagContainer().addAll(parseFlags(roadflags));</span>
+<span class="source-line-no">430</span><span id="line-430">        parseFlags(this.getRoadFlagContainer(), roadflags);</span>
 <span class="source-line-no">431</span><span id="line-431">        ConsolePlayer.getConsole().sendMessage(</span>
 <span class="source-line-no">432</span><span id="line-432">                TranslatableCaption.of("flags.road_flags"),</span>
 <span class="source-line-no">433</span><span id="line-433">                TagResolver.resolver("flags", Tag.inserting(Component.text(roadflags.toString())))</span>

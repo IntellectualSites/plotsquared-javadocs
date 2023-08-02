@@ -542,7 +542,7 @@
 <span class="source-line-no">529</span><span id="line-529">                Math.min(plotworld.PLOT_HEIGHT, Math.min(plotworld.WALL_HEIGHT, plotworld.ROAD_HEIGHT)) : plotworld.ROAD_HEIGHT;</span>
 <span class="source-line-no">530</span><span id="line-530">        int sx = bot.getX() - plotworld.ROAD_WIDTH + 1;</span>
 <span class="source-line-no">531</span><span id="line-531">        int sz = bot.getZ() + 1;</span>
-<span class="source-line-no">532</span><span id="line-532">        int sy = Settings.Schematics.PASTE_ROAD_ON_TOP ? schemY : plot.getArea().getMinBuildHeight();</span>
+<span class="source-line-no">532</span><span id="line-532">        int sy = Settings.Schematics.PASTE_ROAD_ON_TOP ? schemY : plot.getArea().getMinGenHeight();</span>
 <span class="source-line-no">533</span><span id="line-533">        int ex = bot.getX();</span>
 <span class="source-line-no">534</span><span id="line-534">        int ez = top.getZ();</span>
 <span class="source-line-no">535</span><span id="line-535">        int ey = get_ey(plotworld, queue, sx, ex, sz, ez, sy);</span>

@@ -219,7 +219,7 @@
 <span class="source-line-no">206</span><span id="line-206">                    return false;</span>
 <span class="source-line-no">207</span><span id="line-207">                }</span>
 <span class="source-line-no">208</span><span id="line-208"></span>
-<span class="source-line-no">209</span><span id="line-209">                if (componentPreset.cost() &gt; 0.0D) {</span>
+<span class="source-line-no">209</span><span id="line-209">                if (componentPreset.cost() &gt; 0.0D &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_ECON)) {</span>
 <span class="source-line-no">210</span><span id="line-210">                    if (!econHandler.isEnabled(plot.getArea())) {</span>
 <span class="source-line-no">211</span><span id="line-211">                        getPlayer().sendMessage(</span>
 <span class="source-line-no">212</span><span id="line-212">                                TranslatableCaption.of("preset.economy_disabled"),</span>

@@ -154,7 +154,7 @@
 <span class="source-line-no">141</span><span id="line-141">                    }</span>
 <span class="source-line-no">142</span><span id="line-142">                }</span>
 <span class="source-line-no">143</span><span id="line-143">            }</span>
-<span class="source-line-no">144</span><span id="line-144">            if (this.econHandler.isEnabled(area) &amp;&amp; !force) {</span>
+<span class="source-line-no">144</span><span id="line-144">            if (this.econHandler.isEnabled(area) &amp;&amp; !force &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_ECON)) {</span>
 <span class="source-line-no">145</span><span id="line-145">                PlotExpression costExr = area.getPrices().get("claim");</span>
 <span class="source-line-no">146</span><span id="line-146">                double cost = costExr.evaluate(currentPlots);</span>
 <span class="source-line-no">147</span><span id="line-147">                if (cost &gt; 0d) {</span>

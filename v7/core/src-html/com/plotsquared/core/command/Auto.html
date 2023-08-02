@@ -307,7 +307,7 @@
 <span class="source-line-no">294</span><span id="line-294">                return true;</span>
 <span class="source-line-no">295</span><span id="line-295">            }</span>
 <span class="source-line-no">296</span><span id="line-296">        }</span>
-<span class="source-line-no">297</span><span id="line-297">        if (this.econHandler != null &amp;&amp; plotarea.useEconomy()) {</span>
+<span class="source-line-no">297</span><span id="line-297">        if (this.econHandler != null &amp;&amp; plotarea.useEconomy() &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_ECON)) {</span>
 <span class="source-line-no">298</span><span id="line-298">            PlotExpression costExp = plotarea.getPrices().get("claim");</span>
 <span class="source-line-no">299</span><span id="line-299">            PlotExpression mergeCostExp = plotarea.getPrices().get("merge");</span>
 <span class="source-line-no">300</span><span id="line-300">            int size = sizeX * sizeZ;</span>

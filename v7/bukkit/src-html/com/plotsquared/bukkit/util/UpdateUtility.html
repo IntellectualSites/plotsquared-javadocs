@@ -48,7 +48,7 @@
 <span class="source-line-no">035</span><span id="line-35">import javax.net.ssl.HttpsURLConnection;</span>
 <span class="source-line-no">036</span><span id="line-36">import java.io.IOException;</span>
 <span class="source-line-no">037</span><span id="line-37">import java.io.InputStreamReader;</span>
-<span class="source-line-no">038</span><span id="line-38">import java.net.URL;</span>
+<span class="source-line-no">038</span><span id="line-38">import java.net.URI;</span>
 <span class="source-line-no">039</span><span id="line-39"></span>
 <span class="source-line-no">040</span><span id="line-40">public class UpdateUtility implements Listener {</span>
 <span class="source-line-no">041</span><span id="line-41"></span>
@@ -72,41 +72,42 @@
 <span class="source-line-no">059</span><span id="line-59">    public void updateChecker() {</span>
 <span class="source-line-no">060</span><span id="line-60">        task = Bukkit.getScheduler().runTaskTimerAsynchronously(this.javaPlugin, () -&gt; {</span>
 <span class="source-line-no">061</span><span id="line-61">            try {</span>
-<span class="source-line-no">062</span><span id="line-62">                HttpsURLConnection connection = (HttpsURLConnection) new URL(</span>
-<span class="source-line-no">063</span><span id="line-63">                        "https://api.spigotmc.org/simple/0.1/index.php?action=getResource&amp;id=77506")</span>
-<span class="source-line-no">064</span><span id="line-64">                        .openConnection();</span>
-<span class="source-line-no">065</span><span id="line-65">                connection.setRequestMethod("GET");</span>
-<span class="source-line-no">066</span><span id="line-66">                JsonObject result = new JsonParser()</span>
-<span class="source-line-no">067</span><span id="line-67">                        .parse(new JsonReader(new InputStreamReader(connection.getInputStream())))</span>
-<span class="source-line-no">068</span><span id="line-68">                        .getAsJsonObject();</span>
-<span class="source-line-no">069</span><span id="line-69">                spigotVersion = result.get("current_version").getAsString();</span>
-<span class="source-line-no">070</span><span id="line-70">            } catch (IOException e) {</span>
-<span class="source-line-no">071</span><span id="line-71">                LOGGER.error("Unable to check for updates. Error: {}", e.getMessage());</span>
-<span class="source-line-no">072</span><span id="line-72">                return;</span>
-<span class="source-line-no">073</span><span id="line-73">            }</span>
-<span class="source-line-no">074</span><span id="line-74"></span>
-<span class="source-line-no">075</span><span id="line-75">            if (internalVersion.isLaterVersion(spigotVersion)) {</span>
-<span class="source-line-no">076</span><span id="line-76">                LOGGER.info("There appears to be a PlotSquared update available!");</span>
-<span class="source-line-no">077</span><span id="line-77">                LOGGER.info("You are running version {}, the latest version is {}",</span>
-<span class="source-line-no">078</span><span id="line-78">                        internalVersion.versionString(), spigotVersion</span>
-<span class="source-line-no">079</span><span id="line-79">                );</span>
-<span class="source-line-no">080</span><span id="line-80">                LOGGER.info("https://www.spigotmc.org/resources/77506/updates");</span>
-<span class="source-line-no">081</span><span id="line-81">                hasUpdate = true;</span>
-<span class="source-line-no">082</span><span id="line-82">                if (Settings.UpdateChecker.NOTIFY_ONCE) {</span>
-<span class="source-line-no">083</span><span id="line-83">                    cancelTask();</span>
-<span class="source-line-no">084</span><span id="line-84">                }</span>
-<span class="source-line-no">085</span><span id="line-85">            } else if (notify) {</span>
-<span class="source-line-no">086</span><span id="line-86">                notify = false;</span>
-<span class="source-line-no">087</span><span id="line-87">                LOGGER.info("Congratulations! You are running the latest PlotSquared version");</span>
-<span class="source-line-no">088</span><span id="line-88">            }</span>
-<span class="source-line-no">089</span><span id="line-89">        }, 0L, (long) Settings.UpdateChecker.POLL_RATE * 60 * 20);</span>
-<span class="source-line-no">090</span><span id="line-90">    }</span>
-<span class="source-line-no">091</span><span id="line-91"></span>
-<span class="source-line-no">092</span><span id="line-92">    private void cancelTask() {</span>
-<span class="source-line-no">093</span><span id="line-93">        Bukkit.getScheduler().runTaskLater(javaPlugin, () -&gt; task.cancel(), 20L);</span>
-<span class="source-line-no">094</span><span id="line-94">    }</span>
-<span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">}</span>
+<span class="source-line-no">062</span><span id="line-62">                HttpsURLConnection connection = (HttpsURLConnection) URI.create(</span>
+<span class="source-line-no">063</span><span id="line-63">                        "https://api.spigotmc.org/simple/0.2/index.php?action=getResource&amp;id=77506")</span>
+<span class="source-line-no">064</span><span id="line-64">                        .toURL()</span>
+<span class="source-line-no">065</span><span id="line-65">                        .openConnection();</span>
+<span class="source-line-no">066</span><span id="line-66">                connection.setRequestMethod("GET");</span>
+<span class="source-line-no">067</span><span id="line-67">                JsonObject result = new JsonParser()</span>
+<span class="source-line-no">068</span><span id="line-68">                        .parse(new JsonReader(new InputStreamReader(connection.getInputStream())))</span>
+<span class="source-line-no">069</span><span id="line-69">                        .getAsJsonObject();</span>
+<span class="source-line-no">070</span><span id="line-70">                spigotVersion = result.get("current_version").getAsString();</span>
+<span class="source-line-no">071</span><span id="line-71">            } catch (IOException e) {</span>
+<span class="source-line-no">072</span><span id="line-72">                LOGGER.error("Unable to check for updates. Error: {}", e.getMessage());</span>
+<span class="source-line-no">073</span><span id="line-73">                return;</span>
+<span class="source-line-no">074</span><span id="line-74">            }</span>
+<span class="source-line-no">075</span><span id="line-75"></span>
+<span class="source-line-no">076</span><span id="line-76">            if (internalVersion.isLaterVersion(spigotVersion)) {</span>
+<span class="source-line-no">077</span><span id="line-77">                LOGGER.info("There appears to be a PlotSquared update available!");</span>
+<span class="source-line-no">078</span><span id="line-78">                LOGGER.info("You are running version {}, the latest version is {}",</span>
+<span class="source-line-no">079</span><span id="line-79">                        internalVersion.versionString(), spigotVersion</span>
+<span class="source-line-no">080</span><span id="line-80">                );</span>
+<span class="source-line-no">081</span><span id="line-81">                LOGGER.info("https://www.spigotmc.org/resources/77506/updates");</span>
+<span class="source-line-no">082</span><span id="line-82">                hasUpdate = true;</span>
+<span class="source-line-no">083</span><span id="line-83">                if (Settings.UpdateChecker.NOTIFY_ONCE) {</span>
+<span class="source-line-no">084</span><span id="line-84">                    cancelTask();</span>
+<span class="source-line-no">085</span><span id="line-85">                }</span>
+<span class="source-line-no">086</span><span id="line-86">            } else if (notify) {</span>
+<span class="source-line-no">087</span><span id="line-87">                notify = false;</span>
+<span class="source-line-no">088</span><span id="line-88">                LOGGER.info("Congratulations! You are running the latest PlotSquared version");</span>
+<span class="source-line-no">089</span><span id="line-89">            }</span>
+<span class="source-line-no">090</span><span id="line-90">        }, 0L, (long) Settings.UpdateChecker.POLL_RATE * 60 * 20);</span>
+<span class="source-line-no">091</span><span id="line-91">    }</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">    private void cancelTask() {</span>
+<span class="source-line-no">094</span><span id="line-94">        Bukkit.getScheduler().runTaskLater(javaPlugin, () -&gt; task.cancel(), 20L);</span>
+<span class="source-line-no">095</span><span id="line-95">    }</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">}</span>
 
 
 

@@ -53,98 +53,98 @@
 <span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
 <span class="source-line-no">041</span><span id="line-41">import org.checkerframework.checker.nullness.qual.NonNull;</span>
 <span class="source-line-no">042</span><span id="line-42"></span>
-<span class="source-line-no">043</span><span id="line-43">import java.net.URL;</span>
-<span class="source-line-no">044</span><span id="line-44">import java.util.ArrayList;</span>
-<span class="source-line-no">045</span><span id="line-45">import java.util.Collection;</span>
-<span class="source-line-no">046</span><span id="line-46">import java.util.Collections;</span>
-<span class="source-line-no">047</span><span id="line-47">import java.util.LinkedList;</span>
-<span class="source-line-no">048</span><span id="line-48">import java.util.List;</span>
-<span class="source-line-no">049</span><span id="line-49">import java.util.UUID;</span>
-<span class="source-line-no">050</span><span id="line-50">import java.util.stream.Collectors;</span>
-<span class="source-line-no">051</span><span id="line-51"></span>
-<span class="source-line-no">052</span><span id="line-52">@CommandDeclaration(command = "schematic",</span>
-<span class="source-line-no">053</span><span id="line-53">        permission = "plots.schematic",</span>
-<span class="source-line-no">054</span><span id="line-54">        aliases = "schem",</span>
-<span class="source-line-no">055</span><span id="line-55">        category = CommandCategory.SCHEMATIC,</span>
-<span class="source-line-no">056</span><span id="line-56">        usage = "/plot schematic &lt;save | saveall | paste | list&gt;")</span>
-<span class="source-line-no">057</span><span id="line-57">public class SchematicCmd extends SubCommand {</span>
-<span class="source-line-no">058</span><span id="line-58"></span>
-<span class="source-line-no">059</span><span id="line-59">    private final PlotAreaManager plotAreaManager;</span>
-<span class="source-line-no">060</span><span id="line-60">    private final SchematicHandler schematicHandler;</span>
-<span class="source-line-no">061</span><span id="line-61">    private boolean running = false;</span>
-<span class="source-line-no">062</span><span id="line-62"></span>
-<span class="source-line-no">063</span><span id="line-63">    @Inject</span>
-<span class="source-line-no">064</span><span id="line-64">    public SchematicCmd(</span>
-<span class="source-line-no">065</span><span id="line-65">            final @NonNull PlotAreaManager plotAreaManager,</span>
-<span class="source-line-no">066</span><span id="line-66">            final @NonNull SchematicHandler schematicHandler</span>
-<span class="source-line-no">067</span><span id="line-67">    ) {</span>
-<span class="source-line-no">068</span><span id="line-68">        this.plotAreaManager = plotAreaManager;</span>
-<span class="source-line-no">069</span><span id="line-69">        this.schematicHandler = schematicHandler;</span>
-<span class="source-line-no">070</span><span id="line-70">    }</span>
-<span class="source-line-no">071</span><span id="line-71"></span>
-<span class="source-line-no">072</span><span id="line-72">    @Override</span>
-<span class="source-line-no">073</span><span id="line-73">    public boolean onCommand(final PlotPlayer&lt;?&gt; player, String[] args) {</span>
-<span class="source-line-no">074</span><span id="line-74">        if (args.length &lt; 1) {</span>
-<span class="source-line-no">075</span><span id="line-75">            player.sendMessage(</span>
-<span class="source-line-no">076</span><span id="line-76">                    TranslatableCaption.of("commandconfig.command_syntax"),</span>
-<span class="source-line-no">077</span><span id="line-77">                    TagResolver.resolver("value", Tag.inserting(Component.text("Possible values: save, paste, exportall, list")))</span>
-<span class="source-line-no">078</span><span id="line-78">            );</span>
-<span class="source-line-no">079</span><span id="line-79">            return true;</span>
-<span class="source-line-no">080</span><span id="line-80">        }</span>
-<span class="source-line-no">081</span><span id="line-81">        String arg = args[0].toLowerCase();</span>
-<span class="source-line-no">082</span><span id="line-82">        switch (arg) {</span>
-<span class="source-line-no">083</span><span id="line-83">            case "paste" -&gt; {</span>
-<span class="source-line-no">084</span><span id="line-84">                if (!player.hasPermission(Permission.PERMISSION_SCHEMATIC_PASTE)) {</span>
-<span class="source-line-no">085</span><span id="line-85">                    player.sendMessage(</span>
-<span class="source-line-no">086</span><span id="line-86">                            TranslatableCaption.of("permission.no_permission"),</span>
-<span class="source-line-no">087</span><span id="line-87">                            TagResolver.resolver(</span>
-<span class="source-line-no">088</span><span id="line-88">                                    "node",</span>
-<span class="source-line-no">089</span><span id="line-89">                                    Tag.inserting(Permission.PERMISSION_SCHEMATIC_PASTE)</span>
-<span class="source-line-no">090</span><span id="line-90">                            )</span>
-<span class="source-line-no">091</span><span id="line-91">                    );</span>
-<span class="source-line-no">092</span><span id="line-92">                    return false;</span>
-<span class="source-line-no">093</span><span id="line-93">                }</span>
-<span class="source-line-no">094</span><span id="line-94">                if (args.length &lt; 2) {</span>
-<span class="source-line-no">095</span><span id="line-95">                    player.sendMessage(</span>
-<span class="source-line-no">096</span><span id="line-96">                            TranslatableCaption.of("commandconfig.command_syntax"),</span>
-<span class="source-line-no">097</span><span id="line-97">                            TagResolver.resolver(</span>
-<span class="source-line-no">098</span><span id="line-98">                                    "value",</span>
-<span class="source-line-no">099</span><span id="line-99">                                    Tag.inserting(Component.text("Possible values: save, paste, exportall, list"))</span>
-<span class="source-line-no">100</span><span id="line-100">                            )</span>
-<span class="source-line-no">101</span><span id="line-101">                    );</span>
-<span class="source-line-no">102</span><span id="line-102">                    break;</span>
-<span class="source-line-no">103</span><span id="line-103">                }</span>
-<span class="source-line-no">104</span><span id="line-104">                Location loc = player.getLocation();</span>
-<span class="source-line-no">105</span><span id="line-105">                final Plot plot = loc.getPlotAbs();</span>
-<span class="source-line-no">106</span><span id="line-106">                if (plot == null) {</span>
-<span class="source-line-no">107</span><span id="line-107">                    player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">108</span><span id="line-108">                    return false;</span>
-<span class="source-line-no">109</span><span id="line-109">                }</span>
-<span class="source-line-no">110</span><span id="line-110">                if (!plot.hasOwner()) {</span>
-<span class="source-line-no">111</span><span id="line-111">                    player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
-<span class="source-line-no">112</span><span id="line-112">                    return false;</span>
-<span class="source-line-no">113</span><span id="line-113">                }</span>
-<span class="source-line-no">114</span><span id="line-114">                if (!plot.isOwner(player.getUUID()) &amp;&amp; !player.hasPermission("plots.admin.command.schematic.paste")) {</span>
-<span class="source-line-no">115</span><span id="line-115">                    player.sendMessage(TranslatableCaption.of("permission.no_plot_perms"));</span>
-<span class="source-line-no">116</span><span id="line-116">                    return false;</span>
-<span class="source-line-no">117</span><span id="line-117">                }</span>
-<span class="source-line-no">118</span><span id="line-118">                if (plot.getVolume() &gt; Integer.MAX_VALUE) {</span>
-<span class="source-line-no">119</span><span id="line-119">                    player.sendMessage(TranslatableCaption.of("schematics.schematic_too_large"));</span>
-<span class="source-line-no">120</span><span id="line-120">                    return false;</span>
-<span class="source-line-no">121</span><span id="line-121">                }</span>
-<span class="source-line-no">122</span><span id="line-122">                if (this.running) {</span>
-<span class="source-line-no">123</span><span id="line-123">                    player.sendMessage(TranslatableCaption.of("error.task_in_process"));</span>
-<span class="source-line-no">124</span><span id="line-124">                    return false;</span>
-<span class="source-line-no">125</span><span id="line-125">                }</span>
-<span class="source-line-no">126</span><span id="line-126">                final String location = args[1];</span>
-<span class="source-line-no">127</span><span id="line-127">                this.running = true;</span>
-<span class="source-line-no">128</span><span id="line-128">                TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">129</span><span id="line-129">                    Schematic schematic = null;</span>
-<span class="source-line-no">130</span><span id="line-130">                    if (location.startsWith("url:")) {</span>
-<span class="source-line-no">131</span><span id="line-131">                        try {</span>
-<span class="source-line-no">132</span><span id="line-132">                            UUID uuid = UUID.fromString(location.substring(4));</span>
-<span class="source-line-no">133</span><span id="line-133">                            URL base = new URL(Settings.Web.URL);</span>
-<span class="source-line-no">134</span><span id="line-134">                            URL url = new URL(base, "uploads/" + uuid + ".schematic");</span>
+<span class="source-line-no">043</span><span id="line-43">import java.net.URI;</span>
+<span class="source-line-no">044</span><span id="line-44">import java.net.URL;</span>
+<span class="source-line-no">045</span><span id="line-45">import java.util.ArrayList;</span>
+<span class="source-line-no">046</span><span id="line-46">import java.util.Collection;</span>
+<span class="source-line-no">047</span><span id="line-47">import java.util.Collections;</span>
+<span class="source-line-no">048</span><span id="line-48">import java.util.LinkedList;</span>
+<span class="source-line-no">049</span><span id="line-49">import java.util.List;</span>
+<span class="source-line-no">050</span><span id="line-50">import java.util.UUID;</span>
+<span class="source-line-no">051</span><span id="line-51">import java.util.stream.Collectors;</span>
+<span class="source-line-no">052</span><span id="line-52"></span>
+<span class="source-line-no">053</span><span id="line-53">@CommandDeclaration(command = "schematic",</span>
+<span class="source-line-no">054</span><span id="line-54">        permission = "plots.schematic",</span>
+<span class="source-line-no">055</span><span id="line-55">        aliases = "schem",</span>
+<span class="source-line-no">056</span><span id="line-56">        category = CommandCategory.SCHEMATIC,</span>
+<span class="source-line-no">057</span><span id="line-57">        usage = "/plot schematic &lt;save | saveall | paste | list&gt;")</span>
+<span class="source-line-no">058</span><span id="line-58">public class SchematicCmd extends SubCommand {</span>
+<span class="source-line-no">059</span><span id="line-59"></span>
+<span class="source-line-no">060</span><span id="line-60">    private final PlotAreaManager plotAreaManager;</span>
+<span class="source-line-no">061</span><span id="line-61">    private final SchematicHandler schematicHandler;</span>
+<span class="source-line-no">062</span><span id="line-62">    private boolean running = false;</span>
+<span class="source-line-no">063</span><span id="line-63"></span>
+<span class="source-line-no">064</span><span id="line-64">    @Inject</span>
+<span class="source-line-no">065</span><span id="line-65">    public SchematicCmd(</span>
+<span class="source-line-no">066</span><span id="line-66">            final @NonNull PlotAreaManager plotAreaManager,</span>
+<span class="source-line-no">067</span><span id="line-67">            final @NonNull SchematicHandler schematicHandler</span>
+<span class="source-line-no">068</span><span id="line-68">    ) {</span>
+<span class="source-line-no">069</span><span id="line-69">        this.plotAreaManager = plotAreaManager;</span>
+<span class="source-line-no">070</span><span id="line-70">        this.schematicHandler = schematicHandler;</span>
+<span class="source-line-no">071</span><span id="line-71">    }</span>
+<span class="source-line-no">072</span><span id="line-72"></span>
+<span class="source-line-no">073</span><span id="line-73">    @Override</span>
+<span class="source-line-no">074</span><span id="line-74">    public boolean onCommand(final PlotPlayer&lt;?&gt; player, String[] args) {</span>
+<span class="source-line-no">075</span><span id="line-75">        if (args.length &lt; 1) {</span>
+<span class="source-line-no">076</span><span id="line-76">            player.sendMessage(</span>
+<span class="source-line-no">077</span><span id="line-77">                    TranslatableCaption.of("commandconfig.command_syntax"),</span>
+<span class="source-line-no">078</span><span id="line-78">                    TagResolver.resolver("value", Tag.inserting(Component.text("Possible values: save, paste, exportall, list")))</span>
+<span class="source-line-no">079</span><span id="line-79">            );</span>
+<span class="source-line-no">080</span><span id="line-80">            return true;</span>
+<span class="source-line-no">081</span><span id="line-81">        }</span>
+<span class="source-line-no">082</span><span id="line-82">        String arg = args[0].toLowerCase();</span>
+<span class="source-line-no">083</span><span id="line-83">        switch (arg) {</span>
+<span class="source-line-no">084</span><span id="line-84">            case "paste" -&gt; {</span>
+<span class="source-line-no">085</span><span id="line-85">                if (!player.hasPermission(Permission.PERMISSION_SCHEMATIC_PASTE)) {</span>
+<span class="source-line-no">086</span><span id="line-86">                    player.sendMessage(</span>
+<span class="source-line-no">087</span><span id="line-87">                            TranslatableCaption.of("permission.no_permission"),</span>
+<span class="source-line-no">088</span><span id="line-88">                            TagResolver.resolver(</span>
+<span class="source-line-no">089</span><span id="line-89">                                    "node",</span>
+<span class="source-line-no">090</span><span id="line-90">                                    Tag.inserting(Permission.PERMISSION_SCHEMATIC_PASTE)</span>
+<span class="source-line-no">091</span><span id="line-91">                            )</span>
+<span class="source-line-no">092</span><span id="line-92">                    );</span>
+<span class="source-line-no">093</span><span id="line-93">                    return false;</span>
+<span class="source-line-no">094</span><span id="line-94">                }</span>
+<span class="source-line-no">095</span><span id="line-95">                if (args.length &lt; 2) {</span>
+<span class="source-line-no">096</span><span id="line-96">                    player.sendMessage(</span>
+<span class="source-line-no">097</span><span id="line-97">                            TranslatableCaption.of("commandconfig.command_syntax"),</span>
+<span class="source-line-no">098</span><span id="line-98">                            TagResolver.resolver(</span>
+<span class="source-line-no">099</span><span id="line-99">                                    "value",</span>
+<span class="source-line-no">100</span><span id="line-100">                                    Tag.inserting(Component.text("Possible values: save, paste, exportall, list"))</span>
+<span class="source-line-no">101</span><span id="line-101">                            )</span>
+<span class="source-line-no">102</span><span id="line-102">                    );</span>
+<span class="source-line-no">103</span><span id="line-103">                    break;</span>
+<span class="source-line-no">104</span><span id="line-104">                }</span>
+<span class="source-line-no">105</span><span id="line-105">                Location loc = player.getLocation();</span>
+<span class="source-line-no">106</span><span id="line-106">                final Plot plot = loc.getPlotAbs();</span>
+<span class="source-line-no">107</span><span id="line-107">                if (plot == null) {</span>
+<span class="source-line-no">108</span><span id="line-108">                    player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
+<span class="source-line-no">109</span><span id="line-109">                    return false;</span>
+<span class="source-line-no">110</span><span id="line-110">                }</span>
+<span class="source-line-no">111</span><span id="line-111">                if (!plot.hasOwner()) {</span>
+<span class="source-line-no">112</span><span id="line-112">                    player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
+<span class="source-line-no">113</span><span id="line-113">                    return false;</span>
+<span class="source-line-no">114</span><span id="line-114">                }</span>
+<span class="source-line-no">115</span><span id="line-115">                if (!plot.isOwner(player.getUUID()) &amp;&amp; !player.hasPermission("plots.admin.command.schematic.paste")) {</span>
+<span class="source-line-no">116</span><span id="line-116">                    player.sendMessage(TranslatableCaption.of("permission.no_plot_perms"));</span>
+<span class="source-line-no">117</span><span id="line-117">                    return false;</span>
+<span class="source-line-no">118</span><span id="line-118">                }</span>
+<span class="source-line-no">119</span><span id="line-119">                if (plot.getVolume() &gt; Integer.MAX_VALUE) {</span>
+<span class="source-line-no">120</span><span id="line-120">                    player.sendMessage(TranslatableCaption.of("schematics.schematic_too_large"));</span>
+<span class="source-line-no">121</span><span id="line-121">                    return false;</span>
+<span class="source-line-no">122</span><span id="line-122">                }</span>
+<span class="source-line-no">123</span><span id="line-123">                if (this.running) {</span>
+<span class="source-line-no">124</span><span id="line-124">                    player.sendMessage(TranslatableCaption.of("error.task_in_process"));</span>
+<span class="source-line-no">125</span><span id="line-125">                    return false;</span>
+<span class="source-line-no">126</span><span id="line-126">                }</span>
+<span class="source-line-no">127</span><span id="line-127">                final String location = args[1];</span>
+<span class="source-line-no">128</span><span id="line-128">                this.running = true;</span>
+<span class="source-line-no">129</span><span id="line-129">                TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">130</span><span id="line-130">                    Schematic schematic = null;</span>
+<span class="source-line-no">131</span><span id="line-131">                    if (location.startsWith("url:")) {</span>
+<span class="source-line-no">132</span><span id="line-132">                        try {</span>
+<span class="source-line-no">133</span><span id="line-133">                            UUID uuid = UUID.fromString(location.substring(4));</span>
+<span class="source-line-no">134</span><span id="line-134">                            URL url = URI.create(Settings.Web.URL + "uploads/" + uuid + ".schematic").toURL();</span>
 <span class="source-line-no">135</span><span id="line-135">                            schematic = this.schematicHandler.getSchematic(url);</span>
 <span class="source-line-no">136</span><span id="line-136">                        } catch (Exception e) {</span>
 <span class="source-line-no">137</span><span id="line-137">                            e.printStackTrace();</span>

@@ -530,57 +530,58 @@
 <span class="source-line-no">517</span><span id="line-517">                    }</span>
 <span class="source-line-no">518</span><span id="line-518">                }</span>
 <span class="source-line-no">519</span><span id="line-519">                finalResolver.tag("players", Tag.inserting(builder.asComponent()));</span>
-<span class="source-line-no">520</span><span id="line-520">                caption.set(TranslatableCaption.of("info.plot_list_item"));</span>
-<span class="source-line-no">521</span><span id="line-521">                caption.setTagResolvers(finalResolver.build());</span>
-<span class="source-line-no">522</span><span id="line-522">            }</span>
-<span class="source-line-no">523</span><span id="line-523">        }, "/plot list " + args[0], TranslatableCaption.of("list.plot_list_header_paged"));</span>
-<span class="source-line-no">524</span><span id="line-524">    }</span>
-<span class="source-line-no">525</span><span id="line-525"></span>
-<span class="source-line-no">526</span><span id="line-526">    @Override</span>
-<span class="source-line-no">527</span><span id="line-527">    public Collection&lt;Command&gt; tab(PlotPlayer&lt;?&gt; player, String[] args, boolean space) {</span>
-<span class="source-line-no">528</span><span id="line-528">        final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
-<span class="source-line-no">529</span><span id="line-529">        if (this.econHandler.isSupported() &amp;&amp; player.hasPermission(Permission.PERMISSION_LIST_FOR_SALE)) {</span>
-<span class="source-line-no">530</span><span id="line-530">            completions.add("forsale");</span>
-<span class="source-line-no">531</span><span id="line-531">        }</span>
-<span class="source-line-no">532</span><span id="line-532">        if (player.hasPermission(Permission.PERMISSION_LIST_MINE)) {</span>
-<span class="source-line-no">533</span><span id="line-533">            completions.add("mine");</span>
-<span class="source-line-no">534</span><span id="line-534">        }</span>
-<span class="source-line-no">535</span><span id="line-535">        if (player.hasPermission(Permission.PERMISSION_LIST_SHARED)) {</span>
-<span class="source-line-no">536</span><span id="line-536">            completions.add("shared");</span>
-<span class="source-line-no">537</span><span id="line-537">        }</span>
-<span class="source-line-no">538</span><span id="line-538">        if (player.hasPermission(Permission.PERMISSION_LIST_WORLD)) {</span>
-<span class="source-line-no">539</span><span id="line-539">            completions.addAll(PlotSquared.platform().worldManager().getWorlds());</span>
-<span class="source-line-no">540</span><span id="line-540">        }</span>
-<span class="source-line-no">541</span><span id="line-541">        if (player.hasPermission(Permission.PERMISSION_LIST_TOP)) {</span>
-<span class="source-line-no">542</span><span id="line-542">            completions.add("top");</span>
-<span class="source-line-no">543</span><span id="line-543">        }</span>
-<span class="source-line-no">544</span><span id="line-544">        if (player.hasPermission(Permission.PERMISSION_LIST_ALL)) {</span>
-<span class="source-line-no">545</span><span id="line-545">            completions.add("all");</span>
-<span class="source-line-no">546</span><span id="line-546">        }</span>
-<span class="source-line-no">547</span><span id="line-547">        if (player.hasPermission(Permission.PERMISSION_LIST_UNOWNED)) {</span>
-<span class="source-line-no">548</span><span id="line-548">            completions.add("unowned");</span>
-<span class="source-line-no">549</span><span id="line-549">        }</span>
-<span class="source-line-no">550</span><span id="line-550">        if (player.hasPermission(Permission.PERMISSION_LIST_DONE)) {</span>
-<span class="source-line-no">551</span><span id="line-551">            completions.add("done");</span>
-<span class="source-line-no">552</span><span id="line-552">        }</span>
-<span class="source-line-no">553</span><span id="line-553">        if (player.hasPermission(Permission.PERMISSION_LIST_EXPIRED)) {</span>
-<span class="source-line-no">554</span><span id="line-554">            completions.add("expired");</span>
-<span class="source-line-no">555</span><span id="line-555">        }</span>
-<span class="source-line-no">556</span><span id="line-556"></span>
-<span class="source-line-no">557</span><span id="line-557">        final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
-<span class="source-line-no">558</span><span id="line-558">                        .toLowerCase()</span>
-<span class="source-line-no">559</span><span id="line-559">                        .startsWith(args[0].toLowerCase()))</span>
-<span class="source-line-no">560</span><span id="line-560">                .map(completion -&gt; new Command(null, true, completion, "", RequiredType.NONE, CommandCategory.TELEPORT) {</span>
-<span class="source-line-no">561</span><span id="line-561">                }).collect(Collectors.toCollection(LinkedList::new));</span>
-<span class="source-line-no">562</span><span id="line-562"></span>
-<span class="source-line-no">563</span><span id="line-563">        if (player.hasPermission(Permission.PERMISSION_LIST_PLAYER) &amp;&amp; args[0].length() &gt; 0) {</span>
-<span class="source-line-no">564</span><span id="line-564">            commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
-<span class="source-line-no">565</span><span id="line-565">        }</span>
-<span class="source-line-no">566</span><span id="line-566"></span>
-<span class="source-line-no">567</span><span id="line-567">        return commands;</span>
-<span class="source-line-no">568</span><span id="line-568">    }</span>
-<span class="source-line-no">569</span><span id="line-569"></span>
-<span class="source-line-no">570</span><span id="line-570">}</span>
+<span class="source-line-no">520</span><span id="line-520">                finalResolver.tag("size", Tag.inserting(Component.text(plot.getConnectedPlots().size())));</span>
+<span class="source-line-no">521</span><span id="line-521">                caption.set(TranslatableCaption.of("info.plot_list_item"));</span>
+<span class="source-line-no">522</span><span id="line-522">                caption.setTagResolvers(finalResolver.build());</span>
+<span class="source-line-no">523</span><span id="line-523">            }</span>
+<span class="source-line-no">524</span><span id="line-524">        }, "/plot list " + args[0], TranslatableCaption.of("list.plot_list_header_paged"));</span>
+<span class="source-line-no">525</span><span id="line-525">    }</span>
+<span class="source-line-no">526</span><span id="line-526"></span>
+<span class="source-line-no">527</span><span id="line-527">    @Override</span>
+<span class="source-line-no">528</span><span id="line-528">    public Collection&lt;Command&gt; tab(PlotPlayer&lt;?&gt; player, String[] args, boolean space) {</span>
+<span class="source-line-no">529</span><span id="line-529">        final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
+<span class="source-line-no">530</span><span id="line-530">        if (this.econHandler.isSupported() &amp;&amp; player.hasPermission(Permission.PERMISSION_LIST_FOR_SALE)) {</span>
+<span class="source-line-no">531</span><span id="line-531">            completions.add("forsale");</span>
+<span class="source-line-no">532</span><span id="line-532">        }</span>
+<span class="source-line-no">533</span><span id="line-533">        if (player.hasPermission(Permission.PERMISSION_LIST_MINE)) {</span>
+<span class="source-line-no">534</span><span id="line-534">            completions.add("mine");</span>
+<span class="source-line-no">535</span><span id="line-535">        }</span>
+<span class="source-line-no">536</span><span id="line-536">        if (player.hasPermission(Permission.PERMISSION_LIST_SHARED)) {</span>
+<span class="source-line-no">537</span><span id="line-537">            completions.add("shared");</span>
+<span class="source-line-no">538</span><span id="line-538">        }</span>
+<span class="source-line-no">539</span><span id="line-539">        if (player.hasPermission(Permission.PERMISSION_LIST_WORLD)) {</span>
+<span class="source-line-no">540</span><span id="line-540">            completions.addAll(PlotSquared.platform().worldManager().getWorlds());</span>
+<span class="source-line-no">541</span><span id="line-541">        }</span>
+<span class="source-line-no">542</span><span id="line-542">        if (player.hasPermission(Permission.PERMISSION_LIST_TOP)) {</span>
+<span class="source-line-no">543</span><span id="line-543">            completions.add("top");</span>
+<span class="source-line-no">544</span><span id="line-544">        }</span>
+<span class="source-line-no">545</span><span id="line-545">        if (player.hasPermission(Permission.PERMISSION_LIST_ALL)) {</span>
+<span class="source-line-no">546</span><span id="line-546">            completions.add("all");</span>
+<span class="source-line-no">547</span><span id="line-547">        }</span>
+<span class="source-line-no">548</span><span id="line-548">        if (player.hasPermission(Permission.PERMISSION_LIST_UNOWNED)) {</span>
+<span class="source-line-no">549</span><span id="line-549">            completions.add("unowned");</span>
+<span class="source-line-no">550</span><span id="line-550">        }</span>
+<span class="source-line-no">551</span><span id="line-551">        if (player.hasPermission(Permission.PERMISSION_LIST_DONE)) {</span>
+<span class="source-line-no">552</span><span id="line-552">            completions.add("done");</span>
+<span class="source-line-no">553</span><span id="line-553">        }</span>
+<span class="source-line-no">554</span><span id="line-554">        if (player.hasPermission(Permission.PERMISSION_LIST_EXPIRED)) {</span>
+<span class="source-line-no">555</span><span id="line-555">            completions.add("expired");</span>
+<span class="source-line-no">556</span><span id="line-556">        }</span>
+<span class="source-line-no">557</span><span id="line-557"></span>
+<span class="source-line-no">558</span><span id="line-558">        final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
+<span class="source-line-no">559</span><span id="line-559">                        .toLowerCase()</span>
+<span class="source-line-no">560</span><span id="line-560">                        .startsWith(args[0].toLowerCase()))</span>
+<span class="source-line-no">561</span><span id="line-561">                .map(completion -&gt; new Command(null, true, completion, "", RequiredType.NONE, CommandCategory.TELEPORT) {</span>
+<span class="source-line-no">562</span><span id="line-562">                }).collect(Collectors.toCollection(LinkedList::new));</span>
+<span class="source-line-no">563</span><span id="line-563"></span>
+<span class="source-line-no">564</span><span id="line-564">        if (player.hasPermission(Permission.PERMISSION_LIST_PLAYER) &amp;&amp; args[0].length() &gt; 0) {</span>
+<span class="source-line-no">565</span><span id="line-565">            commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
+<span class="source-line-no">566</span><span id="line-566">        }</span>
+<span class="source-line-no">567</span><span id="line-567"></span>
+<span class="source-line-no">568</span><span id="line-568">        return commands;</span>
+<span class="source-line-no">569</span><span id="line-569">    }</span>
+<span class="source-line-no">570</span><span id="line-570"></span>
+<span class="source-line-no">571</span><span id="line-571">}</span>
 
 
 

@@ -202,7 +202,7 @@
 <span class="source-line-no">189</span><span id="line-189">                }</span>
 <span class="source-line-no">190</span><span id="line-190">                Object value;</span>
 <span class="source-line-no">191</span><span id="line-191">                try {</span>
-<span class="source-line-no">192</span><span id="line-192">                    final boolean accessible = field.isAccessible();</span>
+<span class="source-line-no">192</span><span id="line-192">                    final boolean accessible = field.canAccess(this);</span>
 <span class="source-line-no">193</span><span id="line-193">                    field.setAccessible(true);</span>
 <span class="source-line-no">194</span><span id="line-194">                    value = field.get(this);</span>
 <span class="source-line-no">195</span><span id="line-195">                    field.setAccessible(accessible);</span>

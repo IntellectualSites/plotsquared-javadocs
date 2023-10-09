@@ -55,67 +55,53 @@
 <span class="source-line-no">042</span><span id="line-42">    }</span>
 <span class="source-line-no">043</span><span id="line-43"></span>
 <span class="source-line-no">044</span><span id="line-44">    private static int capNumeral(final @NonNull String flagName) {</span>
-<span class="source-line-no">045</span><span id="line-45">        int i;</span>
-<span class="source-line-no">046</span><span id="line-46">        switch (flagName) {</span>
-<span class="source-line-no">047</span><span id="line-47">            case "mob-cap":</span>
-<span class="source-line-no">048</span><span id="line-48">                i = CAP_MOB;</span>
-<span class="source-line-no">049</span><span id="line-49">                break;</span>
-<span class="source-line-no">050</span><span id="line-50">            case "hostile-cap":</span>
-<span class="source-line-no">051</span><span id="line-51">                i = CAP_MONSTER;</span>
-<span class="source-line-no">052</span><span id="line-52">                break;</span>
-<span class="source-line-no">053</span><span id="line-53">            case "animal-cap":</span>
-<span class="source-line-no">054</span><span id="line-54">                i = CAP_ANIMAL;</span>
-<span class="source-line-no">055</span><span id="line-55">                break;</span>
-<span class="source-line-no">056</span><span id="line-56">            case "vehicle-cap":</span>
-<span class="source-line-no">057</span><span id="line-57">                i = CAP_VEHICLE;</span>
-<span class="source-line-no">058</span><span id="line-58">                break;</span>
-<span class="source-line-no">059</span><span id="line-59">            case "misc-cap":</span>
-<span class="source-line-no">060</span><span id="line-60">                i = CAP_MISC;</span>
-<span class="source-line-no">061</span><span id="line-61">                break;</span>
-<span class="source-line-no">062</span><span id="line-62">            case "entity-cap":</span>
-<span class="source-line-no">063</span><span id="line-63">            default:</span>
-<span class="source-line-no">064</span><span id="line-64">                i = CAP_ENTITY;</span>
-<span class="source-line-no">065</span><span id="line-65">        }</span>
-<span class="source-line-no">066</span><span id="line-66">        return i;</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    @SuppressWarnings("unchecked")</span>
-<span class="source-line-no">070</span><span id="line-70">    public static boolean checkEntity(Plot plot, PlotFlag&lt;Integer, ?&gt;... flags) {</span>
-<span class="source-line-no">071</span><span id="line-71">        if (Settings.Done.RESTRICT_BUILDING &amp;&amp; DoneFlag.isDone(plot)) {</span>
-<span class="source-line-no">072</span><span id="line-72">            return true;</span>
-<span class="source-line-no">073</span><span id="line-73">        }</span>
-<span class="source-line-no">074</span><span id="line-74">        int[] mobs = null;</span>
-<span class="source-line-no">075</span><span id="line-75">        for (PlotFlag&lt;Integer, ?&gt; flag : flags) {</span>
-<span class="source-line-no">076</span><span id="line-76">            final int i = capNumeral(flag.getName());</span>
-<span class="source-line-no">077</span><span id="line-77">            int cap = plot.getFlag(flag);</span>
-<span class="source-line-no">078</span><span id="line-78">            if (cap == Integer.MAX_VALUE) {</span>
-<span class="source-line-no">079</span><span id="line-79">                continue;</span>
-<span class="source-line-no">080</span><span id="line-80">            }</span>
-<span class="source-line-no">081</span><span id="line-81">            if (cap == 0) {</span>
-<span class="source-line-no">082</span><span id="line-82">                return true;</span>
-<span class="source-line-no">083</span><span id="line-83">            }</span>
-<span class="source-line-no">084</span><span id="line-84">            if (mobs == null) {</span>
-<span class="source-line-no">085</span><span id="line-85">                mobs = plot.countEntities();</span>
-<span class="source-line-no">086</span><span id="line-86">            }</span>
-<span class="source-line-no">087</span><span id="line-87">            if (mobs[i] &gt;= cap) {</span>
-<span class="source-line-no">088</span><span id="line-88">                plot.setMeta("EntityCount", mobs);</span>
-<span class="source-line-no">089</span><span id="line-89">                plot.setMeta("EntityCountTime", System.currentTimeMillis());</span>
-<span class="source-line-no">090</span><span id="line-90">                plot.debug("Prevented spawning of mob because it would exceed " + flag.getName());</span>
-<span class="source-line-no">091</span><span id="line-91">                return true;</span>
-<span class="source-line-no">092</span><span id="line-92">            }</span>
-<span class="source-line-no">093</span><span id="line-93">        }</span>
-<span class="source-line-no">094</span><span id="line-94">        if (mobs != null) {</span>
-<span class="source-line-no">095</span><span id="line-95">            for (PlotFlag&lt;Integer, ?&gt; flag : flags) {</span>
-<span class="source-line-no">096</span><span id="line-96">                final int i = capNumeral(flag.getName());</span>
-<span class="source-line-no">097</span><span id="line-97">                mobs[i]++;</span>
-<span class="source-line-no">098</span><span id="line-98">            }</span>
-<span class="source-line-no">099</span><span id="line-99">            plot.setMeta("EntityCount", mobs);</span>
-<span class="source-line-no">100</span><span id="line-100">            plot.setMeta("EntityCountTime", System.currentTimeMillis());</span>
-<span class="source-line-no">101</span><span id="line-101">        }</span>
-<span class="source-line-no">102</span><span id="line-102">        return false;</span>
-<span class="source-line-no">103</span><span id="line-103">    }</span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">}</span>
+<span class="source-line-no">045</span><span id="line-45">        return switch (flagName) {</span>
+<span class="source-line-no">046</span><span id="line-46">            case "mob-cap" -&gt; CAP_MOB;</span>
+<span class="source-line-no">047</span><span id="line-47">            case "hostile-cap" -&gt; CAP_MONSTER;</span>
+<span class="source-line-no">048</span><span id="line-48">            case "animal-cap" -&gt; CAP_ANIMAL;</span>
+<span class="source-line-no">049</span><span id="line-49">            case "vehicle-cap" -&gt; CAP_VEHICLE;</span>
+<span class="source-line-no">050</span><span id="line-50">            case "misc-cap" -&gt; CAP_MISC;</span>
+<span class="source-line-no">051</span><span id="line-51">            default -&gt; CAP_ENTITY;</span>
+<span class="source-line-no">052</span><span id="line-52">        };</span>
+<span class="source-line-no">053</span><span id="line-53">    }</span>
+<span class="source-line-no">054</span><span id="line-54"></span>
+<span class="source-line-no">055</span><span id="line-55">    @SuppressWarnings("unchecked")</span>
+<span class="source-line-no">056</span><span id="line-56">    public static boolean checkEntity(Plot plot, PlotFlag&lt;Integer, ?&gt;... flags) {</span>
+<span class="source-line-no">057</span><span id="line-57">        if (Settings.Done.RESTRICT_BUILDING &amp;&amp; DoneFlag.isDone(plot)) {</span>
+<span class="source-line-no">058</span><span id="line-58">            return true;</span>
+<span class="source-line-no">059</span><span id="line-59">        }</span>
+<span class="source-line-no">060</span><span id="line-60">        int[] mobs = null;</span>
+<span class="source-line-no">061</span><span id="line-61">        for (PlotFlag&lt;Integer, ?&gt; flag : flags) {</span>
+<span class="source-line-no">062</span><span id="line-62">            final int i = capNumeral(flag.getName());</span>
+<span class="source-line-no">063</span><span id="line-63">            int cap = plot.getFlag(flag);</span>
+<span class="source-line-no">064</span><span id="line-64">            if (cap == Integer.MAX_VALUE) {</span>
+<span class="source-line-no">065</span><span id="line-65">                continue;</span>
+<span class="source-line-no">066</span><span id="line-66">            }</span>
+<span class="source-line-no">067</span><span id="line-67">            if (cap == 0) {</span>
+<span class="source-line-no">068</span><span id="line-68">                return true;</span>
+<span class="source-line-no">069</span><span id="line-69">            }</span>
+<span class="source-line-no">070</span><span id="line-70">            if (mobs == null) {</span>
+<span class="source-line-no">071</span><span id="line-71">                mobs = plot.countEntities();</span>
+<span class="source-line-no">072</span><span id="line-72">            }</span>
+<span class="source-line-no">073</span><span id="line-73">            if (mobs[i] &gt;= cap) {</span>
+<span class="source-line-no">074</span><span id="line-74">                plot.setMeta("EntityCount", mobs);</span>
+<span class="source-line-no">075</span><span id="line-75">                plot.setMeta("EntityCountTime", System.currentTimeMillis());</span>
+<span class="source-line-no">076</span><span id="line-76">                plot.debug("Prevented spawning of mob because it would exceed " + flag.getName());</span>
+<span class="source-line-no">077</span><span id="line-77">                return true;</span>
+<span class="source-line-no">078</span><span id="line-78">            }</span>
+<span class="source-line-no">079</span><span id="line-79">        }</span>
+<span class="source-line-no">080</span><span id="line-80">        if (mobs != null) {</span>
+<span class="source-line-no">081</span><span id="line-81">            for (PlotFlag&lt;Integer, ?&gt; flag : flags) {</span>
+<span class="source-line-no">082</span><span id="line-82">                final int i = capNumeral(flag.getName());</span>
+<span class="source-line-no">083</span><span id="line-83">                mobs[i]++;</span>
+<span class="source-line-no">084</span><span id="line-84">            }</span>
+<span class="source-line-no">085</span><span id="line-85">            plot.setMeta("EntityCount", mobs);</span>
+<span class="source-line-no">086</span><span id="line-86">            plot.setMeta("EntityCountTime", System.currentTimeMillis());</span>
+<span class="source-line-no">087</span><span id="line-87">        }</span>
+<span class="source-line-no">088</span><span id="line-88">        return false;</span>
+<span class="source-line-no">089</span><span id="line-89">    }</span>
+<span class="source-line-no">090</span><span id="line-90"></span>
+<span class="source-line-no">091</span><span id="line-91">}</span>
 
 
 

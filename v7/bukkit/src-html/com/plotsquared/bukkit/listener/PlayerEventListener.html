@@ -621,7 +621,7 @@
 <span class="source-line-no">608</span><span id="line-608">                this.tmpTeleport = true;</span>
 <span class="source-line-no">609</span><span id="line-609">                return;</span>
 <span class="source-line-no">610</span><span id="line-610">            }</span>
-<span class="source-line-no">611</span><span id="line-611">            int border = area.getBorder();</span>
+<span class="source-line-no">611</span><span id="line-611">            int border = area.getBorder(true);</span>
 <span class="source-line-no">612</span><span id="line-612">            int x1;</span>
 <span class="source-line-no">613</span><span id="line-613">            if (x2 &gt; border &amp;&amp; this.tmpTeleport) {</span>
 <span class="source-line-no">614</span><span id="line-614">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_BORDER)) {</span>
@@ -716,7 +716,7 @@
 <span class="source-line-no">703</span><span id="line-703">                this.tmpTeleport = true;</span>
 <span class="source-line-no">704</span><span id="line-704">                return;</span>
 <span class="source-line-no">705</span><span id="line-705">            }</span>
-<span class="source-line-no">706</span><span id="line-706">            int border = area.getBorder();</span>
+<span class="source-line-no">706</span><span id="line-706">            int border = area.getBorder(true);</span>
 <span class="source-line-no">707</span><span id="line-707">            int z1;</span>
 <span class="source-line-no">708</span><span id="line-708">            if (z2 &gt; border &amp;&amp; this.tmpTeleport) {</span>
 <span class="source-line-no">709</span><span id="line-709">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_BORDER)) {</span>

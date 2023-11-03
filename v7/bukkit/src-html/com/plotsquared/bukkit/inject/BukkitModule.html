@@ -36,13 +36,13 @@
 <span class="source-line-no">023</span><span id="line-23">import com.google.inject.Singleton;</span>
 <span class="source-line-no">024</span><span id="line-24">import com.google.inject.assistedinject.FactoryModuleBuilder;</span>
 <span class="source-line-no">025</span><span id="line-25">import com.plotsquared.bukkit.BukkitPlatform;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.plotsquared.bukkit.listener.SingleWorldListener;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.plotsquared.bukkit.player.BukkitPlayerManager;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.plotsquared.bukkit.queue.BukkitChunkCoordinator;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.bukkit.queue.BukkitQueueCoordinator;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.bukkit.schematic.BukkitSchematicHandler;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.bukkit.util.BukkitChunkManager;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.bukkit.util.BukkitEconHandler;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.plotsquared.bukkit.listener.ServerListener;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.plotsquared.bukkit.listener.SingleWorldListener;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.plotsquared.bukkit.player.BukkitPlayerManager;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.bukkit.queue.BukkitChunkCoordinator;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.bukkit.queue.BukkitQueueCoordinator;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.bukkit.schematic.BukkitSchematicHandler;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.bukkit.util.BukkitChunkManager;</span>
 <span class="source-line-no">033</span><span id="line-33">import com.plotsquared.bukkit.util.BukkitInventoryUtil;</span>
 <span class="source-line-no">034</span><span id="line-34">import com.plotsquared.bukkit.util.BukkitRegionManager;</span>
 <span class="source-line-no">035</span><span id="line-35">import com.plotsquared.bukkit.util.BukkitSetupUtils;</span>
@@ -60,105 +60,153 @@
 <span class="source-line-no">047</span><span id="line-47">import com.plotsquared.core.inject.factory.ChunkCoordinatorFactory;</span>
 <span class="source-line-no">048</span><span id="line-48">import com.plotsquared.core.inject.factory.HybridPlotWorldFactory;</span>
 <span class="source-line-no">049</span><span id="line-49">import com.plotsquared.core.inject.factory.ProgressSubscriberFactory;</span>
-<span class="source-line-no">050</span><span id="line-50">import com.plotsquared.core.plot.world.DefaultPlotAreaManager;</span>
-<span class="source-line-no">051</span><span id="line-51">import com.plotsquared.core.plot.world.PlotAreaManager;</span>
-<span class="source-line-no">052</span><span id="line-52">import com.plotsquared.core.plot.world.SinglePlotAreaManager;</span>
-<span class="source-line-no">053</span><span id="line-53">import com.plotsquared.core.queue.ChunkCoordinator;</span>
-<span class="source-line-no">054</span><span id="line-54">import com.plotsquared.core.queue.GlobalBlockQueue;</span>
-<span class="source-line-no">055</span><span id="line-55">import com.plotsquared.core.queue.QueueProvider;</span>
-<span class="source-line-no">056</span><span id="line-56">import com.plotsquared.core.queue.subscriber.DefaultProgressSubscriber;</span>
-<span class="source-line-no">057</span><span id="line-57">import com.plotsquared.core.queue.subscriber.ProgressSubscriber;</span>
-<span class="source-line-no">058</span><span id="line-58">import com.plotsquared.core.util.ChunkManager;</span>
-<span class="source-line-no">059</span><span id="line-59">import com.plotsquared.core.util.EconHandler;</span>
-<span class="source-line-no">060</span><span id="line-60">import com.plotsquared.core.util.InventoryUtil;</span>
-<span class="source-line-no">061</span><span id="line-61">import com.plotsquared.core.util.PlayerManager;</span>
-<span class="source-line-no">062</span><span id="line-62">import com.plotsquared.core.util.RegionManager;</span>
-<span class="source-line-no">063</span><span id="line-63">import com.plotsquared.core.util.SchematicHandler;</span>
-<span class="source-line-no">064</span><span id="line-64">import com.plotsquared.core.util.SetupUtils;</span>
-<span class="source-line-no">065</span><span id="line-65">import com.plotsquared.core.util.WorldUtil;</span>
-<span class="source-line-no">066</span><span id="line-66">import com.sk89q.worldedit.bukkit.WorldEditPlugin;</span>
-<span class="source-line-no">067</span><span id="line-67">import com.sk89q.worldedit.extension.platform.Actor;</span>
-<span class="source-line-no">068</span><span id="line-68">import org.apache.logging.log4j.LogManager;</span>
-<span class="source-line-no">069</span><span id="line-69">import org.apache.logging.log4j.Logger;</span>
-<span class="source-line-no">070</span><span id="line-70">import org.bukkit.Bukkit;</span>
-<span class="source-line-no">071</span><span id="line-71">import org.bukkit.command.ConsoleCommandSender;</span>
-<span class="source-line-no">072</span><span id="line-72">import org.bukkit.plugin.java.JavaPlugin;</span>
-<span class="source-line-no">073</span><span id="line-73">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">074</span><span id="line-74"></span>
-<span class="source-line-no">075</span><span id="line-75">public class BukkitModule extends AbstractModule {</span>
-<span class="source-line-no">076</span><span id="line-76"></span>
-<span class="source-line-no">077</span><span id="line-77">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + BukkitModule.class.getSimpleName());</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">    private final BukkitPlatform bukkitPlatform;</span>
-<span class="source-line-no">080</span><span id="line-80"></span>
-<span class="source-line-no">081</span><span id="line-81">    public BukkitModule(final @NonNull BukkitPlatform bukkitPlatform) {</span>
-<span class="source-line-no">082</span><span id="line-82">        this.bukkitPlatform = bukkitPlatform;</span>
-<span class="source-line-no">083</span><span id="line-83">    }</span>
-<span class="source-line-no">084</span><span id="line-84"></span>
-<span class="source-line-no">085</span><span id="line-85">    @Override</span>
-<span class="source-line-no">086</span><span id="line-86">    protected void configure() {</span>
-<span class="source-line-no">087</span><span id="line-87">        bind(PlayerManager.class).to(BukkitPlayerManager.class);</span>
-<span class="source-line-no">088</span><span id="line-88">        bind(JavaPlugin.class).toInstance(bukkitPlatform);</span>
-<span class="source-line-no">089</span><span id="line-89">        bind(PlotPlatform.class).toInstance(bukkitPlatform);</span>
-<span class="source-line-no">090</span><span id="line-90">        bind(BukkitPlatform.class).toInstance(bukkitPlatform);</span>
-<span class="source-line-no">091</span><span id="line-91">        bind(IndependentPlotGenerator.class).annotatedWith(DefaultGenerator.class).to(HybridGen.class);</span>
-<span class="source-line-no">092</span><span id="line-92">        // Console actor</span>
-<span class="source-line-no">093</span><span id="line-93">        @NonNull ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();</span>
-<span class="source-line-no">094</span><span id="line-94">        WorldEditPlugin wePlugin = ((WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit"));</span>
-<span class="source-line-no">095</span><span id="line-95">        bind(Actor.class).annotatedWith(ConsoleActor.class).toInstance(wePlugin.wrapCommandSender(console));</span>
-<span class="source-line-no">096</span><span id="line-96">        bind(InventoryUtil.class).to(BukkitInventoryUtil.class);</span>
-<span class="source-line-no">097</span><span id="line-97">        bind(SetupUtils.class).to(BukkitSetupUtils.class);</span>
-<span class="source-line-no">098</span><span id="line-98">        bind(WorldUtil.class).to(BukkitUtil.class);</span>
-<span class="source-line-no">099</span><span id="line-99">        install(new FactoryModuleBuilder()</span>
-<span class="source-line-no">100</span><span id="line-100">                .implement(ProgressSubscriber.class, DefaultProgressSubscriber.class)</span>
-<span class="source-line-no">101</span><span id="line-101">                .build(ProgressSubscriberFactory.class));</span>
-<span class="source-line-no">102</span><span id="line-102">        bind(ChunkManager.class).to(BukkitChunkManager.class);</span>
-<span class="source-line-no">103</span><span id="line-103">        if (PlotSquared.platform().isFaweHooking()) {</span>
-<span class="source-line-no">104</span><span id="line-104">            bind(SchematicHandler.class).to(FaweSchematicHandler.class);</span>
-<span class="source-line-no">105</span><span id="line-105">            bind(RegionManager.class).to(FaweRegionManager.class);</span>
-<span class="source-line-no">106</span><span id="line-106">        } else {</span>
-<span class="source-line-no">107</span><span id="line-107">            bind(SchematicHandler.class).to(BukkitSchematicHandler.class);</span>
-<span class="source-line-no">108</span><span id="line-108">            bind(RegionManager.class).to(BukkitRegionManager.class);</span>
-<span class="source-line-no">109</span><span id="line-109">        }</span>
-<span class="source-line-no">110</span><span id="line-110">        bind(GlobalBlockQueue.class).toInstance(new GlobalBlockQueue(QueueProvider.of(BukkitQueueCoordinator.class)));</span>
-<span class="source-line-no">111</span><span id="line-111">        if (Settings.Enabled_Components.WORLDS) {</span>
-<span class="source-line-no">112</span><span id="line-112">            bind(PlotAreaManager.class).to(SinglePlotAreaManager.class);</span>
-<span class="source-line-no">113</span><span id="line-113">            try {</span>
-<span class="source-line-no">114</span><span id="line-114">                bind(SingleWorldListener.class).toInstance(new SingleWorldListener());</span>
-<span class="source-line-no">115</span><span id="line-115">            } catch (Exception e) {</span>
-<span class="source-line-no">116</span><span id="line-116">                e.printStackTrace();</span>
-<span class="source-line-no">117</span><span id="line-117">            }</span>
-<span class="source-line-no">118</span><span id="line-118">        } else {</span>
-<span class="source-line-no">119</span><span id="line-119">            bind(PlotAreaManager.class).to(DefaultPlotAreaManager.class);</span>
-<span class="source-line-no">120</span><span id="line-120">        }</span>
-<span class="source-line-no">121</span><span id="line-121">        install(new FactoryModuleBuilder().build(HybridPlotWorldFactory.class));</span>
-<span class="source-line-no">122</span><span id="line-122">        install(new FactoryModuleBuilder()</span>
-<span class="source-line-no">123</span><span id="line-123">                .implement(ChunkCoordinator.class, BukkitChunkCoordinator.class)</span>
-<span class="source-line-no">124</span><span id="line-124">                .build(ChunkCoordinatorFactory.class));</span>
-<span class="source-line-no">125</span><span id="line-125">        install(new FactoryModuleBuilder().build(ChunkCoordinatorBuilderFactory.class));</span>
-<span class="source-line-no">126</span><span id="line-126">    }</span>
-<span class="source-line-no">127</span><span id="line-127"></span>
-<span class="source-line-no">128</span><span id="line-128">    @Provides</span>
-<span class="source-line-no">129</span><span id="line-129">    @Singleton</span>
-<span class="source-line-no">130</span><span id="line-130">    @NonNull EconHandler provideEconHandler() {</span>
-<span class="source-line-no">131</span><span id="line-131">        if (!Settings.Enabled_Components.ECONOMY) {</span>
-<span class="source-line-no">132</span><span id="line-132">            return EconHandler.nullEconHandler();</span>
-<span class="source-line-no">133</span><span id="line-133">        }</span>
-<span class="source-line-no">134</span><span id="line-134">        if (Bukkit.getPluginManager().isPluginEnabled("Vault")) {</span>
-<span class="source-line-no">135</span><span id="line-135">            try {</span>
-<span class="source-line-no">136</span><span id="line-136">                BukkitEconHandler econHandler = new BukkitEconHandler();</span>
-<span class="source-line-no">137</span><span id="line-137">                if (!econHandler.init()) {</span>
-<span class="source-line-no">138</span><span id="line-138">                    LOGGER.warn("Economy is enabled but no plugin is providing an economy service. Falling back...");</span>
-<span class="source-line-no">139</span><span id="line-139">                    return EconHandler.nullEconHandler();</span>
-<span class="source-line-no">140</span><span id="line-140">                }</span>
-<span class="source-line-no">141</span><span id="line-141">                return econHandler;</span>
-<span class="source-line-no">142</span><span id="line-142">            } catch (final Exception ignored) {</span>
-<span class="source-line-no">143</span><span id="line-143">            }</span>
-<span class="source-line-no">144</span><span id="line-144">        }</span>
-<span class="source-line-no">145</span><span id="line-145">        return EconHandler.nullEconHandler();</span>
-<span class="source-line-no">146</span><span id="line-146">    }</span>
-<span class="source-line-no">147</span><span id="line-147"></span>
-<span class="source-line-no">148</span><span id="line-148">}</span>
+<span class="source-line-no">050</span><span id="line-50">import com.plotsquared.core.player.OfflinePlotPlayer;</span>
+<span class="source-line-no">051</span><span id="line-51">import com.plotsquared.core.player.PlotPlayer;</span>
+<span class="source-line-no">052</span><span id="line-52">import com.plotsquared.core.plot.PlotArea;</span>
+<span class="source-line-no">053</span><span id="line-53">import com.plotsquared.core.plot.world.DefaultPlotAreaManager;</span>
+<span class="source-line-no">054</span><span id="line-54">import com.plotsquared.core.plot.world.PlotAreaManager;</span>
+<span class="source-line-no">055</span><span id="line-55">import com.plotsquared.core.plot.world.SinglePlotAreaManager;</span>
+<span class="source-line-no">056</span><span id="line-56">import com.plotsquared.core.queue.ChunkCoordinator;</span>
+<span class="source-line-no">057</span><span id="line-57">import com.plotsquared.core.queue.GlobalBlockQueue;</span>
+<span class="source-line-no">058</span><span id="line-58">import com.plotsquared.core.queue.QueueProvider;</span>
+<span class="source-line-no">059</span><span id="line-59">import com.plotsquared.core.queue.subscriber.DefaultProgressSubscriber;</span>
+<span class="source-line-no">060</span><span id="line-60">import com.plotsquared.core.queue.subscriber.ProgressSubscriber;</span>
+<span class="source-line-no">061</span><span id="line-61">import com.plotsquared.core.util.ChunkManager;</span>
+<span class="source-line-no">062</span><span id="line-62">import com.plotsquared.core.util.EconHandler;</span>
+<span class="source-line-no">063</span><span id="line-63">import com.plotsquared.core.util.InventoryUtil;</span>
+<span class="source-line-no">064</span><span id="line-64">import com.plotsquared.core.util.PlayerManager;</span>
+<span class="source-line-no">065</span><span id="line-65">import com.plotsquared.core.util.RegionManager;</span>
+<span class="source-line-no">066</span><span id="line-66">import com.plotsquared.core.util.SchematicHandler;</span>
+<span class="source-line-no">067</span><span id="line-67">import com.plotsquared.core.util.SetupUtils;</span>
+<span class="source-line-no">068</span><span id="line-68">import com.plotsquared.core.util.WorldUtil;</span>
+<span class="source-line-no">069</span><span id="line-69">import com.sk89q.worldedit.bukkit.WorldEditPlugin;</span>
+<span class="source-line-no">070</span><span id="line-70">import com.sk89q.worldedit.extension.platform.Actor;</span>
+<span class="source-line-no">071</span><span id="line-71">import org.apache.logging.log4j.LogManager;</span>
+<span class="source-line-no">072</span><span id="line-72">import org.apache.logging.log4j.Logger;</span>
+<span class="source-line-no">073</span><span id="line-73">import org.bukkit.Bukkit;</span>
+<span class="source-line-no">074</span><span id="line-74">import org.bukkit.command.ConsoleCommandSender;</span>
+<span class="source-line-no">075</span><span id="line-75">import org.bukkit.plugin.java.JavaPlugin;</span>
+<span class="source-line-no">076</span><span id="line-76">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">import java.util.Objects;</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">public class BukkitModule extends AbstractModule {</span>
+<span class="source-line-no">081</span><span id="line-81"></span>
+<span class="source-line-no">082</span><span id="line-82">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + BukkitModule.class.getSimpleName());</span>
+<span class="source-line-no">083</span><span id="line-83"></span>
+<span class="source-line-no">084</span><span id="line-84">    private final BukkitPlatform bukkitPlatform;</span>
+<span class="source-line-no">085</span><span id="line-85"></span>
+<span class="source-line-no">086</span><span id="line-86">    public BukkitModule(final @NonNull BukkitPlatform bukkitPlatform) {</span>
+<span class="source-line-no">087</span><span id="line-87">        this.bukkitPlatform = bukkitPlatform;</span>
+<span class="source-line-no">088</span><span id="line-88">    }</span>
+<span class="source-line-no">089</span><span id="line-89"></span>
+<span class="source-line-no">090</span><span id="line-90">    @Override</span>
+<span class="source-line-no">091</span><span id="line-91">    protected void configure() {</span>
+<span class="source-line-no">092</span><span id="line-92">        bind(PlayerManager.class).to(BukkitPlayerManager.class);</span>
+<span class="source-line-no">093</span><span id="line-93">        bind(JavaPlugin.class).toInstance(bukkitPlatform);</span>
+<span class="source-line-no">094</span><span id="line-94">        bind(PlotPlatform.class).toInstance(bukkitPlatform);</span>
+<span class="source-line-no">095</span><span id="line-95">        bind(BukkitPlatform.class).toInstance(bukkitPlatform);</span>
+<span class="source-line-no">096</span><span id="line-96">        bind(IndependentPlotGenerator.class).annotatedWith(DefaultGenerator.class).to(HybridGen.class);</span>
+<span class="source-line-no">097</span><span id="line-97">        // Console actor</span>
+<span class="source-line-no">098</span><span id="line-98">        @NonNull ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();</span>
+<span class="source-line-no">099</span><span id="line-99">        WorldEditPlugin wePlugin = ((WorldEditPlugin) Bukkit.getPluginManager().getPlugin("WorldEdit"));</span>
+<span class="source-line-no">100</span><span id="line-100">        bind(Actor.class).annotatedWith(ConsoleActor.class).toInstance(wePlugin.wrapCommandSender(console));</span>
+<span class="source-line-no">101</span><span id="line-101">        bind(InventoryUtil.class).to(BukkitInventoryUtil.class);</span>
+<span class="source-line-no">102</span><span id="line-102">        bind(SetupUtils.class).to(BukkitSetupUtils.class);</span>
+<span class="source-line-no">103</span><span id="line-103">        bind(WorldUtil.class).to(BukkitUtil.class);</span>
+<span class="source-line-no">104</span><span id="line-104">        install(new FactoryModuleBuilder()</span>
+<span class="source-line-no">105</span><span id="line-105">                .implement(ProgressSubscriber.class, DefaultProgressSubscriber.class)</span>
+<span class="source-line-no">106</span><span id="line-106">                .build(ProgressSubscriberFactory.class));</span>
+<span class="source-line-no">107</span><span id="line-107">        bind(ChunkManager.class).to(BukkitChunkManager.class);</span>
+<span class="source-line-no">108</span><span id="line-108">        if (PlotSquared.platform().isFaweHooking()) {</span>
+<span class="source-line-no">109</span><span id="line-109">            bind(SchematicHandler.class).to(FaweSchematicHandler.class);</span>
+<span class="source-line-no">110</span><span id="line-110">            bind(RegionManager.class).to(FaweRegionManager.class);</span>
+<span class="source-line-no">111</span><span id="line-111">        } else {</span>
+<span class="source-line-no">112</span><span id="line-112">            bind(SchematicHandler.class).to(BukkitSchematicHandler.class);</span>
+<span class="source-line-no">113</span><span id="line-113">            bind(RegionManager.class).to(BukkitRegionManager.class);</span>
+<span class="source-line-no">114</span><span id="line-114">        }</span>
+<span class="source-line-no">115</span><span id="line-115">        bind(GlobalBlockQueue.class).toInstance(new GlobalBlockQueue(QueueProvider.of(BukkitQueueCoordinator.class)));</span>
+<span class="source-line-no">116</span><span id="line-116">        if (Settings.Enabled_Components.WORLDS) {</span>
+<span class="source-line-no">117</span><span id="line-117">            bind(PlotAreaManager.class).to(SinglePlotAreaManager.class);</span>
+<span class="source-line-no">118</span><span id="line-118">            try {</span>
+<span class="source-line-no">119</span><span id="line-119">                bind(SingleWorldListener.class).toInstance(new SingleWorldListener());</span>
+<span class="source-line-no">120</span><span id="line-120">            } catch (Exception e) {</span>
+<span class="source-line-no">121</span><span id="line-121">                e.printStackTrace();</span>
+<span class="source-line-no">122</span><span id="line-122">            }</span>
+<span class="source-line-no">123</span><span id="line-123">        } else {</span>
+<span class="source-line-no">124</span><span id="line-124">            bind(PlotAreaManager.class).to(DefaultPlotAreaManager.class);</span>
+<span class="source-line-no">125</span><span id="line-125">        }</span>
+<span class="source-line-no">126</span><span id="line-126">        install(new FactoryModuleBuilder().build(HybridPlotWorldFactory.class));</span>
+<span class="source-line-no">127</span><span id="line-127">        install(new FactoryModuleBuilder()</span>
+<span class="source-line-no">128</span><span id="line-128">                .implement(ChunkCoordinator.class, BukkitChunkCoordinator.class)</span>
+<span class="source-line-no">129</span><span id="line-129">                .build(ChunkCoordinatorFactory.class));</span>
+<span class="source-line-no">130</span><span id="line-130">        install(new FactoryModuleBuilder().build(ChunkCoordinatorBuilderFactory.class));</span>
+<span class="source-line-no">131</span><span id="line-131">    }</span>
+<span class="source-line-no">132</span><span id="line-132"></span>
+<span class="source-line-no">133</span><span id="line-133">    @Provides</span>
+<span class="source-line-no">134</span><span id="line-134">    @Singleton</span>
+<span class="source-line-no">135</span><span id="line-135">    @NonNull EconHandler provideEconHandler() {</span>
+<span class="source-line-no">136</span><span id="line-136">        if (!Settings.Enabled_Components.ECONOMY || !Bukkit.getPluginManager().isPluginEnabled("Vault")) {</span>
+<span class="source-line-no">137</span><span id="line-137">            return EconHandler.nullEconHandler();</span>
+<span class="source-line-no">138</span><span id="line-138">        }</span>
+<span class="source-line-no">139</span><span id="line-139">        // Guice eagerly initializes singletons, so we need to bring the laziness ourselves</span>
+<span class="source-line-no">140</span><span id="line-140">        return new LazyEconHandler();</span>
+<span class="source-line-no">141</span><span id="line-141">    }</span>
+<span class="source-line-no">142</span><span id="line-142"></span>
+<span class="source-line-no">143</span><span id="line-143">    private static final class LazyEconHandler extends EconHandler implements ServerListener.MutableEconHandler {</span>
+<span class="source-line-no">144</span><span id="line-144">        private volatile EconHandler implementation;</span>
+<span class="source-line-no">145</span><span id="line-145"></span>
+<span class="source-line-no">146</span><span id="line-146">        public void setImplementation(EconHandler econHandler) {</span>
+<span class="source-line-no">147</span><span id="line-147">            this.implementation = econHandler;</span>
+<span class="source-line-no">148</span><span id="line-148">        }</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">        @Override</span>
+<span class="source-line-no">151</span><span id="line-151">        public boolean init() {</span>
+<span class="source-line-no">152</span><span id="line-152">            return get().init();</span>
+<span class="source-line-no">153</span><span id="line-153">        }</span>
+<span class="source-line-no">154</span><span id="line-154"></span>
+<span class="source-line-no">155</span><span id="line-155">        @Override</span>
+<span class="source-line-no">156</span><span id="line-156">        public double getBalance(final PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">157</span><span id="line-157">            return get().getBalance(player);</span>
+<span class="source-line-no">158</span><span id="line-158">        }</span>
+<span class="source-line-no">159</span><span id="line-159"></span>
+<span class="source-line-no">160</span><span id="line-160">        @Override</span>
+<span class="source-line-no">161</span><span id="line-161">        public void withdrawMoney(final PlotPlayer&lt;?&gt; player, final double amount) {</span>
+<span class="source-line-no">162</span><span id="line-162">            get().withdrawMoney(player, amount);</span>
+<span class="source-line-no">163</span><span id="line-163">        }</span>
+<span class="source-line-no">164</span><span id="line-164"></span>
+<span class="source-line-no">165</span><span id="line-165">        @Override</span>
+<span class="source-line-no">166</span><span id="line-166">        public void depositMoney(final PlotPlayer&lt;?&gt; player, final double amount) {</span>
+<span class="source-line-no">167</span><span id="line-167">            get().depositMoney(player, amount);</span>
+<span class="source-line-no">168</span><span id="line-168">        }</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
+<span class="source-line-no">170</span><span id="line-170">        @Override</span>
+<span class="source-line-no">171</span><span id="line-171">        public void depositMoney(final OfflinePlotPlayer player, final double amount) {</span>
+<span class="source-line-no">172</span><span id="line-172">            get().depositMoney(player, amount);</span>
+<span class="source-line-no">173</span><span id="line-173">        }</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175">        @Override</span>
+<span class="source-line-no">176</span><span id="line-176">        public boolean isEnabled(final PlotArea plotArea) {</span>
+<span class="source-line-no">177</span><span id="line-177">            return get().isEnabled(plotArea);</span>
+<span class="source-line-no">178</span><span id="line-178">        }</span>
+<span class="source-line-no">179</span><span id="line-179"></span>
+<span class="source-line-no">180</span><span id="line-180">        @Override</span>
+<span class="source-line-no">181</span><span id="line-181">        public @NonNull String format(final double balance) {</span>
+<span class="source-line-no">182</span><span id="line-182">            return get().format(balance);</span>
+<span class="source-line-no">183</span><span id="line-183">        }</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">        @Override</span>
+<span class="source-line-no">186</span><span id="line-186">        public boolean isSupported() {</span>
+<span class="source-line-no">187</span><span id="line-187">            return get().isSupported();</span>
+<span class="source-line-no">188</span><span id="line-188">        }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">        private EconHandler get() {</span>
+<span class="source-line-no">191</span><span id="line-191">            return Objects.requireNonNull(this.implementation, "EconHandler not ready yet.");</span>
+<span class="source-line-no">192</span><span id="line-192">        }</span>
+<span class="source-line-no">193</span><span id="line-193"></span>
+<span class="source-line-no">194</span><span id="line-194">    }</span>
+<span class="source-line-no">195</span><span id="line-195"></span>
+<span class="source-line-no">196</span><span id="line-196">}</span>
 
 
 

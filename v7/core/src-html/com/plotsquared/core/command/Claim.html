@@ -206,7 +206,7 @@
 <span class="source-line-no">193</span><span id="line-193">            }</span>
 <span class="source-line-no">194</span><span id="line-194">        }</span>
 <span class="source-line-no">195</span><span id="line-195">        if (!player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_BORDER)) {</span>
-<span class="source-line-no">196</span><span id="line-196">            int border = area.getBorder();</span>
+<span class="source-line-no">196</span><span id="line-196">            int border = area.getBorder(false);</span>
 <span class="source-line-no">197</span><span id="line-197">            if (border != Integer.MAX_VALUE &amp;&amp; plot.getDistanceFromOrigin() &gt; border &amp;&amp; !force) {</span>
 <span class="source-line-no">198</span><span id="line-198">                player.sendMessage(TranslatableCaption.of("border.denied"));</span>
 <span class="source-line-no">199</span><span id="line-199">                return false;</span>

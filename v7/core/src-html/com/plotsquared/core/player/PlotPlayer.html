@@ -895,7 +895,7 @@
 <span class="source-line-no">882</span><span id="line-882">        final Component titleComponent = MiniMessage.miniMessage().deserialize(title.getComponent(this), replacements);</span>
 <span class="source-line-no">883</span><span id="line-883">        final Component subtitleComponent =</span>
 <span class="source-line-no">884</span><span id="line-884">                MiniMessage.miniMessage().deserialize(subtitle.getComponent(this), replacements);</span>
-<span class="source-line-no">885</span><span id="line-885">        final Title.Times times = Title.Times.of(</span>
+<span class="source-line-no">885</span><span id="line-885">        final Title.Times times = Title.Times.times(</span>
 <span class="source-line-no">886</span><span id="line-886">                Duration.of(Settings.Titles.TITLES_FADE_IN * 50L, ChronoUnit.MILLIS),</span>
 <span class="source-line-no">887</span><span id="line-887">                Duration.of(Settings.Titles.TITLES_STAY * 50L, ChronoUnit.MILLIS),</span>
 <span class="source-line-no">888</span><span id="line-888">                Duration.of(Settings.Titles.TITLES_FADE_OUT * 50L, ChronoUnit.MILLIS)</span>

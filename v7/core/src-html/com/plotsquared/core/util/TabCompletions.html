@@ -186,7 +186,7 @@
 <span class="source-line-no">173</span><span id="line-173">            return Collections.emptyList();</span>
 <span class="source-line-no">174</span><span id="line-174">        }</span>
 <span class="source-line-no">175</span><span id="line-175">        final List&lt;String&gt; commands = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">176</span><span id="line-176">        for (int i = offset; i &lt; highestLimit &amp;&amp; (offset - i + amountLimit) &gt; 0; i++) {</span>
+<span class="source-line-no">176</span><span id="line-176">        for (int i = offset; i &lt;= highestLimit &amp;&amp; (offset - i + amountLimit) &gt; 0; i++) {</span>
 <span class="source-line-no">177</span><span id="line-177">            commands.add(String.valueOf(i));</span>
 <span class="source-line-no">178</span><span id="line-178">        }</span>
 <span class="source-line-no">179</span><span id="line-179">        return asCompletions(commands.toArray(new String[0]));</span>

@@ -68,14 +68,33 @@
 <span class="source-line-no">055</span><span id="line-55">        return NORTH;</span>
 <span class="source-line-no">056</span><span id="line-56">    }</span>
 <span class="source-line-no">057</span><span id="line-57"></span>
-<span class="source-line-no">058</span><span id="line-58">    public int getIndex() {</span>
-<span class="source-line-no">059</span><span id="line-59">        return index;</span>
-<span class="source-line-no">060</span><span id="line-60">    }</span>
-<span class="source-line-no">061</span><span id="line-61"></span>
-<span class="source-line-no">062</span><span id="line-62">    public String getName() {</span>
-<span class="source-line-no">063</span><span id="line-63">        return name;</span>
-<span class="source-line-no">064</span><span id="line-64">    }</span>
-<span class="source-line-no">065</span><span id="line-65">}</span>
+<span class="source-line-no">058</span><span id="line-58">    /**</span>
+<span class="source-line-no">059</span><span id="line-59">     * {@return the opposite direction}</span>
+<span class="source-line-no">060</span><span id="line-60">     * If this is {@link Direction#ALL}, then {@link Direction#ALL} is returned.</span>
+<span class="source-line-no">061</span><span id="line-61">     * @since 7.2.0</span>
+<span class="source-line-no">062</span><span id="line-62">     */</span>
+<span class="source-line-no">063</span><span id="line-63">    public Direction opposite() {</span>
+<span class="source-line-no">064</span><span id="line-64">        return switch (this) {</span>
+<span class="source-line-no">065</span><span id="line-65">            case ALL -&gt; ALL;</span>
+<span class="source-line-no">066</span><span id="line-66">            case NORTH -&gt; SOUTH;</span>
+<span class="source-line-no">067</span><span id="line-67">            case EAST -&gt; WEST;</span>
+<span class="source-line-no">068</span><span id="line-68">            case SOUTH -&gt; NORTH;</span>
+<span class="source-line-no">069</span><span id="line-69">            case WEST -&gt; EAST;</span>
+<span class="source-line-no">070</span><span id="line-70">            case NORTHEAST -&gt; SOUTHWEST;</span>
+<span class="source-line-no">071</span><span id="line-71">            case SOUTHEAST -&gt; NORTHWEST;</span>
+<span class="source-line-no">072</span><span id="line-72">            case SOUTHWEST -&gt; NORTHEAST;</span>
+<span class="source-line-no">073</span><span id="line-73">            case NORTHWEST -&gt; SOUTHEAST;</span>
+<span class="source-line-no">074</span><span id="line-74">        };</span>
+<span class="source-line-no">075</span><span id="line-75">    }</span>
+<span class="source-line-no">076</span><span id="line-76"></span>
+<span class="source-line-no">077</span><span id="line-77">    public int getIndex() {</span>
+<span class="source-line-no">078</span><span id="line-78">        return index;</span>
+<span class="source-line-no">079</span><span id="line-79">    }</span>
+<span class="source-line-no">080</span><span id="line-80"></span>
+<span class="source-line-no">081</span><span id="line-81">    public String getName() {</span>
+<span class="source-line-no">082</span><span id="line-82">        return name;</span>
+<span class="source-line-no">083</span><span id="line-83">    }</span>
+<span class="source-line-no">084</span><span id="line-84">}</span>
 
 
 

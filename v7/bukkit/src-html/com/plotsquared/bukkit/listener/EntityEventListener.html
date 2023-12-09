@@ -156,284 +156,288 @@
 <span class="source-line-no">143</span><span id="line-143">        if (area == null) {</span>
 <span class="source-line-no">144</span><span id="line-144">            return;</span>
 <span class="source-line-no">145</span><span id="line-145">        }</span>
-<span class="source-line-no">146</span><span id="line-146">        CreatureSpawnEvent.SpawnReason reason = event.getSpawnReason();</span>
-<span class="source-line-no">147</span><span id="line-147">        switch (reason.toString()) {</span>
-<span class="source-line-no">148</span><span id="line-148">            case "DISPENSE_EGG", "EGG", "OCELOT_BABY", "SPAWNER_EGG" -&gt; {</span>
-<span class="source-line-no">149</span><span id="line-149">                if (!area.isSpawnEggs()) {</span>
-<span class="source-line-no">150</span><span id="line-150">                    event.setCancelled(true);</span>
-<span class="source-line-no">151</span><span id="line-151">                    return;</span>
-<span class="source-line-no">152</span><span id="line-152">                }</span>
-<span class="source-line-no">153</span><span id="line-153">            }</span>
-<span class="source-line-no">154</span><span id="line-154">            case "REINFORCEMENTS", "NATURAL", "MOUNT", "PATROL", "RAID", "SHEARED", "SILVERFISH_BLOCK", "ENDER_PEARL",</span>
-<span class="source-line-no">155</span><span id="line-155">                    "TRAP", "VILLAGE_DEFENSE", "VILLAGE_INVASION", "BEEHIVE", "CHUNK_GEN", "NETHER_PORTAL",</span>
-<span class="source-line-no">156</span><span id="line-156">                    "DUPLICATION", "FROZEN", "SPELL" -&gt; {</span>
-<span class="source-line-no">157</span><span id="line-157">                if (!area.isMobSpawning()) {</span>
-<span class="source-line-no">158</span><span id="line-158">                    event.setCancelled(true);</span>
-<span class="source-line-no">159</span><span id="line-159">                    return;</span>
-<span class="source-line-no">160</span><span id="line-160">                }</span>
-<span class="source-line-no">161</span><span id="line-161">            }</span>
-<span class="source-line-no">162</span><span id="line-162">            case "BREEDING" -&gt; {</span>
-<span class="source-line-no">163</span><span id="line-163">                if (!area.isSpawnBreeding()) {</span>
-<span class="source-line-no">164</span><span id="line-164">                    event.setCancelled(true);</span>
-<span class="source-line-no">165</span><span id="line-165">                    return;</span>
-<span class="source-line-no">166</span><span id="line-166">                }</span>
-<span class="source-line-no">167</span><span id="line-167">            }</span>
-<span class="source-line-no">168</span><span id="line-168">            case "BUILD_IRONGOLEM", "BUILD_SNOWMAN", "BUILD_WITHER", "CUSTOM" -&gt; {</span>
-<span class="source-line-no">169</span><span id="line-169">                if (!area.isSpawnCustom() &amp;&amp; entity.getType() != EntityType.ARMOR_STAND) {</span>
-<span class="source-line-no">170</span><span id="line-170">                    event.setCancelled(true);</span>
-<span class="source-line-no">171</span><span id="line-171">                    return;</span>
-<span class="source-line-no">172</span><span id="line-172">                }</span>
-<span class="source-line-no">173</span><span id="line-173">            }</span>
-<span class="source-line-no">174</span><span id="line-174">            case "SPAWNER" -&gt; {</span>
-<span class="source-line-no">175</span><span id="line-175">                if (!area.isMobSpawnerSpawning()) {</span>
-<span class="source-line-no">176</span><span id="line-176">                    event.setCancelled(true);</span>
-<span class="source-line-no">177</span><span id="line-177">                    return;</span>
-<span class="source-line-no">178</span><span id="line-178">                }</span>
-<span class="source-line-no">179</span><span id="line-179">            }</span>
-<span class="source-line-no">180</span><span id="line-180">        }</span>
-<span class="source-line-no">181</span><span id="line-181">        Plot plot = area.getOwnedPlotAbs(location);</span>
-<span class="source-line-no">182</span><span id="line-182">        if (plot == null) {</span>
-<span class="source-line-no">183</span><span id="line-183">            if (!area.isMobSpawning()) {</span>
-<span class="source-line-no">184</span><span id="line-184">                event.setCancelled(true);</span>
-<span class="source-line-no">185</span><span id="line-185">            }</span>
-<span class="source-line-no">186</span><span id="line-186">            return;</span>
-<span class="source-line-no">187</span><span id="line-187">        }</span>
-<span class="source-line-no">188</span><span id="line-188">        if (BukkitEntityUtil.checkEntity(entity, plot.getBasePlot(false))) {</span>
-<span class="source-line-no">189</span><span id="line-189">            event.setCancelled(true);</span>
-<span class="source-line-no">190</span><span id="line-190">        }</span>
-<span class="source-line-no">191</span><span id="line-191">    }</span>
-<span class="source-line-no">192</span><span id="line-192"></span>
-<span class="source-line-no">193</span><span id="line-193">    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)</span>
-<span class="source-line-no">194</span><span id="line-194">    public void onEntityFall(EntityChangeBlockEvent event) {</span>
-<span class="source-line-no">195</span><span id="line-195">        if (event.getEntityType() != EntityType.FALLING_BLOCK) {</span>
-<span class="source-line-no">196</span><span id="line-196">            return;</span>
-<span class="source-line-no">197</span><span id="line-197">        }</span>
-<span class="source-line-no">198</span><span id="line-198">        Block block = event.getBlock();</span>
-<span class="source-line-no">199</span><span id="line-199">        World world = block.getWorld();</span>
-<span class="source-line-no">200</span><span id="line-200">        String worldName = world.getName();</span>
-<span class="source-line-no">201</span><span id="line-201">        if (!this.plotAreaManager.hasPlotArea(worldName)) {</span>
-<span class="source-line-no">202</span><span id="line-202">            return;</span>
-<span class="source-line-no">203</span><span id="line-203">        }</span>
-<span class="source-line-no">204</span><span id="line-204">        Location location = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">205</span><span id="line-205">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">206</span><span id="line-206">        if (area == null) {</span>
-<span class="source-line-no">207</span><span id="line-207">            return;</span>
-<span class="source-line-no">208</span><span id="line-208">        }</span>
-<span class="source-line-no">209</span><span id="line-209">        Plot plot = area.getOwnedPlotAbs(location);</span>
-<span class="source-line-no">210</span><span id="line-210">        if (plot == null || plot.getFlag(DisablePhysicsFlag.class)) {</span>
-<span class="source-line-no">211</span><span id="line-211">            event.setCancelled(true);</span>
-<span class="source-line-no">212</span><span id="line-212">            if (plot != null) {</span>
-<span class="source-line-no">213</span><span id="line-213">                if (block.getType().hasGravity()) {</span>
-<span class="source-line-no">214</span><span id="line-214">                    BlockEventListener.sendBlockChange(block.getLocation(), block.getBlockData());</span>
-<span class="source-line-no">215</span><span id="line-215">                }</span>
-<span class="source-line-no">216</span><span id="line-216">                plot.debug("Falling block event was cancelled because disable-physics = true");</span>
-<span class="source-line-no">217</span><span id="line-217">            }</span>
-<span class="source-line-no">218</span><span id="line-218">            return;</span>
-<span class="source-line-no">219</span><span id="line-219">        }</span>
-<span class="source-line-no">220</span><span id="line-220">        if (event.getTo().hasGravity()) {</span>
-<span class="source-line-no">221</span><span id="line-221">            Entity entity = event.getEntity();</span>
-<span class="source-line-no">222</span><span id="line-222">            List&lt;MetadataValue&gt; meta = entity.getMetadata("plot");</span>
-<span class="source-line-no">223</span><span id="line-223">            if (meta.isEmpty()) {</span>
-<span class="source-line-no">224</span><span id="line-224">                return;</span>
-<span class="source-line-no">225</span><span id="line-225">            }</span>
-<span class="source-line-no">226</span><span id="line-226">            Plot origin = (Plot) meta.get(0).value();</span>
-<span class="source-line-no">227</span><span id="line-227">            if (origin != null &amp;&amp; !origin.equals(plot)) {</span>
-<span class="source-line-no">228</span><span id="line-228">                event.setCancelled(true);</span>
-<span class="source-line-no">229</span><span id="line-229">                entity.remove();</span>
-<span class="source-line-no">230</span><span id="line-230">            }</span>
-<span class="source-line-no">231</span><span id="line-231">        } else if (event.getTo() == Material.AIR) {</span>
-<span class="source-line-no">232</span><span id="line-232">            event.getEntity().setMetadata("plot", new FixedMetadataValue((Plugin) PlotSquared.platform(), plot));</span>
-<span class="source-line-no">233</span><span id="line-233">        }</span>
-<span class="source-line-no">234</span><span id="line-234">    }</span>
-<span class="source-line-no">235</span><span id="line-235"></span>
-<span class="source-line-no">236</span><span id="line-236">    @EventHandler(priority = EventPriority.HIGH)</span>
-<span class="source-line-no">237</span><span id="line-237">    public void onDamage(EntityDamageEvent event) {</span>
-<span class="source-line-no">238</span><span id="line-238">        if (event.getEntityType() != EntityType.PLAYER) {</span>
-<span class="source-line-no">239</span><span id="line-239">            return;</span>
-<span class="source-line-no">240</span><span id="line-240">        }</span>
-<span class="source-line-no">241</span><span id="line-241">        Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
-<span class="source-line-no">242</span><span id="line-242">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">243</span><span id="line-243">        if (area == null) {</span>
-<span class="source-line-no">244</span><span id="line-244">            return;</span>
-<span class="source-line-no">245</span><span id="line-245">        }</span>
-<span class="source-line-no">246</span><span id="line-246">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">247</span><span id="line-247">        if (plot == null) {</span>
-<span class="source-line-no">248</span><span id="line-248">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, InvincibleFlag.class, true)) {</span>
-<span class="source-line-no">249</span><span id="line-249">                event.setCancelled(true);</span>
-<span class="source-line-no">250</span><span id="line-250">            }</span>
-<span class="source-line-no">251</span><span id="line-251">            return;</span>
-<span class="source-line-no">252</span><span id="line-252">        }</span>
-<span class="source-line-no">253</span><span id="line-253">        if (plot.getFlag(InvincibleFlag.class)) {</span>
-<span class="source-line-no">254</span><span id="line-254">            plot.debug(event.getEntity().getName() + " could not take damage because invincible = true");</span>
-<span class="source-line-no">255</span><span id="line-255">            event.setCancelled(true);</span>
+<span class="source-line-no">146</span><span id="line-146">        // Armour-stands are handled elsewhere and should not be handled by area-wide entity-spawn options</span>
+<span class="source-line-no">147</span><span id="line-147">        if (entity.getType() == EntityType.ARMOR_STAND) {</span>
+<span class="source-line-no">148</span><span id="line-148">            return;</span>
+<span class="source-line-no">149</span><span id="line-149">        }</span>
+<span class="source-line-no">150</span><span id="line-150">        CreatureSpawnEvent.SpawnReason reason = event.getSpawnReason();</span>
+<span class="source-line-no">151</span><span id="line-151">        switch (reason.toString()) {</span>
+<span class="source-line-no">152</span><span id="line-152">            case "DISPENSE_EGG", "EGG", "OCELOT_BABY", "SPAWNER_EGG" -&gt; {</span>
+<span class="source-line-no">153</span><span id="line-153">                if (!area.isSpawnEggs()) {</span>
+<span class="source-line-no">154</span><span id="line-154">                    event.setCancelled(true);</span>
+<span class="source-line-no">155</span><span id="line-155">                    return;</span>
+<span class="source-line-no">156</span><span id="line-156">                }</span>
+<span class="source-line-no">157</span><span id="line-157">            }</span>
+<span class="source-line-no">158</span><span id="line-158">            case "REINFORCEMENTS", "NATURAL", "MOUNT", "PATROL", "RAID", "SHEARED", "SILVERFISH_BLOCK", "ENDER_PEARL",</span>
+<span class="source-line-no">159</span><span id="line-159">                    "TRAP", "VILLAGE_DEFENSE", "VILLAGE_INVASION", "BEEHIVE", "CHUNK_GEN", "NETHER_PORTAL",</span>
+<span class="source-line-no">160</span><span id="line-160">                    "DUPLICATION", "FROZEN", "SPELL", "DEFAULT" -&gt; {</span>
+<span class="source-line-no">161</span><span id="line-161">                if (!area.isMobSpawning()) {</span>
+<span class="source-line-no">162</span><span id="line-162">                    event.setCancelled(true);</span>
+<span class="source-line-no">163</span><span id="line-163">                    return;</span>
+<span class="source-line-no">164</span><span id="line-164">                }</span>
+<span class="source-line-no">165</span><span id="line-165">            }</span>
+<span class="source-line-no">166</span><span id="line-166">            case "BREEDING" -&gt; {</span>
+<span class="source-line-no">167</span><span id="line-167">                if (!area.isSpawnBreeding()) {</span>
+<span class="source-line-no">168</span><span id="line-168">                    event.setCancelled(true);</span>
+<span class="source-line-no">169</span><span id="line-169">                    return;</span>
+<span class="source-line-no">170</span><span id="line-170">                }</span>
+<span class="source-line-no">171</span><span id="line-171">            }</span>
+<span class="source-line-no">172</span><span id="line-172">            case "BUILD_IRONGOLEM", "BUILD_SNOWMAN", "BUILD_WITHER", "CUSTOM" -&gt; {</span>
+<span class="source-line-no">173</span><span id="line-173">                if (!area.isSpawnCustom()) {</span>
+<span class="source-line-no">174</span><span id="line-174">                    event.setCancelled(true);</span>
+<span class="source-line-no">175</span><span id="line-175">                    return;</span>
+<span class="source-line-no">176</span><span id="line-176">                }</span>
+<span class="source-line-no">177</span><span id="line-177">            }</span>
+<span class="source-line-no">178</span><span id="line-178">            case "SPAWNER" -&gt; {</span>
+<span class="source-line-no">179</span><span id="line-179">                if (!area.isMobSpawnerSpawning()) {</span>
+<span class="source-line-no">180</span><span id="line-180">                    event.setCancelled(true);</span>
+<span class="source-line-no">181</span><span id="line-181">                    return;</span>
+<span class="source-line-no">182</span><span id="line-182">                }</span>
+<span class="source-line-no">183</span><span id="line-183">            }</span>
+<span class="source-line-no">184</span><span id="line-184">        }</span>
+<span class="source-line-no">185</span><span id="line-185">        Plot plot = area.getOwnedPlotAbs(location);</span>
+<span class="source-line-no">186</span><span id="line-186">        if (plot == null) {</span>
+<span class="source-line-no">187</span><span id="line-187">            if (!area.isMobSpawning()) {</span>
+<span class="source-line-no">188</span><span id="line-188">                event.setCancelled(true);</span>
+<span class="source-line-no">189</span><span id="line-189">            }</span>
+<span class="source-line-no">190</span><span id="line-190">            return;</span>
+<span class="source-line-no">191</span><span id="line-191">        }</span>
+<span class="source-line-no">192</span><span id="line-192">        if (BukkitEntityUtil.checkEntity(entity, plot.getBasePlot(false))) {</span>
+<span class="source-line-no">193</span><span id="line-193">            event.setCancelled(true);</span>
+<span class="source-line-no">194</span><span id="line-194">        }</span>
+<span class="source-line-no">195</span><span id="line-195">    }</span>
+<span class="source-line-no">196</span><span id="line-196"></span>
+<span class="source-line-no">197</span><span id="line-197">    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)</span>
+<span class="source-line-no">198</span><span id="line-198">    public void onEntityFall(EntityChangeBlockEvent event) {</span>
+<span class="source-line-no">199</span><span id="line-199">        if (event.getEntityType() != EntityType.FALLING_BLOCK) {</span>
+<span class="source-line-no">200</span><span id="line-200">            return;</span>
+<span class="source-line-no">201</span><span id="line-201">        }</span>
+<span class="source-line-no">202</span><span id="line-202">        Block block = event.getBlock();</span>
+<span class="source-line-no">203</span><span id="line-203">        World world = block.getWorld();</span>
+<span class="source-line-no">204</span><span id="line-204">        String worldName = world.getName();</span>
+<span class="source-line-no">205</span><span id="line-205">        if (!this.plotAreaManager.hasPlotArea(worldName)) {</span>
+<span class="source-line-no">206</span><span id="line-206">            return;</span>
+<span class="source-line-no">207</span><span id="line-207">        }</span>
+<span class="source-line-no">208</span><span id="line-208">        Location location = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">209</span><span id="line-209">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">210</span><span id="line-210">        if (area == null) {</span>
+<span class="source-line-no">211</span><span id="line-211">            return;</span>
+<span class="source-line-no">212</span><span id="line-212">        }</span>
+<span class="source-line-no">213</span><span id="line-213">        Plot plot = area.getOwnedPlotAbs(location);</span>
+<span class="source-line-no">214</span><span id="line-214">        if (plot == null || plot.getFlag(DisablePhysicsFlag.class)) {</span>
+<span class="source-line-no">215</span><span id="line-215">            event.setCancelled(true);</span>
+<span class="source-line-no">216</span><span id="line-216">            if (plot != null) {</span>
+<span class="source-line-no">217</span><span id="line-217">                if (block.getType().hasGravity()) {</span>
+<span class="source-line-no">218</span><span id="line-218">                    BlockEventListener.sendBlockChange(block.getLocation(), block.getBlockData());</span>
+<span class="source-line-no">219</span><span id="line-219">                }</span>
+<span class="source-line-no">220</span><span id="line-220">                plot.debug("Falling block event was cancelled because disable-physics = true");</span>
+<span class="source-line-no">221</span><span id="line-221">            }</span>
+<span class="source-line-no">222</span><span id="line-222">            return;</span>
+<span class="source-line-no">223</span><span id="line-223">        }</span>
+<span class="source-line-no">224</span><span id="line-224">        if (event.getTo().hasGravity()) {</span>
+<span class="source-line-no">225</span><span id="line-225">            Entity entity = event.getEntity();</span>
+<span class="source-line-no">226</span><span id="line-226">            List&lt;MetadataValue&gt; meta = entity.getMetadata("plot");</span>
+<span class="source-line-no">227</span><span id="line-227">            if (meta.isEmpty()) {</span>
+<span class="source-line-no">228</span><span id="line-228">                return;</span>
+<span class="source-line-no">229</span><span id="line-229">            }</span>
+<span class="source-line-no">230</span><span id="line-230">            Plot origin = (Plot) meta.get(0).value();</span>
+<span class="source-line-no">231</span><span id="line-231">            if (origin != null &amp;&amp; !origin.equals(plot)) {</span>
+<span class="source-line-no">232</span><span id="line-232">                event.setCancelled(true);</span>
+<span class="source-line-no">233</span><span id="line-233">                entity.remove();</span>
+<span class="source-line-no">234</span><span id="line-234">            }</span>
+<span class="source-line-no">235</span><span id="line-235">        } else if (event.getTo() == Material.AIR) {</span>
+<span class="source-line-no">236</span><span id="line-236">            event.getEntity().setMetadata("plot", new FixedMetadataValue((Plugin) PlotSquared.platform(), plot));</span>
+<span class="source-line-no">237</span><span id="line-237">        }</span>
+<span class="source-line-no">238</span><span id="line-238">    }</span>
+<span class="source-line-no">239</span><span id="line-239"></span>
+<span class="source-line-no">240</span><span id="line-240">    @EventHandler(priority = EventPriority.HIGH)</span>
+<span class="source-line-no">241</span><span id="line-241">    public void onDamage(EntityDamageEvent event) {</span>
+<span class="source-line-no">242</span><span id="line-242">        if (event.getEntityType() != EntityType.PLAYER) {</span>
+<span class="source-line-no">243</span><span id="line-243">            return;</span>
+<span class="source-line-no">244</span><span id="line-244">        }</span>
+<span class="source-line-no">245</span><span id="line-245">        Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
+<span class="source-line-no">246</span><span id="line-246">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">247</span><span id="line-247">        if (area == null) {</span>
+<span class="source-line-no">248</span><span id="line-248">            return;</span>
+<span class="source-line-no">249</span><span id="line-249">        }</span>
+<span class="source-line-no">250</span><span id="line-250">        Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">251</span><span id="line-251">        if (plot == null) {</span>
+<span class="source-line-no">252</span><span id="line-252">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, InvincibleFlag.class, true)) {</span>
+<span class="source-line-no">253</span><span id="line-253">                event.setCancelled(true);</span>
+<span class="source-line-no">254</span><span id="line-254">            }</span>
+<span class="source-line-no">255</span><span id="line-255">            return;</span>
 <span class="source-line-no">256</span><span id="line-256">        }</span>
-<span class="source-line-no">257</span><span id="line-257">    }</span>
-<span class="source-line-no">258</span><span id="line-258"></span>
-<span class="source-line-no">259</span><span id="line-259">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">260</span><span id="line-260">    public void onBigBoom(EntityExplodeEvent event) {</span>
-<span class="source-line-no">261</span><span id="line-261">        Location location = BukkitUtil.adapt(event.getLocation());</span>
-<span class="source-line-no">262</span><span id="line-262">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">263</span><span id="line-263">        boolean plotArea = location.isPlotArea();</span>
-<span class="source-line-no">264</span><span id="line-264">        if (!plotArea) {</span>
-<span class="source-line-no">265</span><span id="line-265">            if (!this.plotAreaManager.hasPlotArea(location.getWorldName())) {</span>
-<span class="source-line-no">266</span><span id="line-266">                return;</span>
-<span class="source-line-no">267</span><span id="line-267">            }</span>
-<span class="source-line-no">268</span><span id="line-268">            return;</span>
-<span class="source-line-no">269</span><span id="line-269">        }</span>
-<span class="source-line-no">270</span><span id="line-270">        Plot plot = area.getOwnedPlot(location);</span>
-<span class="source-line-no">271</span><span id="line-271">        if (plot != null) {</span>
-<span class="source-line-no">272</span><span id="line-272">            if (plot.getFlag(ExplosionFlag.class)) {</span>
-<span class="source-line-no">273</span><span id="line-273">                List&lt;MetadataValue&gt; meta = event.getEntity().getMetadata("plot");</span>
-<span class="source-line-no">274</span><span id="line-274">                Plot origin;</span>
-<span class="source-line-no">275</span><span id="line-275">                if (meta.isEmpty()) {</span>
-<span class="source-line-no">276</span><span id="line-276">                    origin = plot;</span>
-<span class="source-line-no">277</span><span id="line-277">                } else {</span>
-<span class="source-line-no">278</span><span id="line-278">                    origin = (Plot) meta.get(0).value();</span>
-<span class="source-line-no">279</span><span id="line-279">                }</span>
-<span class="source-line-no">280</span><span id="line-280">                if (this.lastRadius != 0) {</span>
-<span class="source-line-no">281</span><span id="line-281">                    List&lt;Entity&gt; nearby = event.getEntity().getNearbyEntities(this.lastRadius, this.lastRadius, this.lastRadius);</span>
-<span class="source-line-no">282</span><span id="line-282">                    for (Entity near : nearby) {</span>
-<span class="source-line-no">283</span><span id="line-283">                        if (near instanceof TNTPrimed || near.getType().equals(EntityType.MINECART_TNT)) {</span>
-<span class="source-line-no">284</span><span id="line-284">                            if (!near.hasMetadata("plot")) {</span>
-<span class="source-line-no">285</span><span id="line-285">                                near.setMetadata("plot", new FixedMetadataValue((Plugin) PlotSquared.platform(), plot));</span>
-<span class="source-line-no">286</span><span id="line-286">                            }</span>
-<span class="source-line-no">287</span><span id="line-287">                        }</span>
-<span class="source-line-no">288</span><span id="line-288">                    }</span>
-<span class="source-line-no">289</span><span id="line-289">                    this.lastRadius = 0;</span>
-<span class="source-line-no">290</span><span id="line-290">                }</span>
-<span class="source-line-no">291</span><span id="line-291">                Iterator&lt;Block&gt; iterator = event.blockList().iterator();</span>
-<span class="source-line-no">292</span><span id="line-292">                while (iterator.hasNext()) {</span>
-<span class="source-line-no">293</span><span id="line-293">                    Block block = iterator.next();</span>
-<span class="source-line-no">294</span><span id="line-294">                    location = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">295</span><span id="line-295">                    if (!area.contains(location.getX(), location.getZ()) || !origin.equals(area.getOwnedPlot(location))) {</span>
-<span class="source-line-no">296</span><span id="line-296">                        iterator.remove();</span>
-<span class="source-line-no">297</span><span id="line-297">                    }</span>
-<span class="source-line-no">298</span><span id="line-298">                }</span>
-<span class="source-line-no">299</span><span id="line-299">                return;</span>
-<span class="source-line-no">300</span><span id="line-300">            } else {</span>
-<span class="source-line-no">301</span><span id="line-301">                plot.debug("Explosion was cancelled because explosion = false");</span>
-<span class="source-line-no">302</span><span id="line-302">            }</span>
-<span class="source-line-no">303</span><span id="line-303">        }</span>
-<span class="source-line-no">304</span><span id="line-304">        event.setCancelled(true);</span>
-<span class="source-line-no">305</span><span id="line-305">        //Spawn Explosion Particles when enabled in settings</span>
-<span class="source-line-no">306</span><span id="line-306">        if (Settings.General.ALWAYS_SHOW_EXPLOSIONS) {</span>
-<span class="source-line-no">307</span><span id="line-307">            event.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getLocation(), 0);</span>
-<span class="source-line-no">308</span><span id="line-308">        }</span>
-<span class="source-line-no">309</span><span id="line-309">    }</span>
-<span class="source-line-no">310</span><span id="line-310"></span>
-<span class="source-line-no">311</span><span id="line-311">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">312</span><span id="line-312">    public void onPeskyMobsChangeTheWorldLikeWTFEvent(EntityChangeBlockEvent event) {</span>
-<span class="source-line-no">313</span><span id="line-313">        Entity e = event.getEntity();</span>
-<span class="source-line-no">314</span><span id="line-314">        Material type = event.getBlock().getType();</span>
-<span class="source-line-no">315</span><span id="line-315">        Location location = BukkitUtil.adapt(event.getBlock().getLocation());</span>
-<span class="source-line-no">316</span><span id="line-316">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">317</span><span id="line-317">        if (area == null) {</span>
-<span class="source-line-no">318</span><span id="line-318">            return;</span>
-<span class="source-line-no">319</span><span id="line-319">        }</span>
-<span class="source-line-no">320</span><span id="line-320">        if (e instanceof FallingBlock) {</span>
-<span class="source-line-no">321</span><span id="line-321">            // allow falling blocks converting to blocks and vice versa</span>
+<span class="source-line-no">257</span><span id="line-257">        if (plot.getFlag(InvincibleFlag.class)) {</span>
+<span class="source-line-no">258</span><span id="line-258">            plot.debug(event.getEntity().getName() + " could not take damage because invincible = true");</span>
+<span class="source-line-no">259</span><span id="line-259">            event.setCancelled(true);</span>
+<span class="source-line-no">260</span><span id="line-260">        }</span>
+<span class="source-line-no">261</span><span id="line-261">    }</span>
+<span class="source-line-no">262</span><span id="line-262"></span>
+<span class="source-line-no">263</span><span id="line-263">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">264</span><span id="line-264">    public void onBigBoom(EntityExplodeEvent event) {</span>
+<span class="source-line-no">265</span><span id="line-265">        Location location = BukkitUtil.adapt(event.getLocation());</span>
+<span class="source-line-no">266</span><span id="line-266">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">267</span><span id="line-267">        boolean plotArea = location.isPlotArea();</span>
+<span class="source-line-no">268</span><span id="line-268">        if (!plotArea) {</span>
+<span class="source-line-no">269</span><span id="line-269">            if (!this.plotAreaManager.hasPlotArea(location.getWorldName())) {</span>
+<span class="source-line-no">270</span><span id="line-270">                return;</span>
+<span class="source-line-no">271</span><span id="line-271">            }</span>
+<span class="source-line-no">272</span><span id="line-272">            return;</span>
+<span class="source-line-no">273</span><span id="line-273">        }</span>
+<span class="source-line-no">274</span><span id="line-274">        Plot plot = area.getOwnedPlot(location);</span>
+<span class="source-line-no">275</span><span id="line-275">        if (plot != null) {</span>
+<span class="source-line-no">276</span><span id="line-276">            if (plot.getFlag(ExplosionFlag.class)) {</span>
+<span class="source-line-no">277</span><span id="line-277">                List&lt;MetadataValue&gt; meta = event.getEntity().getMetadata("plot");</span>
+<span class="source-line-no">278</span><span id="line-278">                Plot origin;</span>
+<span class="source-line-no">279</span><span id="line-279">                if (meta.isEmpty()) {</span>
+<span class="source-line-no">280</span><span id="line-280">                    origin = plot;</span>
+<span class="source-line-no">281</span><span id="line-281">                } else {</span>
+<span class="source-line-no">282</span><span id="line-282">                    origin = (Plot) meta.get(0).value();</span>
+<span class="source-line-no">283</span><span id="line-283">                }</span>
+<span class="source-line-no">284</span><span id="line-284">                if (this.lastRadius != 0) {</span>
+<span class="source-line-no">285</span><span id="line-285">                    List&lt;Entity&gt; nearby = event.getEntity().getNearbyEntities(this.lastRadius, this.lastRadius, this.lastRadius);</span>
+<span class="source-line-no">286</span><span id="line-286">                    for (Entity near : nearby) {</span>
+<span class="source-line-no">287</span><span id="line-287">                        if (near instanceof TNTPrimed || near.getType().equals(EntityType.MINECART_TNT)) {</span>
+<span class="source-line-no">288</span><span id="line-288">                            if (!near.hasMetadata("plot")) {</span>
+<span class="source-line-no">289</span><span id="line-289">                                near.setMetadata("plot", new FixedMetadataValue((Plugin) PlotSquared.platform(), plot));</span>
+<span class="source-line-no">290</span><span id="line-290">                            }</span>
+<span class="source-line-no">291</span><span id="line-291">                        }</span>
+<span class="source-line-no">292</span><span id="line-292">                    }</span>
+<span class="source-line-no">293</span><span id="line-293">                    this.lastRadius = 0;</span>
+<span class="source-line-no">294</span><span id="line-294">                }</span>
+<span class="source-line-no">295</span><span id="line-295">                Iterator&lt;Block&gt; iterator = event.blockList().iterator();</span>
+<span class="source-line-no">296</span><span id="line-296">                while (iterator.hasNext()) {</span>
+<span class="source-line-no">297</span><span id="line-297">                    Block block = iterator.next();</span>
+<span class="source-line-no">298</span><span id="line-298">                    location = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">299</span><span id="line-299">                    if (!area.contains(location.getX(), location.getZ()) || !origin.equals(area.getOwnedPlot(location))) {</span>
+<span class="source-line-no">300</span><span id="line-300">                        iterator.remove();</span>
+<span class="source-line-no">301</span><span id="line-301">                    }</span>
+<span class="source-line-no">302</span><span id="line-302">                }</span>
+<span class="source-line-no">303</span><span id="line-303">                return;</span>
+<span class="source-line-no">304</span><span id="line-304">            } else {</span>
+<span class="source-line-no">305</span><span id="line-305">                plot.debug("Explosion was cancelled because explosion = false");</span>
+<span class="source-line-no">306</span><span id="line-306">            }</span>
+<span class="source-line-no">307</span><span id="line-307">        }</span>
+<span class="source-line-no">308</span><span id="line-308">        event.setCancelled(true);</span>
+<span class="source-line-no">309</span><span id="line-309">        //Spawn Explosion Particles when enabled in settings</span>
+<span class="source-line-no">310</span><span id="line-310">        if (Settings.General.ALWAYS_SHOW_EXPLOSIONS) {</span>
+<span class="source-line-no">311</span><span id="line-311">            event.getLocation().getWorld().spawnParticle(Particle.EXPLOSION_HUGE, event.getLocation(), 0);</span>
+<span class="source-line-no">312</span><span id="line-312">        }</span>
+<span class="source-line-no">313</span><span id="line-313">    }</span>
+<span class="source-line-no">314</span><span id="line-314"></span>
+<span class="source-line-no">315</span><span id="line-315">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">316</span><span id="line-316">    public void onPeskyMobsChangeTheWorldLikeWTFEvent(EntityChangeBlockEvent event) {</span>
+<span class="source-line-no">317</span><span id="line-317">        Entity e = event.getEntity();</span>
+<span class="source-line-no">318</span><span id="line-318">        Material type = event.getBlock().getType();</span>
+<span class="source-line-no">319</span><span id="line-319">        Location location = BukkitUtil.adapt(event.getBlock().getLocation());</span>
+<span class="source-line-no">320</span><span id="line-320">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">321</span><span id="line-321">        if (area == null) {</span>
 <span class="source-line-no">322</span><span id="line-322">            return;</span>
-<span class="source-line-no">323</span><span id="line-323">        } else if (e instanceof Boat) {</span>
-<span class="source-line-no">324</span><span id="line-324">            // allow boats destroying lily pads</span>
-<span class="source-line-no">325</span><span id="line-325">            if (type == Material.LILY_PAD) {</span>
-<span class="source-line-no">326</span><span id="line-326">                return;</span>
-<span class="source-line-no">327</span><span id="line-327">            }</span>
-<span class="source-line-no">328</span><span id="line-328">        } else if (e instanceof Player player) {</span>
-<span class="source-line-no">329</span><span id="line-329">            BukkitPlayer pp = BukkitUtil.adapt(player);</span>
-<span class="source-line-no">330</span><span id="line-330">            if (type.toString().equals("POWDER_SNOW")) {</span>
-<span class="source-line-no">331</span><span id="line-331">                // Burning player evaporating powder snow. Use same checks as</span>
-<span class="source-line-no">332</span><span id="line-332">                // trampling farmland</span>
-<span class="source-line-no">333</span><span id="line-333">                BlockType blockType = BukkitAdapter.asBlockType(type);</span>
-<span class="source-line-no">334</span><span id="line-334">                if (!this.eventDispatcher.checkPlayerBlockEvent(pp,</span>
-<span class="source-line-no">335</span><span id="line-335">                        PlayerBlockEventType.TRIGGER_PHYSICAL, location, blockType, true</span>
-<span class="source-line-no">336</span><span id="line-336">                )) {</span>
-<span class="source-line-no">337</span><span id="line-337">                    event.setCancelled(true);</span>
-<span class="source-line-no">338</span><span id="line-338">                }</span>
-<span class="source-line-no">339</span><span id="line-339">                return;</span>
-<span class="source-line-no">340</span><span id="line-340">            } else {</span>
-<span class="source-line-no">341</span><span id="line-341">                // already handled by other flags (mainly the 'use' flag):</span>
-<span class="source-line-no">342</span><span id="line-342">                // - player tilting big dripleaf by standing on it</span>
-<span class="source-line-no">343</span><span id="line-343">                // - player picking glow berries from cave vine</span>
-<span class="source-line-no">344</span><span id="line-344">                // - player trampling farmland</span>
-<span class="source-line-no">345</span><span id="line-345">                // - player standing on or clicking redstone ore</span>
-<span class="source-line-no">346</span><span id="line-346">                return;</span>
-<span class="source-line-no">347</span><span id="line-347">            }</span>
-<span class="source-line-no">348</span><span id="line-348">        } else if (e instanceof Projectile entity) {</span>
-<span class="source-line-no">349</span><span id="line-349">            // Exact same as the ProjectileHitEvent listener, except that we let</span>
-<span class="source-line-no">350</span><span id="line-350">            // the entity-change-block determine what to do with shooters that</span>
-<span class="source-line-no">351</span><span id="line-351">            // aren't players and aren't blocks</span>
-<span class="source-line-no">352</span><span id="line-352">            Plot plot = area.getPlot(location);</span>
-<span class="source-line-no">353</span><span id="line-353">            ProjectileSource shooter = entity.getShooter();</span>
-<span class="source-line-no">354</span><span id="line-354">            if (shooter instanceof Player) {</span>
-<span class="source-line-no">355</span><span id="line-355">                PlotPlayer&lt;?&gt; pp = BukkitUtil.adapt((Player) shooter);</span>
-<span class="source-line-no">356</span><span id="line-356">                if (plot == null) {</span>
-<span class="source-line-no">357</span><span id="line-357">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_PROJECTILE_UNOWNED)) {</span>
-<span class="source-line-no">358</span><span id="line-358">                        entity.remove();</span>
-<span class="source-line-no">359</span><span id="line-359">                        event.setCancelled(true);</span>
-<span class="source-line-no">360</span><span id="line-360">                    }</span>
-<span class="source-line-no">361</span><span id="line-361">                    return;</span>
-<span class="source-line-no">362</span><span id="line-362">                }</span>
-<span class="source-line-no">363</span><span id="line-363">                if (plot.isAdded(pp.getUUID()) || pp.hasPermission(Permission.PERMISSION_ADMIN_PROJECTILE_OTHER)) {</span>
-<span class="source-line-no">364</span><span id="line-364">                    return;</span>
-<span class="source-line-no">365</span><span id="line-365">                }</span>
-<span class="source-line-no">366</span><span id="line-366">                entity.remove();</span>
-<span class="source-line-no">367</span><span id="line-367">                event.setCancelled(true);</span>
-<span class="source-line-no">368</span><span id="line-368">                return;</span>
-<span class="source-line-no">369</span><span id="line-369">            }</span>
-<span class="source-line-no">370</span><span id="line-370">            if (!(shooter instanceof Entity) &amp;&amp; shooter != null) {</span>
-<span class="source-line-no">371</span><span id="line-371">                if (plot == null) {</span>
-<span class="source-line-no">372</span><span id="line-372">                    entity.remove();</span>
-<span class="source-line-no">373</span><span id="line-373">                    event.setCancelled(true);</span>
-<span class="source-line-no">374</span><span id="line-374">                    return;</span>
-<span class="source-line-no">375</span><span id="line-375">                }</span>
-<span class="source-line-no">376</span><span id="line-376">                Location sLoc =</span>
-<span class="source-line-no">377</span><span id="line-377">                        BukkitUtil.adapt(((BlockProjectileSource) shooter).getBlock().getLocation());</span>
-<span class="source-line-no">378</span><span id="line-378">                if (!area.contains(sLoc.getX(), sLoc.getZ())) {</span>
-<span class="source-line-no">379</span><span id="line-379">                    entity.remove();</span>
-<span class="source-line-no">380</span><span id="line-380">                    event.setCancelled(true);</span>
-<span class="source-line-no">381</span><span id="line-381">                    return;</span>
-<span class="source-line-no">382</span><span id="line-382">                }</span>
-<span class="source-line-no">383</span><span id="line-383">                Plot sPlot = area.getOwnedPlotAbs(sLoc);</span>
-<span class="source-line-no">384</span><span id="line-384">                if (sPlot == null || !PlotHandler.sameOwners(plot, sPlot)) {</span>
-<span class="source-line-no">385</span><span id="line-385">                    entity.remove();</span>
-<span class="source-line-no">386</span><span id="line-386">                    event.setCancelled(true);</span>
-<span class="source-line-no">387</span><span id="line-387">                }</span>
-<span class="source-line-no">388</span><span id="line-388">                return;</span>
-<span class="source-line-no">389</span><span id="line-389">            }</span>
-<span class="source-line-no">390</span><span id="line-390">            // fall back to entity-change-block flag</span>
-<span class="source-line-no">391</span><span id="line-391">        }</span>
-<span class="source-line-no">392</span><span id="line-392"></span>
-<span class="source-line-no">393</span><span id="line-393">        Plot plot = area.getOwnedPlot(location);</span>
-<span class="source-line-no">394</span><span id="line-394">        if (plot != null &amp;&amp; !plot.getFlag(EntityChangeBlockFlag.class)) {</span>
-<span class="source-line-no">395</span><span id="line-395">            plot.debug(e.getType() + " could not change block because entity-change-block = false");</span>
-<span class="source-line-no">396</span><span id="line-396">            event.setCancelled(true);</span>
-<span class="source-line-no">397</span><span id="line-397">        }</span>
-<span class="source-line-no">398</span><span id="line-398">    }</span>
-<span class="source-line-no">399</span><span id="line-399"></span>
-<span class="source-line-no">400</span><span id="line-400">    @EventHandler</span>
-<span class="source-line-no">401</span><span id="line-401">    public void onPrime(ExplosionPrimeEvent event) {</span>
-<span class="source-line-no">402</span><span id="line-402">        this.lastRadius = event.getRadius() + 1;</span>
-<span class="source-line-no">403</span><span id="line-403">    }</span>
-<span class="source-line-no">404</span><span id="line-404"></span>
-<span class="source-line-no">405</span><span id="line-405">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">406</span><span id="line-406">    public void onVehicleCreate(VehicleCreateEvent event) {</span>
-<span class="source-line-no">407</span><span id="line-407">        Vehicle entity = event.getVehicle();</span>
-<span class="source-line-no">408</span><span id="line-408">        Location location = BukkitUtil.adapt(entity.getLocation());</span>
-<span class="source-line-no">409</span><span id="line-409">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">410</span><span id="line-410">        if (area == null) {</span>
-<span class="source-line-no">411</span><span id="line-411">            return;</span>
-<span class="source-line-no">412</span><span id="line-412">        }</span>
-<span class="source-line-no">413</span><span id="line-413">        Plot plot = area.getOwnedPlotAbs(location);</span>
-<span class="source-line-no">414</span><span id="line-414">        if (plot == null || BukkitEntityUtil.checkEntity(entity, plot)) {</span>
-<span class="source-line-no">415</span><span id="line-415">            entity.remove();</span>
-<span class="source-line-no">416</span><span id="line-416">            return;</span>
-<span class="source-line-no">417</span><span id="line-417">        }</span>
-<span class="source-line-no">418</span><span id="line-418">        if (Settings.Enabled_Components.KILL_ROAD_VEHICLES) {</span>
-<span class="source-line-no">419</span><span id="line-419">            entity.setMetadata("plot", new FixedMetadataValue((Plugin) PlotSquared.platform(), plot));</span>
-<span class="source-line-no">420</span><span id="line-420">        }</span>
-<span class="source-line-no">421</span><span id="line-421">    }</span>
-<span class="source-line-no">422</span><span id="line-422"></span>
-<span class="source-line-no">423</span><span id="line-423">}</span>
+<span class="source-line-no">323</span><span id="line-323">        }</span>
+<span class="source-line-no">324</span><span id="line-324">        if (e instanceof FallingBlock) {</span>
+<span class="source-line-no">325</span><span id="line-325">            // allow falling blocks converting to blocks and vice versa</span>
+<span class="source-line-no">326</span><span id="line-326">            return;</span>
+<span class="source-line-no">327</span><span id="line-327">        } else if (e instanceof Boat) {</span>
+<span class="source-line-no">328</span><span id="line-328">            // allow boats destroying lily pads</span>
+<span class="source-line-no">329</span><span id="line-329">            if (type == Material.LILY_PAD) {</span>
+<span class="source-line-no">330</span><span id="line-330">                return;</span>
+<span class="source-line-no">331</span><span id="line-331">            }</span>
+<span class="source-line-no">332</span><span id="line-332">        } else if (e instanceof Player player) {</span>
+<span class="source-line-no">333</span><span id="line-333">            BukkitPlayer pp = BukkitUtil.adapt(player);</span>
+<span class="source-line-no">334</span><span id="line-334">            if (type.toString().equals("POWDER_SNOW")) {</span>
+<span class="source-line-no">335</span><span id="line-335">                // Burning player evaporating powder snow. Use same checks as</span>
+<span class="source-line-no">336</span><span id="line-336">                // trampling farmland</span>
+<span class="source-line-no">337</span><span id="line-337">                BlockType blockType = BukkitAdapter.asBlockType(type);</span>
+<span class="source-line-no">338</span><span id="line-338">                if (!this.eventDispatcher.checkPlayerBlockEvent(pp,</span>
+<span class="source-line-no">339</span><span id="line-339">                        PlayerBlockEventType.TRIGGER_PHYSICAL, location, blockType, true</span>
+<span class="source-line-no">340</span><span id="line-340">                )) {</span>
+<span class="source-line-no">341</span><span id="line-341">                    event.setCancelled(true);</span>
+<span class="source-line-no">342</span><span id="line-342">                }</span>
+<span class="source-line-no">343</span><span id="line-343">                return;</span>
+<span class="source-line-no">344</span><span id="line-344">            } else {</span>
+<span class="source-line-no">345</span><span id="line-345">                // already handled by other flags (mainly the 'use' flag):</span>
+<span class="source-line-no">346</span><span id="line-346">                // - player tilting big dripleaf by standing on it</span>
+<span class="source-line-no">347</span><span id="line-347">                // - player picking glow berries from cave vine</span>
+<span class="source-line-no">348</span><span id="line-348">                // - player trampling farmland</span>
+<span class="source-line-no">349</span><span id="line-349">                // - player standing on or clicking redstone ore</span>
+<span class="source-line-no">350</span><span id="line-350">                return;</span>
+<span class="source-line-no">351</span><span id="line-351">            }</span>
+<span class="source-line-no">352</span><span id="line-352">        } else if (e instanceof Projectile entity) {</span>
+<span class="source-line-no">353</span><span id="line-353">            // Exact same as the ProjectileHitEvent listener, except that we let</span>
+<span class="source-line-no">354</span><span id="line-354">            // the entity-change-block determine what to do with shooters that</span>
+<span class="source-line-no">355</span><span id="line-355">            // aren't players and aren't blocks</span>
+<span class="source-line-no">356</span><span id="line-356">            Plot plot = area.getPlot(location);</span>
+<span class="source-line-no">357</span><span id="line-357">            ProjectileSource shooter = entity.getShooter();</span>
+<span class="source-line-no">358</span><span id="line-358">            if (shooter instanceof Player) {</span>
+<span class="source-line-no">359</span><span id="line-359">                PlotPlayer&lt;?&gt; pp = BukkitUtil.adapt((Player) shooter);</span>
+<span class="source-line-no">360</span><span id="line-360">                if (plot == null) {</span>
+<span class="source-line-no">361</span><span id="line-361">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_PROJECTILE_UNOWNED)) {</span>
+<span class="source-line-no">362</span><span id="line-362">                        entity.remove();</span>
+<span class="source-line-no">363</span><span id="line-363">                        event.setCancelled(true);</span>
+<span class="source-line-no">364</span><span id="line-364">                    }</span>
+<span class="source-line-no">365</span><span id="line-365">                    return;</span>
+<span class="source-line-no">366</span><span id="line-366">                }</span>
+<span class="source-line-no">367</span><span id="line-367">                if (plot.isAdded(pp.getUUID()) || pp.hasPermission(Permission.PERMISSION_ADMIN_PROJECTILE_OTHER)) {</span>
+<span class="source-line-no">368</span><span id="line-368">                    return;</span>
+<span class="source-line-no">369</span><span id="line-369">                }</span>
+<span class="source-line-no">370</span><span id="line-370">                entity.remove();</span>
+<span class="source-line-no">371</span><span id="line-371">                event.setCancelled(true);</span>
+<span class="source-line-no">372</span><span id="line-372">                return;</span>
+<span class="source-line-no">373</span><span id="line-373">            }</span>
+<span class="source-line-no">374</span><span id="line-374">            if (!(shooter instanceof Entity) &amp;&amp; shooter != null) {</span>
+<span class="source-line-no">375</span><span id="line-375">                if (plot == null) {</span>
+<span class="source-line-no">376</span><span id="line-376">                    entity.remove();</span>
+<span class="source-line-no">377</span><span id="line-377">                    event.setCancelled(true);</span>
+<span class="source-line-no">378</span><span id="line-378">                    return;</span>
+<span class="source-line-no">379</span><span id="line-379">                }</span>
+<span class="source-line-no">380</span><span id="line-380">                Location sLoc =</span>
+<span class="source-line-no">381</span><span id="line-381">                        BukkitUtil.adapt(((BlockProjectileSource) shooter).getBlock().getLocation());</span>
+<span class="source-line-no">382</span><span id="line-382">                if (!area.contains(sLoc.getX(), sLoc.getZ())) {</span>
+<span class="source-line-no">383</span><span id="line-383">                    entity.remove();</span>
+<span class="source-line-no">384</span><span id="line-384">                    event.setCancelled(true);</span>
+<span class="source-line-no">385</span><span id="line-385">                    return;</span>
+<span class="source-line-no">386</span><span id="line-386">                }</span>
+<span class="source-line-no">387</span><span id="line-387">                Plot sPlot = area.getOwnedPlotAbs(sLoc);</span>
+<span class="source-line-no">388</span><span id="line-388">                if (sPlot == null || !PlotHandler.sameOwners(plot, sPlot)) {</span>
+<span class="source-line-no">389</span><span id="line-389">                    entity.remove();</span>
+<span class="source-line-no">390</span><span id="line-390">                    event.setCancelled(true);</span>
+<span class="source-line-no">391</span><span id="line-391">                }</span>
+<span class="source-line-no">392</span><span id="line-392">                return;</span>
+<span class="source-line-no">393</span><span id="line-393">            }</span>
+<span class="source-line-no">394</span><span id="line-394">            // fall back to entity-change-block flag</span>
+<span class="source-line-no">395</span><span id="line-395">        }</span>
+<span class="source-line-no">396</span><span id="line-396"></span>
+<span class="source-line-no">397</span><span id="line-397">        Plot plot = area.getOwnedPlot(location);</span>
+<span class="source-line-no">398</span><span id="line-398">        if (plot != null &amp;&amp; !plot.getFlag(EntityChangeBlockFlag.class)) {</span>
+<span class="source-line-no">399</span><span id="line-399">            plot.debug(e.getType() + " could not change block because entity-change-block = false");</span>
+<span class="source-line-no">400</span><span id="line-400">            event.setCancelled(true);</span>
+<span class="source-line-no">401</span><span id="line-401">        }</span>
+<span class="source-line-no">402</span><span id="line-402">    }</span>
+<span class="source-line-no">403</span><span id="line-403"></span>
+<span class="source-line-no">404</span><span id="line-404">    @EventHandler</span>
+<span class="source-line-no">405</span><span id="line-405">    public void onPrime(ExplosionPrimeEvent event) {</span>
+<span class="source-line-no">406</span><span id="line-406">        this.lastRadius = event.getRadius() + 1;</span>
+<span class="source-line-no">407</span><span id="line-407">    }</span>
+<span class="source-line-no">408</span><span id="line-408"></span>
+<span class="source-line-no">409</span><span id="line-409">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">410</span><span id="line-410">    public void onVehicleCreate(VehicleCreateEvent event) {</span>
+<span class="source-line-no">411</span><span id="line-411">        Vehicle entity = event.getVehicle();</span>
+<span class="source-line-no">412</span><span id="line-412">        Location location = BukkitUtil.adapt(entity.getLocation());</span>
+<span class="source-line-no">413</span><span id="line-413">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">414</span><span id="line-414">        if (area == null) {</span>
+<span class="source-line-no">415</span><span id="line-415">            return;</span>
+<span class="source-line-no">416</span><span id="line-416">        }</span>
+<span class="source-line-no">417</span><span id="line-417">        Plot plot = area.getOwnedPlotAbs(location);</span>
+<span class="source-line-no">418</span><span id="line-418">        if (plot == null || BukkitEntityUtil.checkEntity(entity, plot)) {</span>
+<span class="source-line-no">419</span><span id="line-419">            entity.remove();</span>
+<span class="source-line-no">420</span><span id="line-420">            return;</span>
+<span class="source-line-no">421</span><span id="line-421">        }</span>
+<span class="source-line-no">422</span><span id="line-422">        if (Settings.Enabled_Components.KILL_ROAD_VEHICLES) {</span>
+<span class="source-line-no">423</span><span id="line-423">            entity.setMetadata("plot", new FixedMetadataValue((Plugin) PlotSquared.platform(), plot));</span>
+<span class="source-line-no">424</span><span id="line-424">        }</span>
+<span class="source-line-no">425</span><span id="line-425">    }</span>
+<span class="source-line-no">426</span><span id="line-426"></span>
+<span class="source-line-no">427</span><span id="line-427">}</span>
 
 
 

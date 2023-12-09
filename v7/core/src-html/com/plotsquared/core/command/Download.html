@@ -149,97 +149,99 @@
 <span class="source-line-no">136</span><span id="line-136">                    }</span>
 <span class="source-line-no">137</span><span id="line-137">                    player.sendMessage(</span>
 <span class="source-line-no">138</span><span id="line-138">                            TranslatableCaption.of("web.generation_link_success_legacy_world"),</span>
-<span class="source-line-no">139</span><span id="line-139">                            TagResolver.resolver("url", Tag.inserting(Component.text(url.toString())))</span>
-<span class="source-line-no">140</span><span id="line-140">                    );</span>
-<span class="source-line-no">141</span><span id="line-141">                }</span>
-<span class="source-line-no">142</span><span id="line-142">            });</span>
-<span class="source-line-no">143</span><span id="line-143">        } else {</span>
-<span class="source-line-no">144</span><span id="line-144">            sendUsage(player);</span>
-<span class="source-line-no">145</span><span id="line-145">            return false;</span>
-<span class="source-line-no">146</span><span id="line-146">        }</span>
-<span class="source-line-no">147</span><span id="line-147">        player.sendMessage(</span>
-<span class="source-line-no">148</span><span id="line-148">                TranslatableCaption.of("web.generating_link"),</span>
-<span class="source-line-no">149</span><span id="line-149">                TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">150</span><span id="line-150">        );</span>
-<span class="source-line-no">151</span><span id="line-151">        return true;</span>
-<span class="source-line-no">152</span><span id="line-152">    }</span>
-<span class="source-line-no">153</span><span id="line-153"></span>
-<span class="source-line-no">154</span><span id="line-154">    @Override</span>
-<span class="source-line-no">155</span><span id="line-155">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
-<span class="source-line-no">156</span><span id="line-156">        if (args.length == 1) {</span>
-<span class="source-line-no">157</span><span id="line-157">            final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
-<span class="source-line-no">158</span><span id="line-158">            if (player.hasPermission(Permission.PERMISSION_DOWNLOAD)) {</span>
-<span class="source-line-no">159</span><span id="line-159">                completions.add("schem");</span>
-<span class="source-line-no">160</span><span id="line-160">            }</span>
-<span class="source-line-no">161</span><span id="line-161">            if (player.hasPermission(Permission.PERMISSION_DOWNLOAD_WORLD)) {</span>
-<span class="source-line-no">162</span><span id="line-162">                completions.add("world");</span>
-<span class="source-line-no">163</span><span id="line-163">            }</span>
-<span class="source-line-no">164</span><span id="line-164">            final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
-<span class="source-line-no">165</span><span id="line-165">                            .toLowerCase()</span>
-<span class="source-line-no">166</span><span id="line-166">                            .startsWith(args[0].toLowerCase()))</span>
-<span class="source-line-no">167</span><span id="line-167">                    .map(completion -&gt; new Command(</span>
-<span class="source-line-no">168</span><span id="line-168">                            null,</span>
-<span class="source-line-no">169</span><span id="line-169">                            true,</span>
-<span class="source-line-no">170</span><span id="line-170">                            completion,</span>
-<span class="source-line-no">171</span><span id="line-171">                            "",</span>
-<span class="source-line-no">172</span><span id="line-172">                            RequiredType.NONE,</span>
-<span class="source-line-no">173</span><span id="line-173">                            CommandCategory.ADMINISTRATION</span>
-<span class="source-line-no">174</span><span id="line-174">                    ) {</span>
-<span class="source-line-no">175</span><span id="line-175">                    }).collect(Collectors.toCollection(LinkedList::new));</span>
-<span class="source-line-no">176</span><span id="line-176">            if (player.hasPermission(Permission.PERMISSION_DOWNLOAD) &amp;&amp; args[0].length() &gt; 0) {</span>
-<span class="source-line-no">177</span><span id="line-177">                commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
-<span class="source-line-no">178</span><span id="line-178">            }</span>
-<span class="source-line-no">179</span><span id="line-179">            return commands;</span>
-<span class="source-line-no">180</span><span id="line-180">        }</span>
-<span class="source-line-no">181</span><span id="line-181">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
-<span class="source-line-no">182</span><span id="line-182">    }</span>
-<span class="source-line-no">183</span><span id="line-183"></span>
-<span class="source-line-no">184</span><span id="line-184">    private void upload(PlotPlayer&lt;?&gt; player, Plot plot) {</span>
-<span class="source-line-no">185</span><span id="line-185">        if (Settings.Web.LEGACY_WEBINTERFACE) {</span>
-<span class="source-line-no">186</span><span id="line-186">            schematicHandler</span>
-<span class="source-line-no">187</span><span id="line-187">                    .getCompoundTag(plot)</span>
-<span class="source-line-no">188</span><span id="line-188">                    .whenComplete((compoundTag, throwable) -&gt; schematicHandler.upload(</span>
-<span class="source-line-no">189</span><span id="line-189">                            compoundTag,</span>
-<span class="source-line-no">190</span><span id="line-190">                            null,</span>
-<span class="source-line-no">191</span><span id="line-191">                            null,</span>
-<span class="source-line-no">192</span><span id="line-192">                            new RunnableVal&lt;&gt;() {</span>
-<span class="source-line-no">193</span><span id="line-193">                                @Override</span>
-<span class="source-line-no">194</span><span id="line-194">                                public void run(URL value) {</span>
-<span class="source-line-no">195</span><span id="line-195">                                    plot.removeRunning();</span>
-<span class="source-line-no">196</span><span id="line-196">                                    player.sendMessage(</span>
-<span class="source-line-no">197</span><span id="line-197">                                            TranslatableCaption.of("web.generation_link_success"),</span>
-<span class="source-line-no">198</span><span id="line-198">                                            TagResolver.builder()</span>
-<span class="source-line-no">199</span><span id="line-199">                                                    .tag("download", Tag.preProcessParsed(value.toString()))</span>
-<span class="source-line-no">200</span><span id="line-200">                                                    .tag("delete", Tag.preProcessParsed("Not available"))</span>
-<span class="source-line-no">201</span><span id="line-201">                                                    .build()</span>
-<span class="source-line-no">202</span><span id="line-202">                                    );</span>
-<span class="source-line-no">203</span><span id="line-203">                                    player.sendMessage(StaticCaption.of(value.toString()));</span>
-<span class="source-line-no">204</span><span id="line-204">                                }</span>
-<span class="source-line-no">205</span><span id="line-205">                            }</span>
-<span class="source-line-no">206</span><span id="line-206">                    ));</span>
-<span class="source-line-no">207</span><span id="line-207">            return;</span>
-<span class="source-line-no">208</span><span id="line-208">        }</span>
-<span class="source-line-no">209</span><span id="line-209">        // TODO legacy support</span>
-<span class="source-line-no">210</span><span id="line-210">        this.plotUploader.upload(plot)</span>
-<span class="source-line-no">211</span><span id="line-211">                .whenComplete((result, throwable) -&gt; {</span>
-<span class="source-line-no">212</span><span id="line-212">                    if (throwable != null || !result.isSuccess()) {</span>
-<span class="source-line-no">213</span><span id="line-213">                        player.sendMessage(</span>
-<span class="source-line-no">214</span><span id="line-214">                                TranslatableCaption.of("web.generating_link_failed"),</span>
-<span class="source-line-no">215</span><span id="line-215">                                TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">216</span><span id="line-216">                        );</span>
-<span class="source-line-no">217</span><span id="line-217">                    } else {</span>
-<span class="source-line-no">218</span><span id="line-218">                        player.sendMessage(</span>
-<span class="source-line-no">219</span><span id="line-219">                                TranslatableCaption.of("web.generation_link_success"),</span>
-<span class="source-line-no">220</span><span id="line-220">                                TagResolver.builder()</span>
-<span class="source-line-no">221</span><span id="line-221">                                        .tag("download", Tag.preProcessParsed(result.getDownloadUrl()))</span>
-<span class="source-line-no">222</span><span id="line-222">                                        .tag("delete", Tag.preProcessParsed(result.getDeletionUrl()))</span>
-<span class="source-line-no">223</span><span id="line-223">                                        .build()</span>
-<span class="source-line-no">224</span><span id="line-224">                        );</span>
-<span class="source-line-no">225</span><span id="line-225">                    }</span>
-<span class="source-line-no">226</span><span id="line-226">                });</span>
-<span class="source-line-no">227</span><span id="line-227">    }</span>
-<span class="source-line-no">228</span><span id="line-228"></span>
-<span class="source-line-no">229</span><span id="line-229">}</span>
+<span class="source-line-no">139</span><span id="line-139">                            TagResolver.builder()</span>
+<span class="source-line-no">140</span><span id="line-140">                                    .tag("url", Tag.preProcessParsed(url.toString()))</span>
+<span class="source-line-no">141</span><span id="line-141">                                    .build()</span>
+<span class="source-line-no">142</span><span id="line-142">                    );</span>
+<span class="source-line-no">143</span><span id="line-143">                }</span>
+<span class="source-line-no">144</span><span id="line-144">            });</span>
+<span class="source-line-no">145</span><span id="line-145">        } else {</span>
+<span class="source-line-no">146</span><span id="line-146">            sendUsage(player);</span>
+<span class="source-line-no">147</span><span id="line-147">            return false;</span>
+<span class="source-line-no">148</span><span id="line-148">        }</span>
+<span class="source-line-no">149</span><span id="line-149">        player.sendMessage(</span>
+<span class="source-line-no">150</span><span id="line-150">                TranslatableCaption.of("web.generating_link"),</span>
+<span class="source-line-no">151</span><span id="line-151">                TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">152</span><span id="line-152">        );</span>
+<span class="source-line-no">153</span><span id="line-153">        return true;</span>
+<span class="source-line-no">154</span><span id="line-154">    }</span>
+<span class="source-line-no">155</span><span id="line-155"></span>
+<span class="source-line-no">156</span><span id="line-156">    @Override</span>
+<span class="source-line-no">157</span><span id="line-157">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
+<span class="source-line-no">158</span><span id="line-158">        if (args.length == 1) {</span>
+<span class="source-line-no">159</span><span id="line-159">            final List&lt;String&gt; completions = new LinkedList&lt;&gt;();</span>
+<span class="source-line-no">160</span><span id="line-160">            if (player.hasPermission(Permission.PERMISSION_DOWNLOAD)) {</span>
+<span class="source-line-no">161</span><span id="line-161">                completions.add("schem");</span>
+<span class="source-line-no">162</span><span id="line-162">            }</span>
+<span class="source-line-no">163</span><span id="line-163">            if (player.hasPermission(Permission.PERMISSION_DOWNLOAD_WORLD)) {</span>
+<span class="source-line-no">164</span><span id="line-164">                completions.add("world");</span>
+<span class="source-line-no">165</span><span id="line-165">            }</span>
+<span class="source-line-no">166</span><span id="line-166">            final List&lt;Command&gt; commands = completions.stream().filter(completion -&gt; completion</span>
+<span class="source-line-no">167</span><span id="line-167">                            .toLowerCase()</span>
+<span class="source-line-no">168</span><span id="line-168">                            .startsWith(args[0].toLowerCase()))</span>
+<span class="source-line-no">169</span><span id="line-169">                    .map(completion -&gt; new Command(</span>
+<span class="source-line-no">170</span><span id="line-170">                            null,</span>
+<span class="source-line-no">171</span><span id="line-171">                            true,</span>
+<span class="source-line-no">172</span><span id="line-172">                            completion,</span>
+<span class="source-line-no">173</span><span id="line-173">                            "",</span>
+<span class="source-line-no">174</span><span id="line-174">                            RequiredType.NONE,</span>
+<span class="source-line-no">175</span><span id="line-175">                            CommandCategory.ADMINISTRATION</span>
+<span class="source-line-no">176</span><span id="line-176">                    ) {</span>
+<span class="source-line-no">177</span><span id="line-177">                    }).collect(Collectors.toCollection(LinkedList::new));</span>
+<span class="source-line-no">178</span><span id="line-178">            if (player.hasPermission(Permission.PERMISSION_DOWNLOAD) &amp;&amp; args[0].length() &gt; 0) {</span>
+<span class="source-line-no">179</span><span id="line-179">                commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
+<span class="source-line-no">180</span><span id="line-180">            }</span>
+<span class="source-line-no">181</span><span id="line-181">            return commands;</span>
+<span class="source-line-no">182</span><span id="line-182">        }</span>
+<span class="source-line-no">183</span><span id="line-183">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
+<span class="source-line-no">184</span><span id="line-184">    }</span>
+<span class="source-line-no">185</span><span id="line-185"></span>
+<span class="source-line-no">186</span><span id="line-186">    private void upload(PlotPlayer&lt;?&gt; player, Plot plot) {</span>
+<span class="source-line-no">187</span><span id="line-187">        if (Settings.Web.LEGACY_WEBINTERFACE) {</span>
+<span class="source-line-no">188</span><span id="line-188">            schematicHandler</span>
+<span class="source-line-no">189</span><span id="line-189">                    .getCompoundTag(plot)</span>
+<span class="source-line-no">190</span><span id="line-190">                    .whenComplete((compoundTag, throwable) -&gt; schematicHandler.upload(</span>
+<span class="source-line-no">191</span><span id="line-191">                            compoundTag,</span>
+<span class="source-line-no">192</span><span id="line-192">                            null,</span>
+<span class="source-line-no">193</span><span id="line-193">                            null,</span>
+<span class="source-line-no">194</span><span id="line-194">                            new RunnableVal&lt;&gt;() {</span>
+<span class="source-line-no">195</span><span id="line-195">                                @Override</span>
+<span class="source-line-no">196</span><span id="line-196">                                public void run(URL value) {</span>
+<span class="source-line-no">197</span><span id="line-197">                                    plot.removeRunning();</span>
+<span class="source-line-no">198</span><span id="line-198">                                    player.sendMessage(</span>
+<span class="source-line-no">199</span><span id="line-199">                                            TranslatableCaption.of("web.generation_link_success"),</span>
+<span class="source-line-no">200</span><span id="line-200">                                            TagResolver.builder()</span>
+<span class="source-line-no">201</span><span id="line-201">                                                    .tag("download", Tag.preProcessParsed(value.toString()))</span>
+<span class="source-line-no">202</span><span id="line-202">                                                    .tag("delete", Tag.preProcessParsed("Not available"))</span>
+<span class="source-line-no">203</span><span id="line-203">                                                    .build()</span>
+<span class="source-line-no">204</span><span id="line-204">                                    );</span>
+<span class="source-line-no">205</span><span id="line-205">                                    player.sendMessage(StaticCaption.of(value.toString()));</span>
+<span class="source-line-no">206</span><span id="line-206">                                }</span>
+<span class="source-line-no">207</span><span id="line-207">                            }</span>
+<span class="source-line-no">208</span><span id="line-208">                    ));</span>
+<span class="source-line-no">209</span><span id="line-209">            return;</span>
+<span class="source-line-no">210</span><span id="line-210">        }</span>
+<span class="source-line-no">211</span><span id="line-211">        // TODO legacy support</span>
+<span class="source-line-no">212</span><span id="line-212">        this.plotUploader.upload(plot)</span>
+<span class="source-line-no">213</span><span id="line-213">                .whenComplete((result, throwable) -&gt; {</span>
+<span class="source-line-no">214</span><span id="line-214">                    if (throwable != null || !result.isSuccess()) {</span>
+<span class="source-line-no">215</span><span id="line-215">                        player.sendMessage(</span>
+<span class="source-line-no">216</span><span id="line-216">                                TranslatableCaption.of("web.generating_link_failed"),</span>
+<span class="source-line-no">217</span><span id="line-217">                                TagResolver.resolver("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">218</span><span id="line-218">                        );</span>
+<span class="source-line-no">219</span><span id="line-219">                    } else {</span>
+<span class="source-line-no">220</span><span id="line-220">                        player.sendMessage(</span>
+<span class="source-line-no">221</span><span id="line-221">                                TranslatableCaption.of("web.generation_link_success"),</span>
+<span class="source-line-no">222</span><span id="line-222">                                TagResolver.builder()</span>
+<span class="source-line-no">223</span><span id="line-223">                                        .tag("download", Tag.preProcessParsed(result.getDownloadUrl()))</span>
+<span class="source-line-no">224</span><span id="line-224">                                        .tag("delete", Tag.preProcessParsed(result.getDeletionUrl()))</span>
+<span class="source-line-no">225</span><span id="line-225">                                        .build()</span>
+<span class="source-line-no">226</span><span id="line-226">                        );</span>
+<span class="source-line-no">227</span><span id="line-227">                    }</span>
+<span class="source-line-no">228</span><span id="line-228">                });</span>
+<span class="source-line-no">229</span><span id="line-229">    }</span>
+<span class="source-line-no">230</span><span id="line-230"></span>
+<span class="source-line-no">231</span><span id="line-231">}</span>
 
 
 

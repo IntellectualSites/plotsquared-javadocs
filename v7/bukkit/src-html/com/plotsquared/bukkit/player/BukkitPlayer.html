@@ -53,18 +53,18 @@
 <span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.audience.Audience;</span>
 <span class="source-line-no">041</span><span id="line-41">import org.bukkit.GameMode;</span>
 <span class="source-line-no">042</span><span id="line-42">import org.bukkit.Sound;</span>
-<span class="source-line-no">043</span><span id="line-43">import org.bukkit.WeatherType;</span>
-<span class="source-line-no">044</span><span id="line-44">import org.bukkit.entity.Player;</span>
-<span class="source-line-no">045</span><span id="line-45">import org.bukkit.event.Event;</span>
-<span class="source-line-no">046</span><span id="line-46">import org.bukkit.event.EventException;</span>
-<span class="source-line-no">047</span><span id="line-47">import org.bukkit.event.player.PlayerTeleportEvent;</span>
-<span class="source-line-no">048</span><span id="line-48">import org.bukkit.permissions.PermissionAttachmentInfo;</span>
-<span class="source-line-no">049</span><span id="line-49">import org.bukkit.plugin.RegisteredListener;</span>
-<span class="source-line-no">050</span><span id="line-50">import org.bukkit.potion.PotionEffectType;</span>
-<span class="source-line-no">051</span><span id="line-51">import org.checkerframework.checker.index.qual.NonNegative;</span>
-<span class="source-line-no">052</span><span id="line-52">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">053</span><span id="line-53"></span>
-<span class="source-line-no">054</span><span id="line-54">import java.util.Arrays;</span>
+<span class="source-line-no">043</span><span id="line-43">import org.bukkit.SoundCategory;</span>
+<span class="source-line-no">044</span><span id="line-44">import org.bukkit.WeatherType;</span>
+<span class="source-line-no">045</span><span id="line-45">import org.bukkit.entity.Player;</span>
+<span class="source-line-no">046</span><span id="line-46">import org.bukkit.event.Event;</span>
+<span class="source-line-no">047</span><span id="line-47">import org.bukkit.event.EventException;</span>
+<span class="source-line-no">048</span><span id="line-48">import org.bukkit.event.player.PlayerTeleportEvent;</span>
+<span class="source-line-no">049</span><span id="line-49">import org.bukkit.permissions.PermissionAttachmentInfo;</span>
+<span class="source-line-no">050</span><span id="line-50">import org.bukkit.plugin.RegisteredListener;</span>
+<span class="source-line-no">051</span><span id="line-51">import org.bukkit.potion.PotionEffectType;</span>
+<span class="source-line-no">052</span><span id="line-52">import org.checkerframework.checker.index.qual.NonNegative;</span>
+<span class="source-line-no">053</span><span id="line-53">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">054</span><span id="line-54"></span>
 <span class="source-line-no">055</span><span id="line-55">import java.util.Set;</span>
 <span class="source-line-no">056</span><span id="line-56">import java.util.UUID;</span>
 <span class="source-line-no">057</span><span id="line-57"></span>
@@ -322,76 +322,79 @@
 <span class="source-line-no">309</span><span id="line-309">    @Override</span>
 <span class="source-line-no">310</span><span id="line-310">    public void playMusic(final @NonNull Location location, final @NonNull ItemType id) {</span>
 <span class="source-line-no">311</span><span id="line-311">        if (id == ItemTypes.AIR) {</span>
-<span class="source-line-no">312</span><span id="line-312">            // Let's just stop all the discs because why not?</span>
-<span class="source-line-no">313</span><span id="line-313">            for (final Sound sound : Arrays.stream(Sound.values())</span>
-<span class="source-line-no">314</span><span id="line-314">                    .filter(sound -&gt; sound.name().contains("DISC")).toList()) {</span>
-<span class="source-line-no">315</span><span id="line-315">                player.stopSound(sound);</span>
-<span class="source-line-no">316</span><span id="line-316">            }</span>
-<span class="source-line-no">317</span><span id="line-317">            // this.player.playEffect(BukkitUtil.getLocation(location), Effect.RECORD_PLAY, Material.AIR);</span>
-<span class="source-line-no">318</span><span id="line-318">        } else {</span>
-<span class="source-line-no">319</span><span id="line-319">            // this.player.playEffect(BukkitUtil.getLocation(location), Effect.RECORD_PLAY, id.to(Material.class));</span>
-<span class="source-line-no">320</span><span id="line-320">            this.player.playSound(BukkitUtil.adapt(location),</span>
-<span class="source-line-no">321</span><span id="line-321">                    Sound.valueOf(BukkitAdapter.adapt(id).name()), Float.MAX_VALUE, 1f</span>
-<span class="source-line-no">322</span><span id="line-322">            );</span>
+<span class="source-line-no">312</span><span id="line-312">            if (PlotSquared.platform().serverVersion()[1] &gt;= 19) {</span>
+<span class="source-line-no">313</span><span id="line-313">                player.stopSound(SoundCategory.MUSIC);</span>
+<span class="source-line-no">314</span><span id="line-314">                return;</span>
+<span class="source-line-no">315</span><span id="line-315">            }</span>
+<span class="source-line-no">316</span><span id="line-316">            // 1.18 and downwards require a specific Sound to stop (even tho the packet does not??)</span>
+<span class="source-line-no">317</span><span id="line-317">            for (final Sound sound : Sound.values()) {</span>
+<span class="source-line-no">318</span><span id="line-318">                if (sound.name().startsWith("MUSIC_DISC")) {</span>
+<span class="source-line-no">319</span><span id="line-319">                    this.player.stopSound(sound, SoundCategory.MUSIC);</span>
+<span class="source-line-no">320</span><span id="line-320">                }</span>
+<span class="source-line-no">321</span><span id="line-321">            }</span>
+<span class="source-line-no">322</span><span id="line-322">            return;</span>
 <span class="source-line-no">323</span><span id="line-323">        }</span>
-<span class="source-line-no">324</span><span id="line-324">    }</span>
-<span class="source-line-no">325</span><span id="line-325"></span>
-<span class="source-line-no">326</span><span id="line-326">    @SuppressWarnings("deprecation") // Needed for Spigot compatibility</span>
-<span class="source-line-no">327</span><span id="line-327">    @Override</span>
-<span class="source-line-no">328</span><span id="line-328">    public void kick(final String message) {</span>
-<span class="source-line-no">329</span><span id="line-329">        this.player.kickPlayer(message);</span>
-<span class="source-line-no">330</span><span id="line-330">    }</span>
-<span class="source-line-no">331</span><span id="line-331"></span>
-<span class="source-line-no">332</span><span id="line-332">    @Override</span>
-<span class="source-line-no">333</span><span id="line-333">    public void stopSpectating() {</span>
-<span class="source-line-no">334</span><span id="line-334">        if (getGameMode() == SPECTATOR) {</span>
-<span class="source-line-no">335</span><span id="line-335">            this.player.setSpectatorTarget(null);</span>
-<span class="source-line-no">336</span><span id="line-336">        }</span>
-<span class="source-line-no">337</span><span id="line-337">    }</span>
-<span class="source-line-no">338</span><span id="line-338"></span>
-<span class="source-line-no">339</span><span id="line-339">    @Override</span>
-<span class="source-line-no">340</span><span id="line-340">    public boolean isBanned() {</span>
-<span class="source-line-no">341</span><span id="line-341">        return this.player.isBanned();</span>
-<span class="source-line-no">342</span><span id="line-342">    }</span>
-<span class="source-line-no">343</span><span id="line-343"></span>
-<span class="source-line-no">344</span><span id="line-344">    @Override</span>
-<span class="source-line-no">345</span><span id="line-345">    public @NonNull Audience getAudience() {</span>
-<span class="source-line-no">346</span><span id="line-346">        return BukkitUtil.BUKKIT_AUDIENCES.player(this.player);</span>
-<span class="source-line-no">347</span><span id="line-347">    }</span>
-<span class="source-line-no">348</span><span id="line-348"></span>
-<span class="source-line-no">349</span><span id="line-349">    @Override</span>
-<span class="source-line-no">350</span><span id="line-350">    public void removeEffect(@NonNull String name) {</span>
-<span class="source-line-no">351</span><span id="line-351">        PotionEffectType type = PotionEffectType.getByName(name);</span>
-<span class="source-line-no">352</span><span id="line-352">        if (type != null) {</span>
-<span class="source-line-no">353</span><span id="line-353">            player.removePotionEffect(type);</span>
-<span class="source-line-no">354</span><span id="line-354">        }</span>
-<span class="source-line-no">355</span><span id="line-355">    }</span>
-<span class="source-line-no">356</span><span id="line-356"></span>
-<span class="source-line-no">357</span><span id="line-357">    @Override</span>
-<span class="source-line-no">358</span><span id="line-358">    public boolean canSee(final PlotPlayer&lt;?&gt; other) {</span>
-<span class="source-line-no">359</span><span id="line-359">        if (other instanceof ConsolePlayer) {</span>
-<span class="source-line-no">360</span><span id="line-360">            return true;</span>
-<span class="source-line-no">361</span><span id="line-361">        } else {</span>
-<span class="source-line-no">362</span><span id="line-362">            return this.player.canSee(((BukkitPlayer) other).getPlatformPlayer());</span>
-<span class="source-line-no">363</span><span id="line-363">        }</span>
-<span class="source-line-no">364</span><span id="line-364">    }</span>
-<span class="source-line-no">365</span><span id="line-365"></span>
-<span class="source-line-no">366</span><span id="line-366">    /**</span>
-<span class="source-line-no">367</span><span id="line-367">     * Convert from PlotSquared's {@link TeleportCause} to Bukkit's {@link PlayerTeleportEvent.TeleportCause}</span>
-<span class="source-line-no">368</span><span id="line-368">     *</span>
-<span class="source-line-no">369</span><span id="line-369">     * @param cause PlotSquared teleport cause to convert</span>
-<span class="source-line-no">370</span><span id="line-370">     * @return Bukkit's equivalent teleport cause</span>
-<span class="source-line-no">371</span><span id="line-371">     */</span>
-<span class="source-line-no">372</span><span id="line-372">    public PlayerTeleportEvent.TeleportCause getTeleportCause(final @NonNull TeleportCause cause) {</span>
-<span class="source-line-no">373</span><span id="line-373">        if (TeleportCause.CauseSets.COMMAND.contains(cause)) {</span>
-<span class="source-line-no">374</span><span id="line-374">            return PlayerTeleportEvent.TeleportCause.COMMAND;</span>
-<span class="source-line-no">375</span><span id="line-375">        } else if (cause == TeleportCause.UNKNOWN) {</span>
-<span class="source-line-no">376</span><span id="line-376">            return PlayerTeleportEvent.TeleportCause.UNKNOWN;</span>
-<span class="source-line-no">377</span><span id="line-377">        }</span>
-<span class="source-line-no">378</span><span id="line-378">        return PlayerTeleportEvent.TeleportCause.PLUGIN;</span>
-<span class="source-line-no">379</span><span id="line-379">    }</span>
-<span class="source-line-no">380</span><span id="line-380"></span>
-<span class="source-line-no">381</span><span id="line-381">}</span>
+<span class="source-line-no">324</span><span id="line-324">        this.player.playSound(BukkitUtil.adapt(location), Sound.valueOf(BukkitAdapter.adapt(id).name()),</span>
+<span class="source-line-no">325</span><span id="line-325">                SoundCategory.MUSIC, 1f, 1f</span>
+<span class="source-line-no">326</span><span id="line-326">        );</span>
+<span class="source-line-no">327</span><span id="line-327">    }</span>
+<span class="source-line-no">328</span><span id="line-328"></span>
+<span class="source-line-no">329</span><span id="line-329">    @SuppressWarnings("deprecation") // Needed for Spigot compatibility</span>
+<span class="source-line-no">330</span><span id="line-330">    @Override</span>
+<span class="source-line-no">331</span><span id="line-331">    public void kick(final String message) {</span>
+<span class="source-line-no">332</span><span id="line-332">        this.player.kickPlayer(message);</span>
+<span class="source-line-no">333</span><span id="line-333">    }</span>
+<span class="source-line-no">334</span><span id="line-334"></span>
+<span class="source-line-no">335</span><span id="line-335">    @Override</span>
+<span class="source-line-no">336</span><span id="line-336">    public void stopSpectating() {</span>
+<span class="source-line-no">337</span><span id="line-337">        if (getGameMode() == SPECTATOR) {</span>
+<span class="source-line-no">338</span><span id="line-338">            this.player.setSpectatorTarget(null);</span>
+<span class="source-line-no">339</span><span id="line-339">        }</span>
+<span class="source-line-no">340</span><span id="line-340">    }</span>
+<span class="source-line-no">341</span><span id="line-341"></span>
+<span class="source-line-no">342</span><span id="line-342">    @Override</span>
+<span class="source-line-no">343</span><span id="line-343">    public boolean isBanned() {</span>
+<span class="source-line-no">344</span><span id="line-344">        return this.player.isBanned();</span>
+<span class="source-line-no">345</span><span id="line-345">    }</span>
+<span class="source-line-no">346</span><span id="line-346"></span>
+<span class="source-line-no">347</span><span id="line-347">    @Override</span>
+<span class="source-line-no">348</span><span id="line-348">    public @NonNull Audience getAudience() {</span>
+<span class="source-line-no">349</span><span id="line-349">        return BukkitUtil.BUKKIT_AUDIENCES.player(this.player);</span>
+<span class="source-line-no">350</span><span id="line-350">    }</span>
+<span class="source-line-no">351</span><span id="line-351"></span>
+<span class="source-line-no">352</span><span id="line-352">    @Override</span>
+<span class="source-line-no">353</span><span id="line-353">    public void removeEffect(@NonNull String name) {</span>
+<span class="source-line-no">354</span><span id="line-354">        PotionEffectType type = PotionEffectType.getByName(name);</span>
+<span class="source-line-no">355</span><span id="line-355">        if (type != null) {</span>
+<span class="source-line-no">356</span><span id="line-356">            player.removePotionEffect(type);</span>
+<span class="source-line-no">357</span><span id="line-357">        }</span>
+<span class="source-line-no">358</span><span id="line-358">    }</span>
+<span class="source-line-no">359</span><span id="line-359"></span>
+<span class="source-line-no">360</span><span id="line-360">    @Override</span>
+<span class="source-line-no">361</span><span id="line-361">    public boolean canSee(final PlotPlayer&lt;?&gt; other) {</span>
+<span class="source-line-no">362</span><span id="line-362">        if (other instanceof ConsolePlayer) {</span>
+<span class="source-line-no">363</span><span id="line-363">            return true;</span>
+<span class="source-line-no">364</span><span id="line-364">        } else {</span>
+<span class="source-line-no">365</span><span id="line-365">            return this.player.canSee(((BukkitPlayer) other).getPlatformPlayer());</span>
+<span class="source-line-no">366</span><span id="line-366">        }</span>
+<span class="source-line-no">367</span><span id="line-367">    }</span>
+<span class="source-line-no">368</span><span id="line-368"></span>
+<span class="source-line-no">369</span><span id="line-369">    /**</span>
+<span class="source-line-no">370</span><span id="line-370">     * Convert from PlotSquared's {@link TeleportCause} to Bukkit's {@link PlayerTeleportEvent.TeleportCause}</span>
+<span class="source-line-no">371</span><span id="line-371">     *</span>
+<span class="source-line-no">372</span><span id="line-372">     * @param cause PlotSquared teleport cause to convert</span>
+<span class="source-line-no">373</span><span id="line-373">     * @return Bukkit's equivalent teleport cause</span>
+<span class="source-line-no">374</span><span id="line-374">     */</span>
+<span class="source-line-no">375</span><span id="line-375">    public PlayerTeleportEvent.TeleportCause getTeleportCause(final @NonNull TeleportCause cause) {</span>
+<span class="source-line-no">376</span><span id="line-376">        if (TeleportCause.CauseSets.COMMAND.contains(cause)) {</span>
+<span class="source-line-no">377</span><span id="line-377">            return PlayerTeleportEvent.TeleportCause.COMMAND;</span>
+<span class="source-line-no">378</span><span id="line-378">        } else if (cause == TeleportCause.UNKNOWN) {</span>
+<span class="source-line-no">379</span><span id="line-379">            return PlayerTeleportEvent.TeleportCause.UNKNOWN;</span>
+<span class="source-line-no">380</span><span id="line-380">        }</span>
+<span class="source-line-no">381</span><span id="line-381">        return PlayerTeleportEvent.TeleportCause.PLUGIN;</span>
+<span class="source-line-no">382</span><span id="line-382">    }</span>
+<span class="source-line-no">383</span><span id="line-383"></span>
+<span class="source-line-no">384</span><span id="line-384">}</span>
 
 
 

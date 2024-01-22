@@ -1496,7 +1496,7 @@
 <span class="source-line-no">1483</span><span id="line-1483">     */</span>
 <span class="source-line-no">1484</span><span id="line-1484">    public void setHome(BlockLoc location) {</span>
 <span class="source-line-no">1485</span><span id="line-1485">        Plot plot = this.getBasePlot(false);</span>
-<span class="source-line-no">1486</span><span id="line-1486">        if (BlockLoc.ZERO.equals(location) || BlockLoc.MINY.equals(location)) {</span>
+<span class="source-line-no">1486</span><span id="line-1486">        if (location != null &amp;&amp; (BlockLoc.ZERO.equals(location) || BlockLoc.MINY.equals(location))) {</span>
 <span class="source-line-no">1487</span><span id="line-1487">            return;</span>
 <span class="source-line-no">1488</span><span id="line-1488">        }</span>
 <span class="source-line-no">1489</span><span id="line-1489">        plot.getSettings().setPosition(location);</span>

@@ -31,20 +31,37 @@
 <span class="source-line-no">018</span><span id="line-18"> */</span>
 <span class="source-line-no">019</span><span id="line-19">package com.plotsquared.core.events;</span>
 <span class="source-line-no">020</span><span id="line-20"></span>
-<span class="source-line-no">021</span><span id="line-21">/**</span>
-<span class="source-line-no">022</span><span id="line-22"> * PlotSquared event with {@link Result} to cancel, force, or allow.</span>
-<span class="source-line-no">023</span><span id="line-23"> */</span>
-<span class="source-line-no">024</span><span id="line-24">public interface CancellablePlotEvent {</span>
-<span class="source-line-no">025</span><span id="line-25"></span>
-<span class="source-line-no">026</span><span id="line-26">    Result getEventResult();</span>
-<span class="source-line-no">027</span><span id="line-27"></span>
-<span class="source-line-no">028</span><span id="line-28">    void setEventResult(Result eventResult);</span>
-<span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    default int getEventResultRaw() {</span>
-<span class="source-line-no">031</span><span id="line-31">        return getEventResult().getValue();</span>
-<span class="source-line-no">032</span><span id="line-32">    }</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">}</span>
+<span class="source-line-no">021</span><span id="line-21"></span>
+<span class="source-line-no">022</span><span id="line-22">import org.checkerframework.checker.nullness.qual.Nullable;</span>
+<span class="source-line-no">023</span><span id="line-23"></span>
+<span class="source-line-no">024</span><span id="line-24">/**</span>
+<span class="source-line-no">025</span><span id="line-25"> * PlotSquared event with {@link Result} to cancel, force, or allow.</span>
+<span class="source-line-no">026</span><span id="line-26"> */</span>
+<span class="source-line-no">027</span><span id="line-27">public interface CancellablePlotEvent {</span>
+<span class="source-line-no">028</span><span id="line-28"></span>
+<span class="source-line-no">029</span><span id="line-29">    /**</span>
+<span class="source-line-no">030</span><span id="line-30">     * The currently set {@link Result} for this event (as set by potential previous event listeners).</span>
+<span class="source-line-no">031</span><span id="line-31">     *</span>
+<span class="source-line-no">032</span><span id="line-32">     * @return the current result.</span>
+<span class="source-line-no">033</span><span id="line-33">     */</span>
+<span class="source-line-no">034</span><span id="line-34">    @Nullable Result getEventResult();</span>
+<span class="source-line-no">035</span><span id="line-35"></span>
+<span class="source-line-no">036</span><span id="line-36">    /**</span>
+<span class="source-line-no">037</span><span id="line-37">     * Set the {@link Result} for this event.</span>
+<span class="source-line-no">038</span><span id="line-38">     *</span>
+<span class="source-line-no">039</span><span id="line-39">     * @param eventResult the new result.</span>
+<span class="source-line-no">040</span><span id="line-40">     */</span>
+<span class="source-line-no">041</span><span id="line-41">    void setEventResult(@Nullable Result eventResult);</span>
+<span class="source-line-no">042</span><span id="line-42"></span>
+<span class="source-line-no">043</span><span id="line-43">    /**</span>
+<span class="source-line-no">044</span><span id="line-44">     * @deprecated No usage and not null-safe</span>
+<span class="source-line-no">045</span><span id="line-45">     */</span>
+<span class="source-line-no">046</span><span id="line-46">    @Deprecated(since = "7.3.2")</span>
+<span class="source-line-no">047</span><span id="line-47">    default int getEventResultRaw() {</span>
+<span class="source-line-no">048</span><span id="line-48">        return getEventResult() != null ? getEventResult().getValue() : -1;</span>
+<span class="source-line-no">049</span><span id="line-49">    }</span>
+<span class="source-line-no">050</span><span id="line-50"></span>
+<span class="source-line-no">051</span><span id="line-51">}</span>
 
 
 

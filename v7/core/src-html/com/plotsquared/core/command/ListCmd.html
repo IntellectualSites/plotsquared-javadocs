@@ -478,7 +478,7 @@
 <span class="source-line-no">465</span><span id="line-465">                TextComponent.Builder builder = Component.text();</span>
 <span class="source-line-no">466</span><span id="line-466">                if (plot.getFlag(ServerPlotFlag.class)) {</span>
 <span class="source-line-no">467</span><span id="line-467">                    TagResolver serverResolver = TagResolver.resolver(</span>
-<span class="source-line-no">468</span><span id="line-468">                            "info.server",</span>
+<span class="source-line-no">468</span><span id="line-468">                            "server",</span>
 <span class="source-line-no">469</span><span id="line-469">                            Tag.inserting(TranslatableCaption.of("info.server").toComponent(player))</span>
 <span class="source-line-no">470</span><span id="line-470">                    );</span>
 <span class="source-line-no">471</span><span id="line-471">                    builder.append(MINI_MESSAGE.deserialize(server, serverResolver));</span>
@@ -496,13 +496,13 @@
 <span class="source-line-no">483</span><span id="line-483">                                builder.append(MINI_MESSAGE.deserialize(online, resolver));</span>
 <span class="source-line-no">484</span><span id="line-484">                            } else if (uuidMapping.username().equalsIgnoreCase("unknown")) {</span>
 <span class="source-line-no">485</span><span id="line-485">                                TagResolver unknownResolver = TagResolver.resolver(</span>
-<span class="source-line-no">486</span><span id="line-486">                                        "info.unknown",</span>
+<span class="source-line-no">486</span><span id="line-486">                                        "unknown",</span>
 <span class="source-line-no">487</span><span id="line-487">                                        Tag.inserting(TranslatableCaption.of("info.unknown").toComponent(player))</span>
 <span class="source-line-no">488</span><span id="line-488">                                );</span>
 <span class="source-line-no">489</span><span id="line-489">                                builder.append(MINI_MESSAGE.deserialize(unknown, unknownResolver));</span>
 <span class="source-line-no">490</span><span id="line-490">                            } else if (uuidMapping.uuid().equals(DBFunc.EVERYONE)) {</span>
 <span class="source-line-no">491</span><span id="line-491">                                TagResolver everyoneResolver = TagResolver.resolver(</span>
-<span class="source-line-no">492</span><span id="line-492">                                        "info.everyone",</span>
+<span class="source-line-no">492</span><span id="line-492">                                        "everyone",</span>
 <span class="source-line-no">493</span><span id="line-493">                                        Tag.inserting(TranslatableCaption.of("info.everyone").toComponent(player))</span>
 <span class="source-line-no">494</span><span id="line-494">                                );</span>
 <span class="source-line-no">495</span><span id="line-495">                                builder.append(MINI_MESSAGE.deserialize(everyone, everyoneResolver));</span>

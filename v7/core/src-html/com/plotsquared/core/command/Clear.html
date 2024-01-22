@@ -148,18 +148,19 @@
 <span class="source-line-no">135</span><span id="line-135">                                    .tag("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
 <span class="source-line-no">136</span><span id="line-136">                                    .build()</span>
 <span class="source-line-no">137</span><span id="line-137">                    );</span>
-<span class="source-line-no">138</span><span id="line-138">                }));</span>
-<span class="source-line-no">139</span><span id="line-139">                if (!result) {</span>
-<span class="source-line-no">140</span><span id="line-140">                    player.sendMessage(TranslatableCaption.of("errors.wait_for_timer"));</span>
-<span class="source-line-no">141</span><span id="line-141">                } else {</span>
-<span class="source-line-no">142</span><span id="line-142">                    plot.addRunning();</span>
-<span class="source-line-no">143</span><span id="line-143">                }</span>
-<span class="source-line-no">144</span><span id="line-144">            });</span>
-<span class="source-line-no">145</span><span id="line-145">        }, null);</span>
-<span class="source-line-no">146</span><span id="line-146">        return CompletableFuture.completedFuture(true);</span>
-<span class="source-line-no">147</span><span id="line-147">    }</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">}</span>
+<span class="source-line-no">138</span><span id="line-138">                    this.eventDispatcher.callPostPlotClear(player, plot);</span>
+<span class="source-line-no">139</span><span id="line-139">                }));</span>
+<span class="source-line-no">140</span><span id="line-140">                if (!result) {</span>
+<span class="source-line-no">141</span><span id="line-141">                    player.sendMessage(TranslatableCaption.of("errors.wait_for_timer"));</span>
+<span class="source-line-no">142</span><span id="line-142">                } else {</span>
+<span class="source-line-no">143</span><span id="line-143">                    plot.addRunning();</span>
+<span class="source-line-no">144</span><span id="line-144">                }</span>
+<span class="source-line-no">145</span><span id="line-145">            });</span>
+<span class="source-line-no">146</span><span id="line-146">        }, null);</span>
+<span class="source-line-no">147</span><span id="line-147">        return CompletableFuture.completedFuture(true);</span>
+<span class="source-line-no">148</span><span id="line-148">    }</span>
+<span class="source-line-no">149</span><span id="line-149"></span>
+<span class="source-line-no">150</span><span id="line-150">}</span>
 
 
 

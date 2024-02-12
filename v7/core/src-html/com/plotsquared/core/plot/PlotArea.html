@@ -1466,66 +1466,84 @@
 <span class="source-line-no">1453</span><span id="line-1453">    }</span>
 <span class="source-line-no">1454</span><span id="line-1454"></span>
 <span class="source-line-no">1455</span><span id="line-1455">    /**</span>
-<span class="source-line-no">1456</span><span id="line-1456">     * Get the maximum height players may build in. Exclusive.</span>
-<span class="source-line-no">1457</span><span id="line-1457">     */</span>
-<span class="source-line-no">1458</span><span id="line-1458">    public int getMaxBuildHeight() {</span>
-<span class="source-line-no">1459</span><span id="line-1459">        return this.maxBuildHeight;</span>
-<span class="source-line-no">1460</span><span id="line-1460">    }</span>
-<span class="source-line-no">1461</span><span id="line-1461"></span>
-<span class="source-line-no">1462</span><span id="line-1462">    /**</span>
-<span class="source-line-no">1463</span><span id="line-1463">     * Get the minimum height players may build in. Inclusive.</span>
-<span class="source-line-no">1464</span><span id="line-1464">     */</span>
-<span class="source-line-no">1465</span><span id="line-1465">    public int getMinBuildHeight() {</span>
-<span class="source-line-no">1466</span><span id="line-1466">        return this.minBuildHeight;</span>
-<span class="source-line-no">1467</span><span id="line-1467">    }</span>
-<span class="source-line-no">1468</span><span id="line-1468"></span>
-<span class="source-line-no">1469</span><span id="line-1469">    /**</span>
-<span class="source-line-no">1470</span><span id="line-1470">     * Get the min height from which PlotSquared will generate blocks. Inclusive.</span>
-<span class="source-line-no">1471</span><span id="line-1471">     *</span>
-<span class="source-line-no">1472</span><span id="line-1472">     * @since 6.6.0</span>
-<span class="source-line-no">1473</span><span id="line-1473">     */</span>
-<span class="source-line-no">1474</span><span id="line-1474">    public int getMinGenHeight() {</span>
-<span class="source-line-no">1475</span><span id="line-1475">        return this.minGenHeight;</span>
-<span class="source-line-no">1476</span><span id="line-1476">    }</span>
-<span class="source-line-no">1477</span><span id="line-1477"></span>
-<span class="source-line-no">1478</span><span id="line-1478">    /**</span>
-<span class="source-line-no">1479</span><span id="line-1479">     * Get the max height to which PlotSquared will generate blocks. Inclusive.</span>
-<span class="source-line-no">1480</span><span id="line-1480">     *</span>
-<span class="source-line-no">1481</span><span id="line-1481">     * @since 6.6.0</span>
+<span class="source-line-no">1456</span><span id="line-1456">     * Get the maximum height that changes to plot components (wall filling, air, all etc.) may operate to</span>
+<span class="source-line-no">1457</span><span id="line-1457">     *</span>
+<span class="source-line-no">1458</span><span id="line-1458">     * @since 7.3.4</span>
+<span class="source-line-no">1459</span><span id="line-1459">     */</span>
+<span class="source-line-no">1460</span><span id="line-1460">    public int getMaxComponentHeight() {</span>
+<span class="source-line-no">1461</span><span id="line-1461">        return this.maxBuildHeight;</span>
+<span class="source-line-no">1462</span><span id="line-1462">    }</span>
+<span class="source-line-no">1463</span><span id="line-1463"></span>
+<span class="source-line-no">1464</span><span id="line-1464">    /**</span>
+<span class="source-line-no">1465</span><span id="line-1465">     * Get the minimum height that changes to plot components (wall filling, air, all etc.) may operate to</span>
+<span class="source-line-no">1466</span><span id="line-1466">     *</span>
+<span class="source-line-no">1467</span><span id="line-1467">     * @since 7.3.4</span>
+<span class="source-line-no">1468</span><span id="line-1468">     */</span>
+<span class="source-line-no">1469</span><span id="line-1469">    public int getMinComponentHeight() {</span>
+<span class="source-line-no">1470</span><span id="line-1470">        return this.minBuildHeight;</span>
+<span class="source-line-no">1471</span><span id="line-1471">    }</span>
+<span class="source-line-no">1472</span><span id="line-1472"></span>
+<span class="source-line-no">1473</span><span id="line-1473">    /**</span>
+<span class="source-line-no">1474</span><span id="line-1474">     * Get the maximum height players may build in. Exclusive.</span>
+<span class="source-line-no">1475</span><span id="line-1475">     */</span>
+<span class="source-line-no">1476</span><span id="line-1476">    public int getMaxBuildHeight() {</span>
+<span class="source-line-no">1477</span><span id="line-1477">        return this.maxBuildHeight;</span>
+<span class="source-line-no">1478</span><span id="line-1478">    }</span>
+<span class="source-line-no">1479</span><span id="line-1479"></span>
+<span class="source-line-no">1480</span><span id="line-1480">    /**</span>
+<span class="source-line-no">1481</span><span id="line-1481">     * Get the minimum height players may build in. Inclusive.</span>
 <span class="source-line-no">1482</span><span id="line-1482">     */</span>
-<span class="source-line-no">1483</span><span id="line-1483">    public int getMaxGenHeight() {</span>
-<span class="source-line-no">1484</span><span id="line-1484">        return this.maxGenHeight;</span>
+<span class="source-line-no">1483</span><span id="line-1483">    public int getMinBuildHeight() {</span>
+<span class="source-line-no">1484</span><span id="line-1484">        return this.minBuildHeight;</span>
 <span class="source-line-no">1485</span><span id="line-1485">    }</span>
 <span class="source-line-no">1486</span><span id="line-1486"></span>
-<span class="source-line-no">1487</span><span id="line-1487">    public GameMode getGameMode() {</span>
-<span class="source-line-no">1488</span><span id="line-1488">        return this.gameMode;</span>
-<span class="source-line-no">1489</span><span id="line-1489">    }</span>
-<span class="source-line-no">1490</span><span id="line-1490"></span>
-<span class="source-line-no">1491</span><span id="line-1491">    public Map&lt;String, PlotExpression&gt; getPrices() {</span>
-<span class="source-line-no">1492</span><span id="line-1492">        return this.prices;</span>
-<span class="source-line-no">1493</span><span id="line-1493">    }</span>
-<span class="source-line-no">1494</span><span id="line-1494"></span>
-<span class="source-line-no">1495</span><span id="line-1495">    protected List&lt;String&gt; getSchematics() {</span>
-<span class="source-line-no">1496</span><span id="line-1496">        return this.schematics;</span>
-<span class="source-line-no">1497</span><span id="line-1497">    }</span>
-<span class="source-line-no">1498</span><span id="line-1498"></span>
-<span class="source-line-no">1499</span><span id="line-1499">    public boolean isRoadFlags() {</span>
-<span class="source-line-no">1500</span><span id="line-1500">        return this.roadFlags;</span>
-<span class="source-line-no">1501</span><span id="line-1501">    }</span>
-<span class="source-line-no">1502</span><span id="line-1502"></span>
-<span class="source-line-no">1503</span><span id="line-1503">    public FlagContainer getFlagContainer() {</span>
-<span class="source-line-no">1504</span><span id="line-1504">        return this.flagContainer;</span>
-<span class="source-line-no">1505</span><span id="line-1505">    }</span>
-<span class="source-line-no">1506</span><span id="line-1506"></span>
-<span class="source-line-no">1507</span><span id="line-1507">    public FlagContainer getRoadFlagContainer() {</span>
-<span class="source-line-no">1508</span><span id="line-1508">        return this.roadFlagContainer;</span>
-<span class="source-line-no">1509</span><span id="line-1509">    }</span>
-<span class="source-line-no">1510</span><span id="line-1510"></span>
-<span class="source-line-no">1511</span><span id="line-1511">    public void setAllowSigns(boolean allowSigns) {</span>
-<span class="source-line-no">1512</span><span id="line-1512">        this.allowSigns = allowSigns;</span>
-<span class="source-line-no">1513</span><span id="line-1513">    }</span>
-<span class="source-line-no">1514</span><span id="line-1514"></span>
-<span class="source-line-no">1515</span><span id="line-1515">}</span>
+<span class="source-line-no">1487</span><span id="line-1487">    /**</span>
+<span class="source-line-no">1488</span><span id="line-1488">     * Get the min height from which PlotSquared will generate blocks. Inclusive.</span>
+<span class="source-line-no">1489</span><span id="line-1489">     *</span>
+<span class="source-line-no">1490</span><span id="line-1490">     * @since 6.6.0</span>
+<span class="source-line-no">1491</span><span id="line-1491">     */</span>
+<span class="source-line-no">1492</span><span id="line-1492">    public int getMinGenHeight() {</span>
+<span class="source-line-no">1493</span><span id="line-1493">        return this.minGenHeight;</span>
+<span class="source-line-no">1494</span><span id="line-1494">    }</span>
+<span class="source-line-no">1495</span><span id="line-1495"></span>
+<span class="source-line-no">1496</span><span id="line-1496">    /**</span>
+<span class="source-line-no">1497</span><span id="line-1497">     * Get the max height to which PlotSquared will generate blocks. Inclusive.</span>
+<span class="source-line-no">1498</span><span id="line-1498">     *</span>
+<span class="source-line-no">1499</span><span id="line-1499">     * @since 6.6.0</span>
+<span class="source-line-no">1500</span><span id="line-1500">     */</span>
+<span class="source-line-no">1501</span><span id="line-1501">    public int getMaxGenHeight() {</span>
+<span class="source-line-no">1502</span><span id="line-1502">        return this.maxGenHeight;</span>
+<span class="source-line-no">1503</span><span id="line-1503">    }</span>
+<span class="source-line-no">1504</span><span id="line-1504"></span>
+<span class="source-line-no">1505</span><span id="line-1505">    public GameMode getGameMode() {</span>
+<span class="source-line-no">1506</span><span id="line-1506">        return this.gameMode;</span>
+<span class="source-line-no">1507</span><span id="line-1507">    }</span>
+<span class="source-line-no">1508</span><span id="line-1508"></span>
+<span class="source-line-no">1509</span><span id="line-1509">    public Map&lt;String, PlotExpression&gt; getPrices() {</span>
+<span class="source-line-no">1510</span><span id="line-1510">        return this.prices;</span>
+<span class="source-line-no">1511</span><span id="line-1511">    }</span>
+<span class="source-line-no">1512</span><span id="line-1512"></span>
+<span class="source-line-no">1513</span><span id="line-1513">    protected List&lt;String&gt; getSchematics() {</span>
+<span class="source-line-no">1514</span><span id="line-1514">        return this.schematics;</span>
+<span class="source-line-no">1515</span><span id="line-1515">    }</span>
+<span class="source-line-no">1516</span><span id="line-1516"></span>
+<span class="source-line-no">1517</span><span id="line-1517">    public boolean isRoadFlags() {</span>
+<span class="source-line-no">1518</span><span id="line-1518">        return this.roadFlags;</span>
+<span class="source-line-no">1519</span><span id="line-1519">    }</span>
+<span class="source-line-no">1520</span><span id="line-1520"></span>
+<span class="source-line-no">1521</span><span id="line-1521">    public FlagContainer getFlagContainer() {</span>
+<span class="source-line-no">1522</span><span id="line-1522">        return this.flagContainer;</span>
+<span class="source-line-no">1523</span><span id="line-1523">    }</span>
+<span class="source-line-no">1524</span><span id="line-1524"></span>
+<span class="source-line-no">1525</span><span id="line-1525">    public FlagContainer getRoadFlagContainer() {</span>
+<span class="source-line-no">1526</span><span id="line-1526">        return this.roadFlagContainer;</span>
+<span class="source-line-no">1527</span><span id="line-1527">    }</span>
+<span class="source-line-no">1528</span><span id="line-1528"></span>
+<span class="source-line-no">1529</span><span id="line-1529">    public void setAllowSigns(boolean allowSigns) {</span>
+<span class="source-line-no">1530</span><span id="line-1530">        this.allowSigns = allowSigns;</span>
+<span class="source-line-no">1531</span><span id="line-1531">    }</span>
+<span class="source-line-no">1532</span><span id="line-1532"></span>
+<span class="source-line-no">1533</span><span id="line-1533">}</span>
 
 
 

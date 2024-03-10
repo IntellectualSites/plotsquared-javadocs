@@ -736,99 +736,105 @@
 <span class="source-line-no">723</span><span id="line-723"></span>
 <span class="source-line-no">724</span><span id="line-724">    }</span>
 <span class="source-line-no">725</span><span id="line-725"></span>
-<span class="source-line-no">726</span><span id="line-726"></span>
-<span class="source-line-no">727</span><span id="line-727">    @Comment({"Enable or disable parts of the plugin",</span>
-<span class="source-line-no">728</span><span id="line-728">            "Note: A cache will use some memory if enabled"})</span>
-<span class="source-line-no">729</span><span id="line-729">    public static final class Enabled_Components { // Group the following values into a new config section</span>
-<span class="source-line-no">730</span><span id="line-730"></span>
-<span class="source-line-no">731</span><span id="line-731">        @Comment("The database stores all the plots")</span>
-<span class="source-line-no">732</span><span id="line-732">        public static boolean DATABASE = true;</span>
-<span class="source-line-no">733</span><span id="line-733">        @Comment("Events are needed to track a lot of things")</span>
-<span class="source-line-no">734</span><span id="line-734">        public static boolean EVENTS = true;</span>
-<span class="source-line-no">735</span><span id="line-735">        @Comment("Commands are used to interact with the plugin")</span>
-<span class="source-line-no">736</span><span id="line-736">        public static boolean COMMANDS =</span>
-<span class="source-line-no">737</span><span id="line-737">                true;</span>
-<span class="source-line-no">738</span><span id="line-738">        @Comment("Whether we should notify you about updates or not.")</span>
-<span class="source-line-no">739</span><span id="line-739">        public static boolean</span>
-<span class="source-line-no">740</span><span id="line-740">                UPDATE_NOTIFICATIONS = true;</span>
-<span class="source-line-no">741</span><span id="line-741">        @Comment("Stores user metadata in a database")</span>
-<span class="source-line-no">742</span><span id="line-742">        public static boolean PERSISTENT_META = true;</span>
-<span class="source-line-no">743</span><span id="line-743">        @Comment("Getting a rating won't need the database")</span>
-<span class="source-line-no">744</span><span id="line-744">        public static boolean RATING_CACHE =</span>
-<span class="source-line-no">745</span><span id="line-745">                true;</span>
-<span class="source-line-no">746</span><span id="line-746">        @Comment("Allow WorldEdit to be restricted to plots")</span>
-<span class="source-line-no">747</span><span id="line-747">        public static boolean</span>
-<span class="source-line-no">748</span><span id="line-748">                WORLDEDIT_RESTRICTIONS = true;</span>
-<span class="source-line-no">749</span><span id="line-749">        @Comment("Allow economy to be used to sell, claim or buy plots.")</span>
-<span class="source-line-no">750</span><span id="line-750">        public static boolean ECONOMY = false;</span>
-<span class="source-line-no">751</span><span id="line-751">        @Comment("Expiry will clear old or simplistic plots")</span>
-<span class="source-line-no">752</span><span id="line-752">        public static boolean PLOT_EXPIRY =</span>
-<span class="source-line-no">753</span><span id="line-753">                false;</span>
-<span class="source-line-no">754</span><span id="line-754">        @Comment("Processes chunks (trimming, or entity/tile limits) ")</span>
-<span class="source-line-no">755</span><span id="line-755">        public static boolean</span>
-<span class="source-line-no">756</span><span id="line-756">                CHUNK_PROCESSOR = false;</span>
-<span class="source-line-no">757</span><span id="line-757">        @Comment("Kill mobs on roads (Chicken, Cow, etc.)")</span>
-<span class="source-line-no">758</span><span id="line-758">        public static boolean KILL_ROAD_MOBS = false;</span>
-<span class="source-line-no">759</span><span id="line-759">        @Comment("Also kill any road mobs that are being ridden, or are leashed")</span>
-<span class="source-line-no">760</span><span id="line-760">        public static boolean</span>
-<span class="source-line-no">761</span><span id="line-761">                KILL_OWNED_ROAD_MOBS = false;</span>
-<span class="source-line-no">762</span><span id="line-762">        @Comment("Also kill any road mobs that are named")</span>
-<span class="source-line-no">763</span><span id="line-763">        public static boolean KILL_NAMED_ROAD_MOBS = false;</span>
-<span class="source-line-no">764</span><span id="line-764">        @Comment("Kill items on roads (Stick, Paper, etc.)")</span>
-<span class="source-line-no">765</span><span id="line-765">        public static boolean KILL_ROAD_ITEMS = false;</span>
-<span class="source-line-no">766</span><span id="line-766">        @Comment("Kill vehicles on roads (Boat, Minecart, etc.)")</span>
-<span class="source-line-no">767</span><span id="line-767">        public static boolean KILL_ROAD_VEHICLES = false;</span>
-<span class="source-line-no">768</span><span id="line-768">        @Comment("Notify a player of any missed plot comments upon plot entry")</span>
-<span class="source-line-no">769</span><span id="line-769">        public static boolean</span>
-<span class="source-line-no">770</span><span id="line-770">                COMMENT_NOTIFIER = true;</span>
-<span class="source-line-no">771</span><span id="line-771">        @Comment("Let players claim entire worlds with PlotSquared")</span>
-<span class="source-line-no">772</span><span id="line-772">        public static boolean WORLDS =</span>
-<span class="source-line-no">773</span><span id="line-773">                false;</span>
-<span class="source-line-no">774</span><span id="line-774">        @Comment("Actively purge invalid database entries")</span>
-<span class="source-line-no">775</span><span id="line-775">        public static boolean DATABASE_PURGER =</span>
-<span class="source-line-no">776</span><span id="line-776">                false;</span>
-<span class="source-line-no">777</span><span id="line-777">        @Comment({"Delete plots when a player is banned.",</span>
-<span class="source-line-no">778</span><span id="line-778">                "Note: This only works with the /minecraft:ban command. Any punishment plugin is not supported."})</span>
-<span class="source-line-no">779</span><span id="line-779">        public static boolean BAN_DELETER = false;</span>
-<span class="source-line-no">780</span><span id="line-780">        @Comment("Allows PlaceholderAPI placeholders to be used in captions, flags, etc.")</span>
-<span class="source-line-no">781</span><span id="line-781">        public static boolean EXTERNAL_PLACEHOLDERS = true;</span>
-<span class="source-line-no">782</span><span id="line-782">        @Comment("Make road regeneration persistent across restarts")</span>
-<span class="source-line-no">783</span><span id="line-783">        public static boolean</span>
-<span class="source-line-no">784</span><span id="line-784">                PERSISTENT_ROAD_REGEN = true;</span>
-<span class="source-line-no">785</span><span id="line-785">        @Comment({"Enable the `/plot component` preset GUI",</span>
-<span class="source-line-no">786</span><span id="line-786">                "Read more about components here: https://intellectualsites.gitbook.io/plotsquared/customization/plot-components"})</span>
-<span class="source-line-no">787</span><span id="line-787">        public static boolean COMPONENT_PRESETS = true;</span>
-<span class="source-line-no">788</span><span id="line-788">        @Comment("Enable per user locale")</span>
-<span class="source-line-no">789</span><span id="line-789">        public static boolean PER_USER_LOCALE = false;</span>
-<span class="source-line-no">790</span><span id="line-790">        @Comment({"The default locale. Before changing the language, make sure you downloaded the appropriate file and put it " +</span>
-<span class="source-line-no">791</span><span id="line-791">                "in the 'lang' folder.",</span>
-<span class="source-line-no">792</span><span id="line-792">                "You can find additional translations here: https://intellectualsites.crowdin.com/plotsquared"</span>
-<span class="source-line-no">793</span><span id="line-793">        })</span>
-<span class="source-line-no">794</span><span id="line-794">        public static String DEFAULT_LOCALE = "en";</span>
-<span class="source-line-no">795</span><span id="line-795">        @Comment("Use UUID cache to complete usernames")</span>
-<span class="source-line-no">796</span><span id="line-796">        public static boolean EXTENDED_USERNAME_COMPLETION = true;</span>
-<span class="source-line-no">797</span><span id="line-797">        @Comment("Command aliases that will be tab completed")</span>
-<span class="source-line-no">798</span><span id="line-798">        public static List&lt;String&gt; TAB_COMPLETED_ALIASES = Arrays.asList(</span>
-<span class="source-line-no">799</span><span id="line-799">                "plot",</span>
-<span class="source-line-no">800</span><span id="line-800">                "plots",</span>
-<span class="source-line-no">801</span><span id="line-801">                "p",</span>
-<span class="source-line-no">802</span><span id="line-802">                "plotsquared",</span>
-<span class="source-line-no">803</span><span id="line-803">                "plot2",</span>
-<span class="source-line-no">804</span><span id="line-804">                "p2",</span>
-<span class="source-line-no">805</span><span id="line-805">                "ps",</span>
-<span class="source-line-no">806</span><span id="line-806">                "2",</span>
-<span class="source-line-no">807</span><span id="line-807">                "plotme",</span>
-<span class="source-line-no">808</span><span id="line-808">                "plotz",</span>
-<span class="source-line-no">809</span><span id="line-809">                "ap"</span>
-<span class="source-line-no">810</span><span id="line-810">        );</span>
-<span class="source-line-no">811</span><span id="line-811">        @Comment("Whether PlotSquared should hook into MvDWPlaceholderAPI or not")</span>
-<span class="source-line-no">812</span><span id="line-812">        public static boolean USE_MVDWAPI = true;</span>
-<span class="source-line-no">813</span><span id="line-813">        @Comment("Prevent cross plot beacon effects")</span>
-<span class="source-line-no">814</span><span id="line-814">        public static boolean DISABLE_BEACON_EFFECT_OVERFLOW = true;</span>
-<span class="source-line-no">815</span><span id="line-815"></span>
-<span class="source-line-no">816</span><span id="line-816">    }</span>
-<span class="source-line-no">817</span><span id="line-817"></span>
-<span class="source-line-no">818</span><span id="line-818">}</span>
+<span class="source-line-no">726</span><span id="line-726">    @Comment("Settings related to flags")</span>
+<span class="source-line-no">727</span><span id="line-727">    public static final class Flags {</span>
+<span class="source-line-no">728</span><span id="line-728"></span>
+<span class="source-line-no">729</span><span id="line-729">        @Comment("If \"instabreak\" should consider the used tool.")</span>
+<span class="source-line-no">730</span><span id="line-730">        public static boolean INSTABREAK_CONSIDER_TOOL = false;</span>
+<span class="source-line-no">731</span><span id="line-731">    }</span>
+<span class="source-line-no">732</span><span id="line-732"></span>
+<span class="source-line-no">733</span><span id="line-733">    @Comment({"Enable or disable parts of the plugin",</span>
+<span class="source-line-no">734</span><span id="line-734">            "Note: A cache will use some memory if enabled"})</span>
+<span class="source-line-no">735</span><span id="line-735">    public static final class Enabled_Components { // Group the following values into a new config section</span>
+<span class="source-line-no">736</span><span id="line-736"></span>
+<span class="source-line-no">737</span><span id="line-737">        @Comment("The database stores all the plots")</span>
+<span class="source-line-no">738</span><span id="line-738">        public static boolean DATABASE = true;</span>
+<span class="source-line-no">739</span><span id="line-739">        @Comment("Events are needed to track a lot of things")</span>
+<span class="source-line-no">740</span><span id="line-740">        public static boolean EVENTS = true;</span>
+<span class="source-line-no">741</span><span id="line-741">        @Comment("Commands are used to interact with the plugin")</span>
+<span class="source-line-no">742</span><span id="line-742">        public static boolean COMMANDS =</span>
+<span class="source-line-no">743</span><span id="line-743">                true;</span>
+<span class="source-line-no">744</span><span id="line-744">        @Comment("Whether we should notify you about updates or not.")</span>
+<span class="source-line-no">745</span><span id="line-745">        public static boolean</span>
+<span class="source-line-no">746</span><span id="line-746">                UPDATE_NOTIFICATIONS = true;</span>
+<span class="source-line-no">747</span><span id="line-747">        @Comment("Stores user metadata in a database")</span>
+<span class="source-line-no">748</span><span id="line-748">        public static boolean PERSISTENT_META = true;</span>
+<span class="source-line-no">749</span><span id="line-749">        @Comment("Getting a rating won't need the database")</span>
+<span class="source-line-no">750</span><span id="line-750">        public static boolean RATING_CACHE =</span>
+<span class="source-line-no">751</span><span id="line-751">                true;</span>
+<span class="source-line-no">752</span><span id="line-752">        @Comment("Allow WorldEdit to be restricted to plots")</span>
+<span class="source-line-no">753</span><span id="line-753">        public static boolean</span>
+<span class="source-line-no">754</span><span id="line-754">                WORLDEDIT_RESTRICTIONS = true;</span>
+<span class="source-line-no">755</span><span id="line-755">        @Comment("Allow economy to be used to sell, claim or buy plots.")</span>
+<span class="source-line-no">756</span><span id="line-756">        public static boolean ECONOMY = false;</span>
+<span class="source-line-no">757</span><span id="line-757">        @Comment("Expiry will clear old or simplistic plots")</span>
+<span class="source-line-no">758</span><span id="line-758">        public static boolean PLOT_EXPIRY =</span>
+<span class="source-line-no">759</span><span id="line-759">                false;</span>
+<span class="source-line-no">760</span><span id="line-760">        @Comment("Processes chunks (trimming, or entity/tile limits) ")</span>
+<span class="source-line-no">761</span><span id="line-761">        public static boolean</span>
+<span class="source-line-no">762</span><span id="line-762">                CHUNK_PROCESSOR = false;</span>
+<span class="source-line-no">763</span><span id="line-763">        @Comment("Kill mobs on roads (Chicken, Cow, etc.)")</span>
+<span class="source-line-no">764</span><span id="line-764">        public static boolean KILL_ROAD_MOBS = false;</span>
+<span class="source-line-no">765</span><span id="line-765">        @Comment("Also kill any road mobs that are being ridden, or are leashed")</span>
+<span class="source-line-no">766</span><span id="line-766">        public static boolean</span>
+<span class="source-line-no">767</span><span id="line-767">                KILL_OWNED_ROAD_MOBS = false;</span>
+<span class="source-line-no">768</span><span id="line-768">        @Comment("Also kill any road mobs that are named")</span>
+<span class="source-line-no">769</span><span id="line-769">        public static boolean KILL_NAMED_ROAD_MOBS = false;</span>
+<span class="source-line-no">770</span><span id="line-770">        @Comment("Kill items on roads (Stick, Paper, etc.)")</span>
+<span class="source-line-no">771</span><span id="line-771">        public static boolean KILL_ROAD_ITEMS = false;</span>
+<span class="source-line-no">772</span><span id="line-772">        @Comment("Kill vehicles on roads (Boat, Minecart, etc.)")</span>
+<span class="source-line-no">773</span><span id="line-773">        public static boolean KILL_ROAD_VEHICLES = false;</span>
+<span class="source-line-no">774</span><span id="line-774">        @Comment("Notify a player of any missed plot comments upon plot entry")</span>
+<span class="source-line-no">775</span><span id="line-775">        public static boolean</span>
+<span class="source-line-no">776</span><span id="line-776">                COMMENT_NOTIFIER = true;</span>
+<span class="source-line-no">777</span><span id="line-777">        @Comment("Let players claim entire worlds with PlotSquared")</span>
+<span class="source-line-no">778</span><span id="line-778">        public static boolean WORLDS =</span>
+<span class="source-line-no">779</span><span id="line-779">                false;</span>
+<span class="source-line-no">780</span><span id="line-780">        @Comment("Actively purge invalid database entries")</span>
+<span class="source-line-no">781</span><span id="line-781">        public static boolean DATABASE_PURGER =</span>
+<span class="source-line-no">782</span><span id="line-782">                false;</span>
+<span class="source-line-no">783</span><span id="line-783">        @Comment({"Delete plots when a player is banned.",</span>
+<span class="source-line-no">784</span><span id="line-784">                "Note: This only works with the /minecraft:ban command. Any punishment plugin is not supported."})</span>
+<span class="source-line-no">785</span><span id="line-785">        public static boolean BAN_DELETER = false;</span>
+<span class="source-line-no">786</span><span id="line-786">        @Comment("Allows PlaceholderAPI placeholders to be used in captions, flags, etc.")</span>
+<span class="source-line-no">787</span><span id="line-787">        public static boolean EXTERNAL_PLACEHOLDERS = true;</span>
+<span class="source-line-no">788</span><span id="line-788">        @Comment("Make road regeneration persistent across restarts")</span>
+<span class="source-line-no">789</span><span id="line-789">        public static boolean</span>
+<span class="source-line-no">790</span><span id="line-790">                PERSISTENT_ROAD_REGEN = true;</span>
+<span class="source-line-no">791</span><span id="line-791">        @Comment({"Enable the `/plot component` preset GUI",</span>
+<span class="source-line-no">792</span><span id="line-792">                "Read more about components here: https://intellectualsites.gitbook.io/plotsquared/customization/plot-components"})</span>
+<span class="source-line-no">793</span><span id="line-793">        public static boolean COMPONENT_PRESETS = true;</span>
+<span class="source-line-no">794</span><span id="line-794">        @Comment("Enable per user locale")</span>
+<span class="source-line-no">795</span><span id="line-795">        public static boolean PER_USER_LOCALE = false;</span>
+<span class="source-line-no">796</span><span id="line-796">        @Comment({"The default locale. Before changing the language, make sure you downloaded the appropriate file and put it " +</span>
+<span class="source-line-no">797</span><span id="line-797">                "in the 'lang' folder.",</span>
+<span class="source-line-no">798</span><span id="line-798">                "You can find additional translations here: https://intellectualsites.crowdin.com/plotsquared"</span>
+<span class="source-line-no">799</span><span id="line-799">        })</span>
+<span class="source-line-no">800</span><span id="line-800">        public static String DEFAULT_LOCALE = "en";</span>
+<span class="source-line-no">801</span><span id="line-801">        @Comment("Use UUID cache to complete usernames")</span>
+<span class="source-line-no">802</span><span id="line-802">        public static boolean EXTENDED_USERNAME_COMPLETION = true;</span>
+<span class="source-line-no">803</span><span id="line-803">        @Comment("Command aliases that will be tab completed")</span>
+<span class="source-line-no">804</span><span id="line-804">        public static List&lt;String&gt; TAB_COMPLETED_ALIASES = Arrays.asList(</span>
+<span class="source-line-no">805</span><span id="line-805">                "plot",</span>
+<span class="source-line-no">806</span><span id="line-806">                "plots",</span>
+<span class="source-line-no">807</span><span id="line-807">                "p",</span>
+<span class="source-line-no">808</span><span id="line-808">                "plotsquared",</span>
+<span class="source-line-no">809</span><span id="line-809">                "plot2",</span>
+<span class="source-line-no">810</span><span id="line-810">                "p2",</span>
+<span class="source-line-no">811</span><span id="line-811">                "ps",</span>
+<span class="source-line-no">812</span><span id="line-812">                "2",</span>
+<span class="source-line-no">813</span><span id="line-813">                "plotme",</span>
+<span class="source-line-no">814</span><span id="line-814">                "plotz",</span>
+<span class="source-line-no">815</span><span id="line-815">                "ap"</span>
+<span class="source-line-no">816</span><span id="line-816">        );</span>
+<span class="source-line-no">817</span><span id="line-817">        @Comment("Whether PlotSquared should hook into MvDWPlaceholderAPI or not")</span>
+<span class="source-line-no">818</span><span id="line-818">        public static boolean USE_MVDWAPI = true;</span>
+<span class="source-line-no">819</span><span id="line-819">        @Comment("Prevent cross plot beacon effects")</span>
+<span class="source-line-no">820</span><span id="line-820">        public static boolean DISABLE_BEACON_EFFECT_OVERFLOW = true;</span>
+<span class="source-line-no">821</span><span id="line-821"></span>
+<span class="source-line-no">822</span><span id="line-822">    }</span>
+<span class="source-line-no">823</span><span id="line-823"></span>
+<span class="source-line-no">824</span><span id="line-824">}</span>
 
 
 

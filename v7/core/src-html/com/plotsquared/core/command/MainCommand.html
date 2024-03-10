@@ -281,84 +281,85 @@
 <span class="source-line-no">268</span><span id="line-268">                    tp = true;</span>
 <span class="source-line-no">269</span><span id="line-269">                } else {</span>
 <span class="source-line-no">270</span><span id="line-270">                    player.sendMessage(TranslatableCaption.of("border.denied"));</span>
-<span class="source-line-no">271</span><span id="line-271">                }</span>
-<span class="source-line-no">272</span><span id="line-272">                // Trim command</span>
-<span class="source-line-no">273</span><span id="line-273">                args = Arrays.copyOfRange(args, 1, args.length);</span>
-<span class="source-line-no">274</span><span id="line-274">            }</span>
-<span class="source-line-no">275</span><span id="line-275">            if (args.length &gt;= 2 &amp;&amp; !args[0].isEmpty() &amp;&amp; args[0].charAt(0) == '-') {</span>
-<span class="source-line-no">276</span><span id="line-276">                if ("f".equals(args[0].substring(1))) {</span>
-<span class="source-line-no">277</span><span id="line-277">                    confirm = new RunnableVal3&lt;&gt;() {</span>
-<span class="source-line-no">278</span><span id="line-278">                        @Override</span>
-<span class="source-line-no">279</span><span id="line-279">                        public void run(Command cmd, Runnable success, Runnable failure) {</span>
-<span class="source-line-no">280</span><span id="line-280">                            if (area != null &amp;&amp; PlotSquared.platform().econHandler().isEnabled(area)) {</span>
-<span class="source-line-no">281</span><span id="line-281">                                PlotExpression priceEval =</span>
-<span class="source-line-no">282</span><span id="line-282">                                        area.getPrices().get(cmd.getFullId());</span>
-<span class="source-line-no">283</span><span id="line-283">                                double price = priceEval != null ? priceEval.evaluate(0d) : 0d;</span>
-<span class="source-line-no">284</span><span id="line-284">                                if (price != 0d</span>
-<span class="source-line-no">285</span><span id="line-285">                                        &amp;&amp; PlotSquared.platform().econHandler().getMoney(player) &lt; price) {</span>
-<span class="source-line-no">286</span><span id="line-286">                                    if (failure != null) {</span>
-<span class="source-line-no">287</span><span id="line-287">                                        failure.run();</span>
-<span class="source-line-no">288</span><span id="line-288">                                    }</span>
-<span class="source-line-no">289</span><span id="line-289">                                    return;</span>
-<span class="source-line-no">290</span><span id="line-290">                                }</span>
-<span class="source-line-no">291</span><span id="line-291">                            }</span>
-<span class="source-line-no">292</span><span id="line-292">                            if (success != null) {</span>
-<span class="source-line-no">293</span><span id="line-293">                                success.run();</span>
-<span class="source-line-no">294</span><span id="line-294">                            }</span>
-<span class="source-line-no">295</span><span id="line-295">                        }</span>
-<span class="source-line-no">296</span><span id="line-296">                    };</span>
-<span class="source-line-no">297</span><span id="line-297">                    args = Arrays.copyOfRange(args, 1, args.length);</span>
-<span class="source-line-no">298</span><span id="line-298">                } else {</span>
-<span class="source-line-no">299</span><span id="line-299">                    player.sendMessage(TranslatableCaption.of("errors.invalid_command_flag"));</span>
-<span class="source-line-no">300</span><span id="line-300">                    return CompletableFuture.completedFuture(false);</span>
-<span class="source-line-no">301</span><span id="line-301">                }</span>
-<span class="source-line-no">302</span><span id="line-302">            }</span>
-<span class="source-line-no">303</span><span id="line-303">        }</span>
-<span class="source-line-no">304</span><span id="line-304">        try {</span>
-<span class="source-line-no">305</span><span id="line-305">            super.execute(player, args, confirm, whenDone);</span>
-<span class="source-line-no">306</span><span id="line-306">        } catch (CommandException e) {</span>
-<span class="source-line-no">307</span><span id="line-307">            throw e;</span>
-<span class="source-line-no">308</span><span id="line-308">        } catch (Throwable e) {</span>
-<span class="source-line-no">309</span><span id="line-309">            e.printStackTrace();</span>
-<span class="source-line-no">310</span><span id="line-310">            String message = e.getMessage();</span>
-<span class="source-line-no">311</span><span id="line-311">            if (message != null) {</span>
-<span class="source-line-no">312</span><span id="line-312">                player.sendMessage(</span>
-<span class="source-line-no">313</span><span id="line-313">                        TranslatableCaption.of("errors.error"),</span>
-<span class="source-line-no">314</span><span id="line-314">                        TagResolver.resolver("value", Tag.inserting(Component.text(message)))</span>
-<span class="source-line-no">315</span><span id="line-315">                );</span>
-<span class="source-line-no">316</span><span id="line-316">            } else {</span>
-<span class="source-line-no">317</span><span id="line-317">                player.sendMessage(</span>
-<span class="source-line-no">318</span><span id="line-318">                        TranslatableCaption.of("errors.error_console"));</span>
-<span class="source-line-no">319</span><span id="line-319">            }</span>
-<span class="source-line-no">320</span><span id="line-320">        }</span>
-<span class="source-line-no">321</span><span id="line-321">        // Reset command scope //</span>
-<span class="source-line-no">322</span><span id="line-322">        if (tp &amp;&amp; !(player instanceof ConsolePlayer)) {</span>
-<span class="source-line-no">323</span><span id="line-323">            try (final MetaDataAccess&lt;Location&gt; locationMetaDataAccess</span>
-<span class="source-line-no">324</span><span id="line-324">                         = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LOCATION)) {</span>
-<span class="source-line-no">325</span><span id="line-325">                if (location == null) {</span>
-<span class="source-line-no">326</span><span id="line-326">                    locationMetaDataAccess.remove();</span>
-<span class="source-line-no">327</span><span id="line-327">                } else {</span>
-<span class="source-line-no">328</span><span id="line-328">                    locationMetaDataAccess.set(location);</span>
-<span class="source-line-no">329</span><span id="line-329">                }</span>
-<span class="source-line-no">330</span><span id="line-330">            }</span>
-<span class="source-line-no">331</span><span id="line-331">            try (final MetaDataAccess&lt;Plot&gt; plotMetaDataAccess</span>
-<span class="source-line-no">332</span><span id="line-332">                         = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
-<span class="source-line-no">333</span><span id="line-333">                if (plot == null) {</span>
-<span class="source-line-no">334</span><span id="line-334">                    plotMetaDataAccess.remove();</span>
-<span class="source-line-no">335</span><span id="line-335">                } else {</span>
-<span class="source-line-no">336</span><span id="line-336">                    plotMetaDataAccess.set(plot);</span>
-<span class="source-line-no">337</span><span id="line-337">                }</span>
-<span class="source-line-no">338</span><span id="line-338">            }</span>
-<span class="source-line-no">339</span><span id="line-339">        }</span>
-<span class="source-line-no">340</span><span id="line-340">        return CompletableFuture.completedFuture(true);</span>
-<span class="source-line-no">341</span><span id="line-341">    }</span>
-<span class="source-line-no">342</span><span id="line-342"></span>
-<span class="source-line-no">343</span><span id="line-343">    @Override</span>
-<span class="source-line-no">344</span><span id="line-344">    public boolean canExecute(PlotPlayer&lt;?&gt; player, boolean message) {</span>
-<span class="source-line-no">345</span><span id="line-345">        return true;</span>
-<span class="source-line-no">346</span><span id="line-346">    }</span>
-<span class="source-line-no">347</span><span id="line-347"></span>
-<span class="source-line-no">348</span><span id="line-348">}</span>
+<span class="source-line-no">271</span><span id="line-271">                    return CompletableFuture.completedFuture(false);</span>
+<span class="source-line-no">272</span><span id="line-272">                }</span>
+<span class="source-line-no">273</span><span id="line-273">                // Trim command</span>
+<span class="source-line-no">274</span><span id="line-274">                args = Arrays.copyOfRange(args, 1, args.length);</span>
+<span class="source-line-no">275</span><span id="line-275">            }</span>
+<span class="source-line-no">276</span><span id="line-276">            if (args.length &gt;= 2 &amp;&amp; !args[0].isEmpty() &amp;&amp; args[0].charAt(0) == '-') {</span>
+<span class="source-line-no">277</span><span id="line-277">                if ("f".equals(args[0].substring(1))) {</span>
+<span class="source-line-no">278</span><span id="line-278">                    confirm = new RunnableVal3&lt;&gt;() {</span>
+<span class="source-line-no">279</span><span id="line-279">                        @Override</span>
+<span class="source-line-no">280</span><span id="line-280">                        public void run(Command cmd, Runnable success, Runnable failure) {</span>
+<span class="source-line-no">281</span><span id="line-281">                            if (area != null &amp;&amp; PlotSquared.platform().econHandler().isEnabled(area)) {</span>
+<span class="source-line-no">282</span><span id="line-282">                                PlotExpression priceEval =</span>
+<span class="source-line-no">283</span><span id="line-283">                                        area.getPrices().get(cmd.getFullId());</span>
+<span class="source-line-no">284</span><span id="line-284">                                double price = priceEval != null ? priceEval.evaluate(0d) : 0d;</span>
+<span class="source-line-no">285</span><span id="line-285">                                if (price != 0d</span>
+<span class="source-line-no">286</span><span id="line-286">                                        &amp;&amp; PlotSquared.platform().econHandler().getMoney(player) &lt; price) {</span>
+<span class="source-line-no">287</span><span id="line-287">                                    if (failure != null) {</span>
+<span class="source-line-no">288</span><span id="line-288">                                        failure.run();</span>
+<span class="source-line-no">289</span><span id="line-289">                                    }</span>
+<span class="source-line-no">290</span><span id="line-290">                                    return;</span>
+<span class="source-line-no">291</span><span id="line-291">                                }</span>
+<span class="source-line-no">292</span><span id="line-292">                            }</span>
+<span class="source-line-no">293</span><span id="line-293">                            if (success != null) {</span>
+<span class="source-line-no">294</span><span id="line-294">                                success.run();</span>
+<span class="source-line-no">295</span><span id="line-295">                            }</span>
+<span class="source-line-no">296</span><span id="line-296">                        }</span>
+<span class="source-line-no">297</span><span id="line-297">                    };</span>
+<span class="source-line-no">298</span><span id="line-298">                    args = Arrays.copyOfRange(args, 1, args.length);</span>
+<span class="source-line-no">299</span><span id="line-299">                } else {</span>
+<span class="source-line-no">300</span><span id="line-300">                    player.sendMessage(TranslatableCaption.of("errors.invalid_command_flag"));</span>
+<span class="source-line-no">301</span><span id="line-301">                    return CompletableFuture.completedFuture(false);</span>
+<span class="source-line-no">302</span><span id="line-302">                }</span>
+<span class="source-line-no">303</span><span id="line-303">            }</span>
+<span class="source-line-no">304</span><span id="line-304">        }</span>
+<span class="source-line-no">305</span><span id="line-305">        try {</span>
+<span class="source-line-no">306</span><span id="line-306">            super.execute(player, args, confirm, whenDone);</span>
+<span class="source-line-no">307</span><span id="line-307">        } catch (CommandException e) {</span>
+<span class="source-line-no">308</span><span id="line-308">            throw e;</span>
+<span class="source-line-no">309</span><span id="line-309">        } catch (Throwable e) {</span>
+<span class="source-line-no">310</span><span id="line-310">            e.printStackTrace();</span>
+<span class="source-line-no">311</span><span id="line-311">            String message = e.getMessage();</span>
+<span class="source-line-no">312</span><span id="line-312">            if (message != null) {</span>
+<span class="source-line-no">313</span><span id="line-313">                player.sendMessage(</span>
+<span class="source-line-no">314</span><span id="line-314">                        TranslatableCaption.of("errors.error"),</span>
+<span class="source-line-no">315</span><span id="line-315">                        TagResolver.resolver("value", Tag.inserting(Component.text(message)))</span>
+<span class="source-line-no">316</span><span id="line-316">                );</span>
+<span class="source-line-no">317</span><span id="line-317">            } else {</span>
+<span class="source-line-no">318</span><span id="line-318">                player.sendMessage(</span>
+<span class="source-line-no">319</span><span id="line-319">                        TranslatableCaption.of("errors.error_console"));</span>
+<span class="source-line-no">320</span><span id="line-320">            }</span>
+<span class="source-line-no">321</span><span id="line-321">        }</span>
+<span class="source-line-no">322</span><span id="line-322">        // Reset command scope //</span>
+<span class="source-line-no">323</span><span id="line-323">        if (tp &amp;&amp; !(player instanceof ConsolePlayer)) {</span>
+<span class="source-line-no">324</span><span id="line-324">            try (final MetaDataAccess&lt;Location&gt; locationMetaDataAccess</span>
+<span class="source-line-no">325</span><span id="line-325">                         = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LOCATION)) {</span>
+<span class="source-line-no">326</span><span id="line-326">                if (location == null) {</span>
+<span class="source-line-no">327</span><span id="line-327">                    locationMetaDataAccess.remove();</span>
+<span class="source-line-no">328</span><span id="line-328">                } else {</span>
+<span class="source-line-no">329</span><span id="line-329">                    locationMetaDataAccess.set(location);</span>
+<span class="source-line-no">330</span><span id="line-330">                }</span>
+<span class="source-line-no">331</span><span id="line-331">            }</span>
+<span class="source-line-no">332</span><span id="line-332">            try (final MetaDataAccess&lt;Plot&gt; plotMetaDataAccess</span>
+<span class="source-line-no">333</span><span id="line-333">                         = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
+<span class="source-line-no">334</span><span id="line-334">                if (plot == null) {</span>
+<span class="source-line-no">335</span><span id="line-335">                    plotMetaDataAccess.remove();</span>
+<span class="source-line-no">336</span><span id="line-336">                } else {</span>
+<span class="source-line-no">337</span><span id="line-337">                    plotMetaDataAccess.set(plot);</span>
+<span class="source-line-no">338</span><span id="line-338">                }</span>
+<span class="source-line-no">339</span><span id="line-339">            }</span>
+<span class="source-line-no">340</span><span id="line-340">        }</span>
+<span class="source-line-no">341</span><span id="line-341">        return CompletableFuture.completedFuture(true);</span>
+<span class="source-line-no">342</span><span id="line-342">    }</span>
+<span class="source-line-no">343</span><span id="line-343"></span>
+<span class="source-line-no">344</span><span id="line-344">    @Override</span>
+<span class="source-line-no">345</span><span id="line-345">    public boolean canExecute(PlotPlayer&lt;?&gt; player, boolean message) {</span>
+<span class="source-line-no">346</span><span id="line-346">        return true;</span>
+<span class="source-line-no">347</span><span id="line-347">    }</span>
+<span class="source-line-no">348</span><span id="line-348"></span>
+<span class="source-line-no">349</span><span id="line-349">}</span>
 
 
 

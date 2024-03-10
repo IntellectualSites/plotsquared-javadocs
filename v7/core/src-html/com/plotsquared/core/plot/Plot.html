@@ -2587,453 +2587,459 @@
 <span class="source-line-no">2574</span><span id="line-2574">     */</span>
 <span class="source-line-no">2575</span><span id="line-2575">    public void teleportPlayer(final PlotPlayer&lt;?&gt; player, TeleportCause cause, Consumer&lt;Boolean&gt; resultConsumer) {</span>
 <span class="source-line-no">2576</span><span id="line-2576">        Plot plot = this.getBasePlot(false);</span>
-<span class="source-line-no">2577</span><span id="line-2577"></span>
-<span class="source-line-no">2578</span><span id="line-2578">        PlayerTeleportToPlotEvent event = this.eventDispatcher.callTeleport(player, player.getLocation(), plot, cause);</span>
-<span class="source-line-no">2579</span><span id="line-2579">        if (event.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">2580</span><span id="line-2580">            player.sendMessage(</span>
-<span class="source-line-no">2581</span><span id="line-2581">                    TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">2582</span><span id="line-2582">                    TagResolver.resolver("value", Tag.inserting(Component.text("Teleport")))</span>
-<span class="source-line-no">2583</span><span id="line-2583">            );</span>
-<span class="source-line-no">2584</span><span id="line-2584">            resultConsumer.accept(false);</span>
-<span class="source-line-no">2585</span><span id="line-2585">            return;</span>
-<span class="source-line-no">2586</span><span id="line-2586">        }</span>
-<span class="source-line-no">2587</span><span id="line-2587"></span>
-<span class="source-line-no">2588</span><span id="line-2588">        final Consumer&lt;Location&gt; locationConsumer = calculatedLocation -&gt; {</span>
-<span class="source-line-no">2589</span><span id="line-2589">            Location location = event.getLocationTransformer() == null ? calculatedLocation :</span>
-<span class="source-line-no">2590</span><span id="line-2590">                    Objects.requireNonNullElse(event.getLocationTransformer().apply(calculatedLocation), calculatedLocation);</span>
-<span class="source-line-no">2591</span><span id="line-2591">            if (Settings.Teleport.DELAY == 0 || player.hasPermission("plots.teleport.delay.bypass")) {</span>
-<span class="source-line-no">2592</span><span id="line-2592">                player.sendMessage(TranslatableCaption.of("teleport.teleported_to_plot"));</span>
-<span class="source-line-no">2593</span><span id="line-2593">                player.teleport(location, cause);</span>
-<span class="source-line-no">2594</span><span id="line-2594">                resultConsumer.accept(true);</span>
-<span class="source-line-no">2595</span><span id="line-2595">                return;</span>
-<span class="source-line-no">2596</span><span id="line-2596">            }</span>
-<span class="source-line-no">2597</span><span id="line-2597">            player.sendMessage(</span>
-<span class="source-line-no">2598</span><span id="line-2598">                    TranslatableCaption.of("teleport.teleport_in_seconds"),</span>
-<span class="source-line-no">2599</span><span id="line-2599">                    TagResolver.resolver("amount", Tag.inserting(Component.text(Settings.Teleport.DELAY)))</span>
-<span class="source-line-no">2600</span><span id="line-2600">            );</span>
-<span class="source-line-no">2601</span><span id="line-2601">            final String name = player.getName();</span>
-<span class="source-line-no">2602</span><span id="line-2602">            TaskManager.addToTeleportQueue(name);</span>
-<span class="source-line-no">2603</span><span id="line-2603">            TaskManager.runTaskLater(() -&gt; {</span>
-<span class="source-line-no">2604</span><span id="line-2604">                if (!TaskManager.removeFromTeleportQueue(name)) {</span>
-<span class="source-line-no">2605</span><span id="line-2605">                    return;</span>
-<span class="source-line-no">2606</span><span id="line-2606">                }</span>
-<span class="source-line-no">2607</span><span id="line-2607">                try {</span>
-<span class="source-line-no">2608</span><span id="line-2608">                    player.sendMessage(TranslatableCaption.of("teleport.teleported_to_plot"));</span>
-<span class="source-line-no">2609</span><span id="line-2609">                    player.teleport(location, cause);</span>
-<span class="source-line-no">2610</span><span id="line-2610">                } catch (final Exception ignored) {</span>
-<span class="source-line-no">2611</span><span id="line-2611">                }</span>
-<span class="source-line-no">2612</span><span id="line-2612">            }, TaskTime.seconds(Settings.Teleport.DELAY));</span>
-<span class="source-line-no">2613</span><span id="line-2613">            resultConsumer.accept(true);</span>
-<span class="source-line-no">2614</span><span id="line-2614">        };</span>
-<span class="source-line-no">2615</span><span id="line-2615">        if (this.area.isHomeAllowNonmember() || plot.isAdded(player.getUUID())) {</span>
-<span class="source-line-no">2616</span><span id="line-2616">            this.getHome(locationConsumer);</span>
-<span class="source-line-no">2617</span><span id="line-2617">        } else {</span>
-<span class="source-line-no">2618</span><span id="line-2618">            this.getDefaultHome(false, locationConsumer);</span>
-<span class="source-line-no">2619</span><span id="line-2619">        }</span>
-<span class="source-line-no">2620</span><span id="line-2620">    }</span>
-<span class="source-line-no">2621</span><span id="line-2621"></span>
-<span class="source-line-no">2622</span><span id="line-2622">    /**</span>
-<span class="source-line-no">2623</span><span id="line-2623">     * Checks if the owner of this Plot is online.</span>
-<span class="source-line-no">2624</span><span id="line-2624">     *</span>
-<span class="source-line-no">2625</span><span id="line-2625">     * @return {@code true} if the owner of the Plot is online</span>
-<span class="source-line-no">2626</span><span id="line-2626">     */</span>
-<span class="source-line-no">2627</span><span id="line-2627">    public boolean isOnline() {</span>
-<span class="source-line-no">2628</span><span id="line-2628">        if (!this.hasOwner()) {</span>
-<span class="source-line-no">2629</span><span id="line-2629">            return false;</span>
-<span class="source-line-no">2630</span><span id="line-2630">        }</span>
-<span class="source-line-no">2631</span><span id="line-2631">        if (!isMerged()) {</span>
-<span class="source-line-no">2632</span><span id="line-2632">            return PlotSquared.platform().playerManager().getPlayerIfExists(Objects.requireNonNull(this.getOwnerAbs())) != null;</span>
-<span class="source-line-no">2633</span><span id="line-2633">        }</span>
-<span class="source-line-no">2634</span><span id="line-2634">        for (final Plot current : getConnectedPlots()) {</span>
-<span class="source-line-no">2635</span><span id="line-2635">            if (current.hasOwner()</span>
-<span class="source-line-no">2636</span><span id="line-2636">                    &amp;&amp; PlotSquared</span>
-<span class="source-line-no">2637</span><span id="line-2637">                    .platform()</span>
-<span class="source-line-no">2638</span><span id="line-2638">                    .playerManager()</span>
-<span class="source-line-no">2639</span><span id="line-2639">                    .getPlayerIfExists(Objects.requireNonNull(current.getOwnerAbs())) != null) {</span>
-<span class="source-line-no">2640</span><span id="line-2640">                return true;</span>
-<span class="source-line-no">2641</span><span id="line-2641">            }</span>
-<span class="source-line-no">2642</span><span id="line-2642">        }</span>
-<span class="source-line-no">2643</span><span id="line-2643">        return false;</span>
-<span class="source-line-no">2644</span><span id="line-2644">    }</span>
-<span class="source-line-no">2645</span><span id="line-2645"></span>
-<span class="source-line-no">2646</span><span id="line-2646">    /**</span>
-<span class="source-line-no">2647</span><span id="line-2647">     * Get the maximum distance of the plot from x=0, z=0.</span>
-<span class="source-line-no">2648</span><span id="line-2648">     *</span>
-<span class="source-line-no">2649</span><span id="line-2649">     * @return max block distance from 0,0</span>
-<span class="source-line-no">2650</span><span id="line-2650">     */</span>
-<span class="source-line-no">2651</span><span id="line-2651">    public int getDistanceFromOrigin() {</span>
-<span class="source-line-no">2652</span><span id="line-2652">        Location bot = getManager().getPlotBottomLocAbs(id);</span>
-<span class="source-line-no">2653</span><span id="line-2653">        Location top = getManager().getPlotTopLocAbs(id);</span>
-<span class="source-line-no">2654</span><span id="line-2654">        return Math.max(</span>
-<span class="source-line-no">2655</span><span id="line-2655">                Math.max(Math.abs(bot.getX()), Math.abs(bot.getZ())),</span>
-<span class="source-line-no">2656</span><span id="line-2656">                Math.max(Math.abs(top.getX()), Math.abs(top.getZ()))</span>
-<span class="source-line-no">2657</span><span id="line-2657">        );</span>
-<span class="source-line-no">2658</span><span id="line-2658">    }</span>
-<span class="source-line-no">2659</span><span id="line-2659"></span>
-<span class="source-line-no">2660</span><span id="line-2660">    /**</span>
-<span class="source-line-no">2661</span><span id="line-2661">     * Expands the world border to include this plot if it is beyond the current border.</span>
-<span class="source-line-no">2662</span><span id="line-2662">     */</span>
-<span class="source-line-no">2663</span><span id="line-2663">    public void updateWorldBorder() {</span>
-<span class="source-line-no">2664</span><span id="line-2664">        int border = this.area.getBorder(false);</span>
-<span class="source-line-no">2665</span><span id="line-2665">        if (border == Integer.MAX_VALUE) {</span>
-<span class="source-line-no">2666</span><span id="line-2666">            return;</span>
-<span class="source-line-no">2667</span><span id="line-2667">        }</span>
-<span class="source-line-no">2668</span><span id="line-2668">        int max = getDistanceFromOrigin();</span>
-<span class="source-line-no">2669</span><span id="line-2669">        if (max &gt; border) {</span>
-<span class="source-line-no">2670</span><span id="line-2670">            this.area.setMeta("worldBorder", max);</span>
-<span class="source-line-no">2671</span><span id="line-2671">        }</span>
-<span class="source-line-no">2672</span><span id="line-2672">    }</span>
-<span class="source-line-no">2673</span><span id="line-2673"></span>
-<span class="source-line-no">2674</span><span id="line-2674">    /**</span>
-<span class="source-line-no">2675</span><span id="line-2675">     * Merges two plots. &lt;br&gt;- Assumes plots are directly next to each other &lt;br&gt; - saves to DB</span>
-<span class="source-line-no">2676</span><span id="line-2676">     *</span>
-<span class="source-line-no">2677</span><span id="line-2677">     * @param lesserPlot  the plot to merge into this plot instance</span>
-<span class="source-line-no">2678</span><span id="line-2678">     * @param removeRoads if roads should be removed during the merge</span>
-<span class="source-line-no">2679</span><span id="line-2679">     * @param queue       Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
-<span class="source-line-no">2680</span><span id="line-2680">     *                    otherwise writes to the queue but does not enqueue.</span>
-<span class="source-line-no">2681</span><span id="line-2681">     */</span>
-<span class="source-line-no">2682</span><span id="line-2682">    public void mergePlot(Plot lesserPlot, boolean removeRoads, @Nullable QueueCoordinator queue) {</span>
-<span class="source-line-no">2683</span><span id="line-2683">        Plot greaterPlot = this;</span>
-<span class="source-line-no">2684</span><span id="line-2684">        lesserPlot.getPlotModificationManager().removeSign();</span>
-<span class="source-line-no">2685</span><span id="line-2685">        if (lesserPlot.getId().getX() == greaterPlot.getId().getX()) {</span>
-<span class="source-line-no">2686</span><span id="line-2686">            if (lesserPlot.getId().getY() &gt; greaterPlot.getId().getY()) {</span>
-<span class="source-line-no">2687</span><span id="line-2687">                Plot tmp = lesserPlot;</span>
-<span class="source-line-no">2688</span><span id="line-2688">                lesserPlot = greaterPlot;</span>
-<span class="source-line-no">2689</span><span id="line-2689">                greaterPlot = tmp;</span>
-<span class="source-line-no">2690</span><span id="line-2690">            }</span>
-<span class="source-line-no">2691</span><span id="line-2691">            if (!lesserPlot.isMerged(Direction.SOUTH)) {</span>
-<span class="source-line-no">2692</span><span id="line-2692">                lesserPlot.clearRatings();</span>
-<span class="source-line-no">2693</span><span id="line-2693">                greaterPlot.clearRatings();</span>
-<span class="source-line-no">2694</span><span id="line-2694">                lesserPlot.setMerged(Direction.SOUTH, true);</span>
-<span class="source-line-no">2695</span><span id="line-2695">                greaterPlot.setMerged(Direction.NORTH, true);</span>
-<span class="source-line-no">2696</span><span id="line-2696">                lesserPlot.mergeData(greaterPlot);</span>
-<span class="source-line-no">2697</span><span id="line-2697">                if (removeRoads) {</span>
-<span class="source-line-no">2698</span><span id="line-2698">                    //lesserPlot.removeSign();</span>
-<span class="source-line-no">2699</span><span id="line-2699">                    lesserPlot.getPlotModificationManager().removeRoadSouth(queue);</span>
-<span class="source-line-no">2700</span><span id="line-2700">                    Plot diagonal = greaterPlot.getRelative(Direction.EAST);</span>
-<span class="source-line-no">2701</span><span id="line-2701">                    if (diagonal.isMerged(Direction.NORTHWEST)) {</span>
-<span class="source-line-no">2702</span><span id="line-2702">                        lesserPlot.plotModificationManager.removeRoadSouthEast(queue);</span>
-<span class="source-line-no">2703</span><span id="line-2703">                    }</span>
-<span class="source-line-no">2704</span><span id="line-2704">                    Plot below = greaterPlot.getRelative(Direction.WEST);</span>
-<span class="source-line-no">2705</span><span id="line-2705">                    if (below.isMerged(Direction.NORTHEAST)) {</span>
-<span class="source-line-no">2706</span><span id="line-2706">                        below.getRelative(Direction.NORTH).plotModificationManager.removeRoadSouthEast(queue);</span>
-<span class="source-line-no">2707</span><span id="line-2707">                    }</span>
-<span class="source-line-no">2708</span><span id="line-2708">                }</span>
-<span class="source-line-no">2709</span><span id="line-2709">            }</span>
-<span class="source-line-no">2710</span><span id="line-2710">        } else {</span>
-<span class="source-line-no">2711</span><span id="line-2711">            if (lesserPlot.getId().getX() &gt; greaterPlot.getId().getX()) {</span>
-<span class="source-line-no">2712</span><span id="line-2712">                Plot tmp = lesserPlot;</span>
-<span class="source-line-no">2713</span><span id="line-2713">                lesserPlot = greaterPlot;</span>
-<span class="source-line-no">2714</span><span id="line-2714">                greaterPlot = tmp;</span>
+<span class="source-line-no">2577</span><span id="line-2577">        if (!WorldUtil.isValidLocation(plot.getBottomAbs())) {</span>
+<span class="source-line-no">2578</span><span id="line-2578">            // prevent from teleporting into unsafe regions</span>
+<span class="source-line-no">2579</span><span id="line-2579">            player.sendMessage(TranslatableCaption.of("border.denied"));</span>
+<span class="source-line-no">2580</span><span id="line-2580">            resultConsumer.accept(false);</span>
+<span class="source-line-no">2581</span><span id="line-2581">            return;</span>
+<span class="source-line-no">2582</span><span id="line-2582">        }</span>
+<span class="source-line-no">2583</span><span id="line-2583"></span>
+<span class="source-line-no">2584</span><span id="line-2584">        PlayerTeleportToPlotEvent event = this.eventDispatcher.callTeleport(player, player.getLocation(), plot, cause);</span>
+<span class="source-line-no">2585</span><span id="line-2585">        if (event.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">2586</span><span id="line-2586">            player.sendMessage(</span>
+<span class="source-line-no">2587</span><span id="line-2587">                    TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">2588</span><span id="line-2588">                    TagResolver.resolver("value", Tag.inserting(Component.text("Teleport")))</span>
+<span class="source-line-no">2589</span><span id="line-2589">            );</span>
+<span class="source-line-no">2590</span><span id="line-2590">            resultConsumer.accept(false);</span>
+<span class="source-line-no">2591</span><span id="line-2591">            return;</span>
+<span class="source-line-no">2592</span><span id="line-2592">        }</span>
+<span class="source-line-no">2593</span><span id="line-2593"></span>
+<span class="source-line-no">2594</span><span id="line-2594">        final Consumer&lt;Location&gt; locationConsumer = calculatedLocation -&gt; {</span>
+<span class="source-line-no">2595</span><span id="line-2595">            Location location = event.getLocationTransformer() == null ? calculatedLocation :</span>
+<span class="source-line-no">2596</span><span id="line-2596">                    Objects.requireNonNullElse(event.getLocationTransformer().apply(calculatedLocation), calculatedLocation);</span>
+<span class="source-line-no">2597</span><span id="line-2597">            if (Settings.Teleport.DELAY == 0 || player.hasPermission("plots.teleport.delay.bypass")) {</span>
+<span class="source-line-no">2598</span><span id="line-2598">                player.sendMessage(TranslatableCaption.of("teleport.teleported_to_plot"));</span>
+<span class="source-line-no">2599</span><span id="line-2599">                player.teleport(location, cause);</span>
+<span class="source-line-no">2600</span><span id="line-2600">                resultConsumer.accept(true);</span>
+<span class="source-line-no">2601</span><span id="line-2601">                return;</span>
+<span class="source-line-no">2602</span><span id="line-2602">            }</span>
+<span class="source-line-no">2603</span><span id="line-2603">            player.sendMessage(</span>
+<span class="source-line-no">2604</span><span id="line-2604">                    TranslatableCaption.of("teleport.teleport_in_seconds"),</span>
+<span class="source-line-no">2605</span><span id="line-2605">                    TagResolver.resolver("amount", Tag.inserting(Component.text(Settings.Teleport.DELAY)))</span>
+<span class="source-line-no">2606</span><span id="line-2606">            );</span>
+<span class="source-line-no">2607</span><span id="line-2607">            final String name = player.getName();</span>
+<span class="source-line-no">2608</span><span id="line-2608">            TaskManager.addToTeleportQueue(name);</span>
+<span class="source-line-no">2609</span><span id="line-2609">            TaskManager.runTaskLater(() -&gt; {</span>
+<span class="source-line-no">2610</span><span id="line-2610">                if (!TaskManager.removeFromTeleportQueue(name)) {</span>
+<span class="source-line-no">2611</span><span id="line-2611">                    return;</span>
+<span class="source-line-no">2612</span><span id="line-2612">                }</span>
+<span class="source-line-no">2613</span><span id="line-2613">                try {</span>
+<span class="source-line-no">2614</span><span id="line-2614">                    player.sendMessage(TranslatableCaption.of("teleport.teleported_to_plot"));</span>
+<span class="source-line-no">2615</span><span id="line-2615">                    player.teleport(location, cause);</span>
+<span class="source-line-no">2616</span><span id="line-2616">                } catch (final Exception ignored) {</span>
+<span class="source-line-no">2617</span><span id="line-2617">                }</span>
+<span class="source-line-no">2618</span><span id="line-2618">            }, TaskTime.seconds(Settings.Teleport.DELAY));</span>
+<span class="source-line-no">2619</span><span id="line-2619">            resultConsumer.accept(true);</span>
+<span class="source-line-no">2620</span><span id="line-2620">        };</span>
+<span class="source-line-no">2621</span><span id="line-2621">        if (this.area.isHomeAllowNonmember() || plot.isAdded(player.getUUID())) {</span>
+<span class="source-line-no">2622</span><span id="line-2622">            this.getHome(locationConsumer);</span>
+<span class="source-line-no">2623</span><span id="line-2623">        } else {</span>
+<span class="source-line-no">2624</span><span id="line-2624">            this.getDefaultHome(false, locationConsumer);</span>
+<span class="source-line-no">2625</span><span id="line-2625">        }</span>
+<span class="source-line-no">2626</span><span id="line-2626">    }</span>
+<span class="source-line-no">2627</span><span id="line-2627"></span>
+<span class="source-line-no">2628</span><span id="line-2628">    /**</span>
+<span class="source-line-no">2629</span><span id="line-2629">     * Checks if the owner of this Plot is online.</span>
+<span class="source-line-no">2630</span><span id="line-2630">     *</span>
+<span class="source-line-no">2631</span><span id="line-2631">     * @return {@code true} if the owner of the Plot is online</span>
+<span class="source-line-no">2632</span><span id="line-2632">     */</span>
+<span class="source-line-no">2633</span><span id="line-2633">    public boolean isOnline() {</span>
+<span class="source-line-no">2634</span><span id="line-2634">        if (!this.hasOwner()) {</span>
+<span class="source-line-no">2635</span><span id="line-2635">            return false;</span>
+<span class="source-line-no">2636</span><span id="line-2636">        }</span>
+<span class="source-line-no">2637</span><span id="line-2637">        if (!isMerged()) {</span>
+<span class="source-line-no">2638</span><span id="line-2638">            return PlotSquared.platform().playerManager().getPlayerIfExists(Objects.requireNonNull(this.getOwnerAbs())) != null;</span>
+<span class="source-line-no">2639</span><span id="line-2639">        }</span>
+<span class="source-line-no">2640</span><span id="line-2640">        for (final Plot current : getConnectedPlots()) {</span>
+<span class="source-line-no">2641</span><span id="line-2641">            if (current.hasOwner()</span>
+<span class="source-line-no">2642</span><span id="line-2642">                    &amp;&amp; PlotSquared</span>
+<span class="source-line-no">2643</span><span id="line-2643">                    .platform()</span>
+<span class="source-line-no">2644</span><span id="line-2644">                    .playerManager()</span>
+<span class="source-line-no">2645</span><span id="line-2645">                    .getPlayerIfExists(Objects.requireNonNull(current.getOwnerAbs())) != null) {</span>
+<span class="source-line-no">2646</span><span id="line-2646">                return true;</span>
+<span class="source-line-no">2647</span><span id="line-2647">            }</span>
+<span class="source-line-no">2648</span><span id="line-2648">        }</span>
+<span class="source-line-no">2649</span><span id="line-2649">        return false;</span>
+<span class="source-line-no">2650</span><span id="line-2650">    }</span>
+<span class="source-line-no">2651</span><span id="line-2651"></span>
+<span class="source-line-no">2652</span><span id="line-2652">    /**</span>
+<span class="source-line-no">2653</span><span id="line-2653">     * Get the maximum distance of the plot from x=0, z=0.</span>
+<span class="source-line-no">2654</span><span id="line-2654">     *</span>
+<span class="source-line-no">2655</span><span id="line-2655">     * @return max block distance from 0,0</span>
+<span class="source-line-no">2656</span><span id="line-2656">     */</span>
+<span class="source-line-no">2657</span><span id="line-2657">    public int getDistanceFromOrigin() {</span>
+<span class="source-line-no">2658</span><span id="line-2658">        Location bot = getManager().getPlotBottomLocAbs(id);</span>
+<span class="source-line-no">2659</span><span id="line-2659">        Location top = getManager().getPlotTopLocAbs(id);</span>
+<span class="source-line-no">2660</span><span id="line-2660">        return Math.max(</span>
+<span class="source-line-no">2661</span><span id="line-2661">                Math.max(Math.abs(bot.getX()), Math.abs(bot.getZ())),</span>
+<span class="source-line-no">2662</span><span id="line-2662">                Math.max(Math.abs(top.getX()), Math.abs(top.getZ()))</span>
+<span class="source-line-no">2663</span><span id="line-2663">        );</span>
+<span class="source-line-no">2664</span><span id="line-2664">    }</span>
+<span class="source-line-no">2665</span><span id="line-2665"></span>
+<span class="source-line-no">2666</span><span id="line-2666">    /**</span>
+<span class="source-line-no">2667</span><span id="line-2667">     * Expands the world border to include this plot if it is beyond the current border.</span>
+<span class="source-line-no">2668</span><span id="line-2668">     */</span>
+<span class="source-line-no">2669</span><span id="line-2669">    public void updateWorldBorder() {</span>
+<span class="source-line-no">2670</span><span id="line-2670">        int border = this.area.getBorder(false);</span>
+<span class="source-line-no">2671</span><span id="line-2671">        if (border == Integer.MAX_VALUE) {</span>
+<span class="source-line-no">2672</span><span id="line-2672">            return;</span>
+<span class="source-line-no">2673</span><span id="line-2673">        }</span>
+<span class="source-line-no">2674</span><span id="line-2674">        int max = getDistanceFromOrigin();</span>
+<span class="source-line-no">2675</span><span id="line-2675">        if (max &gt; border) {</span>
+<span class="source-line-no">2676</span><span id="line-2676">            this.area.setMeta("worldBorder", max);</span>
+<span class="source-line-no">2677</span><span id="line-2677">        }</span>
+<span class="source-line-no">2678</span><span id="line-2678">    }</span>
+<span class="source-line-no">2679</span><span id="line-2679"></span>
+<span class="source-line-no">2680</span><span id="line-2680">    /**</span>
+<span class="source-line-no">2681</span><span id="line-2681">     * Merges two plots. &lt;br&gt;- Assumes plots are directly next to each other &lt;br&gt; - saves to DB</span>
+<span class="source-line-no">2682</span><span id="line-2682">     *</span>
+<span class="source-line-no">2683</span><span id="line-2683">     * @param lesserPlot  the plot to merge into this plot instance</span>
+<span class="source-line-no">2684</span><span id="line-2684">     * @param removeRoads if roads should be removed during the merge</span>
+<span class="source-line-no">2685</span><span id="line-2685">     * @param queue       Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
+<span class="source-line-no">2686</span><span id="line-2686">     *                    otherwise writes to the queue but does not enqueue.</span>
+<span class="source-line-no">2687</span><span id="line-2687">     */</span>
+<span class="source-line-no">2688</span><span id="line-2688">    public void mergePlot(Plot lesserPlot, boolean removeRoads, @Nullable QueueCoordinator queue) {</span>
+<span class="source-line-no">2689</span><span id="line-2689">        Plot greaterPlot = this;</span>
+<span class="source-line-no">2690</span><span id="line-2690">        lesserPlot.getPlotModificationManager().removeSign();</span>
+<span class="source-line-no">2691</span><span id="line-2691">        if (lesserPlot.getId().getX() == greaterPlot.getId().getX()) {</span>
+<span class="source-line-no">2692</span><span id="line-2692">            if (lesserPlot.getId().getY() &gt; greaterPlot.getId().getY()) {</span>
+<span class="source-line-no">2693</span><span id="line-2693">                Plot tmp = lesserPlot;</span>
+<span class="source-line-no">2694</span><span id="line-2694">                lesserPlot = greaterPlot;</span>
+<span class="source-line-no">2695</span><span id="line-2695">                greaterPlot = tmp;</span>
+<span class="source-line-no">2696</span><span id="line-2696">            }</span>
+<span class="source-line-no">2697</span><span id="line-2697">            if (!lesserPlot.isMerged(Direction.SOUTH)) {</span>
+<span class="source-line-no">2698</span><span id="line-2698">                lesserPlot.clearRatings();</span>
+<span class="source-line-no">2699</span><span id="line-2699">                greaterPlot.clearRatings();</span>
+<span class="source-line-no">2700</span><span id="line-2700">                lesserPlot.setMerged(Direction.SOUTH, true);</span>
+<span class="source-line-no">2701</span><span id="line-2701">                greaterPlot.setMerged(Direction.NORTH, true);</span>
+<span class="source-line-no">2702</span><span id="line-2702">                lesserPlot.mergeData(greaterPlot);</span>
+<span class="source-line-no">2703</span><span id="line-2703">                if (removeRoads) {</span>
+<span class="source-line-no">2704</span><span id="line-2704">                    //lesserPlot.removeSign();</span>
+<span class="source-line-no">2705</span><span id="line-2705">                    lesserPlot.getPlotModificationManager().removeRoadSouth(queue);</span>
+<span class="source-line-no">2706</span><span id="line-2706">                    Plot diagonal = greaterPlot.getRelative(Direction.EAST);</span>
+<span class="source-line-no">2707</span><span id="line-2707">                    if (diagonal.isMerged(Direction.NORTHWEST)) {</span>
+<span class="source-line-no">2708</span><span id="line-2708">                        lesserPlot.plotModificationManager.removeRoadSouthEast(queue);</span>
+<span class="source-line-no">2709</span><span id="line-2709">                    }</span>
+<span class="source-line-no">2710</span><span id="line-2710">                    Plot below = greaterPlot.getRelative(Direction.WEST);</span>
+<span class="source-line-no">2711</span><span id="line-2711">                    if (below.isMerged(Direction.NORTHEAST)) {</span>
+<span class="source-line-no">2712</span><span id="line-2712">                        below.getRelative(Direction.NORTH).plotModificationManager.removeRoadSouthEast(queue);</span>
+<span class="source-line-no">2713</span><span id="line-2713">                    }</span>
+<span class="source-line-no">2714</span><span id="line-2714">                }</span>
 <span class="source-line-no">2715</span><span id="line-2715">            }</span>
-<span class="source-line-no">2716</span><span id="line-2716">            if (!lesserPlot.isMerged(Direction.EAST)) {</span>
-<span class="source-line-no">2717</span><span id="line-2717">                lesserPlot.clearRatings();</span>
-<span class="source-line-no">2718</span><span id="line-2718">                greaterPlot.clearRatings();</span>
-<span class="source-line-no">2719</span><span id="line-2719">                lesserPlot.setMerged(Direction.EAST, true);</span>
-<span class="source-line-no">2720</span><span id="line-2720">                greaterPlot.setMerged(Direction.WEST, true);</span>
-<span class="source-line-no">2721</span><span id="line-2721">                lesserPlot.mergeData(greaterPlot);</span>
-<span class="source-line-no">2722</span><span id="line-2722">                if (removeRoads) {</span>
-<span class="source-line-no">2723</span><span id="line-2723">                    //lesserPlot.removeSign();</span>
-<span class="source-line-no">2724</span><span id="line-2724">                    Plot diagonal = greaterPlot.getRelative(Direction.SOUTH);</span>
-<span class="source-line-no">2725</span><span id="line-2725">                    if (diagonal.isMerged(Direction.NORTHWEST)) {</span>
-<span class="source-line-no">2726</span><span id="line-2726">                        lesserPlot.plotModificationManager.removeRoadSouthEast(queue);</span>
-<span class="source-line-no">2727</span><span id="line-2727">                    }</span>
-<span class="source-line-no">2728</span><span id="line-2728">                    lesserPlot.plotModificationManager.removeRoadEast(queue);</span>
-<span class="source-line-no">2729</span><span id="line-2729">                }</span>
-<span class="source-line-no">2730</span><span id="line-2730">                Plot below = greaterPlot.getRelative(Direction.NORTH);</span>
-<span class="source-line-no">2731</span><span id="line-2731">                if (below.isMerged(Direction.SOUTHWEST)) {</span>
-<span class="source-line-no">2732</span><span id="line-2732">                    below.getRelative(Direction.WEST).getPlotModificationManager().removeRoadSouthEast(queue);</span>
-<span class="source-line-no">2733</span><span id="line-2733">                }</span>
-<span class="source-line-no">2734</span><span id="line-2734">            }</span>
-<span class="source-line-no">2735</span><span id="line-2735">        }</span>
-<span class="source-line-no">2736</span><span id="line-2736">    }</span>
-<span class="source-line-no">2737</span><span id="line-2737"></span>
-<span class="source-line-no">2738</span><span id="line-2738">    /**</span>
-<span class="source-line-no">2739</span><span id="line-2739">     * Check if the plot is merged in a given direction</span>
-<span class="source-line-no">2740</span><span id="line-2740">     *</span>
-<span class="source-line-no">2741</span><span id="line-2741">     * @param direction Direction</span>
-<span class="source-line-no">2742</span><span id="line-2742">     * @return {@code true} if the plot is merged in the given direction</span>
-<span class="source-line-no">2743</span><span id="line-2743">     */</span>
-<span class="source-line-no">2744</span><span id="line-2744">    public boolean isMerged(final @NonNull Direction direction) {</span>
-<span class="source-line-no">2745</span><span id="line-2745">        return isMerged(direction.getIndex());</span>
-<span class="source-line-no">2746</span><span id="line-2746">    }</span>
-<span class="source-line-no">2747</span><span id="line-2747"></span>
-<span class="source-line-no">2748</span><span id="line-2748">    /**</span>
-<span class="source-line-no">2749</span><span id="line-2749">     * Get the value associated with the specified flag. This will first look at plot</span>
-<span class="source-line-no">2750</span><span id="line-2750">     * specific flag values, then at the containing plot area and its default values</span>
-<span class="source-line-no">2751</span><span id="line-2751">     * and at last, it will look at the default values stored in {@link GlobalFlagContainer}.</span>
-<span class="source-line-no">2752</span><span id="line-2752">     *</span>
-<span class="source-line-no">2753</span><span id="line-2753">     * @param flagClass The flag type (Class)</span>
-<span class="source-line-no">2754</span><span id="line-2754">     * @param &lt;T&gt;       the flag value type</span>
-<span class="source-line-no">2755</span><span id="line-2755">     * @return The flag value</span>
-<span class="source-line-no">2756</span><span id="line-2756">     */</span>
-<span class="source-line-no">2757</span><span id="line-2757">    public @NonNull &lt;T&gt; T getFlag(final @NonNull Class&lt;? extends PlotFlag&lt;T, ?&gt;&gt; flagClass) {</span>
-<span class="source-line-no">2758</span><span id="line-2758">        return this.flagContainer.getFlag(flagClass).getValue();</span>
-<span class="source-line-no">2759</span><span id="line-2759">    }</span>
-<span class="source-line-no">2760</span><span id="line-2760"></span>
-<span class="source-line-no">2761</span><span id="line-2761">    /**</span>
-<span class="source-line-no">2762</span><span id="line-2762">     * Get the value associated with the specified flag. This will first look at plot</span>
-<span class="source-line-no">2763</span><span id="line-2763">     * specific flag values, then at the containing plot area and its default values</span>
-<span class="source-line-no">2764</span><span id="line-2764">     * and at last, it will look at the default values stored in {@link GlobalFlagContainer}.</span>
-<span class="source-line-no">2765</span><span id="line-2765">     *</span>
-<span class="source-line-no">2766</span><span id="line-2766">     * @param flag The flag type (Any instance of the flag)</span>
-<span class="source-line-no">2767</span><span id="line-2767">     * @param &lt;V&gt;  the flag type (Any instance of the flag)</span>
-<span class="source-line-no">2768</span><span id="line-2768">     * @param &lt;T&gt;  the flag's value type</span>
-<span class="source-line-no">2769</span><span id="line-2769">     * @return The flag value</span>
-<span class="source-line-no">2770</span><span id="line-2770">     */</span>
-<span class="source-line-no">2771</span><span id="line-2771">    public @NonNull &lt;T, V extends PlotFlag&lt;T, ?&gt;&gt; T getFlag(final @NonNull V flag) {</span>
-<span class="source-line-no">2772</span><span id="line-2772">        final Class&lt;?&gt; flagClass = flag.getClass();</span>
-<span class="source-line-no">2773</span><span id="line-2773">        final PlotFlag&lt;?, ?&gt; flagInstance = this.flagContainer.getFlagErased(flagClass);</span>
-<span class="source-line-no">2774</span><span id="line-2774">        return FlagContainer.&lt;T, V&gt;castUnsafe(flagInstance).getValue();</span>
-<span class="source-line-no">2775</span><span id="line-2775">    }</span>
-<span class="source-line-no">2776</span><span id="line-2776"></span>
-<span class="source-line-no">2777</span><span id="line-2777">    public CompletableFuture&lt;Caption&gt; format(final Caption iInfo, PlotPlayer&lt;?&gt; player, final boolean full) {</span>
-<span class="source-line-no">2778</span><span id="line-2778">        final CompletableFuture&lt;Caption&gt; future = new CompletableFuture&lt;&gt;();</span>
-<span class="source-line-no">2779</span><span id="line-2779">        int num = this.getConnectedPlots().size();</span>
-<span class="source-line-no">2780</span><span id="line-2780">        ComponentLike alias = !this.getAlias().isEmpty() ?</span>
-<span class="source-line-no">2781</span><span id="line-2781">                Component.text(this.getAlias()) :</span>
-<span class="source-line-no">2782</span><span id="line-2782">                TranslatableCaption.of("info.none").toComponent(player);</span>
-<span class="source-line-no">2783</span><span id="line-2783">        Location bot = this.getCorners()[0];</span>
-<span class="source-line-no">2784</span><span id="line-2784">        PlotSquared.platform().worldUtil().getBiome(</span>
-<span class="source-line-no">2785</span><span id="line-2785">                Objects.requireNonNull(this.getWorldName()),</span>
-<span class="source-line-no">2786</span><span id="line-2786">                bot.getX(),</span>
-<span class="source-line-no">2787</span><span id="line-2787">                bot.getZ(),</span>
-<span class="source-line-no">2788</span><span id="line-2788">                biome -&gt; {</span>
-<span class="source-line-no">2789</span><span id="line-2789">                    ComponentLike trusted = PlayerManager.getPlayerList(this.getTrusted(), player);</span>
-<span class="source-line-no">2790</span><span id="line-2790">                    ComponentLike members = PlayerManager.getPlayerList(this.getMembers(), player);</span>
-<span class="source-line-no">2791</span><span id="line-2791">                    ComponentLike denied = PlayerManager.getPlayerList(this.getDenied(), player);</span>
-<span class="source-line-no">2792</span><span id="line-2792">                    ComponentLike seen;</span>
-<span class="source-line-no">2793</span><span id="line-2793">                    ExpireManager expireManager = PlotSquared.platform().expireManager();</span>
-<span class="source-line-no">2794</span><span id="line-2794">                    if (Settings.Enabled_Components.PLOT_EXPIRY &amp;&amp; expireManager != null) {</span>
-<span class="source-line-no">2795</span><span id="line-2795">                        if (this.isOnline()) {</span>
-<span class="source-line-no">2796</span><span id="line-2796">                            seen = TranslatableCaption.of("info.now").toComponent(player);</span>
-<span class="source-line-no">2797</span><span id="line-2797">                        } else {</span>
-<span class="source-line-no">2798</span><span id="line-2798">                            int time = (int) (PlotSquared.platform().expireManager().getAge(this, false) / 1000);</span>
-<span class="source-line-no">2799</span><span id="line-2799">                            if (time != 0) {</span>
-<span class="source-line-no">2800</span><span id="line-2800">                                seen = Component.text(TimeUtil.secToTime(time));</span>
-<span class="source-line-no">2801</span><span id="line-2801">                            } else {</span>
-<span class="source-line-no">2802</span><span id="line-2802">                                seen = TranslatableCaption.of("info.unknown").toComponent(player);</span>
-<span class="source-line-no">2803</span><span id="line-2803">                            }</span>
-<span class="source-line-no">2804</span><span id="line-2804">                        }</span>
-<span class="source-line-no">2805</span><span id="line-2805">                    } else {</span>
-<span class="source-line-no">2806</span><span id="line-2806">                        seen = TranslatableCaption.of("info.never").toComponent(player);</span>
-<span class="source-line-no">2807</span><span id="line-2807">                    }</span>
-<span class="source-line-no">2808</span><span id="line-2808"></span>
-<span class="source-line-no">2809</span><span id="line-2809">                    ComponentLike description = TranslatableCaption.of("info.plot_no_description").toComponent(player);</span>
-<span class="source-line-no">2810</span><span id="line-2810">                    String descriptionValue = this.getFlag(DescriptionFlag.class);</span>
-<span class="source-line-no">2811</span><span id="line-2811">                    if (!descriptionValue.isEmpty()) {</span>
-<span class="source-line-no">2812</span><span id="line-2812">                        description = Component.text(descriptionValue);</span>
+<span class="source-line-no">2716</span><span id="line-2716">        } else {</span>
+<span class="source-line-no">2717</span><span id="line-2717">            if (lesserPlot.getId().getX() &gt; greaterPlot.getId().getX()) {</span>
+<span class="source-line-no">2718</span><span id="line-2718">                Plot tmp = lesserPlot;</span>
+<span class="source-line-no">2719</span><span id="line-2719">                lesserPlot = greaterPlot;</span>
+<span class="source-line-no">2720</span><span id="line-2720">                greaterPlot = tmp;</span>
+<span class="source-line-no">2721</span><span id="line-2721">            }</span>
+<span class="source-line-no">2722</span><span id="line-2722">            if (!lesserPlot.isMerged(Direction.EAST)) {</span>
+<span class="source-line-no">2723</span><span id="line-2723">                lesserPlot.clearRatings();</span>
+<span class="source-line-no">2724</span><span id="line-2724">                greaterPlot.clearRatings();</span>
+<span class="source-line-no">2725</span><span id="line-2725">                lesserPlot.setMerged(Direction.EAST, true);</span>
+<span class="source-line-no">2726</span><span id="line-2726">                greaterPlot.setMerged(Direction.WEST, true);</span>
+<span class="source-line-no">2727</span><span id="line-2727">                lesserPlot.mergeData(greaterPlot);</span>
+<span class="source-line-no">2728</span><span id="line-2728">                if (removeRoads) {</span>
+<span class="source-line-no">2729</span><span id="line-2729">                    //lesserPlot.removeSign();</span>
+<span class="source-line-no">2730</span><span id="line-2730">                    Plot diagonal = greaterPlot.getRelative(Direction.SOUTH);</span>
+<span class="source-line-no">2731</span><span id="line-2731">                    if (diagonal.isMerged(Direction.NORTHWEST)) {</span>
+<span class="source-line-no">2732</span><span id="line-2732">                        lesserPlot.plotModificationManager.removeRoadSouthEast(queue);</span>
+<span class="source-line-no">2733</span><span id="line-2733">                    }</span>
+<span class="source-line-no">2734</span><span id="line-2734">                    lesserPlot.plotModificationManager.removeRoadEast(queue);</span>
+<span class="source-line-no">2735</span><span id="line-2735">                }</span>
+<span class="source-line-no">2736</span><span id="line-2736">                Plot below = greaterPlot.getRelative(Direction.NORTH);</span>
+<span class="source-line-no">2737</span><span id="line-2737">                if (below.isMerged(Direction.SOUTHWEST)) {</span>
+<span class="source-line-no">2738</span><span id="line-2738">                    below.getRelative(Direction.WEST).getPlotModificationManager().removeRoadSouthEast(queue);</span>
+<span class="source-line-no">2739</span><span id="line-2739">                }</span>
+<span class="source-line-no">2740</span><span id="line-2740">            }</span>
+<span class="source-line-no">2741</span><span id="line-2741">        }</span>
+<span class="source-line-no">2742</span><span id="line-2742">    }</span>
+<span class="source-line-no">2743</span><span id="line-2743"></span>
+<span class="source-line-no">2744</span><span id="line-2744">    /**</span>
+<span class="source-line-no">2745</span><span id="line-2745">     * Check if the plot is merged in a given direction</span>
+<span class="source-line-no">2746</span><span id="line-2746">     *</span>
+<span class="source-line-no">2747</span><span id="line-2747">     * @param direction Direction</span>
+<span class="source-line-no">2748</span><span id="line-2748">     * @return {@code true} if the plot is merged in the given direction</span>
+<span class="source-line-no">2749</span><span id="line-2749">     */</span>
+<span class="source-line-no">2750</span><span id="line-2750">    public boolean isMerged(final @NonNull Direction direction) {</span>
+<span class="source-line-no">2751</span><span id="line-2751">        return isMerged(direction.getIndex());</span>
+<span class="source-line-no">2752</span><span id="line-2752">    }</span>
+<span class="source-line-no">2753</span><span id="line-2753"></span>
+<span class="source-line-no">2754</span><span id="line-2754">    /**</span>
+<span class="source-line-no">2755</span><span id="line-2755">     * Get the value associated with the specified flag. This will first look at plot</span>
+<span class="source-line-no">2756</span><span id="line-2756">     * specific flag values, then at the containing plot area and its default values</span>
+<span class="source-line-no">2757</span><span id="line-2757">     * and at last, it will look at the default values stored in {@link GlobalFlagContainer}.</span>
+<span class="source-line-no">2758</span><span id="line-2758">     *</span>
+<span class="source-line-no">2759</span><span id="line-2759">     * @param flagClass The flag type (Class)</span>
+<span class="source-line-no">2760</span><span id="line-2760">     * @param &lt;T&gt;       the flag value type</span>
+<span class="source-line-no">2761</span><span id="line-2761">     * @return The flag value</span>
+<span class="source-line-no">2762</span><span id="line-2762">     */</span>
+<span class="source-line-no">2763</span><span id="line-2763">    public @NonNull &lt;T&gt; T getFlag(final @NonNull Class&lt;? extends PlotFlag&lt;T, ?&gt;&gt; flagClass) {</span>
+<span class="source-line-no">2764</span><span id="line-2764">        return this.flagContainer.getFlag(flagClass).getValue();</span>
+<span class="source-line-no">2765</span><span id="line-2765">    }</span>
+<span class="source-line-no">2766</span><span id="line-2766"></span>
+<span class="source-line-no">2767</span><span id="line-2767">    /**</span>
+<span class="source-line-no">2768</span><span id="line-2768">     * Get the value associated with the specified flag. This will first look at plot</span>
+<span class="source-line-no">2769</span><span id="line-2769">     * specific flag values, then at the containing plot area and its default values</span>
+<span class="source-line-no">2770</span><span id="line-2770">     * and at last, it will look at the default values stored in {@link GlobalFlagContainer}.</span>
+<span class="source-line-no">2771</span><span id="line-2771">     *</span>
+<span class="source-line-no">2772</span><span id="line-2772">     * @param flag The flag type (Any instance of the flag)</span>
+<span class="source-line-no">2773</span><span id="line-2773">     * @param &lt;V&gt;  the flag type (Any instance of the flag)</span>
+<span class="source-line-no">2774</span><span id="line-2774">     * @param &lt;T&gt;  the flag's value type</span>
+<span class="source-line-no">2775</span><span id="line-2775">     * @return The flag value</span>
+<span class="source-line-no">2776</span><span id="line-2776">     */</span>
+<span class="source-line-no">2777</span><span id="line-2777">    public @NonNull &lt;T, V extends PlotFlag&lt;T, ?&gt;&gt; T getFlag(final @NonNull V flag) {</span>
+<span class="source-line-no">2778</span><span id="line-2778">        final Class&lt;?&gt; flagClass = flag.getClass();</span>
+<span class="source-line-no">2779</span><span id="line-2779">        final PlotFlag&lt;?, ?&gt; flagInstance = this.flagContainer.getFlagErased(flagClass);</span>
+<span class="source-line-no">2780</span><span id="line-2780">        return FlagContainer.&lt;T, V&gt;castUnsafe(flagInstance).getValue();</span>
+<span class="source-line-no">2781</span><span id="line-2781">    }</span>
+<span class="source-line-no">2782</span><span id="line-2782"></span>
+<span class="source-line-no">2783</span><span id="line-2783">    public CompletableFuture&lt;Caption&gt; format(final Caption iInfo, PlotPlayer&lt;?&gt; player, final boolean full) {</span>
+<span class="source-line-no">2784</span><span id="line-2784">        final CompletableFuture&lt;Caption&gt; future = new CompletableFuture&lt;&gt;();</span>
+<span class="source-line-no">2785</span><span id="line-2785">        int num = this.getConnectedPlots().size();</span>
+<span class="source-line-no">2786</span><span id="line-2786">        ComponentLike alias = !this.getAlias().isEmpty() ?</span>
+<span class="source-line-no">2787</span><span id="line-2787">                Component.text(this.getAlias()) :</span>
+<span class="source-line-no">2788</span><span id="line-2788">                TranslatableCaption.of("info.none").toComponent(player);</span>
+<span class="source-line-no">2789</span><span id="line-2789">        Location bot = this.getCorners()[0];</span>
+<span class="source-line-no">2790</span><span id="line-2790">        PlotSquared.platform().worldUtil().getBiome(</span>
+<span class="source-line-no">2791</span><span id="line-2791">                Objects.requireNonNull(this.getWorldName()),</span>
+<span class="source-line-no">2792</span><span id="line-2792">                bot.getX(),</span>
+<span class="source-line-no">2793</span><span id="line-2793">                bot.getZ(),</span>
+<span class="source-line-no">2794</span><span id="line-2794">                biome -&gt; {</span>
+<span class="source-line-no">2795</span><span id="line-2795">                    ComponentLike trusted = PlayerManager.getPlayerList(this.getTrusted(), player);</span>
+<span class="source-line-no">2796</span><span id="line-2796">                    ComponentLike members = PlayerManager.getPlayerList(this.getMembers(), player);</span>
+<span class="source-line-no">2797</span><span id="line-2797">                    ComponentLike denied = PlayerManager.getPlayerList(this.getDenied(), player);</span>
+<span class="source-line-no">2798</span><span id="line-2798">                    ComponentLike seen;</span>
+<span class="source-line-no">2799</span><span id="line-2799">                    ExpireManager expireManager = PlotSquared.platform().expireManager();</span>
+<span class="source-line-no">2800</span><span id="line-2800">                    if (Settings.Enabled_Components.PLOT_EXPIRY &amp;&amp; expireManager != null) {</span>
+<span class="source-line-no">2801</span><span id="line-2801">                        if (this.isOnline()) {</span>
+<span class="source-line-no">2802</span><span id="line-2802">                            seen = TranslatableCaption.of("info.now").toComponent(player);</span>
+<span class="source-line-no">2803</span><span id="line-2803">                        } else {</span>
+<span class="source-line-no">2804</span><span id="line-2804">                            int time = (int) (PlotSquared.platform().expireManager().getAge(this, false) / 1000);</span>
+<span class="source-line-no">2805</span><span id="line-2805">                            if (time != 0) {</span>
+<span class="source-line-no">2806</span><span id="line-2806">                                seen = Component.text(TimeUtil.secToTime(time));</span>
+<span class="source-line-no">2807</span><span id="line-2807">                            } else {</span>
+<span class="source-line-no">2808</span><span id="line-2808">                                seen = TranslatableCaption.of("info.unknown").toComponent(player);</span>
+<span class="source-line-no">2809</span><span id="line-2809">                            }</span>
+<span class="source-line-no">2810</span><span id="line-2810">                        }</span>
+<span class="source-line-no">2811</span><span id="line-2811">                    } else {</span>
+<span class="source-line-no">2812</span><span id="line-2812">                        seen = TranslatableCaption.of("info.never").toComponent(player);</span>
 <span class="source-line-no">2813</span><span id="line-2813">                    }</span>
 <span class="source-line-no">2814</span><span id="line-2814"></span>
-<span class="source-line-no">2815</span><span id="line-2815">                    ComponentLike flags;</span>
-<span class="source-line-no">2816</span><span id="line-2816">                    Collection&lt;PlotFlag&lt;?, ?&gt;&gt; flagCollection = this.getApplicableFlags(true);</span>
-<span class="source-line-no">2817</span><span id="line-2817">                    if (flagCollection.isEmpty()) {</span>
-<span class="source-line-no">2818</span><span id="line-2818">                        flags = TranslatableCaption.of("info.none").toComponent(player);</span>
-<span class="source-line-no">2819</span><span id="line-2819">                    } else {</span>
-<span class="source-line-no">2820</span><span id="line-2820">                        TextComponent.Builder flagBuilder = Component.text();</span>
-<span class="source-line-no">2821</span><span id="line-2821">                        String prefix = "";</span>
-<span class="source-line-no">2822</span><span id="line-2822">                        for (final PlotFlag&lt;?, ?&gt; flag : flagCollection) {</span>
-<span class="source-line-no">2823</span><span id="line-2823">                            Object value;</span>
-<span class="source-line-no">2824</span><span id="line-2824">                            if (flag instanceof DoubleFlag &amp;&amp; !Settings.General.SCIENTIFIC) {</span>
-<span class="source-line-no">2825</span><span id="line-2825">                                value = FLAG_DECIMAL_FORMAT.format(flag.getValue());</span>
-<span class="source-line-no">2826</span><span id="line-2826">                            } else {</span>
-<span class="source-line-no">2827</span><span id="line-2827">                                value = flag.toString();</span>
-<span class="source-line-no">2828</span><span id="line-2828">                            }</span>
-<span class="source-line-no">2829</span><span id="line-2829">                            Component snip = MINI_MESSAGE.deserialize(</span>
-<span class="source-line-no">2830</span><span id="line-2830">                                    prefix + CaptionUtility.format(</span>
-<span class="source-line-no">2831</span><span id="line-2831">                                            player,</span>
-<span class="source-line-no">2832</span><span id="line-2832">                                            TranslatableCaption.of("info.plot_flag_list").getComponent(player)</span>
-<span class="source-line-no">2833</span><span id="line-2833">                                    ),</span>
-<span class="source-line-no">2834</span><span id="line-2834">                                    TagResolver.builder()</span>
-<span class="source-line-no">2835</span><span id="line-2835">                                            .tag("flag", Tag.inserting(Component.text(flag.getName())))</span>
-<span class="source-line-no">2836</span><span id="line-2836">                                            .tag("value", Tag.inserting(Component.text(CaptionUtility.formatRaw(</span>
-<span class="source-line-no">2837</span><span id="line-2837">                                                    player,</span>
-<span class="source-line-no">2838</span><span id="line-2838">                                                    value.toString()</span>
-<span class="source-line-no">2839</span><span id="line-2839">                                            ))))</span>
-<span class="source-line-no">2840</span><span id="line-2840">                                            .build()</span>
-<span class="source-line-no">2841</span><span id="line-2841">                            );</span>
-<span class="source-line-no">2842</span><span id="line-2842">                            flagBuilder.append(snip);</span>
-<span class="source-line-no">2843</span><span id="line-2843">                            prefix = ", ";</span>
-<span class="source-line-no">2844</span><span id="line-2844">                        }</span>
-<span class="source-line-no">2845</span><span id="line-2845">                        flags = flagBuilder.build();</span>
-<span class="source-line-no">2846</span><span id="line-2846">                    }</span>
-<span class="source-line-no">2847</span><span id="line-2847">                    boolean build = this.isAdded(player.getUUID());</span>
-<span class="source-line-no">2848</span><span id="line-2848">                    Component owner;</span>
-<span class="source-line-no">2849</span><span id="line-2849">                    if (this.getOwner() == null) {</span>
-<span class="source-line-no">2850</span><span id="line-2850">                        owner = Component.text("unowned");</span>
-<span class="source-line-no">2851</span><span id="line-2851">                    } else if (this.getOwner().equals(DBFunc.SERVER)) {</span>
-<span class="source-line-no">2852</span><span id="line-2852">                        owner = Component.text(MINI_MESSAGE.stripTags(TranslatableCaption</span>
-<span class="source-line-no">2853</span><span id="line-2853">                                .of("info.server")</span>
-<span class="source-line-no">2854</span><span id="line-2854">                                .getComponent(player)));</span>
-<span class="source-line-no">2855</span><span id="line-2855">                    } else {</span>
-<span class="source-line-no">2856</span><span id="line-2856">                        owner = PlayerManager.getPlayerList(this.getOwners(), player);</span>
-<span class="source-line-no">2857</span><span id="line-2857">                    }</span>
-<span class="source-line-no">2858</span><span id="line-2858">                    TagResolver.Builder tagBuilder = TagResolver.builder();</span>
-<span class="source-line-no">2859</span><span id="line-2859">                    tagBuilder.tag("header", Tag.inserting(TranslatableCaption.of("info.plot_info_header").toComponent(player)));</span>
-<span class="source-line-no">2860</span><span id="line-2860">                    tagBuilder.tag("footer", Tag.inserting(TranslatableCaption.of("info.plot_info_footer").toComponent(player)));</span>
-<span class="source-line-no">2861</span><span id="line-2861">                    TextComponent.Builder areaComponent = Component.text();</span>
-<span class="source-line-no">2862</span><span id="line-2862">                    if (this.getArea() != null) {</span>
-<span class="source-line-no">2863</span><span id="line-2863">                        areaComponent.append(Component.text(getArea().getWorldName()));</span>
-<span class="source-line-no">2864</span><span id="line-2864">                        if (getArea().getId() != null) {</span>
-<span class="source-line-no">2865</span><span id="line-2865">                            areaComponent.append(Component.text("("))</span>
-<span class="source-line-no">2866</span><span id="line-2866">                                    .append(Component.text(getArea().getId()))</span>
-<span class="source-line-no">2867</span><span id="line-2867">                                    .append(Component.text(")"));</span>
-<span class="source-line-no">2868</span><span id="line-2868">                        }</span>
-<span class="source-line-no">2869</span><span id="line-2869">                    } else {</span>
-<span class="source-line-no">2870</span><span id="line-2870">                        areaComponent.append(TranslatableCaption.of("info.none").toComponent(player));</span>
-<span class="source-line-no">2871</span><span id="line-2871">                    }</span>
-<span class="source-line-no">2872</span><span id="line-2872">                    tagBuilder.tag("area", Tag.inserting(areaComponent));</span>
-<span class="source-line-no">2873</span><span id="line-2873">                    long creationDate = Long.parseLong(String.valueOf(timestamp));</span>
-<span class="source-line-no">2874</span><span id="line-2874">                    SimpleDateFormat sdf = new SimpleDateFormat(Settings.Timeformat.DATE_FORMAT);</span>
-<span class="source-line-no">2875</span><span id="line-2875">                    sdf.setTimeZone(TimeZone.getTimeZone(Settings.Timeformat.TIME_ZONE));</span>
-<span class="source-line-no">2876</span><span id="line-2876">                    String newDate = sdf.format(creationDate);</span>
-<span class="source-line-no">2877</span><span id="line-2877"></span>
-<span class="source-line-no">2878</span><span id="line-2878">                    tagBuilder.tag("id", Tag.inserting(Component.text(getId().toString())));</span>
-<span class="source-line-no">2879</span><span id="line-2879">                    tagBuilder.tag("alias", Tag.inserting(alias));</span>
-<span class="source-line-no">2880</span><span id="line-2880">                    tagBuilder.tag("num", Tag.inserting(Component.text(num)));</span>
-<span class="source-line-no">2881</span><span id="line-2881">                    tagBuilder.tag("desc", Tag.inserting(description));</span>
-<span class="source-line-no">2882</span><span id="line-2882">                    tagBuilder.tag("biome", Tag.inserting(Component.text(biome.toString().toLowerCase())));</span>
-<span class="source-line-no">2883</span><span id="line-2883">                    tagBuilder.tag("owner", Tag.inserting(owner));</span>
-<span class="source-line-no">2884</span><span id="line-2884">                    tagBuilder.tag("members", Tag.inserting(members));</span>
-<span class="source-line-no">2885</span><span id="line-2885">                    tagBuilder.tag("player", Tag.inserting(Component.text(player.getName())));</span>
-<span class="source-line-no">2886</span><span id="line-2886">                    tagBuilder.tag("trusted", Tag.inserting(trusted));</span>
-<span class="source-line-no">2887</span><span id="line-2887">                    tagBuilder.tag("denied", Tag.inserting(denied));</span>
-<span class="source-line-no">2888</span><span id="line-2888">                    tagBuilder.tag("seen", Tag.inserting(seen));</span>
-<span class="source-line-no">2889</span><span id="line-2889">                    tagBuilder.tag("flags", Tag.inserting(flags));</span>
-<span class="source-line-no">2890</span><span id="line-2890">                    tagBuilder.tag("creationdate", Tag.inserting(Component.text(newDate)));</span>
-<span class="source-line-no">2891</span><span id="line-2891">                    tagBuilder.tag("build", Tag.inserting(Component.text(build)));</span>
-<span class="source-line-no">2892</span><span id="line-2892">                    tagBuilder.tag("size", Tag.inserting(Component.text(getConnectedPlots().size())));</span>
-<span class="source-line-no">2893</span><span id="line-2893">                    String component = iInfo.getComponent(player);</span>
-<span class="source-line-no">2894</span><span id="line-2894">                    if (component.contains("&lt;rating&gt;") || component.contains("&lt;likes&gt;")) {</span>
-<span class="source-line-no">2895</span><span id="line-2895">                        TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">2896</span><span id="line-2896">                            if (Settings.Ratings.USE_LIKES) {</span>
-<span class="source-line-no">2897</span><span id="line-2897">                                tagBuilder.tag("rating", Tag.inserting(Component.text(</span>
-<span class="source-line-no">2898</span><span id="line-2898">                                        String.format("%.0f%%", Like.getLikesPercentage(this) * 100D)</span>
-<span class="source-line-no">2899</span><span id="line-2899">                                )));</span>
-<span class="source-line-no">2900</span><span id="line-2900">                                tagBuilder.tag("likes", Tag.inserting(Component.text(</span>
-<span class="source-line-no">2901</span><span id="line-2901">                                        String.format("%.0f%%", Like.getLikesPercentage(this) * 100D)</span>
-<span class="source-line-no">2902</span><span id="line-2902">                                )));</span>
-<span class="source-line-no">2903</span><span id="line-2903">                            } else {</span>
-<span class="source-line-no">2904</span><span id="line-2904">                                int max = 10;</span>
-<span class="source-line-no">2905</span><span id="line-2905">                                if (Settings.Ratings.CATEGORIES != null &amp;&amp; !Settings.Ratings.CATEGORIES.isEmpty()) {</span>
-<span class="source-line-no">2906</span><span id="line-2906">                                    max = 8;</span>
-<span class="source-line-no">2907</span><span id="line-2907">                                }</span>
-<span class="source-line-no">2908</span><span id="line-2908">                                if (full &amp;&amp; Settings.Ratings.CATEGORIES != null &amp;&amp; Settings.Ratings.CATEGORIES.size() &gt; 1) {</span>
-<span class="source-line-no">2909</span><span id="line-2909">                                    double[] ratings = this.getAverageRatings();</span>
-<span class="source-line-no">2910</span><span id="line-2910">                                    StringBuilder rating = new StringBuilder();</span>
-<span class="source-line-no">2911</span><span id="line-2911">                                    String prefix = "";</span>
-<span class="source-line-no">2912</span><span id="line-2912">                                    for (int i = 0; i &lt; ratings.length; i++) {</span>
-<span class="source-line-no">2913</span><span id="line-2913">                                        rating.append(prefix).append(Settings.Ratings.CATEGORIES.get(i)).append('=')</span>
-<span class="source-line-no">2914</span><span id="line-2914">                                                .append(String.format("%.1f", ratings[i]));</span>
-<span class="source-line-no">2915</span><span id="line-2915">                                        prefix = ",";</span>
-<span class="source-line-no">2916</span><span id="line-2916">                                    }</span>
-<span class="source-line-no">2917</span><span id="line-2917">                                    tagBuilder.tag("rating", Tag.inserting(Component.text(rating.toString())));</span>
-<span class="source-line-no">2918</span><span id="line-2918">                                } else {</span>
-<span class="source-line-no">2919</span><span id="line-2919">                                    double rating = this.getAverageRating();</span>
-<span class="source-line-no">2920</span><span id="line-2920">                                    if (Double.isFinite(rating)) {</span>
-<span class="source-line-no">2921</span><span id="line-2921">                                        tagBuilder.tag(</span>
-<span class="source-line-no">2922</span><span id="line-2922">                                                "rating",</span>
-<span class="source-line-no">2923</span><span id="line-2923">                                                Tag.inserting(Component.text(String.format("%.1f", rating) + '/' + max))</span>
-<span class="source-line-no">2924</span><span id="line-2924">                                        );</span>
-<span class="source-line-no">2925</span><span id="line-2925">                                    } else {</span>
-<span class="source-line-no">2926</span><span id="line-2926">                                        tagBuilder.tag(</span>
-<span class="source-line-no">2927</span><span id="line-2927">                                                "rating", Tag.inserting(TranslatableCaption.of("info.none").toComponent(player))</span>
-<span class="source-line-no">2928</span><span id="line-2928">                                        );</span>
-<span class="source-line-no">2929</span><span id="line-2929">                                    }</span>
-<span class="source-line-no">2930</span><span id="line-2930">                                }</span>
-<span class="source-line-no">2931</span><span id="line-2931">                                tagBuilder.tag("likes", Tag.inserting(Component.text("N/A")));</span>
-<span class="source-line-no">2932</span><span id="line-2932">                            }</span>
-<span class="source-line-no">2933</span><span id="line-2933">                            future.complete(StaticCaption.of(MINI_MESSAGE.serialize(MINI_MESSAGE</span>
-<span class="source-line-no">2934</span><span id="line-2934">                                    .deserialize(</span>
-<span class="source-line-no">2935</span><span id="line-2935">                                            iInfo.getComponent(player),</span>
-<span class="source-line-no">2936</span><span id="line-2936">                                            tagBuilder.build()</span>
-<span class="source-line-no">2937</span><span id="line-2937">                                    ))));</span>
-<span class="source-line-no">2938</span><span id="line-2938">                        });</span>
-<span class="source-line-no">2939</span><span id="line-2939">                        return;</span>
-<span class="source-line-no">2940</span><span id="line-2940">                    }</span>
-<span class="source-line-no">2941</span><span id="line-2941">                    future.complete(StaticCaption.of(MINI_MESSAGE.serialize(MINI_MESSAGE</span>
-<span class="source-line-no">2942</span><span id="line-2942">                            .deserialize(</span>
-<span class="source-line-no">2943</span><span id="line-2943">                                    iInfo.getComponent(player),</span>
-<span class="source-line-no">2944</span><span id="line-2944">                                    tagBuilder.build()</span>
-<span class="source-line-no">2945</span><span id="line-2945">                            ))));</span>
-<span class="source-line-no">2946</span><span id="line-2946">                }</span>
-<span class="source-line-no">2947</span><span id="line-2947">        );</span>
-<span class="source-line-no">2948</span><span id="line-2948">        return future;</span>
-<span class="source-line-no">2949</span><span id="line-2949">    }</span>
-<span class="source-line-no">2950</span><span id="line-2950"></span>
-<span class="source-line-no">2951</span><span id="line-2951">    /**</span>
-<span class="source-line-no">2952</span><span id="line-2952">     * If rating categories are enabled, get the average rating by category.&lt;br&gt;</span>
-<span class="source-line-no">2953</span><span id="line-2953">     * - The index corresponds to the index of the category in the config</span>
-<span class="source-line-no">2954</span><span id="line-2954">     *</span>
-<span class="source-line-no">2955</span><span id="line-2955">     * &lt;p&gt;</span>
-<span class="source-line-no">2956</span><span id="line-2956">     * See {@link Settings.Ratings#CATEGORIES} for rating categories</span>
-<span class="source-line-no">2957</span><span id="line-2957">     * &lt;/p&gt;</span>
-<span class="source-line-no">2958</span><span id="line-2958">     *</span>
-<span class="source-line-no">2959</span><span id="line-2959">     * @return Average ratings in each category</span>
-<span class="source-line-no">2960</span><span id="line-2960">     */</span>
-<span class="source-line-no">2961</span><span id="line-2961">    public @NonNull double[] getAverageRatings() {</span>
-<span class="source-line-no">2962</span><span id="line-2962">        Map&lt;UUID, Integer&gt; rating;</span>
-<span class="source-line-no">2963</span><span id="line-2963">        if (this.getSettings().getRatings() != null) {</span>
-<span class="source-line-no">2964</span><span id="line-2964">            rating = this.getSettings().getRatings();</span>
-<span class="source-line-no">2965</span><span id="line-2965">        } else if (Settings.Enabled_Components.RATING_CACHE) {</span>
-<span class="source-line-no">2966</span><span id="line-2966">            rating = new HashMap&lt;&gt;();</span>
-<span class="source-line-no">2967</span><span id="line-2967">        } else {</span>
-<span class="source-line-no">2968</span><span id="line-2968">            rating = DBFunc.getRatings(this);</span>
-<span class="source-line-no">2969</span><span id="line-2969">        }</span>
-<span class="source-line-no">2970</span><span id="line-2970">        int size = 1;</span>
-<span class="source-line-no">2971</span><span id="line-2971">        if (!Settings.Ratings.CATEGORIES.isEmpty()) {</span>
-<span class="source-line-no">2972</span><span id="line-2972">            size = Math.max(1, Settings.Ratings.CATEGORIES.size());</span>
-<span class="source-line-no">2973</span><span id="line-2973">        }</span>
-<span class="source-line-no">2974</span><span id="line-2974">        double[] ratings = new double[size];</span>
-<span class="source-line-no">2975</span><span id="line-2975">        if (rating == null || rating.isEmpty()) {</span>
-<span class="source-line-no">2976</span><span id="line-2976">            return ratings;</span>
-<span class="source-line-no">2977</span><span id="line-2977">        }</span>
-<span class="source-line-no">2978</span><span id="line-2978">        for (Entry&lt;UUID, Integer&gt; entry : rating.entrySet()) {</span>
-<span class="source-line-no">2979</span><span id="line-2979">            int current = entry.getValue();</span>
-<span class="source-line-no">2980</span><span id="line-2980">            if (Settings.Ratings.CATEGORIES.isEmpty()) {</span>
-<span class="source-line-no">2981</span><span id="line-2981">                ratings[0] += current;</span>
-<span class="source-line-no">2982</span><span id="line-2982">            } else {</span>
-<span class="source-line-no">2983</span><span id="line-2983">                for (int i = 0; i &lt; Settings.Ratings.CATEGORIES.size(); i++) {</span>
-<span class="source-line-no">2984</span><span id="line-2984">                    ratings[i] += current % 10 - 1;</span>
-<span class="source-line-no">2985</span><span id="line-2985">                    current /= 10;</span>
-<span class="source-line-no">2986</span><span id="line-2986">                }</span>
-<span class="source-line-no">2987</span><span id="line-2987">            }</span>
-<span class="source-line-no">2988</span><span id="line-2988">        }</span>
-<span class="source-line-no">2989</span><span id="line-2989">        for (int i = 0; i &lt; size; i++) {</span>
-<span class="source-line-no">2990</span><span id="line-2990">            ratings[i] /= rating.size();</span>
-<span class="source-line-no">2991</span><span id="line-2991">        }</span>
-<span class="source-line-no">2992</span><span id="line-2992">        return ratings;</span>
-<span class="source-line-no">2993</span><span id="line-2993">    }</span>
-<span class="source-line-no">2994</span><span id="line-2994"></span>
-<span class="source-line-no">2995</span><span id="line-2995">    /**</span>
-<span class="source-line-no">2996</span><span id="line-2996">     * Get the plot flag container</span>
-<span class="source-line-no">2997</span><span id="line-2997">     *</span>
-<span class="source-line-no">2998</span><span id="line-2998">     * @return Flag container</span>
-<span class="source-line-no">2999</span><span id="line-2999">     */</span>
-<span class="source-line-no">3000</span><span id="line-3000">    public @NonNull FlagContainer getFlagContainer() {</span>
-<span class="source-line-no">3001</span><span id="line-3001">        return this.flagContainer;</span>
-<span class="source-line-no">3002</span><span id="line-3002">    }</span>
-<span class="source-line-no">3003</span><span id="line-3003"></span>
-<span class="source-line-no">3004</span><span id="line-3004">    /**</span>
-<span class="source-line-no">3005</span><span id="line-3005">     * Get the plot comment container. This can be used to manage</span>
-<span class="source-line-no">3006</span><span id="line-3006">     * and access plot comments</span>
-<span class="source-line-no">3007</span><span id="line-3007">     *</span>
-<span class="source-line-no">3008</span><span id="line-3008">     * @return Plot comment container</span>
-<span class="source-line-no">3009</span><span id="line-3009">     */</span>
-<span class="source-line-no">3010</span><span id="line-3010">    public @NonNull PlotCommentContainer getPlotCommentContainer() {</span>
-<span class="source-line-no">3011</span><span id="line-3011">        return this.plotCommentContainer;</span>
-<span class="source-line-no">3012</span><span id="line-3012">    }</span>
-<span class="source-line-no">3013</span><span id="line-3013"></span>
-<span class="source-line-no">3014</span><span id="line-3014">    /**</span>
-<span class="source-line-no">3015</span><span id="line-3015">     * Get the plot modification manager</span>
-<span class="source-line-no">3016</span><span id="line-3016">     *</span>
-<span class="source-line-no">3017</span><span id="line-3017">     * @return Plot modification manager</span>
-<span class="source-line-no">3018</span><span id="line-3018">     */</span>
-<span class="source-line-no">3019</span><span id="line-3019">    public @NonNull PlotModificationManager getPlotModificationManager() {</span>
-<span class="source-line-no">3020</span><span id="line-3020">        return this.plotModificationManager;</span>
-<span class="source-line-no">3021</span><span id="line-3021">    }</span>
-<span class="source-line-no">3022</span><span id="line-3022"></span>
-<span class="source-line-no">3023</span><span id="line-3023">}</span>
+<span class="source-line-no">2815</span><span id="line-2815">                    ComponentLike description = TranslatableCaption.of("info.plot_no_description").toComponent(player);</span>
+<span class="source-line-no">2816</span><span id="line-2816">                    String descriptionValue = this.getFlag(DescriptionFlag.class);</span>
+<span class="source-line-no">2817</span><span id="line-2817">                    if (!descriptionValue.isEmpty()) {</span>
+<span class="source-line-no">2818</span><span id="line-2818">                        description = Component.text(descriptionValue);</span>
+<span class="source-line-no">2819</span><span id="line-2819">                    }</span>
+<span class="source-line-no">2820</span><span id="line-2820"></span>
+<span class="source-line-no">2821</span><span id="line-2821">                    ComponentLike flags;</span>
+<span class="source-line-no">2822</span><span id="line-2822">                    Collection&lt;PlotFlag&lt;?, ?&gt;&gt; flagCollection = this.getApplicableFlags(true);</span>
+<span class="source-line-no">2823</span><span id="line-2823">                    if (flagCollection.isEmpty()) {</span>
+<span class="source-line-no">2824</span><span id="line-2824">                        flags = TranslatableCaption.of("info.none").toComponent(player);</span>
+<span class="source-line-no">2825</span><span id="line-2825">                    } else {</span>
+<span class="source-line-no">2826</span><span id="line-2826">                        TextComponent.Builder flagBuilder = Component.text();</span>
+<span class="source-line-no">2827</span><span id="line-2827">                        String prefix = "";</span>
+<span class="source-line-no">2828</span><span id="line-2828">                        for (final PlotFlag&lt;?, ?&gt; flag : flagCollection) {</span>
+<span class="source-line-no">2829</span><span id="line-2829">                            Object value;</span>
+<span class="source-line-no">2830</span><span id="line-2830">                            if (flag instanceof DoubleFlag &amp;&amp; !Settings.General.SCIENTIFIC) {</span>
+<span class="source-line-no">2831</span><span id="line-2831">                                value = FLAG_DECIMAL_FORMAT.format(flag.getValue());</span>
+<span class="source-line-no">2832</span><span id="line-2832">                            } else {</span>
+<span class="source-line-no">2833</span><span id="line-2833">                                value = flag.toString();</span>
+<span class="source-line-no">2834</span><span id="line-2834">                            }</span>
+<span class="source-line-no">2835</span><span id="line-2835">                            Component snip = MINI_MESSAGE.deserialize(</span>
+<span class="source-line-no">2836</span><span id="line-2836">                                    prefix + CaptionUtility.format(</span>
+<span class="source-line-no">2837</span><span id="line-2837">                                            player,</span>
+<span class="source-line-no">2838</span><span id="line-2838">                                            TranslatableCaption.of("info.plot_flag_list").getComponent(player)</span>
+<span class="source-line-no">2839</span><span id="line-2839">                                    ),</span>
+<span class="source-line-no">2840</span><span id="line-2840">                                    TagResolver.builder()</span>
+<span class="source-line-no">2841</span><span id="line-2841">                                            .tag("flag", Tag.inserting(Component.text(flag.getName())))</span>
+<span class="source-line-no">2842</span><span id="line-2842">                                            .tag("value", Tag.inserting(Component.text(CaptionUtility.formatRaw(</span>
+<span class="source-line-no">2843</span><span id="line-2843">                                                    player,</span>
+<span class="source-line-no">2844</span><span id="line-2844">                                                    value.toString()</span>
+<span class="source-line-no">2845</span><span id="line-2845">                                            ))))</span>
+<span class="source-line-no">2846</span><span id="line-2846">                                            .build()</span>
+<span class="source-line-no">2847</span><span id="line-2847">                            );</span>
+<span class="source-line-no">2848</span><span id="line-2848">                            flagBuilder.append(snip);</span>
+<span class="source-line-no">2849</span><span id="line-2849">                            prefix = ", ";</span>
+<span class="source-line-no">2850</span><span id="line-2850">                        }</span>
+<span class="source-line-no">2851</span><span id="line-2851">                        flags = flagBuilder.build();</span>
+<span class="source-line-no">2852</span><span id="line-2852">                    }</span>
+<span class="source-line-no">2853</span><span id="line-2853">                    boolean build = this.isAdded(player.getUUID());</span>
+<span class="source-line-no">2854</span><span id="line-2854">                    Component owner;</span>
+<span class="source-line-no">2855</span><span id="line-2855">                    if (this.getOwner() == null) {</span>
+<span class="source-line-no">2856</span><span id="line-2856">                        owner = Component.text("unowned");</span>
+<span class="source-line-no">2857</span><span id="line-2857">                    } else if (this.getOwner().equals(DBFunc.SERVER)) {</span>
+<span class="source-line-no">2858</span><span id="line-2858">                        owner = Component.text(MINI_MESSAGE.stripTags(TranslatableCaption</span>
+<span class="source-line-no">2859</span><span id="line-2859">                                .of("info.server")</span>
+<span class="source-line-no">2860</span><span id="line-2860">                                .getComponent(player)));</span>
+<span class="source-line-no">2861</span><span id="line-2861">                    } else {</span>
+<span class="source-line-no">2862</span><span id="line-2862">                        owner = PlayerManager.getPlayerList(this.getOwners(), player);</span>
+<span class="source-line-no">2863</span><span id="line-2863">                    }</span>
+<span class="source-line-no">2864</span><span id="line-2864">                    TagResolver.Builder tagBuilder = TagResolver.builder();</span>
+<span class="source-line-no">2865</span><span id="line-2865">                    tagBuilder.tag("header", Tag.inserting(TranslatableCaption.of("info.plot_info_header").toComponent(player)));</span>
+<span class="source-line-no">2866</span><span id="line-2866">                    tagBuilder.tag("footer", Tag.inserting(TranslatableCaption.of("info.plot_info_footer").toComponent(player)));</span>
+<span class="source-line-no">2867</span><span id="line-2867">                    TextComponent.Builder areaComponent = Component.text();</span>
+<span class="source-line-no">2868</span><span id="line-2868">                    if (this.getArea() != null) {</span>
+<span class="source-line-no">2869</span><span id="line-2869">                        areaComponent.append(Component.text(getArea().getWorldName()));</span>
+<span class="source-line-no">2870</span><span id="line-2870">                        if (getArea().getId() != null) {</span>
+<span class="source-line-no">2871</span><span id="line-2871">                            areaComponent.append(Component.text("("))</span>
+<span class="source-line-no">2872</span><span id="line-2872">                                    .append(Component.text(getArea().getId()))</span>
+<span class="source-line-no">2873</span><span id="line-2873">                                    .append(Component.text(")"));</span>
+<span class="source-line-no">2874</span><span id="line-2874">                        }</span>
+<span class="source-line-no">2875</span><span id="line-2875">                    } else {</span>
+<span class="source-line-no">2876</span><span id="line-2876">                        areaComponent.append(TranslatableCaption.of("info.none").toComponent(player));</span>
+<span class="source-line-no">2877</span><span id="line-2877">                    }</span>
+<span class="source-line-no">2878</span><span id="line-2878">                    tagBuilder.tag("area", Tag.inserting(areaComponent));</span>
+<span class="source-line-no">2879</span><span id="line-2879">                    long creationDate = Long.parseLong(String.valueOf(timestamp));</span>
+<span class="source-line-no">2880</span><span id="line-2880">                    SimpleDateFormat sdf = new SimpleDateFormat(Settings.Timeformat.DATE_FORMAT);</span>
+<span class="source-line-no">2881</span><span id="line-2881">                    sdf.setTimeZone(TimeZone.getTimeZone(Settings.Timeformat.TIME_ZONE));</span>
+<span class="source-line-no">2882</span><span id="line-2882">                    String newDate = sdf.format(creationDate);</span>
+<span class="source-line-no">2883</span><span id="line-2883"></span>
+<span class="source-line-no">2884</span><span id="line-2884">                    tagBuilder.tag("id", Tag.inserting(Component.text(getId().toString())));</span>
+<span class="source-line-no">2885</span><span id="line-2885">                    tagBuilder.tag("alias", Tag.inserting(alias));</span>
+<span class="source-line-no">2886</span><span id="line-2886">                    tagBuilder.tag("num", Tag.inserting(Component.text(num)));</span>
+<span class="source-line-no">2887</span><span id="line-2887">                    tagBuilder.tag("desc", Tag.inserting(description));</span>
+<span class="source-line-no">2888</span><span id="line-2888">                    tagBuilder.tag("biome", Tag.inserting(Component.text(biome.toString().toLowerCase())));</span>
+<span class="source-line-no">2889</span><span id="line-2889">                    tagBuilder.tag("owner", Tag.inserting(owner));</span>
+<span class="source-line-no">2890</span><span id="line-2890">                    tagBuilder.tag("members", Tag.inserting(members));</span>
+<span class="source-line-no">2891</span><span id="line-2891">                    tagBuilder.tag("player", Tag.inserting(Component.text(player.getName())));</span>
+<span class="source-line-no">2892</span><span id="line-2892">                    tagBuilder.tag("trusted", Tag.inserting(trusted));</span>
+<span class="source-line-no">2893</span><span id="line-2893">                    tagBuilder.tag("denied", Tag.inserting(denied));</span>
+<span class="source-line-no">2894</span><span id="line-2894">                    tagBuilder.tag("seen", Tag.inserting(seen));</span>
+<span class="source-line-no">2895</span><span id="line-2895">                    tagBuilder.tag("flags", Tag.inserting(flags));</span>
+<span class="source-line-no">2896</span><span id="line-2896">                    tagBuilder.tag("creationdate", Tag.inserting(Component.text(newDate)));</span>
+<span class="source-line-no">2897</span><span id="line-2897">                    tagBuilder.tag("build", Tag.inserting(Component.text(build)));</span>
+<span class="source-line-no">2898</span><span id="line-2898">                    tagBuilder.tag("size", Tag.inserting(Component.text(getConnectedPlots().size())));</span>
+<span class="source-line-no">2899</span><span id="line-2899">                    String component = iInfo.getComponent(player);</span>
+<span class="source-line-no">2900</span><span id="line-2900">                    if (component.contains("&lt;rating&gt;") || component.contains("&lt;likes&gt;")) {</span>
+<span class="source-line-no">2901</span><span id="line-2901">                        TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">2902</span><span id="line-2902">                            if (Settings.Ratings.USE_LIKES) {</span>
+<span class="source-line-no">2903</span><span id="line-2903">                                tagBuilder.tag("rating", Tag.inserting(Component.text(</span>
+<span class="source-line-no">2904</span><span id="line-2904">                                        String.format("%.0f%%", Like.getLikesPercentage(this) * 100D)</span>
+<span class="source-line-no">2905</span><span id="line-2905">                                )));</span>
+<span class="source-line-no">2906</span><span id="line-2906">                                tagBuilder.tag("likes", Tag.inserting(Component.text(</span>
+<span class="source-line-no">2907</span><span id="line-2907">                                        String.format("%.0f%%", Like.getLikesPercentage(this) * 100D)</span>
+<span class="source-line-no">2908</span><span id="line-2908">                                )));</span>
+<span class="source-line-no">2909</span><span id="line-2909">                            } else {</span>
+<span class="source-line-no">2910</span><span id="line-2910">                                int max = 10;</span>
+<span class="source-line-no">2911</span><span id="line-2911">                                if (Settings.Ratings.CATEGORIES != null &amp;&amp; !Settings.Ratings.CATEGORIES.isEmpty()) {</span>
+<span class="source-line-no">2912</span><span id="line-2912">                                    max = 8;</span>
+<span class="source-line-no">2913</span><span id="line-2913">                                }</span>
+<span class="source-line-no">2914</span><span id="line-2914">                                if (full &amp;&amp; Settings.Ratings.CATEGORIES != null &amp;&amp; Settings.Ratings.CATEGORIES.size() &gt; 1) {</span>
+<span class="source-line-no">2915</span><span id="line-2915">                                    double[] ratings = this.getAverageRatings();</span>
+<span class="source-line-no">2916</span><span id="line-2916">                                    StringBuilder rating = new StringBuilder();</span>
+<span class="source-line-no">2917</span><span id="line-2917">                                    String prefix = "";</span>
+<span class="source-line-no">2918</span><span id="line-2918">                                    for (int i = 0; i &lt; ratings.length; i++) {</span>
+<span class="source-line-no">2919</span><span id="line-2919">                                        rating.append(prefix).append(Settings.Ratings.CATEGORIES.get(i)).append('=')</span>
+<span class="source-line-no">2920</span><span id="line-2920">                                                .append(String.format("%.1f", ratings[i]));</span>
+<span class="source-line-no">2921</span><span id="line-2921">                                        prefix = ",";</span>
+<span class="source-line-no">2922</span><span id="line-2922">                                    }</span>
+<span class="source-line-no">2923</span><span id="line-2923">                                    tagBuilder.tag("rating", Tag.inserting(Component.text(rating.toString())));</span>
+<span class="source-line-no">2924</span><span id="line-2924">                                } else {</span>
+<span class="source-line-no">2925</span><span id="line-2925">                                    double rating = this.getAverageRating();</span>
+<span class="source-line-no">2926</span><span id="line-2926">                                    if (Double.isFinite(rating)) {</span>
+<span class="source-line-no">2927</span><span id="line-2927">                                        tagBuilder.tag(</span>
+<span class="source-line-no">2928</span><span id="line-2928">                                                "rating",</span>
+<span class="source-line-no">2929</span><span id="line-2929">                                                Tag.inserting(Component.text(String.format("%.1f", rating) + '/' + max))</span>
+<span class="source-line-no">2930</span><span id="line-2930">                                        );</span>
+<span class="source-line-no">2931</span><span id="line-2931">                                    } else {</span>
+<span class="source-line-no">2932</span><span id="line-2932">                                        tagBuilder.tag(</span>
+<span class="source-line-no">2933</span><span id="line-2933">                                                "rating", Tag.inserting(TranslatableCaption.of("info.none").toComponent(player))</span>
+<span class="source-line-no">2934</span><span id="line-2934">                                        );</span>
+<span class="source-line-no">2935</span><span id="line-2935">                                    }</span>
+<span class="source-line-no">2936</span><span id="line-2936">                                }</span>
+<span class="source-line-no">2937</span><span id="line-2937">                                tagBuilder.tag("likes", Tag.inserting(Component.text("N/A")));</span>
+<span class="source-line-no">2938</span><span id="line-2938">                            }</span>
+<span class="source-line-no">2939</span><span id="line-2939">                            future.complete(StaticCaption.of(MINI_MESSAGE.serialize(MINI_MESSAGE</span>
+<span class="source-line-no">2940</span><span id="line-2940">                                    .deserialize(</span>
+<span class="source-line-no">2941</span><span id="line-2941">                                            iInfo.getComponent(player),</span>
+<span class="source-line-no">2942</span><span id="line-2942">                                            tagBuilder.build()</span>
+<span class="source-line-no">2943</span><span id="line-2943">                                    ))));</span>
+<span class="source-line-no">2944</span><span id="line-2944">                        });</span>
+<span class="source-line-no">2945</span><span id="line-2945">                        return;</span>
+<span class="source-line-no">2946</span><span id="line-2946">                    }</span>
+<span class="source-line-no">2947</span><span id="line-2947">                    future.complete(StaticCaption.of(MINI_MESSAGE.serialize(MINI_MESSAGE</span>
+<span class="source-line-no">2948</span><span id="line-2948">                            .deserialize(</span>
+<span class="source-line-no">2949</span><span id="line-2949">                                    iInfo.getComponent(player),</span>
+<span class="source-line-no">2950</span><span id="line-2950">                                    tagBuilder.build()</span>
+<span class="source-line-no">2951</span><span id="line-2951">                            ))));</span>
+<span class="source-line-no">2952</span><span id="line-2952">                }</span>
+<span class="source-line-no">2953</span><span id="line-2953">        );</span>
+<span class="source-line-no">2954</span><span id="line-2954">        return future;</span>
+<span class="source-line-no">2955</span><span id="line-2955">    }</span>
+<span class="source-line-no">2956</span><span id="line-2956"></span>
+<span class="source-line-no">2957</span><span id="line-2957">    /**</span>
+<span class="source-line-no">2958</span><span id="line-2958">     * If rating categories are enabled, get the average rating by category.&lt;br&gt;</span>
+<span class="source-line-no">2959</span><span id="line-2959">     * - The index corresponds to the index of the category in the config</span>
+<span class="source-line-no">2960</span><span id="line-2960">     *</span>
+<span class="source-line-no">2961</span><span id="line-2961">     * &lt;p&gt;</span>
+<span class="source-line-no">2962</span><span id="line-2962">     * See {@link Settings.Ratings#CATEGORIES} for rating categories</span>
+<span class="source-line-no">2963</span><span id="line-2963">     * &lt;/p&gt;</span>
+<span class="source-line-no">2964</span><span id="line-2964">     *</span>
+<span class="source-line-no">2965</span><span id="line-2965">     * @return Average ratings in each category</span>
+<span class="source-line-no">2966</span><span id="line-2966">     */</span>
+<span class="source-line-no">2967</span><span id="line-2967">    public @NonNull double[] getAverageRatings() {</span>
+<span class="source-line-no">2968</span><span id="line-2968">        Map&lt;UUID, Integer&gt; rating;</span>
+<span class="source-line-no">2969</span><span id="line-2969">        if (this.getSettings().getRatings() != null) {</span>
+<span class="source-line-no">2970</span><span id="line-2970">            rating = this.getSettings().getRatings();</span>
+<span class="source-line-no">2971</span><span id="line-2971">        } else if (Settings.Enabled_Components.RATING_CACHE) {</span>
+<span class="source-line-no">2972</span><span id="line-2972">            rating = new HashMap&lt;&gt;();</span>
+<span class="source-line-no">2973</span><span id="line-2973">        } else {</span>
+<span class="source-line-no">2974</span><span id="line-2974">            rating = DBFunc.getRatings(this);</span>
+<span class="source-line-no">2975</span><span id="line-2975">        }</span>
+<span class="source-line-no">2976</span><span id="line-2976">        int size = 1;</span>
+<span class="source-line-no">2977</span><span id="line-2977">        if (!Settings.Ratings.CATEGORIES.isEmpty()) {</span>
+<span class="source-line-no">2978</span><span id="line-2978">            size = Math.max(1, Settings.Ratings.CATEGORIES.size());</span>
+<span class="source-line-no">2979</span><span id="line-2979">        }</span>
+<span class="source-line-no">2980</span><span id="line-2980">        double[] ratings = new double[size];</span>
+<span class="source-line-no">2981</span><span id="line-2981">        if (rating == null || rating.isEmpty()) {</span>
+<span class="source-line-no">2982</span><span id="line-2982">            return ratings;</span>
+<span class="source-line-no">2983</span><span id="line-2983">        }</span>
+<span class="source-line-no">2984</span><span id="line-2984">        for (Entry&lt;UUID, Integer&gt; entry : rating.entrySet()) {</span>
+<span class="source-line-no">2985</span><span id="line-2985">            int current = entry.getValue();</span>
+<span class="source-line-no">2986</span><span id="line-2986">            if (Settings.Ratings.CATEGORIES.isEmpty()) {</span>
+<span class="source-line-no">2987</span><span id="line-2987">                ratings[0] += current;</span>
+<span class="source-line-no">2988</span><span id="line-2988">            } else {</span>
+<span class="source-line-no">2989</span><span id="line-2989">                for (int i = 0; i &lt; Settings.Ratings.CATEGORIES.size(); i++) {</span>
+<span class="source-line-no">2990</span><span id="line-2990">                    ratings[i] += current % 10 - 1;</span>
+<span class="source-line-no">2991</span><span id="line-2991">                    current /= 10;</span>
+<span class="source-line-no">2992</span><span id="line-2992">                }</span>
+<span class="source-line-no">2993</span><span id="line-2993">            }</span>
+<span class="source-line-no">2994</span><span id="line-2994">        }</span>
+<span class="source-line-no">2995</span><span id="line-2995">        for (int i = 0; i &lt; size; i++) {</span>
+<span class="source-line-no">2996</span><span id="line-2996">            ratings[i] /= rating.size();</span>
+<span class="source-line-no">2997</span><span id="line-2997">        }</span>
+<span class="source-line-no">2998</span><span id="line-2998">        return ratings;</span>
+<span class="source-line-no">2999</span><span id="line-2999">    }</span>
+<span class="source-line-no">3000</span><span id="line-3000"></span>
+<span class="source-line-no">3001</span><span id="line-3001">    /**</span>
+<span class="source-line-no">3002</span><span id="line-3002">     * Get the plot flag container</span>
+<span class="source-line-no">3003</span><span id="line-3003">     *</span>
+<span class="source-line-no">3004</span><span id="line-3004">     * @return Flag container</span>
+<span class="source-line-no">3005</span><span id="line-3005">     */</span>
+<span class="source-line-no">3006</span><span id="line-3006">    public @NonNull FlagContainer getFlagContainer() {</span>
+<span class="source-line-no">3007</span><span id="line-3007">        return this.flagContainer;</span>
+<span class="source-line-no">3008</span><span id="line-3008">    }</span>
+<span class="source-line-no">3009</span><span id="line-3009"></span>
+<span class="source-line-no">3010</span><span id="line-3010">    /**</span>
+<span class="source-line-no">3011</span><span id="line-3011">     * Get the plot comment container. This can be used to manage</span>
+<span class="source-line-no">3012</span><span id="line-3012">     * and access plot comments</span>
+<span class="source-line-no">3013</span><span id="line-3013">     *</span>
+<span class="source-line-no">3014</span><span id="line-3014">     * @return Plot comment container</span>
+<span class="source-line-no">3015</span><span id="line-3015">     */</span>
+<span class="source-line-no">3016</span><span id="line-3016">    public @NonNull PlotCommentContainer getPlotCommentContainer() {</span>
+<span class="source-line-no">3017</span><span id="line-3017">        return this.plotCommentContainer;</span>
+<span class="source-line-no">3018</span><span id="line-3018">    }</span>
+<span class="source-line-no">3019</span><span id="line-3019"></span>
+<span class="source-line-no">3020</span><span id="line-3020">    /**</span>
+<span class="source-line-no">3021</span><span id="line-3021">     * Get the plot modification manager</span>
+<span class="source-line-no">3022</span><span id="line-3022">     *</span>
+<span class="source-line-no">3023</span><span id="line-3023">     * @return Plot modification manager</span>
+<span class="source-line-no">3024</span><span id="line-3024">     */</span>
+<span class="source-line-no">3025</span><span id="line-3025">    public @NonNull PlotModificationManager getPlotModificationManager() {</span>
+<span class="source-line-no">3026</span><span id="line-3026">        return this.plotModificationManager;</span>
+<span class="source-line-no">3027</span><span id="line-3027">    }</span>
+<span class="source-line-no">3028</span><span id="line-3028"></span>
+<span class="source-line-no">3029</span><span id="line-3029">}</span>
 
 
 

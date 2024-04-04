@@ -167,7 +167,7 @@
 <span class="source-line-no">154</span><span id="line-154">        if (Settings.Done.RESTRICT_BUILDING &amp;&amp; DoneFlag.isDone(plot)) {</span>
 <span class="source-line-no">155</span><span id="line-155">            event.setCancelled(true);</span>
 <span class="source-line-no">156</span><span id="line-156">        }</span>
-<span class="source-line-no">157</span><span id="line-157">        if (type == EntityType.ENDER_CRYSTAL) {</span>
+<span class="source-line-no">157</span><span id="line-157">        if (type == EntityType.ENDER_CRYSTAL || type == EntityType.ARMOR_STAND) {</span>
 <span class="source-line-no">158</span><span id="line-158">            if (BukkitEntityUtil.checkEntity(entity, plot)) {</span>
 <span class="source-line-no">159</span><span id="line-159">                event.setCancelled(true);</span>
 <span class="source-line-no">160</span><span id="line-160">            }</span>

@@ -2587,7 +2587,7 @@
 <span class="source-line-no">2574</span><span id="line-2574">     */</span>
 <span class="source-line-no">2575</span><span id="line-2575">    public void teleportPlayer(final PlotPlayer&lt;?&gt; player, TeleportCause cause, Consumer&lt;Boolean&gt; resultConsumer) {</span>
 <span class="source-line-no">2576</span><span id="line-2576">        Plot plot = this.getBasePlot(false);</span>
-<span class="source-line-no">2577</span><span id="line-2577">        if (!WorldUtil.isValidLocation(plot.getBottomAbs())) {</span>
+<span class="source-line-no">2577</span><span id="line-2577">        if ((getArea() == null || !(getArea() instanceof SinglePlotArea)) &amp;&amp; !WorldUtil.isValidLocation(plot.getBottomAbs())) {</span>
 <span class="source-line-no">2578</span><span id="line-2578">            // prevent from teleporting into unsafe regions</span>
 <span class="source-line-no">2579</span><span id="line-2579">            player.sendMessage(TranslatableCaption.of("border.denied"));</span>
 <span class="source-line-no">2580</span><span id="line-2580">            resultConsumer.accept(false);</span>

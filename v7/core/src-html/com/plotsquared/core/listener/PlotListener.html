@@ -119,433 +119,437 @@
 <span class="source-line-no">106</span><span id="line-106">                            iterator.remove();</span>
 <span class="source-line-no">107</span><span id="line-107">                            continue;</span>
 <span class="source-line-no">108</span><span id="line-108">                        }</span>
-<span class="source-line-no">109</span><span id="line-109">                        double level = PlotSquared.platform().worldUtil().getHealth(player);</span>
-<span class="source-line-no">110</span><span id="line-110">                        if (level != value.max) {</span>
-<span class="source-line-no">111</span><span id="line-111">                            PlotSquared.platform().worldUtil().setHealth(player, Math.min(level + value.amount, value.max));</span>
+<span class="source-line-no">109</span><span id="line-109">                        // Don't attempt to heal dead players - they will get stuck in the abyss (#4406)</span>
+<span class="source-line-no">110</span><span id="line-110">                        if (PlotSquared.platform().worldUtil().getHealth(player) &lt;= 0) {</span>
+<span class="source-line-no">111</span><span id="line-111">                            continue;</span>
 <span class="source-line-no">112</span><span id="line-112">                        }</span>
-<span class="source-line-no">113</span><span id="line-113">                    }</span>
-<span class="source-line-no">114</span><span id="line-114">                }</span>
-<span class="source-line-no">115</span><span id="line-115">            }</span>
-<span class="source-line-no">116</span><span id="line-116">            if (!feedRunnable.isEmpty()) {</span>
-<span class="source-line-no">117</span><span id="line-117">                for (Iterator&lt;Map.Entry&lt;UUID, Interval&gt;&gt; iterator =</span>
-<span class="source-line-no">118</span><span id="line-118">                     feedRunnable.entrySet().iterator(); iterator.hasNext(); ) {</span>
-<span class="source-line-no">119</span><span id="line-119">                    Map.Entry&lt;UUID, Interval&gt; entry = iterator.next();</span>
-<span class="source-line-no">120</span><span id="line-120">                    Interval value = entry.getValue();</span>
-<span class="source-line-no">121</span><span id="line-121">                    ++value.count;</span>
-<span class="source-line-no">122</span><span id="line-122">                    if (value.count == value.interval) {</span>
-<span class="source-line-no">123</span><span id="line-123">                        value.count = 0;</span>
-<span class="source-line-no">124</span><span id="line-124">                        final PlotPlayer&lt;?&gt; player = PlotSquared.platform().playerManager().getPlayerIfExists(entry.getKey());</span>
-<span class="source-line-no">125</span><span id="line-125">                        if (player == null) {</span>
-<span class="source-line-no">126</span><span id="line-126">                            iterator.remove();</span>
-<span class="source-line-no">127</span><span id="line-127">                            continue;</span>
-<span class="source-line-no">128</span><span id="line-128">                        }</span>
-<span class="source-line-no">129</span><span id="line-129">                        int level = PlotSquared.platform().worldUtil().getFoodLevel(player);</span>
-<span class="source-line-no">130</span><span id="line-130">                        if (level != value.max) {</span>
-<span class="source-line-no">131</span><span id="line-131">                            PlotSquared.platform().worldUtil().setFoodLevel(player, Math.min(level + value.amount, value.max));</span>
+<span class="source-line-no">113</span><span id="line-113">                        double level = PlotSquared.platform().worldUtil().getHealth(player);</span>
+<span class="source-line-no">114</span><span id="line-114">                        if (level != value.max) {</span>
+<span class="source-line-no">115</span><span id="line-115">                            PlotSquared.platform().worldUtil().setHealth(player, Math.min(level + value.amount, value.max));</span>
+<span class="source-line-no">116</span><span id="line-116">                        }</span>
+<span class="source-line-no">117</span><span id="line-117">                    }</span>
+<span class="source-line-no">118</span><span id="line-118">                }</span>
+<span class="source-line-no">119</span><span id="line-119">            }</span>
+<span class="source-line-no">120</span><span id="line-120">            if (!feedRunnable.isEmpty()) {</span>
+<span class="source-line-no">121</span><span id="line-121">                for (Iterator&lt;Map.Entry&lt;UUID, Interval&gt;&gt; iterator =</span>
+<span class="source-line-no">122</span><span id="line-122">                     feedRunnable.entrySet().iterator(); iterator.hasNext(); ) {</span>
+<span class="source-line-no">123</span><span id="line-123">                    Map.Entry&lt;UUID, Interval&gt; entry = iterator.next();</span>
+<span class="source-line-no">124</span><span id="line-124">                    Interval value = entry.getValue();</span>
+<span class="source-line-no">125</span><span id="line-125">                    ++value.count;</span>
+<span class="source-line-no">126</span><span id="line-126">                    if (value.count == value.interval) {</span>
+<span class="source-line-no">127</span><span id="line-127">                        value.count = 0;</span>
+<span class="source-line-no">128</span><span id="line-128">                        final PlotPlayer&lt;?&gt; player = PlotSquared.platform().playerManager().getPlayerIfExists(entry.getKey());</span>
+<span class="source-line-no">129</span><span id="line-129">                        if (player == null) {</span>
+<span class="source-line-no">130</span><span id="line-130">                            iterator.remove();</span>
+<span class="source-line-no">131</span><span id="line-131">                            continue;</span>
 <span class="source-line-no">132</span><span id="line-132">                        }</span>
-<span class="source-line-no">133</span><span id="line-133">                    }</span>
-<span class="source-line-no">134</span><span id="line-134">                }</span>
-<span class="source-line-no">135</span><span id="line-135">            }</span>
-<span class="source-line-no">136</span><span id="line-136"></span>
-<span class="source-line-no">137</span><span id="line-137">            if (!playerEffects.isEmpty()) {</span>
-<span class="source-line-no">138</span><span id="line-138">                long currentTime = System.currentTimeMillis();</span>
-<span class="source-line-no">139</span><span id="line-139">                for (Iterator&lt;Map.Entry&lt;UUID, List&lt;StatusEffect&gt;&gt;&gt; iterator =</span>
-<span class="source-line-no">140</span><span id="line-140">                     playerEffects.entrySet().iterator(); iterator.hasNext(); ) {</span>
-<span class="source-line-no">141</span><span id="line-141">                    Map.Entry&lt;UUID, List&lt;StatusEffect&gt;&gt; entry = iterator.next();</span>
-<span class="source-line-no">142</span><span id="line-142">                    List&lt;StatusEffect&gt; effects = entry.getValue();</span>
-<span class="source-line-no">143</span><span id="line-143">                    effects.removeIf(effect -&gt; currentTime &gt; effect.expiresAt);</span>
-<span class="source-line-no">144</span><span id="line-144">                    if (effects.isEmpty()) {</span>
-<span class="source-line-no">145</span><span id="line-145">                        iterator.remove();</span>
-<span class="source-line-no">146</span><span id="line-146">                    }</span>
-<span class="source-line-no">147</span><span id="line-147">                }</span>
-<span class="source-line-no">148</span><span id="line-148">            }</span>
-<span class="source-line-no">149</span><span id="line-149">        }, TaskTime.seconds(1L));</span>
-<span class="source-line-no">150</span><span id="line-150">    }</span>
-<span class="source-line-no">151</span><span id="line-151"></span>
-<span class="source-line-no">152</span><span id="line-152">    public boolean plotEntry(final PlotPlayer&lt;?&gt; player, final Plot plot) {</span>
-<span class="source-line-no">153</span><span id="line-153">        if (plot.isDenied(player.getUUID()) &amp;&amp; !player.hasPermission("plots.admin.entry.denied")) {</span>
-<span class="source-line-no">154</span><span id="line-154">            player.sendMessage(</span>
-<span class="source-line-no">155</span><span id="line-155">                    TranslatableCaption.of("deny.no_enter"),</span>
-<span class="source-line-no">156</span><span id="line-156">                    TagResolver.resolver("plot", Tag.inserting(Component.text(plot.toString())))</span>
-<span class="source-line-no">157</span><span id="line-157">            );</span>
-<span class="source-line-no">158</span><span id="line-158">            return false;</span>
-<span class="source-line-no">159</span><span id="line-159">        }</span>
-<span class="source-line-no">160</span><span id="line-160">        try (final MetaDataAccess&lt;Plot&gt; lastPlot = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
-<span class="source-line-no">161</span><span id="line-161">            Plot last = lastPlot.get().orElse(null);</span>
-<span class="source-line-no">162</span><span id="line-162">            if ((last != null) &amp;&amp; !last.getId().equals(plot.getId())) {</span>
-<span class="source-line-no">163</span><span id="line-163">                plotExit(player, last);</span>
-<span class="source-line-no">164</span><span id="line-164">            }</span>
-<span class="source-line-no">165</span><span id="line-165">            if (PlotSquared.platform().expireManager() != null) {</span>
-<span class="source-line-no">166</span><span id="line-166">                PlotSquared.platform().expireManager().handleEntry(player, plot);</span>
-<span class="source-line-no">167</span><span id="line-167">            }</span>
-<span class="source-line-no">168</span><span id="line-168">            lastPlot.set(plot);</span>
-<span class="source-line-no">169</span><span id="line-169">        }</span>
-<span class="source-line-no">170</span><span id="line-170">        this.eventDispatcher.callEntry(player, plot);</span>
-<span class="source-line-no">171</span><span id="line-171">        if (plot.hasOwner()) {</span>
-<span class="source-line-no">172</span><span id="line-172">            // This will inherit values from PlotArea</span>
-<span class="source-line-no">173</span><span id="line-173">            final TitlesFlag.TitlesFlagValue titlesFlag = plot.getFlag(TitlesFlag.class);</span>
-<span class="source-line-no">174</span><span id="line-174">            final boolean titles;</span>
-<span class="source-line-no">175</span><span id="line-175">            if (titlesFlag == TitlesFlag.TitlesFlagValue.NONE) {</span>
-<span class="source-line-no">176</span><span id="line-176">                titles = Settings.Titles.DISPLAY_TITLES;</span>
-<span class="source-line-no">177</span><span id="line-177">            } else {</span>
-<span class="source-line-no">178</span><span id="line-178">                titles = titlesFlag == TitlesFlag.TitlesFlagValue.TRUE;</span>
-<span class="source-line-no">179</span><span id="line-179">            }</span>
-<span class="source-line-no">180</span><span id="line-180"></span>
-<span class="source-line-no">181</span><span id="line-181">            String greeting = plot.getFlag(GreetingFlag.class);</span>
-<span class="source-line-no">182</span><span id="line-182">            if (!greeting.isEmpty()) {</span>
-<span class="source-line-no">183</span><span id="line-183">                if (!Settings.Chat.NOTIFICATION_AS_ACTIONBAR) {</span>
-<span class="source-line-no">184</span><span id="line-184">                    plot.format(StaticCaption.of(greeting), player, false).thenAcceptAsync(player::sendMessage);</span>
-<span class="source-line-no">185</span><span id="line-185">                } else {</span>
-<span class="source-line-no">186</span><span id="line-186">                    plot.format(StaticCaption.of(greeting), player, false).thenAcceptAsync(player::sendActionBar);</span>
-<span class="source-line-no">187</span><span id="line-187">                }</span>
-<span class="source-line-no">188</span><span id="line-188">            }</span>
-<span class="source-line-no">189</span><span id="line-189"></span>
-<span class="source-line-no">190</span><span id="line-190">            if (plot.getFlag(NotifyEnterFlag.class)) {</span>
-<span class="source-line-no">191</span><span id="line-191">                if (!player.hasPermission("plots.flag.notify-enter.bypass")) {</span>
-<span class="source-line-no">192</span><span id="line-192">                    for (UUID uuid : plot.getOwners()) {</span>
-<span class="source-line-no">193</span><span id="line-193">                        final PlotPlayer&lt;?&gt; owner = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
-<span class="source-line-no">194</span><span id="line-194">                        if (owner != null &amp;&amp; !owner.getUUID().equals(player.getUUID()) &amp;&amp; owner.canSee(player)) {</span>
-<span class="source-line-no">195</span><span id="line-195">                            Caption caption = TranslatableCaption.of("notification.notify_enter");</span>
-<span class="source-line-no">196</span><span id="line-196">                            notifyPlotOwner(player, plot, owner, caption);</span>
-<span class="source-line-no">197</span><span id="line-197">                        }</span>
-<span class="source-line-no">198</span><span id="line-198">                    }</span>
-<span class="source-line-no">199</span><span id="line-199">                }</span>
-<span class="source-line-no">200</span><span id="line-200">            }</span>
-<span class="source-line-no">201</span><span id="line-201"></span>
-<span class="source-line-no">202</span><span id="line-202">            final FlyFlag.FlyStatus flyStatus = plot.getFlag(FlyFlag.class);</span>
-<span class="source-line-no">203</span><span id="line-203">            if (!player.hasPermission(Permission.PERMISSION_ADMIN_FLIGHT)) {</span>
-<span class="source-line-no">204</span><span id="line-204">                if (flyStatus != FlyFlag.FlyStatus.DEFAULT) {</span>
-<span class="source-line-no">205</span><span id="line-205">                    boolean flight = player.getFlight();</span>
-<span class="source-line-no">206</span><span id="line-206">                    GameMode gamemode = player.getGameMode();</span>
-<span class="source-line-no">207</span><span id="line-207">                    if (flight != (gamemode == GameModes.CREATIVE || gamemode == GameModes.SPECTATOR)) {</span>
-<span class="source-line-no">208</span><span id="line-208">                        try (final MetaDataAccess&lt;Boolean&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_FLIGHT)) {</span>
-<span class="source-line-no">209</span><span id="line-209">                            metaDataAccess.set(player.getFlight());</span>
-<span class="source-line-no">210</span><span id="line-210">                        }</span>
-<span class="source-line-no">211</span><span id="line-211">                    }</span>
-<span class="source-line-no">212</span><span id="line-212">                    player.setFlight(flyStatus == FlyFlag.FlyStatus.ENABLED);</span>
-<span class="source-line-no">213</span><span id="line-213">                }</span>
-<span class="source-line-no">214</span><span id="line-214">            }</span>
-<span class="source-line-no">215</span><span id="line-215"></span>
-<span class="source-line-no">216</span><span id="line-216">            final GameMode gameMode = plot.getFlag(GamemodeFlag.class);</span>
-<span class="source-line-no">217</span><span id="line-217">            if (!gameMode.equals(GamemodeFlag.DEFAULT)) {</span>
-<span class="source-line-no">218</span><span id="line-218">                if (player.getGameMode() != gameMode) {</span>
-<span class="source-line-no">219</span><span id="line-219">                    if (!player.hasPermission("plots.gamemode.bypass")) {</span>
-<span class="source-line-no">220</span><span id="line-220">                        player.setGameMode(gameMode);</span>
-<span class="source-line-no">221</span><span id="line-221">                    } else {</span>
-<span class="source-line-no">222</span><span id="line-222">                        player.sendMessage(</span>
-<span class="source-line-no">223</span><span id="line-223">                                TranslatableCaption.of("gamemode.gamemode_was_bypassed"),</span>
-<span class="source-line-no">224</span><span id="line-224">                                TagResolver.builder()</span>
-<span class="source-line-no">225</span><span id="line-225">                                        .tag("gamemode", Tag.inserting(Component.text(gameMode.toString())))</span>
-<span class="source-line-no">226</span><span id="line-226">                                        .tag("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">227</span><span id="line-227">                                        .build()</span>
-<span class="source-line-no">228</span><span id="line-228">                        );</span>
-<span class="source-line-no">229</span><span id="line-229">                    }</span>
-<span class="source-line-no">230</span><span id="line-230">                }</span>
-<span class="source-line-no">231</span><span id="line-231">            }</span>
-<span class="source-line-no">232</span><span id="line-232"></span>
-<span class="source-line-no">233</span><span id="line-233">            final GameMode guestGameMode = plot.getFlag(GuestGamemodeFlag.class);</span>
-<span class="source-line-no">234</span><span id="line-234">            if (!guestGameMode.equals(GamemodeFlag.DEFAULT)) {</span>
-<span class="source-line-no">235</span><span id="line-235">                if (player.getGameMode() != guestGameMode &amp;&amp; !plot.isAdded(player.getUUID())) {</span>
-<span class="source-line-no">236</span><span id="line-236">                    if (!player.hasPermission("plots.gamemode.bypass")) {</span>
-<span class="source-line-no">237</span><span id="line-237">                        player.setGameMode(guestGameMode);</span>
-<span class="source-line-no">238</span><span id="line-238">                    } else {</span>
-<span class="source-line-no">239</span><span id="line-239">                        player.sendMessage(</span>
-<span class="source-line-no">240</span><span id="line-240">                                TranslatableCaption.of("gamemode.gamemode_was_bypassed"),</span>
-<span class="source-line-no">241</span><span id="line-241">                                TagResolver.builder()</span>
-<span class="source-line-no">242</span><span id="line-242">                                        .tag("gamemode", Tag.inserting(Component.text(guestGameMode.toString())))</span>
-<span class="source-line-no">243</span><span id="line-243">                                        .tag("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">244</span><span id="line-244">                                        .build()</span>
-<span class="source-line-no">245</span><span id="line-245">                        );</span>
-<span class="source-line-no">246</span><span id="line-246">                    }</span>
-<span class="source-line-no">247</span><span id="line-247">                }</span>
-<span class="source-line-no">248</span><span id="line-248">            }</span>
-<span class="source-line-no">249</span><span id="line-249"></span>
-<span class="source-line-no">250</span><span id="line-250">            long time = plot.getFlag(TimeFlag.class);</span>
-<span class="source-line-no">251</span><span id="line-251">            if (time != TimeFlag.TIME_DISABLED.getValue() &amp;&amp; !player.getAttribute("disabletime")) {</span>
-<span class="source-line-no">252</span><span id="line-252">                try {</span>
-<span class="source-line-no">253</span><span id="line-253">                    player.setTime(time);</span>
-<span class="source-line-no">254</span><span id="line-254">                } catch (Exception ignored) {</span>
-<span class="source-line-no">255</span><span id="line-255">                    PlotFlag&lt;?, ?&gt; plotFlag =</span>
-<span class="source-line-no">256</span><span id="line-256">                            GlobalFlagContainer.getInstance().getFlag(TimeFlag.class);</span>
-<span class="source-line-no">257</span><span id="line-257">                    PlotFlagRemoveEvent event =</span>
-<span class="source-line-no">258</span><span id="line-258">                            this.eventDispatcher.callFlagRemove(plotFlag, plot);</span>
-<span class="source-line-no">259</span><span id="line-259">                    if (event.getEventResult() != Result.DENY) {</span>
-<span class="source-line-no">260</span><span id="line-260">                        plot.removeFlag(event.getFlag());</span>
-<span class="source-line-no">261</span><span id="line-261">                    }</span>
-<span class="source-line-no">262</span><span id="line-262">                }</span>
-<span class="source-line-no">263</span><span id="line-263">            }</span>
-<span class="source-line-no">264</span><span id="line-264"></span>
-<span class="source-line-no">265</span><span id="line-265">            player.setWeather(plot.getFlag(WeatherFlag.class));</span>
-<span class="source-line-no">266</span><span id="line-266"></span>
-<span class="source-line-no">267</span><span id="line-267">            ItemType musicFlag = plot.getFlag(MusicFlag.class);</span>
+<span class="source-line-no">133</span><span id="line-133">                        int level = PlotSquared.platform().worldUtil().getFoodLevel(player);</span>
+<span class="source-line-no">134</span><span id="line-134">                        if (level != value.max) {</span>
+<span class="source-line-no">135</span><span id="line-135">                            PlotSquared.platform().worldUtil().setFoodLevel(player, Math.min(level + value.amount, value.max));</span>
+<span class="source-line-no">136</span><span id="line-136">                        }</span>
+<span class="source-line-no">137</span><span id="line-137">                    }</span>
+<span class="source-line-no">138</span><span id="line-138">                }</span>
+<span class="source-line-no">139</span><span id="line-139">            }</span>
+<span class="source-line-no">140</span><span id="line-140"></span>
+<span class="source-line-no">141</span><span id="line-141">            if (!playerEffects.isEmpty()) {</span>
+<span class="source-line-no">142</span><span id="line-142">                long currentTime = System.currentTimeMillis();</span>
+<span class="source-line-no">143</span><span id="line-143">                for (Iterator&lt;Map.Entry&lt;UUID, List&lt;StatusEffect&gt;&gt;&gt; iterator =</span>
+<span class="source-line-no">144</span><span id="line-144">                     playerEffects.entrySet().iterator(); iterator.hasNext(); ) {</span>
+<span class="source-line-no">145</span><span id="line-145">                    Map.Entry&lt;UUID, List&lt;StatusEffect&gt;&gt; entry = iterator.next();</span>
+<span class="source-line-no">146</span><span id="line-146">                    List&lt;StatusEffect&gt; effects = entry.getValue();</span>
+<span class="source-line-no">147</span><span id="line-147">                    effects.removeIf(effect -&gt; currentTime &gt; effect.expiresAt);</span>
+<span class="source-line-no">148</span><span id="line-148">                    if (effects.isEmpty()) {</span>
+<span class="source-line-no">149</span><span id="line-149">                        iterator.remove();</span>
+<span class="source-line-no">150</span><span id="line-150">                    }</span>
+<span class="source-line-no">151</span><span id="line-151">                }</span>
+<span class="source-line-no">152</span><span id="line-152">            }</span>
+<span class="source-line-no">153</span><span id="line-153">        }, TaskTime.seconds(1L));</span>
+<span class="source-line-no">154</span><span id="line-154">    }</span>
+<span class="source-line-no">155</span><span id="line-155"></span>
+<span class="source-line-no">156</span><span id="line-156">    public boolean plotEntry(final PlotPlayer&lt;?&gt; player, final Plot plot) {</span>
+<span class="source-line-no">157</span><span id="line-157">        if (plot.isDenied(player.getUUID()) &amp;&amp; !player.hasPermission("plots.admin.entry.denied")) {</span>
+<span class="source-line-no">158</span><span id="line-158">            player.sendMessage(</span>
+<span class="source-line-no">159</span><span id="line-159">                    TranslatableCaption.of("deny.no_enter"),</span>
+<span class="source-line-no">160</span><span id="line-160">                    TagResolver.resolver("plot", Tag.inserting(Component.text(plot.toString())))</span>
+<span class="source-line-no">161</span><span id="line-161">            );</span>
+<span class="source-line-no">162</span><span id="line-162">            return false;</span>
+<span class="source-line-no">163</span><span id="line-163">        }</span>
+<span class="source-line-no">164</span><span id="line-164">        try (final MetaDataAccess&lt;Plot&gt; lastPlot = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
+<span class="source-line-no">165</span><span id="line-165">            Plot last = lastPlot.get().orElse(null);</span>
+<span class="source-line-no">166</span><span id="line-166">            if ((last != null) &amp;&amp; !last.getId().equals(plot.getId())) {</span>
+<span class="source-line-no">167</span><span id="line-167">                plotExit(player, last);</span>
+<span class="source-line-no">168</span><span id="line-168">            }</span>
+<span class="source-line-no">169</span><span id="line-169">            if (PlotSquared.platform().expireManager() != null) {</span>
+<span class="source-line-no">170</span><span id="line-170">                PlotSquared.platform().expireManager().handleEntry(player, plot);</span>
+<span class="source-line-no">171</span><span id="line-171">            }</span>
+<span class="source-line-no">172</span><span id="line-172">            lastPlot.set(plot);</span>
+<span class="source-line-no">173</span><span id="line-173">        }</span>
+<span class="source-line-no">174</span><span id="line-174">        this.eventDispatcher.callEntry(player, plot);</span>
+<span class="source-line-no">175</span><span id="line-175">        if (plot.hasOwner()) {</span>
+<span class="source-line-no">176</span><span id="line-176">            // This will inherit values from PlotArea</span>
+<span class="source-line-no">177</span><span id="line-177">            final TitlesFlag.TitlesFlagValue titlesFlag = plot.getFlag(TitlesFlag.class);</span>
+<span class="source-line-no">178</span><span id="line-178">            final boolean titles;</span>
+<span class="source-line-no">179</span><span id="line-179">            if (titlesFlag == TitlesFlag.TitlesFlagValue.NONE) {</span>
+<span class="source-line-no">180</span><span id="line-180">                titles = Settings.Titles.DISPLAY_TITLES;</span>
+<span class="source-line-no">181</span><span id="line-181">            } else {</span>
+<span class="source-line-no">182</span><span id="line-182">                titles = titlesFlag == TitlesFlag.TitlesFlagValue.TRUE;</span>
+<span class="source-line-no">183</span><span id="line-183">            }</span>
+<span class="source-line-no">184</span><span id="line-184"></span>
+<span class="source-line-no">185</span><span id="line-185">            String greeting = plot.getFlag(GreetingFlag.class);</span>
+<span class="source-line-no">186</span><span id="line-186">            if (!greeting.isEmpty()) {</span>
+<span class="source-line-no">187</span><span id="line-187">                if (!Settings.Chat.NOTIFICATION_AS_ACTIONBAR) {</span>
+<span class="source-line-no">188</span><span id="line-188">                    plot.format(StaticCaption.of(greeting), player, false).thenAcceptAsync(player::sendMessage);</span>
+<span class="source-line-no">189</span><span id="line-189">                } else {</span>
+<span class="source-line-no">190</span><span id="line-190">                    plot.format(StaticCaption.of(greeting), player, false).thenAcceptAsync(player::sendActionBar);</span>
+<span class="source-line-no">191</span><span id="line-191">                }</span>
+<span class="source-line-no">192</span><span id="line-192">            }</span>
+<span class="source-line-no">193</span><span id="line-193"></span>
+<span class="source-line-no">194</span><span id="line-194">            if (plot.getFlag(NotifyEnterFlag.class)) {</span>
+<span class="source-line-no">195</span><span id="line-195">                if (!player.hasPermission("plots.flag.notify-enter.bypass")) {</span>
+<span class="source-line-no">196</span><span id="line-196">                    for (UUID uuid : plot.getOwners()) {</span>
+<span class="source-line-no">197</span><span id="line-197">                        final PlotPlayer&lt;?&gt; owner = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
+<span class="source-line-no">198</span><span id="line-198">                        if (owner != null &amp;&amp; !owner.getUUID().equals(player.getUUID()) &amp;&amp; owner.canSee(player)) {</span>
+<span class="source-line-no">199</span><span id="line-199">                            Caption caption = TranslatableCaption.of("notification.notify_enter");</span>
+<span class="source-line-no">200</span><span id="line-200">                            notifyPlotOwner(player, plot, owner, caption);</span>
+<span class="source-line-no">201</span><span id="line-201">                        }</span>
+<span class="source-line-no">202</span><span id="line-202">                    }</span>
+<span class="source-line-no">203</span><span id="line-203">                }</span>
+<span class="source-line-no">204</span><span id="line-204">            }</span>
+<span class="source-line-no">205</span><span id="line-205"></span>
+<span class="source-line-no">206</span><span id="line-206">            final FlyFlag.FlyStatus flyStatus = plot.getFlag(FlyFlag.class);</span>
+<span class="source-line-no">207</span><span id="line-207">            if (!player.hasPermission(Permission.PERMISSION_ADMIN_FLIGHT)) {</span>
+<span class="source-line-no">208</span><span id="line-208">                if (flyStatus != FlyFlag.FlyStatus.DEFAULT) {</span>
+<span class="source-line-no">209</span><span id="line-209">                    boolean flight = player.getFlight();</span>
+<span class="source-line-no">210</span><span id="line-210">                    GameMode gamemode = player.getGameMode();</span>
+<span class="source-line-no">211</span><span id="line-211">                    if (flight != (gamemode == GameModes.CREATIVE || gamemode == GameModes.SPECTATOR)) {</span>
+<span class="source-line-no">212</span><span id="line-212">                        try (final MetaDataAccess&lt;Boolean&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_FLIGHT)) {</span>
+<span class="source-line-no">213</span><span id="line-213">                            metaDataAccess.set(player.getFlight());</span>
+<span class="source-line-no">214</span><span id="line-214">                        }</span>
+<span class="source-line-no">215</span><span id="line-215">                    }</span>
+<span class="source-line-no">216</span><span id="line-216">                    player.setFlight(flyStatus == FlyFlag.FlyStatus.ENABLED);</span>
+<span class="source-line-no">217</span><span id="line-217">                }</span>
+<span class="source-line-no">218</span><span id="line-218">            }</span>
+<span class="source-line-no">219</span><span id="line-219"></span>
+<span class="source-line-no">220</span><span id="line-220">            final GameMode gameMode = plot.getFlag(GamemodeFlag.class);</span>
+<span class="source-line-no">221</span><span id="line-221">            if (!gameMode.equals(GamemodeFlag.DEFAULT)) {</span>
+<span class="source-line-no">222</span><span id="line-222">                if (player.getGameMode() != gameMode) {</span>
+<span class="source-line-no">223</span><span id="line-223">                    if (!player.hasPermission("plots.gamemode.bypass")) {</span>
+<span class="source-line-no">224</span><span id="line-224">                        player.setGameMode(gameMode);</span>
+<span class="source-line-no">225</span><span id="line-225">                    } else {</span>
+<span class="source-line-no">226</span><span id="line-226">                        player.sendMessage(</span>
+<span class="source-line-no">227</span><span id="line-227">                                TranslatableCaption.of("gamemode.gamemode_was_bypassed"),</span>
+<span class="source-line-no">228</span><span id="line-228">                                TagResolver.builder()</span>
+<span class="source-line-no">229</span><span id="line-229">                                        .tag("gamemode", Tag.inserting(Component.text(gameMode.toString())))</span>
+<span class="source-line-no">230</span><span id="line-230">                                        .tag("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">231</span><span id="line-231">                                        .build()</span>
+<span class="source-line-no">232</span><span id="line-232">                        );</span>
+<span class="source-line-no">233</span><span id="line-233">                    }</span>
+<span class="source-line-no">234</span><span id="line-234">                }</span>
+<span class="source-line-no">235</span><span id="line-235">            }</span>
+<span class="source-line-no">236</span><span id="line-236"></span>
+<span class="source-line-no">237</span><span id="line-237">            final GameMode guestGameMode = plot.getFlag(GuestGamemodeFlag.class);</span>
+<span class="source-line-no">238</span><span id="line-238">            if (!guestGameMode.equals(GamemodeFlag.DEFAULT)) {</span>
+<span class="source-line-no">239</span><span id="line-239">                if (player.getGameMode() != guestGameMode &amp;&amp; !plot.isAdded(player.getUUID())) {</span>
+<span class="source-line-no">240</span><span id="line-240">                    if (!player.hasPermission("plots.gamemode.bypass")) {</span>
+<span class="source-line-no">241</span><span id="line-241">                        player.setGameMode(guestGameMode);</span>
+<span class="source-line-no">242</span><span id="line-242">                    } else {</span>
+<span class="source-line-no">243</span><span id="line-243">                        player.sendMessage(</span>
+<span class="source-line-no">244</span><span id="line-244">                                TranslatableCaption.of("gamemode.gamemode_was_bypassed"),</span>
+<span class="source-line-no">245</span><span id="line-245">                                TagResolver.builder()</span>
+<span class="source-line-no">246</span><span id="line-246">                                        .tag("gamemode", Tag.inserting(Component.text(guestGameMode.toString())))</span>
+<span class="source-line-no">247</span><span id="line-247">                                        .tag("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">248</span><span id="line-248">                                        .build()</span>
+<span class="source-line-no">249</span><span id="line-249">                        );</span>
+<span class="source-line-no">250</span><span id="line-250">                    }</span>
+<span class="source-line-no">251</span><span id="line-251">                }</span>
+<span class="source-line-no">252</span><span id="line-252">            }</span>
+<span class="source-line-no">253</span><span id="line-253"></span>
+<span class="source-line-no">254</span><span id="line-254">            long time = plot.getFlag(TimeFlag.class);</span>
+<span class="source-line-no">255</span><span id="line-255">            if (time != TimeFlag.TIME_DISABLED.getValue() &amp;&amp; !player.getAttribute("disabletime")) {</span>
+<span class="source-line-no">256</span><span id="line-256">                try {</span>
+<span class="source-line-no">257</span><span id="line-257">                    player.setTime(time);</span>
+<span class="source-line-no">258</span><span id="line-258">                } catch (Exception ignored) {</span>
+<span class="source-line-no">259</span><span id="line-259">                    PlotFlag&lt;?, ?&gt; plotFlag =</span>
+<span class="source-line-no">260</span><span id="line-260">                            GlobalFlagContainer.getInstance().getFlag(TimeFlag.class);</span>
+<span class="source-line-no">261</span><span id="line-261">                    PlotFlagRemoveEvent event =</span>
+<span class="source-line-no">262</span><span id="line-262">                            this.eventDispatcher.callFlagRemove(plotFlag, plot);</span>
+<span class="source-line-no">263</span><span id="line-263">                    if (event.getEventResult() != Result.DENY) {</span>
+<span class="source-line-no">264</span><span id="line-264">                        plot.removeFlag(event.getFlag());</span>
+<span class="source-line-no">265</span><span id="line-265">                    }</span>
+<span class="source-line-no">266</span><span id="line-266">                }</span>
+<span class="source-line-no">267</span><span id="line-267">            }</span>
 <span class="source-line-no">268</span><span id="line-268"></span>
-<span class="source-line-no">269</span><span id="line-269">            try (final MetaDataAccess&lt;Location&gt; musicMeta =</span>
-<span class="source-line-no">270</span><span id="line-270">                         player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_MUSIC)) {</span>
-<span class="source-line-no">271</span><span id="line-271">                if (musicFlag != null) {</span>
-<span class="source-line-no">272</span><span id="line-272">                    final String rawId = musicFlag.getId();</span>
-<span class="source-line-no">273</span><span id="line-273">                    if (rawId.contains("disc") || musicFlag == ItemTypes.AIR) {</span>
-<span class="source-line-no">274</span><span id="line-274">                        Location location = player.getLocation();</span>
-<span class="source-line-no">275</span><span id="line-275">                        Location lastLocation = musicMeta.get().orElse(null);</span>
-<span class="source-line-no">276</span><span id="line-276">                        if (lastLocation != null) {</span>
-<span class="source-line-no">277</span><span id="line-277">                            plot.getCenter(center -&gt; player.playMusic(center.add(0, Short.MAX_VALUE, 0), musicFlag));</span>
-<span class="source-line-no">278</span><span id="line-278">                            if (musicFlag == ItemTypes.AIR) {</span>
-<span class="source-line-no">279</span><span id="line-279">                                musicMeta.remove();</span>
-<span class="source-line-no">280</span><span id="line-280">                            }</span>
-<span class="source-line-no">281</span><span id="line-281">                        }</span>
-<span class="source-line-no">282</span><span id="line-282">                        if (musicFlag != ItemTypes.AIR) {</span>
-<span class="source-line-no">283</span><span id="line-283">                            try {</span>
-<span class="source-line-no">284</span><span id="line-284">                                musicMeta.set(location);</span>
-<span class="source-line-no">285</span><span id="line-285">                                plot.getCenter(center -&gt; player.playMusic(center.add(0, Short.MAX_VALUE, 0), musicFlag));</span>
-<span class="source-line-no">286</span><span id="line-286">                            } catch (Exception ignored) {</span>
-<span class="source-line-no">287</span><span id="line-287">                            }</span>
-<span class="source-line-no">288</span><span id="line-288">                        }</span>
-<span class="source-line-no">289</span><span id="line-289">                    }</span>
-<span class="source-line-no">290</span><span id="line-290">                } else {</span>
-<span class="source-line-no">291</span><span id="line-291">                    musicMeta.get().ifPresent(lastLoc -&gt; {</span>
-<span class="source-line-no">292</span><span id="line-292">                        musicMeta.remove();</span>
-<span class="source-line-no">293</span><span id="line-293">                        player.playMusic(lastLoc, ItemTypes.AIR);</span>
-<span class="source-line-no">294</span><span id="line-294">                    });</span>
-<span class="source-line-no">295</span><span id="line-295">                }</span>
-<span class="source-line-no">296</span><span id="line-296">            }</span>
-<span class="source-line-no">297</span><span id="line-297"></span>
-<span class="source-line-no">298</span><span id="line-298">            CommentManager.sendTitle(player, plot);</span>
-<span class="source-line-no">299</span><span id="line-299"></span>
-<span class="source-line-no">300</span><span id="line-300">            if (titles &amp;&amp; !player.getAttribute("disabletitles")) {</span>
-<span class="source-line-no">301</span><span id="line-301">                String title;</span>
-<span class="source-line-no">302</span><span id="line-302">                String subtitle;</span>
-<span class="source-line-no">303</span><span id="line-303">                PlotTitle titleFlag = plot.getFlag(PlotTitleFlag.class);</span>
-<span class="source-line-no">304</span><span id="line-304">                boolean fromFlag;</span>
-<span class="source-line-no">305</span><span id="line-305">                if (titleFlag.title() != null &amp;&amp; titleFlag.subtitle() != null) {</span>
-<span class="source-line-no">306</span><span id="line-306">                    title = titleFlag.title();</span>
-<span class="source-line-no">307</span><span id="line-307">                    subtitle = titleFlag.subtitle();</span>
-<span class="source-line-no">308</span><span id="line-308">                    fromFlag = true;</span>
-<span class="source-line-no">309</span><span id="line-309">                } else {</span>
-<span class="source-line-no">310</span><span id="line-310">                    title = "";</span>
-<span class="source-line-no">311</span><span id="line-311">                    subtitle = "";</span>
-<span class="source-line-no">312</span><span id="line-312">                    fromFlag = false;</span>
-<span class="source-line-no">313</span><span id="line-313">                }</span>
-<span class="source-line-no">314</span><span id="line-314">                if (fromFlag || !plot.getFlag(ServerPlotFlag.class) || Settings.Titles.DISPLAY_DEFAULT_ON_SERVER_PLOT) {</span>
-<span class="source-line-no">315</span><span id="line-315">                    TaskManager.runTaskLaterAsync(() -&gt; {</span>
-<span class="source-line-no">316</span><span id="line-316">                        Plot lastPlot;</span>
-<span class="source-line-no">317</span><span id="line-317">                        try (final MetaDataAccess&lt;Plot&gt; lastPlotAccess =</span>
-<span class="source-line-no">318</span><span id="line-318">                                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
-<span class="source-line-no">319</span><span id="line-319">                            lastPlot = lastPlotAccess.get().orElse(null);</span>
-<span class="source-line-no">320</span><span id="line-320">                        }</span>
-<span class="source-line-no">321</span><span id="line-321">                        if ((lastPlot != null) &amp;&amp; plot.getId().equals(lastPlot.getId()) &amp;&amp; plot.hasOwner()) {</span>
-<span class="source-line-no">322</span><span id="line-322">                            final UUID plotOwner = plot.getOwnerAbs();</span>
-<span class="source-line-no">323</span><span id="line-323">                            Caption header = fromFlag ? StaticCaption.of(title) : TranslatableCaption.of("titles" +</span>
-<span class="source-line-no">324</span><span id="line-324">                                    ".title_entered_plot");</span>
-<span class="source-line-no">325</span><span id="line-325">                            Caption subHeader = fromFlag ? StaticCaption.of(subtitle) : TranslatableCaption.of("titles" +</span>
-<span class="source-line-no">326</span><span id="line-326">                                    ".title_entered_plot_sub");</span>
-<span class="source-line-no">327</span><span id="line-327"></span>
-<span class="source-line-no">328</span><span id="line-328">                            CompletableFuture&lt;TagResolver&gt; future = PlotSquared.platform().playerManager()</span>
-<span class="source-line-no">329</span><span id="line-329">                                    .getUsernameCaption(plotOwner).thenApply(caption -&gt; TagResolver.builder()</span>
-<span class="source-line-no">330</span><span id="line-330">                                            .tag("owner", Tag.inserting(caption.toComponent(player)))</span>
-<span class="source-line-no">331</span><span id="line-331">                                            .tag("plot", Tag.inserting(Component.text(lastPlot.getId().toString())))</span>
-<span class="source-line-no">332</span><span id="line-332">                                            .tag("world", Tag.inserting(Component.text(player.getLocation().getWorldName())))</span>
-<span class="source-line-no">333</span><span id="line-333">                                            .tag("alias", Tag.inserting(Component.text(plot.getAlias())))</span>
-<span class="source-line-no">334</span><span id="line-334">                                            .build()</span>
-<span class="source-line-no">335</span><span id="line-335">                                    );</span>
-<span class="source-line-no">336</span><span id="line-336"></span>
-<span class="source-line-no">337</span><span id="line-337">                            future.whenComplete((tagResolver, throwable) -&gt; {</span>
-<span class="source-line-no">338</span><span id="line-338">                                if (Settings.Titles.TITLES_AS_ACTIONBAR) {</span>
-<span class="source-line-no">339</span><span id="line-339">                                    player.sendActionBar(header, tagResolver);</span>
-<span class="source-line-no">340</span><span id="line-340">                                } else {</span>
-<span class="source-line-no">341</span><span id="line-341">                                    player.sendTitle(header, subHeader, tagResolver);</span>
-<span class="source-line-no">342</span><span id="line-342">                                }</span>
-<span class="source-line-no">343</span><span id="line-343">                            });</span>
-<span class="source-line-no">344</span><span id="line-344">                        }</span>
-<span class="source-line-no">345</span><span id="line-345">                    }, TaskTime.seconds(1L));</span>
-<span class="source-line-no">346</span><span id="line-346">                }</span>
-<span class="source-line-no">347</span><span id="line-347">            }</span>
-<span class="source-line-no">348</span><span id="line-348"></span>
-<span class="source-line-no">349</span><span id="line-349">            TimedFlag.Timed&lt;Integer&gt; feed = plot.getFlag(FeedFlag.class);</span>
-<span class="source-line-no">350</span><span id="line-350">            if (feed.interval() != 0 &amp;&amp; feed.value() != 0) {</span>
-<span class="source-line-no">351</span><span id="line-351">                feedRunnable</span>
-<span class="source-line-no">352</span><span id="line-352">                        .put(player.getUUID(), new Interval(feed.interval(), feed.value(), 20));</span>
-<span class="source-line-no">353</span><span id="line-353">            }</span>
-<span class="source-line-no">354</span><span id="line-354">            TimedFlag.Timed&lt;Integer&gt; heal = plot.getFlag(HealFlag.class);</span>
-<span class="source-line-no">355</span><span id="line-355">            if (heal.interval() != 0 &amp;&amp; heal.value() != 0) {</span>
-<span class="source-line-no">356</span><span id="line-356">                healRunnable</span>
-<span class="source-line-no">357</span><span id="line-357">                        .put(player.getUUID(), new Interval(heal.interval(), heal.value(), 20));</span>
-<span class="source-line-no">358</span><span id="line-358">            }</span>
-<span class="source-line-no">359</span><span id="line-359">            return true;</span>
-<span class="source-line-no">360</span><span id="line-360">        }</span>
-<span class="source-line-no">361</span><span id="line-361">        return true;</span>
-<span class="source-line-no">362</span><span id="line-362">    }</span>
-<span class="source-line-no">363</span><span id="line-363"></span>
-<span class="source-line-no">364</span><span id="line-364">    public boolean plotExit(final PlotPlayer&lt;?&gt; player, Plot plot) {</span>
-<span class="source-line-no">365</span><span id="line-365">        try (final MetaDataAccess&lt;Plot&gt; lastPlot = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
-<span class="source-line-no">366</span><span id="line-366">            final Plot previous = lastPlot.remove();</span>
+<span class="source-line-no">269</span><span id="line-269">            player.setWeather(plot.getFlag(WeatherFlag.class));</span>
+<span class="source-line-no">270</span><span id="line-270"></span>
+<span class="source-line-no">271</span><span id="line-271">            ItemType musicFlag = plot.getFlag(MusicFlag.class);</span>
+<span class="source-line-no">272</span><span id="line-272"></span>
+<span class="source-line-no">273</span><span id="line-273">            try (final MetaDataAccess&lt;Location&gt; musicMeta =</span>
+<span class="source-line-no">274</span><span id="line-274">                         player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_MUSIC)) {</span>
+<span class="source-line-no">275</span><span id="line-275">                if (musicFlag != null) {</span>
+<span class="source-line-no">276</span><span id="line-276">                    final String rawId = musicFlag.getId();</span>
+<span class="source-line-no">277</span><span id="line-277">                    if (rawId.contains("disc") || musicFlag == ItemTypes.AIR) {</span>
+<span class="source-line-no">278</span><span id="line-278">                        Location location = player.getLocation();</span>
+<span class="source-line-no">279</span><span id="line-279">                        Location lastLocation = musicMeta.get().orElse(null);</span>
+<span class="source-line-no">280</span><span id="line-280">                        if (lastLocation != null) {</span>
+<span class="source-line-no">281</span><span id="line-281">                            plot.getCenter(center -&gt; player.playMusic(center.add(0, Short.MAX_VALUE, 0), musicFlag));</span>
+<span class="source-line-no">282</span><span id="line-282">                            if (musicFlag == ItemTypes.AIR) {</span>
+<span class="source-line-no">283</span><span id="line-283">                                musicMeta.remove();</span>
+<span class="source-line-no">284</span><span id="line-284">                            }</span>
+<span class="source-line-no">285</span><span id="line-285">                        }</span>
+<span class="source-line-no">286</span><span id="line-286">                        if (musicFlag != ItemTypes.AIR) {</span>
+<span class="source-line-no">287</span><span id="line-287">                            try {</span>
+<span class="source-line-no">288</span><span id="line-288">                                musicMeta.set(location);</span>
+<span class="source-line-no">289</span><span id="line-289">                                plot.getCenter(center -&gt; player.playMusic(center.add(0, Short.MAX_VALUE, 0), musicFlag));</span>
+<span class="source-line-no">290</span><span id="line-290">                            } catch (Exception ignored) {</span>
+<span class="source-line-no">291</span><span id="line-291">                            }</span>
+<span class="source-line-no">292</span><span id="line-292">                        }</span>
+<span class="source-line-no">293</span><span id="line-293">                    }</span>
+<span class="source-line-no">294</span><span id="line-294">                } else {</span>
+<span class="source-line-no">295</span><span id="line-295">                    musicMeta.get().ifPresent(lastLoc -&gt; {</span>
+<span class="source-line-no">296</span><span id="line-296">                        musicMeta.remove();</span>
+<span class="source-line-no">297</span><span id="line-297">                        player.playMusic(lastLoc, ItemTypes.AIR);</span>
+<span class="source-line-no">298</span><span id="line-298">                    });</span>
+<span class="source-line-no">299</span><span id="line-299">                }</span>
+<span class="source-line-no">300</span><span id="line-300">            }</span>
+<span class="source-line-no">301</span><span id="line-301"></span>
+<span class="source-line-no">302</span><span id="line-302">            CommentManager.sendTitle(player, plot);</span>
+<span class="source-line-no">303</span><span id="line-303"></span>
+<span class="source-line-no">304</span><span id="line-304">            if (titles &amp;&amp; !player.getAttribute("disabletitles")) {</span>
+<span class="source-line-no">305</span><span id="line-305">                String title;</span>
+<span class="source-line-no">306</span><span id="line-306">                String subtitle;</span>
+<span class="source-line-no">307</span><span id="line-307">                PlotTitle titleFlag = plot.getFlag(PlotTitleFlag.class);</span>
+<span class="source-line-no">308</span><span id="line-308">                boolean fromFlag;</span>
+<span class="source-line-no">309</span><span id="line-309">                if (titleFlag.title() != null &amp;&amp; titleFlag.subtitle() != null) {</span>
+<span class="source-line-no">310</span><span id="line-310">                    title = titleFlag.title();</span>
+<span class="source-line-no">311</span><span id="line-311">                    subtitle = titleFlag.subtitle();</span>
+<span class="source-line-no">312</span><span id="line-312">                    fromFlag = true;</span>
+<span class="source-line-no">313</span><span id="line-313">                } else {</span>
+<span class="source-line-no">314</span><span id="line-314">                    title = "";</span>
+<span class="source-line-no">315</span><span id="line-315">                    subtitle = "";</span>
+<span class="source-line-no">316</span><span id="line-316">                    fromFlag = false;</span>
+<span class="source-line-no">317</span><span id="line-317">                }</span>
+<span class="source-line-no">318</span><span id="line-318">                if (fromFlag || !plot.getFlag(ServerPlotFlag.class) || Settings.Titles.DISPLAY_DEFAULT_ON_SERVER_PLOT) {</span>
+<span class="source-line-no">319</span><span id="line-319">                    TaskManager.runTaskLaterAsync(() -&gt; {</span>
+<span class="source-line-no">320</span><span id="line-320">                        Plot lastPlot;</span>
+<span class="source-line-no">321</span><span id="line-321">                        try (final MetaDataAccess&lt;Plot&gt; lastPlotAccess =</span>
+<span class="source-line-no">322</span><span id="line-322">                                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
+<span class="source-line-no">323</span><span id="line-323">                            lastPlot = lastPlotAccess.get().orElse(null);</span>
+<span class="source-line-no">324</span><span id="line-324">                        }</span>
+<span class="source-line-no">325</span><span id="line-325">                        if ((lastPlot != null) &amp;&amp; plot.getId().equals(lastPlot.getId()) &amp;&amp; plot.hasOwner()) {</span>
+<span class="source-line-no">326</span><span id="line-326">                            final UUID plotOwner = plot.getOwnerAbs();</span>
+<span class="source-line-no">327</span><span id="line-327">                            Caption header = fromFlag ? StaticCaption.of(title) : TranslatableCaption.of("titles" +</span>
+<span class="source-line-no">328</span><span id="line-328">                                    ".title_entered_plot");</span>
+<span class="source-line-no">329</span><span id="line-329">                            Caption subHeader = fromFlag ? StaticCaption.of(subtitle) : TranslatableCaption.of("titles" +</span>
+<span class="source-line-no">330</span><span id="line-330">                                    ".title_entered_plot_sub");</span>
+<span class="source-line-no">331</span><span id="line-331"></span>
+<span class="source-line-no">332</span><span id="line-332">                            CompletableFuture&lt;TagResolver&gt; future = PlotSquared.platform().playerManager()</span>
+<span class="source-line-no">333</span><span id="line-333">                                    .getUsernameCaption(plotOwner).thenApply(caption -&gt; TagResolver.builder()</span>
+<span class="source-line-no">334</span><span id="line-334">                                            .tag("owner", Tag.inserting(caption.toComponent(player)))</span>
+<span class="source-line-no">335</span><span id="line-335">                                            .tag("plot", Tag.inserting(Component.text(lastPlot.getId().toString())))</span>
+<span class="source-line-no">336</span><span id="line-336">                                            .tag("world", Tag.inserting(Component.text(player.getLocation().getWorldName())))</span>
+<span class="source-line-no">337</span><span id="line-337">                                            .tag("alias", Tag.inserting(Component.text(plot.getAlias())))</span>
+<span class="source-line-no">338</span><span id="line-338">                                            .build()</span>
+<span class="source-line-no">339</span><span id="line-339">                                    );</span>
+<span class="source-line-no">340</span><span id="line-340"></span>
+<span class="source-line-no">341</span><span id="line-341">                            future.whenComplete((tagResolver, throwable) -&gt; {</span>
+<span class="source-line-no">342</span><span id="line-342">                                if (Settings.Titles.TITLES_AS_ACTIONBAR) {</span>
+<span class="source-line-no">343</span><span id="line-343">                                    player.sendActionBar(header, tagResolver);</span>
+<span class="source-line-no">344</span><span id="line-344">                                } else {</span>
+<span class="source-line-no">345</span><span id="line-345">                                    player.sendTitle(header, subHeader, tagResolver);</span>
+<span class="source-line-no">346</span><span id="line-346">                                }</span>
+<span class="source-line-no">347</span><span id="line-347">                            });</span>
+<span class="source-line-no">348</span><span id="line-348">                        }</span>
+<span class="source-line-no">349</span><span id="line-349">                    }, TaskTime.seconds(1L));</span>
+<span class="source-line-no">350</span><span id="line-350">                }</span>
+<span class="source-line-no">351</span><span id="line-351">            }</span>
+<span class="source-line-no">352</span><span id="line-352"></span>
+<span class="source-line-no">353</span><span id="line-353">            TimedFlag.Timed&lt;Integer&gt; feed = plot.getFlag(FeedFlag.class);</span>
+<span class="source-line-no">354</span><span id="line-354">            if (feed.interval() != 0 &amp;&amp; feed.value() != 0) {</span>
+<span class="source-line-no">355</span><span id="line-355">                feedRunnable</span>
+<span class="source-line-no">356</span><span id="line-356">                        .put(player.getUUID(), new Interval(feed.interval(), feed.value(), 20));</span>
+<span class="source-line-no">357</span><span id="line-357">            }</span>
+<span class="source-line-no">358</span><span id="line-358">            TimedFlag.Timed&lt;Integer&gt; heal = plot.getFlag(HealFlag.class);</span>
+<span class="source-line-no">359</span><span id="line-359">            if (heal.interval() != 0 &amp;&amp; heal.value() != 0) {</span>
+<span class="source-line-no">360</span><span id="line-360">                healRunnable</span>
+<span class="source-line-no">361</span><span id="line-361">                        .put(player.getUUID(), new Interval(heal.interval(), heal.value(), 20));</span>
+<span class="source-line-no">362</span><span id="line-362">            }</span>
+<span class="source-line-no">363</span><span id="line-363">            return true;</span>
+<span class="source-line-no">364</span><span id="line-364">        }</span>
+<span class="source-line-no">365</span><span id="line-365">        return true;</span>
+<span class="source-line-no">366</span><span id="line-366">    }</span>
 <span class="source-line-no">367</span><span id="line-367"></span>
-<span class="source-line-no">368</span><span id="line-368">            List&lt;StatusEffect&gt; effects = playerEffects.remove(player.getUUID());</span>
-<span class="source-line-no">369</span><span id="line-369">            if (effects != null) {</span>
-<span class="source-line-no">370</span><span id="line-370">                long currentTime = System.currentTimeMillis();</span>
-<span class="source-line-no">371</span><span id="line-371">                effects.forEach(effect -&gt; {</span>
-<span class="source-line-no">372</span><span id="line-372">                    if (currentTime &lt;= effect.expiresAt) {</span>
-<span class="source-line-no">373</span><span id="line-373">                        player.removeEffect(effect.name);</span>
-<span class="source-line-no">374</span><span id="line-374">                    }</span>
-<span class="source-line-no">375</span><span id="line-375">                });</span>
-<span class="source-line-no">376</span><span id="line-376">            }</span>
-<span class="source-line-no">377</span><span id="line-377"></span>
-<span class="source-line-no">378</span><span id="line-378">            if (plot.hasOwner()) {</span>
-<span class="source-line-no">379</span><span id="line-379">                PlotArea pw = plot.getArea();</span>
-<span class="source-line-no">380</span><span id="line-380">                if (pw == null) {</span>
-<span class="source-line-no">381</span><span id="line-381">                    return true;</span>
-<span class="source-line-no">382</span><span id="line-382">                }</span>
-<span class="source-line-no">383</span><span id="line-383">                try (final MetaDataAccess&lt;Boolean&gt; kickAccess =</span>
-<span class="source-line-no">384</span><span id="line-384">                             player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_KICK)) {</span>
-<span class="source-line-no">385</span><span id="line-385">                    if (plot.getFlag(DenyExitFlag.class) &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_EXIT_DENIED) &amp;&amp;</span>
-<span class="source-line-no">386</span><span id="line-386">                            !kickAccess.get().orElse(false)) {</span>
-<span class="source-line-no">387</span><span id="line-387">                        if (previous != null) {</span>
-<span class="source-line-no">388</span><span id="line-388">                            lastPlot.set(previous);</span>
-<span class="source-line-no">389</span><span id="line-389">                        }</span>
-<span class="source-line-no">390</span><span id="line-390">                        return false;</span>
-<span class="source-line-no">391</span><span id="line-391">                    }</span>
-<span class="source-line-no">392</span><span id="line-392">                }</span>
-<span class="source-line-no">393</span><span id="line-393">                if (!plot.getFlag(GamemodeFlag.class).equals(GamemodeFlag.DEFAULT) || !plot</span>
-<span class="source-line-no">394</span><span id="line-394">                        .getFlag(GuestGamemodeFlag.class).equals(GamemodeFlag.DEFAULT)) {</span>
-<span class="source-line-no">395</span><span id="line-395">                    if (player.getGameMode() != pw.getGameMode()) {</span>
-<span class="source-line-no">396</span><span id="line-396">                        if (!player.hasPermission("plots.gamemode.bypass")) {</span>
-<span class="source-line-no">397</span><span id="line-397">                            player.setGameMode(pw.getGameMode());</span>
-<span class="source-line-no">398</span><span id="line-398">                        } else {</span>
-<span class="source-line-no">399</span><span id="line-399">                            player.sendMessage(</span>
-<span class="source-line-no">400</span><span id="line-400">                                    TranslatableCaption.of("gamemode.gamemode_was_bypassed"),</span>
-<span class="source-line-no">401</span><span id="line-401">                                    TagResolver.builder()</span>
-<span class="source-line-no">402</span><span id="line-402">                                            .tag("gamemode", Tag.inserting(Component.text(pw.getGameMode().toString())))</span>
-<span class="source-line-no">403</span><span id="line-403">                                            .tag("plot", Tag.inserting(Component.text(plot.toString())))</span>
-<span class="source-line-no">404</span><span id="line-404">                                            .build()</span>
-<span class="source-line-no">405</span><span id="line-405">                            );</span>
-<span class="source-line-no">406</span><span id="line-406">                        }</span>
-<span class="source-line-no">407</span><span id="line-407">                    }</span>
-<span class="source-line-no">408</span><span id="line-408">                }</span>
-<span class="source-line-no">409</span><span id="line-409"></span>
-<span class="source-line-no">410</span><span id="line-410">                String farewell = plot.getFlag(FarewellFlag.class);</span>
-<span class="source-line-no">411</span><span id="line-411">                if (!farewell.isEmpty()) {</span>
-<span class="source-line-no">412</span><span id="line-412">                    if (!Settings.Chat.NOTIFICATION_AS_ACTIONBAR) {</span>
-<span class="source-line-no">413</span><span id="line-413">                        plot.format(StaticCaption.of(farewell), player, false).thenAcceptAsync(player::sendMessage);</span>
-<span class="source-line-no">414</span><span id="line-414">                    } else {</span>
-<span class="source-line-no">415</span><span id="line-415">                        plot.format(StaticCaption.of(farewell), player, false).thenAcceptAsync(player::sendActionBar);</span>
-<span class="source-line-no">416</span><span id="line-416">                    }</span>
-<span class="source-line-no">417</span><span id="line-417">                }</span>
-<span class="source-line-no">418</span><span id="line-418"></span>
-<span class="source-line-no">419</span><span id="line-419">                if (plot.getFlag(NotifyLeaveFlag.class)) {</span>
-<span class="source-line-no">420</span><span id="line-420">                    if (!player.hasPermission("plots.flag.notify-leave.bypass")) {</span>
-<span class="source-line-no">421</span><span id="line-421">                        for (UUID uuid : plot.getOwners()) {</span>
-<span class="source-line-no">422</span><span id="line-422">                            final PlotPlayer&lt;?&gt; owner = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
-<span class="source-line-no">423</span><span id="line-423">                            if ((owner != null) &amp;&amp; !owner.getUUID().equals(player.getUUID()) &amp;&amp; owner.canSee(player)) {</span>
-<span class="source-line-no">424</span><span id="line-424">                                Caption caption = TranslatableCaption.of("notification.notify_leave");</span>
-<span class="source-line-no">425</span><span id="line-425">                                notifyPlotOwner(player, plot, owner, caption);</span>
-<span class="source-line-no">426</span><span id="line-426">                            }</span>
-<span class="source-line-no">427</span><span id="line-427">                        }</span>
-<span class="source-line-no">428</span><span id="line-428">                    }</span>
-<span class="source-line-no">429</span><span id="line-429">                }</span>
-<span class="source-line-no">430</span><span id="line-430"></span>
-<span class="source-line-no">431</span><span id="line-431">                final FlyFlag.FlyStatus flyStatus = plot.getFlag(FlyFlag.class);</span>
-<span class="source-line-no">432</span><span id="line-432">                if (flyStatus != FlyFlag.FlyStatus.DEFAULT) {</span>
-<span class="source-line-no">433</span><span id="line-433">                    try (final MetaDataAccess&lt;Boolean&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_FLIGHT)) {</span>
-<span class="source-line-no">434</span><span id="line-434">                        final Optional&lt;Boolean&gt; value = metaDataAccess.get();</span>
-<span class="source-line-no">435</span><span id="line-435">                        if (value.isPresent()) {</span>
-<span class="source-line-no">436</span><span id="line-436">                            player.setFlight(value.get());</span>
-<span class="source-line-no">437</span><span id="line-437">                            metaDataAccess.remove();</span>
-<span class="source-line-no">438</span><span id="line-438">                        } else {</span>
-<span class="source-line-no">439</span><span id="line-439">                            GameMode gameMode = player.getGameMode();</span>
-<span class="source-line-no">440</span><span id="line-440">                            if (gameMode == GameModes.SURVIVAL || gameMode == GameModes.ADVENTURE) {</span>
-<span class="source-line-no">441</span><span id="line-441">                                player.setFlight(false);</span>
-<span class="source-line-no">442</span><span id="line-442">                            } else if (!player.getFlight()) {</span>
-<span class="source-line-no">443</span><span id="line-443">                                player.setFlight(true);</span>
-<span class="source-line-no">444</span><span id="line-444">                            }</span>
-<span class="source-line-no">445</span><span id="line-445">                        }</span>
-<span class="source-line-no">446</span><span id="line-446">                    }</span>
-<span class="source-line-no">447</span><span id="line-447">                }</span>
-<span class="source-line-no">448</span><span id="line-448"></span>
-<span class="source-line-no">449</span><span id="line-449">                if (plot.getFlag(TimeFlag.class) != TimeFlag.TIME_DISABLED.getValue().longValue()) {</span>
-<span class="source-line-no">450</span><span id="line-450">                    player.setTime(Long.MAX_VALUE);</span>
+<span class="source-line-no">368</span><span id="line-368">    public boolean plotExit(final PlotPlayer&lt;?&gt; player, Plot plot) {</span>
+<span class="source-line-no">369</span><span id="line-369">        try (final MetaDataAccess&lt;Plot&gt; lastPlot = player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
+<span class="source-line-no">370</span><span id="line-370">            final Plot previous = lastPlot.remove();</span>
+<span class="source-line-no">371</span><span id="line-371"></span>
+<span class="source-line-no">372</span><span id="line-372">            List&lt;StatusEffect&gt; effects = playerEffects.remove(player.getUUID());</span>
+<span class="source-line-no">373</span><span id="line-373">            if (effects != null) {</span>
+<span class="source-line-no">374</span><span id="line-374">                long currentTime = System.currentTimeMillis();</span>
+<span class="source-line-no">375</span><span id="line-375">                effects.forEach(effect -&gt; {</span>
+<span class="source-line-no">376</span><span id="line-376">                    if (currentTime &lt;= effect.expiresAt) {</span>
+<span class="source-line-no">377</span><span id="line-377">                        player.removeEffect(effect.name);</span>
+<span class="source-line-no">378</span><span id="line-378">                    }</span>
+<span class="source-line-no">379</span><span id="line-379">                });</span>
+<span class="source-line-no">380</span><span id="line-380">            }</span>
+<span class="source-line-no">381</span><span id="line-381"></span>
+<span class="source-line-no">382</span><span id="line-382">            if (plot.hasOwner()) {</span>
+<span class="source-line-no">383</span><span id="line-383">                PlotArea pw = plot.getArea();</span>
+<span class="source-line-no">384</span><span id="line-384">                if (pw == null) {</span>
+<span class="source-line-no">385</span><span id="line-385">                    return true;</span>
+<span class="source-line-no">386</span><span id="line-386">                }</span>
+<span class="source-line-no">387</span><span id="line-387">                try (final MetaDataAccess&lt;Boolean&gt; kickAccess =</span>
+<span class="source-line-no">388</span><span id="line-388">                             player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_KICK)) {</span>
+<span class="source-line-no">389</span><span id="line-389">                    if (plot.getFlag(DenyExitFlag.class) &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_EXIT_DENIED) &amp;&amp;</span>
+<span class="source-line-no">390</span><span id="line-390">                            !kickAccess.get().orElse(false)) {</span>
+<span class="source-line-no">391</span><span id="line-391">                        if (previous != null) {</span>
+<span class="source-line-no">392</span><span id="line-392">                            lastPlot.set(previous);</span>
+<span class="source-line-no">393</span><span id="line-393">                        }</span>
+<span class="source-line-no">394</span><span id="line-394">                        return false;</span>
+<span class="source-line-no">395</span><span id="line-395">                    }</span>
+<span class="source-line-no">396</span><span id="line-396">                }</span>
+<span class="source-line-no">397</span><span id="line-397">                if (!plot.getFlag(GamemodeFlag.class).equals(GamemodeFlag.DEFAULT) || !plot</span>
+<span class="source-line-no">398</span><span id="line-398">                        .getFlag(GuestGamemodeFlag.class).equals(GamemodeFlag.DEFAULT)) {</span>
+<span class="source-line-no">399</span><span id="line-399">                    if (player.getGameMode() != pw.getGameMode()) {</span>
+<span class="source-line-no">400</span><span id="line-400">                        if (!player.hasPermission("plots.gamemode.bypass")) {</span>
+<span class="source-line-no">401</span><span id="line-401">                            player.setGameMode(pw.getGameMode());</span>
+<span class="source-line-no">402</span><span id="line-402">                        } else {</span>
+<span class="source-line-no">403</span><span id="line-403">                            player.sendMessage(</span>
+<span class="source-line-no">404</span><span id="line-404">                                    TranslatableCaption.of("gamemode.gamemode_was_bypassed"),</span>
+<span class="source-line-no">405</span><span id="line-405">                                    TagResolver.builder()</span>
+<span class="source-line-no">406</span><span id="line-406">                                            .tag("gamemode", Tag.inserting(Component.text(pw.getGameMode().toString())))</span>
+<span class="source-line-no">407</span><span id="line-407">                                            .tag("plot", Tag.inserting(Component.text(plot.toString())))</span>
+<span class="source-line-no">408</span><span id="line-408">                                            .build()</span>
+<span class="source-line-no">409</span><span id="line-409">                            );</span>
+<span class="source-line-no">410</span><span id="line-410">                        }</span>
+<span class="source-line-no">411</span><span id="line-411">                    }</span>
+<span class="source-line-no">412</span><span id="line-412">                }</span>
+<span class="source-line-no">413</span><span id="line-413"></span>
+<span class="source-line-no">414</span><span id="line-414">                String farewell = plot.getFlag(FarewellFlag.class);</span>
+<span class="source-line-no">415</span><span id="line-415">                if (!farewell.isEmpty()) {</span>
+<span class="source-line-no">416</span><span id="line-416">                    if (!Settings.Chat.NOTIFICATION_AS_ACTIONBAR) {</span>
+<span class="source-line-no">417</span><span id="line-417">                        plot.format(StaticCaption.of(farewell), player, false).thenAcceptAsync(player::sendMessage);</span>
+<span class="source-line-no">418</span><span id="line-418">                    } else {</span>
+<span class="source-line-no">419</span><span id="line-419">                        plot.format(StaticCaption.of(farewell), player, false).thenAcceptAsync(player::sendActionBar);</span>
+<span class="source-line-no">420</span><span id="line-420">                    }</span>
+<span class="source-line-no">421</span><span id="line-421">                }</span>
+<span class="source-line-no">422</span><span id="line-422"></span>
+<span class="source-line-no">423</span><span id="line-423">                if (plot.getFlag(NotifyLeaveFlag.class)) {</span>
+<span class="source-line-no">424</span><span id="line-424">                    if (!player.hasPermission("plots.flag.notify-leave.bypass")) {</span>
+<span class="source-line-no">425</span><span id="line-425">                        for (UUID uuid : plot.getOwners()) {</span>
+<span class="source-line-no">426</span><span id="line-426">                            final PlotPlayer&lt;?&gt; owner = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
+<span class="source-line-no">427</span><span id="line-427">                            if ((owner != null) &amp;&amp; !owner.getUUID().equals(player.getUUID()) &amp;&amp; owner.canSee(player)) {</span>
+<span class="source-line-no">428</span><span id="line-428">                                Caption caption = TranslatableCaption.of("notification.notify_leave");</span>
+<span class="source-line-no">429</span><span id="line-429">                                notifyPlotOwner(player, plot, owner, caption);</span>
+<span class="source-line-no">430</span><span id="line-430">                            }</span>
+<span class="source-line-no">431</span><span id="line-431">                        }</span>
+<span class="source-line-no">432</span><span id="line-432">                    }</span>
+<span class="source-line-no">433</span><span id="line-433">                }</span>
+<span class="source-line-no">434</span><span id="line-434"></span>
+<span class="source-line-no">435</span><span id="line-435">                final FlyFlag.FlyStatus flyStatus = plot.getFlag(FlyFlag.class);</span>
+<span class="source-line-no">436</span><span id="line-436">                if (flyStatus != FlyFlag.FlyStatus.DEFAULT) {</span>
+<span class="source-line-no">437</span><span id="line-437">                    try (final MetaDataAccess&lt;Boolean&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_FLIGHT)) {</span>
+<span class="source-line-no">438</span><span id="line-438">                        final Optional&lt;Boolean&gt; value = metaDataAccess.get();</span>
+<span class="source-line-no">439</span><span id="line-439">                        if (value.isPresent()) {</span>
+<span class="source-line-no">440</span><span id="line-440">                            player.setFlight(value.get());</span>
+<span class="source-line-no">441</span><span id="line-441">                            metaDataAccess.remove();</span>
+<span class="source-line-no">442</span><span id="line-442">                        } else {</span>
+<span class="source-line-no">443</span><span id="line-443">                            GameMode gameMode = player.getGameMode();</span>
+<span class="source-line-no">444</span><span id="line-444">                            if (gameMode == GameModes.SURVIVAL || gameMode == GameModes.ADVENTURE) {</span>
+<span class="source-line-no">445</span><span id="line-445">                                player.setFlight(false);</span>
+<span class="source-line-no">446</span><span id="line-446">                            } else if (!player.getFlight()) {</span>
+<span class="source-line-no">447</span><span id="line-447">                                player.setFlight(true);</span>
+<span class="source-line-no">448</span><span id="line-448">                            }</span>
+<span class="source-line-no">449</span><span id="line-449">                        }</span>
+<span class="source-line-no">450</span><span id="line-450">                    }</span>
 <span class="source-line-no">451</span><span id="line-451">                }</span>
 <span class="source-line-no">452</span><span id="line-452"></span>
-<span class="source-line-no">453</span><span id="line-453">                final PlotWeather plotWeather = plot.getFlag(WeatherFlag.class);</span>
-<span class="source-line-no">454</span><span id="line-454">                if (plotWeather != PlotWeather.OFF) {</span>
-<span class="source-line-no">455</span><span id="line-455">                    player.setWeather(PlotWeather.WORLD);</span>
-<span class="source-line-no">456</span><span id="line-456">                }</span>
-<span class="source-line-no">457</span><span id="line-457"></span>
-<span class="source-line-no">458</span><span id="line-458">                try (final MetaDataAccess&lt;Location&gt; musicAccess =</span>
-<span class="source-line-no">459</span><span id="line-459">                             player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_MUSIC)) {</span>
-<span class="source-line-no">460</span><span id="line-460">                    musicAccess.get().ifPresent(lastLoc -&gt; {</span>
-<span class="source-line-no">461</span><span id="line-461">                        musicAccess.remove();</span>
-<span class="source-line-no">462</span><span id="line-462">                        player.playMusic(lastLoc, ItemTypes.AIR);</span>
-<span class="source-line-no">463</span><span id="line-463">                    });</span>
-<span class="source-line-no">464</span><span id="line-464">                }</span>
-<span class="source-line-no">465</span><span id="line-465"></span>
-<span class="source-line-no">466</span><span id="line-466">                feedRunnable.remove(player.getUUID());</span>
-<span class="source-line-no">467</span><span id="line-467">                healRunnable.remove(player.getUUID());</span>
-<span class="source-line-no">468</span><span id="line-468">            }</span>
-<span class="source-line-no">469</span><span id="line-469">        } finally {</span>
-<span class="source-line-no">470</span><span id="line-470">            this.eventDispatcher.callLeave(player, plot);</span>
-<span class="source-line-no">471</span><span id="line-471">        }</span>
-<span class="source-line-no">472</span><span id="line-472">        return true;</span>
-<span class="source-line-no">473</span><span id="line-473">    }</span>
-<span class="source-line-no">474</span><span id="line-474"></span>
-<span class="source-line-no">475</span><span id="line-475">    private void notifyPlotOwner(final PlotPlayer&lt;?&gt; player, final Plot plot, final PlotPlayer&lt;?&gt; owner, final Caption caption) {</span>
-<span class="source-line-no">476</span><span id="line-476">        TagResolver resolver = TagResolver.builder()</span>
-<span class="source-line-no">477</span><span id="line-477">                .tag("player", Tag.inserting(Component.text(player.getName())))</span>
-<span class="source-line-no">478</span><span id="line-478">                .tag("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
-<span class="source-line-no">479</span><span id="line-479">                .tag("area", Tag.inserting(Component.text(String.valueOf(plot.getArea()))))</span>
-<span class="source-line-no">480</span><span id="line-480">                .build();</span>
-<span class="source-line-no">481</span><span id="line-481">        if (!Settings.Chat.NOTIFICATION_AS_ACTIONBAR) {</span>
-<span class="source-line-no">482</span><span id="line-482">            owner.sendMessage(caption, resolver);</span>
-<span class="source-line-no">483</span><span id="line-483">        } else {</span>
-<span class="source-line-no">484</span><span id="line-484">            owner.sendActionBar(caption, resolver);</span>
-<span class="source-line-no">485</span><span id="line-485">        }</span>
-<span class="source-line-no">486</span><span id="line-486">    }</span>
-<span class="source-line-no">487</span><span id="line-487"></span>
-<span class="source-line-no">488</span><span id="line-488">    public void logout(UUID uuid) {</span>
-<span class="source-line-no">489</span><span id="line-489">        feedRunnable.remove(uuid);</span>
-<span class="source-line-no">490</span><span id="line-490">        healRunnable.remove(uuid);</span>
-<span class="source-line-no">491</span><span id="line-491">        playerEffects.remove(uuid);</span>
-<span class="source-line-no">492</span><span id="line-492">    }</span>
-<span class="source-line-no">493</span><span id="line-493"></span>
-<span class="source-line-no">494</span><span id="line-494">    /**</span>
-<span class="source-line-no">495</span><span id="line-495">     * Marks an effect as a status effect that will be removed on leaving a plot</span>
-<span class="source-line-no">496</span><span id="line-496">     *</span>
-<span class="source-line-no">497</span><span id="line-497">     * @param uuid      The uuid of the player the effect belongs to</span>
-<span class="source-line-no">498</span><span id="line-498">     * @param name      The name of the status effect</span>
-<span class="source-line-no">499</span><span id="line-499">     * @param expiresAt The time when the effect expires</span>
-<span class="source-line-no">500</span><span id="line-500">     * @since 6.10.0</span>
-<span class="source-line-no">501</span><span id="line-501">     */</span>
-<span class="source-line-no">502</span><span id="line-502">    public void addEffect(@NonNull UUID uuid, @NonNull String name, long expiresAt) {</span>
-<span class="source-line-no">503</span><span id="line-503">        List&lt;StatusEffect&gt; effects = playerEffects.getOrDefault(uuid, new ArrayList&lt;&gt;());</span>
-<span class="source-line-no">504</span><span id="line-504">        effects.removeIf(effect -&gt; effect.name.equals(name));</span>
-<span class="source-line-no">505</span><span id="line-505">        if (expiresAt != -1) {</span>
-<span class="source-line-no">506</span><span id="line-506">            effects.add(new StatusEffect(name, expiresAt));</span>
-<span class="source-line-no">507</span><span id="line-507">        }</span>
-<span class="source-line-no">508</span><span id="line-508">        playerEffects.put(uuid, effects);</span>
-<span class="source-line-no">509</span><span id="line-509">    }</span>
-<span class="source-line-no">510</span><span id="line-510"></span>
-<span class="source-line-no">511</span><span id="line-511">    private static class Interval {</span>
-<span class="source-line-no">512</span><span id="line-512"></span>
-<span class="source-line-no">513</span><span id="line-513">        final int interval;</span>
-<span class="source-line-no">514</span><span id="line-514">        final int amount;</span>
-<span class="source-line-no">515</span><span id="line-515">        final int max;</span>
-<span class="source-line-no">516</span><span id="line-516">        int count = 0;</span>
-<span class="source-line-no">517</span><span id="line-517"></span>
-<span class="source-line-no">518</span><span id="line-518">        Interval(int interval, int amount, int max) {</span>
-<span class="source-line-no">519</span><span id="line-519">            this.interval = interval;</span>
-<span class="source-line-no">520</span><span id="line-520">            this.amount = amount;</span>
-<span class="source-line-no">521</span><span id="line-521">            this.max = max;</span>
-<span class="source-line-no">522</span><span id="line-522">        }</span>
-<span class="source-line-no">523</span><span id="line-523"></span>
-<span class="source-line-no">524</span><span id="line-524">    }</span>
-<span class="source-line-no">525</span><span id="line-525"></span>
-<span class="source-line-no">526</span><span id="line-526">    private record StatusEffect(@NonNull String name, long expiresAt) {</span>
+<span class="source-line-no">453</span><span id="line-453">                if (plot.getFlag(TimeFlag.class) != TimeFlag.TIME_DISABLED.getValue().longValue()) {</span>
+<span class="source-line-no">454</span><span id="line-454">                    player.setTime(Long.MAX_VALUE);</span>
+<span class="source-line-no">455</span><span id="line-455">                }</span>
+<span class="source-line-no">456</span><span id="line-456"></span>
+<span class="source-line-no">457</span><span id="line-457">                final PlotWeather plotWeather = plot.getFlag(WeatherFlag.class);</span>
+<span class="source-line-no">458</span><span id="line-458">                if (plotWeather != PlotWeather.OFF) {</span>
+<span class="source-line-no">459</span><span id="line-459">                    player.setWeather(PlotWeather.WORLD);</span>
+<span class="source-line-no">460</span><span id="line-460">                }</span>
+<span class="source-line-no">461</span><span id="line-461"></span>
+<span class="source-line-no">462</span><span id="line-462">                try (final MetaDataAccess&lt;Location&gt; musicAccess =</span>
+<span class="source-line-no">463</span><span id="line-463">                             player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_MUSIC)) {</span>
+<span class="source-line-no">464</span><span id="line-464">                    musicAccess.get().ifPresent(lastLoc -&gt; {</span>
+<span class="source-line-no">465</span><span id="line-465">                        musicAccess.remove();</span>
+<span class="source-line-no">466</span><span id="line-466">                        player.playMusic(lastLoc, ItemTypes.AIR);</span>
+<span class="source-line-no">467</span><span id="line-467">                    });</span>
+<span class="source-line-no">468</span><span id="line-468">                }</span>
+<span class="source-line-no">469</span><span id="line-469"></span>
+<span class="source-line-no">470</span><span id="line-470">                feedRunnable.remove(player.getUUID());</span>
+<span class="source-line-no">471</span><span id="line-471">                healRunnable.remove(player.getUUID());</span>
+<span class="source-line-no">472</span><span id="line-472">            }</span>
+<span class="source-line-no">473</span><span id="line-473">        } finally {</span>
+<span class="source-line-no">474</span><span id="line-474">            this.eventDispatcher.callLeave(player, plot);</span>
+<span class="source-line-no">475</span><span id="line-475">        }</span>
+<span class="source-line-no">476</span><span id="line-476">        return true;</span>
+<span class="source-line-no">477</span><span id="line-477">    }</span>
+<span class="source-line-no">478</span><span id="line-478"></span>
+<span class="source-line-no">479</span><span id="line-479">    private void notifyPlotOwner(final PlotPlayer&lt;?&gt; player, final Plot plot, final PlotPlayer&lt;?&gt; owner, final Caption caption) {</span>
+<span class="source-line-no">480</span><span id="line-480">        TagResolver resolver = TagResolver.builder()</span>
+<span class="source-line-no">481</span><span id="line-481">                .tag("player", Tag.inserting(Component.text(player.getName())))</span>
+<span class="source-line-no">482</span><span id="line-482">                .tag("plot", Tag.inserting(Component.text(plot.getId().toString())))</span>
+<span class="source-line-no">483</span><span id="line-483">                .tag("area", Tag.inserting(Component.text(String.valueOf(plot.getArea()))))</span>
+<span class="source-line-no">484</span><span id="line-484">                .build();</span>
+<span class="source-line-no">485</span><span id="line-485">        if (!Settings.Chat.NOTIFICATION_AS_ACTIONBAR) {</span>
+<span class="source-line-no">486</span><span id="line-486">            owner.sendMessage(caption, resolver);</span>
+<span class="source-line-no">487</span><span id="line-487">        } else {</span>
+<span class="source-line-no">488</span><span id="line-488">            owner.sendActionBar(caption, resolver);</span>
+<span class="source-line-no">489</span><span id="line-489">        }</span>
+<span class="source-line-no">490</span><span id="line-490">    }</span>
+<span class="source-line-no">491</span><span id="line-491"></span>
+<span class="source-line-no">492</span><span id="line-492">    public void logout(UUID uuid) {</span>
+<span class="source-line-no">493</span><span id="line-493">        feedRunnable.remove(uuid);</span>
+<span class="source-line-no">494</span><span id="line-494">        healRunnable.remove(uuid);</span>
+<span class="source-line-no">495</span><span id="line-495">        playerEffects.remove(uuid);</span>
+<span class="source-line-no">496</span><span id="line-496">    }</span>
+<span class="source-line-no">497</span><span id="line-497"></span>
+<span class="source-line-no">498</span><span id="line-498">    /**</span>
+<span class="source-line-no">499</span><span id="line-499">     * Marks an effect as a status effect that will be removed on leaving a plot</span>
+<span class="source-line-no">500</span><span id="line-500">     *</span>
+<span class="source-line-no">501</span><span id="line-501">     * @param uuid      The uuid of the player the effect belongs to</span>
+<span class="source-line-no">502</span><span id="line-502">     * @param name      The name of the status effect</span>
+<span class="source-line-no">503</span><span id="line-503">     * @param expiresAt The time when the effect expires</span>
+<span class="source-line-no">504</span><span id="line-504">     * @since 6.10.0</span>
+<span class="source-line-no">505</span><span id="line-505">     */</span>
+<span class="source-line-no">506</span><span id="line-506">    public void addEffect(@NonNull UUID uuid, @NonNull String name, long expiresAt) {</span>
+<span class="source-line-no">507</span><span id="line-507">        List&lt;StatusEffect&gt; effects = playerEffects.getOrDefault(uuid, new ArrayList&lt;&gt;());</span>
+<span class="source-line-no">508</span><span id="line-508">        effects.removeIf(effect -&gt; effect.name.equals(name));</span>
+<span class="source-line-no">509</span><span id="line-509">        if (expiresAt != -1) {</span>
+<span class="source-line-no">510</span><span id="line-510">            effects.add(new StatusEffect(name, expiresAt));</span>
+<span class="source-line-no">511</span><span id="line-511">        }</span>
+<span class="source-line-no">512</span><span id="line-512">        playerEffects.put(uuid, effects);</span>
+<span class="source-line-no">513</span><span id="line-513">    }</span>
+<span class="source-line-no">514</span><span id="line-514"></span>
+<span class="source-line-no">515</span><span id="line-515">    private static class Interval {</span>
+<span class="source-line-no">516</span><span id="line-516"></span>
+<span class="source-line-no">517</span><span id="line-517">        final int interval;</span>
+<span class="source-line-no">518</span><span id="line-518">        final int amount;</span>
+<span class="source-line-no">519</span><span id="line-519">        final int max;</span>
+<span class="source-line-no">520</span><span id="line-520">        int count = 0;</span>
+<span class="source-line-no">521</span><span id="line-521"></span>
+<span class="source-line-no">522</span><span id="line-522">        Interval(int interval, int amount, int max) {</span>
+<span class="source-line-no">523</span><span id="line-523">            this.interval = interval;</span>
+<span class="source-line-no">524</span><span id="line-524">            this.amount = amount;</span>
+<span class="source-line-no">525</span><span id="line-525">            this.max = max;</span>
+<span class="source-line-no">526</span><span id="line-526">        }</span>
 <span class="source-line-no">527</span><span id="line-527"></span>
-<span class="source-line-no">528</span><span id="line-528">        private StatusEffect(@NonNull String name, long expiresAt) {</span>
-<span class="source-line-no">529</span><span id="line-529">            this.name = name;</span>
-<span class="source-line-no">530</span><span id="line-530">            this.expiresAt = expiresAt;</span>
-<span class="source-line-no">531</span><span id="line-531">        }</span>
-<span class="source-line-no">532</span><span id="line-532"></span>
-<span class="source-line-no">533</span><span id="line-533">    }</span>
-<span class="source-line-no">534</span><span id="line-534"></span>
-<span class="source-line-no">535</span><span id="line-535">}</span>
+<span class="source-line-no">528</span><span id="line-528">    }</span>
+<span class="source-line-no">529</span><span id="line-529"></span>
+<span class="source-line-no">530</span><span id="line-530">    private record StatusEffect(@NonNull String name, long expiresAt) {</span>
+<span class="source-line-no">531</span><span id="line-531"></span>
+<span class="source-line-no">532</span><span id="line-532">        private StatusEffect(@NonNull String name, long expiresAt) {</span>
+<span class="source-line-no">533</span><span id="line-533">            this.name = name;</span>
+<span class="source-line-no">534</span><span id="line-534">            this.expiresAt = expiresAt;</span>
+<span class="source-line-no">535</span><span id="line-535">        }</span>
+<span class="source-line-no">536</span><span id="line-536"></span>
+<span class="source-line-no">537</span><span id="line-537">    }</span>
+<span class="source-line-no">538</span><span id="line-538"></span>
+<span class="source-line-no">539</span><span id="line-539">}</span>
 
 
 

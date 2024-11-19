@@ -65,7 +65,7 @@
 <span class="source-line-no">052</span><span id="line-52"></span>
 <span class="source-line-no">053</span><span id="line-53">import java.util.ArrayList;</span>
 <span class="source-line-no">054</span><span id="line-54">import java.util.Arrays;</span>
-<span class="source-line-no">055</span><span id="line-55">import java.util.EnumSet;</span>
+<span class="source-line-no">055</span><span id="line-55">import java.util.HashSet;</span>
 <span class="source-line-no">056</span><span id="line-56">import java.util.List;</span>
 <span class="source-line-no">057</span><span id="line-57">import java.util.Random;</span>
 <span class="source-line-no">058</span><span id="line-58">import java.util.Set;</span>
@@ -458,7 +458,7 @@
 <span class="source-line-no">445</span><span id="line-445">        private static final List&lt;Biome&gt; BIOMES;</span>
 <span class="source-line-no">446</span><span id="line-446"></span>
 <span class="source-line-no">447</span><span id="line-447">        static {</span>
-<span class="source-line-no">448</span><span id="line-448">            Set&lt;Biome&gt; disabledBiomes = EnumSet.of(Biome.CUSTOM);</span>
+<span class="source-line-no">448</span><span id="line-448">            Set&lt;Biome&gt; disabledBiomes = new HashSet&lt;&gt;(List.of(Biome.CUSTOM));</span>
 <span class="source-line-no">449</span><span id="line-449">            if (PlotSquared.platform().serverVersion()[1] &lt;= 19) {</span>
 <span class="source-line-no">450</span><span id="line-450">                final Biome cherryGrove = Registry.BIOME.get(NamespacedKey.minecraft("cherry_grove"));</span>
 <span class="source-line-no">451</span><span id="line-451">                if (cherryGrove != null) {</span>

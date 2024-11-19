@@ -88,510 +88,517 @@
 <span class="source-line-no">075</span><span id="line-75">import org.bukkit.entity.Firework;</span>
 <span class="source-line-no">076</span><span id="line-76">import org.bukkit.entity.Ghast;</span>
 <span class="source-line-no">077</span><span id="line-77">import org.bukkit.entity.Hanging;</span>
-<span class="source-line-no">078</span><span id="line-78">import org.bukkit.entity.IronGolem;</span>
-<span class="source-line-no">079</span><span id="line-79">import org.bukkit.entity.Item;</span>
-<span class="source-line-no">080</span><span id="line-80">import org.bukkit.entity.LightningStrike;</span>
-<span class="source-line-no">081</span><span id="line-81">import org.bukkit.entity.Monster;</span>
-<span class="source-line-no">082</span><span id="line-82">import org.bukkit.entity.NPC;</span>
-<span class="source-line-no">083</span><span id="line-83">import org.bukkit.entity.Phantom;</span>
-<span class="source-line-no">084</span><span id="line-84">import org.bukkit.entity.Player;</span>
-<span class="source-line-no">085</span><span id="line-85">import org.bukkit.entity.Projectile;</span>
-<span class="source-line-no">086</span><span id="line-86">import org.bukkit.entity.Shulker;</span>
-<span class="source-line-no">087</span><span id="line-87">import org.bukkit.entity.Slime;</span>
-<span class="source-line-no">088</span><span id="line-88">import org.bukkit.entity.Snowman;</span>
-<span class="source-line-no">089</span><span id="line-89">import org.bukkit.entity.Tameable;</span>
-<span class="source-line-no">090</span><span id="line-90">import org.bukkit.entity.Vehicle;</span>
-<span class="source-line-no">091</span><span id="line-91">import org.bukkit.entity.WaterMob;</span>
-<span class="source-line-no">092</span><span id="line-92">import org.checkerframework.checker.index.qual.NonNegative;</span>
-<span class="source-line-no">093</span><span id="line-93">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">094</span><span id="line-94">import org.checkerframework.checker.nullness.qual.Nullable;</span>
-<span class="source-line-no">095</span><span id="line-95"></span>
-<span class="source-line-no">096</span><span id="line-96">import java.util.Collection;</span>
-<span class="source-line-no">097</span><span id="line-97">import java.util.HashSet;</span>
-<span class="source-line-no">098</span><span id="line-98">import java.util.Objects;</span>
-<span class="source-line-no">099</span><span id="line-99">import java.util.Set;</span>
-<span class="source-line-no">100</span><span id="line-100">import java.util.concurrent.Semaphore;</span>
-<span class="source-line-no">101</span><span id="line-101">import java.util.function.Consumer;</span>
-<span class="source-line-no">102</span><span id="line-102">import java.util.function.IntConsumer;</span>
-<span class="source-line-no">103</span><span id="line-103">import java.util.stream.Stream;</span>
-<span class="source-line-no">104</span><span id="line-104"></span>
-<span class="source-line-no">105</span><span id="line-105">@SuppressWarnings({"unused", "WeakerAccess"})</span>
-<span class="source-line-no">106</span><span id="line-106">@Singleton</span>
-<span class="source-line-no">107</span><span id="line-107">public class BukkitUtil extends WorldUtil {</span>
-<span class="source-line-no">108</span><span id="line-108"></span>
-<span class="source-line-no">109</span><span id="line-109">    public static final BukkitAudiences BUKKIT_AUDIENCES = BukkitAudiences.create(BukkitPlatform.getPlugin(BukkitPlatform.class));</span>
-<span class="source-line-no">110</span><span id="line-110">    public static final LegacyComponentSerializer LEGACY_COMPONENT_SERIALIZER = LegacyComponentSerializer.legacySection();</span>
-<span class="source-line-no">111</span><span id="line-111">    public static final MiniMessage MINI_MESSAGE = MiniMessage.builder().build();</span>
-<span class="source-line-no">112</span><span id="line-112">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + BukkitUtil.class.getSimpleName());</span>
-<span class="source-line-no">113</span><span id="line-113">    private final Collection&lt;BlockType&gt; tileEntityTypes = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">114</span><span id="line-114"></span>
-<span class="source-line-no">115</span><span id="line-115">    /**</span>
-<span class="source-line-no">116</span><span id="line-116">     * Turn a Bukkit {@link Player} into a PlotSquared {@link PlotPlayer}</span>
-<span class="source-line-no">117</span><span id="line-117">     *</span>
-<span class="source-line-no">118</span><span id="line-118">     * @param player Bukkit player</span>
-<span class="source-line-no">119</span><span id="line-119">     * @return PlotSquared player</span>
-<span class="source-line-no">120</span><span id="line-120">     */</span>
-<span class="source-line-no">121</span><span id="line-121">    public static @NonNull BukkitPlayer adapt(final @NonNull Player player) {</span>
-<span class="source-line-no">122</span><span id="line-122">        final PlayerManager&lt;?, ?&gt; playerManager = PlotSquared.platform().playerManager();</span>
-<span class="source-line-no">123</span><span id="line-123">        return ((BukkitPlayerManager) playerManager).getPlayer(player);</span>
-<span class="source-line-no">124</span><span id="line-124">    }</span>
-<span class="source-line-no">125</span><span id="line-125"></span>
-<span class="source-line-no">126</span><span id="line-126">    /**</span>
-<span class="source-line-no">127</span><span id="line-127">     * Turn a Bukkit {@link org.bukkit.Location} into a PlotSquared {@link Location}.</span>
-<span class="source-line-no">128</span><span id="line-128">     * This only copies the 4-tuple (world,x,y,z) and does not include the yaw and the pitch</span>
-<span class="source-line-no">129</span><span id="line-129">     *</span>
-<span class="source-line-no">130</span><span id="line-130">     * @param location Bukkit location</span>
-<span class="source-line-no">131</span><span id="line-131">     * @return PlotSquared location</span>
-<span class="source-line-no">132</span><span id="line-132">     */</span>
-<span class="source-line-no">133</span><span id="line-133">    public static @NonNull Location adapt(final org.bukkit.@NonNull Location location) {</span>
-<span class="source-line-no">134</span><span id="line-134">        return Location</span>
-<span class="source-line-no">135</span><span id="line-135">                .at(</span>
-<span class="source-line-no">136</span><span id="line-136">                        com.plotsquared.bukkit.util.BukkitWorld.of(location.getWorld()),</span>
-<span class="source-line-no">137</span><span id="line-137">                        MathMan.roundInt(location.getX()),</span>
-<span class="source-line-no">138</span><span id="line-138">                        MathMan.roundInt(location.getY()),</span>
-<span class="source-line-no">139</span><span id="line-139">                        MathMan.roundInt(location.getZ())</span>
-<span class="source-line-no">140</span><span id="line-140">                );</span>
-<span class="source-line-no">141</span><span id="line-141">    }</span>
-<span class="source-line-no">142</span><span id="line-142"></span>
-<span class="source-line-no">143</span><span id="line-143">    /**</span>
-<span class="source-line-no">144</span><span id="line-144">     * Turn a Bukkit {@link org.bukkit.Location} into a PlotSquared {@link Location}.</span>
-<span class="source-line-no">145</span><span id="line-145">     * This copies the entire 6-tuple (world,x,y,z,yaw,pitch).</span>
-<span class="source-line-no">146</span><span id="line-146">     *</span>
-<span class="source-line-no">147</span><span id="line-147">     * @param location Bukkit location</span>
-<span class="source-line-no">148</span><span id="line-148">     * @return PlotSquared location</span>
-<span class="source-line-no">149</span><span id="line-149">     */</span>
-<span class="source-line-no">150</span><span id="line-150">    public static @NonNull Location adaptComplete(final org.bukkit.@NonNull Location location) {</span>
-<span class="source-line-no">151</span><span id="line-151">        return Location</span>
-<span class="source-line-no">152</span><span id="line-152">                .at(</span>
-<span class="source-line-no">153</span><span id="line-153">                        com.plotsquared.bukkit.util.BukkitWorld.of(location.getWorld()),</span>
-<span class="source-line-no">154</span><span id="line-154">                        MathMan.roundInt(location.getX()),</span>
-<span class="source-line-no">155</span><span id="line-155">                        MathMan.roundInt(location.getY()),</span>
-<span class="source-line-no">156</span><span id="line-156">                        MathMan.roundInt(location.getZ()),</span>
-<span class="source-line-no">157</span><span id="line-157">                        location.getYaw(),</span>
-<span class="source-line-no">158</span><span id="line-158">                        location.getPitch()</span>
-<span class="source-line-no">159</span><span id="line-159">                );</span>
-<span class="source-line-no">160</span><span id="line-160">    }</span>
-<span class="source-line-no">161</span><span id="line-161"></span>
-<span class="source-line-no">162</span><span id="line-162">    /**</span>
-<span class="source-line-no">163</span><span id="line-163">     * Turn a PlotSquared {@link Location} into a Bukkit {@link org.bukkit.Location}.</span>
-<span class="source-line-no">164</span><span id="line-164">     * This only copies the 4-tuple (world,x,y,z) and does not include the yaw and the pitch</span>
-<span class="source-line-no">165</span><span id="line-165">     *</span>
-<span class="source-line-no">166</span><span id="line-166">     * @param location PlotSquared location</span>
-<span class="source-line-no">167</span><span id="line-167">     * @return Bukkit location</span>
-<span class="source-line-no">168</span><span id="line-168">     */</span>
-<span class="source-line-no">169</span><span id="line-169">    public static org.bukkit.@NonNull Location adapt(final @NonNull Location location) {</span>
-<span class="source-line-no">170</span><span id="line-170">        return new org.bukkit.Location(</span>
-<span class="source-line-no">171</span><span id="line-171">                (World) location.getWorld().getPlatformWorld(),</span>
-<span class="source-line-no">172</span><span id="line-172">                location.getX(),</span>
-<span class="source-line-no">173</span><span id="line-173">                location.getY(),</span>
-<span class="source-line-no">174</span><span id="line-174">                location.getZ()</span>
-<span class="source-line-no">175</span><span id="line-175">        );</span>
-<span class="source-line-no">176</span><span id="line-176">    }</span>
-<span class="source-line-no">177</span><span id="line-177"></span>
-<span class="source-line-no">178</span><span id="line-178">    /**</span>
-<span class="source-line-no">179</span><span id="line-179">     * Get a Bukkit {@link World} from its name</span>
-<span class="source-line-no">180</span><span id="line-180">     *</span>
-<span class="source-line-no">181</span><span id="line-181">     * @param string World name</span>
-<span class="source-line-no">182</span><span id="line-182">     * @return World if it exists, or {@code null}</span>
-<span class="source-line-no">183</span><span id="line-183">     */</span>
-<span class="source-line-no">184</span><span id="line-184">    public static @Nullable World getWorld(final @NonNull String string) {</span>
-<span class="source-line-no">185</span><span id="line-185">        return Bukkit.getWorld(string);</span>
-<span class="source-line-no">186</span><span id="line-186">    }</span>
-<span class="source-line-no">187</span><span id="line-187"></span>
-<span class="source-line-no">188</span><span id="line-188">    private static void ensureLoaded(</span>
-<span class="source-line-no">189</span><span id="line-189">            final @NonNull String world,</span>
-<span class="source-line-no">190</span><span id="line-190">            final int x,</span>
-<span class="source-line-no">191</span><span id="line-191">            final int z,</span>
-<span class="source-line-no">192</span><span id="line-192">            final @NonNull Consumer&lt;Chunk&gt; chunkConsumer</span>
-<span class="source-line-no">193</span><span id="line-193">    ) {</span>
-<span class="source-line-no">194</span><span id="line-194">        PaperLib.getChunkAtAsync(Objects.requireNonNull(getWorld(world)), x &gt;&gt; 4, z &gt;&gt; 4, true)</span>
-<span class="source-line-no">195</span><span id="line-195">                .thenAccept(chunk -&gt; ensureMainThread(chunkConsumer, chunk));</span>
-<span class="source-line-no">196</span><span id="line-196">    }</span>
-<span class="source-line-no">197</span><span id="line-197"></span>
-<span class="source-line-no">198</span><span id="line-198">    private static void ensureLoaded(final @NonNull Location location, final @NonNull Consumer&lt;Chunk&gt; chunkConsumer) {</span>
-<span class="source-line-no">199</span><span id="line-199">        PaperLib.getChunkAtAsync(adapt(location), true).thenAccept(chunk -&gt; ensureMainThread(chunkConsumer, chunk));</span>
-<span class="source-line-no">200</span><span id="line-200">    }</span>
-<span class="source-line-no">201</span><span id="line-201"></span>
-<span class="source-line-no">202</span><span id="line-202">    private static &lt;T&gt; void ensureMainThread(final @NonNull Consumer&lt;T&gt; consumer, final @NonNull T value) {</span>
-<span class="source-line-no">203</span><span id="line-203">        if (Bukkit.isPrimaryThread()) {</span>
-<span class="source-line-no">204</span><span id="line-204">            consumer.accept(value);</span>
-<span class="source-line-no">205</span><span id="line-205">        } else {</span>
-<span class="source-line-no">206</span><span id="line-206">            Bukkit.getScheduler().runTask(BukkitPlatform.getPlugin(BukkitPlatform.class), () -&gt; consumer.accept(value));</span>
-<span class="source-line-no">207</span><span id="line-207">        }</span>
-<span class="source-line-no">208</span><span id="line-208">    }</span>
-<span class="source-line-no">209</span><span id="line-209"></span>
-<span class="source-line-no">210</span><span id="line-210">    @Override</span>
-<span class="source-line-no">211</span><span id="line-211">    public boolean isBlockSame(final @NonNull BlockState block1, final @NonNull BlockState block2) {</span>
-<span class="source-line-no">212</span><span id="line-212">        if (block1.equals(block2)) {</span>
-<span class="source-line-no">213</span><span id="line-213">            return true;</span>
-<span class="source-line-no">214</span><span id="line-214">        }</span>
-<span class="source-line-no">215</span><span id="line-215">        final Material mat1 = BukkitAdapter.adapt(block1.getBlockType());</span>
-<span class="source-line-no">216</span><span id="line-216">        final Material mat2 = BukkitAdapter.adapt(block2.getBlockType());</span>
-<span class="source-line-no">217</span><span id="line-217">        return mat1 == mat2;</span>
-<span class="source-line-no">218</span><span id="line-218">    }</span>
-<span class="source-line-no">219</span><span id="line-219"></span>
-<span class="source-line-no">220</span><span id="line-220">    @Override</span>
-<span class="source-line-no">221</span><span id="line-221">    public boolean isWorld(final @NonNull String worldName) {</span>
-<span class="source-line-no">222</span><span id="line-222">        return getWorld(worldName) != null;</span>
-<span class="source-line-no">223</span><span id="line-223">    }</span>
-<span class="source-line-no">224</span><span id="line-224"></span>
-<span class="source-line-no">225</span><span id="line-225">    @Override</span>
-<span class="source-line-no">226</span><span id="line-226">    public void getBiome(final @NonNull String world, final int x, final int z, final @NonNull Consumer&lt;BiomeType&gt; result) {</span>
-<span class="source-line-no">227</span><span id="line-227">        ensureLoaded(world, x, z, chunk -&gt; result.accept(BukkitAdapter.adapt(getWorld(world).getBiome(x, z))));</span>
-<span class="source-line-no">228</span><span id="line-228">    }</span>
-<span class="source-line-no">229</span><span id="line-229"></span>
-<span class="source-line-no">230</span><span id="line-230">    @Override</span>
-<span class="source-line-no">231</span><span id="line-231">    public @NonNull BiomeType getBiomeSynchronous(final @NonNull String world, final int x, final int z) {</span>
-<span class="source-line-no">232</span><span id="line-232">        return BukkitAdapter.adapt(Objects.requireNonNull(getWorld(world)).getBiome(x, z));</span>
-<span class="source-line-no">233</span><span id="line-233">    }</span>
-<span class="source-line-no">234</span><span id="line-234"></span>
-<span class="source-line-no">235</span><span id="line-235">    @Override</span>
-<span class="source-line-no">236</span><span id="line-236">    public void getHighestBlock(final @NonNull String world, final int x, final int z, final @NonNull IntConsumer result) {</span>
-<span class="source-line-no">237</span><span id="line-237">        ensureLoaded(world, x, z, chunk -&gt; {</span>
-<span class="source-line-no">238</span><span id="line-238">            final World bukkitWorld = Objects.requireNonNull(getWorld(world));</span>
-<span class="source-line-no">239</span><span id="line-239">            // Skip top and bottom block</span>
-<span class="source-line-no">240</span><span id="line-240">            int air = 1;</span>
-<span class="source-line-no">241</span><span id="line-241">            int maxY = com.plotsquared.bukkit.util.BukkitWorld.getMaxWorldHeight(bukkitWorld);</span>
-<span class="source-line-no">242</span><span id="line-242">            int minY = com.plotsquared.bukkit.util.BukkitWorld.getMinWorldHeight(bukkitWorld);</span>
-<span class="source-line-no">243</span><span id="line-243">            for (int y = maxY - 1; y &gt;= minY; y--) {</span>
-<span class="source-line-no">244</span><span id="line-244">                Block block = bukkitWorld.getBlockAt(x, y, z);</span>
-<span class="source-line-no">245</span><span id="line-245">                Material type = block.getType();</span>
-<span class="source-line-no">246</span><span id="line-246">                if (type.isSolid()) {</span>
-<span class="source-line-no">247</span><span id="line-247">                    if (air &gt; 1) {</span>
-<span class="source-line-no">248</span><span id="line-248">                        result.accept(y);</span>
-<span class="source-line-no">249</span><span id="line-249">                        return;</span>
-<span class="source-line-no">250</span><span id="line-250">                    }</span>
-<span class="source-line-no">251</span><span id="line-251">                    air = 0;</span>
-<span class="source-line-no">252</span><span id="line-252">                } else {</span>
-<span class="source-line-no">253</span><span id="line-253">                    if (block.isLiquid()) {</span>
-<span class="source-line-no">254</span><span id="line-254">                        result.accept(y);</span>
-<span class="source-line-no">255</span><span id="line-255">                        return;</span>
-<span class="source-line-no">256</span><span id="line-256">                    }</span>
-<span class="source-line-no">257</span><span id="line-257">                    air++;</span>
-<span class="source-line-no">258</span><span id="line-258">                }</span>
-<span class="source-line-no">259</span><span id="line-259">            }</span>
-<span class="source-line-no">260</span><span id="line-260">            result.accept(bukkitWorld.getMaxHeight() - 1);</span>
-<span class="source-line-no">261</span><span id="line-261">        });</span>
-<span class="source-line-no">262</span><span id="line-262">    }</span>
-<span class="source-line-no">263</span><span id="line-263"></span>
-<span class="source-line-no">264</span><span id="line-264">    @Override</span>
-<span class="source-line-no">265</span><span id="line-265">    @NonNegative</span>
-<span class="source-line-no">266</span><span id="line-266">    public int getHighestBlockSynchronous(final @NonNull String world, final int x, final int z) {</span>
-<span class="source-line-no">267</span><span id="line-267">        final World bukkitWorld = Objects.requireNonNull(getWorld(world));</span>
-<span class="source-line-no">268</span><span id="line-268">        // Skip top and bottom block</span>
-<span class="source-line-no">269</span><span id="line-269">        int air = 1;</span>
-<span class="source-line-no">270</span><span id="line-270">        int maxY = com.plotsquared.bukkit.util.BukkitWorld.getMaxWorldHeight(bukkitWorld);</span>
-<span class="source-line-no">271</span><span id="line-271">        int minY = com.plotsquared.bukkit.util.BukkitWorld.getMinWorldHeight(bukkitWorld);</span>
-<span class="source-line-no">272</span><span id="line-272">        for (int y = maxY - 1; y &gt;= minY; y--) {</span>
-<span class="source-line-no">273</span><span id="line-273">            Block block = bukkitWorld.getBlockAt(x, y, z);</span>
-<span class="source-line-no">274</span><span id="line-274">            Material type = block.getType();</span>
-<span class="source-line-no">275</span><span id="line-275">            if (type.isSolid()) {</span>
-<span class="source-line-no">276</span><span id="line-276">                if (air &gt; 1) {</span>
-<span class="source-line-no">277</span><span id="line-277">                    return y;</span>
-<span class="source-line-no">278</span><span id="line-278">                }</span>
-<span class="source-line-no">279</span><span id="line-279">                air = 0;</span>
-<span class="source-line-no">280</span><span id="line-280">            } else {</span>
-<span class="source-line-no">281</span><span id="line-281">                if (block.isLiquid()) {</span>
-<span class="source-line-no">282</span><span id="line-282">                    return y;</span>
-<span class="source-line-no">283</span><span id="line-283">                }</span>
-<span class="source-line-no">284</span><span id="line-284">                air++;</span>
-<span class="source-line-no">285</span><span id="line-285">            }</span>
-<span class="source-line-no">286</span><span id="line-286">        }</span>
-<span class="source-line-no">287</span><span id="line-287">        return bukkitWorld.getMaxHeight() - 1;</span>
-<span class="source-line-no">288</span><span id="line-288">    }</span>
-<span class="source-line-no">289</span><span id="line-289"></span>
-<span class="source-line-no">290</span><span id="line-290">    @Override</span>
-<span class="source-line-no">291</span><span id="line-291">    public @NonNull String[] getSignSynchronous(final @NonNull Location location) {</span>
-<span class="source-line-no">292</span><span id="line-292">        Block block = Objects.requireNonNull(getWorld(location.getWorldName())).getBlockAt(</span>
-<span class="source-line-no">293</span><span id="line-293">                location.getX(),</span>
-<span class="source-line-no">294</span><span id="line-294">                location.getY(),</span>
-<span class="source-line-no">295</span><span id="line-295">                location.getZ()</span>
-<span class="source-line-no">296</span><span id="line-296">        );</span>
-<span class="source-line-no">297</span><span id="line-297">        try {</span>
-<span class="source-line-no">298</span><span id="line-298">            return TaskManager.getPlatformImplementation().sync(() -&gt; {</span>
-<span class="source-line-no">299</span><span id="line-299">                if (block.getState() instanceof Sign sign) {</span>
-<span class="source-line-no">300</span><span id="line-300">                    return sign.getLines();</span>
-<span class="source-line-no">301</span><span id="line-301">                }</span>
-<span class="source-line-no">302</span><span id="line-302">                return new String[0];</span>
-<span class="source-line-no">303</span><span id="line-303">            });</span>
-<span class="source-line-no">304</span><span id="line-304">        } catch (final Exception e) {</span>
-<span class="source-line-no">305</span><span id="line-305">            e.printStackTrace();</span>
-<span class="source-line-no">306</span><span id="line-306">        }</span>
-<span class="source-line-no">307</span><span id="line-307">        return new String[0];</span>
-<span class="source-line-no">308</span><span id="line-308">    }</span>
-<span class="source-line-no">309</span><span id="line-309"></span>
-<span class="source-line-no">310</span><span id="line-310">    @Override</span>
-<span class="source-line-no">311</span><span id="line-311">    public @NonNull Location getSpawn(final @NonNull String world) {</span>
-<span class="source-line-no">312</span><span id="line-312">        final org.bukkit.Location temp = getWorld(world).getSpawnLocation();</span>
-<span class="source-line-no">313</span><span id="line-313">        return Location.at(world, temp.getBlockX(), temp.getBlockY(), temp.getBlockZ(), temp.getYaw(), temp.getPitch());</span>
-<span class="source-line-no">314</span><span id="line-314">    }</span>
-<span class="source-line-no">315</span><span id="line-315"></span>
-<span class="source-line-no">316</span><span id="line-316">    @Override</span>
-<span class="source-line-no">317</span><span id="line-317">    public void setSpawn(final @NonNull Location location) {</span>
-<span class="source-line-no">318</span><span id="line-318">        final World world = getWorld(location.getWorldName());</span>
-<span class="source-line-no">319</span><span id="line-319">        if (world != null) {</span>
-<span class="source-line-no">320</span><span id="line-320">            world.setSpawnLocation(location.getX(), location.getY(), location.getZ());</span>
-<span class="source-line-no">321</span><span id="line-321">        }</span>
-<span class="source-line-no">322</span><span id="line-322">    }</span>
-<span class="source-line-no">323</span><span id="line-323"></span>
-<span class="source-line-no">324</span><span id="line-324">    @Override</span>
-<span class="source-line-no">325</span><span id="line-325">    public void saveWorld(final @NonNull String worldName) {</span>
-<span class="source-line-no">326</span><span id="line-326">        final World world = getWorld(worldName);</span>
-<span class="source-line-no">327</span><span id="line-327">        if (world != null) {</span>
-<span class="source-line-no">328</span><span id="line-328">            world.save();</span>
-<span class="source-line-no">329</span><span id="line-329">        }</span>
-<span class="source-line-no">330</span><span id="line-330">    }</span>
-<span class="source-line-no">331</span><span id="line-331"></span>
-<span class="source-line-no">332</span><span id="line-332">    @Override</span>
-<span class="source-line-no">333</span><span id="line-333">    @SuppressWarnings("deprecation")</span>
-<span class="source-line-no">334</span><span id="line-334">    public void setSign(</span>
-<span class="source-line-no">335</span><span id="line-335">            final @NonNull Location location, final @NonNull Caption[] lines,</span>
-<span class="source-line-no">336</span><span id="line-336">            final @NonNull TagResolver... replacements</span>
-<span class="source-line-no">337</span><span id="line-337">    ) {</span>
-<span class="source-line-no">338</span><span id="line-338">        ensureLoaded(location.getWorldName(), location.getX(), location.getZ(), chunk -&gt; {</span>
-<span class="source-line-no">339</span><span id="line-339">            PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">340</span><span id="line-340">            final World world = getWorld(location.getWorldName());</span>
-<span class="source-line-no">341</span><span id="line-341">            final Block block = world.getBlockAt(location.getX(), location.getY(), location.getZ());</span>
-<span class="source-line-no">342</span><span id="line-342">            final Material type = block.getType();</span>
-<span class="source-line-no">343</span><span id="line-343">            if (type != Material.LEGACY_SIGN &amp;&amp; type != Material.LEGACY_WALL_SIGN) {</span>
-<span class="source-line-no">344</span><span id="line-344">                BlockFace facing = BlockFace.NORTH;</span>
-<span class="source-line-no">345</span><span id="line-345">                if (!world.getBlockAt(location.getX(), location.getY(), location.getZ() + 1).getType().isSolid()) {</span>
-<span class="source-line-no">346</span><span id="line-346">                    if (world.getBlockAt(location.getX() - 1, location.getY(), location.getZ()).getType().isSolid()) {</span>
-<span class="source-line-no">347</span><span id="line-347">                        facing = BlockFace.EAST;</span>
-<span class="source-line-no">348</span><span id="line-348">                    } else if (world.getBlockAt(location.getX() + 1, location.getY(), location.getZ()).getType().isSolid()) {</span>
-<span class="source-line-no">349</span><span id="line-349">                        facing = BlockFace.WEST;</span>
-<span class="source-line-no">350</span><span id="line-350">                    } else if (world.getBlockAt(location.getX(), location.getY(), location.getZ() - 1).getType().isSolid()) {</span>
-<span class="source-line-no">351</span><span id="line-351">                        facing = BlockFace.SOUTH;</span>
-<span class="source-line-no">352</span><span id="line-352">                    }</span>
-<span class="source-line-no">353</span><span id="line-353">                }</span>
-<span class="source-line-no">354</span><span id="line-354">                if (PlotSquared.platform().serverVersion()[1] == 13) {</span>
-<span class="source-line-no">355</span><span id="line-355">                    block.setType(Material.valueOf(area.legacySignMaterial()), false);</span>
-<span class="source-line-no">356</span><span id="line-356">                } else {</span>
-<span class="source-line-no">357</span><span id="line-357">                    block.setType(Material.valueOf(area.signMaterial()), false);</span>
-<span class="source-line-no">358</span><span id="line-358">                }</span>
-<span class="source-line-no">359</span><span id="line-359">                if (!(block.getBlockData() instanceof WallSign)) {</span>
-<span class="source-line-no">360</span><span id="line-360">                    throw new RuntimeException("Something went wrong generating a sign");</span>
-<span class="source-line-no">361</span><span id="line-361">                }</span>
-<span class="source-line-no">362</span><span id="line-362">                final Directional sign = (Directional) block.getBlockData();</span>
-<span class="source-line-no">363</span><span id="line-363">                sign.setFacing(facing);</span>
-<span class="source-line-no">364</span><span id="line-364">                block.setBlockData(sign, false);</span>
-<span class="source-line-no">365</span><span id="line-365">            }</span>
-<span class="source-line-no">366</span><span id="line-366">            final org.bukkit.block.BlockState blockstate = block.getState();</span>
-<span class="source-line-no">367</span><span id="line-367">            if (blockstate instanceof final Sign sign) {</span>
-<span class="source-line-no">368</span><span id="line-368">                for (int i = 0; i &lt; lines.length; i++) {</span>
-<span class="source-line-no">369</span><span id="line-369">                    sign.setLine(i, LEGACY_COMPONENT_SERIALIZER.serialize(</span>
-<span class="source-line-no">370</span><span id="line-370">                            MINI_MESSAGE.deserialize(lines[i].getComponent(LocaleHolder.console()), replacements)</span>
-<span class="source-line-no">371</span><span id="line-371">                    ));</span>
-<span class="source-line-no">372</span><span id="line-372">                }</span>
-<span class="source-line-no">373</span><span id="line-373">                sign.update(true, false);</span>
-<span class="source-line-no">374</span><span id="line-374">            }</span>
-<span class="source-line-no">375</span><span id="line-375">        });</span>
-<span class="source-line-no">376</span><span id="line-376">    }</span>
-<span class="source-line-no">377</span><span id="line-377"></span>
-<span class="source-line-no">378</span><span id="line-378">    @Override</span>
-<span class="source-line-no">379</span><span id="line-379">    public @NonNull StringComparison&lt;BlockState&gt;.ComparisonResult getClosestBlock(@NonNull String name) {</span>
-<span class="source-line-no">380</span><span id="line-380">        BlockState state = BlockUtil.get(name);</span>
-<span class="source-line-no">381</span><span id="line-381">        return new StringComparison&lt;BlockState&gt;().new ComparisonResult(1, state);</span>
-<span class="source-line-no">382</span><span id="line-382">    }</span>
-<span class="source-line-no">383</span><span id="line-383"></span>
-<span class="source-line-no">384</span><span id="line-384">    @Override</span>
-<span class="source-line-no">385</span><span id="line-385">    public com.sk89q.worldedit.world.@NonNull World getWeWorld(final @NonNull String world) {</span>
-<span class="source-line-no">386</span><span id="line-386">        return new BukkitWorld(Bukkit.getWorld(world));</span>
-<span class="source-line-no">387</span><span id="line-387">    }</span>
-<span class="source-line-no">388</span><span id="line-388"></span>
-<span class="source-line-no">389</span><span id="line-389">    @Override</span>
-<span class="source-line-no">390</span><span id="line-390">    public void refreshChunk(int x, int z, String world) {</span>
-<span class="source-line-no">391</span><span id="line-391">        Bukkit.getWorld(world).refreshChunk(x, z);</span>
-<span class="source-line-no">392</span><span id="line-392">    }</span>
-<span class="source-line-no">393</span><span id="line-393"></span>
-<span class="source-line-no">394</span><span id="line-394">    @Override</span>
-<span class="source-line-no">395</span><span id="line-395">    public void getBlock(final @NonNull Location location, final @NonNull Consumer&lt;BlockState&gt; result) {</span>
-<span class="source-line-no">396</span><span id="line-396">        ensureLoaded(location, chunk -&gt; {</span>
-<span class="source-line-no">397</span><span id="line-397">            final World world = getWorld(location.getWorldName());</span>
-<span class="source-line-no">398</span><span id="line-398">            final Block block = Objects.requireNonNull(world).getBlockAt(location.getX(), location.getY(), location.getZ());</span>
-<span class="source-line-no">399</span><span id="line-399">            result.accept(Objects.requireNonNull(BukkitAdapter.asBlockType(block.getType())).getDefaultState());</span>
-<span class="source-line-no">400</span><span id="line-400">        });</span>
-<span class="source-line-no">401</span><span id="line-401">    }</span>
-<span class="source-line-no">402</span><span id="line-402"></span>
-<span class="source-line-no">403</span><span id="line-403">    @Override</span>
-<span class="source-line-no">404</span><span id="line-404">    public @NonNull BlockState getBlockSynchronous(final @NonNull Location location) {</span>
-<span class="source-line-no">405</span><span id="line-405">        final World world = getWorld(location.getWorldName());</span>
-<span class="source-line-no">406</span><span id="line-406">        final Block block = Objects.requireNonNull(world).getBlockAt(location.getX(), location.getY(), location.getZ());</span>
-<span class="source-line-no">407</span><span id="line-407">        return Objects.requireNonNull(BukkitAdapter.asBlockType(block.getType())).getDefaultState();</span>
-<span class="source-line-no">408</span><span id="line-408">    }</span>
-<span class="source-line-no">409</span><span id="line-409"></span>
-<span class="source-line-no">410</span><span id="line-410">    @Override</span>
-<span class="source-line-no">411</span><span id="line-411">    @NonNegative</span>
-<span class="source-line-no">412</span><span id="line-412">    public double getHealth(final @NonNull PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">413</span><span id="line-413">        return Objects.requireNonNull(Bukkit.getPlayer(player.getUUID())).getHealth();</span>
-<span class="source-line-no">414</span><span id="line-414">    }</span>
-<span class="source-line-no">415</span><span id="line-415"></span>
-<span class="source-line-no">416</span><span id="line-416">    @Override</span>
-<span class="source-line-no">417</span><span id="line-417">    @NonNegative</span>
-<span class="source-line-no">418</span><span id="line-418">    public int getFoodLevel(final @NonNull PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">419</span><span id="line-419">        return Objects.requireNonNull(Bukkit.getPlayer(player.getUUID())).getFoodLevel();</span>
-<span class="source-line-no">420</span><span id="line-420">    }</span>
-<span class="source-line-no">421</span><span id="line-421"></span>
-<span class="source-line-no">422</span><span id="line-422">    @Override</span>
-<span class="source-line-no">423</span><span id="line-423">    public void setHealth(final @NonNull PlotPlayer&lt;?&gt; player, @NonNegative final double health) {</span>
-<span class="source-line-no">424</span><span id="line-424">        Objects.requireNonNull(Bukkit.getPlayer(player.getUUID())).setHealth(health);</span>
-<span class="source-line-no">425</span><span id="line-425">    }</span>
-<span class="source-line-no">426</span><span id="line-426"></span>
-<span class="source-line-no">427</span><span id="line-427">    @Override</span>
-<span class="source-line-no">428</span><span id="line-428">    public void setFoodLevel(final @NonNull PlotPlayer&lt;?&gt; player, @NonNegative final int foodLevel) {</span>
-<span class="source-line-no">429</span><span id="line-429">        Bukkit.getPlayer(player.getUUID()).setFoodLevel(foodLevel);</span>
-<span class="source-line-no">430</span><span id="line-430">    }</span>
-<span class="source-line-no">431</span><span id="line-431"></span>
-<span class="source-line-no">432</span><span id="line-432">    @Override</span>
-<span class="source-line-no">433</span><span id="line-433">    public @NonNull Set&lt;com.sk89q.worldedit.world.entity.EntityType&gt; getTypesInCategory(final @NonNull String category) {</span>
-<span class="source-line-no">434</span><span id="line-434">        final Collection&lt;Class&lt;?&gt;&gt; allowedInterfaces = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">435</span><span id="line-435">        switch (category) {</span>
-<span class="source-line-no">436</span><span id="line-436">            case "animal" -&gt; {</span>
-<span class="source-line-no">437</span><span id="line-437">                allowedInterfaces.add(IronGolem.class);</span>
-<span class="source-line-no">438</span><span id="line-438">                allowedInterfaces.add(Snowman.class);</span>
-<span class="source-line-no">439</span><span id="line-439">                allowedInterfaces.add(Animals.class);</span>
-<span class="source-line-no">440</span><span id="line-440">                allowedInterfaces.add(WaterMob.class);</span>
-<span class="source-line-no">441</span><span id="line-441">                allowedInterfaces.add(Ambient.class);</span>
-<span class="source-line-no">442</span><span id="line-442">                if (PlotSquared.platform().serverVersion()[1] &gt;= 19) {</span>
-<span class="source-line-no">443</span><span id="line-443">                    allowedInterfaces.add(Allay.class);</span>
-<span class="source-line-no">444</span><span id="line-444">                }</span>
-<span class="source-line-no">445</span><span id="line-445">            }</span>
-<span class="source-line-no">446</span><span id="line-446">            case "tameable" -&gt; allowedInterfaces.add(Tameable.class);</span>
-<span class="source-line-no">447</span><span id="line-447">            case "vehicle" -&gt; allowedInterfaces.add(Vehicle.class);</span>
-<span class="source-line-no">448</span><span id="line-448">            case "hostile" -&gt; {</span>
-<span class="source-line-no">449</span><span id="line-449">                allowedInterfaces.add(Shulker.class);</span>
-<span class="source-line-no">450</span><span id="line-450">                allowedInterfaces.add(Monster.class);</span>
-<span class="source-line-no">451</span><span id="line-451">                allowedInterfaces.add(Boss.class);</span>
-<span class="source-line-no">452</span><span id="line-452">                allowedInterfaces.add(Slime.class);</span>
-<span class="source-line-no">453</span><span id="line-453">                allowedInterfaces.add(Ghast.class);</span>
-<span class="source-line-no">454</span><span id="line-454">                allowedInterfaces.add(Phantom.class);</span>
-<span class="source-line-no">455</span><span id="line-455">                allowedInterfaces.add(EnderCrystal.class);</span>
-<span class="source-line-no">456</span><span id="line-456">            }</span>
-<span class="source-line-no">457</span><span id="line-457">            case "hanging" -&gt; allowedInterfaces.add(Hanging.class);</span>
-<span class="source-line-no">458</span><span id="line-458">            case "villager" -&gt; allowedInterfaces.add(NPC.class);</span>
-<span class="source-line-no">459</span><span id="line-459">            case "projectile" -&gt; allowedInterfaces.add(Projectile.class);</span>
-<span class="source-line-no">460</span><span id="line-460">            case "other" -&gt; {</span>
-<span class="source-line-no">461</span><span id="line-461">                allowedInterfaces.add(ArmorStand.class);</span>
-<span class="source-line-no">462</span><span id="line-462">                allowedInterfaces.add(FallingBlock.class);</span>
-<span class="source-line-no">463</span><span id="line-463">                allowedInterfaces.add(Item.class);</span>
-<span class="source-line-no">464</span><span id="line-464">                allowedInterfaces.add(Explosive.class);</span>
-<span class="source-line-no">465</span><span id="line-465">                allowedInterfaces.add(AreaEffectCloud.class);</span>
-<span class="source-line-no">466</span><span id="line-466">                allowedInterfaces.add(EvokerFangs.class);</span>
-<span class="source-line-no">467</span><span id="line-467">                allowedInterfaces.add(LightningStrike.class);</span>
-<span class="source-line-no">468</span><span id="line-468">                allowedInterfaces.add(ExperienceOrb.class);</span>
-<span class="source-line-no">469</span><span id="line-469">                allowedInterfaces.add(EnderSignal.class);</span>
-<span class="source-line-no">470</span><span id="line-470">                allowedInterfaces.add(Firework.class);</span>
-<span class="source-line-no">471</span><span id="line-471">            }</span>
-<span class="source-line-no">472</span><span id="line-472">            case "player" -&gt; allowedInterfaces.add(Player.class);</span>
-<span class="source-line-no">473</span><span id="line-473">            default -&gt; LOGGER.error("Unknown entity category requested: {}", category);</span>
-<span class="source-line-no">474</span><span id="line-474">        }</span>
-<span class="source-line-no">475</span><span id="line-475">        final Set&lt;com.sk89q.worldedit.world.entity.EntityType&gt; types = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">476</span><span id="line-476">        outer:</span>
-<span class="source-line-no">477</span><span id="line-477">        for (final EntityType bukkitType : EntityType.values()) {</span>
-<span class="source-line-no">478</span><span id="line-478">            final Class&lt;? extends Entity&gt; entityClass = bukkitType.getEntityClass();</span>
-<span class="source-line-no">479</span><span id="line-479">            if (entityClass == null) {</span>
-<span class="source-line-no">480</span><span id="line-480">                continue;</span>
-<span class="source-line-no">481</span><span id="line-481">            }</span>
-<span class="source-line-no">482</span><span id="line-482">            for (final Class&lt;?&gt; allowedInterface : allowedInterfaces) {</span>
-<span class="source-line-no">483</span><span id="line-483">                if (allowedInterface.isAssignableFrom(entityClass)) {</span>
-<span class="source-line-no">484</span><span id="line-484">                    types.add(BukkitAdapter.adapt(bukkitType));</span>
-<span class="source-line-no">485</span><span id="line-485">                    continue outer;</span>
-<span class="source-line-no">486</span><span id="line-486">                }</span>
-<span class="source-line-no">487</span><span id="line-487">            }</span>
-<span class="source-line-no">488</span><span id="line-488">        }</span>
-<span class="source-line-no">489</span><span id="line-489">        return types;</span>
-<span class="source-line-no">490</span><span id="line-490">    }</span>
-<span class="source-line-no">491</span><span id="line-491"></span>
-<span class="source-line-no">492</span><span id="line-492">    @Override</span>
-<span class="source-line-no">493</span><span id="line-493">    public @NonNull Collection&lt;BlockType&gt; getTileEntityTypes() {</span>
-<span class="source-line-no">494</span><span id="line-494">        if (this.tileEntityTypes.isEmpty()) {</span>
-<span class="source-line-no">495</span><span id="line-495">            // Categories</span>
-<span class="source-line-no">496</span><span id="line-496">            tileEntityTypes.addAll(BlockCategories.BANNERS.getAll());</span>
-<span class="source-line-no">497</span><span id="line-497">            tileEntityTypes.addAll(BlockCategories.SIGNS.getAll());</span>
-<span class="source-line-no">498</span><span id="line-498">            tileEntityTypes.addAll(BlockCategories.BEDS.getAll());</span>
-<span class="source-line-no">499</span><span id="line-499">            tileEntityTypes.addAll(BlockCategories.FLOWER_POTS.getAll());</span>
-<span class="source-line-no">500</span><span id="line-500">            // Individual Types</span>
-<span class="source-line-no">501</span><span id="line-501">            // Add these from strings</span>
-<span class="source-line-no">502</span><span id="line-502">            Stream.of(</span>
-<span class="source-line-no">503</span><span id="line-503">                            "barrel",</span>
-<span class="source-line-no">504</span><span id="line-504">                            "beacon",</span>
-<span class="source-line-no">505</span><span id="line-505">                            "beehive",</span>
-<span class="source-line-no">506</span><span id="line-506">                            "bee_nest",</span>
-<span class="source-line-no">507</span><span id="line-507">                            "bell",</span>
-<span class="source-line-no">508</span><span id="line-508">                            "blast_furnace",</span>
-<span class="source-line-no">509</span><span id="line-509">                            "brewing_stand",</span>
-<span class="source-line-no">510</span><span id="line-510">                            "campfire",</span>
-<span class="source-line-no">511</span><span id="line-511">                            "chest",</span>
-<span class="source-line-no">512</span><span id="line-512">                            "ender_chest",</span>
-<span class="source-line-no">513</span><span id="line-513">                            "trapped_chest",</span>
-<span class="source-line-no">514</span><span id="line-514">                            "command_block",</span>
-<span class="source-line-no">515</span><span id="line-515">                            "end_gateway",</span>
-<span class="source-line-no">516</span><span id="line-516">                            "hopper",</span>
-<span class="source-line-no">517</span><span id="line-517">                            "jigsaw",</span>
-<span class="source-line-no">518</span><span id="line-518">                            "jubekox",</span>
-<span class="source-line-no">519</span><span id="line-519">                            "lectern",</span>
-<span class="source-line-no">520</span><span id="line-520">                            "note_block",</span>
-<span class="source-line-no">521</span><span id="line-521">                            "black_shulker_box",</span>
-<span class="source-line-no">522</span><span id="line-522">                            "blue_shulker_box",</span>
-<span class="source-line-no">523</span><span id="line-523">                            "brown_shulker_box",</span>
-<span class="source-line-no">524</span><span id="line-524">                            "cyan_shulker_box",</span>
-<span class="source-line-no">525</span><span id="line-525">                            "gray_shulker_box",</span>
-<span class="source-line-no">526</span><span id="line-526">                            "green_shulker_box",</span>
-<span class="source-line-no">527</span><span id="line-527">                            "light_blue_shulker_box",</span>
-<span class="source-line-no">528</span><span id="line-528">                            "light_gray_shulker_box",</span>
-<span class="source-line-no">529</span><span id="line-529">                            "lime_shulker_box",</span>
-<span class="source-line-no">530</span><span id="line-530">                            "magenta_shulker_box",</span>
-<span class="source-line-no">531</span><span id="line-531">                            "orange_shulker_box",</span>
-<span class="source-line-no">532</span><span id="line-532">                            "pink_shulker_box",</span>
-<span class="source-line-no">533</span><span id="line-533">                            "purple_shulker_box",</span>
-<span class="source-line-no">534</span><span id="line-534">                            "red_shulker_box",</span>
-<span class="source-line-no">535</span><span id="line-535">                            "shulker_box",</span>
-<span class="source-line-no">536</span><span id="line-536">                            "white_shulker_box",</span>
-<span class="source-line-no">537</span><span id="line-537">                            "yellow_shulker_box",</span>
-<span class="source-line-no">538</span><span id="line-538">                            "smoker",</span>
-<span class="source-line-no">539</span><span id="line-539">                            "structure_block",</span>
-<span class="source-line-no">540</span><span id="line-540">                            "structure_void"</span>
-<span class="source-line-no">541</span><span id="line-541">                    )</span>
-<span class="source-line-no">542</span><span id="line-542">                    .map(BlockTypes::get).filter(Objects::nonNull).forEach(tileEntityTypes::add);</span>
-<span class="source-line-no">543</span><span id="line-543">        }</span>
-<span class="source-line-no">544</span><span id="line-544">        return this.tileEntityTypes;</span>
-<span class="source-line-no">545</span><span id="line-545">    }</span>
-<span class="source-line-no">546</span><span id="line-546"></span>
-<span class="source-line-no">547</span><span id="line-547">    @Override</span>
-<span class="source-line-no">548</span><span id="line-548">    @NonNegative</span>
-<span class="source-line-no">549</span><span id="line-549">    public int getTileEntityCount(final @NonNull String world, final @NonNull BlockVector2 chunk) {</span>
-<span class="source-line-no">550</span><span id="line-550">        return Objects.requireNonNull(getWorld(world)).</span>
-<span class="source-line-no">551</span><span id="line-551">                getChunkAt(chunk.getBlockX(), chunk.getBlockZ()).getTileEntities().length;</span>
+<span class="source-line-no">078</span><span id="line-78">import org.bukkit.entity.Interaction;</span>
+<span class="source-line-no">079</span><span id="line-79">import org.bukkit.entity.IronGolem;</span>
+<span class="source-line-no">080</span><span id="line-80">import org.bukkit.entity.Item;</span>
+<span class="source-line-no">081</span><span id="line-81">import org.bukkit.entity.LightningStrike;</span>
+<span class="source-line-no">082</span><span id="line-82">import org.bukkit.entity.Monster;</span>
+<span class="source-line-no">083</span><span id="line-83">import org.bukkit.entity.NPC;</span>
+<span class="source-line-no">084</span><span id="line-84">import org.bukkit.entity.Phantom;</span>
+<span class="source-line-no">085</span><span id="line-85">import org.bukkit.entity.Player;</span>
+<span class="source-line-no">086</span><span id="line-86">import org.bukkit.entity.Projectile;</span>
+<span class="source-line-no">087</span><span id="line-87">import org.bukkit.entity.Shulker;</span>
+<span class="source-line-no">088</span><span id="line-88">import org.bukkit.entity.Slime;</span>
+<span class="source-line-no">089</span><span id="line-89">import org.bukkit.entity.Snowman;</span>
+<span class="source-line-no">090</span><span id="line-90">import org.bukkit.entity.Tameable;</span>
+<span class="source-line-no">091</span><span id="line-91">import org.bukkit.entity.Vehicle;</span>
+<span class="source-line-no">092</span><span id="line-92">import org.bukkit.entity.WaterMob;</span>
+<span class="source-line-no">093</span><span id="line-93">import org.checkerframework.checker.index.qual.NonNegative;</span>
+<span class="source-line-no">094</span><span id="line-94">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">095</span><span id="line-95">import org.checkerframework.checker.nullness.qual.Nullable;</span>
+<span class="source-line-no">096</span><span id="line-96"></span>
+<span class="source-line-no">097</span><span id="line-97">import java.util.Collection;</span>
+<span class="source-line-no">098</span><span id="line-98">import java.util.HashSet;</span>
+<span class="source-line-no">099</span><span id="line-99">import java.util.Objects;</span>
+<span class="source-line-no">100</span><span id="line-100">import java.util.Set;</span>
+<span class="source-line-no">101</span><span id="line-101">import java.util.concurrent.Semaphore;</span>
+<span class="source-line-no">102</span><span id="line-102">import java.util.function.Consumer;</span>
+<span class="source-line-no">103</span><span id="line-103">import java.util.function.IntConsumer;</span>
+<span class="source-line-no">104</span><span id="line-104">import java.util.stream.Stream;</span>
+<span class="source-line-no">105</span><span id="line-105"></span>
+<span class="source-line-no">106</span><span id="line-106">@SuppressWarnings({"unused", "WeakerAccess"})</span>
+<span class="source-line-no">107</span><span id="line-107">@Singleton</span>
+<span class="source-line-no">108</span><span id="line-108">public class BukkitUtil extends WorldUtil {</span>
+<span class="source-line-no">109</span><span id="line-109"></span>
+<span class="source-line-no">110</span><span id="line-110">    public static final BukkitAudiences BUKKIT_AUDIENCES = BukkitAudiences.create(BukkitPlatform.getPlugin(BukkitPlatform.class));</span>
+<span class="source-line-no">111</span><span id="line-111">    public static final LegacyComponentSerializer LEGACY_COMPONENT_SERIALIZER = LegacyComponentSerializer.legacySection();</span>
+<span class="source-line-no">112</span><span id="line-112">    public static final MiniMessage MINI_MESSAGE = MiniMessage.builder().build();</span>
+<span class="source-line-no">113</span><span id="line-113">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + BukkitUtil.class.getSimpleName());</span>
+<span class="source-line-no">114</span><span id="line-114">    private final Collection&lt;BlockType&gt; tileEntityTypes = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">115</span><span id="line-115"></span>
+<span class="source-line-no">116</span><span id="line-116">    /**</span>
+<span class="source-line-no">117</span><span id="line-117">     * Turn a Bukkit {@link Player} into a PlotSquared {@link PlotPlayer}</span>
+<span class="source-line-no">118</span><span id="line-118">     *</span>
+<span class="source-line-no">119</span><span id="line-119">     * @param player Bukkit player</span>
+<span class="source-line-no">120</span><span id="line-120">     * @return PlotSquared player</span>
+<span class="source-line-no">121</span><span id="line-121">     */</span>
+<span class="source-line-no">122</span><span id="line-122">    public static @NonNull BukkitPlayer adapt(final @NonNull Player player) {</span>
+<span class="source-line-no">123</span><span id="line-123">        final PlayerManager&lt;?, ?&gt; playerManager = PlotSquared.platform().playerManager();</span>
+<span class="source-line-no">124</span><span id="line-124">        return ((BukkitPlayerManager) playerManager).getPlayer(player);</span>
+<span class="source-line-no">125</span><span id="line-125">    }</span>
+<span class="source-line-no">126</span><span id="line-126"></span>
+<span class="source-line-no">127</span><span id="line-127">    /**</span>
+<span class="source-line-no">128</span><span id="line-128">     * Turn a Bukkit {@link org.bukkit.Location} into a PlotSquared {@link Location}.</span>
+<span class="source-line-no">129</span><span id="line-129">     * This only copies the 4-tuple (world,x,y,z) and does not include the yaw and the pitch</span>
+<span class="source-line-no">130</span><span id="line-130">     *</span>
+<span class="source-line-no">131</span><span id="line-131">     * @param location Bukkit location</span>
+<span class="source-line-no">132</span><span id="line-132">     * @return PlotSquared location</span>
+<span class="source-line-no">133</span><span id="line-133">     */</span>
+<span class="source-line-no">134</span><span id="line-134">    public static @NonNull Location adapt(final org.bukkit.@NonNull Location location) {</span>
+<span class="source-line-no">135</span><span id="line-135">        return Location</span>
+<span class="source-line-no">136</span><span id="line-136">                .at(</span>
+<span class="source-line-no">137</span><span id="line-137">                        com.plotsquared.bukkit.util.BukkitWorld.of(location.getWorld()),</span>
+<span class="source-line-no">138</span><span id="line-138">                        MathMan.roundInt(location.getX()),</span>
+<span class="source-line-no">139</span><span id="line-139">                        MathMan.roundInt(location.getY()),</span>
+<span class="source-line-no">140</span><span id="line-140">                        MathMan.roundInt(location.getZ())</span>
+<span class="source-line-no">141</span><span id="line-141">                );</span>
+<span class="source-line-no">142</span><span id="line-142">    }</span>
+<span class="source-line-no">143</span><span id="line-143"></span>
+<span class="source-line-no">144</span><span id="line-144">    /**</span>
+<span class="source-line-no">145</span><span id="line-145">     * Turn a Bukkit {@link org.bukkit.Location} into a PlotSquared {@link Location}.</span>
+<span class="source-line-no">146</span><span id="line-146">     * This copies the entire 6-tuple (world,x,y,z,yaw,pitch).</span>
+<span class="source-line-no">147</span><span id="line-147">     *</span>
+<span class="source-line-no">148</span><span id="line-148">     * @param location Bukkit location</span>
+<span class="source-line-no">149</span><span id="line-149">     * @return PlotSquared location</span>
+<span class="source-line-no">150</span><span id="line-150">     */</span>
+<span class="source-line-no">151</span><span id="line-151">    public static @NonNull Location adaptComplete(final org.bukkit.@NonNull Location location) {</span>
+<span class="source-line-no">152</span><span id="line-152">        return Location</span>
+<span class="source-line-no">153</span><span id="line-153">                .at(</span>
+<span class="source-line-no">154</span><span id="line-154">                        com.plotsquared.bukkit.util.BukkitWorld.of(location.getWorld()),</span>
+<span class="source-line-no">155</span><span id="line-155">                        MathMan.roundInt(location.getX()),</span>
+<span class="source-line-no">156</span><span id="line-156">                        MathMan.roundInt(location.getY()),</span>
+<span class="source-line-no">157</span><span id="line-157">                        MathMan.roundInt(location.getZ()),</span>
+<span class="source-line-no">158</span><span id="line-158">                        location.getYaw(),</span>
+<span class="source-line-no">159</span><span id="line-159">                        location.getPitch()</span>
+<span class="source-line-no">160</span><span id="line-160">                );</span>
+<span class="source-line-no">161</span><span id="line-161">    }</span>
+<span class="source-line-no">162</span><span id="line-162"></span>
+<span class="source-line-no">163</span><span id="line-163">    /**</span>
+<span class="source-line-no">164</span><span id="line-164">     * Turn a PlotSquared {@link Location} into a Bukkit {@link org.bukkit.Location}.</span>
+<span class="source-line-no">165</span><span id="line-165">     * This only copies the 4-tuple (world,x,y,z) and does not include the yaw and the pitch</span>
+<span class="source-line-no">166</span><span id="line-166">     *</span>
+<span class="source-line-no">167</span><span id="line-167">     * @param location PlotSquared location</span>
+<span class="source-line-no">168</span><span id="line-168">     * @return Bukkit location</span>
+<span class="source-line-no">169</span><span id="line-169">     */</span>
+<span class="source-line-no">170</span><span id="line-170">    public static org.bukkit.@NonNull Location adapt(final @NonNull Location location) {</span>
+<span class="source-line-no">171</span><span id="line-171">        return new org.bukkit.Location(</span>
+<span class="source-line-no">172</span><span id="line-172">                (World) location.getWorld().getPlatformWorld(),</span>
+<span class="source-line-no">173</span><span id="line-173">                location.getX(),</span>
+<span class="source-line-no">174</span><span id="line-174">                location.getY(),</span>
+<span class="source-line-no">175</span><span id="line-175">                location.getZ()</span>
+<span class="source-line-no">176</span><span id="line-176">        );</span>
+<span class="source-line-no">177</span><span id="line-177">    }</span>
+<span class="source-line-no">178</span><span id="line-178"></span>
+<span class="source-line-no">179</span><span id="line-179">    /**</span>
+<span class="source-line-no">180</span><span id="line-180">     * Get a Bukkit {@link World} from its name</span>
+<span class="source-line-no">181</span><span id="line-181">     *</span>
+<span class="source-line-no">182</span><span id="line-182">     * @param string World name</span>
+<span class="source-line-no">183</span><span id="line-183">     * @return World if it exists, or {@code null}</span>
+<span class="source-line-no">184</span><span id="line-184">     */</span>
+<span class="source-line-no">185</span><span id="line-185">    public static @Nullable World getWorld(final @NonNull String string) {</span>
+<span class="source-line-no">186</span><span id="line-186">        return Bukkit.getWorld(string);</span>
+<span class="source-line-no">187</span><span id="line-187">    }</span>
+<span class="source-line-no">188</span><span id="line-188"></span>
+<span class="source-line-no">189</span><span id="line-189">    private static void ensureLoaded(</span>
+<span class="source-line-no">190</span><span id="line-190">            final @NonNull String world,</span>
+<span class="source-line-no">191</span><span id="line-191">            final int x,</span>
+<span class="source-line-no">192</span><span id="line-192">            final int z,</span>
+<span class="source-line-no">193</span><span id="line-193">            final @NonNull Consumer&lt;Chunk&gt; chunkConsumer</span>
+<span class="source-line-no">194</span><span id="line-194">    ) {</span>
+<span class="source-line-no">195</span><span id="line-195">        PaperLib.getChunkAtAsync(Objects.requireNonNull(getWorld(world)), x &gt;&gt; 4, z &gt;&gt; 4, true)</span>
+<span class="source-line-no">196</span><span id="line-196">                .thenAccept(chunk -&gt; ensureMainThread(chunkConsumer, chunk));</span>
+<span class="source-line-no">197</span><span id="line-197">    }</span>
+<span class="source-line-no">198</span><span id="line-198"></span>
+<span class="source-line-no">199</span><span id="line-199">    private static void ensureLoaded(final @NonNull Location location, final @NonNull Consumer&lt;Chunk&gt; chunkConsumer) {</span>
+<span class="source-line-no">200</span><span id="line-200">        PaperLib.getChunkAtAsync(adapt(location), true).thenAccept(chunk -&gt; ensureMainThread(chunkConsumer, chunk));</span>
+<span class="source-line-no">201</span><span id="line-201">    }</span>
+<span class="source-line-no">202</span><span id="line-202"></span>
+<span class="source-line-no">203</span><span id="line-203">    private static &lt;T&gt; void ensureMainThread(final @NonNull Consumer&lt;T&gt; consumer, final @NonNull T value) {</span>
+<span class="source-line-no">204</span><span id="line-204">        if (Bukkit.isPrimaryThread()) {</span>
+<span class="source-line-no">205</span><span id="line-205">            consumer.accept(value);</span>
+<span class="source-line-no">206</span><span id="line-206">        } else {</span>
+<span class="source-line-no">207</span><span id="line-207">            Bukkit.getScheduler().runTask(BukkitPlatform.getPlugin(BukkitPlatform.class), () -&gt; consumer.accept(value));</span>
+<span class="source-line-no">208</span><span id="line-208">        }</span>
+<span class="source-line-no">209</span><span id="line-209">    }</span>
+<span class="source-line-no">210</span><span id="line-210"></span>
+<span class="source-line-no">211</span><span id="line-211">    @Override</span>
+<span class="source-line-no">212</span><span id="line-212">    public boolean isBlockSame(final @NonNull BlockState block1, final @NonNull BlockState block2) {</span>
+<span class="source-line-no">213</span><span id="line-213">        if (block1.equals(block2)) {</span>
+<span class="source-line-no">214</span><span id="line-214">            return true;</span>
+<span class="source-line-no">215</span><span id="line-215">        }</span>
+<span class="source-line-no">216</span><span id="line-216">        final Material mat1 = BukkitAdapter.adapt(block1.getBlockType());</span>
+<span class="source-line-no">217</span><span id="line-217">        final Material mat2 = BukkitAdapter.adapt(block2.getBlockType());</span>
+<span class="source-line-no">218</span><span id="line-218">        return mat1 == mat2;</span>
+<span class="source-line-no">219</span><span id="line-219">    }</span>
+<span class="source-line-no">220</span><span id="line-220"></span>
+<span class="source-line-no">221</span><span id="line-221">    @Override</span>
+<span class="source-line-no">222</span><span id="line-222">    public boolean isWorld(final @NonNull String worldName) {</span>
+<span class="source-line-no">223</span><span id="line-223">        return getWorld(worldName) != null;</span>
+<span class="source-line-no">224</span><span id="line-224">    }</span>
+<span class="source-line-no">225</span><span id="line-225"></span>
+<span class="source-line-no">226</span><span id="line-226">    @Override</span>
+<span class="source-line-no">227</span><span id="line-227">    public void getBiome(final @NonNull String world, final int x, final int z, final @NonNull Consumer&lt;BiomeType&gt; result) {</span>
+<span class="source-line-no">228</span><span id="line-228">        ensureLoaded(world, x, z, chunk -&gt; result.accept(BukkitAdapter.adapt(getWorld(world).getBiome(x, z))));</span>
+<span class="source-line-no">229</span><span id="line-229">    }</span>
+<span class="source-line-no">230</span><span id="line-230"></span>
+<span class="source-line-no">231</span><span id="line-231">    @Override</span>
+<span class="source-line-no">232</span><span id="line-232">    public @NonNull BiomeType getBiomeSynchronous(final @NonNull String world, final int x, final int z) {</span>
+<span class="source-line-no">233</span><span id="line-233">        return BukkitAdapter.adapt(Objects.requireNonNull(getWorld(world)).getBiome(x, z));</span>
+<span class="source-line-no">234</span><span id="line-234">    }</span>
+<span class="source-line-no">235</span><span id="line-235"></span>
+<span class="source-line-no">236</span><span id="line-236">    @Override</span>
+<span class="source-line-no">237</span><span id="line-237">    public void getHighestBlock(final @NonNull String world, final int x, final int z, final @NonNull IntConsumer result) {</span>
+<span class="source-line-no">238</span><span id="line-238">        ensureLoaded(world, x, z, chunk -&gt; {</span>
+<span class="source-line-no">239</span><span id="line-239">            final World bukkitWorld = Objects.requireNonNull(getWorld(world));</span>
+<span class="source-line-no">240</span><span id="line-240">            // Skip top and bottom block</span>
+<span class="source-line-no">241</span><span id="line-241">            int air = 1;</span>
+<span class="source-line-no">242</span><span id="line-242">            int maxY = com.plotsquared.bukkit.util.BukkitWorld.getMaxWorldHeight(bukkitWorld);</span>
+<span class="source-line-no">243</span><span id="line-243">            int minY = com.plotsquared.bukkit.util.BukkitWorld.getMinWorldHeight(bukkitWorld);</span>
+<span class="source-line-no">244</span><span id="line-244">            for (int y = maxY - 1; y &gt;= minY; y--) {</span>
+<span class="source-line-no">245</span><span id="line-245">                Block block = bukkitWorld.getBlockAt(x, y, z);</span>
+<span class="source-line-no">246</span><span id="line-246">                Material type = block.getType();</span>
+<span class="source-line-no">247</span><span id="line-247">                if (type.isSolid()) {</span>
+<span class="source-line-no">248</span><span id="line-248">                    if (air &gt; 1) {</span>
+<span class="source-line-no">249</span><span id="line-249">                        result.accept(y);</span>
+<span class="source-line-no">250</span><span id="line-250">                        return;</span>
+<span class="source-line-no">251</span><span id="line-251">                    }</span>
+<span class="source-line-no">252</span><span id="line-252">                    air = 0;</span>
+<span class="source-line-no">253</span><span id="line-253">                } else {</span>
+<span class="source-line-no">254</span><span id="line-254">                    if (block.isLiquid()) {</span>
+<span class="source-line-no">255</span><span id="line-255">                        result.accept(y);</span>
+<span class="source-line-no">256</span><span id="line-256">                        return;</span>
+<span class="source-line-no">257</span><span id="line-257">                    }</span>
+<span class="source-line-no">258</span><span id="line-258">                    air++;</span>
+<span class="source-line-no">259</span><span id="line-259">                }</span>
+<span class="source-line-no">260</span><span id="line-260">            }</span>
+<span class="source-line-no">261</span><span id="line-261">            result.accept(bukkitWorld.getMaxHeight() - 1);</span>
+<span class="source-line-no">262</span><span id="line-262">        });</span>
+<span class="source-line-no">263</span><span id="line-263">    }</span>
+<span class="source-line-no">264</span><span id="line-264"></span>
+<span class="source-line-no">265</span><span id="line-265">    @Override</span>
+<span class="source-line-no">266</span><span id="line-266">    @NonNegative</span>
+<span class="source-line-no">267</span><span id="line-267">    public int getHighestBlockSynchronous(final @NonNull String world, final int x, final int z) {</span>
+<span class="source-line-no">268</span><span id="line-268">        final World bukkitWorld = Objects.requireNonNull(getWorld(world));</span>
+<span class="source-line-no">269</span><span id="line-269">        // Skip top and bottom block</span>
+<span class="source-line-no">270</span><span id="line-270">        int air = 1;</span>
+<span class="source-line-no">271</span><span id="line-271">        int maxY = com.plotsquared.bukkit.util.BukkitWorld.getMaxWorldHeight(bukkitWorld);</span>
+<span class="source-line-no">272</span><span id="line-272">        int minY = com.plotsquared.bukkit.util.BukkitWorld.getMinWorldHeight(bukkitWorld);</span>
+<span class="source-line-no">273</span><span id="line-273">        for (int y = maxY - 1; y &gt;= minY; y--) {</span>
+<span class="source-line-no">274</span><span id="line-274">            Block block = bukkitWorld.getBlockAt(x, y, z);</span>
+<span class="source-line-no">275</span><span id="line-275">            Material type = block.getType();</span>
+<span class="source-line-no">276</span><span id="line-276">            if (type.isSolid()) {</span>
+<span class="source-line-no">277</span><span id="line-277">                if (air &gt; 1) {</span>
+<span class="source-line-no">278</span><span id="line-278">                    return y;</span>
+<span class="source-line-no">279</span><span id="line-279">                }</span>
+<span class="source-line-no">280</span><span id="line-280">                air = 0;</span>
+<span class="source-line-no">281</span><span id="line-281">            } else {</span>
+<span class="source-line-no">282</span><span id="line-282">                if (block.isLiquid()) {</span>
+<span class="source-line-no">283</span><span id="line-283">                    return y;</span>
+<span class="source-line-no">284</span><span id="line-284">                }</span>
+<span class="source-line-no">285</span><span id="line-285">                air++;</span>
+<span class="source-line-no">286</span><span id="line-286">            }</span>
+<span class="source-line-no">287</span><span id="line-287">        }</span>
+<span class="source-line-no">288</span><span id="line-288">        return bukkitWorld.getMaxHeight() - 1;</span>
+<span class="source-line-no">289</span><span id="line-289">    }</span>
+<span class="source-line-no">290</span><span id="line-290"></span>
+<span class="source-line-no">291</span><span id="line-291">    @Override</span>
+<span class="source-line-no">292</span><span id="line-292">    public @NonNull String[] getSignSynchronous(final @NonNull Location location) {</span>
+<span class="source-line-no">293</span><span id="line-293">        Block block = Objects.requireNonNull(getWorld(location.getWorldName())).getBlockAt(</span>
+<span class="source-line-no">294</span><span id="line-294">                location.getX(),</span>
+<span class="source-line-no">295</span><span id="line-295">                location.getY(),</span>
+<span class="source-line-no">296</span><span id="line-296">                location.getZ()</span>
+<span class="source-line-no">297</span><span id="line-297">        );</span>
+<span class="source-line-no">298</span><span id="line-298">        try {</span>
+<span class="source-line-no">299</span><span id="line-299">            return TaskManager.getPlatformImplementation().sync(() -&gt; {</span>
+<span class="source-line-no">300</span><span id="line-300">                if (block.getState() instanceof Sign sign) {</span>
+<span class="source-line-no">301</span><span id="line-301">                    return sign.getLines();</span>
+<span class="source-line-no">302</span><span id="line-302">                }</span>
+<span class="source-line-no">303</span><span id="line-303">                return new String[0];</span>
+<span class="source-line-no">304</span><span id="line-304">            });</span>
+<span class="source-line-no">305</span><span id="line-305">        } catch (final Exception e) {</span>
+<span class="source-line-no">306</span><span id="line-306">            e.printStackTrace();</span>
+<span class="source-line-no">307</span><span id="line-307">        }</span>
+<span class="source-line-no">308</span><span id="line-308">        return new String[0];</span>
+<span class="source-line-no">309</span><span id="line-309">    }</span>
+<span class="source-line-no">310</span><span id="line-310"></span>
+<span class="source-line-no">311</span><span id="line-311">    @Override</span>
+<span class="source-line-no">312</span><span id="line-312">    public @NonNull Location getSpawn(final @NonNull String world) {</span>
+<span class="source-line-no">313</span><span id="line-313">        final org.bukkit.Location temp = getWorld(world).getSpawnLocation();</span>
+<span class="source-line-no">314</span><span id="line-314">        return Location.at(world, temp.getBlockX(), temp.getBlockY(), temp.getBlockZ(), temp.getYaw(), temp.getPitch());</span>
+<span class="source-line-no">315</span><span id="line-315">    }</span>
+<span class="source-line-no">316</span><span id="line-316"></span>
+<span class="source-line-no">317</span><span id="line-317">    @Override</span>
+<span class="source-line-no">318</span><span id="line-318">    public void setSpawn(final @NonNull Location location) {</span>
+<span class="source-line-no">319</span><span id="line-319">        final World world = getWorld(location.getWorldName());</span>
+<span class="source-line-no">320</span><span id="line-320">        if (world != null) {</span>
+<span class="source-line-no">321</span><span id="line-321">            world.setSpawnLocation(location.getX(), location.getY(), location.getZ());</span>
+<span class="source-line-no">322</span><span id="line-322">        }</span>
+<span class="source-line-no">323</span><span id="line-323">    }</span>
+<span class="source-line-no">324</span><span id="line-324"></span>
+<span class="source-line-no">325</span><span id="line-325">    @Override</span>
+<span class="source-line-no">326</span><span id="line-326">    public void saveWorld(final @NonNull String worldName) {</span>
+<span class="source-line-no">327</span><span id="line-327">        final World world = getWorld(worldName);</span>
+<span class="source-line-no">328</span><span id="line-328">        if (world != null) {</span>
+<span class="source-line-no">329</span><span id="line-329">            world.save();</span>
+<span class="source-line-no">330</span><span id="line-330">        }</span>
+<span class="source-line-no">331</span><span id="line-331">    }</span>
+<span class="source-line-no">332</span><span id="line-332"></span>
+<span class="source-line-no">333</span><span id="line-333">    @Override</span>
+<span class="source-line-no">334</span><span id="line-334">    @SuppressWarnings("deprecation")</span>
+<span class="source-line-no">335</span><span id="line-335">    public void setSign(</span>
+<span class="source-line-no">336</span><span id="line-336">            final @NonNull Location location, final @NonNull Caption[] lines,</span>
+<span class="source-line-no">337</span><span id="line-337">            final @NonNull TagResolver... replacements</span>
+<span class="source-line-no">338</span><span id="line-338">    ) {</span>
+<span class="source-line-no">339</span><span id="line-339">        ensureLoaded(location.getWorldName(), location.getX(), location.getZ(), chunk -&gt; {</span>
+<span class="source-line-no">340</span><span id="line-340">            PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">341</span><span id="line-341">            final World world = getWorld(location.getWorldName());</span>
+<span class="source-line-no">342</span><span id="line-342">            final Block block = world.getBlockAt(location.getX(), location.getY(), location.getZ());</span>
+<span class="source-line-no">343</span><span id="line-343">            final Material type = block.getType();</span>
+<span class="source-line-no">344</span><span id="line-344">            if (type != Material.LEGACY_SIGN &amp;&amp; type != Material.LEGACY_WALL_SIGN) {</span>
+<span class="source-line-no">345</span><span id="line-345">                BlockFace facing = BlockFace.NORTH;</span>
+<span class="source-line-no">346</span><span id="line-346">                if (!world.getBlockAt(location.getX(), location.getY(), location.getZ() + 1).getType().isSolid()) {</span>
+<span class="source-line-no">347</span><span id="line-347">                    if (world.getBlockAt(location.getX() - 1, location.getY(), location.getZ()).getType().isSolid()) {</span>
+<span class="source-line-no">348</span><span id="line-348">                        facing = BlockFace.EAST;</span>
+<span class="source-line-no">349</span><span id="line-349">                    } else if (world.getBlockAt(location.getX() + 1, location.getY(), location.getZ()).getType().isSolid()) {</span>
+<span class="source-line-no">350</span><span id="line-350">                        facing = BlockFace.WEST;</span>
+<span class="source-line-no">351</span><span id="line-351">                    } else if (world.getBlockAt(location.getX(), location.getY(), location.getZ() - 1).getType().isSolid()) {</span>
+<span class="source-line-no">352</span><span id="line-352">                        facing = BlockFace.SOUTH;</span>
+<span class="source-line-no">353</span><span id="line-353">                    }</span>
+<span class="source-line-no">354</span><span id="line-354">                }</span>
+<span class="source-line-no">355</span><span id="line-355">                if (PlotSquared.platform().serverVersion()[1] == 13) {</span>
+<span class="source-line-no">356</span><span id="line-356">                    block.setType(Material.valueOf(area.legacySignMaterial()), false);</span>
+<span class="source-line-no">357</span><span id="line-357">                } else {</span>
+<span class="source-line-no">358</span><span id="line-358">                    block.setType(Material.valueOf(area.signMaterial()), false);</span>
+<span class="source-line-no">359</span><span id="line-359">                }</span>
+<span class="source-line-no">360</span><span id="line-360">                if (!(block.getBlockData() instanceof WallSign)) {</span>
+<span class="source-line-no">361</span><span id="line-361">                    throw new RuntimeException("Something went wrong generating a sign");</span>
+<span class="source-line-no">362</span><span id="line-362">                }</span>
+<span class="source-line-no">363</span><span id="line-363">                final Directional sign = (Directional) block.getBlockData();</span>
+<span class="source-line-no">364</span><span id="line-364">                sign.setFacing(facing);</span>
+<span class="source-line-no">365</span><span id="line-365">                block.setBlockData(sign, false);</span>
+<span class="source-line-no">366</span><span id="line-366">            }</span>
+<span class="source-line-no">367</span><span id="line-367">            final org.bukkit.block.BlockState blockstate = block.getState();</span>
+<span class="source-line-no">368</span><span id="line-368">            if (blockstate instanceof final Sign sign) {</span>
+<span class="source-line-no">369</span><span id="line-369">                for (int i = 0; i &lt; lines.length; i++) {</span>
+<span class="source-line-no">370</span><span id="line-370">                    sign.setLine(i, LEGACY_COMPONENT_SERIALIZER.serialize(</span>
+<span class="source-line-no">371</span><span id="line-371">                            MINI_MESSAGE.deserialize(lines[i].getComponent(LocaleHolder.console()), replacements)</span>
+<span class="source-line-no">372</span><span id="line-372">                    ));</span>
+<span class="source-line-no">373</span><span id="line-373">                }</span>
+<span class="source-line-no">374</span><span id="line-374">                sign.update(true, false);</span>
+<span class="source-line-no">375</span><span id="line-375">            }</span>
+<span class="source-line-no">376</span><span id="line-376">        });</span>
+<span class="source-line-no">377</span><span id="line-377">    }</span>
+<span class="source-line-no">378</span><span id="line-378"></span>
+<span class="source-line-no">379</span><span id="line-379">    @Override</span>
+<span class="source-line-no">380</span><span id="line-380">    public @NonNull StringComparison&lt;BlockState&gt;.ComparisonResult getClosestBlock(@NonNull String name) {</span>
+<span class="source-line-no">381</span><span id="line-381">        BlockState state = BlockUtil.get(name);</span>
+<span class="source-line-no">382</span><span id="line-382">        return new StringComparison&lt;BlockState&gt;().new ComparisonResult(1, state);</span>
+<span class="source-line-no">383</span><span id="line-383">    }</span>
+<span class="source-line-no">384</span><span id="line-384"></span>
+<span class="source-line-no">385</span><span id="line-385">    @Override</span>
+<span class="source-line-no">386</span><span id="line-386">    public com.sk89q.worldedit.world.@NonNull World getWeWorld(final @NonNull String world) {</span>
+<span class="source-line-no">387</span><span id="line-387">        return new BukkitWorld(Bukkit.getWorld(world));</span>
+<span class="source-line-no">388</span><span id="line-388">    }</span>
+<span class="source-line-no">389</span><span id="line-389"></span>
+<span class="source-line-no">390</span><span id="line-390">    @Override</span>
+<span class="source-line-no">391</span><span id="line-391">    public void refreshChunk(int x, int z, String world) {</span>
+<span class="source-line-no">392</span><span id="line-392">        Bukkit.getWorld(world).refreshChunk(x, z);</span>
+<span class="source-line-no">393</span><span id="line-393">    }</span>
+<span class="source-line-no">394</span><span id="line-394"></span>
+<span class="source-line-no">395</span><span id="line-395">    @Override</span>
+<span class="source-line-no">396</span><span id="line-396">    public void getBlock(final @NonNull Location location, final @NonNull Consumer&lt;BlockState&gt; result) {</span>
+<span class="source-line-no">397</span><span id="line-397">        ensureLoaded(location, chunk -&gt; {</span>
+<span class="source-line-no">398</span><span id="line-398">            final World world = getWorld(location.getWorldName());</span>
+<span class="source-line-no">399</span><span id="line-399">            final Block block = Objects.requireNonNull(world).getBlockAt(location.getX(), location.getY(), location.getZ());</span>
+<span class="source-line-no">400</span><span id="line-400">            result.accept(Objects.requireNonNull(BukkitAdapter.asBlockType(block.getType())).getDefaultState());</span>
+<span class="source-line-no">401</span><span id="line-401">        });</span>
+<span class="source-line-no">402</span><span id="line-402">    }</span>
+<span class="source-line-no">403</span><span id="line-403"></span>
+<span class="source-line-no">404</span><span id="line-404">    @Override</span>
+<span class="source-line-no">405</span><span id="line-405">    public @NonNull BlockState getBlockSynchronous(final @NonNull Location location) {</span>
+<span class="source-line-no">406</span><span id="line-406">        final World world = getWorld(location.getWorldName());</span>
+<span class="source-line-no">407</span><span id="line-407">        final Block block = Objects.requireNonNull(world).getBlockAt(location.getX(), location.getY(), location.getZ());</span>
+<span class="source-line-no">408</span><span id="line-408">        return Objects.requireNonNull(BukkitAdapter.asBlockType(block.getType())).getDefaultState();</span>
+<span class="source-line-no">409</span><span id="line-409">    }</span>
+<span class="source-line-no">410</span><span id="line-410"></span>
+<span class="source-line-no">411</span><span id="line-411">    @Override</span>
+<span class="source-line-no">412</span><span id="line-412">    @NonNegative</span>
+<span class="source-line-no">413</span><span id="line-413">    public double getHealth(final @NonNull PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">414</span><span id="line-414">        return Objects.requireNonNull(Bukkit.getPlayer(player.getUUID())).getHealth();</span>
+<span class="source-line-no">415</span><span id="line-415">    }</span>
+<span class="source-line-no">416</span><span id="line-416"></span>
+<span class="source-line-no">417</span><span id="line-417">    @Override</span>
+<span class="source-line-no">418</span><span id="line-418">    @NonNegative</span>
+<span class="source-line-no">419</span><span id="line-419">    public int getFoodLevel(final @NonNull PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">420</span><span id="line-420">        return Objects.requireNonNull(Bukkit.getPlayer(player.getUUID())).getFoodLevel();</span>
+<span class="source-line-no">421</span><span id="line-421">    }</span>
+<span class="source-line-no">422</span><span id="line-422"></span>
+<span class="source-line-no">423</span><span id="line-423">    @Override</span>
+<span class="source-line-no">424</span><span id="line-424">    public void setHealth(final @NonNull PlotPlayer&lt;?&gt; player, @NonNegative final double health) {</span>
+<span class="source-line-no">425</span><span id="line-425">        Objects.requireNonNull(Bukkit.getPlayer(player.getUUID())).setHealth(health);</span>
+<span class="source-line-no">426</span><span id="line-426">    }</span>
+<span class="source-line-no">427</span><span id="line-427"></span>
+<span class="source-line-no">428</span><span id="line-428">    @Override</span>
+<span class="source-line-no">429</span><span id="line-429">    public void setFoodLevel(final @NonNull PlotPlayer&lt;?&gt; player, @NonNegative final int foodLevel) {</span>
+<span class="source-line-no">430</span><span id="line-430">        Bukkit.getPlayer(player.getUUID()).setFoodLevel(foodLevel);</span>
+<span class="source-line-no">431</span><span id="line-431">    }</span>
+<span class="source-line-no">432</span><span id="line-432"></span>
+<span class="source-line-no">433</span><span id="line-433">    @Override</span>
+<span class="source-line-no">434</span><span id="line-434">    public @NonNull Set&lt;com.sk89q.worldedit.world.entity.EntityType&gt; getTypesInCategory(final @NonNull String category) {</span>
+<span class="source-line-no">435</span><span id="line-435">        final Collection&lt;Class&lt;?&gt;&gt; allowedInterfaces = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">436</span><span id="line-436">        final int[] version = PlotSquared.platform().serverVersion();</span>
+<span class="source-line-no">437</span><span id="line-437">        switch (category) {</span>
+<span class="source-line-no">438</span><span id="line-438">            case "animal" -&gt; {</span>
+<span class="source-line-no">439</span><span id="line-439">                allowedInterfaces.add(IronGolem.class);</span>
+<span class="source-line-no">440</span><span id="line-440">                allowedInterfaces.add(Snowman.class);</span>
+<span class="source-line-no">441</span><span id="line-441">                allowedInterfaces.add(Animals.class);</span>
+<span class="source-line-no">442</span><span id="line-442">                allowedInterfaces.add(WaterMob.class);</span>
+<span class="source-line-no">443</span><span id="line-443">                allowedInterfaces.add(Ambient.class);</span>
+<span class="source-line-no">444</span><span id="line-444">                if (version[1] &gt;= 19) {</span>
+<span class="source-line-no">445</span><span id="line-445">                    allowedInterfaces.add(Allay.class);</span>
+<span class="source-line-no">446</span><span id="line-446">                }</span>
+<span class="source-line-no">447</span><span id="line-447">            }</span>
+<span class="source-line-no">448</span><span id="line-448">            case "tameable" -&gt; allowedInterfaces.add(Tameable.class);</span>
+<span class="source-line-no">449</span><span id="line-449">            case "vehicle" -&gt; allowedInterfaces.add(Vehicle.class);</span>
+<span class="source-line-no">450</span><span id="line-450">            case "hostile" -&gt; {</span>
+<span class="source-line-no">451</span><span id="line-451">                allowedInterfaces.add(Shulker.class);</span>
+<span class="source-line-no">452</span><span id="line-452">                allowedInterfaces.add(Monster.class);</span>
+<span class="source-line-no">453</span><span id="line-453">                allowedInterfaces.add(Boss.class);</span>
+<span class="source-line-no">454</span><span id="line-454">                allowedInterfaces.add(Slime.class);</span>
+<span class="source-line-no">455</span><span id="line-455">                allowedInterfaces.add(Ghast.class);</span>
+<span class="source-line-no">456</span><span id="line-456">                allowedInterfaces.add(Phantom.class);</span>
+<span class="source-line-no">457</span><span id="line-457">                allowedInterfaces.add(EnderCrystal.class);</span>
+<span class="source-line-no">458</span><span id="line-458">            }</span>
+<span class="source-line-no">459</span><span id="line-459">            case "hanging" -&gt; allowedInterfaces.add(Hanging.class);</span>
+<span class="source-line-no">460</span><span id="line-460">            case "villager" -&gt; allowedInterfaces.add(NPC.class);</span>
+<span class="source-line-no">461</span><span id="line-461">            case "projectile" -&gt; allowedInterfaces.add(Projectile.class);</span>
+<span class="source-line-no">462</span><span id="line-462">            case "other" -&gt; {</span>
+<span class="source-line-no">463</span><span id="line-463">                allowedInterfaces.add(ArmorStand.class);</span>
+<span class="source-line-no">464</span><span id="line-464">                allowedInterfaces.add(FallingBlock.class);</span>
+<span class="source-line-no">465</span><span id="line-465">                allowedInterfaces.add(Item.class);</span>
+<span class="source-line-no">466</span><span id="line-466">                allowedInterfaces.add(Explosive.class);</span>
+<span class="source-line-no">467</span><span id="line-467">                allowedInterfaces.add(AreaEffectCloud.class);</span>
+<span class="source-line-no">468</span><span id="line-468">                allowedInterfaces.add(EvokerFangs.class);</span>
+<span class="source-line-no">469</span><span id="line-469">                allowedInterfaces.add(LightningStrike.class);</span>
+<span class="source-line-no">470</span><span id="line-470">                allowedInterfaces.add(ExperienceOrb.class);</span>
+<span class="source-line-no">471</span><span id="line-471">                allowedInterfaces.add(EnderSignal.class);</span>
+<span class="source-line-no">472</span><span id="line-472">                allowedInterfaces.add(Firework.class);</span>
+<span class="source-line-no">473</span><span id="line-473">            }</span>
+<span class="source-line-no">474</span><span id="line-474">            case "player" -&gt; allowedInterfaces.add(Player.class);</span>
+<span class="source-line-no">475</span><span id="line-475">            case "interaction" -&gt; {</span>
+<span class="source-line-no">476</span><span id="line-476">                if ((version[1] &gt; 19) || (version[1] == 19 &amp;&amp; version[2] &gt;= 4)) {</span>
+<span class="source-line-no">477</span><span id="line-477">                    allowedInterfaces.add(Interaction.class);</span>
+<span class="source-line-no">478</span><span id="line-478">                }</span>
+<span class="source-line-no">479</span><span id="line-479">            }</span>
+<span class="source-line-no">480</span><span id="line-480">            default -&gt; LOGGER.error("Unknown entity category requested: {}", category);</span>
+<span class="source-line-no">481</span><span id="line-481">        }</span>
+<span class="source-line-no">482</span><span id="line-482">        final Set&lt;com.sk89q.worldedit.world.entity.EntityType&gt; types = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">483</span><span id="line-483">        outer:</span>
+<span class="source-line-no">484</span><span id="line-484">        for (final EntityType bukkitType : EntityType.values()) {</span>
+<span class="source-line-no">485</span><span id="line-485">            final Class&lt;? extends Entity&gt; entityClass = bukkitType.getEntityClass();</span>
+<span class="source-line-no">486</span><span id="line-486">            if (entityClass == null) {</span>
+<span class="source-line-no">487</span><span id="line-487">                continue;</span>
+<span class="source-line-no">488</span><span id="line-488">            }</span>
+<span class="source-line-no">489</span><span id="line-489">            for (final Class&lt;?&gt; allowedInterface : allowedInterfaces) {</span>
+<span class="source-line-no">490</span><span id="line-490">                if (allowedInterface.isAssignableFrom(entityClass)) {</span>
+<span class="source-line-no">491</span><span id="line-491">                    types.add(BukkitAdapter.adapt(bukkitType));</span>
+<span class="source-line-no">492</span><span id="line-492">                    continue outer;</span>
+<span class="source-line-no">493</span><span id="line-493">                }</span>
+<span class="source-line-no">494</span><span id="line-494">            }</span>
+<span class="source-line-no">495</span><span id="line-495">        }</span>
+<span class="source-line-no">496</span><span id="line-496">        return types;</span>
+<span class="source-line-no">497</span><span id="line-497">    }</span>
+<span class="source-line-no">498</span><span id="line-498"></span>
+<span class="source-line-no">499</span><span id="line-499">    @Override</span>
+<span class="source-line-no">500</span><span id="line-500">    public @NonNull Collection&lt;BlockType&gt; getTileEntityTypes() {</span>
+<span class="source-line-no">501</span><span id="line-501">        if (this.tileEntityTypes.isEmpty()) {</span>
+<span class="source-line-no">502</span><span id="line-502">            // Categories</span>
+<span class="source-line-no">503</span><span id="line-503">            tileEntityTypes.addAll(BlockCategories.BANNERS.getAll());</span>
+<span class="source-line-no">504</span><span id="line-504">            tileEntityTypes.addAll(BlockCategories.SIGNS.getAll());</span>
+<span class="source-line-no">505</span><span id="line-505">            tileEntityTypes.addAll(BlockCategories.BEDS.getAll());</span>
+<span class="source-line-no">506</span><span id="line-506">            tileEntityTypes.addAll(BlockCategories.FLOWER_POTS.getAll());</span>
+<span class="source-line-no">507</span><span id="line-507">            // Individual Types</span>
+<span class="source-line-no">508</span><span id="line-508">            // Add these from strings</span>
+<span class="source-line-no">509</span><span id="line-509">            Stream.of(</span>
+<span class="source-line-no">510</span><span id="line-510">                            "barrel",</span>
+<span class="source-line-no">511</span><span id="line-511">                            "beacon",</span>
+<span class="source-line-no">512</span><span id="line-512">                            "beehive",</span>
+<span class="source-line-no">513</span><span id="line-513">                            "bee_nest",</span>
+<span class="source-line-no">514</span><span id="line-514">                            "bell",</span>
+<span class="source-line-no">515</span><span id="line-515">                            "blast_furnace",</span>
+<span class="source-line-no">516</span><span id="line-516">                            "brewing_stand",</span>
+<span class="source-line-no">517</span><span id="line-517">                            "campfire",</span>
+<span class="source-line-no">518</span><span id="line-518">                            "chest",</span>
+<span class="source-line-no">519</span><span id="line-519">                            "ender_chest",</span>
+<span class="source-line-no">520</span><span id="line-520">                            "trapped_chest",</span>
+<span class="source-line-no">521</span><span id="line-521">                            "command_block",</span>
+<span class="source-line-no">522</span><span id="line-522">                            "end_gateway",</span>
+<span class="source-line-no">523</span><span id="line-523">                            "hopper",</span>
+<span class="source-line-no">524</span><span id="line-524">                            "jigsaw",</span>
+<span class="source-line-no">525</span><span id="line-525">                            "jubekox",</span>
+<span class="source-line-no">526</span><span id="line-526">                            "lectern",</span>
+<span class="source-line-no">527</span><span id="line-527">                            "note_block",</span>
+<span class="source-line-no">528</span><span id="line-528">                            "black_shulker_box",</span>
+<span class="source-line-no">529</span><span id="line-529">                            "blue_shulker_box",</span>
+<span class="source-line-no">530</span><span id="line-530">                            "brown_shulker_box",</span>
+<span class="source-line-no">531</span><span id="line-531">                            "cyan_shulker_box",</span>
+<span class="source-line-no">532</span><span id="line-532">                            "gray_shulker_box",</span>
+<span class="source-line-no">533</span><span id="line-533">                            "green_shulker_box",</span>
+<span class="source-line-no">534</span><span id="line-534">                            "light_blue_shulker_box",</span>
+<span class="source-line-no">535</span><span id="line-535">                            "light_gray_shulker_box",</span>
+<span class="source-line-no">536</span><span id="line-536">                            "lime_shulker_box",</span>
+<span class="source-line-no">537</span><span id="line-537">                            "magenta_shulker_box",</span>
+<span class="source-line-no">538</span><span id="line-538">                            "orange_shulker_box",</span>
+<span class="source-line-no">539</span><span id="line-539">                            "pink_shulker_box",</span>
+<span class="source-line-no">540</span><span id="line-540">                            "purple_shulker_box",</span>
+<span class="source-line-no">541</span><span id="line-541">                            "red_shulker_box",</span>
+<span class="source-line-no">542</span><span id="line-542">                            "shulker_box",</span>
+<span class="source-line-no">543</span><span id="line-543">                            "white_shulker_box",</span>
+<span class="source-line-no">544</span><span id="line-544">                            "yellow_shulker_box",</span>
+<span class="source-line-no">545</span><span id="line-545">                            "smoker",</span>
+<span class="source-line-no">546</span><span id="line-546">                            "structure_block",</span>
+<span class="source-line-no">547</span><span id="line-547">                            "structure_void"</span>
+<span class="source-line-no">548</span><span id="line-548">                    )</span>
+<span class="source-line-no">549</span><span id="line-549">                    .map(BlockTypes::get).filter(Objects::nonNull).forEach(tileEntityTypes::add);</span>
+<span class="source-line-no">550</span><span id="line-550">        }</span>
+<span class="source-line-no">551</span><span id="line-551">        return this.tileEntityTypes;</span>
 <span class="source-line-no">552</span><span id="line-552">    }</span>
 <span class="source-line-no">553</span><span id="line-553"></span>
 <span class="source-line-no">554</span><span id="line-554">    @Override</span>
-<span class="source-line-no">555</span><span id="line-555">    public Set&lt;BlockVector2&gt; getChunkChunks(String world) {</span>
-<span class="source-line-no">556</span><span id="line-556">        Set&lt;BlockVector2&gt; chunks = super.getChunkChunks(world);</span>
-<span class="source-line-no">557</span><span id="line-557">        if (Bukkit.isPrimaryThread()) {</span>
-<span class="source-line-no">558</span><span id="line-558">            for (Chunk chunk : Objects.requireNonNull(Bukkit.getWorld(world)).getLoadedChunks()) {</span>
-<span class="source-line-no">559</span><span id="line-559">                BlockVector2 loc = BlockVector2.at(chunk.getX() &gt;&gt; 5, chunk.getZ() &gt;&gt; 5);</span>
-<span class="source-line-no">560</span><span id="line-560">                chunks.add(loc);</span>
-<span class="source-line-no">561</span><span id="line-561">            }</span>
-<span class="source-line-no">562</span><span id="line-562">        } else {</span>
-<span class="source-line-no">563</span><span id="line-563">            final Semaphore semaphore = new Semaphore(1);</span>
-<span class="source-line-no">564</span><span id="line-564">            try {</span>
-<span class="source-line-no">565</span><span id="line-565">                semaphore.acquire();</span>
-<span class="source-line-no">566</span><span id="line-566">                Bukkit.getScheduler().runTask(BukkitPlatform.getPlugin(BukkitPlatform.class), () -&gt; {</span>
-<span class="source-line-no">567</span><span id="line-567">                    for (Chunk chunk : Objects.requireNonNull(Bukkit.getWorld(world)).getLoadedChunks()) {</span>
-<span class="source-line-no">568</span><span id="line-568">                        BlockVector2 loc = BlockVector2.at(chunk.getX() &gt;&gt; 5, chunk.getZ() &gt;&gt; 5);</span>
-<span class="source-line-no">569</span><span id="line-569">                        chunks.add(loc);</span>
-<span class="source-line-no">570</span><span id="line-570">                    }</span>
-<span class="source-line-no">571</span><span id="line-571">                    semaphore.release();</span>
-<span class="source-line-no">572</span><span id="line-572">                });</span>
-<span class="source-line-no">573</span><span id="line-573">                semaphore.acquireUninterruptibly();</span>
-<span class="source-line-no">574</span><span id="line-574">            } catch (final Exception e) {</span>
-<span class="source-line-no">575</span><span id="line-575">                e.printStackTrace();</span>
-<span class="source-line-no">576</span><span id="line-576">            }</span>
-<span class="source-line-no">577</span><span id="line-577">        }</span>
-<span class="source-line-no">578</span><span id="line-578">        return chunks;</span>
-<span class="source-line-no">579</span><span id="line-579">    }</span>
-<span class="source-line-no">580</span><span id="line-580"></span>
-<span class="source-line-no">581</span><span id="line-581">}</span>
+<span class="source-line-no">555</span><span id="line-555">    @NonNegative</span>
+<span class="source-line-no">556</span><span id="line-556">    public int getTileEntityCount(final @NonNull String world, final @NonNull BlockVector2 chunk) {</span>
+<span class="source-line-no">557</span><span id="line-557">        return Objects.requireNonNull(getWorld(world)).</span>
+<span class="source-line-no">558</span><span id="line-558">                getChunkAt(chunk.getBlockX(), chunk.getBlockZ()).getTileEntities().length;</span>
+<span class="source-line-no">559</span><span id="line-559">    }</span>
+<span class="source-line-no">560</span><span id="line-560"></span>
+<span class="source-line-no">561</span><span id="line-561">    @Override</span>
+<span class="source-line-no">562</span><span id="line-562">    public Set&lt;BlockVector2&gt; getChunkChunks(String world) {</span>
+<span class="source-line-no">563</span><span id="line-563">        Set&lt;BlockVector2&gt; chunks = super.getChunkChunks(world);</span>
+<span class="source-line-no">564</span><span id="line-564">        if (Bukkit.isPrimaryThread()) {</span>
+<span class="source-line-no">565</span><span id="line-565">            for (Chunk chunk : Objects.requireNonNull(Bukkit.getWorld(world)).getLoadedChunks()) {</span>
+<span class="source-line-no">566</span><span id="line-566">                BlockVector2 loc = BlockVector2.at(chunk.getX() &gt;&gt; 5, chunk.getZ() &gt;&gt; 5);</span>
+<span class="source-line-no">567</span><span id="line-567">                chunks.add(loc);</span>
+<span class="source-line-no">568</span><span id="line-568">            }</span>
+<span class="source-line-no">569</span><span id="line-569">        } else {</span>
+<span class="source-line-no">570</span><span id="line-570">            final Semaphore semaphore = new Semaphore(1);</span>
+<span class="source-line-no">571</span><span id="line-571">            try {</span>
+<span class="source-line-no">572</span><span id="line-572">                semaphore.acquire();</span>
+<span class="source-line-no">573</span><span id="line-573">                Bukkit.getScheduler().runTask(BukkitPlatform.getPlugin(BukkitPlatform.class), () -&gt; {</span>
+<span class="source-line-no">574</span><span id="line-574">                    for (Chunk chunk : Objects.requireNonNull(Bukkit.getWorld(world)).getLoadedChunks()) {</span>
+<span class="source-line-no">575</span><span id="line-575">                        BlockVector2 loc = BlockVector2.at(chunk.getX() &gt;&gt; 5, chunk.getZ() &gt;&gt; 5);</span>
+<span class="source-line-no">576</span><span id="line-576">                        chunks.add(loc);</span>
+<span class="source-line-no">577</span><span id="line-577">                    }</span>
+<span class="source-line-no">578</span><span id="line-578">                    semaphore.release();</span>
+<span class="source-line-no">579</span><span id="line-579">                });</span>
+<span class="source-line-no">580</span><span id="line-580">                semaphore.acquireUninterruptibly();</span>
+<span class="source-line-no">581</span><span id="line-581">            } catch (final Exception e) {</span>
+<span class="source-line-no">582</span><span id="line-582">                e.printStackTrace();</span>
+<span class="source-line-no">583</span><span id="line-583">            }</span>
+<span class="source-line-no">584</span><span id="line-584">        }</span>
+<span class="source-line-no">585</span><span id="line-585">        return chunks;</span>
+<span class="source-line-no">586</span><span id="line-586">    }</span>
+<span class="source-line-no">587</span><span id="line-587"></span>
+<span class="source-line-no">588</span><span id="line-588">}</span>
 
 
 

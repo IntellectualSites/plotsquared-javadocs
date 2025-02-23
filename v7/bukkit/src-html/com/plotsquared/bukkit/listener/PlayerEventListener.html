@@ -389,7 +389,7 @@
 <span class="source-line-no">376</span><span id="line-376"></span>
 <span class="source-line-no">377</span><span id="line-377">    @EventHandler</span>
 <span class="source-line-no">378</span><span id="line-378">    public void onVehicleEntityCollision(VehicleEntityCollisionEvent e) {</span>
-<span class="source-line-no">379</span><span id="line-379">        if (e.getVehicle().getType() == EntityType.BOAT) {</span>
+<span class="source-line-no">379</span><span id="line-379">        if (e.getVehicle() instanceof Boat) {</span>
 <span class="source-line-no">380</span><span id="line-380">            Location location = BukkitUtil.adapt(e.getEntity().getLocation());</span>
 <span class="source-line-no">381</span><span id="line-381">            if (location.isPlotArea()) {</span>
 <span class="source-line-no">382</span><span id="line-382">                if (e.getEntity() instanceof Player) {</span>

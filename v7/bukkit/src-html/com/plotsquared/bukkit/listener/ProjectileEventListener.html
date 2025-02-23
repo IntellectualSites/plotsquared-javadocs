@@ -48,7 +48,7 @@
 <span class="source-line-no">035</span><span id="line-35">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
 <span class="source-line-no">036</span><span id="line-36">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
 <span class="source-line-no">037</span><span id="line-37">import org.bukkit.entity.Entity;</span>
-<span class="source-line-no">038</span><span id="line-38">import org.bukkit.entity.EntityType;</span>
+<span class="source-line-no">038</span><span id="line-38">import org.bukkit.entity.FishHook;</span>
 <span class="source-line-no">039</span><span id="line-39">import org.bukkit.entity.LivingEntity;</span>
 <span class="source-line-no">040</span><span id="line-40">import org.bukkit.entity.Player;</span>
 <span class="source-line-no">041</span><span id="line-41">import org.bukkit.entity.Projectile;</span>
@@ -147,7 +147,7 @@
 <span class="source-line-no">134</span><span id="line-134">                event.setCancelled(true);</span>
 <span class="source-line-no">135</span><span id="line-135">            }</span>
 <span class="source-line-no">136</span><span id="line-136">        } else if (!plot.isAdded(pp.getUUID())) {</span>
-<span class="source-line-no">137</span><span id="line-137">            if (entity.getType().equals(EntityType.FISHING_HOOK)) {</span>
+<span class="source-line-no">137</span><span id="line-137">            if (entity instanceof FishHook) {</span>
 <span class="source-line-no">138</span><span id="line-138">                if (plot.getFlag(FishingFlag.class)) {</span>
 <span class="source-line-no">139</span><span id="line-139">                    return;</span>
 <span class="source-line-no">140</span><span id="line-140">                }</span>
@@ -207,7 +207,7 @@
 <span class="source-line-no">194</span><span id="line-194">                return;</span>
 <span class="source-line-no">195</span><span id="line-195">            }</span>
 <span class="source-line-no">196</span><span id="line-196">            if (plot.isAdded(pp.getUUID()) || pp.hasPermission(Permission.PERMISSION_ADMIN_PROJECTILE_OTHER) || plot.getFlag(</span>
-<span class="source-line-no">197</span><span id="line-197">                    ProjectilesFlag.class) || (entity.getType().equals(EntityType.FISHING_HOOK) &amp;&amp; plot.getFlag(</span>
+<span class="source-line-no">197</span><span id="line-197">                    ProjectilesFlag.class) || (entity instanceof FishHook &amp;&amp; plot.getFlag(</span>
 <span class="source-line-no">198</span><span id="line-198">                    FishingFlag.class))) {</span>
 <span class="source-line-no">199</span><span id="line-199">                return;</span>
 <span class="source-line-no">200</span><span id="line-200">            }</span>

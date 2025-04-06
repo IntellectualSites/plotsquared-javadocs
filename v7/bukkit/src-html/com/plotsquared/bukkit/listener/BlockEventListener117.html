@@ -147,7 +147,7 @@
 <span class="source-line-no">134</span><span id="line-134">    public void onBlockFertilize(BlockFertilizeEvent event) {</span>
 <span class="source-line-no">135</span><span id="line-135">        Block block = event.getBlock();</span>
 <span class="source-line-no">136</span><span id="line-136">        List&lt;org.bukkit.block.BlockState&gt; blocks = event.getBlocks();</span>
-<span class="source-line-no">137</span><span id="line-137">        Location location = BukkitUtil.adapt(blocks.get(0).getLocation());</span>
+<span class="source-line-no">137</span><span id="line-137">        Location location = BukkitUtil.adapt(block.getLocation());</span>
 <span class="source-line-no">138</span><span id="line-138"></span>
 <span class="source-line-no">139</span><span id="line-139">        PlotArea area = location.getPlotArea();</span>
 <span class="source-line-no">140</span><span id="line-140">        if (area == null) {</span>

@@ -606,7 +606,7 @@
 <span class="source-line-no">593</span><span id="line-593">                    return;</span>
 <span class="source-line-no">594</span><span id="line-594">                }</span>
 <span class="source-line-no">595</span><span id="line-595">                Plot plot = area.getPlot(location);</span>
-<span class="source-line-no">596</span><span id="line-596">                if (plot != null) {</span>
+<span class="source-line-no">596</span><span id="line-596">                if (plot != null &amp;&amp; !plot.equals(lastPlot)) {</span>
 <span class="source-line-no">597</span><span id="line-597">                    final boolean result = DenyTeleportFlag.allowsTeleport(pp, plot);</span>
 <span class="source-line-no">598</span><span id="line-598">                    // there is one possibility to still allow teleportation:</span>
 <span class="source-line-no">599</span><span id="line-599">                    // to is identical to the plot's home location, and untrusted-visit is true</span>

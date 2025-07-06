@@ -126,76 +126,72 @@
 <span class="source-line-no">113</span><span id="line-113">            }</span>
 <span class="source-line-no">114</span><span id="line-114">            if (cat == null &amp;&amp; page == 0) {</span>
 <span class="source-line-no">115</span><span id="line-115">                TextComponent.Builder builder = Component.text();</span>
-<span class="source-line-no">116</span><span id="line-116">                builder.append(MINI_MESSAGE.deserialize(TranslatableCaption.of("help.help_header").getComponent(player)));</span>
+<span class="source-line-no">116</span><span id="line-116">                builder.append(TranslatableCaption.of("help.help_header").toComponent(player));</span>
 <span class="source-line-no">117</span><span id="line-117">                for (CommandCategory c : CommandCategory.values()) {</span>
 <span class="source-line-no">118</span><span id="line-118">                    if (!c.canAccess(player)) {</span>
 <span class="source-line-no">119</span><span id="line-119">                        continue;</span>
 <span class="source-line-no">120</span><span id="line-120">                    }</span>
-<span class="source-line-no">121</span><span id="line-121">                    builder.append(Component.newline()).append(MINI_MESSAGE</span>
-<span class="source-line-no">122</span><span id="line-122">                            .deserialize(</span>
-<span class="source-line-no">123</span><span id="line-123">                                    TranslatableCaption.of("help.help_info_item").getComponent(player),</span>
-<span class="source-line-no">124</span><span id="line-124">                                    TagResolver.builder()</span>
-<span class="source-line-no">125</span><span id="line-125">                                            .tag("command", Tag.inserting(Component.text("/plot help")))</span>
-<span class="source-line-no">126</span><span id="line-126">                                            .tag("category", Tag.inserting(Component.text(c.name().toLowerCase())))</span>
-<span class="source-line-no">127</span><span id="line-127">                                            .tag("category_desc", Tag.inserting(c.toComponent(player)))</span>
-<span class="source-line-no">128</span><span id="line-128">                                            .build()</span>
-<span class="source-line-no">129</span><span id="line-129">                            ));</span>
-<span class="source-line-no">130</span><span id="line-130">                }</span>
-<span class="source-line-no">131</span><span id="line-131">                builder.append(Component.newline()).append(MINI_MESSAGE</span>
-<span class="source-line-no">132</span><span id="line-132">                        .deserialize(</span>
-<span class="source-line-no">133</span><span id="line-133">                                TranslatableCaption.of("help.help_info_item").getComponent(player),</span>
-<span class="source-line-no">134</span><span id="line-134">                                TagResolver.builder()</span>
-<span class="source-line-no">135</span><span id="line-135">                                        .tag("command", Tag.inserting(Component.text("/plot help")))</span>
-<span class="source-line-no">136</span><span id="line-136">                                        .tag("category", Tag.inserting(Component.text("all")))</span>
-<span class="source-line-no">137</span><span id="line-137">                                        .tag(</span>
-<span class="source-line-no">138</span><span id="line-138">                                                "category_desc",</span>
-<span class="source-line-no">139</span><span id="line-139">                                                Tag.inserting(TranslatableCaption</span>
-<span class="source-line-no">140</span><span id="line-140">                                                        .of("help.help_display_all_commands")</span>
-<span class="source-line-no">141</span><span id="line-141">                                                        .toComponent(player))</span>
-<span class="source-line-no">142</span><span id="line-142">                                        )</span>
-<span class="source-line-no">143</span><span id="line-143">                                        .build()</span>
-<span class="source-line-no">144</span><span id="line-144">                        ));</span>
-<span class="source-line-no">145</span><span id="line-145">                builder.append(Component.newline()).append(MINI_MESSAGE.deserialize(TranslatableCaption</span>
-<span class="source-line-no">146</span><span id="line-146">                        .of("help.help_footer")</span>
-<span class="source-line-no">147</span><span id="line-147">                        .getComponent(player)));</span>
-<span class="source-line-no">148</span><span id="line-148">                player.sendMessage(StaticCaption.of(MINI_MESSAGE.serialize(builder.asComponent())));</span>
-<span class="source-line-no">149</span><span id="line-149">                return true;</span>
-<span class="source-line-no">150</span><span id="line-150">            }</span>
-<span class="source-line-no">151</span><span id="line-151">            new HelpMenu(player).setCategory(catEnum).getCommands().generateMaxPages().generatePage(</span>
-<span class="source-line-no">152</span><span id="line-152">                            page - 1,</span>
-<span class="source-line-no">153</span><span id="line-153">                            getParent().toString(),</span>
-<span class="source-line-no">154</span><span id="line-154">                            player</span>
-<span class="source-line-no">155</span><span id="line-155">                    )</span>
-<span class="source-line-no">156</span><span id="line-156">                    .render();</span>
-<span class="source-line-no">157</span><span id="line-157">            return true;</span>
-<span class="source-line-no">158</span><span id="line-158">        });</span>
-<span class="source-line-no">159</span><span id="line-159">    }</span>
-<span class="source-line-no">160</span><span id="line-160"></span>
-<span class="source-line-no">161</span><span id="line-161">    @Override</span>
-<span class="source-line-no">162</span><span id="line-162">    public Collection&lt;Command&gt; tab(PlotPlayer&lt;?&gt; player, String[] args, boolean space) {</span>
-<span class="source-line-no">163</span><span id="line-163">        final String argument = args[0].toLowerCase(Locale.ENGLISH);</span>
-<span class="source-line-no">164</span><span id="line-164">        List&lt;Command&gt; result = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">165</span><span id="line-165"></span>
-<span class="source-line-no">166</span><span id="line-166">        for (final CommandCategory category : CommandCategory.values()) {</span>
-<span class="source-line-no">167</span><span id="line-167">            if (!category.canAccess(player)) {</span>
+<span class="source-line-no">121</span><span id="line-121">                    builder.append(Component.newline());</span>
+<span class="source-line-no">122</span><span id="line-122">                    builder.append(TranslatableCaption.of("help.help_info_item").toComponent(</span>
+<span class="source-line-no">123</span><span id="line-123">                            player, TagResolver.builder()</span>
+<span class="source-line-no">124</span><span id="line-124">                                    .tag("command", Tag.inserting(Component.text("/plot help")))</span>
+<span class="source-line-no">125</span><span id="line-125">                                    .tag("category", Tag.inserting(Component.text(c.name().toLowerCase())))</span>
+<span class="source-line-no">126</span><span id="line-126">                                    .tag("category_desc", Tag.inserting(c.toComponent(player)))</span>
+<span class="source-line-no">127</span><span id="line-127">                                    .build()</span>
+<span class="source-line-no">128</span><span id="line-128">                    ));</span>
+<span class="source-line-no">129</span><span id="line-129">                }</span>
+<span class="source-line-no">130</span><span id="line-130">                builder.append(Component.newline());</span>
+<span class="source-line-no">131</span><span id="line-131">                builder.append(TranslatableCaption.of("help.help_info_item").toComponent(</span>
+<span class="source-line-no">132</span><span id="line-132">                        player, TagResolver.builder()</span>
+<span class="source-line-no">133</span><span id="line-133">                                .tag("command", Tag.inserting(Component.text("/plot help")))</span>
+<span class="source-line-no">134</span><span id="line-134">                                .tag("category", Tag.inserting(Component.text("all")))</span>
+<span class="source-line-no">135</span><span id="line-135">                                .tag(</span>
+<span class="source-line-no">136</span><span id="line-136">                                        "category_desc", Tag.inserting(TranslatableCaption</span>
+<span class="source-line-no">137</span><span id="line-137">                                                .of("help.help_display_all_commands")</span>
+<span class="source-line-no">138</span><span id="line-138">                                                .toComponent(player))</span>
+<span class="source-line-no">139</span><span id="line-139">                                )</span>
+<span class="source-line-no">140</span><span id="line-140">                                .build()</span>
+<span class="source-line-no">141</span><span id="line-141">                ));</span>
+<span class="source-line-no">142</span><span id="line-142">                builder.append(Component.newline());</span>
+<span class="source-line-no">143</span><span id="line-143">                builder.append(TranslatableCaption.of("help.help_footer").toComponent(player));</span>
+<span class="source-line-no">144</span><span id="line-144">                player.sendMessage(StaticCaption.of(MINI_MESSAGE.serialize(builder.asComponent())));</span>
+<span class="source-line-no">145</span><span id="line-145">                return true;</span>
+<span class="source-line-no">146</span><span id="line-146">            }</span>
+<span class="source-line-no">147</span><span id="line-147">            new HelpMenu(player).setCategory(catEnum).getCommands().generateMaxPages().generatePage(</span>
+<span class="source-line-no">148</span><span id="line-148">                            page - 1,</span>
+<span class="source-line-no">149</span><span id="line-149">                            getParent().toString(),</span>
+<span class="source-line-no">150</span><span id="line-150">                            player</span>
+<span class="source-line-no">151</span><span id="line-151">                    )</span>
+<span class="source-line-no">152</span><span id="line-152">                    .render();</span>
+<span class="source-line-no">153</span><span id="line-153">            return true;</span>
+<span class="source-line-no">154</span><span id="line-154">        });</span>
+<span class="source-line-no">155</span><span id="line-155">    }</span>
+<span class="source-line-no">156</span><span id="line-156"></span>
+<span class="source-line-no">157</span><span id="line-157">    @Override</span>
+<span class="source-line-no">158</span><span id="line-158">    public Collection&lt;Command&gt; tab(PlotPlayer&lt;?&gt; player, String[] args, boolean space) {</span>
+<span class="source-line-no">159</span><span id="line-159">        final String argument = args[0].toLowerCase(Locale.ENGLISH);</span>
+<span class="source-line-no">160</span><span id="line-160">        List&lt;Command&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">161</span><span id="line-161"></span>
+<span class="source-line-no">162</span><span id="line-162">        for (final CommandCategory category : CommandCategory.values()) {</span>
+<span class="source-line-no">163</span><span id="line-163">            if (!category.canAccess(player)) {</span>
+<span class="source-line-no">164</span><span id="line-164">                continue;</span>
+<span class="source-line-no">165</span><span id="line-165">            }</span>
+<span class="source-line-no">166</span><span id="line-166">            String name = category.name().toLowerCase();</span>
+<span class="source-line-no">167</span><span id="line-167">            if (!name.startsWith(argument)) {</span>
 <span class="source-line-no">168</span><span id="line-168">                continue;</span>
 <span class="source-line-no">169</span><span id="line-169">            }</span>
-<span class="source-line-no">170</span><span id="line-170">            String name = category.name().toLowerCase();</span>
-<span class="source-line-no">171</span><span id="line-171">            if (!name.startsWith(argument)) {</span>
-<span class="source-line-no">172</span><span id="line-172">                continue;</span>
-<span class="source-line-no">173</span><span id="line-173">            }</span>
-<span class="source-line-no">174</span><span id="line-174">            result.add(new Command(null, false, name, "", RequiredType.NONE, null) {</span>
-<span class="source-line-no">175</span><span id="line-175">            });</span>
-<span class="source-line-no">176</span><span id="line-176">        }</span>
-<span class="source-line-no">177</span><span id="line-177">        // add the category "all"</span>
-<span class="source-line-no">178</span><span id="line-178">        if ("all".startsWith(argument)) {</span>
-<span class="source-line-no">179</span><span id="line-179">            result.add(new Command(null, false, "all", "", RequiredType.NONE, null) {</span>
-<span class="source-line-no">180</span><span id="line-180">            });</span>
-<span class="source-line-no">181</span><span id="line-181">        }</span>
-<span class="source-line-no">182</span><span id="line-182">        return result;</span>
-<span class="source-line-no">183</span><span id="line-183">    }</span>
-<span class="source-line-no">184</span><span id="line-184"></span>
-<span class="source-line-no">185</span><span id="line-185">}</span>
+<span class="source-line-no">170</span><span id="line-170">            result.add(new Command(null, false, name, "", RequiredType.NONE, null) {</span>
+<span class="source-line-no">171</span><span id="line-171">            });</span>
+<span class="source-line-no">172</span><span id="line-172">        }</span>
+<span class="source-line-no">173</span><span id="line-173">        // add the category "all"</span>
+<span class="source-line-no">174</span><span id="line-174">        if ("all".startsWith(argument)) {</span>
+<span class="source-line-no">175</span><span id="line-175">            result.add(new Command(null, false, "all", "", RequiredType.NONE, null) {</span>
+<span class="source-line-no">176</span><span id="line-176">            });</span>
+<span class="source-line-no">177</span><span id="line-177">        }</span>
+<span class="source-line-no">178</span><span id="line-178">        return result;</span>
+<span class="source-line-no">179</span><span id="line-179">    }</span>
+<span class="source-line-no">180</span><span id="line-180"></span>
+<span class="source-line-no">181</span><span id="line-181">}</span>
 
 
 

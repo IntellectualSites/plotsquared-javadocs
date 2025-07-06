@@ -367,52 +367,56 @@
 <span class="source-line-no">354</span><span id="line-354">    }</span>
 <span class="source-line-no">355</span><span id="line-355"></span>
 <span class="source-line-no">356</span><span id="line-356">    public static boolean checkEntity(Entity entity, Plot plot) {</span>
-<span class="source-line-no">357</span><span id="line-357">        if (plot == null || !plot.hasOwner() || plot.getFlags().isEmpty() &amp;&amp; plot.getArea()</span>
-<span class="source-line-no">358</span><span id="line-358">                .getFlagContainer().getFlagMap().isEmpty()) {</span>
-<span class="source-line-no">359</span><span id="line-359">            return false;</span>
-<span class="source-line-no">360</span><span id="line-360">        }</span>
-<span class="source-line-no">361</span><span id="line-361"></span>
-<span class="source-line-no">362</span><span id="line-362">        final com.sk89q.worldedit.world.entity.EntityType entityType =</span>
-<span class="source-line-no">363</span><span id="line-363">                BukkitAdapter.adapt(entity.getType());</span>
-<span class="source-line-no">364</span><span id="line-364"></span>
-<span class="source-line-no">365</span><span id="line-365">        if (EntityCategories.PLAYER.contains(entityType)) {</span>
-<span class="source-line-no">366</span><span id="line-366">            return false;</span>
-<span class="source-line-no">367</span><span id="line-367">        }</span>
+<span class="source-line-no">357</span><span id="line-357">        return checkEntity(entity.getType(), plot);</span>
+<span class="source-line-no">358</span><span id="line-358">    }</span>
+<span class="source-line-no">359</span><span id="line-359"></span>
+<span class="source-line-no">360</span><span id="line-360">    public static boolean checkEntity(EntityType type, Plot plot) {</span>
+<span class="source-line-no">361</span><span id="line-361">        if (plot == null || !plot.hasOwner() || plot.getFlags().isEmpty() &amp;&amp; plot.getArea()</span>
+<span class="source-line-no">362</span><span id="line-362">                .getFlagContainer().getFlagMap().isEmpty()) {</span>
+<span class="source-line-no">363</span><span id="line-363">            return false;</span>
+<span class="source-line-no">364</span><span id="line-364">        }</span>
+<span class="source-line-no">365</span><span id="line-365"></span>
+<span class="source-line-no">366</span><span id="line-366">        final com.sk89q.worldedit.world.entity.EntityType entityType =</span>
+<span class="source-line-no">367</span><span id="line-367">                BukkitAdapter.adapt(type);</span>
 <span class="source-line-no">368</span><span id="line-368"></span>
-<span class="source-line-no">369</span><span id="line-369">        if (EntityCategories.PROJECTILE.contains(entityType) || EntityCategories.OTHER</span>
-<span class="source-line-no">370</span><span id="line-370">                .contains(entityType) || EntityCategories.HANGING.contains(entityType)) {</span>
-<span class="source-line-no">371</span><span id="line-371">            return EntityUtil.checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED,</span>
-<span class="source-line-no">372</span><span id="line-372">                    MiscCapFlag.MISC_CAP_UNLIMITED</span>
-<span class="source-line-no">373</span><span id="line-373">            );</span>
-<span class="source-line-no">374</span><span id="line-374">        }</span>
-<span class="source-line-no">375</span><span id="line-375"></span>
-<span class="source-line-no">376</span><span id="line-376">        // Has to go go before vehicle as horses are both</span>
-<span class="source-line-no">377</span><span id="line-377">        // animals and vehicles</span>
-<span class="source-line-no">378</span><span id="line-378">        if (EntityCategories.ANIMAL.contains(entityType) || EntityCategories.VILLAGER</span>
-<span class="source-line-no">379</span><span id="line-379">                .contains(entityType) || EntityCategories.TAMEABLE.contains(entityType)) {</span>
-<span class="source-line-no">380</span><span id="line-380">            return EntityUtil</span>
-<span class="source-line-no">381</span><span id="line-381">                    .checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED, MobCapFlag.MOB_CAP_UNLIMITED,</span>
-<span class="source-line-no">382</span><span id="line-382">                            AnimalCapFlag.ANIMAL_CAP_UNLIMITED</span>
-<span class="source-line-no">383</span><span id="line-383">                    );</span>
-<span class="source-line-no">384</span><span id="line-384">        }</span>
-<span class="source-line-no">385</span><span id="line-385"></span>
-<span class="source-line-no">386</span><span id="line-386">        if (EntityCategories.HOSTILE.contains(entityType)) {</span>
-<span class="source-line-no">387</span><span id="line-387">            return EntityUtil</span>
-<span class="source-line-no">388</span><span id="line-388">                    .checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED, MobCapFlag.MOB_CAP_UNLIMITED,</span>
-<span class="source-line-no">389</span><span id="line-389">                            HostileCapFlag.HOSTILE_CAP_UNLIMITED</span>
-<span class="source-line-no">390</span><span id="line-390">                    );</span>
-<span class="source-line-no">391</span><span id="line-391">        }</span>
-<span class="source-line-no">392</span><span id="line-392"></span>
-<span class="source-line-no">393</span><span id="line-393">        if (EntityCategories.VEHICLE.contains(entityType)) {</span>
-<span class="source-line-no">394</span><span id="line-394">            return EntityUtil.checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED,</span>
-<span class="source-line-no">395</span><span id="line-395">                    VehicleCapFlag.VEHICLE_CAP_UNLIMITED</span>
-<span class="source-line-no">396</span><span id="line-396">            );</span>
-<span class="source-line-no">397</span><span id="line-397">        }</span>
-<span class="source-line-no">398</span><span id="line-398"></span>
-<span class="source-line-no">399</span><span id="line-399">        return EntityUtil.checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED);</span>
-<span class="source-line-no">400</span><span id="line-400">    }</span>
-<span class="source-line-no">401</span><span id="line-401"></span>
-<span class="source-line-no">402</span><span id="line-402">}</span>
+<span class="source-line-no">369</span><span id="line-369">        if (EntityCategories.PLAYER.contains(entityType)) {</span>
+<span class="source-line-no">370</span><span id="line-370">            return false;</span>
+<span class="source-line-no">371</span><span id="line-371">        }</span>
+<span class="source-line-no">372</span><span id="line-372"></span>
+<span class="source-line-no">373</span><span id="line-373">        if (EntityCategories.PROJECTILE.contains(entityType) || EntityCategories.OTHER</span>
+<span class="source-line-no">374</span><span id="line-374">                .contains(entityType) || EntityCategories.HANGING.contains(entityType)) {</span>
+<span class="source-line-no">375</span><span id="line-375">            return EntityUtil.checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED,</span>
+<span class="source-line-no">376</span><span id="line-376">                    MiscCapFlag.MISC_CAP_UNLIMITED</span>
+<span class="source-line-no">377</span><span id="line-377">            );</span>
+<span class="source-line-no">378</span><span id="line-378">        }</span>
+<span class="source-line-no">379</span><span id="line-379"></span>
+<span class="source-line-no">380</span><span id="line-380">        // Has to go go before vehicle as horses are both</span>
+<span class="source-line-no">381</span><span id="line-381">        // animals and vehicles</span>
+<span class="source-line-no">382</span><span id="line-382">        if (EntityCategories.ANIMAL.contains(entityType) || EntityCategories.VILLAGER</span>
+<span class="source-line-no">383</span><span id="line-383">                .contains(entityType) || EntityCategories.TAMEABLE.contains(entityType)) {</span>
+<span class="source-line-no">384</span><span id="line-384">            return EntityUtil</span>
+<span class="source-line-no">385</span><span id="line-385">                    .checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED, MobCapFlag.MOB_CAP_UNLIMITED,</span>
+<span class="source-line-no">386</span><span id="line-386">                            AnimalCapFlag.ANIMAL_CAP_UNLIMITED</span>
+<span class="source-line-no">387</span><span id="line-387">                    );</span>
+<span class="source-line-no">388</span><span id="line-388">        }</span>
+<span class="source-line-no">389</span><span id="line-389"></span>
+<span class="source-line-no">390</span><span id="line-390">        if (EntityCategories.HOSTILE.contains(entityType)) {</span>
+<span class="source-line-no">391</span><span id="line-391">            return EntityUtil</span>
+<span class="source-line-no">392</span><span id="line-392">                    .checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED, MobCapFlag.MOB_CAP_UNLIMITED,</span>
+<span class="source-line-no">393</span><span id="line-393">                            HostileCapFlag.HOSTILE_CAP_UNLIMITED</span>
+<span class="source-line-no">394</span><span id="line-394">                    );</span>
+<span class="source-line-no">395</span><span id="line-395">        }</span>
+<span class="source-line-no">396</span><span id="line-396"></span>
+<span class="source-line-no">397</span><span id="line-397">        if (EntityCategories.VEHICLE.contains(entityType)) {</span>
+<span class="source-line-no">398</span><span id="line-398">            return EntityUtil.checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED,</span>
+<span class="source-line-no">399</span><span id="line-399">                    VehicleCapFlag.VEHICLE_CAP_UNLIMITED</span>
+<span class="source-line-no">400</span><span id="line-400">            );</span>
+<span class="source-line-no">401</span><span id="line-401">        }</span>
+<span class="source-line-no">402</span><span id="line-402"></span>
+<span class="source-line-no">403</span><span id="line-403">        return EntityUtil.checkEntity(plot, EntityCapFlag.ENTITY_CAP_UNLIMITED);</span>
+<span class="source-line-no">404</span><span id="line-404">    }</span>
+<span class="source-line-no">405</span><span id="line-405"></span>
+<span class="source-line-no">406</span><span id="line-406">}</span>
 
 
 

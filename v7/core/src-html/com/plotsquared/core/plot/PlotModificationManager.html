@@ -384,618 +384,617 @@
 <span class="source-line-no">371</span><span id="line-371">                            manager.createRoadSouthEast(current, queue);</span>
 <span class="source-line-no">372</span><span id="line-372">                        }</span>
 <span class="source-line-no">373</span><span id="line-373">                    }</span>
-<span class="source-line-no">374</span><span id="line-374">                }</span>
-<span class="source-line-no">375</span><span id="line-375">                if (current.isMerged(Direction.SOUTH)) {</span>
-<span class="source-line-no">376</span><span id="line-376">                    manager.createRoadSouth(current, queue);</span>
-<span class="source-line-no">377</span><span id="line-377">                }</span>
-<span class="source-line-no">378</span><span id="line-378">            }</span>
-<span class="source-line-no">379</span><span id="line-379">        }</span>
-<span class="source-line-no">380</span><span id="line-380">        for (Plot current : plots) {</span>
-<span class="source-line-no">381</span><span id="line-381">            boolean[] merged = new boolean[]{false, false, false, false};</span>
-<span class="source-line-no">382</span><span id="line-382">            current.setMerged(merged);</span>
-<span class="source-line-no">383</span><span id="line-383">        }</span>
-<span class="source-line-no">384</span><span id="line-384">        if (createSign) {</span>
-<span class="source-line-no">385</span><span id="line-385">            queue.setCompleteTask(() -&gt; TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">386</span><span id="line-386">                List&lt;CompletableFuture&lt;Void&gt;&gt; tasks = plots.stream().map(current -&gt; PlotSquared.platform().playerManager()</span>
-<span class="source-line-no">387</span><span id="line-387">                                .getUsernameCaption(current.getOwnerAbs())</span>
-<span class="source-line-no">388</span><span id="line-388">                                .thenAccept(caption -&gt; current</span>
-<span class="source-line-no">389</span><span id="line-389">                                        .getPlotModificationManager()</span>
-<span class="source-line-no">390</span><span id="line-390">                                        .setSign(caption.getComponent(LocaleHolder.console()))))</span>
-<span class="source-line-no">391</span><span id="line-391">                        .toList();</span>
-<span class="source-line-no">392</span><span id="line-392">                CompletableFuture.allOf(tasks.toArray(CompletableFuture[]::new)).whenComplete((unused, throwable) -&gt; {</span>
-<span class="source-line-no">393</span><span id="line-393">                    if (whenDone != null) {</span>
-<span class="source-line-no">394</span><span id="line-394">                        TaskManager.runTask(whenDone);</span>
-<span class="source-line-no">395</span><span id="line-395">                    }</span>
-<span class="source-line-no">396</span><span id="line-396">                });</span>
-<span class="source-line-no">397</span><span id="line-397">            }));</span>
-<span class="source-line-no">398</span><span id="line-398">        } else if (whenDone != null) {</span>
-<span class="source-line-no">399</span><span id="line-399">            queue.setCompleteTask(whenDone);</span>
-<span class="source-line-no">400</span><span id="line-400">        }</span>
-<span class="source-line-no">401</span><span id="line-401">        if (createRoad) {</span>
-<span class="source-line-no">402</span><span id="line-402">            manager.finishPlotUnlink(ids, queue);</span>
-<span class="source-line-no">403</span><span id="line-403">        }</span>
-<span class="source-line-no">404</span><span id="line-404">        queue.enqueue();</span>
-<span class="source-line-no">405</span><span id="line-405">        return true;</span>
-<span class="source-line-no">406</span><span id="line-406">    }</span>
-<span class="source-line-no">407</span><span id="line-407"></span>
-<span class="source-line-no">408</span><span id="line-408">    /**</span>
-<span class="source-line-no">409</span><span id="line-409">     * Sets the sign for a plot to a specific name</span>
-<span class="source-line-no">410</span><span id="line-410">     *</span>
-<span class="source-line-no">411</span><span id="line-411">     * @param name name</span>
-<span class="source-line-no">412</span><span id="line-412">     */</span>
-<span class="source-line-no">413</span><span id="line-413">    public void setSign(final @NonNull String name) {</span>
-<span class="source-line-no">414</span><span id="line-414">        if (!this.plot.isLoaded()) {</span>
-<span class="source-line-no">415</span><span id="line-415">            return;</span>
-<span class="source-line-no">416</span><span id="line-416">        }</span>
-<span class="source-line-no">417</span><span id="line-417">        PlotManager manager = this.plot.getArea().getPlotManager();</span>
-<span class="source-line-no">418</span><span id="line-418">        if (this.plot.getArea().allowSigns()) {</span>
-<span class="source-line-no">419</span><span id="line-419">            Location location = manager.getSignLoc(this.plot);</span>
-<span class="source-line-no">420</span><span id="line-420">            String id = this.plot.getId().toString();</span>
-<span class="source-line-no">421</span><span id="line-421">            Caption[] lines = new Caption[]{TranslatableCaption.of("signs.owner_sign_line_1"), TranslatableCaption.of(</span>
-<span class="source-line-no">422</span><span id="line-422">                    "signs.owner_sign_line_2"),</span>
-<span class="source-line-no">423</span><span id="line-423">                    TranslatableCaption.of("signs.owner_sign_line_3"), TranslatableCaption.of("signs.owner_sign_line_4")};</span>
-<span class="source-line-no">424</span><span id="line-424">            PlotSquared.platform().worldUtil().setSign(location, lines, TagResolver.builder()</span>
-<span class="source-line-no">425</span><span id="line-425">                    .tag("id", Tag.inserting(Component.text(id)))</span>
-<span class="source-line-no">426</span><span id="line-426">                    .tag("owner", Tag.inserting(Component.text(name)))</span>
-<span class="source-line-no">427</span><span id="line-427">                    .build());</span>
-<span class="source-line-no">428</span><span id="line-428">        }</span>
-<span class="source-line-no">429</span><span id="line-429">    }</span>
-<span class="source-line-no">430</span><span id="line-430"></span>
-<span class="source-line-no">431</span><span id="line-431">    /**</span>
-<span class="source-line-no">432</span><span id="line-432">     * Resend all chunks inside the plot to nearby players&lt;br&gt;</span>
-<span class="source-line-no">433</span><span id="line-433">     * This should not need to be called</span>
-<span class="source-line-no">434</span><span id="line-434">     */</span>
-<span class="source-line-no">435</span><span id="line-435">    public void refreshChunks() {</span>
-<span class="source-line-no">436</span><span id="line-436">        final HashSet&lt;BlockVector2&gt; chunks = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">437</span><span id="line-437">        for (final CuboidRegion region : this.plot.getRegions()) {</span>
-<span class="source-line-no">438</span><span id="line-438">            for (int x = region.getMinimumPoint().getX() &gt;&gt; 4; x &lt;= region.getMaximumPoint().getX() &gt;&gt; 4; x++) {</span>
-<span class="source-line-no">439</span><span id="line-439">                for (int z = region.getMinimumPoint().getZ() &gt;&gt; 4; z &lt;= region.getMaximumPoint().getZ() &gt;&gt; 4; z++) {</span>
-<span class="source-line-no">440</span><span id="line-440">                    if (chunks.add(BlockVector2.at(x, z))) {</span>
-<span class="source-line-no">441</span><span id="line-441">                        PlotSquared.platform().worldUtil().refreshChunk(x, z, this.plot.getWorldName());</span>
-<span class="source-line-no">442</span><span id="line-442">                    }</span>
-<span class="source-line-no">443</span><span id="line-443">                }</span>
-<span class="source-line-no">444</span><span id="line-444">            }</span>
-<span class="source-line-no">445</span><span id="line-445">        }</span>
-<span class="source-line-no">446</span><span id="line-446">    }</span>
-<span class="source-line-no">447</span><span id="line-447"></span>
-<span class="source-line-no">448</span><span id="line-448">    /**</span>
-<span class="source-line-no">449</span><span id="line-449">     * Remove the plot sign if it is set.</span>
-<span class="source-line-no">450</span><span id="line-450">     */</span>
-<span class="source-line-no">451</span><span id="line-451">    public void removeSign() {</span>
-<span class="source-line-no">452</span><span id="line-452">        PlotManager manager = this.plot.getArea().getPlotManager();</span>
-<span class="source-line-no">453</span><span id="line-453">        if (!this.plot.getArea().allowSigns()) {</span>
-<span class="source-line-no">454</span><span id="line-454">            return;</span>
-<span class="source-line-no">455</span><span id="line-455">        }</span>
-<span class="source-line-no">456</span><span id="line-456">        Location location = manager.getSignLoc(this.plot);</span>
-<span class="source-line-no">457</span><span id="line-457">        QueueCoordinator queue =</span>
-<span class="source-line-no">458</span><span id="line-458">                PlotSquared.platform().globalBlockQueue().getNewQueue(PlotSquared</span>
-<span class="source-line-no">459</span><span id="line-459">                        .platform()</span>
-<span class="source-line-no">460</span><span id="line-460">                        .worldUtil()</span>
-<span class="source-line-no">461</span><span id="line-461">                        .getWeWorld(this.plot.getWorldName()));</span>
-<span class="source-line-no">462</span><span id="line-462">        queue.setBlock(location.getX(), location.getY(), location.getZ(), BlockTypes.AIR.getDefaultState());</span>
-<span class="source-line-no">463</span><span id="line-463">        queue.enqueue();</span>
-<span class="source-line-no">464</span><span id="line-464">    }</span>
-<span class="source-line-no">465</span><span id="line-465"></span>
-<span class="source-line-no">466</span><span id="line-466">    /**</span>
-<span class="source-line-no">467</span><span id="line-467">     * Sets the plot sign if plot signs are enabled.</span>
-<span class="source-line-no">468</span><span id="line-468">     */</span>
-<span class="source-line-no">469</span><span id="line-469">    public void setSign() {</span>
-<span class="source-line-no">470</span><span id="line-470">        if (!this.plot.hasOwner()) {</span>
-<span class="source-line-no">471</span><span id="line-471">            this.setSign("unknown");</span>
-<span class="source-line-no">472</span><span id="line-472">            return;</span>
-<span class="source-line-no">473</span><span id="line-473">        }</span>
-<span class="source-line-no">474</span><span id="line-474">        PlotSquared.get().getImpromptuUUIDPipeline().getSingle(</span>
-<span class="source-line-no">475</span><span id="line-475">                this.plot.getOwnerAbs(),</span>
-<span class="source-line-no">476</span><span id="line-476">                (username, sign) -&gt; this.setSign(username)</span>
-<span class="source-line-no">477</span><span id="line-477">        );</span>
-<span class="source-line-no">478</span><span id="line-478">    }</span>
-<span class="source-line-no">479</span><span id="line-479"></span>
-<span class="source-line-no">480</span><span id="line-480">    /**</span>
-<span class="source-line-no">481</span><span id="line-481">     * Register a plot and create it in the database&lt;br&gt;</span>
-<span class="source-line-no">482</span><span id="line-482">     * - The plot will not be created if the owner is null&lt;br&gt;</span>
-<span class="source-line-no">483</span><span id="line-483">     * - Any setting from before plot creation will not be saved until the server is stopped properly. i.e. Set any values/options after plot</span>
-<span class="source-line-no">484</span><span id="line-484">     * creation.</span>
-<span class="source-line-no">485</span><span id="line-485">     *</span>
-<span class="source-line-no">486</span><span id="line-486">     * @return {@code true} if plot was created successfully</span>
-<span class="source-line-no">487</span><span id="line-487">     */</span>
-<span class="source-line-no">488</span><span id="line-488">    public boolean create() {</span>
-<span class="source-line-no">489</span><span id="line-489">        return this.create(this.plot.getOwnerAbs(), true);</span>
-<span class="source-line-no">490</span><span id="line-490">    }</span>
-<span class="source-line-no">491</span><span id="line-491"></span>
-<span class="source-line-no">492</span><span id="line-492">    /**</span>
-<span class="source-line-no">493</span><span id="line-493">     * Register a plot and create it in the database&lt;br&gt;</span>
-<span class="source-line-no">494</span><span id="line-494">     * - The plot will not be created if the owner is null&lt;br&gt;</span>
-<span class="source-line-no">495</span><span id="line-495">     * - Any setting from before plot creation will not be saved until the server is stopped properly. i.e. Set any values/options after plot</span>
-<span class="source-line-no">496</span><span id="line-496">     * creation.</span>
-<span class="source-line-no">497</span><span id="line-497">     *</span>
-<span class="source-line-no">498</span><span id="line-498">     * @param uuid   the uuid of the plot owner</span>
-<span class="source-line-no">499</span><span id="line-499">     * @param notify notify</span>
-<span class="source-line-no">500</span><span id="line-500">     * @return {@code true} if plot was created successfully, else {@code false}</span>
-<span class="source-line-no">501</span><span id="line-501">     */</span>
-<span class="source-line-no">502</span><span id="line-502">    public boolean create(final @NonNull UUID uuid, final boolean notify) {</span>
-<span class="source-line-no">503</span><span id="line-503">        this.plot.setOwnerAbs(uuid);</span>
-<span class="source-line-no">504</span><span id="line-504">        Plot existing = this.plot.getArea().getOwnedPlotAbs(this.plot.getId());</span>
-<span class="source-line-no">505</span><span id="line-505">        if (existing != null) {</span>
-<span class="source-line-no">506</span><span id="line-506">            throw new IllegalStateException("Plot already exists!");</span>
-<span class="source-line-no">507</span><span id="line-507">        }</span>
-<span class="source-line-no">508</span><span id="line-508">        if (notify) {</span>
-<span class="source-line-no">509</span><span id="line-509">            Integer meta = (Integer) this.plot.getArea().getMeta("worldBorder");</span>
-<span class="source-line-no">510</span><span id="line-510">            if (meta != null) {</span>
-<span class="source-line-no">511</span><span id="line-511">                this.plot.updateWorldBorder();</span>
-<span class="source-line-no">512</span><span id="line-512">            }</span>
-<span class="source-line-no">513</span><span id="line-513">        }</span>
-<span class="source-line-no">514</span><span id="line-514">        this.plot.clearCache();</span>
-<span class="source-line-no">515</span><span id="line-515">        this.plot.getTrusted().clear();</span>
-<span class="source-line-no">516</span><span id="line-516">        this.plot.getMembers().clear();</span>
-<span class="source-line-no">517</span><span id="line-517">        this.plot.getDenied().clear();</span>
-<span class="source-line-no">518</span><span id="line-518">        this.plot.settings = new PlotSettings();</span>
-<span class="source-line-no">519</span><span id="line-519">        if (this.plot.getArea().addPlot(this.plot)) {</span>
-<span class="source-line-no">520</span><span id="line-520">            DBFunc.createPlotAndSettings(this.plot, () -&gt; {</span>
-<span class="source-line-no">521</span><span id="line-521">                PlotArea plotworld = plot.getArea();</span>
-<span class="source-line-no">522</span><span id="line-522">                if (notify &amp;&amp; plotworld.isAutoMerge()) {</span>
-<span class="source-line-no">523</span><span id="line-523">                    final PlotPlayer&lt;?&gt; player = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
-<span class="source-line-no">524</span><span id="line-524"></span>
-<span class="source-line-no">525</span><span id="line-525">                    PlotMergeEvent event = PlotSquared.get().getEventDispatcher().callMerge(</span>
-<span class="source-line-no">526</span><span id="line-526">                            this.plot,</span>
-<span class="source-line-no">527</span><span id="line-527">                            Direction.ALL,</span>
-<span class="source-line-no">528</span><span id="line-528">                            Integer.MAX_VALUE,</span>
-<span class="source-line-no">529</span><span id="line-529">                            player</span>
-<span class="source-line-no">530</span><span id="line-530">                    );</span>
-<span class="source-line-no">531</span><span id="line-531"></span>
-<span class="source-line-no">532</span><span id="line-532">                    if (event.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">533</span><span id="line-533">                        if (player != null) {</span>
-<span class="source-line-no">534</span><span id="line-534">                            player.sendMessage(</span>
-<span class="source-line-no">535</span><span id="line-535">                                    TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">536</span><span id="line-536">                                    TagResolver.resolver("value", Tag.inserting(Component.text("Auto merge on claim")))</span>
-<span class="source-line-no">537</span><span id="line-537">                            );</span>
-<span class="source-line-no">538</span><span id="line-538">                        }</span>
-<span class="source-line-no">539</span><span id="line-539">                        return;</span>
-<span class="source-line-no">540</span><span id="line-540">                    }</span>
-<span class="source-line-no">541</span><span id="line-541">                    if (plot.getPlotModificationManager().autoMerge(event.getDir(), event.getMax(), uuid, player, true)) {</span>
-<span class="source-line-no">542</span><span id="line-542">                        PlotSquared.get().getEventDispatcher().callPostMerge(player, plot);</span>
-<span class="source-line-no">543</span><span id="line-543">                    }</span>
-<span class="source-line-no">544</span><span id="line-544">                }</span>
-<span class="source-line-no">545</span><span id="line-545">            });</span>
-<span class="source-line-no">546</span><span id="line-546">            return true;</span>
-<span class="source-line-no">547</span><span id="line-547">        }</span>
-<span class="source-line-no">548</span><span id="line-548">        LOGGER.info(</span>
-<span class="source-line-no">549</span><span id="line-549">                "Failed to add plot {} to plot area {}",</span>
-<span class="source-line-no">550</span><span id="line-550">                this.plot.getId().toCommaSeparatedString(),</span>
-<span class="source-line-no">551</span><span id="line-551">                this.plot.getArea().toString()</span>
-<span class="source-line-no">552</span><span id="line-552">        );</span>
-<span class="source-line-no">553</span><span id="line-553">        return false;</span>
-<span class="source-line-no">554</span><span id="line-554">    }</span>
-<span class="source-line-no">555</span><span id="line-555"></span>
-<span class="source-line-no">556</span><span id="line-556">    /**</span>
-<span class="source-line-no">557</span><span id="line-557">     * Auto merge a plot in a specific direction.</span>
-<span class="source-line-no">558</span><span id="line-558">     *</span>
-<span class="source-line-no">559</span><span id="line-559">     * @param dir         the direction to merge</span>
-<span class="source-line-no">560</span><span id="line-560">     * @param max         the max number of merges to do</span>
-<span class="source-line-no">561</span><span id="line-561">     * @param uuid        the UUID it is allowed to merge with</span>
-<span class="source-line-no">562</span><span id="line-562">     * @param actor       The actor executing the task</span>
-<span class="source-line-no">563</span><span id="line-563">     * @param removeRoads whether to remove roads</span>
-<span class="source-line-no">564</span><span id="line-564">     * @return {@code true} if a merge takes place, else {@code false}</span>
-<span class="source-line-no">565</span><span id="line-565">     */</span>
-<span class="source-line-no">566</span><span id="line-566">    public boolean autoMerge(</span>
-<span class="source-line-no">567</span><span id="line-567">            final @NonNull Direction dir,</span>
-<span class="source-line-no">568</span><span id="line-568">            int max,</span>
-<span class="source-line-no">569</span><span id="line-569">            final @NonNull UUID uuid,</span>
-<span class="source-line-no">570</span><span id="line-570">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
-<span class="source-line-no">571</span><span id="line-571">            final boolean removeRoads</span>
-<span class="source-line-no">572</span><span id="line-572">    ) {</span>
-<span class="source-line-no">573</span><span id="line-573">        //Ignore merging if there is no owner for the plot</span>
-<span class="source-line-no">574</span><span id="line-574">        if (!this.plot.hasOwner()) {</span>
-<span class="source-line-no">575</span><span id="line-575">            return false;</span>
-<span class="source-line-no">576</span><span id="line-576">        }</span>
-<span class="source-line-no">577</span><span id="line-577">        Set&lt;Plot&gt; connected = this.plot.getConnectedPlots();</span>
-<span class="source-line-no">578</span><span id="line-578">        HashSet&lt;PlotId&gt; merged = connected.stream().map(Plot::getId).collect(Collectors.toCollection(HashSet::new));</span>
-<span class="source-line-no">579</span><span id="line-579">        ArrayDeque&lt;Plot&gt; frontier = new ArrayDeque&lt;&gt;(connected);</span>
-<span class="source-line-no">580</span><span id="line-580">        Plot current;</span>
-<span class="source-line-no">581</span><span id="line-581">        boolean toReturn = false;</span>
-<span class="source-line-no">582</span><span id="line-582">        HashSet&lt;Plot&gt; visited = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">583</span><span id="line-583">        QueueCoordinator queue = this.plot.getArea().getQueue();</span>
-<span class="source-line-no">584</span><span id="line-584">        while ((current = frontier.poll()) != null &amp;&amp; max &gt;= 0) {</span>
-<span class="source-line-no">585</span><span id="line-585">            if (visited.contains(current)) {</span>
-<span class="source-line-no">586</span><span id="line-586">                continue;</span>
-<span class="source-line-no">587</span><span id="line-587">            }</span>
-<span class="source-line-no">588</span><span id="line-588">            visited.add(current);</span>
-<span class="source-line-no">589</span><span id="line-589">            Set&lt;Plot&gt; plots;</span>
-<span class="source-line-no">590</span><span id="line-590">            if ((dir == Direction.ALL || dir == Direction.NORTH) &amp;&amp; !current.isMerged(Direction.NORTH)) {</span>
-<span class="source-line-no">591</span><span id="line-591">                Plot other = current.getRelative(Direction.NORTH);</span>
-<span class="source-line-no">592</span><span id="line-592">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
-<span class="source-line-no">593</span><span id="line-593">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
-<span class="source-line-no">594</span><span id="line-594">                    current.mergePlot(other, removeRoads, queue);</span>
-<span class="source-line-no">595</span><span id="line-595">                    merged.add(current.getId());</span>
-<span class="source-line-no">596</span><span id="line-596">                    merged.add(other.getId());</span>
-<span class="source-line-no">597</span><span id="line-597">                    toReturn = true;</span>
-<span class="source-line-no">598</span><span id="line-598"></span>
-<span class="source-line-no">599</span><span id="line-599">                    if (removeRoads) {</span>
-<span class="source-line-no">600</span><span id="line-600">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">601</span><span id="line-601">                        ids.add(current.getId());</span>
-<span class="source-line-no">602</span><span id="line-602">                        ids.add(other.getId());</span>
-<span class="source-line-no">603</span><span id="line-603">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
-<span class="source-line-no">604</span><span id="line-604">                    }</span>
-<span class="source-line-no">605</span><span id="line-605">                }</span>
-<span class="source-line-no">606</span><span id="line-606">            }</span>
-<span class="source-line-no">607</span><span id="line-607">            if (max &gt;= 0 &amp;&amp; (dir == Direction.ALL || dir == Direction.EAST) &amp;&amp; !current.isMerged(Direction.EAST)) {</span>
-<span class="source-line-no">608</span><span id="line-608">                Plot other = current.getRelative(Direction.EAST);</span>
-<span class="source-line-no">609</span><span id="line-609">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
-<span class="source-line-no">610</span><span id="line-610">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
-<span class="source-line-no">611</span><span id="line-611">                    current.mergePlot(other, removeRoads, queue);</span>
-<span class="source-line-no">612</span><span id="line-612">                    merged.add(current.getId());</span>
-<span class="source-line-no">613</span><span id="line-613">                    merged.add(other.getId());</span>
-<span class="source-line-no">614</span><span id="line-614">                    toReturn = true;</span>
-<span class="source-line-no">615</span><span id="line-615"></span>
-<span class="source-line-no">616</span><span id="line-616">                    if (removeRoads) {</span>
-<span class="source-line-no">617</span><span id="line-617">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">618</span><span id="line-618">                        ids.add(current.getId());</span>
-<span class="source-line-no">619</span><span id="line-619">                        ids.add(other.getId());</span>
-<span class="source-line-no">620</span><span id="line-620">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
-<span class="source-line-no">621</span><span id="line-621">                    }</span>
-<span class="source-line-no">622</span><span id="line-622">                }</span>
-<span class="source-line-no">623</span><span id="line-623">            }</span>
-<span class="source-line-no">624</span><span id="line-624">            if (max &gt;= 0 &amp;&amp; (dir == Direction.ALL || dir == Direction.SOUTH) &amp;&amp; !current.isMerged(Direction.SOUTH)) {</span>
-<span class="source-line-no">625</span><span id="line-625">                Plot other = current.getRelative(Direction.SOUTH);</span>
-<span class="source-line-no">626</span><span id="line-626">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
-<span class="source-line-no">627</span><span id="line-627">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
-<span class="source-line-no">628</span><span id="line-628">                    current.mergePlot(other, removeRoads, queue);</span>
-<span class="source-line-no">629</span><span id="line-629">                    merged.add(current.getId());</span>
-<span class="source-line-no">630</span><span id="line-630">                    merged.add(other.getId());</span>
-<span class="source-line-no">631</span><span id="line-631">                    toReturn = true;</span>
-<span class="source-line-no">632</span><span id="line-632"></span>
-<span class="source-line-no">633</span><span id="line-633">                    if (removeRoads) {</span>
-<span class="source-line-no">634</span><span id="line-634">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">635</span><span id="line-635">                        ids.add(current.getId());</span>
-<span class="source-line-no">636</span><span id="line-636">                        ids.add(other.getId());</span>
-<span class="source-line-no">637</span><span id="line-637">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
-<span class="source-line-no">638</span><span id="line-638">                    }</span>
-<span class="source-line-no">639</span><span id="line-639">                }</span>
-<span class="source-line-no">640</span><span id="line-640">            }</span>
-<span class="source-line-no">641</span><span id="line-641">            if (max &gt;= 0 &amp;&amp; (dir == Direction.ALL || dir == Direction.WEST) &amp;&amp; !current.isMerged(Direction.WEST)) {</span>
-<span class="source-line-no">642</span><span id="line-642">                Plot other = current.getRelative(Direction.WEST);</span>
-<span class="source-line-no">643</span><span id="line-643">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
-<span class="source-line-no">644</span><span id="line-644">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
-<span class="source-line-no">645</span><span id="line-645">                    current.mergePlot(other, removeRoads, queue);</span>
-<span class="source-line-no">646</span><span id="line-646">                    merged.add(current.getId());</span>
-<span class="source-line-no">647</span><span id="line-647">                    merged.add(other.getId());</span>
-<span class="source-line-no">648</span><span id="line-648">                    toReturn = true;</span>
-<span class="source-line-no">649</span><span id="line-649"></span>
-<span class="source-line-no">650</span><span id="line-650">                    if (removeRoads) {</span>
-<span class="source-line-no">651</span><span id="line-651">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
-<span class="source-line-no">652</span><span id="line-652">                        ids.add(current.getId());</span>
-<span class="source-line-no">653</span><span id="line-653">                        ids.add(other.getId());</span>
-<span class="source-line-no">654</span><span id="line-654">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
-<span class="source-line-no">655</span><span id="line-655">                    }</span>
-<span class="source-line-no">656</span><span id="line-656">                }</span>
-<span class="source-line-no">657</span><span id="line-657">            }</span>
-<span class="source-line-no">658</span><span id="line-658">        }</span>
-<span class="source-line-no">659</span><span id="line-659">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
-<span class="source-line-no">660</span><span id="line-660">            queue.addProgressSubscriber(subscriberFactory.createWithActor(actor));</span>
-<span class="source-line-no">661</span><span id="line-661">        }</span>
-<span class="source-line-no">662</span><span id="line-662">        if (queue.size() &gt; 0) {</span>
-<span class="source-line-no">663</span><span id="line-663">            queue.enqueue();</span>
-<span class="source-line-no">664</span><span id="line-664">        }</span>
-<span class="source-line-no">665</span><span id="line-665">        visited.forEach(Plot::clearCache);</span>
-<span class="source-line-no">666</span><span id="line-666">        return toReturn;</span>
-<span class="source-line-no">667</span><span id="line-667">    }</span>
-<span class="source-line-no">668</span><span id="line-668"></span>
-<span class="source-line-no">669</span><span id="line-669">    /**</span>
-<span class="source-line-no">670</span><span id="line-670">     * Moves a plot physically, as well as the corresponding settings.</span>
-<span class="source-line-no">671</span><span id="line-671">     *</span>
-<span class="source-line-no">672</span><span id="line-672">     * @param destination Plot moved to</span>
-<span class="source-line-no">673</span><span id="line-673">     * @param actor       The actor executing the task</span>
-<span class="source-line-no">674</span><span id="line-674">     * @param whenDone    task when done</span>
-<span class="source-line-no">675</span><span id="line-675">     * @param allowSwap   whether to swap plots</span>
-<span class="source-line-no">676</span><span id="line-676">     * @return {@code true} if the move was successful, else {@code false}</span>
-<span class="source-line-no">677</span><span id="line-677">     */</span>
-<span class="source-line-no">678</span><span id="line-678">    public @NonNull CompletableFuture&lt;Boolean&gt; move(</span>
-<span class="source-line-no">679</span><span id="line-679">            final @NonNull Plot destination,</span>
-<span class="source-line-no">680</span><span id="line-680">            final @Nullable PlotPlayer&lt;?&gt; actor,</span>
-<span class="source-line-no">681</span><span id="line-681">            final @NonNull Runnable whenDone,</span>
-<span class="source-line-no">682</span><span id="line-682">            final boolean allowSwap</span>
-<span class="source-line-no">683</span><span id="line-683">    ) {</span>
-<span class="source-line-no">684</span><span id="line-684">        final PlotId offset = PlotId.of(</span>
-<span class="source-line-no">685</span><span id="line-685">                destination.getId().getX() - this.plot.getId().getX(),</span>
-<span class="source-line-no">686</span><span id="line-686">                destination.getId().getY() - this.plot.getId().getY()</span>
-<span class="source-line-no">687</span><span id="line-687">        );</span>
-<span class="source-line-no">688</span><span id="line-688">        Location db = destination.getBottomAbs();</span>
-<span class="source-line-no">689</span><span id="line-689">        Location ob = this.plot.getBottomAbs();</span>
-<span class="source-line-no">690</span><span id="line-690">        final int offsetX = db.getX() - ob.getX();</span>
-<span class="source-line-no">691</span><span id="line-691">        final int offsetZ = db.getZ() - ob.getZ();</span>
-<span class="source-line-no">692</span><span id="line-692">        if (!this.plot.hasOwner()) {</span>
-<span class="source-line-no">693</span><span id="line-693">            TaskManager.runTaskLater(whenDone, TaskTime.ticks(1L));</span>
-<span class="source-line-no">694</span><span id="line-694">            return CompletableFuture.completedFuture(false);</span>
-<span class="source-line-no">695</span><span id="line-695">        }</span>
-<span class="source-line-no">696</span><span id="line-696">        AtomicBoolean occupied = new AtomicBoolean(false);</span>
-<span class="source-line-no">697</span><span id="line-697">        Set&lt;Plot&gt; plots = this.plot.getConnectedPlots();</span>
-<span class="source-line-no">698</span><span id="line-698">        for (Plot plot : plots) {</span>
-<span class="source-line-no">699</span><span id="line-699">            Plot other = plot.getRelative(destination.getArea(), offset.getX(), offset.getY());</span>
-<span class="source-line-no">700</span><span id="line-700">            if (other.hasOwner()) {</span>
-<span class="source-line-no">701</span><span id="line-701">                if (!allowSwap) {</span>
-<span class="source-line-no">702</span><span id="line-702">                    TaskManager.runTaskLater(whenDone, TaskTime.ticks(1L));</span>
-<span class="source-line-no">703</span><span id="line-703">                    return CompletableFuture.completedFuture(false);</span>
-<span class="source-line-no">704</span><span id="line-704">                }</span>
-<span class="source-line-no">705</span><span id="line-705">                occupied.set(true);</span>
-<span class="source-line-no">706</span><span id="line-706">            } else {</span>
-<span class="source-line-no">707</span><span id="line-707">                plot.getPlotModificationManager().removeSign();</span>
-<span class="source-line-no">708</span><span id="line-708">            }</span>
-<span class="source-line-no">709</span><span id="line-709">        }</span>
-<span class="source-line-no">710</span><span id="line-710">        // world border</span>
-<span class="source-line-no">711</span><span id="line-711">        destination.updateWorldBorder();</span>
-<span class="source-line-no">712</span><span id="line-712">        final ArrayDeque&lt;CuboidRegion&gt; regions = new ArrayDeque&lt;&gt;(this.plot.getRegions());</span>
-<span class="source-line-no">713</span><span id="line-713">        // move / swap data</span>
-<span class="source-line-no">714</span><span id="line-714">        final PlotArea originArea = this.plot.getArea();</span>
-<span class="source-line-no">715</span><span id="line-715"></span>
-<span class="source-line-no">716</span><span id="line-716">        final Iterator&lt;Plot&gt; plotIterator = plots.iterator();</span>
-<span class="source-line-no">717</span><span id="line-717"></span>
-<span class="source-line-no">718</span><span id="line-718">        CompletableFuture&lt;Boolean&gt; future = null;</span>
-<span class="source-line-no">719</span><span id="line-719">        if (plotIterator.hasNext()) {</span>
-<span class="source-line-no">720</span><span id="line-720">            while (plotIterator.hasNext()) {</span>
-<span class="source-line-no">721</span><span id="line-721">                final Plot plot = plotIterator.next();</span>
-<span class="source-line-no">722</span><span id="line-722">                final Plot other = plot.getRelative(destination.getArea(), offset.getX(), offset.getY());</span>
-<span class="source-line-no">723</span><span id="line-723">                final CompletableFuture&lt;Boolean&gt; swapResult = plot.swapData(other);</span>
-<span class="source-line-no">724</span><span id="line-724">                if (future == null) {</span>
-<span class="source-line-no">725</span><span id="line-725">                    future = swapResult;</span>
-<span class="source-line-no">726</span><span id="line-726">                } else {</span>
-<span class="source-line-no">727</span><span id="line-727">                    future = future.thenCombine(swapResult, (fn, th) -&gt; fn);</span>
-<span class="source-line-no">728</span><span id="line-728">                }</span>
-<span class="source-line-no">729</span><span id="line-729">            }</span>
-<span class="source-line-no">730</span><span id="line-730">        } else {</span>
-<span class="source-line-no">731</span><span id="line-731">            future = CompletableFuture.completedFuture(true);</span>
-<span class="source-line-no">732</span><span id="line-732">        }</span>
-<span class="source-line-no">733</span><span id="line-733"></span>
-<span class="source-line-no">734</span><span id="line-734">        return future.thenApply(result -&gt; {</span>
-<span class="source-line-no">735</span><span id="line-735">            if (!result) {</span>
-<span class="source-line-no">736</span><span id="line-736">                return false;</span>
-<span class="source-line-no">737</span><span id="line-737">            }</span>
-<span class="source-line-no">738</span><span id="line-738">            // copy terrain</span>
-<span class="source-line-no">739</span><span id="line-739">            if (occupied.get()) {</span>
-<span class="source-line-no">740</span><span id="line-740">                new Runnable() {</span>
-<span class="source-line-no">741</span><span id="line-741">                    @Override</span>
-<span class="source-line-no">742</span><span id="line-742">                    public void run() {</span>
-<span class="source-line-no">743</span><span id="line-743">                        if (regions.isEmpty()) {</span>
-<span class="source-line-no">744</span><span id="line-744">                            // Update signs</span>
-<span class="source-line-no">745</span><span id="line-745">                            destination.getPlotModificationManager().setSign();</span>
-<span class="source-line-no">746</span><span id="line-746">                            setSign();</span>
-<span class="source-line-no">747</span><span id="line-747">                            // Run final tasks</span>
-<span class="source-line-no">748</span><span id="line-748">                            TaskManager.runTask(whenDone);</span>
-<span class="source-line-no">749</span><span id="line-749">                        } else {</span>
-<span class="source-line-no">750</span><span id="line-750">                            CuboidRegion region = regions.poll();</span>
-<span class="source-line-no">751</span><span id="line-751">                            Location[] corners = Plot.getCorners(plot.getWorldName(), region);</span>
-<span class="source-line-no">752</span><span id="line-752">                            Location pos1 = corners[0];</span>
-<span class="source-line-no">753</span><span id="line-753">                            Location pos2 = corners[1];</span>
-<span class="source-line-no">754</span><span id="line-754">                            Location pos3 = pos1.add(offsetX, 0, offsetZ).withWorld(destination.getWorldName());</span>
-<span class="source-line-no">755</span><span id="line-755">                            PlotSquared.platform().regionManager().swap(pos1, pos2, pos3, actor, this);</span>
-<span class="source-line-no">756</span><span id="line-756">                        }</span>
-<span class="source-line-no">757</span><span id="line-757">                    }</span>
-<span class="source-line-no">758</span><span id="line-758">                }.run();</span>
-<span class="source-line-no">759</span><span id="line-759">            } else {</span>
-<span class="source-line-no">760</span><span id="line-760">                new Runnable() {</span>
-<span class="source-line-no">761</span><span id="line-761">                    @Override</span>
-<span class="source-line-no">762</span><span id="line-762">                    public void run() {</span>
-<span class="source-line-no">763</span><span id="line-763">                        if (regions.isEmpty()) {</span>
-<span class="source-line-no">764</span><span id="line-764">                            Plot plot = destination.getRelative(0, 0);</span>
-<span class="source-line-no">765</span><span id="line-765">                            Plot originPlot =</span>
-<span class="source-line-no">766</span><span id="line-766">                                    originArea.getPlotAbs(PlotId.of(</span>
-<span class="source-line-no">767</span><span id="line-767">                                            plot.getId().getX() - offset.getX(),</span>
-<span class="source-line-no">768</span><span id="line-768">                                            plot.getId().getY() - offset.getY()</span>
-<span class="source-line-no">769</span><span id="line-769">                                    ));</span>
-<span class="source-line-no">770</span><span id="line-770">                            final Runnable clearDone = () -&gt; {</span>
-<span class="source-line-no">771</span><span id="line-771">                                QueueCoordinator queue = PlotModificationManager.this.plot.getArea().getQueue();</span>
-<span class="source-line-no">772</span><span id="line-772">                                for (final Plot current : plot.getConnectedPlots()) {</span>
-<span class="source-line-no">773</span><span id="line-773">                                    PlotModificationManager.this.plot.getManager().claimPlot(current, queue);</span>
-<span class="source-line-no">774</span><span id="line-774">                                }</span>
-<span class="source-line-no">775</span><span id="line-775">                                if (queue.size() &gt; 0) {</span>
-<span class="source-line-no">776</span><span id="line-776">                                    queue.enqueue();</span>
-<span class="source-line-no">777</span><span id="line-777">                                }</span>
-<span class="source-line-no">778</span><span id="line-778">                                plot.getPlotModificationManager().setSign();</span>
-<span class="source-line-no">779</span><span id="line-779">                                TaskManager.runTask(whenDone);</span>
-<span class="source-line-no">780</span><span id="line-780">                            };</span>
-<span class="source-line-no">781</span><span id="line-781">                            if (originPlot != null) {</span>
-<span class="source-line-no">782</span><span id="line-782">                                originPlot.getPlotModificationManager().clear(false, true, actor, clearDone);</span>
-<span class="source-line-no">783</span><span id="line-783">                            } else {</span>
-<span class="source-line-no">784</span><span id="line-784">                                clearDone.run();</span>
-<span class="source-line-no">785</span><span id="line-785">                            }</span>
-<span class="source-line-no">786</span><span id="line-786">                            return;</span>
-<span class="source-line-no">787</span><span id="line-787">                        }</span>
-<span class="source-line-no">788</span><span id="line-788">                        final Runnable task = this;</span>
-<span class="source-line-no">789</span><span id="line-789">                        CuboidRegion region = regions.poll();</span>
-<span class="source-line-no">790</span><span id="line-790">                        Location[] corners = Plot.getCorners(</span>
-<span class="source-line-no">791</span><span id="line-791">                                PlotModificationManager.this.plot.getWorldName(),</span>
-<span class="source-line-no">792</span><span id="line-792">                                region</span>
-<span class="source-line-no">793</span><span id="line-793">                        );</span>
-<span class="source-line-no">794</span><span id="line-794">                        final Location pos1 = corners[0];</span>
-<span class="source-line-no">795</span><span id="line-795">                        final Location pos2 = corners[1];</span>
-<span class="source-line-no">796</span><span id="line-796">                        Location newPos = pos1.add(offsetX, 0, offsetZ).withWorld(destination.getWorldName());</span>
-<span class="source-line-no">797</span><span id="line-797">                        PlotSquared.platform().regionManager().copyRegion(pos1, pos2, newPos, actor, task);</span>
-<span class="source-line-no">798</span><span id="line-798">                    }</span>
-<span class="source-line-no">799</span><span id="line-799">                }.run();</span>
-<span class="source-line-no">800</span><span id="line-800">            }</span>
-<span class="source-line-no">801</span><span id="line-801">            return true;</span>
-<span class="source-line-no">802</span><span id="line-802">        });</span>
-<span class="source-line-no">803</span><span id="line-803">    }</span>
-<span class="source-line-no">804</span><span id="line-804"></span>
-<span class="source-line-no">805</span><span id="line-805">    /**</span>
-<span class="source-line-no">806</span><span id="line-806">     * Unlink a plot and remove the roads</span>
-<span class="source-line-no">807</span><span id="line-807">     *</span>
-<span class="source-line-no">808</span><span id="line-808">     * @return {@code true} if plot was linked</span>
-<span class="source-line-no">809</span><span id="line-809">     * @see #unlinkPlot(boolean, boolean)</span>
-<span class="source-line-no">810</span><span id="line-810">     */</span>
-<span class="source-line-no">811</span><span id="line-811">    public boolean unlink() {</span>
-<span class="source-line-no">812</span><span id="line-812">        return this.unlinkPlot(true, true);</span>
-<span class="source-line-no">813</span><span id="line-813">    }</span>
-<span class="source-line-no">814</span><span id="line-814"></span>
-<span class="source-line-no">815</span><span id="line-815">    /**</span>
-<span class="source-line-no">816</span><span id="line-816">     * Swap the plot contents and settings with another location&lt;br&gt;</span>
-<span class="source-line-no">817</span><span id="line-817">     * - The destination must correspond to a valid plot of equal dimensions</span>
-<span class="source-line-no">818</span><span id="line-818">     *</span>
-<span class="source-line-no">819</span><span id="line-819">     * @param destination The other plot to swap with</span>
-<span class="source-line-no">820</span><span id="line-820">     * @param actor       The actor executing the task</span>
-<span class="source-line-no">821</span><span id="line-821">     * @param whenDone    A task to run when finished, or null</span>
-<span class="source-line-no">822</span><span id="line-822">     * @return Future that completes with {@code true} if the swap was successful, else {@code false}</span>
-<span class="source-line-no">823</span><span id="line-823">     */</span>
-<span class="source-line-no">824</span><span id="line-824">    public @NonNull CompletableFuture&lt;Boolean&gt; swap(</span>
-<span class="source-line-no">825</span><span id="line-825">            final @NonNull Plot destination,</span>
-<span class="source-line-no">826</span><span id="line-826">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
-<span class="source-line-no">827</span><span id="line-827">            final @NonNull Runnable whenDone</span>
-<span class="source-line-no">828</span><span id="line-828">    ) {</span>
-<span class="source-line-no">829</span><span id="line-829">        return this.move(destination, actor, whenDone, true);</span>
-<span class="source-line-no">830</span><span id="line-830">    }</span>
-<span class="source-line-no">831</span><span id="line-831"></span>
-<span class="source-line-no">832</span><span id="line-832">    /**</span>
-<span class="source-line-no">833</span><span id="line-833">     * Moves the plot to an empty location&lt;br&gt;</span>
-<span class="source-line-no">834</span><span id="line-834">     * - The location must be empty</span>
-<span class="source-line-no">835</span><span id="line-835">     *</span>
-<span class="source-line-no">836</span><span id="line-836">     * @param destination Where to move the plot</span>
-<span class="source-line-no">837</span><span id="line-837">     * @param actor       The actor executing the task</span>
-<span class="source-line-no">838</span><span id="line-838">     * @param whenDone    A task to run when done, or null</span>
-<span class="source-line-no">839</span><span id="line-839">     * @return Future that completes with {@code true} if the move was successful, else {@code false}</span>
-<span class="source-line-no">840</span><span id="line-840">     */</span>
-<span class="source-line-no">841</span><span id="line-841">    public @NonNull CompletableFuture&lt;Boolean&gt; move(</span>
-<span class="source-line-no">842</span><span id="line-842">            final @NonNull Plot destination,</span>
-<span class="source-line-no">843</span><span id="line-843">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
-<span class="source-line-no">844</span><span id="line-844">            final @NonNull Runnable whenDone</span>
-<span class="source-line-no">845</span><span id="line-845">    ) {</span>
-<span class="source-line-no">846</span><span id="line-846">        return this.move(destination, actor, whenDone, false);</span>
-<span class="source-line-no">847</span><span id="line-847">    }</span>
-<span class="source-line-no">848</span><span id="line-848"></span>
-<span class="source-line-no">849</span><span id="line-849">    /**</span>
-<span class="source-line-no">850</span><span id="line-850">     * Sets a component for a plot to the provided blocks&lt;br&gt;</span>
-<span class="source-line-no">851</span><span id="line-851">     * - E.g. floor, wall, border etc.&lt;br&gt;</span>
-<span class="source-line-no">852</span><span id="line-852">     * - The available components depend on the generator being used&lt;br&gt;</span>
-<span class="source-line-no">853</span><span id="line-853">     *</span>
-<span class="source-line-no">854</span><span id="line-854">     * @param component Component to set</span>
-<span class="source-line-no">855</span><span id="line-855">     * @param blocks    Pattern to use the generation</span>
-<span class="source-line-no">856</span><span id="line-856">     * @param actor     The actor executing the task</span>
-<span class="source-line-no">857</span><span id="line-857">     * @param queue     Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
-<span class="source-line-no">858</span><span id="line-858">     *                  otherwise writes to the queue but does not enqueue.</span>
-<span class="source-line-no">859</span><span id="line-859">     * @return {@code true} if the component was set successfully, else {@code false}</span>
-<span class="source-line-no">860</span><span id="line-860">     */</span>
-<span class="source-line-no">861</span><span id="line-861">    public boolean setComponent(</span>
-<span class="source-line-no">862</span><span id="line-862">            final @NonNull String component,</span>
-<span class="source-line-no">863</span><span id="line-863">            final @NonNull Pattern blocks,</span>
-<span class="source-line-no">864</span><span id="line-864">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
-<span class="source-line-no">865</span><span id="line-865">            final @Nullable QueueCoordinator queue</span>
-<span class="source-line-no">866</span><span id="line-866">    ) {</span>
-<span class="source-line-no">867</span><span id="line-867">        final PlotComponentSetEvent event = PlotSquared.get().getEventDispatcher().callComponentSet(this.plot, component, blocks);</span>
-<span class="source-line-no">868</span><span id="line-868">        return this.plot.getManager().setComponent(this.plot.getId(), event.getComponent(), event.getPattern(), actor, queue);</span>
-<span class="source-line-no">869</span><span id="line-869">    }</span>
-<span class="source-line-no">870</span><span id="line-870"></span>
-<span class="source-line-no">871</span><span id="line-871">    /**</span>
-<span class="source-line-no">872</span><span id="line-872">     * Delete a plot (use null for the runnable if you don't need to be notified on completion)</span>
-<span class="source-line-no">873</span><span id="line-873">     *</span>
-<span class="source-line-no">874</span><span id="line-874">     * &lt;p&gt;</span>
-<span class="source-line-no">875</span><span id="line-875">     * Use {@link PlotModificationManager#clear(boolean, boolean, PlotPlayer, Runnable)} to simply clear a plot</span>
-<span class="source-line-no">876</span><span id="line-876">     * &lt;/p&gt;</span>
-<span class="source-line-no">877</span><span id="line-877">     *</span>
-<span class="source-line-no">878</span><span id="line-878">     * @param actor    The actor executing the task</span>
-<span class="source-line-no">879</span><span id="line-879">     * @param whenDone task to run when plot has been deleted. Nullable</span>
-<span class="source-line-no">880</span><span id="line-880">     * @return {@code true} if the deletion was successful, {@code false} if not</span>
-<span class="source-line-no">881</span><span id="line-881">     * @see PlotSquared#removePlot(Plot, boolean)</span>
-<span class="source-line-no">882</span><span id="line-882">     */</span>
-<span class="source-line-no">883</span><span id="line-883">    public boolean deletePlot(@Nullable PlotPlayer&lt;?&gt; actor, final Runnable whenDone) {</span>
-<span class="source-line-no">884</span><span id="line-884">        if (!this.plot.hasOwner()) {</span>
-<span class="source-line-no">885</span><span id="line-885">            return false;</span>
-<span class="source-line-no">886</span><span id="line-886">        }</span>
-<span class="source-line-no">887</span><span id="line-887">        final Set&lt;Plot&gt; plots = this.plot.getConnectedPlots();</span>
-<span class="source-line-no">888</span><span id="line-888">        this.clear(false, true, actor, () -&gt; {</span>
-<span class="source-line-no">889</span><span id="line-889">            for (Plot current : plots) {</span>
-<span class="source-line-no">890</span><span id="line-890">                current.unclaim();</span>
-<span class="source-line-no">891</span><span id="line-891">            }</span>
-<span class="source-line-no">892</span><span id="line-892">            TaskManager.runTask(whenDone);</span>
-<span class="source-line-no">893</span><span id="line-893">        });</span>
-<span class="source-line-no">894</span><span id="line-894">        return true;</span>
-<span class="source-line-no">895</span><span id="line-895">    }</span>
-<span class="source-line-no">896</span><span id="line-896"></span>
-<span class="source-line-no">897</span><span id="line-897">    /**</span>
-<span class="source-line-no">898</span><span id="line-898">     * Sets components such as border, wall, floor.</span>
-<span class="source-line-no">899</span><span id="line-899">     * (components are generator specific)</span>
-<span class="source-line-no">900</span><span id="line-900">     *</span>
-<span class="source-line-no">901</span><span id="line-901">     * @param component component to set</span>
-<span class="source-line-no">902</span><span id="line-902">     * @param blocks    string of block(s) to set component to</span>
-<span class="source-line-no">903</span><span id="line-903">     * @param actor     The player executing the task</span>
-<span class="source-line-no">904</span><span id="line-904">     * @param queue     Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
-<span class="source-line-no">905</span><span id="line-905">     *                  otherwise writes to the queue but does not enqueue.</span>
-<span class="source-line-no">906</span><span id="line-906">     * @return {@code true} if the update was successful, {@code false} if not</span>
-<span class="source-line-no">907</span><span id="line-907">     */</span>
-<span class="source-line-no">908</span><span id="line-908">    @Deprecated</span>
-<span class="source-line-no">909</span><span id="line-909">    public boolean setComponent(</span>
-<span class="source-line-no">910</span><span id="line-910">            String component,</span>
-<span class="source-line-no">911</span><span id="line-911">            String blocks,</span>
-<span class="source-line-no">912</span><span id="line-912">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
-<span class="source-line-no">913</span><span id="line-913">            @Nullable QueueCoordinator queue</span>
-<span class="source-line-no">914</span><span id="line-914">    ) {</span>
-<span class="source-line-no">915</span><span id="line-915">        final BlockBucket parsed = ConfigurationUtil.BLOCK_BUCKET.parseString(blocks);</span>
-<span class="source-line-no">916</span><span id="line-916">        if (parsed != null &amp;&amp; parsed.isEmpty()) {</span>
-<span class="source-line-no">917</span><span id="line-917">            return false;</span>
-<span class="source-line-no">918</span><span id="line-918">        }</span>
-<span class="source-line-no">919</span><span id="line-919">        return this.setComponent(component, parsed.toPattern(), actor, queue);</span>
-<span class="source-line-no">920</span><span id="line-920">    }</span>
-<span class="source-line-no">921</span><span id="line-921"></span>
-<span class="source-line-no">922</span><span id="line-922">    /**</span>
-<span class="source-line-no">923</span><span id="line-923">     * Remove the south road section of a plot&lt;br&gt;</span>
-<span class="source-line-no">924</span><span id="line-924">     * - Used when a plot is merged&lt;br&gt;</span>
-<span class="source-line-no">925</span><span id="line-925">     *</span>
-<span class="source-line-no">926</span><span id="line-926">     * @param queue Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
-<span class="source-line-no">927</span><span id="line-927">     *              otherwise writes to the queue but does not enqueue.</span>
-<span class="source-line-no">928</span><span id="line-928">     */</span>
-<span class="source-line-no">929</span><span id="line-929">    public void removeRoadSouth(final @Nullable QueueCoordinator queue) {</span>
-<span class="source-line-no">930</span><span id="line-930">        if (this.plot.getArea().getType() != PlotAreaType.NORMAL &amp;&amp; this.plot</span>
-<span class="source-line-no">931</span><span id="line-931">                .getArea()</span>
-<span class="source-line-no">932</span><span id="line-932">                .getTerrain() == PlotAreaTerrainType.ROAD) {</span>
-<span class="source-line-no">933</span><span id="line-933">            Plot other = this.plot.getRelative(Direction.SOUTH);</span>
-<span class="source-line-no">934</span><span id="line-934">            Location bot = other.getBottomAbs();</span>
-<span class="source-line-no">935</span><span id="line-935">            Location top = this.plot.getTopAbs();</span>
-<span class="source-line-no">936</span><span id="line-936">            Location pos1 = Location.at(this.plot.getWorldName(), bot.getX(), plot.getArea().getMinGenHeight(), top.getZ());</span>
-<span class="source-line-no">937</span><span id="line-937">            Location pos2 = Location.at(this.plot.getWorldName(), top.getX(), plot.getArea().getMaxGenHeight(), bot.getZ());</span>
-<span class="source-line-no">938</span><span id="line-938">            PlotSquared.platform().regionManager().regenerateRegion(pos1, pos2, true, null);</span>
-<span class="source-line-no">939</span><span id="line-939">        } else if (this.plot.getArea().getTerrain() != PlotAreaTerrainType.ALL) { // no road generated =&gt; no road to remove</span>
-<span class="source-line-no">940</span><span id="line-940">            this.plot.getManager().removeRoadSouth(this.plot, queue);</span>
-<span class="source-line-no">941</span><span id="line-941">        }</span>
-<span class="source-line-no">942</span><span id="line-942">    }</span>
-<span class="source-line-no">943</span><span id="line-943"></span>
-<span class="source-line-no">944</span><span id="line-944">    /**</span>
-<span class="source-line-no">945</span><span id="line-945">     * Remove the east road section of a plot&lt;br&gt;</span>
-<span class="source-line-no">946</span><span id="line-946">     * - Used when a plot is merged&lt;br&gt;</span>
-<span class="source-line-no">947</span><span id="line-947">     *</span>
-<span class="source-line-no">948</span><span id="line-948">     * @param queue Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
-<span class="source-line-no">949</span><span id="line-949">     *              otherwise writes to the queue but does not enqueue.</span>
-<span class="source-line-no">950</span><span id="line-950">     */</span>
-<span class="source-line-no">951</span><span id="line-951">    public void removeRoadEast(@Nullable QueueCoordinator queue) {</span>
-<span class="source-line-no">952</span><span id="line-952">        if (this.plot.getArea().getType() != PlotAreaType.NORMAL &amp;&amp; this.plot</span>
-<span class="source-line-no">953</span><span id="line-953">                .getArea()</span>
-<span class="source-line-no">954</span><span id="line-954">                .getTerrain() == PlotAreaTerrainType.ROAD) {</span>
-<span class="source-line-no">955</span><span id="line-955">            Plot other = this.plot.getRelative(Direction.EAST);</span>
-<span class="source-line-no">956</span><span id="line-956">            Location bot = other.getBottomAbs();</span>
-<span class="source-line-no">957</span><span id="line-957">            Location top = this.plot.getTopAbs();</span>
-<span class="source-line-no">958</span><span id="line-958">            Location pos1 = Location.at(this.plot.getWorldName(), top.getX(), plot.getArea().getMinGenHeight(), bot.getZ());</span>
-<span class="source-line-no">959</span><span id="line-959">            Location pos2 = Location.at(this.plot.getWorldName(), bot.getX(), plot.getArea().getMaxGenHeight(), top.getZ());</span>
-<span class="source-line-no">960</span><span id="line-960">            PlotSquared.platform().regionManager().regenerateRegion(pos1, pos2, true, null);</span>
-<span class="source-line-no">961</span><span id="line-961">        } else if (this.plot.getArea().getTerrain() != PlotAreaTerrainType.ALL) { // no road generated =&gt; no road to remove</span>
-<span class="source-line-no">962</span><span id="line-962">            this.plot.getArea().getPlotManager().removeRoadEast(this.plot, queue);</span>
-<span class="source-line-no">963</span><span id="line-963">        }</span>
-<span class="source-line-no">964</span><span id="line-964">    }</span>
-<span class="source-line-no">965</span><span id="line-965"></span>
-<span class="source-line-no">966</span><span id="line-966">    /**</span>
-<span class="source-line-no">967</span><span id="line-967">     * Remove the SE road (only effects terrain)</span>
-<span class="source-line-no">968</span><span id="line-968">     *</span>
-<span class="source-line-no">969</span><span id="line-969">     * @param queue Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
-<span class="source-line-no">970</span><span id="line-970">     *              otherwise writes to the queue but does not enqueue.</span>
-<span class="source-line-no">971</span><span id="line-971">     */</span>
-<span class="source-line-no">972</span><span id="line-972">    public void removeRoadSouthEast(@Nullable QueueCoordinator queue) {</span>
-<span class="source-line-no">973</span><span id="line-973">        if (this.plot.getArea().getType() != PlotAreaType.NORMAL &amp;&amp; this.plot</span>
-<span class="source-line-no">974</span><span id="line-974">                .getArea()</span>
-<span class="source-line-no">975</span><span id="line-975">                .getTerrain() == PlotAreaTerrainType.ROAD) {</span>
-<span class="source-line-no">976</span><span id="line-976">            Plot other = this.plot.getRelative(1, 1);</span>
-<span class="source-line-no">977</span><span id="line-977">            Location pos1 = this.plot.getTopAbs().add(1, 0, 1);</span>
-<span class="source-line-no">978</span><span id="line-978">            Location pos2 = other.getBottomAbs().subtract(1, 0, 1);</span>
-<span class="source-line-no">979</span><span id="line-979">            PlotSquared.platform().regionManager().regenerateRegion(pos1, pos2, true, null);</span>
-<span class="source-line-no">980</span><span id="line-980">        } else if (this.plot.getArea().getTerrain() != PlotAreaTerrainType.ALL) { // no road generated =&gt; no road to remove</span>
-<span class="source-line-no">981</span><span id="line-981">            this.plot.getArea().getPlotManager().removeRoadSouthEast(this.plot, queue);</span>
-<span class="source-line-no">982</span><span id="line-982">        }</span>
-<span class="source-line-no">983</span><span id="line-983">    }</span>
-<span class="source-line-no">984</span><span id="line-984"></span>
-<span class="source-line-no">985</span><span id="line-985">}</span>
+<span class="source-line-no">374</span><span id="line-374">                } else if (current.isMerged(Direction.SOUTH)) {</span>
+<span class="source-line-no">375</span><span id="line-375">                    manager.createRoadSouth(current, queue);</span>
+<span class="source-line-no">376</span><span id="line-376">                }</span>
+<span class="source-line-no">377</span><span id="line-377">            }</span>
+<span class="source-line-no">378</span><span id="line-378">        }</span>
+<span class="source-line-no">379</span><span id="line-379">        for (Plot current : plots) {</span>
+<span class="source-line-no">380</span><span id="line-380">            boolean[] merged = new boolean[]{false, false, false, false};</span>
+<span class="source-line-no">381</span><span id="line-381">            current.setMerged(merged);</span>
+<span class="source-line-no">382</span><span id="line-382">        }</span>
+<span class="source-line-no">383</span><span id="line-383">        if (createSign) {</span>
+<span class="source-line-no">384</span><span id="line-384">            queue.setCompleteTask(() -&gt; TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">385</span><span id="line-385">                List&lt;CompletableFuture&lt;Void&gt;&gt; tasks = plots.stream().map(current -&gt; PlotSquared.platform().playerManager()</span>
+<span class="source-line-no">386</span><span id="line-386">                                .getUsernameCaption(current.getOwnerAbs())</span>
+<span class="source-line-no">387</span><span id="line-387">                                .thenAccept(caption -&gt; current</span>
+<span class="source-line-no">388</span><span id="line-388">                                        .getPlotModificationManager()</span>
+<span class="source-line-no">389</span><span id="line-389">                                        .setSign(caption.getComponent(LocaleHolder.console()))))</span>
+<span class="source-line-no">390</span><span id="line-390">                        .toList();</span>
+<span class="source-line-no">391</span><span id="line-391">                CompletableFuture.allOf(tasks.toArray(CompletableFuture[]::new)).whenComplete((unused, throwable) -&gt; {</span>
+<span class="source-line-no">392</span><span id="line-392">                    if (whenDone != null) {</span>
+<span class="source-line-no">393</span><span id="line-393">                        TaskManager.runTask(whenDone);</span>
+<span class="source-line-no">394</span><span id="line-394">                    }</span>
+<span class="source-line-no">395</span><span id="line-395">                });</span>
+<span class="source-line-no">396</span><span id="line-396">            }));</span>
+<span class="source-line-no">397</span><span id="line-397">        } else if (whenDone != null) {</span>
+<span class="source-line-no">398</span><span id="line-398">            queue.setCompleteTask(whenDone);</span>
+<span class="source-line-no">399</span><span id="line-399">        }</span>
+<span class="source-line-no">400</span><span id="line-400">        if (createRoad) {</span>
+<span class="source-line-no">401</span><span id="line-401">            manager.finishPlotUnlink(ids, queue);</span>
+<span class="source-line-no">402</span><span id="line-402">        }</span>
+<span class="source-line-no">403</span><span id="line-403">        queue.enqueue();</span>
+<span class="source-line-no">404</span><span id="line-404">        return true;</span>
+<span class="source-line-no">405</span><span id="line-405">    }</span>
+<span class="source-line-no">406</span><span id="line-406"></span>
+<span class="source-line-no">407</span><span id="line-407">    /**</span>
+<span class="source-line-no">408</span><span id="line-408">     * Sets the sign for a plot to a specific name</span>
+<span class="source-line-no">409</span><span id="line-409">     *</span>
+<span class="source-line-no">410</span><span id="line-410">     * @param name name</span>
+<span class="source-line-no">411</span><span id="line-411">     */</span>
+<span class="source-line-no">412</span><span id="line-412">    public void setSign(final @NonNull String name) {</span>
+<span class="source-line-no">413</span><span id="line-413">        if (!this.plot.isLoaded()) {</span>
+<span class="source-line-no">414</span><span id="line-414">            return;</span>
+<span class="source-line-no">415</span><span id="line-415">        }</span>
+<span class="source-line-no">416</span><span id="line-416">        PlotManager manager = this.plot.getArea().getPlotManager();</span>
+<span class="source-line-no">417</span><span id="line-417">        if (this.plot.getArea().allowSigns()) {</span>
+<span class="source-line-no">418</span><span id="line-418">            Location location = manager.getSignLoc(this.plot);</span>
+<span class="source-line-no">419</span><span id="line-419">            String id = this.plot.getId().toString();</span>
+<span class="source-line-no">420</span><span id="line-420">            Caption[] lines = new Caption[]{TranslatableCaption.of("signs.owner_sign_line_1"), TranslatableCaption.of(</span>
+<span class="source-line-no">421</span><span id="line-421">                    "signs.owner_sign_line_2"),</span>
+<span class="source-line-no">422</span><span id="line-422">                    TranslatableCaption.of("signs.owner_sign_line_3"), TranslatableCaption.of("signs.owner_sign_line_4")};</span>
+<span class="source-line-no">423</span><span id="line-423">            PlotSquared.platform().worldUtil().setSign(location, lines, TagResolver.builder()</span>
+<span class="source-line-no">424</span><span id="line-424">                    .tag("id", Tag.inserting(Component.text(id)))</span>
+<span class="source-line-no">425</span><span id="line-425">                    .tag("owner", Tag.inserting(Component.text(name)))</span>
+<span class="source-line-no">426</span><span id="line-426">                    .build());</span>
+<span class="source-line-no">427</span><span id="line-427">        }</span>
+<span class="source-line-no">428</span><span id="line-428">    }</span>
+<span class="source-line-no">429</span><span id="line-429"></span>
+<span class="source-line-no">430</span><span id="line-430">    /**</span>
+<span class="source-line-no">431</span><span id="line-431">     * Resend all chunks inside the plot to nearby players&lt;br&gt;</span>
+<span class="source-line-no">432</span><span id="line-432">     * This should not need to be called</span>
+<span class="source-line-no">433</span><span id="line-433">     */</span>
+<span class="source-line-no">434</span><span id="line-434">    public void refreshChunks() {</span>
+<span class="source-line-no">435</span><span id="line-435">        final HashSet&lt;BlockVector2&gt; chunks = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">436</span><span id="line-436">        for (final CuboidRegion region : this.plot.getRegions()) {</span>
+<span class="source-line-no">437</span><span id="line-437">            for (int x = region.getMinimumPoint().getX() &gt;&gt; 4; x &lt;= region.getMaximumPoint().getX() &gt;&gt; 4; x++) {</span>
+<span class="source-line-no">438</span><span id="line-438">                for (int z = region.getMinimumPoint().getZ() &gt;&gt; 4; z &lt;= region.getMaximumPoint().getZ() &gt;&gt; 4; z++) {</span>
+<span class="source-line-no">439</span><span id="line-439">                    if (chunks.add(BlockVector2.at(x, z))) {</span>
+<span class="source-line-no">440</span><span id="line-440">                        PlotSquared.platform().worldUtil().refreshChunk(x, z, this.plot.getWorldName());</span>
+<span class="source-line-no">441</span><span id="line-441">                    }</span>
+<span class="source-line-no">442</span><span id="line-442">                }</span>
+<span class="source-line-no">443</span><span id="line-443">            }</span>
+<span class="source-line-no">444</span><span id="line-444">        }</span>
+<span class="source-line-no">445</span><span id="line-445">    }</span>
+<span class="source-line-no">446</span><span id="line-446"></span>
+<span class="source-line-no">447</span><span id="line-447">    /**</span>
+<span class="source-line-no">448</span><span id="line-448">     * Remove the plot sign if it is set.</span>
+<span class="source-line-no">449</span><span id="line-449">     */</span>
+<span class="source-line-no">450</span><span id="line-450">    public void removeSign() {</span>
+<span class="source-line-no">451</span><span id="line-451">        PlotManager manager = this.plot.getArea().getPlotManager();</span>
+<span class="source-line-no">452</span><span id="line-452">        if (!this.plot.getArea().allowSigns()) {</span>
+<span class="source-line-no">453</span><span id="line-453">            return;</span>
+<span class="source-line-no">454</span><span id="line-454">        }</span>
+<span class="source-line-no">455</span><span id="line-455">        Location location = manager.getSignLoc(this.plot);</span>
+<span class="source-line-no">456</span><span id="line-456">        QueueCoordinator queue =</span>
+<span class="source-line-no">457</span><span id="line-457">                PlotSquared.platform().globalBlockQueue().getNewQueue(PlotSquared</span>
+<span class="source-line-no">458</span><span id="line-458">                        .platform()</span>
+<span class="source-line-no">459</span><span id="line-459">                        .worldUtil()</span>
+<span class="source-line-no">460</span><span id="line-460">                        .getWeWorld(this.plot.getWorldName()));</span>
+<span class="source-line-no">461</span><span id="line-461">        queue.setBlock(location.getX(), location.getY(), location.getZ(), BlockTypes.AIR.getDefaultState());</span>
+<span class="source-line-no">462</span><span id="line-462">        queue.enqueue();</span>
+<span class="source-line-no">463</span><span id="line-463">    }</span>
+<span class="source-line-no">464</span><span id="line-464"></span>
+<span class="source-line-no">465</span><span id="line-465">    /**</span>
+<span class="source-line-no">466</span><span id="line-466">     * Sets the plot sign if plot signs are enabled.</span>
+<span class="source-line-no">467</span><span id="line-467">     */</span>
+<span class="source-line-no">468</span><span id="line-468">    public void setSign() {</span>
+<span class="source-line-no">469</span><span id="line-469">        if (!this.plot.hasOwner()) {</span>
+<span class="source-line-no">470</span><span id="line-470">            this.setSign("unknown");</span>
+<span class="source-line-no">471</span><span id="line-471">            return;</span>
+<span class="source-line-no">472</span><span id="line-472">        }</span>
+<span class="source-line-no">473</span><span id="line-473">        PlotSquared.get().getImpromptuUUIDPipeline().getSingle(</span>
+<span class="source-line-no">474</span><span id="line-474">                this.plot.getOwnerAbs(),</span>
+<span class="source-line-no">475</span><span id="line-475">                (username, sign) -&gt; this.setSign(username)</span>
+<span class="source-line-no">476</span><span id="line-476">        );</span>
+<span class="source-line-no">477</span><span id="line-477">    }</span>
+<span class="source-line-no">478</span><span id="line-478"></span>
+<span class="source-line-no">479</span><span id="line-479">    /**</span>
+<span class="source-line-no">480</span><span id="line-480">     * Register a plot and create it in the database&lt;br&gt;</span>
+<span class="source-line-no">481</span><span id="line-481">     * - The plot will not be created if the owner is null&lt;br&gt;</span>
+<span class="source-line-no">482</span><span id="line-482">     * - Any setting from before plot creation will not be saved until the server is stopped properly. i.e. Set any values/options after plot</span>
+<span class="source-line-no">483</span><span id="line-483">     * creation.</span>
+<span class="source-line-no">484</span><span id="line-484">     *</span>
+<span class="source-line-no">485</span><span id="line-485">     * @return {@code true} if plot was created successfully</span>
+<span class="source-line-no">486</span><span id="line-486">     */</span>
+<span class="source-line-no">487</span><span id="line-487">    public boolean create() {</span>
+<span class="source-line-no">488</span><span id="line-488">        return this.create(this.plot.getOwnerAbs(), true);</span>
+<span class="source-line-no">489</span><span id="line-489">    }</span>
+<span class="source-line-no">490</span><span id="line-490"></span>
+<span class="source-line-no">491</span><span id="line-491">    /**</span>
+<span class="source-line-no">492</span><span id="line-492">     * Register a plot and create it in the database&lt;br&gt;</span>
+<span class="source-line-no">493</span><span id="line-493">     * - The plot will not be created if the owner is null&lt;br&gt;</span>
+<span class="source-line-no">494</span><span id="line-494">     * - Any setting from before plot creation will not be saved until the server is stopped properly. i.e. Set any values/options after plot</span>
+<span class="source-line-no">495</span><span id="line-495">     * creation.</span>
+<span class="source-line-no">496</span><span id="line-496">     *</span>
+<span class="source-line-no">497</span><span id="line-497">     * @param uuid   the uuid of the plot owner</span>
+<span class="source-line-no">498</span><span id="line-498">     * @param notify notify</span>
+<span class="source-line-no">499</span><span id="line-499">     * @return {@code true} if plot was created successfully, else {@code false}</span>
+<span class="source-line-no">500</span><span id="line-500">     */</span>
+<span class="source-line-no">501</span><span id="line-501">    public boolean create(final @NonNull UUID uuid, final boolean notify) {</span>
+<span class="source-line-no">502</span><span id="line-502">        this.plot.setOwnerAbs(uuid);</span>
+<span class="source-line-no">503</span><span id="line-503">        Plot existing = this.plot.getArea().getOwnedPlotAbs(this.plot.getId());</span>
+<span class="source-line-no">504</span><span id="line-504">        if (existing != null) {</span>
+<span class="source-line-no">505</span><span id="line-505">            throw new IllegalStateException("Plot already exists!");</span>
+<span class="source-line-no">506</span><span id="line-506">        }</span>
+<span class="source-line-no">507</span><span id="line-507">        if (notify) {</span>
+<span class="source-line-no">508</span><span id="line-508">            Integer meta = (Integer) this.plot.getArea().getMeta("worldBorder");</span>
+<span class="source-line-no">509</span><span id="line-509">            if (meta != null) {</span>
+<span class="source-line-no">510</span><span id="line-510">                this.plot.updateWorldBorder();</span>
+<span class="source-line-no">511</span><span id="line-511">            }</span>
+<span class="source-line-no">512</span><span id="line-512">        }</span>
+<span class="source-line-no">513</span><span id="line-513">        this.plot.clearCache();</span>
+<span class="source-line-no">514</span><span id="line-514">        this.plot.getTrusted().clear();</span>
+<span class="source-line-no">515</span><span id="line-515">        this.plot.getMembers().clear();</span>
+<span class="source-line-no">516</span><span id="line-516">        this.plot.getDenied().clear();</span>
+<span class="source-line-no">517</span><span id="line-517">        this.plot.settings = new PlotSettings();</span>
+<span class="source-line-no">518</span><span id="line-518">        if (this.plot.getArea().addPlot(this.plot)) {</span>
+<span class="source-line-no">519</span><span id="line-519">            DBFunc.createPlotAndSettings(this.plot, () -&gt; {</span>
+<span class="source-line-no">520</span><span id="line-520">                PlotArea plotworld = plot.getArea();</span>
+<span class="source-line-no">521</span><span id="line-521">                if (notify &amp;&amp; plotworld.isAutoMerge()) {</span>
+<span class="source-line-no">522</span><span id="line-522">                    final PlotPlayer&lt;?&gt; player = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
+<span class="source-line-no">523</span><span id="line-523"></span>
+<span class="source-line-no">524</span><span id="line-524">                    PlotMergeEvent event = PlotSquared.get().getEventDispatcher().callMerge(</span>
+<span class="source-line-no">525</span><span id="line-525">                            this.plot,</span>
+<span class="source-line-no">526</span><span id="line-526">                            Direction.ALL,</span>
+<span class="source-line-no">527</span><span id="line-527">                            Integer.MAX_VALUE,</span>
+<span class="source-line-no">528</span><span id="line-528">                            player</span>
+<span class="source-line-no">529</span><span id="line-529">                    );</span>
+<span class="source-line-no">530</span><span id="line-530"></span>
+<span class="source-line-no">531</span><span id="line-531">                    if (event.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">532</span><span id="line-532">                        if (player != null) {</span>
+<span class="source-line-no">533</span><span id="line-533">                            player.sendMessage(</span>
+<span class="source-line-no">534</span><span id="line-534">                                    TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">535</span><span id="line-535">                                    TagResolver.resolver("value", Tag.inserting(Component.text("Auto merge on claim")))</span>
+<span class="source-line-no">536</span><span id="line-536">                            );</span>
+<span class="source-line-no">537</span><span id="line-537">                        }</span>
+<span class="source-line-no">538</span><span id="line-538">                        return;</span>
+<span class="source-line-no">539</span><span id="line-539">                    }</span>
+<span class="source-line-no">540</span><span id="line-540">                    if (plot.getPlotModificationManager().autoMerge(event.getDir(), event.getMax(), uuid, player, true)) {</span>
+<span class="source-line-no">541</span><span id="line-541">                        PlotSquared.get().getEventDispatcher().callPostMerge(player, plot);</span>
+<span class="source-line-no">542</span><span id="line-542">                    }</span>
+<span class="source-line-no">543</span><span id="line-543">                }</span>
+<span class="source-line-no">544</span><span id="line-544">            });</span>
+<span class="source-line-no">545</span><span id="line-545">            return true;</span>
+<span class="source-line-no">546</span><span id="line-546">        }</span>
+<span class="source-line-no">547</span><span id="line-547">        LOGGER.info(</span>
+<span class="source-line-no">548</span><span id="line-548">                "Failed to add plot {} to plot area {}",</span>
+<span class="source-line-no">549</span><span id="line-549">                this.plot.getId().toCommaSeparatedString(),</span>
+<span class="source-line-no">550</span><span id="line-550">                this.plot.getArea().toString()</span>
+<span class="source-line-no">551</span><span id="line-551">        );</span>
+<span class="source-line-no">552</span><span id="line-552">        return false;</span>
+<span class="source-line-no">553</span><span id="line-553">    }</span>
+<span class="source-line-no">554</span><span id="line-554"></span>
+<span class="source-line-no">555</span><span id="line-555">    /**</span>
+<span class="source-line-no">556</span><span id="line-556">     * Auto merge a plot in a specific direction.</span>
+<span class="source-line-no">557</span><span id="line-557">     *</span>
+<span class="source-line-no">558</span><span id="line-558">     * @param dir         the direction to merge</span>
+<span class="source-line-no">559</span><span id="line-559">     * @param max         the max number of merges to do</span>
+<span class="source-line-no">560</span><span id="line-560">     * @param uuid        the UUID it is allowed to merge with</span>
+<span class="source-line-no">561</span><span id="line-561">     * @param actor       The actor executing the task</span>
+<span class="source-line-no">562</span><span id="line-562">     * @param removeRoads whether to remove roads</span>
+<span class="source-line-no">563</span><span id="line-563">     * @return {@code true} if a merge takes place, else {@code false}</span>
+<span class="source-line-no">564</span><span id="line-564">     */</span>
+<span class="source-line-no">565</span><span id="line-565">    public boolean autoMerge(</span>
+<span class="source-line-no">566</span><span id="line-566">            final @NonNull Direction dir,</span>
+<span class="source-line-no">567</span><span id="line-567">            int max,</span>
+<span class="source-line-no">568</span><span id="line-568">            final @NonNull UUID uuid,</span>
+<span class="source-line-no">569</span><span id="line-569">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
+<span class="source-line-no">570</span><span id="line-570">            final boolean removeRoads</span>
+<span class="source-line-no">571</span><span id="line-571">    ) {</span>
+<span class="source-line-no">572</span><span id="line-572">        //Ignore merging if there is no owner for the plot</span>
+<span class="source-line-no">573</span><span id="line-573">        if (!this.plot.hasOwner()) {</span>
+<span class="source-line-no">574</span><span id="line-574">            return false;</span>
+<span class="source-line-no">575</span><span id="line-575">        }</span>
+<span class="source-line-no">576</span><span id="line-576">        Set&lt;Plot&gt; connected = this.plot.getConnectedPlots();</span>
+<span class="source-line-no">577</span><span id="line-577">        HashSet&lt;PlotId&gt; merged = connected.stream().map(Plot::getId).collect(Collectors.toCollection(HashSet::new));</span>
+<span class="source-line-no">578</span><span id="line-578">        ArrayDeque&lt;Plot&gt; frontier = new ArrayDeque&lt;&gt;(connected);</span>
+<span class="source-line-no">579</span><span id="line-579">        Plot current;</span>
+<span class="source-line-no">580</span><span id="line-580">        boolean toReturn = false;</span>
+<span class="source-line-no">581</span><span id="line-581">        HashSet&lt;Plot&gt; visited = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">582</span><span id="line-582">        QueueCoordinator queue = this.plot.getArea().getQueue();</span>
+<span class="source-line-no">583</span><span id="line-583">        while ((current = frontier.poll()) != null &amp;&amp; max &gt;= 0) {</span>
+<span class="source-line-no">584</span><span id="line-584">            if (visited.contains(current)) {</span>
+<span class="source-line-no">585</span><span id="line-585">                continue;</span>
+<span class="source-line-no">586</span><span id="line-586">            }</span>
+<span class="source-line-no">587</span><span id="line-587">            visited.add(current);</span>
+<span class="source-line-no">588</span><span id="line-588">            Set&lt;Plot&gt; plots;</span>
+<span class="source-line-no">589</span><span id="line-589">            if ((dir == Direction.ALL || dir == Direction.NORTH) &amp;&amp; !current.isMerged(Direction.NORTH)) {</span>
+<span class="source-line-no">590</span><span id="line-590">                Plot other = current.getRelative(Direction.NORTH);</span>
+<span class="source-line-no">591</span><span id="line-591">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
+<span class="source-line-no">592</span><span id="line-592">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
+<span class="source-line-no">593</span><span id="line-593">                    current.mergePlot(other, removeRoads, queue);</span>
+<span class="source-line-no">594</span><span id="line-594">                    merged.add(current.getId());</span>
+<span class="source-line-no">595</span><span id="line-595">                    merged.add(other.getId());</span>
+<span class="source-line-no">596</span><span id="line-596">                    toReturn = true;</span>
+<span class="source-line-no">597</span><span id="line-597"></span>
+<span class="source-line-no">598</span><span id="line-598">                    if (removeRoads) {</span>
+<span class="source-line-no">599</span><span id="line-599">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">600</span><span id="line-600">                        ids.add(current.getId());</span>
+<span class="source-line-no">601</span><span id="line-601">                        ids.add(other.getId());</span>
+<span class="source-line-no">602</span><span id="line-602">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
+<span class="source-line-no">603</span><span id="line-603">                    }</span>
+<span class="source-line-no">604</span><span id="line-604">                }</span>
+<span class="source-line-no">605</span><span id="line-605">            }</span>
+<span class="source-line-no">606</span><span id="line-606">            if (max &gt;= 0 &amp;&amp; (dir == Direction.ALL || dir == Direction.EAST) &amp;&amp; !current.isMerged(Direction.EAST)) {</span>
+<span class="source-line-no">607</span><span id="line-607">                Plot other = current.getRelative(Direction.EAST);</span>
+<span class="source-line-no">608</span><span id="line-608">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
+<span class="source-line-no">609</span><span id="line-609">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
+<span class="source-line-no">610</span><span id="line-610">                    current.mergePlot(other, removeRoads, queue);</span>
+<span class="source-line-no">611</span><span id="line-611">                    merged.add(current.getId());</span>
+<span class="source-line-no">612</span><span id="line-612">                    merged.add(other.getId());</span>
+<span class="source-line-no">613</span><span id="line-613">                    toReturn = true;</span>
+<span class="source-line-no">614</span><span id="line-614"></span>
+<span class="source-line-no">615</span><span id="line-615">                    if (removeRoads) {</span>
+<span class="source-line-no">616</span><span id="line-616">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">617</span><span id="line-617">                        ids.add(current.getId());</span>
+<span class="source-line-no">618</span><span id="line-618">                        ids.add(other.getId());</span>
+<span class="source-line-no">619</span><span id="line-619">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
+<span class="source-line-no">620</span><span id="line-620">                    }</span>
+<span class="source-line-no">621</span><span id="line-621">                }</span>
+<span class="source-line-no">622</span><span id="line-622">            }</span>
+<span class="source-line-no">623</span><span id="line-623">            if (max &gt;= 0 &amp;&amp; (dir == Direction.ALL || dir == Direction.SOUTH) &amp;&amp; !current.isMerged(Direction.SOUTH)) {</span>
+<span class="source-line-no">624</span><span id="line-624">                Plot other = current.getRelative(Direction.SOUTH);</span>
+<span class="source-line-no">625</span><span id="line-625">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
+<span class="source-line-no">626</span><span id="line-626">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
+<span class="source-line-no">627</span><span id="line-627">                    current.mergePlot(other, removeRoads, queue);</span>
+<span class="source-line-no">628</span><span id="line-628">                    merged.add(current.getId());</span>
+<span class="source-line-no">629</span><span id="line-629">                    merged.add(other.getId());</span>
+<span class="source-line-no">630</span><span id="line-630">                    toReturn = true;</span>
+<span class="source-line-no">631</span><span id="line-631"></span>
+<span class="source-line-no">632</span><span id="line-632">                    if (removeRoads) {</span>
+<span class="source-line-no">633</span><span id="line-633">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">634</span><span id="line-634">                        ids.add(current.getId());</span>
+<span class="source-line-no">635</span><span id="line-635">                        ids.add(other.getId());</span>
+<span class="source-line-no">636</span><span id="line-636">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
+<span class="source-line-no">637</span><span id="line-637">                    }</span>
+<span class="source-line-no">638</span><span id="line-638">                }</span>
+<span class="source-line-no">639</span><span id="line-639">            }</span>
+<span class="source-line-no">640</span><span id="line-640">            if (max &gt;= 0 &amp;&amp; (dir == Direction.ALL || dir == Direction.WEST) &amp;&amp; !current.isMerged(Direction.WEST)) {</span>
+<span class="source-line-no">641</span><span id="line-641">                Plot other = current.getRelative(Direction.WEST);</span>
+<span class="source-line-no">642</span><span id="line-642">                if (other != null &amp;&amp; other.isOwner(uuid) &amp;&amp; (other.getBasePlot(false).equals(current.getBasePlot(false))</span>
+<span class="source-line-no">643</span><span id="line-643">                        || (plots = other.getConnectedPlots()).size() &lt;= max &amp;&amp; frontier.addAll(plots) &amp;&amp; (max -= plots.size()) != -1)) {</span>
+<span class="source-line-no">644</span><span id="line-644">                    current.mergePlot(other, removeRoads, queue);</span>
+<span class="source-line-no">645</span><span id="line-645">                    merged.add(current.getId());</span>
+<span class="source-line-no">646</span><span id="line-646">                    merged.add(other.getId());</span>
+<span class="source-line-no">647</span><span id="line-647">                    toReturn = true;</span>
+<span class="source-line-no">648</span><span id="line-648"></span>
+<span class="source-line-no">649</span><span id="line-649">                    if (removeRoads) {</span>
+<span class="source-line-no">650</span><span id="line-650">                        ArrayList&lt;PlotId&gt; ids = new ArrayList&lt;&gt;();</span>
+<span class="source-line-no">651</span><span id="line-651">                        ids.add(current.getId());</span>
+<span class="source-line-no">652</span><span id="line-652">                        ids.add(other.getId());</span>
+<span class="source-line-no">653</span><span id="line-653">                        this.plot.getManager().finishPlotMerge(ids, queue);</span>
+<span class="source-line-no">654</span><span id="line-654">                    }</span>
+<span class="source-line-no">655</span><span id="line-655">                }</span>
+<span class="source-line-no">656</span><span id="line-656">            }</span>
+<span class="source-line-no">657</span><span id="line-657">        }</span>
+<span class="source-line-no">658</span><span id="line-658">        if (actor != null &amp;&amp; Settings.QUEUE.NOTIFY_PROGRESS) {</span>
+<span class="source-line-no">659</span><span id="line-659">            queue.addProgressSubscriber(subscriberFactory.createWithActor(actor));</span>
+<span class="source-line-no">660</span><span id="line-660">        }</span>
+<span class="source-line-no">661</span><span id="line-661">        if (queue.size() &gt; 0) {</span>
+<span class="source-line-no">662</span><span id="line-662">            queue.enqueue();</span>
+<span class="source-line-no">663</span><span id="line-663">        }</span>
+<span class="source-line-no">664</span><span id="line-664">        visited.forEach(Plot::clearCache);</span>
+<span class="source-line-no">665</span><span id="line-665">        return toReturn;</span>
+<span class="source-line-no">666</span><span id="line-666">    }</span>
+<span class="source-line-no">667</span><span id="line-667"></span>
+<span class="source-line-no">668</span><span id="line-668">    /**</span>
+<span class="source-line-no">669</span><span id="line-669">     * Moves a plot physically, as well as the corresponding settings.</span>
+<span class="source-line-no">670</span><span id="line-670">     *</span>
+<span class="source-line-no">671</span><span id="line-671">     * @param destination Plot moved to</span>
+<span class="source-line-no">672</span><span id="line-672">     * @param actor       The actor executing the task</span>
+<span class="source-line-no">673</span><span id="line-673">     * @param whenDone    task when done</span>
+<span class="source-line-no">674</span><span id="line-674">     * @param allowSwap   whether to swap plots</span>
+<span class="source-line-no">675</span><span id="line-675">     * @return {@code true} if the move was successful, else {@code false}</span>
+<span class="source-line-no">676</span><span id="line-676">     */</span>
+<span class="source-line-no">677</span><span id="line-677">    public @NonNull CompletableFuture&lt;Boolean&gt; move(</span>
+<span class="source-line-no">678</span><span id="line-678">            final @NonNull Plot destination,</span>
+<span class="source-line-no">679</span><span id="line-679">            final @Nullable PlotPlayer&lt;?&gt; actor,</span>
+<span class="source-line-no">680</span><span id="line-680">            final @NonNull Runnable whenDone,</span>
+<span class="source-line-no">681</span><span id="line-681">            final boolean allowSwap</span>
+<span class="source-line-no">682</span><span id="line-682">    ) {</span>
+<span class="source-line-no">683</span><span id="line-683">        final PlotId offset = PlotId.of(</span>
+<span class="source-line-no">684</span><span id="line-684">                destination.getId().getX() - this.plot.getId().getX(),</span>
+<span class="source-line-no">685</span><span id="line-685">                destination.getId().getY() - this.plot.getId().getY()</span>
+<span class="source-line-no">686</span><span id="line-686">        );</span>
+<span class="source-line-no">687</span><span id="line-687">        Location db = destination.getBottomAbs();</span>
+<span class="source-line-no">688</span><span id="line-688">        Location ob = this.plot.getBottomAbs();</span>
+<span class="source-line-no">689</span><span id="line-689">        final int offsetX = db.getX() - ob.getX();</span>
+<span class="source-line-no">690</span><span id="line-690">        final int offsetZ = db.getZ() - ob.getZ();</span>
+<span class="source-line-no">691</span><span id="line-691">        if (!this.plot.hasOwner()) {</span>
+<span class="source-line-no">692</span><span id="line-692">            TaskManager.runTaskLater(whenDone, TaskTime.ticks(1L));</span>
+<span class="source-line-no">693</span><span id="line-693">            return CompletableFuture.completedFuture(false);</span>
+<span class="source-line-no">694</span><span id="line-694">        }</span>
+<span class="source-line-no">695</span><span id="line-695">        AtomicBoolean occupied = new AtomicBoolean(false);</span>
+<span class="source-line-no">696</span><span id="line-696">        Set&lt;Plot&gt; plots = this.plot.getConnectedPlots();</span>
+<span class="source-line-no">697</span><span id="line-697">        for (Plot plot : plots) {</span>
+<span class="source-line-no">698</span><span id="line-698">            Plot other = plot.getRelative(destination.getArea(), offset.getX(), offset.getY());</span>
+<span class="source-line-no">699</span><span id="line-699">            if (other.hasOwner()) {</span>
+<span class="source-line-no">700</span><span id="line-700">                if (!allowSwap) {</span>
+<span class="source-line-no">701</span><span id="line-701">                    TaskManager.runTaskLater(whenDone, TaskTime.ticks(1L));</span>
+<span class="source-line-no">702</span><span id="line-702">                    return CompletableFuture.completedFuture(false);</span>
+<span class="source-line-no">703</span><span id="line-703">                }</span>
+<span class="source-line-no">704</span><span id="line-704">                occupied.set(true);</span>
+<span class="source-line-no">705</span><span id="line-705">            } else {</span>
+<span class="source-line-no">706</span><span id="line-706">                plot.getPlotModificationManager().removeSign();</span>
+<span class="source-line-no">707</span><span id="line-707">            }</span>
+<span class="source-line-no">708</span><span id="line-708">        }</span>
+<span class="source-line-no">709</span><span id="line-709">        // world border</span>
+<span class="source-line-no">710</span><span id="line-710">        destination.updateWorldBorder();</span>
+<span class="source-line-no">711</span><span id="line-711">        final ArrayDeque&lt;CuboidRegion&gt; regions = new ArrayDeque&lt;&gt;(this.plot.getRegions());</span>
+<span class="source-line-no">712</span><span id="line-712">        // move / swap data</span>
+<span class="source-line-no">713</span><span id="line-713">        final PlotArea originArea = this.plot.getArea();</span>
+<span class="source-line-no">714</span><span id="line-714"></span>
+<span class="source-line-no">715</span><span id="line-715">        final Iterator&lt;Plot&gt; plotIterator = plots.iterator();</span>
+<span class="source-line-no">716</span><span id="line-716"></span>
+<span class="source-line-no">717</span><span id="line-717">        CompletableFuture&lt;Boolean&gt; future = null;</span>
+<span class="source-line-no">718</span><span id="line-718">        if (plotIterator.hasNext()) {</span>
+<span class="source-line-no">719</span><span id="line-719">            while (plotIterator.hasNext()) {</span>
+<span class="source-line-no">720</span><span id="line-720">                final Plot plot = plotIterator.next();</span>
+<span class="source-line-no">721</span><span id="line-721">                final Plot other = plot.getRelative(destination.getArea(), offset.getX(), offset.getY());</span>
+<span class="source-line-no">722</span><span id="line-722">                final CompletableFuture&lt;Boolean&gt; swapResult = plot.swapData(other);</span>
+<span class="source-line-no">723</span><span id="line-723">                if (future == null) {</span>
+<span class="source-line-no">724</span><span id="line-724">                    future = swapResult;</span>
+<span class="source-line-no">725</span><span id="line-725">                } else {</span>
+<span class="source-line-no">726</span><span id="line-726">                    future = future.thenCombine(swapResult, (fn, th) -&gt; fn);</span>
+<span class="source-line-no">727</span><span id="line-727">                }</span>
+<span class="source-line-no">728</span><span id="line-728">            }</span>
+<span class="source-line-no">729</span><span id="line-729">        } else {</span>
+<span class="source-line-no">730</span><span id="line-730">            future = CompletableFuture.completedFuture(true);</span>
+<span class="source-line-no">731</span><span id="line-731">        }</span>
+<span class="source-line-no">732</span><span id="line-732"></span>
+<span class="source-line-no">733</span><span id="line-733">        return future.thenApply(result -&gt; {</span>
+<span class="source-line-no">734</span><span id="line-734">            if (!result) {</span>
+<span class="source-line-no">735</span><span id="line-735">                return false;</span>
+<span class="source-line-no">736</span><span id="line-736">            }</span>
+<span class="source-line-no">737</span><span id="line-737">            // copy terrain</span>
+<span class="source-line-no">738</span><span id="line-738">            if (occupied.get()) {</span>
+<span class="source-line-no">739</span><span id="line-739">                new Runnable() {</span>
+<span class="source-line-no">740</span><span id="line-740">                    @Override</span>
+<span class="source-line-no">741</span><span id="line-741">                    public void run() {</span>
+<span class="source-line-no">742</span><span id="line-742">                        if (regions.isEmpty()) {</span>
+<span class="source-line-no">743</span><span id="line-743">                            // Update signs</span>
+<span class="source-line-no">744</span><span id="line-744">                            destination.getPlotModificationManager().setSign();</span>
+<span class="source-line-no">745</span><span id="line-745">                            setSign();</span>
+<span class="source-line-no">746</span><span id="line-746">                            // Run final tasks</span>
+<span class="source-line-no">747</span><span id="line-747">                            TaskManager.runTask(whenDone);</span>
+<span class="source-line-no">748</span><span id="line-748">                        } else {</span>
+<span class="source-line-no">749</span><span id="line-749">                            CuboidRegion region = regions.poll();</span>
+<span class="source-line-no">750</span><span id="line-750">                            Location[] corners = Plot.getCorners(plot.getWorldName(), region);</span>
+<span class="source-line-no">751</span><span id="line-751">                            Location pos1 = corners[0];</span>
+<span class="source-line-no">752</span><span id="line-752">                            Location pos2 = corners[1];</span>
+<span class="source-line-no">753</span><span id="line-753">                            Location pos3 = pos1.add(offsetX, 0, offsetZ).withWorld(destination.getWorldName());</span>
+<span class="source-line-no">754</span><span id="line-754">                            PlotSquared.platform().regionManager().swap(pos1, pos2, pos3, actor, this);</span>
+<span class="source-line-no">755</span><span id="line-755">                        }</span>
+<span class="source-line-no">756</span><span id="line-756">                    }</span>
+<span class="source-line-no">757</span><span id="line-757">                }.run();</span>
+<span class="source-line-no">758</span><span id="line-758">            } else {</span>
+<span class="source-line-no">759</span><span id="line-759">                new Runnable() {</span>
+<span class="source-line-no">760</span><span id="line-760">                    @Override</span>
+<span class="source-line-no">761</span><span id="line-761">                    public void run() {</span>
+<span class="source-line-no">762</span><span id="line-762">                        if (regions.isEmpty()) {</span>
+<span class="source-line-no">763</span><span id="line-763">                            Plot plot = destination.getRelative(0, 0);</span>
+<span class="source-line-no">764</span><span id="line-764">                            Plot originPlot =</span>
+<span class="source-line-no">765</span><span id="line-765">                                    originArea.getPlotAbs(PlotId.of(</span>
+<span class="source-line-no">766</span><span id="line-766">                                            plot.getId().getX() - offset.getX(),</span>
+<span class="source-line-no">767</span><span id="line-767">                                            plot.getId().getY() - offset.getY()</span>
+<span class="source-line-no">768</span><span id="line-768">                                    ));</span>
+<span class="source-line-no">769</span><span id="line-769">                            final Runnable clearDone = () -&gt; {</span>
+<span class="source-line-no">770</span><span id="line-770">                                QueueCoordinator queue = PlotModificationManager.this.plot.getArea().getQueue();</span>
+<span class="source-line-no">771</span><span id="line-771">                                for (final Plot current : plot.getConnectedPlots()) {</span>
+<span class="source-line-no">772</span><span id="line-772">                                    PlotModificationManager.this.plot.getManager().claimPlot(current, queue);</span>
+<span class="source-line-no">773</span><span id="line-773">                                }</span>
+<span class="source-line-no">774</span><span id="line-774">                                if (queue.size() &gt; 0) {</span>
+<span class="source-line-no">775</span><span id="line-775">                                    queue.enqueue();</span>
+<span class="source-line-no">776</span><span id="line-776">                                }</span>
+<span class="source-line-no">777</span><span id="line-777">                                plot.getPlotModificationManager().setSign();</span>
+<span class="source-line-no">778</span><span id="line-778">                                TaskManager.runTask(whenDone);</span>
+<span class="source-line-no">779</span><span id="line-779">                            };</span>
+<span class="source-line-no">780</span><span id="line-780">                            if (originPlot != null) {</span>
+<span class="source-line-no">781</span><span id="line-781">                                originPlot.getPlotModificationManager().clear(false, true, actor, clearDone);</span>
+<span class="source-line-no">782</span><span id="line-782">                            } else {</span>
+<span class="source-line-no">783</span><span id="line-783">                                clearDone.run();</span>
+<span class="source-line-no">784</span><span id="line-784">                            }</span>
+<span class="source-line-no">785</span><span id="line-785">                            return;</span>
+<span class="source-line-no">786</span><span id="line-786">                        }</span>
+<span class="source-line-no">787</span><span id="line-787">                        final Runnable task = this;</span>
+<span class="source-line-no">788</span><span id="line-788">                        CuboidRegion region = regions.poll();</span>
+<span class="source-line-no">789</span><span id="line-789">                        Location[] corners = Plot.getCorners(</span>
+<span class="source-line-no">790</span><span id="line-790">                                PlotModificationManager.this.plot.getWorldName(),</span>
+<span class="source-line-no">791</span><span id="line-791">                                region</span>
+<span class="source-line-no">792</span><span id="line-792">                        );</span>
+<span class="source-line-no">793</span><span id="line-793">                        final Location pos1 = corners[0];</span>
+<span class="source-line-no">794</span><span id="line-794">                        final Location pos2 = corners[1];</span>
+<span class="source-line-no">795</span><span id="line-795">                        Location newPos = pos1.add(offsetX, 0, offsetZ).withWorld(destination.getWorldName());</span>
+<span class="source-line-no">796</span><span id="line-796">                        PlotSquared.platform().regionManager().copyRegion(pos1, pos2, newPos, actor, task);</span>
+<span class="source-line-no">797</span><span id="line-797">                    }</span>
+<span class="source-line-no">798</span><span id="line-798">                }.run();</span>
+<span class="source-line-no">799</span><span id="line-799">            }</span>
+<span class="source-line-no">800</span><span id="line-800">            return true;</span>
+<span class="source-line-no">801</span><span id="line-801">        });</span>
+<span class="source-line-no">802</span><span id="line-802">    }</span>
+<span class="source-line-no">803</span><span id="line-803"></span>
+<span class="source-line-no">804</span><span id="line-804">    /**</span>
+<span class="source-line-no">805</span><span id="line-805">     * Unlink a plot and remove the roads</span>
+<span class="source-line-no">806</span><span id="line-806">     *</span>
+<span class="source-line-no">807</span><span id="line-807">     * @return {@code true} if plot was linked</span>
+<span class="source-line-no">808</span><span id="line-808">     * @see #unlinkPlot(boolean, boolean)</span>
+<span class="source-line-no">809</span><span id="line-809">     */</span>
+<span class="source-line-no">810</span><span id="line-810">    public boolean unlink() {</span>
+<span class="source-line-no">811</span><span id="line-811">        return this.unlinkPlot(true, true);</span>
+<span class="source-line-no">812</span><span id="line-812">    }</span>
+<span class="source-line-no">813</span><span id="line-813"></span>
+<span class="source-line-no">814</span><span id="line-814">    /**</span>
+<span class="source-line-no">815</span><span id="line-815">     * Swap the plot contents and settings with another location&lt;br&gt;</span>
+<span class="source-line-no">816</span><span id="line-816">     * - The destination must correspond to a valid plot of equal dimensions</span>
+<span class="source-line-no">817</span><span id="line-817">     *</span>
+<span class="source-line-no">818</span><span id="line-818">     * @param destination The other plot to swap with</span>
+<span class="source-line-no">819</span><span id="line-819">     * @param actor       The actor executing the task</span>
+<span class="source-line-no">820</span><span id="line-820">     * @param whenDone    A task to run when finished, or null</span>
+<span class="source-line-no">821</span><span id="line-821">     * @return Future that completes with {@code true} if the swap was successful, else {@code false}</span>
+<span class="source-line-no">822</span><span id="line-822">     */</span>
+<span class="source-line-no">823</span><span id="line-823">    public @NonNull CompletableFuture&lt;Boolean&gt; swap(</span>
+<span class="source-line-no">824</span><span id="line-824">            final @NonNull Plot destination,</span>
+<span class="source-line-no">825</span><span id="line-825">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
+<span class="source-line-no">826</span><span id="line-826">            final @NonNull Runnable whenDone</span>
+<span class="source-line-no">827</span><span id="line-827">    ) {</span>
+<span class="source-line-no">828</span><span id="line-828">        return this.move(destination, actor, whenDone, true);</span>
+<span class="source-line-no">829</span><span id="line-829">    }</span>
+<span class="source-line-no">830</span><span id="line-830"></span>
+<span class="source-line-no">831</span><span id="line-831">    /**</span>
+<span class="source-line-no">832</span><span id="line-832">     * Moves the plot to an empty location&lt;br&gt;</span>
+<span class="source-line-no">833</span><span id="line-833">     * - The location must be empty</span>
+<span class="source-line-no">834</span><span id="line-834">     *</span>
+<span class="source-line-no">835</span><span id="line-835">     * @param destination Where to move the plot</span>
+<span class="source-line-no">836</span><span id="line-836">     * @param actor       The actor executing the task</span>
+<span class="source-line-no">837</span><span id="line-837">     * @param whenDone    A task to run when done, or null</span>
+<span class="source-line-no">838</span><span id="line-838">     * @return Future that completes with {@code true} if the move was successful, else {@code false}</span>
+<span class="source-line-no">839</span><span id="line-839">     */</span>
+<span class="source-line-no">840</span><span id="line-840">    public @NonNull CompletableFuture&lt;Boolean&gt; move(</span>
+<span class="source-line-no">841</span><span id="line-841">            final @NonNull Plot destination,</span>
+<span class="source-line-no">842</span><span id="line-842">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
+<span class="source-line-no">843</span><span id="line-843">            final @NonNull Runnable whenDone</span>
+<span class="source-line-no">844</span><span id="line-844">    ) {</span>
+<span class="source-line-no">845</span><span id="line-845">        return this.move(destination, actor, whenDone, false);</span>
+<span class="source-line-no">846</span><span id="line-846">    }</span>
+<span class="source-line-no">847</span><span id="line-847"></span>
+<span class="source-line-no">848</span><span id="line-848">    /**</span>
+<span class="source-line-no">849</span><span id="line-849">     * Sets a component for a plot to the provided blocks&lt;br&gt;</span>
+<span class="source-line-no">850</span><span id="line-850">     * - E.g. floor, wall, border etc.&lt;br&gt;</span>
+<span class="source-line-no">851</span><span id="line-851">     * - The available components depend on the generator being used&lt;br&gt;</span>
+<span class="source-line-no">852</span><span id="line-852">     *</span>
+<span class="source-line-no">853</span><span id="line-853">     * @param component Component to set</span>
+<span class="source-line-no">854</span><span id="line-854">     * @param blocks    Pattern to use the generation</span>
+<span class="source-line-no">855</span><span id="line-855">     * @param actor     The actor executing the task</span>
+<span class="source-line-no">856</span><span id="line-856">     * @param queue     Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
+<span class="source-line-no">857</span><span id="line-857">     *                  otherwise writes to the queue but does not enqueue.</span>
+<span class="source-line-no">858</span><span id="line-858">     * @return {@code true} if the component was set successfully, else {@code false}</span>
+<span class="source-line-no">859</span><span id="line-859">     */</span>
+<span class="source-line-no">860</span><span id="line-860">    public boolean setComponent(</span>
+<span class="source-line-no">861</span><span id="line-861">            final @NonNull String component,</span>
+<span class="source-line-no">862</span><span id="line-862">            final @NonNull Pattern blocks,</span>
+<span class="source-line-no">863</span><span id="line-863">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
+<span class="source-line-no">864</span><span id="line-864">            final @Nullable QueueCoordinator queue</span>
+<span class="source-line-no">865</span><span id="line-865">    ) {</span>
+<span class="source-line-no">866</span><span id="line-866">        final PlotComponentSetEvent event = PlotSquared.get().getEventDispatcher().callComponentSet(this.plot, component, blocks);</span>
+<span class="source-line-no">867</span><span id="line-867">        return this.plot.getManager().setComponent(this.plot.getId(), event.getComponent(), event.getPattern(), actor, queue);</span>
+<span class="source-line-no">868</span><span id="line-868">    }</span>
+<span class="source-line-no">869</span><span id="line-869"></span>
+<span class="source-line-no">870</span><span id="line-870">    /**</span>
+<span class="source-line-no">871</span><span id="line-871">     * Delete a plot (use null for the runnable if you don't need to be notified on completion)</span>
+<span class="source-line-no">872</span><span id="line-872">     *</span>
+<span class="source-line-no">873</span><span id="line-873">     * &lt;p&gt;</span>
+<span class="source-line-no">874</span><span id="line-874">     * Use {@link PlotModificationManager#clear(boolean, boolean, PlotPlayer, Runnable)} to simply clear a plot</span>
+<span class="source-line-no">875</span><span id="line-875">     * &lt;/p&gt;</span>
+<span class="source-line-no">876</span><span id="line-876">     *</span>
+<span class="source-line-no">877</span><span id="line-877">     * @param actor    The actor executing the task</span>
+<span class="source-line-no">878</span><span id="line-878">     * @param whenDone task to run when plot has been deleted. Nullable</span>
+<span class="source-line-no">879</span><span id="line-879">     * @return {@code true} if the deletion was successful, {@code false} if not</span>
+<span class="source-line-no">880</span><span id="line-880">     * @see PlotSquared#removePlot(Plot, boolean)</span>
+<span class="source-line-no">881</span><span id="line-881">     */</span>
+<span class="source-line-no">882</span><span id="line-882">    public boolean deletePlot(@Nullable PlotPlayer&lt;?&gt; actor, final Runnable whenDone) {</span>
+<span class="source-line-no">883</span><span id="line-883">        if (!this.plot.hasOwner()) {</span>
+<span class="source-line-no">884</span><span id="line-884">            return false;</span>
+<span class="source-line-no">885</span><span id="line-885">        }</span>
+<span class="source-line-no">886</span><span id="line-886">        final Set&lt;Plot&gt; plots = this.plot.getConnectedPlots();</span>
+<span class="source-line-no">887</span><span id="line-887">        this.clear(false, true, actor, () -&gt; {</span>
+<span class="source-line-no">888</span><span id="line-888">            for (Plot current : plots) {</span>
+<span class="source-line-no">889</span><span id="line-889">                current.unclaim();</span>
+<span class="source-line-no">890</span><span id="line-890">            }</span>
+<span class="source-line-no">891</span><span id="line-891">            TaskManager.runTask(whenDone);</span>
+<span class="source-line-no">892</span><span id="line-892">        });</span>
+<span class="source-line-no">893</span><span id="line-893">        return true;</span>
+<span class="source-line-no">894</span><span id="line-894">    }</span>
+<span class="source-line-no">895</span><span id="line-895"></span>
+<span class="source-line-no">896</span><span id="line-896">    /**</span>
+<span class="source-line-no">897</span><span id="line-897">     * Sets components such as border, wall, floor.</span>
+<span class="source-line-no">898</span><span id="line-898">     * (components are generator specific)</span>
+<span class="source-line-no">899</span><span id="line-899">     *</span>
+<span class="source-line-no">900</span><span id="line-900">     * @param component component to set</span>
+<span class="source-line-no">901</span><span id="line-901">     * @param blocks    string of block(s) to set component to</span>
+<span class="source-line-no">902</span><span id="line-902">     * @param actor     The player executing the task</span>
+<span class="source-line-no">903</span><span id="line-903">     * @param queue     Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
+<span class="source-line-no">904</span><span id="line-904">     *                  otherwise writes to the queue but does not enqueue.</span>
+<span class="source-line-no">905</span><span id="line-905">     * @return {@code true} if the update was successful, {@code false} if not</span>
+<span class="source-line-no">906</span><span id="line-906">     */</span>
+<span class="source-line-no">907</span><span id="line-907">    @Deprecated</span>
+<span class="source-line-no">908</span><span id="line-908">    public boolean setComponent(</span>
+<span class="source-line-no">909</span><span id="line-909">            String component,</span>
+<span class="source-line-no">910</span><span id="line-910">            String blocks,</span>
+<span class="source-line-no">911</span><span id="line-911">            @Nullable PlotPlayer&lt;?&gt; actor,</span>
+<span class="source-line-no">912</span><span id="line-912">            @Nullable QueueCoordinator queue</span>
+<span class="source-line-no">913</span><span id="line-913">    ) {</span>
+<span class="source-line-no">914</span><span id="line-914">        final BlockBucket parsed = ConfigurationUtil.BLOCK_BUCKET.parseString(blocks);</span>
+<span class="source-line-no">915</span><span id="line-915">        if (parsed != null &amp;&amp; parsed.isEmpty()) {</span>
+<span class="source-line-no">916</span><span id="line-916">            return false;</span>
+<span class="source-line-no">917</span><span id="line-917">        }</span>
+<span class="source-line-no">918</span><span id="line-918">        return this.setComponent(component, parsed.toPattern(), actor, queue);</span>
+<span class="source-line-no">919</span><span id="line-919">    }</span>
+<span class="source-line-no">920</span><span id="line-920"></span>
+<span class="source-line-no">921</span><span id="line-921">    /**</span>
+<span class="source-line-no">922</span><span id="line-922">     * Remove the south road section of a plot&lt;br&gt;</span>
+<span class="source-line-no">923</span><span id="line-923">     * - Used when a plot is merged&lt;br&gt;</span>
+<span class="source-line-no">924</span><span id="line-924">     *</span>
+<span class="source-line-no">925</span><span id="line-925">     * @param queue Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
+<span class="source-line-no">926</span><span id="line-926">     *              otherwise writes to the queue but does not enqueue.</span>
+<span class="source-line-no">927</span><span id="line-927">     */</span>
+<span class="source-line-no">928</span><span id="line-928">    public void removeRoadSouth(final @Nullable QueueCoordinator queue) {</span>
+<span class="source-line-no">929</span><span id="line-929">        if (this.plot.getArea().getType() != PlotAreaType.NORMAL &amp;&amp; this.plot</span>
+<span class="source-line-no">930</span><span id="line-930">                .getArea()</span>
+<span class="source-line-no">931</span><span id="line-931">                .getTerrain() == PlotAreaTerrainType.ROAD) {</span>
+<span class="source-line-no">932</span><span id="line-932">            Plot other = this.plot.getRelative(Direction.SOUTH);</span>
+<span class="source-line-no">933</span><span id="line-933">            Location bot = other.getBottomAbs();</span>
+<span class="source-line-no">934</span><span id="line-934">            Location top = this.plot.getTopAbs();</span>
+<span class="source-line-no">935</span><span id="line-935">            Location pos1 = Location.at(this.plot.getWorldName(), bot.getX(), plot.getArea().getMinGenHeight(), top.getZ());</span>
+<span class="source-line-no">936</span><span id="line-936">            Location pos2 = Location.at(this.plot.getWorldName(), top.getX(), plot.getArea().getMaxGenHeight(), bot.getZ());</span>
+<span class="source-line-no">937</span><span id="line-937">            PlotSquared.platform().regionManager().regenerateRegion(pos1, pos2, true, null);</span>
+<span class="source-line-no">938</span><span id="line-938">        } else if (this.plot.getArea().getTerrain() != PlotAreaTerrainType.ALL) { // no road generated =&gt; no road to remove</span>
+<span class="source-line-no">939</span><span id="line-939">            this.plot.getManager().removeRoadSouth(this.plot, queue);</span>
+<span class="source-line-no">940</span><span id="line-940">        }</span>
+<span class="source-line-no">941</span><span id="line-941">    }</span>
+<span class="source-line-no">942</span><span id="line-942"></span>
+<span class="source-line-no">943</span><span id="line-943">    /**</span>
+<span class="source-line-no">944</span><span id="line-944">     * Remove the east road section of a plot&lt;br&gt;</span>
+<span class="source-line-no">945</span><span id="line-945">     * - Used when a plot is merged&lt;br&gt;</span>
+<span class="source-line-no">946</span><span id="line-946">     *</span>
+<span class="source-line-no">947</span><span id="line-947">     * @param queue Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
+<span class="source-line-no">948</span><span id="line-948">     *              otherwise writes to the queue but does not enqueue.</span>
+<span class="source-line-no">949</span><span id="line-949">     */</span>
+<span class="source-line-no">950</span><span id="line-950">    public void removeRoadEast(@Nullable QueueCoordinator queue) {</span>
+<span class="source-line-no">951</span><span id="line-951">        if (this.plot.getArea().getType() != PlotAreaType.NORMAL &amp;&amp; this.plot</span>
+<span class="source-line-no">952</span><span id="line-952">                .getArea()</span>
+<span class="source-line-no">953</span><span id="line-953">                .getTerrain() == PlotAreaTerrainType.ROAD) {</span>
+<span class="source-line-no">954</span><span id="line-954">            Plot other = this.plot.getRelative(Direction.EAST);</span>
+<span class="source-line-no">955</span><span id="line-955">            Location bot = other.getBottomAbs();</span>
+<span class="source-line-no">956</span><span id="line-956">            Location top = this.plot.getTopAbs();</span>
+<span class="source-line-no">957</span><span id="line-957">            Location pos1 = Location.at(this.plot.getWorldName(), top.getX(), plot.getArea().getMinGenHeight(), bot.getZ());</span>
+<span class="source-line-no">958</span><span id="line-958">            Location pos2 = Location.at(this.plot.getWorldName(), bot.getX(), plot.getArea().getMaxGenHeight(), top.getZ());</span>
+<span class="source-line-no">959</span><span id="line-959">            PlotSquared.platform().regionManager().regenerateRegion(pos1, pos2, true, null);</span>
+<span class="source-line-no">960</span><span id="line-960">        } else if (this.plot.getArea().getTerrain() != PlotAreaTerrainType.ALL) { // no road generated =&gt; no road to remove</span>
+<span class="source-line-no">961</span><span id="line-961">            this.plot.getArea().getPlotManager().removeRoadEast(this.plot, queue);</span>
+<span class="source-line-no">962</span><span id="line-962">        }</span>
+<span class="source-line-no">963</span><span id="line-963">    }</span>
+<span class="source-line-no">964</span><span id="line-964"></span>
+<span class="source-line-no">965</span><span id="line-965">    /**</span>
+<span class="source-line-no">966</span><span id="line-966">     * Remove the SE road (only effects terrain)</span>
+<span class="source-line-no">967</span><span id="line-967">     *</span>
+<span class="source-line-no">968</span><span id="line-968">     * @param queue Nullable {@link QueueCoordinator}. If null, creates own queue and enqueues,</span>
+<span class="source-line-no">969</span><span id="line-969">     *              otherwise writes to the queue but does not enqueue.</span>
+<span class="source-line-no">970</span><span id="line-970">     */</span>
+<span class="source-line-no">971</span><span id="line-971">    public void removeRoadSouthEast(@Nullable QueueCoordinator queue) {</span>
+<span class="source-line-no">972</span><span id="line-972">        if (this.plot.getArea().getType() != PlotAreaType.NORMAL &amp;&amp; this.plot</span>
+<span class="source-line-no">973</span><span id="line-973">                .getArea()</span>
+<span class="source-line-no">974</span><span id="line-974">                .getTerrain() == PlotAreaTerrainType.ROAD) {</span>
+<span class="source-line-no">975</span><span id="line-975">            Plot other = this.plot.getRelative(1, 1);</span>
+<span class="source-line-no">976</span><span id="line-976">            Location pos1 = this.plot.getTopAbs().add(1, 0, 1);</span>
+<span class="source-line-no">977</span><span id="line-977">            Location pos2 = other.getBottomAbs().subtract(1, 0, 1);</span>
+<span class="source-line-no">978</span><span id="line-978">            PlotSquared.platform().regionManager().regenerateRegion(pos1, pos2, true, null);</span>
+<span class="source-line-no">979</span><span id="line-979">        } else if (this.plot.getArea().getTerrain() != PlotAreaTerrainType.ALL) { // no road generated =&gt; no road to remove</span>
+<span class="source-line-no">980</span><span id="line-980">            this.plot.getArea().getPlotManager().removeRoadSouthEast(this.plot, queue);</span>
+<span class="source-line-no">981</span><span id="line-981">        }</span>
+<span class="source-line-no">982</span><span id="line-982">    }</span>
+<span class="source-line-no">983</span><span id="line-983"></span>
+<span class="source-line-no">984</span><span id="line-984">}</span>
 
 
 

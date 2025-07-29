@@ -288,7 +288,7 @@
 <span class="source-line-no">275</span><span id="line-275">    private CompletableFuture&lt;Optional&lt;CommandExecutionData&gt;&gt; prepareArguments(CommandExecutionData data) {</span>
 <span class="source-line-no">276</span><span id="line-276">        if (data.args().length &gt;= 2) {</span>
 <span class="source-line-no">277</span><span id="line-277">            PlotArea area = data.player().getApplicablePlotArea();</span>
-<span class="source-line-no">278</span><span id="line-278">            Plot newPlot = Plot.fromString(area, data.args()[0]);</span>
+<span class="source-line-no">278</span><span id="line-278">            Plot newPlot = Plot.fromString(area, data.args()[0], data.player());</span>
 <span class="source-line-no">279</span><span id="line-279">            return preparePlotArgument(newPlot, data, area)</span>
 <span class="source-line-no">280</span><span id="line-280">                    .thenApply(d -&gt; d.flatMap(x -&gt; prepareFlagArgument(x, area)));</span>
 <span class="source-line-no">281</span><span id="line-281">        } else {</span>

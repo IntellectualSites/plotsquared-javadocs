@@ -76,7 +76,21 @@
 <span class="source-line-no">063</span><span id="line-63">        return subtitle;</span>
 <span class="source-line-no">064</span><span id="line-64">    }</span>
 <span class="source-line-no">065</span><span id="line-65"></span>
-<span class="source-line-no">066</span><span id="line-66">}</span>
+<span class="source-line-no">066</span><span id="line-66">    /**</span>
+<span class="source-line-no">067</span><span id="line-67">     * Provides a string representation of this plot title value (used in placeholders).</span>
+<span class="source-line-no">068</span><span id="line-68">     *</span>
+<span class="source-line-no">069</span><span id="line-69">     * @return the plot title representation in the format {@code "&lt;title&gt;" "&lt;subtitle&gt;"}</span>
+<span class="source-line-no">070</span><span id="line-70">     * @since 7.5.5</span>
+<span class="source-line-no">071</span><span id="line-71">     */</span>
+<span class="source-line-no">072</span><span id="line-72">    @Override</span>
+<span class="source-line-no">073</span><span id="line-73">    public String toString() {</span>
+<span class="source-line-no">074</span><span id="line-74">        return "\"%s\" \"%s\"".formatted(</span>
+<span class="source-line-no">075</span><span id="line-75">                this.title != null ? this.title : "",</span>
+<span class="source-line-no">076</span><span id="line-76">                this.subtitle != null ? this.subtitle : ""</span>
+<span class="source-line-no">077</span><span id="line-77">        );</span>
+<span class="source-line-no">078</span><span id="line-78">    }</span>
+<span class="source-line-no">079</span><span id="line-79"></span>
+<span class="source-line-no">080</span><span id="line-80">}</span>
 
 
 

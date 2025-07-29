@@ -128,7 +128,7 @@
 <span class="source-line-no">115</span><span id="line-115">                this.dataByte = getOrdinal(Boat.Type.values(), boat.getBoatType());</span>
 <span class="source-line-no">116</span><span id="line-116">                storeInventory(boat);</span>
 <span class="source-line-no">117</span><span id="line-117">            }</span>
-<span class="source-line-no">118</span><span id="line-118">            case "ARROW", "EGG", "ENDER_CRYSTAL", "ENDER_PEARL", "ENDER_SIGNAL", "EXPERIENCE_ORB", "FALLING_BLOCK", "FIREBALL",</span>
+<span class="source-line-no">118</span><span id="line-118">            case "ARROW", "EGG", "END_CRYSTAL", "ENDER_CRYSTAL", "ENDER_PEARL", "ENDER_SIGNAL", "EXPERIENCE_ORB", "FALLING_BLOCK", "FIREBALL",</span>
 <span class="source-line-no">119</span><span id="line-119">                    "FIREWORK", "FISHING_HOOK", "LEASH_HITCH", "LIGHTNING", "MINECART", "MINECART_COMMAND", "MINECART_MOB_SPAWNER",</span>
 <span class="source-line-no">120</span><span id="line-120">                    "MINECART_TNT", "PLAYER", "PRIMED_TNT", "SLIME", "SMALL_FIREBALL", "SNOWBALL", "MINECART_FURNACE", "SPLASH_POTION",</span>
 <span class="source-line-no">121</span><span id="line-121">                    "THROWN_EXP_BOTTLE", "WITHER_SKULL", "UNKNOWN", "SPECTRAL_ARROW", "SHULKER_BULLET", "DRAGON_FIREBALL", "AREA_EFFECT_CLOUD",</span>
@@ -285,7 +285,7 @@
 <span class="source-line-no">272</span><span id="line-272">                this.dataByte = (byte) entity1.getPhase().ordinal();</span>
 <span class="source-line-no">273</span><span id="line-273">                return;</span>
 <span class="source-line-no">274</span><span id="line-274">            }</span>
-<span class="source-line-no">275</span><span id="line-275">            case "SKELETON", "WITHER_SKELETON", "GUARDIAN", "ELDER_GUARDIAN", "GHAST", "MAGMA_CUBE", "SQUID", "PIG_ZOMBIE", "HOGLIN",</span>
+<span class="source-line-no">275</span><span id="line-275">            case "SKELETON", "WITHER_SKELETON", "GUARDIAN", "ELDER_GUARDIAN", "GHAST", "HAPPY_GHAST", "GHASTLING", "MAGMA_CUBE", "SQUID", "PIG_ZOMBIE", "HOGLIN",</span>
 <span class="source-line-no">276</span><span id="line-276">                    "ZOMBIFIED_PIGLIN", "PIGLIN", "PIGLIN_BRUTE", "ZOMBIE", "WITHER", "WITCH", "SPIDER", "CAVE_SPIDER", "SILVERFISH",</span>
 <span class="source-line-no">277</span><span id="line-277">                    "GIANT", "ENDERMAN", "CREEPER", "BLAZE", "SHULKER", "SNOWMAN", "SNOW_GOLEM" -&gt; {</span>
 <span class="source-line-no">278</span><span id="line-278">                storeLiving((LivingEntity) entity);</span>
@@ -524,7 +524,7 @@
 <span class="source-line-no">511</span><span id="line-511">                ((Slime) entity).setSize(this.dataByte);</span>
 <span class="source-line-no">512</span><span id="line-512">                return entity;</span>
 <span class="source-line-no">513</span><span id="line-513">            } */</span>
-<span class="source-line-no">514</span><span id="line-514">            case "ARROW", "EGG", "ENDER_CRYSTAL", "ENDER_PEARL", "ENDER_SIGNAL", "DROPPED_ITEM", "EXPERIENCE_ORB", "FALLING_BLOCK",</span>
+<span class="source-line-no">514</span><span id="line-514">            case "ARROW", "EGG", "END_CRYSTAL", "ENDER_CRYSTAL", "ENDER_PEARL", "ENDER_SIGNAL", "DROPPED_ITEM", "EXPERIENCE_ORB", "FALLING_BLOCK",</span>
 <span class="source-line-no">515</span><span id="line-515">                    "FIREBALL", "FIREWORK", "FISHING_HOOK", "LEASH_HITCH", "LIGHTNING", "MINECART", "MINECART_COMMAND",</span>
 <span class="source-line-no">516</span><span id="line-516">                    "MINECART_MOB_SPAWNER", "MINECART_TNT", "PLAYER", "PRIMED_TNT", "SMALL_FIREBALL", "SNOWBALL",</span>
 <span class="source-line-no">517</span><span id="line-517">                    "SPLASH_POTION", "THROWN_EXP_BOTTLE", "SPECTRAL_ARROW", "SHULKER_BULLET", "AREA_EFFECT_CLOUD",</span>
@@ -689,7 +689,7 @@
 <span class="source-line-no">676</span><span id="line-676">                restoreLiving((LivingEntity) entity);</span>
 <span class="source-line-no">677</span><span id="line-677">                return entity;</span>
 <span class="source-line-no">678</span><span id="line-678">            }</span>
-<span class="source-line-no">679</span><span id="line-679">            case "ENDERMITE", "GHAST", "MAGMA_CUBE", "SQUID", "PIG_ZOMBIE", "HOGLIN", "PIGLIN", "ZOMBIFIED_PIGLIN", "PIGLIN_BRUTE", "ZOMBIE", "WITHER", "WITCH", "SPIDER", "CAVE_SPIDER", "SILVERFISH", "GIANT", "ENDERMAN", "CREEPER", "BLAZE", "SNOWMAN", "SHULKER", "GUARDIAN", "ELDER_GUARDIAN", "SKELETON", "WITHER_SKELETON" -&gt; {</span>
+<span class="source-line-no">679</span><span id="line-679">            case "ENDERMITE", "GHAST", "HAPPY_GHAST", "GHASTLING", "MAGMA_CUBE", "SQUID", "PIG_ZOMBIE", "HOGLIN", "PIGLIN", "ZOMBIFIED_PIGLIN", "PIGLIN_BRUTE", "ZOMBIE", "WITHER", "WITCH", "SPIDER", "CAVE_SPIDER", "SILVERFISH", "GIANT", "ENDERMAN", "CREEPER", "BLAZE", "SNOWMAN", "SHULKER", "GUARDIAN", "ELDER_GUARDIAN", "SKELETON", "WITHER_SKELETON" -&gt; {</span>
 <span class="source-line-no">680</span><span id="line-680">                restoreLiving((LivingEntity) entity);</span>
 <span class="source-line-no">681</span><span id="line-681">                return entity;</span>
 <span class="source-line-no">682</span><span id="line-682">            }</span>

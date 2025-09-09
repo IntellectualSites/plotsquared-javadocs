@@ -78,100 +78,98 @@
 <span class="source-line-no">065</span><span id="line-65"></span>
 <span class="source-line-no">066</span><span id="line-66">    @Override</span>
 <span class="source-line-no">067</span><span id="line-67">    public boolean onCommand(PlotPlayer&lt;?&gt; player, String[] args) {</span>
-<span class="source-line-no">068</span><span id="line-68">        Location location = player.getLocation();</span>
-<span class="source-line-no">069</span><span id="line-69">        Plot plot = location.getPlot();</span>
-<span class="source-line-no">070</span><span id="line-70">        if (plot == null) {</span>
-<span class="source-line-no">071</span><span id="line-71">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">072</span><span id="line-72">            return false;</span>
-<span class="source-line-no">073</span><span id="line-73">        }</span>
-<span class="source-line-no">074</span><span id="line-74">        if ((!plot.hasOwner() || !plot.isOwner(player.getUUID())) &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_KICK)) {</span>
-<span class="source-line-no">075</span><span id="line-75">            player.sendMessage(TranslatableCaption.of("permission.no_plot_perms"));</span>
-<span class="source-line-no">076</span><span id="line-76">            return false;</span>
-<span class="source-line-no">077</span><span id="line-77">        }</span>
-<span class="source-line-no">078</span><span id="line-78"></span>
-<span class="source-line-no">079</span><span id="line-79">        PlayerManager.getUUIDsFromString(args[0], (uuids, throwable) -&gt; {</span>
-<span class="source-line-no">080</span><span id="line-80">            if (throwable instanceof TimeoutException) {</span>
-<span class="source-line-no">081</span><span id="line-81">                player.sendMessage(TranslatableCaption.of("players.fetching_players_timeout"));</span>
-<span class="source-line-no">082</span><span id="line-82">            } else if (throwable != null || uuids.isEmpty()) {</span>
-<span class="source-line-no">083</span><span id="line-83">                player.sendMessage(</span>
-<span class="source-line-no">084</span><span id="line-84">                        TranslatableCaption.of("errors.invalid_player"),</span>
-<span class="source-line-no">085</span><span id="line-85">                        TagResolver.resolver("value", Tag.inserting(Component.text(args[0])))</span>
-<span class="source-line-no">086</span><span id="line-86">                );</span>
-<span class="source-line-no">087</span><span id="line-87">            } else {</span>
-<span class="source-line-no">088</span><span id="line-88">                Set&lt;PlotPlayer&lt;?&gt;&gt; players = new HashSet&lt;&gt;();</span>
-<span class="source-line-no">089</span><span id="line-89">                for (UUID uuid : uuids) {</span>
-<span class="source-line-no">090</span><span id="line-90">                    if (uuid == DBFunc.EVERYONE) {</span>
-<span class="source-line-no">091</span><span id="line-91">                        for (PlotPlayer&lt;?&gt; pp : plot.getPlayersInPlot()) {</span>
-<span class="source-line-no">092</span><span id="line-92">                            if (pp == player || pp.hasPermission(Permission.PERMISSION_ADMIN_ENTRY_DENIED)) {</span>
-<span class="source-line-no">093</span><span id="line-93">                                continue;</span>
-<span class="source-line-no">094</span><span id="line-94">                            }</span>
-<span class="source-line-no">095</span><span id="line-95">                            players.add(pp);</span>
-<span class="source-line-no">096</span><span id="line-96">                        }</span>
-<span class="source-line-no">097</span><span id="line-97">                        continue;</span>
-<span class="source-line-no">098</span><span id="line-98">                    }</span>
-<span class="source-line-no">099</span><span id="line-99">                    PlotPlayer&lt;?&gt; pp = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
-<span class="source-line-no">100</span><span id="line-100">                    if (pp != null) {</span>
-<span class="source-line-no">101</span><span id="line-101">                        players.add(pp);</span>
-<span class="source-line-no">102</span><span id="line-102">                    }</span>
-<span class="source-line-no">103</span><span id="line-103">                }</span>
-<span class="source-line-no">104</span><span id="line-104">                players.remove(player); // Don't ever kick the calling player</span>
-<span class="source-line-no">105</span><span id="line-105">                if (players.isEmpty()) {</span>
-<span class="source-line-no">106</span><span id="line-106">                    player.sendMessage(</span>
-<span class="source-line-no">107</span><span id="line-107">                            TranslatableCaption.of("errors.invalid_player"),</span>
-<span class="source-line-no">108</span><span id="line-108">                            TagResolver.resolver("value", Tag.inserting(Component.text(args[0])))</span>
-<span class="source-line-no">109</span><span id="line-109">                    );</span>
-<span class="source-line-no">110</span><span id="line-110">                    return;</span>
-<span class="source-line-no">111</span><span id="line-111">                }</span>
-<span class="source-line-no">112</span><span id="line-112">                for (PlotPlayer&lt;?&gt; player2 : players) {</span>
-<span class="source-line-no">113</span><span id="line-113">                    if (!plot.equals(player2.getCurrentPlot())) {</span>
-<span class="source-line-no">114</span><span id="line-114">                        player.sendMessage(</span>
-<span class="source-line-no">115</span><span id="line-115">                                TranslatableCaption.of("kick.player_not_in_plot"),</span>
-<span class="source-line-no">116</span><span id="line-116">                                TagResolver.resolver("player", Tag.inserting(Component.text(player2.getName())))</span>
-<span class="source-line-no">117</span><span id="line-117">                        );</span>
-<span class="source-line-no">118</span><span id="line-118">                        return;</span>
-<span class="source-line-no">119</span><span id="line-119">                    }</span>
-<span class="source-line-no">120</span><span id="line-120">                    if (player2.hasPermission(Permission.PERMISSION_ADMIN_ENTRY_DENIED)) {</span>
-<span class="source-line-no">121</span><span id="line-121">                        player.sendMessage(</span>
-<span class="source-line-no">122</span><span id="line-122">                                TranslatableCaption.of("kick.cannot_kick_player"),</span>
-<span class="source-line-no">123</span><span id="line-123">                                TagResolver.resolver("player", Tag.inserting(Component.text(player2.getName())))</span>
-<span class="source-line-no">124</span><span id="line-124">                        );</span>
-<span class="source-line-no">125</span><span id="line-125">                        return;</span>
-<span class="source-line-no">126</span><span id="line-126">                    }</span>
-<span class="source-line-no">127</span><span id="line-127">                    Location spawn = this.worldUtil.getSpawn(location.getWorldName());</span>
-<span class="source-line-no">128</span><span id="line-128">                    player2.sendMessage(TranslatableCaption.of("kick.you_got_kicked"));</span>
-<span class="source-line-no">129</span><span id="line-129">                    if (plot.equals(spawn.getPlot())) {</span>
-<span class="source-line-no">130</span><span id="line-130">                        Location newSpawn = this.worldUtil.getSpawn(this.plotAreaManager.getAllWorlds()[0]);</span>
-<span class="source-line-no">131</span><span id="line-131">                        if (plot.equals(newSpawn.getPlot())) {</span>
-<span class="source-line-no">132</span><span id="line-132">                            // Kick from server if you can't be teleported to spawn</span>
-<span class="source-line-no">133</span><span id="line-133">                            // Use string based message here for legacy uses</span>
-<span class="source-line-no">134</span><span id="line-134">                            player2.kick("You got kicked from the plot! This server did not set up a loaded spawn, so you got " +</span>
-<span class="source-line-no">135</span><span id="line-135">                                    "kicked from the server.");</span>
-<span class="source-line-no">136</span><span id="line-136">                        } else {</span>
-<span class="source-line-no">137</span><span id="line-137">                            player2.plotkick(newSpawn);</span>
-<span class="source-line-no">138</span><span id="line-138">                        }</span>
-<span class="source-line-no">139</span><span id="line-139">                    } else {</span>
-<span class="source-line-no">140</span><span id="line-140">                        player2.plotkick(spawn);</span>
-<span class="source-line-no">141</span><span id="line-141">                    }</span>
-<span class="source-line-no">142</span><span id="line-142">                }</span>
-<span class="source-line-no">143</span><span id="line-143">            }</span>
-<span class="source-line-no">144</span><span id="line-144">        });</span>
-<span class="source-line-no">145</span><span id="line-145"></span>
-<span class="source-line-no">146</span><span id="line-146">        return true;</span>
-<span class="source-line-no">147</span><span id="line-147">    }</span>
-<span class="source-line-no">148</span><span id="line-148"></span>
-<span class="source-line-no">149</span><span id="line-149">    @Override</span>
-<span class="source-line-no">150</span><span id="line-150">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
-<span class="source-line-no">151</span><span id="line-151">        Location location = player.getLocation();</span>
-<span class="source-line-no">152</span><span id="line-152">        Plot plot = location.getPlotAbs();</span>
-<span class="source-line-no">153</span><span id="line-153">        if (plot == null) {</span>
-<span class="source-line-no">154</span><span id="line-154">            return Collections.emptyList();</span>
-<span class="source-line-no">155</span><span id="line-155">        }</span>
-<span class="source-line-no">156</span><span id="line-156">        return TabCompletions.completePlayersInPlot(player, plot, String.join(",", args).trim(),</span>
-<span class="source-line-no">157</span><span id="line-157">                Collections.singletonList(player.getName())</span>
-<span class="source-line-no">158</span><span id="line-158">        );</span>
-<span class="source-line-no">159</span><span id="line-159">    }</span>
-<span class="source-line-no">160</span><span id="line-160"></span>
-<span class="source-line-no">161</span><span id="line-161">}</span>
+<span class="source-line-no">068</span><span id="line-68">        Plot plot = player.getCurrentPlot();</span>
+<span class="source-line-no">069</span><span id="line-69">        if (plot == null) {</span>
+<span class="source-line-no">070</span><span id="line-70">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
+<span class="source-line-no">071</span><span id="line-71">            return false;</span>
+<span class="source-line-no">072</span><span id="line-72">        }</span>
+<span class="source-line-no">073</span><span id="line-73">        if ((!plot.hasOwner() || !plot.isOwner(player.getUUID())) &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_KICK)) {</span>
+<span class="source-line-no">074</span><span id="line-74">            player.sendMessage(TranslatableCaption.of("permission.no_plot_perms"));</span>
+<span class="source-line-no">075</span><span id="line-75">            return false;</span>
+<span class="source-line-no">076</span><span id="line-76">        }</span>
+<span class="source-line-no">077</span><span id="line-77"></span>
+<span class="source-line-no">078</span><span id="line-78">        PlayerManager.getUUIDsFromString(args[0], (uuids, throwable) -&gt; {</span>
+<span class="source-line-no">079</span><span id="line-79">            if (throwable instanceof TimeoutException) {</span>
+<span class="source-line-no">080</span><span id="line-80">                player.sendMessage(TranslatableCaption.of("players.fetching_players_timeout"));</span>
+<span class="source-line-no">081</span><span id="line-81">            } else if (throwable != null || uuids.isEmpty()) {</span>
+<span class="source-line-no">082</span><span id="line-82">                player.sendMessage(</span>
+<span class="source-line-no">083</span><span id="line-83">                        TranslatableCaption.of("errors.invalid_player"),</span>
+<span class="source-line-no">084</span><span id="line-84">                        TagResolver.resolver("value", Tag.inserting(Component.text(args[0])))</span>
+<span class="source-line-no">085</span><span id="line-85">                );</span>
+<span class="source-line-no">086</span><span id="line-86">            } else {</span>
+<span class="source-line-no">087</span><span id="line-87">                Set&lt;PlotPlayer&lt;?&gt;&gt; players = new HashSet&lt;&gt;();</span>
+<span class="source-line-no">088</span><span id="line-88">                for (UUID uuid : uuids) {</span>
+<span class="source-line-no">089</span><span id="line-89">                    if (uuid == DBFunc.EVERYONE) {</span>
+<span class="source-line-no">090</span><span id="line-90">                        for (PlotPlayer&lt;?&gt; pp : plot.getPlayersInPlot()) {</span>
+<span class="source-line-no">091</span><span id="line-91">                            if (pp == player || pp.hasPermission(Permission.PERMISSION_ADMIN_ENTRY_DENIED)) {</span>
+<span class="source-line-no">092</span><span id="line-92">                                continue;</span>
+<span class="source-line-no">093</span><span id="line-93">                            }</span>
+<span class="source-line-no">094</span><span id="line-94">                            players.add(pp);</span>
+<span class="source-line-no">095</span><span id="line-95">                        }</span>
+<span class="source-line-no">096</span><span id="line-96">                        continue;</span>
+<span class="source-line-no">097</span><span id="line-97">                    }</span>
+<span class="source-line-no">098</span><span id="line-98">                    PlotPlayer&lt;?&gt; pp = PlotSquared.platform().playerManager().getPlayerIfExists(uuid);</span>
+<span class="source-line-no">099</span><span id="line-99">                    if (pp != null) {</span>
+<span class="source-line-no">100</span><span id="line-100">                        players.add(pp);</span>
+<span class="source-line-no">101</span><span id="line-101">                    }</span>
+<span class="source-line-no">102</span><span id="line-102">                }</span>
+<span class="source-line-no">103</span><span id="line-103">                players.remove(player); // Don't ever kick the calling player</span>
+<span class="source-line-no">104</span><span id="line-104">                if (players.isEmpty()) {</span>
+<span class="source-line-no">105</span><span id="line-105">                    player.sendMessage(</span>
+<span class="source-line-no">106</span><span id="line-106">                            TranslatableCaption.of("errors.invalid_player"),</span>
+<span class="source-line-no">107</span><span id="line-107">                            TagResolver.resolver("value", Tag.inserting(Component.text(args[0])))</span>
+<span class="source-line-no">108</span><span id="line-108">                    );</span>
+<span class="source-line-no">109</span><span id="line-109">                    return;</span>
+<span class="source-line-no">110</span><span id="line-110">                }</span>
+<span class="source-line-no">111</span><span id="line-111">                for (PlotPlayer&lt;?&gt; player2 : players) {</span>
+<span class="source-line-no">112</span><span id="line-112">                    if (!plot.equals(player2.getCurrentPlot())) {</span>
+<span class="source-line-no">113</span><span id="line-113">                        player.sendMessage(</span>
+<span class="source-line-no">114</span><span id="line-114">                                TranslatableCaption.of("kick.player_not_in_plot"),</span>
+<span class="source-line-no">115</span><span id="line-115">                                TagResolver.resolver("player", Tag.inserting(Component.text(player2.getName())))</span>
+<span class="source-line-no">116</span><span id="line-116">                        );</span>
+<span class="source-line-no">117</span><span id="line-117">                        return;</span>
+<span class="source-line-no">118</span><span id="line-118">                    }</span>
+<span class="source-line-no">119</span><span id="line-119">                    if (player2.hasPermission(Permission.PERMISSION_ADMIN_ENTRY_DENIED)) {</span>
+<span class="source-line-no">120</span><span id="line-120">                        player.sendMessage(</span>
+<span class="source-line-no">121</span><span id="line-121">                                TranslatableCaption.of("kick.cannot_kick_player"),</span>
+<span class="source-line-no">122</span><span id="line-122">                                TagResolver.resolver("player", Tag.inserting(Component.text(player2.getName())))</span>
+<span class="source-line-no">123</span><span id="line-123">                        );</span>
+<span class="source-line-no">124</span><span id="line-124">                        return;</span>
+<span class="source-line-no">125</span><span id="line-125">                    }</span>
+<span class="source-line-no">126</span><span id="line-126">                    Location spawn = this.worldUtil.getSpawn(plot.getWorldName());</span>
+<span class="source-line-no">127</span><span id="line-127">                    player2.sendMessage(TranslatableCaption.of("kick.you_got_kicked"));</span>
+<span class="source-line-no">128</span><span id="line-128">                    if (plot.equals(spawn.getPlot())) {</span>
+<span class="source-line-no">129</span><span id="line-129">                        Location newSpawn = this.worldUtil.getSpawn(this.plotAreaManager.getAllWorlds()[0]);</span>
+<span class="source-line-no">130</span><span id="line-130">                        if (plot.equals(newSpawn.getPlot())) {</span>
+<span class="source-line-no">131</span><span id="line-131">                            // Kick from server if you can't be teleported to spawn</span>
+<span class="source-line-no">132</span><span id="line-132">                            // Use string based message here for legacy uses</span>
+<span class="source-line-no">133</span><span id="line-133">                            player2.kick("You got kicked from the plot! This server did not set up a loaded spawn, so you got " +</span>
+<span class="source-line-no">134</span><span id="line-134">                                    "kicked from the server.");</span>
+<span class="source-line-no">135</span><span id="line-135">                        } else {</span>
+<span class="source-line-no">136</span><span id="line-136">                            player2.plotkick(newSpawn);</span>
+<span class="source-line-no">137</span><span id="line-137">                        }</span>
+<span class="source-line-no">138</span><span id="line-138">                    } else {</span>
+<span class="source-line-no">139</span><span id="line-139">                        player2.plotkick(spawn);</span>
+<span class="source-line-no">140</span><span id="line-140">                    }</span>
+<span class="source-line-no">141</span><span id="line-141">                }</span>
+<span class="source-line-no">142</span><span id="line-142">            }</span>
+<span class="source-line-no">143</span><span id="line-143">        });</span>
+<span class="source-line-no">144</span><span id="line-144"></span>
+<span class="source-line-no">145</span><span id="line-145">        return true;</span>
+<span class="source-line-no">146</span><span id="line-146">    }</span>
+<span class="source-line-no">147</span><span id="line-147"></span>
+<span class="source-line-no">148</span><span id="line-148">    @Override</span>
+<span class="source-line-no">149</span><span id="line-149">    public Collection&lt;Command&gt; tab(final PlotPlayer&lt;?&gt; player, final String[] args, final boolean space) {</span>
+<span class="source-line-no">150</span><span id="line-150">        Plot plot = player.getCurrentPlot();</span>
+<span class="source-line-no">151</span><span id="line-151">        if (plot == null) {</span>
+<span class="source-line-no">152</span><span id="line-152">            return Collections.emptyList();</span>
+<span class="source-line-no">153</span><span id="line-153">        }</span>
+<span class="source-line-no">154</span><span id="line-154">        return TabCompletions.completePlayersInPlot(player, plot, String.join(",", args).trim(),</span>
+<span class="source-line-no">155</span><span id="line-155">                Collections.singletonList(player.getName())</span>
+<span class="source-line-no">156</span><span id="line-156">        );</span>
+<span class="source-line-no">157</span><span id="line-157">    }</span>
+<span class="source-line-no">158</span><span id="line-158"></span>
+<span class="source-line-no">159</span><span id="line-159">}</span>
 
 
 

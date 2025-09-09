@@ -39,222 +39,220 @@
 <span class="source-line-no">026</span><span id="line-26">import com.plotsquared.core.events.PlotMergeEvent;</span>
 <span class="source-line-no">027</span><span id="line-27">import com.plotsquared.core.events.Result;</span>
 <span class="source-line-no">028</span><span id="line-28">import com.plotsquared.core.location.Direction;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.core.location.Location;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.core.permissions.Permission;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.core.player.MetaDataAccess;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.core.player.PlayerMetaDataKeys;</span>
-<span class="source-line-no">033</span><span id="line-33">import com.plotsquared.core.player.PlotPlayer;</span>
-<span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.plot.Plot;</span>
-<span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.plot.PlotArea;</span>
-<span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.util.EconHandler;</span>
-<span class="source-line-no">037</span><span id="line-37">import com.plotsquared.core.util.EventDispatcher;</span>
-<span class="source-line-no">038</span><span id="line-38">import com.plotsquared.core.util.PlotExpression;</span>
-<span class="source-line-no">039</span><span id="line-39">import com.plotsquared.core.util.task.TaskManager;</span>
-<span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">041</span><span id="line-41">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">042</span><span id="line-42">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">043</span><span id="line-43">import org.apache.logging.log4j.LogManager;</span>
-<span class="source-line-no">044</span><span id="line-44">import org.apache.logging.log4j.Logger;</span>
-<span class="source-line-no">045</span><span id="line-45">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">046</span><span id="line-46"></span>
-<span class="source-line-no">047</span><span id="line-47">@CommandDeclaration(</span>
-<span class="source-line-no">048</span><span id="line-48">        command = "claim",</span>
-<span class="source-line-no">049</span><span id="line-49">        aliases = "c",</span>
-<span class="source-line-no">050</span><span id="line-50">        category = CommandCategory.CLAIMING,</span>
-<span class="source-line-no">051</span><span id="line-51">        requiredType = RequiredType.PLAYER, permission = "plots.claim",</span>
-<span class="source-line-no">052</span><span id="line-52">        usage = "/plot claim")</span>
-<span class="source-line-no">053</span><span id="line-53">public class Claim extends SubCommand {</span>
-<span class="source-line-no">054</span><span id="line-54"></span>
-<span class="source-line-no">055</span><span id="line-55">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + Claim.class.getSimpleName());</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">    private final EventDispatcher eventDispatcher;</span>
-<span class="source-line-no">058</span><span id="line-58">    private final EconHandler econHandler;</span>
-<span class="source-line-no">059</span><span id="line-59"></span>
-<span class="source-line-no">060</span><span id="line-60">    @Inject</span>
-<span class="source-line-no">061</span><span id="line-61">    public Claim(</span>
-<span class="source-line-no">062</span><span id="line-62">            final @NonNull EventDispatcher eventDispatcher,</span>
-<span class="source-line-no">063</span><span id="line-63">            final @NonNull EconHandler econHandler</span>
-<span class="source-line-no">064</span><span id="line-64">    ) {</span>
-<span class="source-line-no">065</span><span id="line-65">        this.eventDispatcher = eventDispatcher;</span>
-<span class="source-line-no">066</span><span id="line-66">        this.econHandler = econHandler;</span>
-<span class="source-line-no">067</span><span id="line-67">    }</span>
-<span class="source-line-no">068</span><span id="line-68"></span>
-<span class="source-line-no">069</span><span id="line-69">    @Override</span>
-<span class="source-line-no">070</span><span id="line-70">    public boolean onCommand(final PlotPlayer&lt;?&gt; player, String[] args) {</span>
-<span class="source-line-no">071</span><span id="line-71">        String schematic = null;</span>
-<span class="source-line-no">072</span><span id="line-72">        if (args.length &gt;= 1) {</span>
-<span class="source-line-no">073</span><span id="line-73">            schematic = args[0];</span>
-<span class="source-line-no">074</span><span id="line-74">        }</span>
-<span class="source-line-no">075</span><span id="line-75">        Location location = player.getLocation();</span>
-<span class="source-line-no">076</span><span id="line-76">        Plot plot = location.getPlotAbs();</span>
-<span class="source-line-no">077</span><span id="line-77">        if (plot == null) {</span>
-<span class="source-line-no">078</span><span id="line-78">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">079</span><span id="line-79">            return false;</span>
-<span class="source-line-no">080</span><span id="line-80">        }</span>
-<span class="source-line-no">081</span><span id="line-81">        final PlayerClaimPlotEvent event = this.eventDispatcher.callClaim(player, plot, schematic);</span>
-<span class="source-line-no">082</span><span id="line-82">        schematic = event.getSchematic();</span>
-<span class="source-line-no">083</span><span id="line-83">        if (event.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">084</span><span id="line-84">            player.sendMessage(</span>
-<span class="source-line-no">085</span><span id="line-85">                    TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">086</span><span id="line-86">                    TagResolver.resolver("value", Tag.inserting(Component.text("Claim")))</span>
-<span class="source-line-no">087</span><span id="line-87">            );</span>
-<span class="source-line-no">088</span><span id="line-88">            return true;</span>
-<span class="source-line-no">089</span><span id="line-89">        }</span>
-<span class="source-line-no">090</span><span id="line-90">        boolean force = event.getEventResult() == Result.FORCE;</span>
-<span class="source-line-no">091</span><span id="line-91">        int currentPlots = Settings.Limit.GLOBAL ?</span>
-<span class="source-line-no">092</span><span id="line-92">                player.getPlotCount() :</span>
-<span class="source-line-no">093</span><span id="line-93">                player.getPlotCount(location.getWorldName());</span>
+<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.core.permissions.Permission;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.core.player.MetaDataAccess;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.core.player.PlayerMetaDataKeys;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.core.player.PlotPlayer;</span>
+<span class="source-line-no">033</span><span id="line-33">import com.plotsquared.core.plot.Plot;</span>
+<span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.plot.PlotArea;</span>
+<span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.util.EconHandler;</span>
+<span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.util.EventDispatcher;</span>
+<span class="source-line-no">037</span><span id="line-37">import com.plotsquared.core.util.PlotExpression;</span>
+<span class="source-line-no">038</span><span id="line-38">import com.plotsquared.core.util.task.TaskManager;</span>
+<span class="source-line-no">039</span><span id="line-39">import net.kyori.adventure.text.Component;</span>
+<span class="source-line-no">040</span><span id="line-40">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">041</span><span id="line-41">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
+<span class="source-line-no">042</span><span id="line-42">import org.apache.logging.log4j.LogManager;</span>
+<span class="source-line-no">043</span><span id="line-43">import org.apache.logging.log4j.Logger;</span>
+<span class="source-line-no">044</span><span id="line-44">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">045</span><span id="line-45"></span>
+<span class="source-line-no">046</span><span id="line-46">@CommandDeclaration(</span>
+<span class="source-line-no">047</span><span id="line-47">        command = "claim",</span>
+<span class="source-line-no">048</span><span id="line-48">        aliases = "c",</span>
+<span class="source-line-no">049</span><span id="line-49">        category = CommandCategory.CLAIMING,</span>
+<span class="source-line-no">050</span><span id="line-50">        requiredType = RequiredType.PLAYER, permission = "plots.claim",</span>
+<span class="source-line-no">051</span><span id="line-51">        usage = "/plot claim")</span>
+<span class="source-line-no">052</span><span id="line-52">public class Claim extends SubCommand {</span>
+<span class="source-line-no">053</span><span id="line-53"></span>
+<span class="source-line-no">054</span><span id="line-54">    private static final Logger LOGGER = LogManager.getLogger("PlotSquared/" + Claim.class.getSimpleName());</span>
+<span class="source-line-no">055</span><span id="line-55"></span>
+<span class="source-line-no">056</span><span id="line-56">    private final EventDispatcher eventDispatcher;</span>
+<span class="source-line-no">057</span><span id="line-57">    private final EconHandler econHandler;</span>
+<span class="source-line-no">058</span><span id="line-58"></span>
+<span class="source-line-no">059</span><span id="line-59">    @Inject</span>
+<span class="source-line-no">060</span><span id="line-60">    public Claim(</span>
+<span class="source-line-no">061</span><span id="line-61">            final @NonNull EventDispatcher eventDispatcher,</span>
+<span class="source-line-no">062</span><span id="line-62">            final @NonNull EconHandler econHandler</span>
+<span class="source-line-no">063</span><span id="line-63">    ) {</span>
+<span class="source-line-no">064</span><span id="line-64">        this.eventDispatcher = eventDispatcher;</span>
+<span class="source-line-no">065</span><span id="line-65">        this.econHandler = econHandler;</span>
+<span class="source-line-no">066</span><span id="line-66">    }</span>
+<span class="source-line-no">067</span><span id="line-67"></span>
+<span class="source-line-no">068</span><span id="line-68">    @Override</span>
+<span class="source-line-no">069</span><span id="line-69">    public boolean onCommand(final PlotPlayer&lt;?&gt; player, String[] args) {</span>
+<span class="source-line-no">070</span><span id="line-70">        String schematic = null;</span>
+<span class="source-line-no">071</span><span id="line-71">        if (args.length &gt;= 1) {</span>
+<span class="source-line-no">072</span><span id="line-72">            schematic = args[0];</span>
+<span class="source-line-no">073</span><span id="line-73">        }</span>
+<span class="source-line-no">074</span><span id="line-74">        Plot plot = player.getCurrentPlot();</span>
+<span class="source-line-no">075</span><span id="line-75">        if (plot == null) {</span>
+<span class="source-line-no">076</span><span id="line-76">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
+<span class="source-line-no">077</span><span id="line-77">            return false;</span>
+<span class="source-line-no">078</span><span id="line-78">        }</span>
+<span class="source-line-no">079</span><span id="line-79">        final PlayerClaimPlotEvent event = this.eventDispatcher.callClaim(player, plot, schematic);</span>
+<span class="source-line-no">080</span><span id="line-80">        schematic = event.getSchematic();</span>
+<span class="source-line-no">081</span><span id="line-81">        if (event.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">082</span><span id="line-82">            player.sendMessage(</span>
+<span class="source-line-no">083</span><span id="line-83">                    TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">084</span><span id="line-84">                    TagResolver.resolver("value", Tag.inserting(Component.text("Claim")))</span>
+<span class="source-line-no">085</span><span id="line-85">            );</span>
+<span class="source-line-no">086</span><span id="line-86">            return true;</span>
+<span class="source-line-no">087</span><span id="line-87">        }</span>
+<span class="source-line-no">088</span><span id="line-88">        boolean force = event.getEventResult() == Result.FORCE;</span>
+<span class="source-line-no">089</span><span id="line-89">        int currentPlots = Settings.Limit.GLOBAL ?</span>
+<span class="source-line-no">090</span><span id="line-90">                player.getPlotCount() :</span>
+<span class="source-line-no">091</span><span id="line-91">                player.getPlotCount(plot.getWorldName());</span>
+<span class="source-line-no">092</span><span id="line-92"></span>
+<span class="source-line-no">093</span><span id="line-93">        final PlotArea area = plot.getArea();</span>
 <span class="source-line-no">094</span><span id="line-94"></span>
-<span class="source-line-no">095</span><span id="line-95">        final PlotArea area = plot.getArea();</span>
-<span class="source-line-no">096</span><span id="line-96"></span>
-<span class="source-line-no">097</span><span id="line-97">        try (final MetaDataAccess&lt;Integer&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_GRANTED_PLOTS)) {</span>
-<span class="source-line-no">098</span><span id="line-98">            int grants = 0;</span>
-<span class="source-line-no">099</span><span id="line-99">            if (currentPlots &gt;= player.getAllowedPlots() &amp;&amp; !force) {</span>
-<span class="source-line-no">100</span><span id="line-100">                if (metaDataAccess.isPresent()) {</span>
-<span class="source-line-no">101</span><span id="line-101">                    grants = metaDataAccess.get().orElse(0);</span>
-<span class="source-line-no">102</span><span id="line-102">                    if (grants &lt;= 0) {</span>
-<span class="source-line-no">103</span><span id="line-103">                        player.sendMessage(</span>
-<span class="source-line-no">104</span><span id="line-104">                                TranslatableCaption.of("permission.cant_claim_more_plots"),</span>
-<span class="source-line-no">105</span><span id="line-105">                                TagResolver.resolver("amount", Tag.inserting(Component.text(grants)))</span>
-<span class="source-line-no">106</span><span id="line-106">                        );</span>
-<span class="source-line-no">107</span><span id="line-107">                        metaDataAccess.remove();</span>
-<span class="source-line-no">108</span><span id="line-108">                    }</span>
-<span class="source-line-no">109</span><span id="line-109">                } else {</span>
-<span class="source-line-no">110</span><span id="line-110">                    player.sendMessage(</span>
-<span class="source-line-no">111</span><span id="line-111">                            TranslatableCaption.of("permission.cant_claim_more_plots"),</span>
-<span class="source-line-no">112</span><span id="line-112">                            TagResolver.resolver("amount", Tag.inserting(Component.text(player.getAllowedPlots())))</span>
-<span class="source-line-no">113</span><span id="line-113">                    );</span>
-<span class="source-line-no">114</span><span id="line-114">                    return false;</span>
-<span class="source-line-no">115</span><span id="line-115">                }</span>
-<span class="source-line-no">116</span><span id="line-116">            }</span>
-<span class="source-line-no">117</span><span id="line-117"></span>
-<span class="source-line-no">118</span><span id="line-118">            if (!plot.canClaim(player)) {</span>
-<span class="source-line-no">119</span><span id="line-119">                player.sendMessage(TranslatableCaption.of("working.plot_is_claimed"));</span>
-<span class="source-line-no">120</span><span id="line-120">                return false;</span>
-<span class="source-line-no">121</span><span id="line-121">            }</span>
-<span class="source-line-no">122</span><span id="line-122">            if (schematic != null &amp;&amp; !schematic.isEmpty()) {</span>
-<span class="source-line-no">123</span><span id="line-123">                if (area.isSchematicClaimSpecify()) {</span>
-<span class="source-line-no">124</span><span id="line-124">                    if (!area.hasSchematic(schematic)) {</span>
-<span class="source-line-no">125</span><span id="line-125">                        player.sendMessage(</span>
-<span class="source-line-no">126</span><span id="line-126">                                TranslatableCaption.of("schematics.schematic_invalid_named"),</span>
-<span class="source-line-no">127</span><span id="line-127">                                TagResolver.builder()</span>
-<span class="source-line-no">128</span><span id="line-128">                                        .tag("schemname", Tag.inserting(Component.text(schematic)))</span>
-<span class="source-line-no">129</span><span id="line-129">                                        .tag("reason", Tag.inserting(Component.text("non-existent")))</span>
-<span class="source-line-no">130</span><span id="line-130">                                        .build()</span>
-<span class="source-line-no">131</span><span id="line-131">                        );</span>
-<span class="source-line-no">132</span><span id="line-132">                    }</span>
-<span class="source-line-no">133</span><span id="line-133">                    if (!player.hasPermission(Permission.PERMISSION_CLAIM_SCHEMATIC</span>
-<span class="source-line-no">134</span><span id="line-134">                            .format(schematic)) &amp;&amp; !player.hasPermission(</span>
-<span class="source-line-no">135</span><span id="line-135">                            "plots.admin.command.schematic"</span>
-<span class="source-line-no">136</span><span id="line-136">                    ) &amp;&amp; !force) {</span>
-<span class="source-line-no">137</span><span id="line-137">                        player.sendMessage(</span>
-<span class="source-line-no">138</span><span id="line-138">                                TranslatableCaption.of("permission.no_schematic_permission"),</span>
-<span class="source-line-no">139</span><span id="line-139">                                TagResolver.resolver("value", Tag.inserting(Component.text(schematic)))</span>
-<span class="source-line-no">140</span><span id="line-140">                        );</span>
-<span class="source-line-no">141</span><span id="line-141">                    }</span>
-<span class="source-line-no">142</span><span id="line-142">                }</span>
-<span class="source-line-no">143</span><span id="line-143">            }</span>
-<span class="source-line-no">144</span><span id="line-144">            if (this.econHandler.isEnabled(area) &amp;&amp; !force &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_ECON)) {</span>
-<span class="source-line-no">145</span><span id="line-145">                PlotExpression costExr = area.getPrices().get("claim");</span>
-<span class="source-line-no">146</span><span id="line-146">                double cost = costExr.evaluate(currentPlots);</span>
-<span class="source-line-no">147</span><span id="line-147">                if (cost &gt; 0d) {</span>
-<span class="source-line-no">148</span><span id="line-148">                    if (!this.econHandler.isSupported()) {</span>
-<span class="source-line-no">149</span><span id="line-149">                        player.sendMessage(TranslatableCaption.of("economy.vault_or_consumer_null"));</span>
-<span class="source-line-no">150</span><span id="line-150">                        return false;</span>
-<span class="source-line-no">151</span><span id="line-151">                    }</span>
-<span class="source-line-no">152</span><span id="line-152">                    if (this.econHandler.getMoney(player) &lt; cost) {</span>
-<span class="source-line-no">153</span><span id="line-153">                        player.sendMessage(</span>
-<span class="source-line-no">154</span><span id="line-154">                                TranslatableCaption.of("economy.cannot_afford_plot"),</span>
-<span class="source-line-no">155</span><span id="line-155">                                TagResolver.builder()</span>
-<span class="source-line-no">156</span><span id="line-156">                                        .tag("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
-<span class="source-line-no">157</span><span id="line-157">                                        .tag(</span>
-<span class="source-line-no">158</span><span id="line-158">                                                "balance",</span>
-<span class="source-line-no">159</span><span id="line-159">                                                Tag.inserting(Component.text(this.econHandler.format(this.econHandler.getMoney(</span>
-<span class="source-line-no">160</span><span id="line-160">                                                        player))))</span>
-<span class="source-line-no">161</span><span id="line-161">                                        )</span>
-<span class="source-line-no">162</span><span id="line-162">                                        .build()</span>
-<span class="source-line-no">163</span><span id="line-163">                        );</span>
-<span class="source-line-no">164</span><span id="line-164">                        return false;</span>
-<span class="source-line-no">165</span><span id="line-165">                    }</span>
-<span class="source-line-no">166</span><span id="line-166">                    this.econHandler.withdrawMoney(player, cost);</span>
-<span class="source-line-no">167</span><span id="line-167">                    player.sendMessage(</span>
-<span class="source-line-no">168</span><span id="line-168">                            TranslatableCaption.of("economy.removed_balance"),</span>
-<span class="source-line-no">169</span><span id="line-169">                            TagResolver.builder()</span>
-<span class="source-line-no">170</span><span id="line-170">                                    .tag("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
-<span class="source-line-no">171</span><span id="line-171">                                    .tag(</span>
-<span class="source-line-no">172</span><span id="line-172">                                            "balance",</span>
-<span class="source-line-no">173</span><span id="line-173">                                            Tag.inserting(Component.text(this.econHandler.format(this.econHandler.getMoney(</span>
-<span class="source-line-no">174</span><span id="line-174">                                                    player))))</span>
-<span class="source-line-no">175</span><span id="line-175">                                    )</span>
-<span class="source-line-no">176</span><span id="line-176">                                    .build()</span>
-<span class="source-line-no">177</span><span id="line-177">                    );</span>
-<span class="source-line-no">178</span><span id="line-178">                }</span>
-<span class="source-line-no">179</span><span id="line-179">            }</span>
-<span class="source-line-no">180</span><span id="line-180">            if (grants &gt; 0) {</span>
-<span class="source-line-no">181</span><span id="line-181">                if (grants == 1) {</span>
-<span class="source-line-no">182</span><span id="line-182">                    metaDataAccess.remove();</span>
-<span class="source-line-no">183</span><span id="line-183">                } else {</span>
-<span class="source-line-no">184</span><span id="line-184">                    metaDataAccess.set(grants - 1);</span>
-<span class="source-line-no">185</span><span id="line-185">                }</span>
-<span class="source-line-no">186</span><span id="line-186">                player.sendMessage(</span>
-<span class="source-line-no">187</span><span id="line-187">                        TranslatableCaption.of("economy.removed_granted_plot"),</span>
-<span class="source-line-no">188</span><span id="line-188">                        TagResolver.builder()</span>
-<span class="source-line-no">189</span><span id="line-189">                                .tag("used_grants", Tag.inserting(Component.text(grants - 1)))</span>
-<span class="source-line-no">190</span><span id="line-190">                                .tag("remaining_grants", Tag.inserting(Component.text(grants)))</span>
-<span class="source-line-no">191</span><span id="line-191">                                .build()</span>
-<span class="source-line-no">192</span><span id="line-192">                );</span>
-<span class="source-line-no">193</span><span id="line-193">            }</span>
-<span class="source-line-no">194</span><span id="line-194">        }</span>
-<span class="source-line-no">195</span><span id="line-195">        if (!player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_BORDER)) {</span>
-<span class="source-line-no">196</span><span id="line-196">            int border = area.getBorder(false);</span>
-<span class="source-line-no">197</span><span id="line-197">            if (border != Integer.MAX_VALUE &amp;&amp; plot.getDistanceFromOrigin() &gt; border &amp;&amp; !force) {</span>
-<span class="source-line-no">198</span><span id="line-198">                player.sendMessage(TranslatableCaption.of("border.denied"));</span>
-<span class="source-line-no">199</span><span id="line-199">                return false;</span>
-<span class="source-line-no">200</span><span id="line-200">            }</span>
-<span class="source-line-no">201</span><span id="line-201">        }</span>
-<span class="source-line-no">202</span><span id="line-202">        plot.setOwnerAbs(player.getUUID());</span>
-<span class="source-line-no">203</span><span id="line-203">        final String finalSchematic = schematic;</span>
-<span class="source-line-no">204</span><span id="line-204">        DBFunc.createPlotSafe(plot, () -&gt; {</span>
-<span class="source-line-no">205</span><span id="line-205">            try {</span>
-<span class="source-line-no">206</span><span id="line-206">                TaskManager.getPlatformImplementation().sync(() -&gt; {</span>
-<span class="source-line-no">207</span><span id="line-207">                    if (!plot.claim(player, true, finalSchematic, false, false)) {</span>
-<span class="source-line-no">208</span><span id="line-208">                        LOGGER.info("Failed to claim plot {}", plot.getId().toCommaSeparatedString());</span>
-<span class="source-line-no">209</span><span id="line-209">                        player.sendMessage(TranslatableCaption.of("working.plot_not_claimed"));</span>
-<span class="source-line-no">210</span><span id="line-210">                        plot.setOwnerAbs(null);</span>
-<span class="source-line-no">211</span><span id="line-211">                    } else if (area.isAutoMerge()) {</span>
-<span class="source-line-no">212</span><span id="line-212">                        PlotMergeEvent mergeEvent = Claim.this.eventDispatcher</span>
-<span class="source-line-no">213</span><span id="line-213">                                .callMerge(plot, Direction.ALL, Integer.MAX_VALUE, player);</span>
-<span class="source-line-no">214</span><span id="line-214">                        if (mergeEvent.getEventResult() == Result.DENY) {</span>
-<span class="source-line-no">215</span><span id="line-215">                            player.sendMessage(</span>
-<span class="source-line-no">216</span><span id="line-216">                                    TranslatableCaption.of("events.event_denied"),</span>
-<span class="source-line-no">217</span><span id="line-217">                                    TagResolver.resolver("value", Tag.inserting(Component.text("Auto merge on claim")))</span>
-<span class="source-line-no">218</span><span id="line-218">                            );</span>
-<span class="source-line-no">219</span><span id="line-219">                        } else {</span>
-<span class="source-line-no">220</span><span id="line-220">                            if (plot.getPlotModificationManager().autoMerge(</span>
-<span class="source-line-no">221</span><span id="line-221">                                    mergeEvent.getDir(),</span>
-<span class="source-line-no">222</span><span id="line-222">                                    mergeEvent.getMax(),</span>
-<span class="source-line-no">223</span><span id="line-223">                                    player.getUUID(),</span>
-<span class="source-line-no">224</span><span id="line-224">                                    player,</span>
-<span class="source-line-no">225</span><span id="line-225">                                    true</span>
-<span class="source-line-no">226</span><span id="line-226">                            )) {</span>
-<span class="source-line-no">227</span><span id="line-227">                                eventDispatcher.callPostMerge(player, plot);</span>
-<span class="source-line-no">228</span><span id="line-228">                            }</span>
-<span class="source-line-no">229</span><span id="line-229">                        }</span>
-<span class="source-line-no">230</span><span id="line-230">                    }</span>
-<span class="source-line-no">231</span><span id="line-231">                    return null;</span>
-<span class="source-line-no">232</span><span id="line-232">                });</span>
-<span class="source-line-no">233</span><span id="line-233">            } catch (final Exception e) {</span>
-<span class="source-line-no">234</span><span id="line-234">                e.printStackTrace();</span>
-<span class="source-line-no">235</span><span id="line-235">            }</span>
-<span class="source-line-no">236</span><span id="line-236">        }, () -&gt; {</span>
-<span class="source-line-no">237</span><span id="line-237">            LOGGER.info("Failed to add plot to database: {}", plot.getId().toCommaSeparatedString());</span>
-<span class="source-line-no">238</span><span id="line-238">            player.sendMessage(TranslatableCaption.of("working.plot_not_claimed"));</span>
-<span class="source-line-no">239</span><span id="line-239">            plot.setOwnerAbs(null);</span>
-<span class="source-line-no">240</span><span id="line-240">        });</span>
-<span class="source-line-no">241</span><span id="line-241">        return true;</span>
-<span class="source-line-no">242</span><span id="line-242">    }</span>
-<span class="source-line-no">243</span><span id="line-243"></span>
-<span class="source-line-no">244</span><span id="line-244">}</span>
+<span class="source-line-no">095</span><span id="line-95">        try (final MetaDataAccess&lt;Integer&gt; metaDataAccess = player.accessPersistentMetaData(PlayerMetaDataKeys.PERSISTENT_GRANTED_PLOTS)) {</span>
+<span class="source-line-no">096</span><span id="line-96">            int grants = 0;</span>
+<span class="source-line-no">097</span><span id="line-97">            if (currentPlots &gt;= player.getAllowedPlots() &amp;&amp; !force) {</span>
+<span class="source-line-no">098</span><span id="line-98">                if (metaDataAccess.isPresent()) {</span>
+<span class="source-line-no">099</span><span id="line-99">                    grants = metaDataAccess.get().orElse(0);</span>
+<span class="source-line-no">100</span><span id="line-100">                    if (grants &lt;= 0) {</span>
+<span class="source-line-no">101</span><span id="line-101">                        player.sendMessage(</span>
+<span class="source-line-no">102</span><span id="line-102">                                TranslatableCaption.of("permission.cant_claim_more_plots"),</span>
+<span class="source-line-no">103</span><span id="line-103">                                TagResolver.resolver("amount", Tag.inserting(Component.text(grants)))</span>
+<span class="source-line-no">104</span><span id="line-104">                        );</span>
+<span class="source-line-no">105</span><span id="line-105">                        metaDataAccess.remove();</span>
+<span class="source-line-no">106</span><span id="line-106">                    }</span>
+<span class="source-line-no">107</span><span id="line-107">                } else {</span>
+<span class="source-line-no">108</span><span id="line-108">                    player.sendMessage(</span>
+<span class="source-line-no">109</span><span id="line-109">                            TranslatableCaption.of("permission.cant_claim_more_plots"),</span>
+<span class="source-line-no">110</span><span id="line-110">                            TagResolver.resolver("amount", Tag.inserting(Component.text(player.getAllowedPlots())))</span>
+<span class="source-line-no">111</span><span id="line-111">                    );</span>
+<span class="source-line-no">112</span><span id="line-112">                    return false;</span>
+<span class="source-line-no">113</span><span id="line-113">                }</span>
+<span class="source-line-no">114</span><span id="line-114">            }</span>
+<span class="source-line-no">115</span><span id="line-115"></span>
+<span class="source-line-no">116</span><span id="line-116">            if (!plot.canClaim(player)) {</span>
+<span class="source-line-no">117</span><span id="line-117">                player.sendMessage(TranslatableCaption.of("working.plot_is_claimed"));</span>
+<span class="source-line-no">118</span><span id="line-118">                return false;</span>
+<span class="source-line-no">119</span><span id="line-119">            }</span>
+<span class="source-line-no">120</span><span id="line-120">            if (schematic != null &amp;&amp; !schematic.isEmpty()) {</span>
+<span class="source-line-no">121</span><span id="line-121">                if (area.isSchematicClaimSpecify()) {</span>
+<span class="source-line-no">122</span><span id="line-122">                    if (!area.hasSchematic(schematic)) {</span>
+<span class="source-line-no">123</span><span id="line-123">                        player.sendMessage(</span>
+<span class="source-line-no">124</span><span id="line-124">                                TranslatableCaption.of("schematics.schematic_invalid_named"),</span>
+<span class="source-line-no">125</span><span id="line-125">                                TagResolver.builder()</span>
+<span class="source-line-no">126</span><span id="line-126">                                        .tag("schemname", Tag.inserting(Component.text(schematic)))</span>
+<span class="source-line-no">127</span><span id="line-127">                                        .tag("reason", Tag.inserting(Component.text("non-existent")))</span>
+<span class="source-line-no">128</span><span id="line-128">                                        .build()</span>
+<span class="source-line-no">129</span><span id="line-129">                        );</span>
+<span class="source-line-no">130</span><span id="line-130">                    }</span>
+<span class="source-line-no">131</span><span id="line-131">                    if (!player.hasPermission(Permission.PERMISSION_CLAIM_SCHEMATIC</span>
+<span class="source-line-no">132</span><span id="line-132">                            .format(schematic)) &amp;&amp; !player.hasPermission(</span>
+<span class="source-line-no">133</span><span id="line-133">                            "plots.admin.command.schematic"</span>
+<span class="source-line-no">134</span><span id="line-134">                    ) &amp;&amp; !force) {</span>
+<span class="source-line-no">135</span><span id="line-135">                        player.sendMessage(</span>
+<span class="source-line-no">136</span><span id="line-136">                                TranslatableCaption.of("permission.no_schematic_permission"),</span>
+<span class="source-line-no">137</span><span id="line-137">                                TagResolver.resolver("value", Tag.inserting(Component.text(schematic)))</span>
+<span class="source-line-no">138</span><span id="line-138">                        );</span>
+<span class="source-line-no">139</span><span id="line-139">                    }</span>
+<span class="source-line-no">140</span><span id="line-140">                }</span>
+<span class="source-line-no">141</span><span id="line-141">            }</span>
+<span class="source-line-no">142</span><span id="line-142">            if (this.econHandler.isEnabled(area) &amp;&amp; !force &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_ECON)) {</span>
+<span class="source-line-no">143</span><span id="line-143">                PlotExpression costExr = area.getPrices().get("claim");</span>
+<span class="source-line-no">144</span><span id="line-144">                double cost = costExr.evaluate(currentPlots);</span>
+<span class="source-line-no">145</span><span id="line-145">                if (cost &gt; 0d) {</span>
+<span class="source-line-no">146</span><span id="line-146">                    if (!this.econHandler.isSupported()) {</span>
+<span class="source-line-no">147</span><span id="line-147">                        player.sendMessage(TranslatableCaption.of("economy.vault_or_consumer_null"));</span>
+<span class="source-line-no">148</span><span id="line-148">                        return false;</span>
+<span class="source-line-no">149</span><span id="line-149">                    }</span>
+<span class="source-line-no">150</span><span id="line-150">                    if (this.econHandler.getMoney(player) &lt; cost) {</span>
+<span class="source-line-no">151</span><span id="line-151">                        player.sendMessage(</span>
+<span class="source-line-no">152</span><span id="line-152">                                TranslatableCaption.of("economy.cannot_afford_plot"),</span>
+<span class="source-line-no">153</span><span id="line-153">                                TagResolver.builder()</span>
+<span class="source-line-no">154</span><span id="line-154">                                        .tag("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
+<span class="source-line-no">155</span><span id="line-155">                                        .tag(</span>
+<span class="source-line-no">156</span><span id="line-156">                                                "balance",</span>
+<span class="source-line-no">157</span><span id="line-157">                                                Tag.inserting(Component.text(this.econHandler.format(this.econHandler.getMoney(</span>
+<span class="source-line-no">158</span><span id="line-158">                                                        player))))</span>
+<span class="source-line-no">159</span><span id="line-159">                                        )</span>
+<span class="source-line-no">160</span><span id="line-160">                                        .build()</span>
+<span class="source-line-no">161</span><span id="line-161">                        );</span>
+<span class="source-line-no">162</span><span id="line-162">                        return false;</span>
+<span class="source-line-no">163</span><span id="line-163">                    }</span>
+<span class="source-line-no">164</span><span id="line-164">                    this.econHandler.withdrawMoney(player, cost);</span>
+<span class="source-line-no">165</span><span id="line-165">                    player.sendMessage(</span>
+<span class="source-line-no">166</span><span id="line-166">                            TranslatableCaption.of("economy.removed_balance"),</span>
+<span class="source-line-no">167</span><span id="line-167">                            TagResolver.builder()</span>
+<span class="source-line-no">168</span><span id="line-168">                                    .tag("money", Tag.inserting(Component.text(this.econHandler.format(cost))))</span>
+<span class="source-line-no">169</span><span id="line-169">                                    .tag(</span>
+<span class="source-line-no">170</span><span id="line-170">                                            "balance",</span>
+<span class="source-line-no">171</span><span id="line-171">                                            Tag.inserting(Component.text(this.econHandler.format(this.econHandler.getMoney(</span>
+<span class="source-line-no">172</span><span id="line-172">                                                    player))))</span>
+<span class="source-line-no">173</span><span id="line-173">                                    )</span>
+<span class="source-line-no">174</span><span id="line-174">                                    .build()</span>
+<span class="source-line-no">175</span><span id="line-175">                    );</span>
+<span class="source-line-no">176</span><span id="line-176">                }</span>
+<span class="source-line-no">177</span><span id="line-177">            }</span>
+<span class="source-line-no">178</span><span id="line-178">            if (grants &gt; 0) {</span>
+<span class="source-line-no">179</span><span id="line-179">                if (grants == 1) {</span>
+<span class="source-line-no">180</span><span id="line-180">                    metaDataAccess.remove();</span>
+<span class="source-line-no">181</span><span id="line-181">                } else {</span>
+<span class="source-line-no">182</span><span id="line-182">                    metaDataAccess.set(grants - 1);</span>
+<span class="source-line-no">183</span><span id="line-183">                }</span>
+<span class="source-line-no">184</span><span id="line-184">                player.sendMessage(</span>
+<span class="source-line-no">185</span><span id="line-185">                        TranslatableCaption.of("economy.removed_granted_plot"),</span>
+<span class="source-line-no">186</span><span id="line-186">                        TagResolver.builder()</span>
+<span class="source-line-no">187</span><span id="line-187">                                .tag("used_grants", Tag.inserting(Component.text(grants - 1)))</span>
+<span class="source-line-no">188</span><span id="line-188">                                .tag("remaining_grants", Tag.inserting(Component.text(grants)))</span>
+<span class="source-line-no">189</span><span id="line-189">                                .build()</span>
+<span class="source-line-no">190</span><span id="line-190">                );</span>
+<span class="source-line-no">191</span><span id="line-191">            }</span>
+<span class="source-line-no">192</span><span id="line-192">        }</span>
+<span class="source-line-no">193</span><span id="line-193">        if (!player.hasPermission(Permission.PERMISSION_ADMIN_BYPASS_BORDER)) {</span>
+<span class="source-line-no">194</span><span id="line-194">            int border = area.getBorder(false);</span>
+<span class="source-line-no">195</span><span id="line-195">            if (border != Integer.MAX_VALUE &amp;&amp; plot.getDistanceFromOrigin() &gt; border &amp;&amp; !force) {</span>
+<span class="source-line-no">196</span><span id="line-196">                player.sendMessage(TranslatableCaption.of("border.denied"));</span>
+<span class="source-line-no">197</span><span id="line-197">                return false;</span>
+<span class="source-line-no">198</span><span id="line-198">            }</span>
+<span class="source-line-no">199</span><span id="line-199">        }</span>
+<span class="source-line-no">200</span><span id="line-200">        plot.setOwnerAbs(player.getUUID());</span>
+<span class="source-line-no">201</span><span id="line-201">        final String finalSchematic = schematic;</span>
+<span class="source-line-no">202</span><span id="line-202">        DBFunc.createPlotSafe(plot, () -&gt; {</span>
+<span class="source-line-no">203</span><span id="line-203">            try {</span>
+<span class="source-line-no">204</span><span id="line-204">                TaskManager.getPlatformImplementation().sync(() -&gt; {</span>
+<span class="source-line-no">205</span><span id="line-205">                    if (!plot.claim(player, true, finalSchematic, false, false)) {</span>
+<span class="source-line-no">206</span><span id="line-206">                        LOGGER.info("Failed to claim plot {}", plot.getId().toCommaSeparatedString());</span>
+<span class="source-line-no">207</span><span id="line-207">                        player.sendMessage(TranslatableCaption.of("working.plot_not_claimed"));</span>
+<span class="source-line-no">208</span><span id="line-208">                        plot.setOwnerAbs(null);</span>
+<span class="source-line-no">209</span><span id="line-209">                    } else if (area.isAutoMerge()) {</span>
+<span class="source-line-no">210</span><span id="line-210">                        PlotMergeEvent mergeEvent = Claim.this.eventDispatcher</span>
+<span class="source-line-no">211</span><span id="line-211">                                .callMerge(plot, Direction.ALL, Integer.MAX_VALUE, player);</span>
+<span class="source-line-no">212</span><span id="line-212">                        if (mergeEvent.getEventResult() == Result.DENY) {</span>
+<span class="source-line-no">213</span><span id="line-213">                            player.sendMessage(</span>
+<span class="source-line-no">214</span><span id="line-214">                                    TranslatableCaption.of("events.event_denied"),</span>
+<span class="source-line-no">215</span><span id="line-215">                                    TagResolver.resolver("value", Tag.inserting(Component.text("Auto merge on claim")))</span>
+<span class="source-line-no">216</span><span id="line-216">                            );</span>
+<span class="source-line-no">217</span><span id="line-217">                        } else {</span>
+<span class="source-line-no">218</span><span id="line-218">                            if (plot.getPlotModificationManager().autoMerge(</span>
+<span class="source-line-no">219</span><span id="line-219">                                    mergeEvent.getDir(),</span>
+<span class="source-line-no">220</span><span id="line-220">                                    mergeEvent.getMax(),</span>
+<span class="source-line-no">221</span><span id="line-221">                                    player.getUUID(),</span>
+<span class="source-line-no">222</span><span id="line-222">                                    player,</span>
+<span class="source-line-no">223</span><span id="line-223">                                    true</span>
+<span class="source-line-no">224</span><span id="line-224">                            )) {</span>
+<span class="source-line-no">225</span><span id="line-225">                                eventDispatcher.callPostMerge(player, plot);</span>
+<span class="source-line-no">226</span><span id="line-226">                            }</span>
+<span class="source-line-no">227</span><span id="line-227">                        }</span>
+<span class="source-line-no">228</span><span id="line-228">                    }</span>
+<span class="source-line-no">229</span><span id="line-229">                    return null;</span>
+<span class="source-line-no">230</span><span id="line-230">                });</span>
+<span class="source-line-no">231</span><span id="line-231">            } catch (final Exception e) {</span>
+<span class="source-line-no">232</span><span id="line-232">                e.printStackTrace();</span>
+<span class="source-line-no">233</span><span id="line-233">            }</span>
+<span class="source-line-no">234</span><span id="line-234">        }, () -&gt; {</span>
+<span class="source-line-no">235</span><span id="line-235">            LOGGER.info("Failed to add plot to database: {}", plot.getId().toCommaSeparatedString());</span>
+<span class="source-line-no">236</span><span id="line-236">            player.sendMessage(TranslatableCaption.of("working.plot_not_claimed"));</span>
+<span class="source-line-no">237</span><span id="line-237">            plot.setOwnerAbs(null);</span>
+<span class="source-line-no">238</span><span id="line-238">        });</span>
+<span class="source-line-no">239</span><span id="line-239">        return true;</span>
+<span class="source-line-no">240</span><span id="line-240">    }</span>
+<span class="source-line-no">241</span><span id="line-241"></span>
+<span class="source-line-no">242</span><span id="line-242">}</span>
 
 
 

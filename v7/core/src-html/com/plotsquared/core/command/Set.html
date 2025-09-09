@@ -91,7 +91,7 @@
 <span class="source-line-no">078</span><span id="line-78"></span>
 <span class="source-line-no">079</span><span id="line-79">            @Override</span>
 <span class="source-line-no">080</span><span id="line-80">            public boolean set(PlotPlayer&lt;?&gt; player, final Plot plot, String value) {</span>
-<span class="source-line-no">081</span><span id="line-81">                final PlotArea plotArea = player.getLocation().getPlotArea();</span>
+<span class="source-line-no">081</span><span id="line-81">                final PlotArea plotArea = player.getCurrentPlot().getArea();</span>
 <span class="source-line-no">082</span><span id="line-82">                if (plotArea == null) {</span>
 <span class="source-line-no">083</span><span id="line-83">                    return false;</span>
 <span class="source-line-no">084</span><span id="line-84">                }</span>

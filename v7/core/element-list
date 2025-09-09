@@ -11,6 +11,7 @@ com.plotsquared.core.configuration.serialization
 com.plotsquared.core.database
 com.plotsquared.core.events
 com.plotsquared.core.events.post
+com.plotsquared.core.exception
 com.plotsquared.core.generator
 com.plotsquared.core.inject.annotations
 com.plotsquared.core.inject.factory

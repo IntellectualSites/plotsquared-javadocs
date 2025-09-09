@@ -190,11 +190,17 @@
 <span class="source-line-no">177</span><span id="line-177">                commands.addAll(TabCompletions.completePlayers(player, args[0], Collections.emptyList()));</span>
 <span class="source-line-no">178</span><span id="line-178">            }</span>
 <span class="source-line-no">179</span><span id="line-179">            return commands;</span>
-<span class="source-line-no">180</span><span id="line-180">        }</span>
-<span class="source-line-no">181</span><span id="line-181">        return TabCompletions.completePlayers(player, String.join(",", args).trim(), Collections.emptyList());</span>
-<span class="source-line-no">182</span><span id="line-182">    }</span>
-<span class="source-line-no">183</span><span id="line-183"></span>
-<span class="source-line-no">184</span><span id="line-184">}</span>
+<span class="source-line-no">180</span><span id="line-180">        } else if (args.length == 2) {</span>
+<span class="source-line-no">181</span><span id="line-181">            final String subcommand = args[0].toLowerCase();</span>
+<span class="source-line-no">182</span><span id="line-182">            if ((subcommand.equals("add") &amp;&amp; player.hasPermission(Permission.PERMISSION_GRANT_ADD)) ||</span>
+<span class="source-line-no">183</span><span id="line-183">                (subcommand.equals("check") &amp;&amp; player.hasPermission(Permission.PERMISSION_GRANT_CHECK))) {</span>
+<span class="source-line-no">184</span><span id="line-184">                return TabCompletions.completePlayers(player, args[1], Collections.emptyList());</span>
+<span class="source-line-no">185</span><span id="line-185">            }</span>
+<span class="source-line-no">186</span><span id="line-186">        }</span>
+<span class="source-line-no">187</span><span id="line-187">        return Collections.emptyList();</span>
+<span class="source-line-no">188</span><span id="line-188">    }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">}</span>
 
 
 

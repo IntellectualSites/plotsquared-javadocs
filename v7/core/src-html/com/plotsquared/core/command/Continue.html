@@ -81,8 +81,8 @@
 <span class="source-line-no">068</span><span id="line-68">            return false;</span>
 <span class="source-line-no">069</span><span id="line-69">        }</span>
 <span class="source-line-no">070</span><span id="line-70">        int size = plot.getConnectedPlots().size();</span>
-<span class="source-line-no">071</span><span id="line-71">        if (!Settings.Done.COUNTS_TOWARDS_LIMIT &amp;&amp; (player.getAllowedPlots()</span>
-<span class="source-line-no">072</span><span id="line-72">                &lt; player.getPlotCount() + size)) {</span>
+<span class="source-line-no">071</span><span id="line-71">        int plotCount = Settings.Limit.GLOBAL ? player.getPlotCount() : player.getPlotCount(plot.getWorldName());</span>
+<span class="source-line-no">072</span><span id="line-72">        if (!Settings.Done.COUNTS_TOWARDS_LIMIT &amp;&amp; (player.getAllowedPlots() &lt; plotCount + size)) {</span>
 <span class="source-line-no">073</span><span id="line-73">            player.sendMessage(</span>
 <span class="source-line-no">074</span><span id="line-74">                    TranslatableCaption.of("permission.cant_claim_more_plots"),</span>
 <span class="source-line-no">075</span><span id="line-75">                    TagResolver.resolver("amount", Tag.inserting(Component.text(player.getAllowedPlots())))</span>

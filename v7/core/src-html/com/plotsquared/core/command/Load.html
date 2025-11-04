@@ -81,160 +81,155 @@
 <span class="source-line-no">068</span><span id="line-68"></span>
 <span class="source-line-no">069</span><span id="line-69">    @Override</span>
 <span class="source-line-no">070</span><span id="line-70">    public boolean onCommand(final PlotPlayer&lt;?&gt; player, final String[] args) {</span>
-<span class="source-line-no">071</span><span id="line-71">        final String world = player.getCurrentPlot().getWorldName();</span>
-<span class="source-line-no">072</span><span id="line-72">        if (!this.plotAreaManager.hasPlotArea(world)) {</span>
-<span class="source-line-no">073</span><span id="line-73">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot_world"));</span>
+<span class="source-line-no">071</span><span id="line-71">        final Plot plot = player.getCurrentPlot();</span>
+<span class="source-line-no">072</span><span id="line-72">        if (plot == null) {</span>
+<span class="source-line-no">073</span><span id="line-73">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
 <span class="source-line-no">074</span><span id="line-74">            return false;</span>
 <span class="source-line-no">075</span><span id="line-75">        }</span>
-<span class="source-line-no">076</span><span id="line-76">        final Plot plot = player.getCurrentPlot();</span>
-<span class="source-line-no">077</span><span id="line-77">        if (plot == null) {</span>
-<span class="source-line-no">078</span><span id="line-78">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
-<span class="source-line-no">079</span><span id="line-79">            return false;</span>
-<span class="source-line-no">080</span><span id="line-80">        }</span>
-<span class="source-line-no">081</span><span id="line-81">        if (!plot.hasOwner()) {</span>
-<span class="source-line-no">082</span><span id="line-82">            player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
-<span class="source-line-no">083</span><span id="line-83">            return false;</span>
-<span class="source-line-no">084</span><span id="line-84">        }</span>
-<span class="source-line-no">085</span><span id="line-85">        if (!plot.isOwner(player.getUUID()) &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_LOAD)) {</span>
-<span class="source-line-no">086</span><span id="line-86">            player.sendMessage(TranslatableCaption.of("permission.no_plot_perms"));</span>
-<span class="source-line-no">087</span><span id="line-87">            return false;</span>
-<span class="source-line-no">088</span><span id="line-88">        }</span>
-<span class="source-line-no">089</span><span id="line-89">        if (plot.getRunning() &gt; 0) {</span>
-<span class="source-line-no">090</span><span id="line-90">            player.sendMessage(TranslatableCaption.of("errors.wait_for_timer"));</span>
-<span class="source-line-no">091</span><span id="line-91">            return false;</span>
-<span class="source-line-no">092</span><span id="line-92">        }</span>
-<span class="source-line-no">093</span><span id="line-93"></span>
-<span class="source-line-no">094</span><span id="line-94">        try (final MetaDataAccess&lt;List&lt;String&gt;&gt; metaDataAccess =</span>
-<span class="source-line-no">095</span><span id="line-95">                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_SCHEMATICS)) {</span>
-<span class="source-line-no">096</span><span id="line-96">            if (args.length != 0) {</span>
-<span class="source-line-no">097</span><span id="line-97">                if (args.length == 1) {</span>
-<span class="source-line-no">098</span><span id="line-98">                    List&lt;String&gt; schematics = metaDataAccess.get().orElse(null);</span>
-<span class="source-line-no">099</span><span id="line-99">                    if (schematics == null) {</span>
-<span class="source-line-no">100</span><span id="line-100">                        // No schematics found:</span>
-<span class="source-line-no">101</span><span id="line-101">                        player.sendMessage(</span>
-<span class="source-line-no">102</span><span id="line-102">                                TranslatableCaption.of("web.load_null"),</span>
-<span class="source-line-no">103</span><span id="line-103">                                TagResolver.resolver("command", Tag.inserting(Component.text("/plot load")))</span>
-<span class="source-line-no">104</span><span id="line-104">                        );</span>
-<span class="source-line-no">105</span><span id="line-105">                        return false;</span>
-<span class="source-line-no">106</span><span id="line-106">                    }</span>
-<span class="source-line-no">107</span><span id="line-107">                    String schematic;</span>
-<span class="source-line-no">108</span><span id="line-108">                    try {</span>
-<span class="source-line-no">109</span><span id="line-109">                        schematic = schematics.get(Integer.parseInt(args[0]) - 1);</span>
-<span class="source-line-no">110</span><span id="line-110">                    } catch (Exception ignored) {</span>
-<span class="source-line-no">111</span><span id="line-111">                        // use /plot load &lt;index&gt;</span>
-<span class="source-line-no">112</span><span id="line-112">                        player.sendMessage(</span>
-<span class="source-line-no">113</span><span id="line-113">                                TranslatableCaption.of("invalid.not_valid_number"),</span>
-<span class="source-line-no">114</span><span id="line-114">                                TagResolver.resolver("value", Tag.inserting(Component.text("(1, " + schematics.size() + ')')))</span>
-<span class="source-line-no">115</span><span id="line-115">                        );</span>
-<span class="source-line-no">116</span><span id="line-116">                        return false;</span>
-<span class="source-line-no">117</span><span id="line-117">                    }</span>
-<span class="source-line-no">118</span><span id="line-118">                    final URL url;</span>
-<span class="source-line-no">119</span><span id="line-119">                    try {</span>
-<span class="source-line-no">120</span><span id="line-120">                        url = URI.create(Settings.Web.URL + "saves/" + player.getUUID() + '/' + schematic).toURL();</span>
-<span class="source-line-no">121</span><span id="line-121">                    } catch (MalformedURLException e) {</span>
-<span class="source-line-no">122</span><span id="line-122">                        e.printStackTrace();</span>
-<span class="source-line-no">123</span><span id="line-123">                        player.sendMessage(TranslatableCaption.of("web.load_failed"));</span>
-<span class="source-line-no">124</span><span id="line-124">                        return false;</span>
-<span class="source-line-no">125</span><span id="line-125">                    }</span>
-<span class="source-line-no">126</span><span id="line-126">                    plot.addRunning();</span>
-<span class="source-line-no">127</span><span id="line-127">                    player.sendMessage(TranslatableCaption.of("working.generating_component"));</span>
-<span class="source-line-no">128</span><span id="line-128">                    TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">129</span><span id="line-129">                        Schematic taskSchematic = this.schematicHandler.getSchematic(url);</span>
-<span class="source-line-no">130</span><span id="line-130">                        if (taskSchematic == null) {</span>
-<span class="source-line-no">131</span><span id="line-131">                            plot.removeRunning();</span>
-<span class="source-line-no">132</span><span id="line-132">                            player.sendMessage(</span>
-<span class="source-line-no">133</span><span id="line-133">                                    TranslatableCaption.of("schematics.schematic_invalid"),</span>
-<span class="source-line-no">134</span><span id="line-134">                                    TagResolver.resolver(</span>
-<span class="source-line-no">135</span><span id="line-135">                                            "reason",</span>
-<span class="source-line-no">136</span><span id="line-136">                                            Tag.inserting(Component.text("non-existent or not in gzip format"))</span>
-<span class="source-line-no">137</span><span id="line-137">                                    )</span>
-<span class="source-line-no">138</span><span id="line-138">                            );</span>
-<span class="source-line-no">139</span><span id="line-139">                            return;</span>
-<span class="source-line-no">140</span><span id="line-140">                        }</span>
-<span class="source-line-no">141</span><span id="line-141">                        PlotArea area = plot.getArea();</span>
-<span class="source-line-no">142</span><span id="line-142">                        this.schematicHandler.paste(</span>
-<span class="source-line-no">143</span><span id="line-143">                                taskSchematic,</span>
-<span class="source-line-no">144</span><span id="line-144">                                plot,</span>
-<span class="source-line-no">145</span><span id="line-145">                                0,</span>
-<span class="source-line-no">146</span><span id="line-146">                                area.getMinBuildHeight(),</span>
-<span class="source-line-no">147</span><span id="line-147">                                0,</span>
-<span class="source-line-no">148</span><span id="line-148">                                false,</span>
-<span class="source-line-no">149</span><span id="line-149">                                player,</span>
-<span class="source-line-no">150</span><span id="line-150">                                new RunnableVal&lt;&gt;() {</span>
-<span class="source-line-no">151</span><span id="line-151">                                    @Override</span>
-<span class="source-line-no">152</span><span id="line-152">                                    public void run(Boolean value) {</span>
-<span class="source-line-no">153</span><span id="line-153">                                        plot.removeRunning();</span>
-<span class="source-line-no">154</span><span id="line-154">                                        if (value) {</span>
-<span class="source-line-no">155</span><span id="line-155">                                            player.sendMessage(TranslatableCaption.of("schematics.schematic_paste_success"));</span>
-<span class="source-line-no">156</span><span id="line-156">                                        } else {</span>
-<span class="source-line-no">157</span><span id="line-157">                                            player.sendMessage(TranslatableCaption.of("schematics.schematic_paste_failed"));</span>
-<span class="source-line-no">158</span><span id="line-158">                                        }</span>
-<span class="source-line-no">159</span><span id="line-159">                                    }</span>
-<span class="source-line-no">160</span><span id="line-160">                                }</span>
-<span class="source-line-no">161</span><span id="line-161">                        );</span>
-<span class="source-line-no">162</span><span id="line-162">                    });</span>
-<span class="source-line-no">163</span><span id="line-163">                    return true;</span>
-<span class="source-line-no">164</span><span id="line-164">                }</span>
-<span class="source-line-no">165</span><span id="line-165">                plot.removeRunning();</span>
-<span class="source-line-no">166</span><span id="line-166">                player.sendMessage(</span>
-<span class="source-line-no">167</span><span id="line-167">                        TranslatableCaption.of("commandconfig.command_syntax"),</span>
-<span class="source-line-no">168</span><span id="line-168">                        TagResolver.resolver("value", Tag.inserting(Component.text("/plot load &lt;index&gt;")))</span>
-<span class="source-line-no">169</span><span id="line-169">                );</span>
-<span class="source-line-no">170</span><span id="line-170">                return false;</span>
-<span class="source-line-no">171</span><span id="line-171">            }</span>
-<span class="source-line-no">172</span><span id="line-172"></span>
-<span class="source-line-no">173</span><span id="line-173">            // list schematics</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">            List&lt;String&gt; schematics = metaDataAccess.get().orElse(null);</span>
-<span class="source-line-no">176</span><span id="line-176">            if (schematics == null) {</span>
-<span class="source-line-no">177</span><span id="line-177">                plot.addRunning();</span>
-<span class="source-line-no">178</span><span id="line-178">                TaskManager.runTaskAsync(() -&gt; {</span>
-<span class="source-line-no">179</span><span id="line-179">                    List&lt;String&gt; schematics1 = this.schematicHandler.getSaves(player.getUUID());</span>
-<span class="source-line-no">180</span><span id="line-180">                    plot.removeRunning();</span>
-<span class="source-line-no">181</span><span id="line-181">                    if ((schematics1 == null) || schematics1.isEmpty()) {</span>
-<span class="source-line-no">182</span><span id="line-182">                        player.sendMessage(TranslatableCaption.of("web.load_failed"));</span>
-<span class="source-line-no">183</span><span id="line-183">                        return;</span>
-<span class="source-line-no">184</span><span id="line-184">                    }</span>
-<span class="source-line-no">185</span><span id="line-185">                    metaDataAccess.set(schematics1);</span>
-<span class="source-line-no">186</span><span id="line-186">                    displaySaves(player);</span>
-<span class="source-line-no">187</span><span id="line-187">                });</span>
-<span class="source-line-no">188</span><span id="line-188">            } else {</span>
-<span class="source-line-no">189</span><span id="line-189">                displaySaves(player);</span>
-<span class="source-line-no">190</span><span id="line-190">            }</span>
-<span class="source-line-no">191</span><span id="line-191">        }</span>
-<span class="source-line-no">192</span><span id="line-192">        return true;</span>
-<span class="source-line-no">193</span><span id="line-193">    }</span>
-<span class="source-line-no">194</span><span id="line-194"></span>
-<span class="source-line-no">195</span><span id="line-195">    public void displaySaves(PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">196</span><span id="line-196">        try (final MetaDataAccess&lt;List&lt;String&gt;&gt; metaDataAccess =</span>
-<span class="source-line-no">197</span><span id="line-197">                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_SCHEMATICS)) {</span>
-<span class="source-line-no">198</span><span id="line-198">            List&lt;String&gt; schematics = metaDataAccess.get().orElse(Collections.emptyList());</span>
-<span class="source-line-no">199</span><span id="line-199">            for (int i = 0; i &lt; Math.min(schematics.size(), 32); i++) {</span>
-<span class="source-line-no">200</span><span id="line-200">                try {</span>
-<span class="source-line-no">201</span><span id="line-201">                    String schematic = schematics.get(i).split("\\.")[0];</span>
-<span class="source-line-no">202</span><span id="line-202">                    String[] split = schematic.split("_");</span>
-<span class="source-line-no">203</span><span id="line-203">                    if (split.length &lt; 5) {</span>
-<span class="source-line-no">204</span><span id="line-204">                        continue;</span>
-<span class="source-line-no">205</span><span id="line-205">                    }</span>
-<span class="source-line-no">206</span><span id="line-206">                    String time = TimeUtil.secToTime((System.currentTimeMillis() / 1000) - Long.parseLong(split[0]));</span>
-<span class="source-line-no">207</span><span id="line-207">                    String world = split[1];</span>
-<span class="source-line-no">208</span><span id="line-208">                    PlotId id = PlotId.fromString(split[2] + ';' + split[3]);</span>
-<span class="source-line-no">209</span><span id="line-209">                    String size = split[4];</span>
-<span class="source-line-no">210</span><span id="line-210">                    String color = "&lt;dark_aqua&gt;";</span>
-<span class="source-line-no">211</span><span id="line-211">                    player.sendMessage(StaticCaption.of("&lt;dark_gray&gt;[&lt;/dark_gray&gt;&lt;gray&gt;" + (i + 1) + "&lt;/gray&gt;&lt;dark_aqua&gt;] &lt;/dark_aqua&gt;" + color + time + "&lt;dark_gray&gt; | &lt;/dark_gray&gt;" + color + world + ';' + id</span>
-<span class="source-line-no">212</span><span id="line-212">                            + "&lt;dark_gray&gt; | &lt;/dark_gray&gt;" + color + size + 'x' + size));</span>
-<span class="source-line-no">213</span><span id="line-213">                } catch (Exception e) {</span>
-<span class="source-line-no">214</span><span id="line-214">                    e.printStackTrace();</span>
-<span class="source-line-no">215</span><span id="line-215">                }</span>
-<span class="source-line-no">216</span><span id="line-216">            }</span>
-<span class="source-line-no">217</span><span id="line-217">            player.sendMessage(</span>
-<span class="source-line-no">218</span><span id="line-218">                    TranslatableCaption.of("web.load_list"),</span>
-<span class="source-line-no">219</span><span id="line-219">                    TagResolver.resolver("command", Tag.inserting(Component.text("/plot load #")))</span>
-<span class="source-line-no">220</span><span id="line-220">            );</span>
-<span class="source-line-no">221</span><span id="line-221">        }</span>
-<span class="source-line-no">222</span><span id="line-222">    }</span>
-<span class="source-line-no">223</span><span id="line-223"></span>
-<span class="source-line-no">224</span><span id="line-224">}</span>
+<span class="source-line-no">076</span><span id="line-76">        if (!plot.hasOwner()) {</span>
+<span class="source-line-no">077</span><span id="line-77">            player.sendMessage(TranslatableCaption.of("info.plot_unowned"));</span>
+<span class="source-line-no">078</span><span id="line-78">            return false;</span>
+<span class="source-line-no">079</span><span id="line-79">        }</span>
+<span class="source-line-no">080</span><span id="line-80">        if (!plot.isOwner(player.getUUID()) &amp;&amp; !player.hasPermission(Permission.PERMISSION_ADMIN_COMMAND_LOAD)) {</span>
+<span class="source-line-no">081</span><span id="line-81">            player.sendMessage(TranslatableCaption.of("permission.no_plot_perms"));</span>
+<span class="source-line-no">082</span><span id="line-82">            return false;</span>
+<span class="source-line-no">083</span><span id="line-83">        }</span>
+<span class="source-line-no">084</span><span id="line-84">        if (plot.getRunning() &gt; 0) {</span>
+<span class="source-line-no">085</span><span id="line-85">            player.sendMessage(TranslatableCaption.of("errors.wait_for_timer"));</span>
+<span class="source-line-no">086</span><span id="line-86">            return false;</span>
+<span class="source-line-no">087</span><span id="line-87">        }</span>
+<span class="source-line-no">088</span><span id="line-88"></span>
+<span class="source-line-no">089</span><span id="line-89">        try (final MetaDataAccess&lt;List&lt;String&gt;&gt; metaDataAccess =</span>
+<span class="source-line-no">090</span><span id="line-90">                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_SCHEMATICS)) {</span>
+<span class="source-line-no">091</span><span id="line-91">            if (args.length != 0) {</span>
+<span class="source-line-no">092</span><span id="line-92">                if (args.length == 1) {</span>
+<span class="source-line-no">093</span><span id="line-93">                    List&lt;String&gt; schematics = metaDataAccess.get().orElse(null);</span>
+<span class="source-line-no">094</span><span id="line-94">                    if (schematics == null) {</span>
+<span class="source-line-no">095</span><span id="line-95">                        // No schematics found:</span>
+<span class="source-line-no">096</span><span id="line-96">                        player.sendMessage(</span>
+<span class="source-line-no">097</span><span id="line-97">                                TranslatableCaption.of("web.load_null"),</span>
+<span class="source-line-no">098</span><span id="line-98">                                TagResolver.resolver("command", Tag.inserting(Component.text("/plot load")))</span>
+<span class="source-line-no">099</span><span id="line-99">                        );</span>
+<span class="source-line-no">100</span><span id="line-100">                        return false;</span>
+<span class="source-line-no">101</span><span id="line-101">                    }</span>
+<span class="source-line-no">102</span><span id="line-102">                    String schematic;</span>
+<span class="source-line-no">103</span><span id="line-103">                    try {</span>
+<span class="source-line-no">104</span><span id="line-104">                        schematic = schematics.get(Integer.parseInt(args[0]) - 1);</span>
+<span class="source-line-no">105</span><span id="line-105">                    } catch (Exception ignored) {</span>
+<span class="source-line-no">106</span><span id="line-106">                        // use /plot load &lt;index&gt;</span>
+<span class="source-line-no">107</span><span id="line-107">                        player.sendMessage(</span>
+<span class="source-line-no">108</span><span id="line-108">                                TranslatableCaption.of("invalid.not_valid_number"),</span>
+<span class="source-line-no">109</span><span id="line-109">                                TagResolver.resolver("value", Tag.inserting(Component.text("(1, " + schematics.size() + ')')))</span>
+<span class="source-line-no">110</span><span id="line-110">                        );</span>
+<span class="source-line-no">111</span><span id="line-111">                        return false;</span>
+<span class="source-line-no">112</span><span id="line-112">                    }</span>
+<span class="source-line-no">113</span><span id="line-113">                    final URL url;</span>
+<span class="source-line-no">114</span><span id="line-114">                    try {</span>
+<span class="source-line-no">115</span><span id="line-115">                        url = URI.create(Settings.Web.URL + "saves/" + player.getUUID() + '/' + schematic).toURL();</span>
+<span class="source-line-no">116</span><span id="line-116">                    } catch (MalformedURLException e) {</span>
+<span class="source-line-no">117</span><span id="line-117">                        e.printStackTrace();</span>
+<span class="source-line-no">118</span><span id="line-118">                        player.sendMessage(TranslatableCaption.of("web.load_failed"));</span>
+<span class="source-line-no">119</span><span id="line-119">                        return false;</span>
+<span class="source-line-no">120</span><span id="line-120">                    }</span>
+<span class="source-line-no">121</span><span id="line-121">                    plot.addRunning();</span>
+<span class="source-line-no">122</span><span id="line-122">                    player.sendMessage(TranslatableCaption.of("working.generating_component"));</span>
+<span class="source-line-no">123</span><span id="line-123">                    TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">124</span><span id="line-124">                        Schematic taskSchematic = this.schematicHandler.getSchematic(url);</span>
+<span class="source-line-no">125</span><span id="line-125">                        if (taskSchematic == null) {</span>
+<span class="source-line-no">126</span><span id="line-126">                            plot.removeRunning();</span>
+<span class="source-line-no">127</span><span id="line-127">                            player.sendMessage(</span>
+<span class="source-line-no">128</span><span id="line-128">                                    TranslatableCaption.of("schematics.schematic_invalid"),</span>
+<span class="source-line-no">129</span><span id="line-129">                                    TagResolver.resolver(</span>
+<span class="source-line-no">130</span><span id="line-130">                                            "reason",</span>
+<span class="source-line-no">131</span><span id="line-131">                                            Tag.inserting(Component.text("non-existent or not in gzip format"))</span>
+<span class="source-line-no">132</span><span id="line-132">                                    )</span>
+<span class="source-line-no">133</span><span id="line-133">                            );</span>
+<span class="source-line-no">134</span><span id="line-134">                            return;</span>
+<span class="source-line-no">135</span><span id="line-135">                        }</span>
+<span class="source-line-no">136</span><span id="line-136">                        PlotArea area = plot.getArea();</span>
+<span class="source-line-no">137</span><span id="line-137">                        this.schematicHandler.paste(</span>
+<span class="source-line-no">138</span><span id="line-138">                                taskSchematic,</span>
+<span class="source-line-no">139</span><span id="line-139">                                plot,</span>
+<span class="source-line-no">140</span><span id="line-140">                                0,</span>
+<span class="source-line-no">141</span><span id="line-141">                                area.getMinBuildHeight(),</span>
+<span class="source-line-no">142</span><span id="line-142">                                0,</span>
+<span class="source-line-no">143</span><span id="line-143">                                false,</span>
+<span class="source-line-no">144</span><span id="line-144">                                player,</span>
+<span class="source-line-no">145</span><span id="line-145">                                new RunnableVal&lt;&gt;() {</span>
+<span class="source-line-no">146</span><span id="line-146">                                    @Override</span>
+<span class="source-line-no">147</span><span id="line-147">                                    public void run(Boolean value) {</span>
+<span class="source-line-no">148</span><span id="line-148">                                        plot.removeRunning();</span>
+<span class="source-line-no">149</span><span id="line-149">                                        if (value) {</span>
+<span class="source-line-no">150</span><span id="line-150">                                            player.sendMessage(TranslatableCaption.of("schematics.schematic_paste_success"));</span>
+<span class="source-line-no">151</span><span id="line-151">                                        } else {</span>
+<span class="source-line-no">152</span><span id="line-152">                                            player.sendMessage(TranslatableCaption.of("schematics.schematic_paste_failed"));</span>
+<span class="source-line-no">153</span><span id="line-153">                                        }</span>
+<span class="source-line-no">154</span><span id="line-154">                                    }</span>
+<span class="source-line-no">155</span><span id="line-155">                                }</span>
+<span class="source-line-no">156</span><span id="line-156">                        );</span>
+<span class="source-line-no">157</span><span id="line-157">                    });</span>
+<span class="source-line-no">158</span><span id="line-158">                    return true;</span>
+<span class="source-line-no">159</span><span id="line-159">                }</span>
+<span class="source-line-no">160</span><span id="line-160">                plot.removeRunning();</span>
+<span class="source-line-no">161</span><span id="line-161">                player.sendMessage(</span>
+<span class="source-line-no">162</span><span id="line-162">                        TranslatableCaption.of("commandconfig.command_syntax"),</span>
+<span class="source-line-no">163</span><span id="line-163">                        TagResolver.resolver("value", Tag.inserting(Component.text("/plot load &lt;index&gt;")))</span>
+<span class="source-line-no">164</span><span id="line-164">                );</span>
+<span class="source-line-no">165</span><span id="line-165">                return false;</span>
+<span class="source-line-no">166</span><span id="line-166">            }</span>
+<span class="source-line-no">167</span><span id="line-167"></span>
+<span class="source-line-no">168</span><span id="line-168">            // list schematics</span>
+<span class="source-line-no">169</span><span id="line-169"></span>
+<span class="source-line-no">170</span><span id="line-170">            List&lt;String&gt; schematics = metaDataAccess.get().orElse(null);</span>
+<span class="source-line-no">171</span><span id="line-171">            if (schematics == null) {</span>
+<span class="source-line-no">172</span><span id="line-172">                plot.addRunning();</span>
+<span class="source-line-no">173</span><span id="line-173">                TaskManager.runTaskAsync(() -&gt; {</span>
+<span class="source-line-no">174</span><span id="line-174">                    List&lt;String&gt; schematics1 = this.schematicHandler.getSaves(player.getUUID());</span>
+<span class="source-line-no">175</span><span id="line-175">                    plot.removeRunning();</span>
+<span class="source-line-no">176</span><span id="line-176">                    if ((schematics1 == null) || schematics1.isEmpty()) {</span>
+<span class="source-line-no">177</span><span id="line-177">                        player.sendMessage(TranslatableCaption.of("web.load_failed"));</span>
+<span class="source-line-no">178</span><span id="line-178">                        return;</span>
+<span class="source-line-no">179</span><span id="line-179">                    }</span>
+<span class="source-line-no">180</span><span id="line-180">                    metaDataAccess.set(schematics1);</span>
+<span class="source-line-no">181</span><span id="line-181">                    displaySaves(player);</span>
+<span class="source-line-no">182</span><span id="line-182">                });</span>
+<span class="source-line-no">183</span><span id="line-183">            } else {</span>
+<span class="source-line-no">184</span><span id="line-184">                displaySaves(player);</span>
+<span class="source-line-no">185</span><span id="line-185">            }</span>
+<span class="source-line-no">186</span><span id="line-186">        }</span>
+<span class="source-line-no">187</span><span id="line-187">        return true;</span>
+<span class="source-line-no">188</span><span id="line-188">    }</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">    public void displaySaves(PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">191</span><span id="line-191">        try (final MetaDataAccess&lt;List&lt;String&gt;&gt; metaDataAccess =</span>
+<span class="source-line-no">192</span><span id="line-192">                     player.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_SCHEMATICS)) {</span>
+<span class="source-line-no">193</span><span id="line-193">            List&lt;String&gt; schematics = metaDataAccess.get().orElse(Collections.emptyList());</span>
+<span class="source-line-no">194</span><span id="line-194">            for (int i = 0; i &lt; Math.min(schematics.size(), 32); i++) {</span>
+<span class="source-line-no">195</span><span id="line-195">                try {</span>
+<span class="source-line-no">196</span><span id="line-196">                    String schematic = schematics.get(i).split("\\.")[0];</span>
+<span class="source-line-no">197</span><span id="line-197">                    String[] split = schematic.split("_");</span>
+<span class="source-line-no">198</span><span id="line-198">                    if (split.length &lt; 5) {</span>
+<span class="source-line-no">199</span><span id="line-199">                        continue;</span>
+<span class="source-line-no">200</span><span id="line-200">                    }</span>
+<span class="source-line-no">201</span><span id="line-201">                    String time = TimeUtil.secToTime((System.currentTimeMillis() / 1000) - Long.parseLong(split[0]));</span>
+<span class="source-line-no">202</span><span id="line-202">                    String world = split[1];</span>
+<span class="source-line-no">203</span><span id="line-203">                    PlotId id = PlotId.fromString(split[2] + ';' + split[3]);</span>
+<span class="source-line-no">204</span><span id="line-204">                    String size = split[4];</span>
+<span class="source-line-no">205</span><span id="line-205">                    String color = "&lt;dark_aqua&gt;";</span>
+<span class="source-line-no">206</span><span id="line-206">                    player.sendMessage(StaticCaption.of("&lt;dark_gray&gt;[&lt;/dark_gray&gt;&lt;gray&gt;" + (i + 1) + "&lt;/gray&gt;&lt;dark_aqua&gt;] &lt;/dark_aqua&gt;" + color + time + "&lt;dark_gray&gt; | &lt;/dark_gray&gt;" + color + world + ';' + id</span>
+<span class="source-line-no">207</span><span id="line-207">                            + "&lt;dark_gray&gt; | &lt;/dark_gray&gt;" + color + size + 'x' + size));</span>
+<span class="source-line-no">208</span><span id="line-208">                } catch (Exception e) {</span>
+<span class="source-line-no">209</span><span id="line-209">                    e.printStackTrace();</span>
+<span class="source-line-no">210</span><span id="line-210">                }</span>
+<span class="source-line-no">211</span><span id="line-211">            }</span>
+<span class="source-line-no">212</span><span id="line-212">            player.sendMessage(</span>
+<span class="source-line-no">213</span><span id="line-213">                    TranslatableCaption.of("web.load_list"),</span>
+<span class="source-line-no">214</span><span id="line-214">                    TagResolver.resolver("command", Tag.inserting(Component.text("/plot load #")))</span>
+<span class="source-line-no">215</span><span id="line-215">            );</span>
+<span class="source-line-no">216</span><span id="line-216">        }</span>
+<span class="source-line-no">217</span><span id="line-217">    }</span>
+<span class="source-line-no">218</span><span id="line-218"></span>
+<span class="source-line-no">219</span><span id="line-219">}</span>
 
 
 

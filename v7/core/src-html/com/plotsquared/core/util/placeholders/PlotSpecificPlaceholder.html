@@ -40,34 +40,48 @@
 <span class="source-line-no">027</span><span id="line-27"> */</span>
 <span class="source-line-no">028</span><span id="line-28">public abstract class PlotSpecificPlaceholder extends Placeholder {</span>
 <span class="source-line-no">029</span><span id="line-29"></span>
-<span class="source-line-no">030</span><span id="line-30">    public PlotSpecificPlaceholder(final @NonNull String key) {</span>
-<span class="source-line-no">031</span><span id="line-31">        super(key);</span>
-<span class="source-line-no">032</span><span id="line-32">    }</span>
-<span class="source-line-no">033</span><span id="line-33"></span>
-<span class="source-line-no">034</span><span id="line-34">    @Override</span>
-<span class="source-line-no">035</span><span id="line-35">    public @NonNull</span>
-<span class="source-line-no">036</span><span id="line-36">    final String getValue(final @NonNull PlotPlayer&lt;?&gt; player) {</span>
-<span class="source-line-no">037</span><span id="line-37">        final Plot plot = player.getCurrentPlot();</span>
-<span class="source-line-no">038</span><span id="line-38">        if (plot == null) {</span>
-<span class="source-line-no">039</span><span id="line-39">            return "";</span>
-<span class="source-line-no">040</span><span id="line-40">        }</span>
-<span class="source-line-no">041</span><span id="line-41">        return this.getValue(player, plot);</span>
-<span class="source-line-no">042</span><span id="line-42">    }</span>
-<span class="source-line-no">043</span><span id="line-43"></span>
-<span class="source-line-no">044</span><span id="line-44">    /**</span>
-<span class="source-line-no">045</span><span id="line-45">     * Get the value of the placeholder for the {@link PlotPlayer player} in a specific {@link Plot plot}</span>
-<span class="source-line-no">046</span><span id="line-46">     *</span>
-<span class="source-line-no">047</span><span id="line-47">     * @param player Player that the placeholder is evaluated for</span>
-<span class="source-line-no">048</span><span id="line-48">     * @param plot   Plot that the player is in</span>
-<span class="source-line-no">049</span><span id="line-49">     * @return Placeholder value, or {@code ""} if the placeholder does not apply</span>
-<span class="source-line-no">050</span><span id="line-50">     */</span>
-<span class="source-line-no">051</span><span id="line-51">    public @NonNull</span>
-<span class="source-line-no">052</span><span id="line-52">    abstract String getValue(</span>
-<span class="source-line-no">053</span><span id="line-53">            final @NonNull PlotPlayer&lt;?&gt; player,</span>
-<span class="source-line-no">054</span><span id="line-54">            final @NonNull Plot plot</span>
-<span class="source-line-no">055</span><span id="line-55">    );</span>
-<span class="source-line-no">056</span><span id="line-56"></span>
-<span class="source-line-no">057</span><span id="line-57">}</span>
+<span class="source-line-no">030</span><span id="line-30">    private final boolean requireAbsolute;</span>
+<span class="source-line-no">031</span><span id="line-31"></span>
+<span class="source-line-no">032</span><span id="line-32">    public PlotSpecificPlaceholder(final @NonNull String key) {</span>
+<span class="source-line-no">033</span><span id="line-33">        this(key, false);</span>
+<span class="source-line-no">034</span><span id="line-34">    }</span>
+<span class="source-line-no">035</span><span id="line-35"></span>
+<span class="source-line-no">036</span><span id="line-36">    /**</span>
+<span class="source-line-no">037</span><span id="line-37">     * Create a functional placeholder</span>
+<span class="source-line-no">038</span><span id="line-38">     *</span>
+<span class="source-line-no">039</span><span id="line-39">     * @param key             Placeholder key</span>
+<span class="source-line-no">040</span><span id="line-40">     * @param requireAbsolute If the plot given to the placeholder should be the absolute (not base) plot</span>
+<span class="source-line-no">041</span><span id="line-41">     * @since 7.5.9</span>
+<span class="source-line-no">042</span><span id="line-42">     */</span>
+<span class="source-line-no">043</span><span id="line-43">    public PlotSpecificPlaceholder(final @NonNull String key, final boolean requireAbsolute) {</span>
+<span class="source-line-no">044</span><span id="line-44">        super(key);</span>
+<span class="source-line-no">045</span><span id="line-45">        this.requireAbsolute = requireAbsolute;</span>
+<span class="source-line-no">046</span><span id="line-46">    }</span>
+<span class="source-line-no">047</span><span id="line-47"></span>
+<span class="source-line-no">048</span><span id="line-48">    @Override</span>
+<span class="source-line-no">049</span><span id="line-49">    public @NonNull</span>
+<span class="source-line-no">050</span><span id="line-50">    final String getValue(final @NonNull PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">051</span><span id="line-51">        final Plot plot = requireAbsolute ? player.getLocation().getPlotAbs() : player.getCurrentPlot();</span>
+<span class="source-line-no">052</span><span id="line-52">        if (plot == null) {</span>
+<span class="source-line-no">053</span><span id="line-53">            return "";</span>
+<span class="source-line-no">054</span><span id="line-54">        }</span>
+<span class="source-line-no">055</span><span id="line-55">        return this.getValue(player, plot);</span>
+<span class="source-line-no">056</span><span id="line-56">    }</span>
+<span class="source-line-no">057</span><span id="line-57"></span>
+<span class="source-line-no">058</span><span id="line-58">    /**</span>
+<span class="source-line-no">059</span><span id="line-59">     * Get the value of the placeholder for the {@link PlotPlayer player} in a specific {@link Plot plot}</span>
+<span class="source-line-no">060</span><span id="line-60">     *</span>
+<span class="source-line-no">061</span><span id="line-61">     * @param player Player that the placeholder is evaluated for</span>
+<span class="source-line-no">062</span><span id="line-62">     * @param plot   Plot that the player is in</span>
+<span class="source-line-no">063</span><span id="line-63">     * @return Placeholder value, or {@code ""} if the placeholder does not apply</span>
+<span class="source-line-no">064</span><span id="line-64">     */</span>
+<span class="source-line-no">065</span><span id="line-65">    public @NonNull</span>
+<span class="source-line-no">066</span><span id="line-66">    abstract String getValue(</span>
+<span class="source-line-no">067</span><span id="line-67">            final @NonNull PlotPlayer&lt;?&gt; player,</span>
+<span class="source-line-no">068</span><span id="line-68">            final @NonNull Plot plot</span>
+<span class="source-line-no">069</span><span id="line-69">    );</span>
+<span class="source-line-no">070</span><span id="line-70"></span>
+<span class="source-line-no">071</span><span id="line-71">}</span>
 
 
 

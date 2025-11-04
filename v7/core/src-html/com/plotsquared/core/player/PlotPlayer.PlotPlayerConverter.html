@@ -303,825 +303,856 @@
 <span class="source-line-no">290</span><span id="line-290">     *</span>
 <span class="source-line-no">291</span><span id="line-291">     * @return the plot the player is standing on or null if standing on a road or not in a {@link PlotArea}</span>
 <span class="source-line-no">292</span><span id="line-292">     */</span>
-<span class="source-line-no">293</span><span id="line-293">    @Nullable</span>
-<span class="source-line-no">294</span><span id="line-294">    public Plot getCurrentPlot() {</span>
-<span class="source-line-no">295</span><span id="line-295">        try (final MetaDataAccess&lt;Plot&gt; lastPlotAccess =</span>
-<span class="source-line-no">296</span><span id="line-296">                     this.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
-<span class="source-line-no">297</span><span id="line-297">            if (lastPlotAccess.get().orElse(null) == null &amp;&amp; !Settings.Enabled_Components.EVENTS) {</span>
-<span class="source-line-no">298</span><span id="line-298">                return this.getLocation().getPlot();</span>
-<span class="source-line-no">299</span><span id="line-299">            }</span>
-<span class="source-line-no">300</span><span id="line-300">            return lastPlotAccess.get().orElse(null);</span>
-<span class="source-line-no">301</span><span id="line-301">        }</span>
-<span class="source-line-no">302</span><span id="line-302">    }</span>
-<span class="source-line-no">303</span><span id="line-303"></span>
-<span class="source-line-no">304</span><span id="line-304">    /**</span>
-<span class="source-line-no">305</span><span id="line-305">     * Get the total number of allowed plots</span>
-<span class="source-line-no">306</span><span id="line-306">     *</span>
-<span class="source-line-no">307</span><span id="line-307">     * @return number of allowed plots within the scope (globally, or in the player's current world as defined in the settings.yml)</span>
-<span class="source-line-no">308</span><span id="line-308">     */</span>
-<span class="source-line-no">309</span><span id="line-309">    public int getAllowedPlots() {</span>
-<span class="source-line-no">310</span><span id="line-310">        final int calculatedLimit = hasPermissionRange("plots.plot", Settings.Limit.MAX_PLOTS);</span>
-<span class="source-line-no">311</span><span id="line-311">        return this.eventDispatcher.callPlayerPlotLimit(this, calculatedLimit).limit();</span>
-<span class="source-line-no">312</span><span id="line-312">    }</span>
-<span class="source-line-no">313</span><span id="line-313"></span>
-<span class="source-line-no">314</span><span id="line-314">    /**</span>
-<span class="source-line-no">315</span><span id="line-315">     * Get the number of plots this player owns.</span>
-<span class="source-line-no">316</span><span id="line-316">     *</span>
-<span class="source-line-no">317</span><span id="line-317">     * @return number of plots within the scope (globally, or in the player's current world as defined in the settings.yml)</span>
-<span class="source-line-no">318</span><span id="line-318">     * @see #getPlotCount(String)</span>
-<span class="source-line-no">319</span><span id="line-319">     * @see #getPlots()</span>
-<span class="source-line-no">320</span><span id="line-320">     */</span>
-<span class="source-line-no">321</span><span id="line-321">    public int getPlotCount() {</span>
-<span class="source-line-no">322</span><span id="line-322">        if (!Settings.Limit.GLOBAL) {</span>
-<span class="source-line-no">323</span><span id="line-323">            return getPlotCount(getCurrentPlot().getWorldName());</span>
-<span class="source-line-no">324</span><span id="line-324">        }</span>
-<span class="source-line-no">325</span><span id="line-325">        final AtomicInteger count = new AtomicInteger(0);</span>
-<span class="source-line-no">326</span><span id="line-326">        final UUID uuid = getUUID();</span>
-<span class="source-line-no">327</span><span id="line-327">        this.plotAreaManager.forEachPlotArea(value -&gt; {</span>
-<span class="source-line-no">328</span><span id="line-328">            if (!Settings.Done.COUNTS_TOWARDS_LIMIT) {</span>
-<span class="source-line-no">329</span><span id="line-329">                for (Plot plot : value.getPlotsAbs(uuid)) {</span>
-<span class="source-line-no">330</span><span id="line-330">                    if (!DoneFlag.isDone(plot)) {</span>
-<span class="source-line-no">331</span><span id="line-331">                        count.incrementAndGet();</span>
-<span class="source-line-no">332</span><span id="line-332">                    }</span>
-<span class="source-line-no">333</span><span id="line-333">                }</span>
-<span class="source-line-no">334</span><span id="line-334">            } else {</span>
-<span class="source-line-no">335</span><span id="line-335">                count.addAndGet(value.getPlotsAbs(uuid).size());</span>
-<span class="source-line-no">336</span><span id="line-336">            }</span>
-<span class="source-line-no">337</span><span id="line-337">        });</span>
-<span class="source-line-no">338</span><span id="line-338">        return count.get();</span>
-<span class="source-line-no">339</span><span id="line-339">    }</span>
-<span class="source-line-no">340</span><span id="line-340"></span>
-<span class="source-line-no">341</span><span id="line-341">    public int getClusterCount() {</span>
-<span class="source-line-no">342</span><span id="line-342">        if (!Settings.Limit.GLOBAL) {</span>
-<span class="source-line-no">343</span><span id="line-343">            return getClusterCount(getCurrentPlot().getWorldName());</span>
-<span class="source-line-no">344</span><span id="line-344">        }</span>
-<span class="source-line-no">345</span><span id="line-345">        final AtomicInteger count = new AtomicInteger(0);</span>
-<span class="source-line-no">346</span><span id="line-346">        this.plotAreaManager.forEachPlotArea(value -&gt; {</span>
-<span class="source-line-no">347</span><span id="line-347">            for (PlotCluster cluster : value.getClusters()) {</span>
-<span class="source-line-no">348</span><span id="line-348">                if (cluster.isOwner(getUUID())) {</span>
-<span class="source-line-no">349</span><span id="line-349">                    count.incrementAndGet();</span>
-<span class="source-line-no">350</span><span id="line-350">                }</span>
-<span class="source-line-no">351</span><span id="line-351">            }</span>
-<span class="source-line-no">352</span><span id="line-352">        });</span>
-<span class="source-line-no">353</span><span id="line-353">        return count.get();</span>
-<span class="source-line-no">354</span><span id="line-354">    }</span>
-<span class="source-line-no">355</span><span id="line-355"></span>
-<span class="source-line-no">356</span><span id="line-356">    /**</span>
-<span class="source-line-no">357</span><span id="line-357">     * Get the number of plots this player owns in the world.</span>
-<span class="source-line-no">358</span><span id="line-358">     *</span>
-<span class="source-line-no">359</span><span id="line-359">     * @param world the name of the plotworld to check.</span>
-<span class="source-line-no">360</span><span id="line-360">     * @return plot count</span>
-<span class="source-line-no">361</span><span id="line-361">     */</span>
-<span class="source-line-no">362</span><span id="line-362">    public int getPlotCount(String world) {</span>
-<span class="source-line-no">363</span><span id="line-363">        UUID uuid = getUUID();</span>
-<span class="source-line-no">364</span><span id="line-364">        int count = 0;</span>
-<span class="source-line-no">365</span><span id="line-365">        for (PlotArea area : this.plotAreaManager.getPlotAreasSet(world)) {</span>
-<span class="source-line-no">366</span><span id="line-366">            if (!Settings.Done.COUNTS_TOWARDS_LIMIT) {</span>
-<span class="source-line-no">367</span><span id="line-367">                count +=</span>
-<span class="source-line-no">368</span><span id="line-368">                        area.getPlotsAbs(uuid).stream().filter(plot -&gt; !DoneFlag.isDone(plot)).count();</span>
-<span class="source-line-no">369</span><span id="line-369">            } else {</span>
-<span class="source-line-no">370</span><span id="line-370">                count += area.getPlotsAbs(uuid).size();</span>
-<span class="source-line-no">371</span><span id="line-371">            }</span>
-<span class="source-line-no">372</span><span id="line-372">        }</span>
-<span class="source-line-no">373</span><span id="line-373">        return count;</span>
-<span class="source-line-no">374</span><span id="line-374">    }</span>
-<span class="source-line-no">375</span><span id="line-375"></span>
-<span class="source-line-no">376</span><span id="line-376">    public int getClusterCount(String world) {</span>
-<span class="source-line-no">377</span><span id="line-377">        int count = 0;</span>
-<span class="source-line-no">378</span><span id="line-378">        for (PlotArea area : this.plotAreaManager.getPlotAreasSet(world)) {</span>
-<span class="source-line-no">379</span><span id="line-379">            for (PlotCluster cluster : area.getClusters()) {</span>
-<span class="source-line-no">380</span><span id="line-380">                if (cluster.isOwner(getUUID())) {</span>
-<span class="source-line-no">381</span><span id="line-381">                    count++;</span>
-<span class="source-line-no">382</span><span id="line-382">                }</span>
-<span class="source-line-no">383</span><span id="line-383">            }</span>
-<span class="source-line-no">384</span><span id="line-384">        }</span>
-<span class="source-line-no">385</span><span id="line-385">        return count;</span>
-<span class="source-line-no">386</span><span id="line-386">    }</span>
-<span class="source-line-no">387</span><span id="line-387"></span>
-<span class="source-line-no">388</span><span id="line-388">    /**</span>
-<span class="source-line-no">389</span><span id="line-389">     * Get a {@link Set} of plots owned by this player.</span>
-<span class="source-line-no">390</span><span id="line-390">     *</span>
-<span class="source-line-no">391</span><span id="line-391">     * &lt;p&gt;</span>
-<span class="source-line-no">392</span><span id="line-392">     * Take a look at {@link PlotSquared} for more searching functions.</span>
-<span class="source-line-no">393</span><span id="line-393">     * See {@link #getPlotCount()} for the number of plots.</span>
-<span class="source-line-no">394</span><span id="line-394">     * &lt;/p&gt;</span>
-<span class="source-line-no">395</span><span id="line-395">     *</span>
-<span class="source-line-no">396</span><span id="line-396">     * @return a {@link Set} of plots owned by the player</span>
-<span class="source-line-no">397</span><span id="line-397">     */</span>
-<span class="source-line-no">398</span><span id="line-398">    public Set&lt;Plot&gt; getPlots() {</span>
-<span class="source-line-no">399</span><span id="line-399">        return PlotQuery.newQuery().ownedBy(this).asSet();</span>
-<span class="source-line-no">400</span><span id="line-400">    }</span>
-<span class="source-line-no">401</span><span id="line-401"></span>
-<span class="source-line-no">402</span><span id="line-402">    /**</span>
-<span class="source-line-no">403</span><span id="line-403">     * Return the PlotArea this player is currently in, or null.</span>
-<span class="source-line-no">404</span><span id="line-404">     *</span>
-<span class="source-line-no">405</span><span id="line-405">     * @return Plot area the player is currently in, or {@code null}</span>
-<span class="source-line-no">406</span><span id="line-406">     */</span>
-<span class="source-line-no">407</span><span id="line-407">    public @Nullable PlotArea getPlotAreaAbs() {</span>
-<span class="source-line-no">408</span><span id="line-408">        return this.plotAreaManager.getPlotArea(getLocation());</span>
-<span class="source-line-no">409</span><span id="line-409">    }</span>
-<span class="source-line-no">410</span><span id="line-410"></span>
-<span class="source-line-no">411</span><span id="line-411">    public PlotArea getApplicablePlotArea() {</span>
-<span class="source-line-no">412</span><span id="line-412">        Plot plot = getCurrentPlot();</span>
-<span class="source-line-no">413</span><span id="line-413">        if (plot == null) {</span>
-<span class="source-line-no">414</span><span id="line-414">            return this.plotAreaManager.getApplicablePlotArea(getLocation());</span>
-<span class="source-line-no">415</span><span id="line-415">        }</span>
-<span class="source-line-no">416</span><span id="line-416">        return plot.getArea();</span>
-<span class="source-line-no">417</span><span id="line-417">    }</span>
-<span class="source-line-no">418</span><span id="line-418"></span>
-<span class="source-line-no">419</span><span id="line-419">    @Override</span>
-<span class="source-line-no">420</span><span id="line-420">    public @NonNull RequiredType getSuperCaller() {</span>
-<span class="source-line-no">421</span><span id="line-421">        return RequiredType.PLAYER;</span>
-<span class="source-line-no">422</span><span id="line-422">    }</span>
-<span class="source-line-no">423</span><span id="line-423"></span>
-<span class="source-line-no">424</span><span id="line-424">    /**</span>
-<span class="source-line-no">425</span><span id="line-425">     * Get this player's last recorded location or null if they don't any plot relevant location.</span>
-<span class="source-line-no">426</span><span id="line-426">     *</span>
-<span class="source-line-no">427</span><span id="line-427">     * @return The location</span>
-<span class="source-line-no">428</span><span id="line-428">     */</span>
-<span class="source-line-no">429</span><span id="line-429">    public @NonNull Location getLocation() {</span>
-<span class="source-line-no">430</span><span id="line-430">        Location location = getMeta("location");</span>
-<span class="source-line-no">431</span><span id="line-431">        if (location != null) {</span>
-<span class="source-line-no">432</span><span id="line-432">            return location;</span>
-<span class="source-line-no">433</span><span id="line-433">        }</span>
-<span class="source-line-no">434</span><span id="line-434">        return getLocationFull();</span>
-<span class="source-line-no">435</span><span id="line-435">    }</span>
-<span class="source-line-no">436</span><span id="line-436"></span>
-<span class="source-line-no">437</span><span id="line-437">    /////////////// PLAYER META ///////////////</span>
-<span class="source-line-no">438</span><span id="line-438"></span>
-<span class="source-line-no">439</span><span id="line-439">    ////////////// PARTIALLY IMPLEMENTED ///////////</span>
-<span class="source-line-no">440</span><span id="line-440"></span>
-<span class="source-line-no">441</span><span id="line-441">    /**</span>
-<span class="source-line-no">442</span><span id="line-442">     * Get this player's full location (including yaw/pitch)</span>
-<span class="source-line-no">443</span><span id="line-443">     *</span>
-<span class="source-line-no">444</span><span id="line-444">     * @return location</span>
-<span class="source-line-no">445</span><span id="line-445">     */</span>
-<span class="source-line-no">446</span><span id="line-446">    public abstract Location getLocationFull();</span>
-<span class="source-line-no">447</span><span id="line-447"></span>
-<span class="source-line-no">448</span><span id="line-448">    ////////////////////////////////////////////////</span>
-<span class="source-line-no">449</span><span id="line-449"></span>
-<span class="source-line-no">450</span><span id="line-450">    /**</span>
-<span class="source-line-no">451</span><span id="line-451">     * Get this player's UUID.</span>
-<span class="source-line-no">452</span><span id="line-452">     * &lt;p&gt;=== !IMPORTANT ===&lt;/p&gt;</span>
-<span class="source-line-no">453</span><span id="line-453">     * The UUID is dependent on the mode chosen in the settings.yml and may not be the same as Bukkit has</span>
-<span class="source-line-no">454</span><span id="line-454">     * (especially if using an old version of Bukkit that does not support UUIDs)</span>
-<span class="source-line-no">455</span><span id="line-455">     *</span>
-<span class="source-line-no">456</span><span id="line-456">     * @return UUID</span>
-<span class="source-line-no">457</span><span id="line-457">     */</span>
-<span class="source-line-no">458</span><span id="line-458">    @Override</span>
-<span class="source-line-no">459</span><span id="line-459">    public @NonNull</span>
-<span class="source-line-no">460</span><span id="line-460">    abstract UUID getUUID();</span>
-<span class="source-line-no">461</span><span id="line-461"></span>
-<span class="source-line-no">462</span><span id="line-462">    public boolean canTeleport(final @NonNull Location location) {</span>
-<span class="source-line-no">463</span><span id="line-463">        Preconditions.checkNotNull(location, "Specified location cannot be null");</span>
-<span class="source-line-no">464</span><span id="line-464">        final Location current = getLocationFull();</span>
-<span class="source-line-no">465</span><span id="line-465">        teleport(location);</span>
-<span class="source-line-no">466</span><span id="line-466">        boolean result = getLocation().equals(location);</span>
-<span class="source-line-no">467</span><span id="line-467">        teleport(current);</span>
-<span class="source-line-no">468</span><span id="line-468">        return result;</span>
-<span class="source-line-no">469</span><span id="line-469">    }</span>
-<span class="source-line-no">470</span><span id="line-470"></span>
-<span class="source-line-no">471</span><span id="line-471">    /**</span>
-<span class="source-line-no">472</span><span id="line-472">     * Teleport this player to a location.</span>
-<span class="source-line-no">473</span><span id="line-473">     *</span>
-<span class="source-line-no">474</span><span id="line-474">     * @param location the target location</span>
-<span class="source-line-no">475</span><span id="line-475">     */</span>
-<span class="source-line-no">476</span><span id="line-476">    public void teleport(Location location) {</span>
-<span class="source-line-no">477</span><span id="line-477">        teleport(location, TeleportCause.PLUGIN);</span>
-<span class="source-line-no">478</span><span id="line-478">    }</span>
-<span class="source-line-no">479</span><span id="line-479"></span>
-<span class="source-line-no">480</span><span id="line-480">    /**</span>
-<span class="source-line-no">481</span><span id="line-481">     * Teleport this player to a location.</span>
+<span class="source-line-no">293</span><span id="line-293">    public @Nullable Plot getCurrentPlot() {</span>
+<span class="source-line-no">294</span><span id="line-294">        try (final MetaDataAccess&lt;Plot&gt; lastPlotAccess =</span>
+<span class="source-line-no">295</span><span id="line-295">                     this.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_LAST_PLOT)) {</span>
+<span class="source-line-no">296</span><span id="line-296">            if (lastPlotAccess.get().orElse(null) == null &amp;&amp; !Settings.Enabled_Components.EVENTS) {</span>
+<span class="source-line-no">297</span><span id="line-297">                return this.getLocation().getPlot();</span>
+<span class="source-line-no">298</span><span id="line-298">            }</span>
+<span class="source-line-no">299</span><span id="line-299">            return lastPlotAccess.get().orElse(null);</span>
+<span class="source-line-no">300</span><span id="line-300">        }</span>
+<span class="source-line-no">301</span><span id="line-301">    }</span>
+<span class="source-line-no">302</span><span id="line-302"></span>
+<span class="source-line-no">303</span><span id="line-303">    /**</span>
+<span class="source-line-no">304</span><span id="line-304">     * Get the total number of allowed plots</span>
+<span class="source-line-no">305</span><span id="line-305">     *</span>
+<span class="source-line-no">306</span><span id="line-306">     * @return number of allowed plots within the scope (globally, or in the player's current world as defined in the settings.yml)</span>
+<span class="source-line-no">307</span><span id="line-307">     */</span>
+<span class="source-line-no">308</span><span id="line-308">    public int getAllowedPlots() {</span>
+<span class="source-line-no">309</span><span id="line-309">        final int calculatedLimit = hasPermissionRange("plots.plot", Settings.Limit.MAX_PLOTS);</span>
+<span class="source-line-no">310</span><span id="line-310">        return this.eventDispatcher.callPlayerPlotLimit(this, calculatedLimit).limit();</span>
+<span class="source-line-no">311</span><span id="line-311">    }</span>
+<span class="source-line-no">312</span><span id="line-312"></span>
+<span class="source-line-no">313</span><span id="line-313">    /**</span>
+<span class="source-line-no">314</span><span id="line-314">     * Get the number of plots this player owns.</span>
+<span class="source-line-no">315</span><span id="line-315">     *</span>
+<span class="source-line-no">316</span><span id="line-316">     * @return number of plots within the scope (globally, or in the player's current world as defined in the settings.yml)</span>
+<span class="source-line-no">317</span><span id="line-317">     * @see #getPlotCount(String)</span>
+<span class="source-line-no">318</span><span id="line-318">     * @see #getPlots()</span>
+<span class="source-line-no">319</span><span id="line-319">     */</span>
+<span class="source-line-no">320</span><span id="line-320">    public int getPlotCount() {</span>
+<span class="source-line-no">321</span><span id="line-321">        if (!Settings.Limit.GLOBAL) {</span>
+<span class="source-line-no">322</span><span id="line-322">            return getPlotCount(getContextualWorldName());</span>
+<span class="source-line-no">323</span><span id="line-323">        }</span>
+<span class="source-line-no">324</span><span id="line-324">        final AtomicInteger count = new AtomicInteger(0);</span>
+<span class="source-line-no">325</span><span id="line-325">        final UUID uuid = getUUID();</span>
+<span class="source-line-no">326</span><span id="line-326">        this.plotAreaManager.forEachPlotArea(value -&gt; {</span>
+<span class="source-line-no">327</span><span id="line-327">            if (!Settings.Done.COUNTS_TOWARDS_LIMIT) {</span>
+<span class="source-line-no">328</span><span id="line-328">                for (Plot plot : value.getPlotsAbs(uuid)) {</span>
+<span class="source-line-no">329</span><span id="line-329">                    if (!DoneFlag.isDone(plot)) {</span>
+<span class="source-line-no">330</span><span id="line-330">                        count.incrementAndGet();</span>
+<span class="source-line-no">331</span><span id="line-331">                    }</span>
+<span class="source-line-no">332</span><span id="line-332">                }</span>
+<span class="source-line-no">333</span><span id="line-333">            } else {</span>
+<span class="source-line-no">334</span><span id="line-334">                count.addAndGet(value.getPlotsAbs(uuid).size());</span>
+<span class="source-line-no">335</span><span id="line-335">            }</span>
+<span class="source-line-no">336</span><span id="line-336">        });</span>
+<span class="source-line-no">337</span><span id="line-337">        return count.get();</span>
+<span class="source-line-no">338</span><span id="line-338">    }</span>
+<span class="source-line-no">339</span><span id="line-339"></span>
+<span class="source-line-no">340</span><span id="line-340">    public int getClusterCount() {</span>
+<span class="source-line-no">341</span><span id="line-341">        if (!Settings.Limit.GLOBAL) {</span>
+<span class="source-line-no">342</span><span id="line-342">            return getClusterCount(getContextualWorldName());</span>
+<span class="source-line-no">343</span><span id="line-343">        }</span>
+<span class="source-line-no">344</span><span id="line-344">        final AtomicInteger count = new AtomicInteger(0);</span>
+<span class="source-line-no">345</span><span id="line-345">        this.plotAreaManager.forEachPlotArea(value -&gt; {</span>
+<span class="source-line-no">346</span><span id="line-346">            for (PlotCluster cluster : value.getClusters()) {</span>
+<span class="source-line-no">347</span><span id="line-347">                if (cluster.isOwner(getUUID())) {</span>
+<span class="source-line-no">348</span><span id="line-348">                    count.incrementAndGet();</span>
+<span class="source-line-no">349</span><span id="line-349">                }</span>
+<span class="source-line-no">350</span><span id="line-350">            }</span>
+<span class="source-line-no">351</span><span id="line-351">        });</span>
+<span class="source-line-no">352</span><span id="line-352">        return count.get();</span>
+<span class="source-line-no">353</span><span id="line-353">    }</span>
+<span class="source-line-no">354</span><span id="line-354"></span>
+<span class="source-line-no">355</span><span id="line-355">    /**</span>
+<span class="source-line-no">356</span><span id="line-356">     * {@return the world name at the player's contextual position}</span>
+<span class="source-line-no">357</span><span id="line-357">     * The contextual position can be affected when using a command with</span>
+<span class="source-line-no">358</span><span id="line-358">     * an explicit plot override, e.g., `/plot &amp;ltid&amp;gt info`.</span>
+<span class="source-line-no">359</span><span id="line-359">     */</span>
+<span class="source-line-no">360</span><span id="line-360">    private @NonNull String getContextualWorldName() {</span>
+<span class="source-line-no">361</span><span id="line-361">        Plot current = getCurrentPlot();</span>
+<span class="source-line-no">362</span><span id="line-362">        if (current != null) {</span>
+<span class="source-line-no">363</span><span id="line-363">            return current.getWorldName();</span>
+<span class="source-line-no">364</span><span id="line-364">        }</span>
+<span class="source-line-no">365</span><span id="line-365">        return getLocation().getWorldName();</span>
+<span class="source-line-no">366</span><span id="line-366">    }</span>
+<span class="source-line-no">367</span><span id="line-367"></span>
+<span class="source-line-no">368</span><span id="line-368">    /**</span>
+<span class="source-line-no">369</span><span id="line-369">     * {@return the plot area at the player's contextual position}</span>
+<span class="source-line-no">370</span><span id="line-370">     * The contextual position can be affected when using a command with</span>
+<span class="source-line-no">371</span><span id="line-371">     * an explicit plot override, e.g., `/plot &amp;ltid&amp;gt info`.</span>
+<span class="source-line-no">372</span><span id="line-372">     *</span>
+<span class="source-line-no">373</span><span id="line-373">     * @since 7.5.9</span>
+<span class="source-line-no">374</span><span id="line-374">     */</span>
+<span class="source-line-no">375</span><span id="line-375">    public @Nullable PlotArea getContextualPlotArea() {</span>
+<span class="source-line-no">376</span><span id="line-376">        Plot current = getCurrentPlot();</span>
+<span class="source-line-no">377</span><span id="line-377">        if (current != null) {</span>
+<span class="source-line-no">378</span><span id="line-378">            return current.getArea();</span>
+<span class="source-line-no">379</span><span id="line-379">        }</span>
+<span class="source-line-no">380</span><span id="line-380">        return getLocation().getPlotArea();</span>
+<span class="source-line-no">381</span><span id="line-381">    }</span>
+<span class="source-line-no">382</span><span id="line-382"></span>
+<span class="source-line-no">383</span><span id="line-383">    /**</span>
+<span class="source-line-no">384</span><span id="line-384">     * Get the number of plots this player owns in the world.</span>
+<span class="source-line-no">385</span><span id="line-385">     *</span>
+<span class="source-line-no">386</span><span id="line-386">     * @param world the name of the plotworld to check.</span>
+<span class="source-line-no">387</span><span id="line-387">     * @return plot count</span>
+<span class="source-line-no">388</span><span id="line-388">     */</span>
+<span class="source-line-no">389</span><span id="line-389">    public int getPlotCount(String world) {</span>
+<span class="source-line-no">390</span><span id="line-390">        UUID uuid = getUUID();</span>
+<span class="source-line-no">391</span><span id="line-391">        int count = 0;</span>
+<span class="source-line-no">392</span><span id="line-392">        for (PlotArea area : this.plotAreaManager.getPlotAreasSet(world)) {</span>
+<span class="source-line-no">393</span><span id="line-393">            if (!Settings.Done.COUNTS_TOWARDS_LIMIT) {</span>
+<span class="source-line-no">394</span><span id="line-394">                count +=</span>
+<span class="source-line-no">395</span><span id="line-395">                        area.getPlotsAbs(uuid).stream().filter(plot -&gt; !DoneFlag.isDone(plot)).count();</span>
+<span class="source-line-no">396</span><span id="line-396">            } else {</span>
+<span class="source-line-no">397</span><span id="line-397">                count += area.getPlotsAbs(uuid).size();</span>
+<span class="source-line-no">398</span><span id="line-398">            }</span>
+<span class="source-line-no">399</span><span id="line-399">        }</span>
+<span class="source-line-no">400</span><span id="line-400">        return count;</span>
+<span class="source-line-no">401</span><span id="line-401">    }</span>
+<span class="source-line-no">402</span><span id="line-402"></span>
+<span class="source-line-no">403</span><span id="line-403">    public int getClusterCount(String world) {</span>
+<span class="source-line-no">404</span><span id="line-404">        int count = 0;</span>
+<span class="source-line-no">405</span><span id="line-405">        for (PlotArea area : this.plotAreaManager.getPlotAreasSet(world)) {</span>
+<span class="source-line-no">406</span><span id="line-406">            for (PlotCluster cluster : area.getClusters()) {</span>
+<span class="source-line-no">407</span><span id="line-407">                if (cluster.isOwner(getUUID())) {</span>
+<span class="source-line-no">408</span><span id="line-408">                    count++;</span>
+<span class="source-line-no">409</span><span id="line-409">                }</span>
+<span class="source-line-no">410</span><span id="line-410">            }</span>
+<span class="source-line-no">411</span><span id="line-411">        }</span>
+<span class="source-line-no">412</span><span id="line-412">        return count;</span>
+<span class="source-line-no">413</span><span id="line-413">    }</span>
+<span class="source-line-no">414</span><span id="line-414"></span>
+<span class="source-line-no">415</span><span id="line-415">    /**</span>
+<span class="source-line-no">416</span><span id="line-416">     * Get a {@link Set} of plots owned by this player.</span>
+<span class="source-line-no">417</span><span id="line-417">     *</span>
+<span class="source-line-no">418</span><span id="line-418">     * &lt;p&gt;</span>
+<span class="source-line-no">419</span><span id="line-419">     * Take a look at {@link PlotSquared} for more searching functions.</span>
+<span class="source-line-no">420</span><span id="line-420">     * See {@link #getPlotCount()} for the number of plots.</span>
+<span class="source-line-no">421</span><span id="line-421">     * &lt;/p&gt;</span>
+<span class="source-line-no">422</span><span id="line-422">     *</span>
+<span class="source-line-no">423</span><span id="line-423">     * @return a {@link Set} of plots owned by the player</span>
+<span class="source-line-no">424</span><span id="line-424">     */</span>
+<span class="source-line-no">425</span><span id="line-425">    public Set&lt;Plot&gt; getPlots() {</span>
+<span class="source-line-no">426</span><span id="line-426">        return PlotQuery.newQuery().ownedBy(this).asSet();</span>
+<span class="source-line-no">427</span><span id="line-427">    }</span>
+<span class="source-line-no">428</span><span id="line-428"></span>
+<span class="source-line-no">429</span><span id="line-429">    /**</span>
+<span class="source-line-no">430</span><span id="line-430">     * Return the PlotArea this player is currently in, or null.</span>
+<span class="source-line-no">431</span><span id="line-431">     *</span>
+<span class="source-line-no">432</span><span id="line-432">     * @return Plot area the player is currently in, or {@code null}</span>
+<span class="source-line-no">433</span><span id="line-433">     */</span>
+<span class="source-line-no">434</span><span id="line-434">    public @Nullable PlotArea getPlotAreaAbs() {</span>
+<span class="source-line-no">435</span><span id="line-435">        return this.plotAreaManager.getPlotArea(getLocation());</span>
+<span class="source-line-no">436</span><span id="line-436">    }</span>
+<span class="source-line-no">437</span><span id="line-437"></span>
+<span class="source-line-no">438</span><span id="line-438">    public PlotArea getApplicablePlotArea() {</span>
+<span class="source-line-no">439</span><span id="line-439">        Plot plot = getCurrentPlot();</span>
+<span class="source-line-no">440</span><span id="line-440">        if (plot == null) {</span>
+<span class="source-line-no">441</span><span id="line-441">            return this.plotAreaManager.getApplicablePlotArea(getLocation());</span>
+<span class="source-line-no">442</span><span id="line-442">        }</span>
+<span class="source-line-no">443</span><span id="line-443">        return plot.getArea();</span>
+<span class="source-line-no">444</span><span id="line-444">    }</span>
+<span class="source-line-no">445</span><span id="line-445"></span>
+<span class="source-line-no">446</span><span id="line-446">    @Override</span>
+<span class="source-line-no">447</span><span id="line-447">    public @NonNull RequiredType getSuperCaller() {</span>
+<span class="source-line-no">448</span><span id="line-448">        return RequiredType.PLAYER;</span>
+<span class="source-line-no">449</span><span id="line-449">    }</span>
+<span class="source-line-no">450</span><span id="line-450"></span>
+<span class="source-line-no">451</span><span id="line-451">    /**</span>
+<span class="source-line-no">452</span><span id="line-452">     * Get this player's last recorded location or null if they don't any plot relevant location.</span>
+<span class="source-line-no">453</span><span id="line-453">     *</span>
+<span class="source-line-no">454</span><span id="line-454">     * @return The location</span>
+<span class="source-line-no">455</span><span id="line-455">     */</span>
+<span class="source-line-no">456</span><span id="line-456">    public @NonNull Location getLocation() {</span>
+<span class="source-line-no">457</span><span id="line-457">        Location location = getMeta("location");</span>
+<span class="source-line-no">458</span><span id="line-458">        if (location != null) {</span>
+<span class="source-line-no">459</span><span id="line-459">            return location;</span>
+<span class="source-line-no">460</span><span id="line-460">        }</span>
+<span class="source-line-no">461</span><span id="line-461">        return getLocationFull();</span>
+<span class="source-line-no">462</span><span id="line-462">    }</span>
+<span class="source-line-no">463</span><span id="line-463"></span>
+<span class="source-line-no">464</span><span id="line-464">    /////////////// PLAYER META ///////////////</span>
+<span class="source-line-no">465</span><span id="line-465"></span>
+<span class="source-line-no">466</span><span id="line-466">    ////////////// PARTIALLY IMPLEMENTED ///////////</span>
+<span class="source-line-no">467</span><span id="line-467"></span>
+<span class="source-line-no">468</span><span id="line-468">    /**</span>
+<span class="source-line-no">469</span><span id="line-469">     * Get this player's full location (including yaw/pitch)</span>
+<span class="source-line-no">470</span><span id="line-470">     *</span>
+<span class="source-line-no">471</span><span id="line-471">     * @return location</span>
+<span class="source-line-no">472</span><span id="line-472">     */</span>
+<span class="source-line-no">473</span><span id="line-473">    public abstract Location getLocationFull();</span>
+<span class="source-line-no">474</span><span id="line-474"></span>
+<span class="source-line-no">475</span><span id="line-475">    ////////////////////////////////////////////////</span>
+<span class="source-line-no">476</span><span id="line-476"></span>
+<span class="source-line-no">477</span><span id="line-477">    /**</span>
+<span class="source-line-no">478</span><span id="line-478">     * Get this player's UUID.</span>
+<span class="source-line-no">479</span><span id="line-479">     * &lt;p&gt;=== !IMPORTANT ===&lt;/p&gt;</span>
+<span class="source-line-no">480</span><span id="line-480">     * The UUID is dependent on the mode chosen in the settings.yml and may not be the same as Bukkit has</span>
+<span class="source-line-no">481</span><span id="line-481">     * (especially if using an old version of Bukkit that does not support UUIDs)</span>
 <span class="source-line-no">482</span><span id="line-482">     *</span>
-<span class="source-line-no">483</span><span id="line-483">     * @param location the target location</span>
-<span class="source-line-no">484</span><span id="line-484">     * @param cause    the cause of the teleport</span>
-<span class="source-line-no">485</span><span id="line-485">     */</span>
-<span class="source-line-no">486</span><span id="line-486">    public abstract void teleport(Location location, TeleportCause cause);</span>
-<span class="source-line-no">487</span><span id="line-487"></span>
-<span class="source-line-no">488</span><span id="line-488">    /**</span>
-<span class="source-line-no">489</span><span id="line-489">     * Kick this player to a location</span>
-<span class="source-line-no">490</span><span id="line-490">     *</span>
-<span class="source-line-no">491</span><span id="line-491">     * @param location the target location</span>
-<span class="source-line-no">492</span><span id="line-492">     */</span>
-<span class="source-line-no">493</span><span id="line-493">    public void plotkick(Location location) {</span>
-<span class="source-line-no">494</span><span id="line-494">        setMeta("kick", true);</span>
-<span class="source-line-no">495</span><span id="line-495">        teleport(location, TeleportCause.KICK);</span>
-<span class="source-line-no">496</span><span id="line-496">        deleteMeta("kick");</span>
-<span class="source-line-no">497</span><span id="line-497">    }</span>
-<span class="source-line-no">498</span><span id="line-498"></span>
-<span class="source-line-no">499</span><span id="line-499">    /**</span>
-<span class="source-line-no">500</span><span id="line-500">     * Set this compass target.</span>
-<span class="source-line-no">501</span><span id="line-501">     *</span>
-<span class="source-line-no">502</span><span id="line-502">     * @param location the target location</span>
-<span class="source-line-no">503</span><span id="line-503">     */</span>
-<span class="source-line-no">504</span><span id="line-504">    public abstract void setCompassTarget(Location location);</span>
-<span class="source-line-no">505</span><span id="line-505"></span>
-<span class="source-line-no">506</span><span id="line-506">    /**</span>
-<span class="source-line-no">507</span><span id="line-507">     * Set player data that will persist restarts.</span>
-<span class="source-line-no">508</span><span id="line-508">     * - Please note that this is not intended to store large values</span>
-<span class="source-line-no">509</span><span id="line-509">     * - For session only data use meta</span>
-<span class="source-line-no">510</span><span id="line-510">     *</span>
-<span class="source-line-no">511</span><span id="line-511">     * @param key metadata key</span>
+<span class="source-line-no">483</span><span id="line-483">     * @return UUID</span>
+<span class="source-line-no">484</span><span id="line-484">     */</span>
+<span class="source-line-no">485</span><span id="line-485">    @Override</span>
+<span class="source-line-no">486</span><span id="line-486">    public @NonNull</span>
+<span class="source-line-no">487</span><span id="line-487">    abstract UUID getUUID();</span>
+<span class="source-line-no">488</span><span id="line-488"></span>
+<span class="source-line-no">489</span><span id="line-489">    public boolean canTeleport(final @NonNull Location location) {</span>
+<span class="source-line-no">490</span><span id="line-490">        Preconditions.checkNotNull(location, "Specified location cannot be null");</span>
+<span class="source-line-no">491</span><span id="line-491">        final Location current = getLocationFull();</span>
+<span class="source-line-no">492</span><span id="line-492">        teleport(location);</span>
+<span class="source-line-no">493</span><span id="line-493">        boolean result = getLocation().equals(location);</span>
+<span class="source-line-no">494</span><span id="line-494">        teleport(current);</span>
+<span class="source-line-no">495</span><span id="line-495">        return result;</span>
+<span class="source-line-no">496</span><span id="line-496">    }</span>
+<span class="source-line-no">497</span><span id="line-497"></span>
+<span class="source-line-no">498</span><span id="line-498">    /**</span>
+<span class="source-line-no">499</span><span id="line-499">     * Teleport this player to a location.</span>
+<span class="source-line-no">500</span><span id="line-500">     *</span>
+<span class="source-line-no">501</span><span id="line-501">     * @param location the target location</span>
+<span class="source-line-no">502</span><span id="line-502">     */</span>
+<span class="source-line-no">503</span><span id="line-503">    public void teleport(Location location) {</span>
+<span class="source-line-no">504</span><span id="line-504">        teleport(location, TeleportCause.PLUGIN);</span>
+<span class="source-line-no">505</span><span id="line-505">    }</span>
+<span class="source-line-no">506</span><span id="line-506"></span>
+<span class="source-line-no">507</span><span id="line-507">    /**</span>
+<span class="source-line-no">508</span><span id="line-508">     * Teleport this player to a location.</span>
+<span class="source-line-no">509</span><span id="line-509">     *</span>
+<span class="source-line-no">510</span><span id="line-510">     * @param location the target location</span>
+<span class="source-line-no">511</span><span id="line-511">     * @param cause    the cause of the teleport</span>
 <span class="source-line-no">512</span><span id="line-512">     */</span>
-<span class="source-line-no">513</span><span id="line-513">    public void setAttribute(String key) {</span>
-<span class="source-line-no">514</span><span id="line-514">        setPersistentMeta("attrib_" + key, new byte[]{(byte) 1});</span>
-<span class="source-line-no">515</span><span id="line-515">    }</span>
-<span class="source-line-no">516</span><span id="line-516"></span>
-<span class="source-line-no">517</span><span id="line-517">    /**</span>
-<span class="source-line-no">518</span><span id="line-518">     * Retrieves the attribute of this player.</span>
-<span class="source-line-no">519</span><span id="line-519">     *</span>
-<span class="source-line-no">520</span><span id="line-520">     * @param key metadata key</span>
-<span class="source-line-no">521</span><span id="line-521">     * @return the attribute will be either {@code true} or {@code false}</span>
-<span class="source-line-no">522</span><span id="line-522">     */</span>
-<span class="source-line-no">523</span><span id="line-523">    public boolean getAttribute(String key) {</span>
-<span class="source-line-no">524</span><span id="line-524">        if (!hasPersistentMeta("attrib_" + key)) {</span>
-<span class="source-line-no">525</span><span id="line-525">            return false;</span>
-<span class="source-line-no">526</span><span id="line-526">        }</span>
-<span class="source-line-no">527</span><span id="line-527">        return getPersistentMeta("attrib_" + key)[0] == 1;</span>
-<span class="source-line-no">528</span><span id="line-528">    }</span>
-<span class="source-line-no">529</span><span id="line-529"></span>
-<span class="source-line-no">530</span><span id="line-530">    /**</span>
-<span class="source-line-no">531</span><span id="line-531">     * Remove an attribute from a player.</span>
-<span class="source-line-no">532</span><span id="line-532">     *</span>
-<span class="source-line-no">533</span><span id="line-533">     * @param key metadata key</span>
-<span class="source-line-no">534</span><span id="line-534">     */</span>
-<span class="source-line-no">535</span><span id="line-535">    public void removeAttribute(String key) {</span>
-<span class="source-line-no">536</span><span id="line-536">        removePersistentMeta("attrib_" + key);</span>
-<span class="source-line-no">537</span><span id="line-537">    }</span>
-<span class="source-line-no">538</span><span id="line-538"></span>
-<span class="source-line-no">539</span><span id="line-539">    /**</span>
-<span class="source-line-no">540</span><span id="line-540">     * Sets the local weather for this Player.</span>
-<span class="source-line-no">541</span><span id="line-541">     *</span>
-<span class="source-line-no">542</span><span id="line-542">     * @param weather the weather visible to the player</span>
-<span class="source-line-no">543</span><span id="line-543">     */</span>
-<span class="source-line-no">544</span><span id="line-544">    public abstract void setWeather(@NonNull PlotWeather weather);</span>
-<span class="source-line-no">545</span><span id="line-545"></span>
-<span class="source-line-no">546</span><span id="line-546">    /**</span>
-<span class="source-line-no">547</span><span id="line-547">     * Get this player's gamemode.</span>
-<span class="source-line-no">548</span><span id="line-548">     *</span>
-<span class="source-line-no">549</span><span id="line-549">     * @return the gamemode of the player.</span>
-<span class="source-line-no">550</span><span id="line-550">     */</span>
-<span class="source-line-no">551</span><span id="line-551">    public abstract @NonNull GameMode getGameMode();</span>
-<span class="source-line-no">552</span><span id="line-552"></span>
-<span class="source-line-no">553</span><span id="line-553">    /**</span>
-<span class="source-line-no">554</span><span id="line-554">     * Set this player's gameMode.</span>
-<span class="source-line-no">555</span><span id="line-555">     *</span>
-<span class="source-line-no">556</span><span id="line-556">     * @param gameMode the gamemode to set</span>
-<span class="source-line-no">557</span><span id="line-557">     */</span>
-<span class="source-line-no">558</span><span id="line-558">    public abstract void setGameMode(@NonNull GameMode gameMode);</span>
-<span class="source-line-no">559</span><span id="line-559"></span>
-<span class="source-line-no">560</span><span id="line-560">    /**</span>
-<span class="source-line-no">561</span><span id="line-561">     * Set this player's local time (ticks).</span>
-<span class="source-line-no">562</span><span id="line-562">     *</span>
-<span class="source-line-no">563</span><span id="line-563">     * @param time the time visible to the player</span>
-<span class="source-line-no">564</span><span id="line-564">     */</span>
-<span class="source-line-no">565</span><span id="line-565">    public abstract void setTime(long time);</span>
-<span class="source-line-no">566</span><span id="line-566"></span>
-<span class="source-line-no">567</span><span id="line-567">    /**</span>
-<span class="source-line-no">568</span><span id="line-568">     * Determines whether or not the player can fly.</span>
-<span class="source-line-no">569</span><span id="line-569">     *</span>
-<span class="source-line-no">570</span><span id="line-570">     * @return {@code true} if the player is allowed to fly</span>
-<span class="source-line-no">571</span><span id="line-571">     */</span>
-<span class="source-line-no">572</span><span id="line-572">    public abstract boolean getFlight();</span>
-<span class="source-line-no">573</span><span id="line-573"></span>
-<span class="source-line-no">574</span><span id="line-574">    /**</span>
-<span class="source-line-no">575</span><span id="line-575">     * Sets whether or not this player can fly.</span>
-<span class="source-line-no">576</span><span id="line-576">     *</span>
-<span class="source-line-no">577</span><span id="line-577">     * @param fly {@code true} if the player can fly, otherwise {@code false}</span>
-<span class="source-line-no">578</span><span id="line-578">     */</span>
-<span class="source-line-no">579</span><span id="line-579">    public abstract void setFlight(boolean fly);</span>
-<span class="source-line-no">580</span><span id="line-580"></span>
-<span class="source-line-no">581</span><span id="line-581">    /**</span>
-<span class="source-line-no">582</span><span id="line-582">     * Play music at a location for this player.</span>
-<span class="source-line-no">583</span><span id="line-583">     *</span>
-<span class="source-line-no">584</span><span id="line-584">     * @param location where to play the music</span>
-<span class="source-line-no">585</span><span id="line-585">     * @param id       the record item id</span>
-<span class="source-line-no">586</span><span id="line-586">     */</span>
-<span class="source-line-no">587</span><span id="line-587">    public abstract void playMusic(@NonNull Location location, @NonNull ItemType id);</span>
-<span class="source-line-no">588</span><span id="line-588"></span>
-<span class="source-line-no">589</span><span id="line-589">    /**</span>
-<span class="source-line-no">590</span><span id="line-590">     * Check if this player is banned.</span>
-<span class="source-line-no">591</span><span id="line-591">     *</span>
-<span class="source-line-no">592</span><span id="line-592">     * @return {@code true} if the player is banned, {@code false} otherwise.</span>
-<span class="source-line-no">593</span><span id="line-593">     */</span>
-<span class="source-line-no">594</span><span id="line-594">    public abstract boolean isBanned();</span>
-<span class="source-line-no">595</span><span id="line-595"></span>
-<span class="source-line-no">596</span><span id="line-596">    /**</span>
-<span class="source-line-no">597</span><span id="line-597">     * Kick this player from the game.</span>
-<span class="source-line-no">598</span><span id="line-598">     *</span>
-<span class="source-line-no">599</span><span id="line-599">     * @param message the reason for the kick</span>
-<span class="source-line-no">600</span><span id="line-600">     */</span>
-<span class="source-line-no">601</span><span id="line-601">    public abstract void kick(String message);</span>
-<span class="source-line-no">602</span><span id="line-602"></span>
-<span class="source-line-no">603</span><span id="line-603">    public void refreshDebug() {</span>
-<span class="source-line-no">604</span><span id="line-604">        final boolean debug = this.getAttribute("debug");</span>
-<span class="source-line-no">605</span><span id="line-605">        if (debug &amp;&amp; !debugModeEnabled.contains(this)) {</span>
-<span class="source-line-no">606</span><span id="line-606">            debugModeEnabled.add(this);</span>
-<span class="source-line-no">607</span><span id="line-607">        } else if (!debug) {</span>
-<span class="source-line-no">608</span><span id="line-608">            debugModeEnabled.remove(this);</span>
-<span class="source-line-no">609</span><span id="line-609">        }</span>
-<span class="source-line-no">610</span><span id="line-610">    }</span>
-<span class="source-line-no">611</span><span id="line-611"></span>
-<span class="source-line-no">612</span><span id="line-612">    /**</span>
-<span class="source-line-no">613</span><span id="line-613">     * Called when this player quits.</span>
-<span class="source-line-no">614</span><span id="line-614">     */</span>
-<span class="source-line-no">615</span><span id="line-615">    public void unregister() {</span>
-<span class="source-line-no">616</span><span id="line-616">        Plot plot = getCurrentPlot();</span>
-<span class="source-line-no">617</span><span id="line-617">        if (plot != null &amp;&amp; Settings.Enabled_Components.PERSISTENT_META &amp;&amp; plot</span>
-<span class="source-line-no">618</span><span id="line-618">                .getArea() instanceof SinglePlotArea) {</span>
-<span class="source-line-no">619</span><span id="line-619">            PlotId id = plot.getId();</span>
-<span class="source-line-no">620</span><span id="line-620">            int x = id.getX();</span>
-<span class="source-line-no">621</span><span id="line-621">            int z = id.getY();</span>
-<span class="source-line-no">622</span><span id="line-622">            ByteBuffer buffer = ByteBuffer.allocate(14);</span>
-<span class="source-line-no">623</span><span id="line-623">            buffer.putShort((short) x);</span>
-<span class="source-line-no">624</span><span id="line-624">            buffer.putShort((short) z);</span>
-<span class="source-line-no">625</span><span id="line-625">            Location location = getLocation();</span>
-<span class="source-line-no">626</span><span id="line-626">            buffer.putInt(location.getX());</span>
-<span class="source-line-no">627</span><span id="line-627">            buffer.putShort((short) location.getY());</span>
-<span class="source-line-no">628</span><span id="line-628">            buffer.putInt(location.getZ());</span>
-<span class="source-line-no">629</span><span id="line-629">            setPersistentMeta("quitLocV2", buffer.array());</span>
-<span class="source-line-no">630</span><span id="line-630">        } else if (hasPersistentMeta("quitLocV2")) {</span>
-<span class="source-line-no">631</span><span id="line-631">            removePersistentMeta("quitLocV2");</span>
-<span class="source-line-no">632</span><span id="line-632">        }</span>
-<span class="source-line-no">633</span><span id="line-633">        if (plot != null) {</span>
-<span class="source-line-no">634</span><span id="line-634">            this.eventDispatcher.callLeave(this, plot);</span>
-<span class="source-line-no">635</span><span id="line-635">        }</span>
-<span class="source-line-no">636</span><span id="line-636">        if (Settings.Enabled_Components.BAN_DELETER &amp;&amp; isBanned()) {</span>
-<span class="source-line-no">637</span><span id="line-637">            for (Plot owned : getPlots()) {</span>
-<span class="source-line-no">638</span><span id="line-638">                owned.getPlotModificationManager().deletePlot(null, null);</span>
-<span class="source-line-no">639</span><span id="line-639">                LOGGER.info("Plot {} was deleted + cleared due to {} getting banned", owned.getId(), getName());</span>
-<span class="source-line-no">640</span><span id="line-640">            }</span>
-<span class="source-line-no">641</span><span id="line-641">        }</span>
-<span class="source-line-no">642</span><span id="line-642">        if (PlotSquared.platform().expireManager() != null) {</span>
-<span class="source-line-no">643</span><span id="line-643">            PlotSquared.platform().expireManager().storeDate(getUUID(), System.currentTimeMillis());</span>
-<span class="source-line-no">644</span><span id="line-644">        }</span>
-<span class="source-line-no">645</span><span id="line-645">        PlotSquared.platform().playerManager().removePlayer(this);</span>
-<span class="source-line-no">646</span><span id="line-646">        PlotSquared.platform().unregister(this);</span>
-<span class="source-line-no">647</span><span id="line-647"></span>
-<span class="source-line-no">648</span><span id="line-648">        debugModeEnabled.remove(this);</span>
-<span class="source-line-no">649</span><span id="line-649">    }</span>
-<span class="source-line-no">650</span><span id="line-650"></span>
-<span class="source-line-no">651</span><span id="line-651">    /**</span>
-<span class="source-line-no">652</span><span id="line-652">     * Get the amount of clusters this player owns in the specific world.</span>
-<span class="source-line-no">653</span><span id="line-653">     *</span>
-<span class="source-line-no">654</span><span id="line-654">     * @param world world</span>
-<span class="source-line-no">655</span><span id="line-655">     * @return number of clusters owned</span>
-<span class="source-line-no">656</span><span id="line-656">     */</span>
-<span class="source-line-no">657</span><span id="line-657">    public int getPlayerClusterCount(String world) {</span>
-<span class="source-line-no">658</span><span id="line-658">        return PlotSquared.get().getClusters(world).stream()</span>
-<span class="source-line-no">659</span><span id="line-659">                .filter(cluster -&gt; getUUID().equals(cluster.owner)).mapToInt(PlotCluster::getArea)</span>
-<span class="source-line-no">660</span><span id="line-660">                .sum();</span>
-<span class="source-line-no">661</span><span id="line-661">    }</span>
-<span class="source-line-no">662</span><span id="line-662"></span>
-<span class="source-line-no">663</span><span id="line-663">    /**</span>
-<span class="source-line-no">664</span><span id="line-664">     * Get the amount of clusters this player owns.</span>
-<span class="source-line-no">665</span><span id="line-665">     *</span>
-<span class="source-line-no">666</span><span id="line-666">     * @return the number of clusters this player owns</span>
-<span class="source-line-no">667</span><span id="line-667">     */</span>
-<span class="source-line-no">668</span><span id="line-668">    public int getPlayerClusterCount() {</span>
-<span class="source-line-no">669</span><span id="line-669">        final AtomicInteger count = new AtomicInteger();</span>
-<span class="source-line-no">670</span><span id="line-670">        this.plotAreaManager.forEachPlotArea(value -&gt; count.addAndGet(value.getClusters().size()));</span>
-<span class="source-line-no">671</span><span id="line-671">        return count.get();</span>
-<span class="source-line-no">672</span><span id="line-672">    }</span>
-<span class="source-line-no">673</span><span id="line-673"></span>
-<span class="source-line-no">674</span><span id="line-674">    /**</span>
-<span class="source-line-no">675</span><span id="line-675">     * Return a {@code Set} of all plots this player owns in a certain world.</span>
-<span class="source-line-no">676</span><span id="line-676">     *</span>
-<span class="source-line-no">677</span><span id="line-677">     * @param world the world to retrieve plots from</span>
-<span class="source-line-no">678</span><span id="line-678">     * @return a {@code Set} of plots this player owns in the provided world</span>
-<span class="source-line-no">679</span><span id="line-679">     */</span>
-<span class="source-line-no">680</span><span id="line-680">    public Set&lt;Plot&gt; getPlots(String world) {</span>
-<span class="source-line-no">681</span><span id="line-681">        return PlotQuery.newQuery().inWorld(world).ownedBy(getUUID()).asSet();</span>
-<span class="source-line-no">682</span><span id="line-682">    }</span>
-<span class="source-line-no">683</span><span id="line-683"></span>
-<span class="source-line-no">684</span><span id="line-684">    public void populatePersistentMetaMap() {</span>
-<span class="source-line-no">685</span><span id="line-685">        if (Settings.Enabled_Components.PERSISTENT_META) {</span>
-<span class="source-line-no">686</span><span id="line-686">            DBFunc.getPersistentMeta(getUUID(), new RunnableVal&lt;&gt;() {</span>
-<span class="source-line-no">687</span><span id="line-687">                @Override</span>
-<span class="source-line-no">688</span><span id="line-688">                public void run(Map&lt;String, byte[]&gt; value) {</span>
-<span class="source-line-no">689</span><span id="line-689">                    try {</span>
-<span class="source-line-no">690</span><span id="line-690">                        PlotPlayer.this.metaMap = value;</span>
-<span class="source-line-no">691</span><span id="line-691">                        if (value.isEmpty()) {</span>
-<span class="source-line-no">692</span><span id="line-692">                            return;</span>
-<span class="source-line-no">693</span><span id="line-693">                        }</span>
-<span class="source-line-no">694</span><span id="line-694"></span>
-<span class="source-line-no">695</span><span id="line-695">                        if (PlotPlayer.this.getAttribute("debug")) {</span>
-<span class="source-line-no">696</span><span id="line-696">                            debugModeEnabled.add(PlotPlayer.this);</span>
-<span class="source-line-no">697</span><span id="line-697">                        }</span>
-<span class="source-line-no">698</span><span id="line-698"></span>
-<span class="source-line-no">699</span><span id="line-699">                        if (!Settings.Teleport.ON_LOGIN) {</span>
-<span class="source-line-no">700</span><span id="line-700">                            return;</span>
-<span class="source-line-no">701</span><span id="line-701">                        }</span>
-<span class="source-line-no">702</span><span id="line-702">                        PlotAreaManager manager = PlotPlayer.this.plotAreaManager;</span>
-<span class="source-line-no">703</span><span id="line-703"></span>
-<span class="source-line-no">704</span><span id="line-704">                        if (!(manager instanceof SinglePlotAreaManager)) {</span>
-<span class="source-line-no">705</span><span id="line-705">                            return;</span>
-<span class="source-line-no">706</span><span id="line-706">                        }</span>
-<span class="source-line-no">707</span><span id="line-707">                        PlotArea area = ((SinglePlotAreaManager) manager).getArea();</span>
-<span class="source-line-no">708</span><span id="line-708">                        boolean V2 = false;</span>
-<span class="source-line-no">709</span><span id="line-709">                        byte[] arr = PlotPlayer.this.getPersistentMeta("quitLoc");</span>
-<span class="source-line-no">710</span><span id="line-710">                        if (arr == null) {</span>
-<span class="source-line-no">711</span><span id="line-711">                            arr = PlotPlayer.this.getPersistentMeta("quitLocV2");</span>
-<span class="source-line-no">712</span><span id="line-712">                            if (arr == null) {</span>
-<span class="source-line-no">713</span><span id="line-713">                                return;</span>
-<span class="source-line-no">714</span><span id="line-714">                            }</span>
-<span class="source-line-no">715</span><span id="line-715">                            V2 = true;</span>
-<span class="source-line-no">716</span><span id="line-716">                            removePersistentMeta("quitLocV2");</span>
-<span class="source-line-no">717</span><span id="line-717">                        } else {</span>
-<span class="source-line-no">718</span><span id="line-718">                            removePersistentMeta("quitLoc");</span>
-<span class="source-line-no">719</span><span id="line-719">                        }</span>
-<span class="source-line-no">720</span><span id="line-720"></span>
-<span class="source-line-no">721</span><span id="line-721">                        if (!getMeta("teleportOnLogin", true)) {</span>
-<span class="source-line-no">722</span><span id="line-722">                            return;</span>
-<span class="source-line-no">723</span><span id="line-723">                        }</span>
-<span class="source-line-no">724</span><span id="line-724">                        ByteBuffer quitWorld = ByteBuffer.wrap(arr);</span>
-<span class="source-line-no">725</span><span id="line-725">                        final int plotX = quitWorld.getShort();</span>
-<span class="source-line-no">726</span><span id="line-726">                        final int plotZ = quitWorld.getShort();</span>
-<span class="source-line-no">727</span><span id="line-727">                        PlotId id = PlotId.of(plotX, plotZ);</span>
-<span class="source-line-no">728</span><span id="line-728">                        int x = quitWorld.getInt();</span>
-<span class="source-line-no">729</span><span id="line-729">                        int y = V2 ? quitWorld.getShort() : (quitWorld.get() &amp; 0xFF);</span>
-<span class="source-line-no">730</span><span id="line-730">                        int z = quitWorld.getInt();</span>
-<span class="source-line-no">731</span><span id="line-731">                        Plot plot = area.getOwnedPlot(id);</span>
-<span class="source-line-no">732</span><span id="line-732"></span>
-<span class="source-line-no">733</span><span id="line-733">                        if (plot == null) {</span>
-<span class="source-line-no">734</span><span id="line-734">                            return;</span>
-<span class="source-line-no">735</span><span id="line-735">                        }</span>
-<span class="source-line-no">736</span><span id="line-736"></span>
-<span class="source-line-no">737</span><span id="line-737">                        final Location location = Location.at(plot.getWorldName(), x, y, z);</span>
-<span class="source-line-no">738</span><span id="line-738">                        if (plot.isLoaded()) {</span>
-<span class="source-line-no">739</span><span id="line-739">                            TaskManager.runTask(() -&gt; {</span>
-<span class="source-line-no">740</span><span id="line-740">                                if (getMeta("teleportOnLogin", true)) {</span>
-<span class="source-line-no">741</span><span id="line-741">                                    teleport(location, TeleportCause.LOGIN);</span>
-<span class="source-line-no">742</span><span id="line-742">                                    sendMessage(</span>
-<span class="source-line-no">743</span><span id="line-743">                                            TranslatableCaption.of("teleport.teleported_to_plot"));</span>
-<span class="source-line-no">744</span><span id="line-744">                                }</span>
-<span class="source-line-no">745</span><span id="line-745">                            });</span>
-<span class="source-line-no">746</span><span id="line-746">                        } else if (!PlotSquared.get().isMainThread(Thread.currentThread())) {</span>
-<span class="source-line-no">747</span><span id="line-747">                            if (getMeta("teleportOnLogin", true)) {</span>
-<span class="source-line-no">748</span><span id="line-748">                                plot.teleportPlayer(</span>
-<span class="source-line-no">749</span><span id="line-749">                                        PlotPlayer.this,</span>
-<span class="source-line-no">750</span><span id="line-750">                                        result -&gt; TaskManager.runTask(() -&gt; {</span>
-<span class="source-line-no">751</span><span id="line-751">                                            if (getMeta("teleportOnLogin", true)) {</span>
-<span class="source-line-no">752</span><span id="line-752">                                                if (plot.isLoaded()) {</span>
-<span class="source-line-no">753</span><span id="line-753">                                                    teleport(location, TeleportCause.LOGIN);</span>
-<span class="source-line-no">754</span><span id="line-754">                                                    sendMessage(TranslatableCaption</span>
-<span class="source-line-no">755</span><span id="line-755">                                                            .of("teleport.teleported_to_plot"));</span>
-<span class="source-line-no">756</span><span id="line-756">                                                }</span>
-<span class="source-line-no">757</span><span id="line-757">                                            }</span>
-<span class="source-line-no">758</span><span id="line-758">                                        })</span>
-<span class="source-line-no">759</span><span id="line-759">                                );</span>
-<span class="source-line-no">760</span><span id="line-760">                            }</span>
-<span class="source-line-no">761</span><span id="line-761">                        }</span>
-<span class="source-line-no">762</span><span id="line-762">                    } catch (Throwable e) {</span>
-<span class="source-line-no">763</span><span id="line-763">                        LOGGER.error("Error populating persistent meta for player {}", PlotPlayer.this.getName(), e);</span>
-<span class="source-line-no">764</span><span id="line-764">                    }</span>
-<span class="source-line-no">765</span><span id="line-765">                }</span>
-<span class="source-line-no">766</span><span id="line-766">                    }</span>
-<span class="source-line-no">767</span><span id="line-767">            );</span>
-<span class="source-line-no">768</span><span id="line-768">        }</span>
-<span class="source-line-no">769</span><span id="line-769">    }</span>
-<span class="source-line-no">770</span><span id="line-770"></span>
-<span class="source-line-no">771</span><span id="line-771">    byte[] getPersistentMeta(String key) {</span>
-<span class="source-line-no">772</span><span id="line-772">        return this.metaMap.get(key);</span>
-<span class="source-line-no">773</span><span id="line-773">    }</span>
-<span class="source-line-no">774</span><span id="line-774"></span>
-<span class="source-line-no">775</span><span id="line-775">    Object removePersistentMeta(String key) {</span>
-<span class="source-line-no">776</span><span id="line-776">        final Object old = this.metaMap.remove(key);</span>
-<span class="source-line-no">777</span><span id="line-777">        if (Settings.Enabled_Components.PERSISTENT_META) {</span>
-<span class="source-line-no">778</span><span id="line-778">            DBFunc.removePersistentMeta(getUUID(), key);</span>
-<span class="source-line-no">779</span><span id="line-779">        }</span>
-<span class="source-line-no">780</span><span id="line-780">        return old;</span>
-<span class="source-line-no">781</span><span id="line-781">    }</span>
-<span class="source-line-no">782</span><span id="line-782"></span>
-<span class="source-line-no">783</span><span id="line-783">    /**</span>
-<span class="source-line-no">784</span><span id="line-784">     * Access keyed persistent meta data for this player. This returns a meta data</span>
-<span class="source-line-no">785</span><span id="line-785">     * access instance, that MUST be closed. It is meant to be used with try-with-resources,</span>
-<span class="source-line-no">786</span><span id="line-786">     * like such:</span>
-<span class="source-line-no">787</span><span id="line-787">     * &lt;pre&gt;{@code</span>
-<span class="source-line-no">788</span><span id="line-788">     * try (final MetaDataAccess&lt;Integer&gt; access = player.accessPersistentMetaData(PlayerMetaKeys.GRANTS)) {</span>
-<span class="source-line-no">789</span><span id="line-789">     *     int grants = access.get();</span>
-<span class="source-line-no">790</span><span id="line-790">     *     access.set(grants + 1);</span>
-<span class="source-line-no">791</span><span id="line-791">     * }</span>
-<span class="source-line-no">792</span><span id="line-792">     * }&lt;/pre&gt;</span>
-<span class="source-line-no">793</span><span id="line-793">     *</span>
-<span class="source-line-no">794</span><span id="line-794">     * @param key Meta data key</span>
-<span class="source-line-no">795</span><span id="line-795">     * @param &lt;T&gt; Meta data type</span>
-<span class="source-line-no">796</span><span id="line-796">     * @return Meta data access. MUST be closed after being used</span>
-<span class="source-line-no">797</span><span id="line-797">     */</span>
-<span class="source-line-no">798</span><span id="line-798">    public @NonNull &lt;T&gt; MetaDataAccess&lt;T&gt; accessPersistentMetaData(final @NonNull MetaDataKey&lt;T&gt; key) {</span>
-<span class="source-line-no">799</span><span id="line-799">        return new PersistentMetaDataAccess&lt;&gt;(this, key, this.lockRepository.lock(key.getLockKey()));</span>
-<span class="source-line-no">800</span><span id="line-800">    }</span>
-<span class="source-line-no">801</span><span id="line-801"></span>
-<span class="source-line-no">802</span><span id="line-802">    /**</span>
-<span class="source-line-no">803</span><span id="line-803">     * Access keyed temporary meta data for this player. This returns a meta data</span>
-<span class="source-line-no">804</span><span id="line-804">     * access instance, that MUST be closed. It is meant to be used with try-with-resources,</span>
-<span class="source-line-no">805</span><span id="line-805">     * like such:</span>
-<span class="source-line-no">806</span><span id="line-806">     * &lt;pre&gt;{@code</span>
-<span class="source-line-no">807</span><span id="line-807">     * try (final MetaDataAccess&lt;Integer&gt; access = player.accessTemporaryMetaData(PlayerMetaKeys.GRANTS)) {</span>
-<span class="source-line-no">808</span><span id="line-808">     *     int grants = access.get();</span>
-<span class="source-line-no">809</span><span id="line-809">     *     access.set(grants + 1);</span>
-<span class="source-line-no">810</span><span id="line-810">     * }</span>
-<span class="source-line-no">811</span><span id="line-811">     * }&lt;/pre&gt;</span>
-<span class="source-line-no">812</span><span id="line-812">     *</span>
-<span class="source-line-no">813</span><span id="line-813">     * @param key Meta data key</span>
-<span class="source-line-no">814</span><span id="line-814">     * @param &lt;T&gt; Meta data type</span>
-<span class="source-line-no">815</span><span id="line-815">     * @return Meta data access. MUST be closed after being used</span>
-<span class="source-line-no">816</span><span id="line-816">     */</span>
-<span class="source-line-no">817</span><span id="line-817">    public @NonNull &lt;T&gt; MetaDataAccess&lt;T&gt; accessTemporaryMetaData(final @NonNull MetaDataKey&lt;T&gt; key) {</span>
-<span class="source-line-no">818</span><span id="line-818">        return new TemporaryMetaDataAccess&lt;&gt;(this, key, this.lockRepository.lock(key.getLockKey()));</span>
-<span class="source-line-no">819</span><span id="line-819">    }</span>
-<span class="source-line-no">820</span><span id="line-820"></span>
-<span class="source-line-no">821</span><span id="line-821">    &lt;T&gt; void setPersistentMeta(</span>
-<span class="source-line-no">822</span><span id="line-822">            final @NonNull MetaDataKey&lt;T&gt; key,</span>
-<span class="source-line-no">823</span><span id="line-823">            final @NonNull T value</span>
-<span class="source-line-no">824</span><span id="line-824">    ) {</span>
-<span class="source-line-no">825</span><span id="line-825">        if (key.getType().getRawType().equals(Integer.class)) {</span>
-<span class="source-line-no">826</span><span id="line-826">            this.setPersistentMeta(key.toString(), Ints.toByteArray((int) (Object) value));</span>
-<span class="source-line-no">827</span><span id="line-827">        } else if (key.getType().getRawType().equals(Boolean.class)) {</span>
-<span class="source-line-no">828</span><span id="line-828">            this.setPersistentMeta(key.toString(), ByteArrayUtilities.booleanToBytes((boolean) (Object) value));</span>
-<span class="source-line-no">829</span><span id="line-829">        } else {</span>
-<span class="source-line-no">830</span><span id="line-830">            throw new IllegalArgumentException(String.format("Unknown meta data type '%s'", key.getType()));</span>
-<span class="source-line-no">831</span><span id="line-831">        }</span>
-<span class="source-line-no">832</span><span id="line-832">    }</span>
-<span class="source-line-no">833</span><span id="line-833"></span>
-<span class="source-line-no">834</span><span id="line-834">    @SuppressWarnings("unchecked")</span>
-<span class="source-line-no">835</span><span id="line-835">    @Nullable &lt;T&gt; T getPersistentMeta(final @NonNull MetaDataKey&lt;T&gt; key) {</span>
-<span class="source-line-no">836</span><span id="line-836">        final byte[] value = this.getPersistentMeta(key.toString());</span>
-<span class="source-line-no">837</span><span id="line-837">        if (value == null) {</span>
-<span class="source-line-no">838</span><span id="line-838">            return null;</span>
-<span class="source-line-no">839</span><span id="line-839">        }</span>
-<span class="source-line-no">840</span><span id="line-840">        final Object returnValue;</span>
-<span class="source-line-no">841</span><span id="line-841">        if (key.getType().getRawType().equals(Integer.class)) {</span>
-<span class="source-line-no">842</span><span id="line-842">            returnValue = Ints.fromByteArray(value);</span>
-<span class="source-line-no">843</span><span id="line-843">        } else if (key.getType().getRawType().equals(Boolean.class)) {</span>
-<span class="source-line-no">844</span><span id="line-844">            returnValue = ByteArrayUtilities.bytesToBoolean(value);</span>
-<span class="source-line-no">845</span><span id="line-845">        } else {</span>
-<span class="source-line-no">846</span><span id="line-846">            throw new IllegalArgumentException(String.format("Unknown meta data type '%s'", key.getType()));</span>
-<span class="source-line-no">847</span><span id="line-847">        }</span>
-<span class="source-line-no">848</span><span id="line-848">        return (T) returnValue;</span>
-<span class="source-line-no">849</span><span id="line-849">    }</span>
-<span class="source-line-no">850</span><span id="line-850"></span>
-<span class="source-line-no">851</span><span id="line-851">    void setPersistentMeta(String key, byte[] value) {</span>
-<span class="source-line-no">852</span><span id="line-852">        boolean delete = hasPersistentMeta(key);</span>
-<span class="source-line-no">853</span><span id="line-853">        this.metaMap.put(key, value);</span>
-<span class="source-line-no">854</span><span id="line-854">        if (Settings.Enabled_Components.PERSISTENT_META) {</span>
-<span class="source-line-no">855</span><span id="line-855">            DBFunc.addPersistentMeta(getUUID(), key, value, delete);</span>
-<span class="source-line-no">856</span><span id="line-856">        }</span>
-<span class="source-line-no">857</span><span id="line-857">    }</span>
-<span class="source-line-no">858</span><span id="line-858"></span>
-<span class="source-line-no">859</span><span id="line-859">    /**</span>
-<span class="source-line-no">860</span><span id="line-860">     * Send a title to the player that fades in, in 10 ticks, stays for 50 ticks and fades</span>
-<span class="source-line-no">861</span><span id="line-861">     * out in 20 ticks</span>
-<span class="source-line-no">862</span><span id="line-862">     *</span>
-<span class="source-line-no">863</span><span id="line-863">     * @param title        Title text</span>
-<span class="source-line-no">864</span><span id="line-864">     * @param subtitle     Subtitle text</span>
-<span class="source-line-no">865</span><span id="line-865">     * @param replacements Variable replacements</span>
-<span class="source-line-no">866</span><span id="line-866">     */</span>
-<span class="source-line-no">867</span><span id="line-867">    public void sendTitle(</span>
-<span class="source-line-no">868</span><span id="line-868">            final @NonNull Caption title, final @NonNull Caption subtitle,</span>
-<span class="source-line-no">869</span><span id="line-869">            final @NonNull TagResolver... replacements</span>
-<span class="source-line-no">870</span><span id="line-870">    ) {</span>
-<span class="source-line-no">871</span><span id="line-871">        sendTitle(</span>
-<span class="source-line-no">872</span><span id="line-872">                title,</span>
-<span class="source-line-no">873</span><span id="line-873">                subtitle,</span>
-<span class="source-line-no">874</span><span id="line-874">                Settings.Titles.TITLES_FADE_IN,</span>
-<span class="source-line-no">875</span><span id="line-875">                Settings.Titles.TITLES_STAY,</span>
-<span class="source-line-no">876</span><span id="line-876">                Settings.Titles.TITLES_FADE_OUT,</span>
-<span class="source-line-no">877</span><span id="line-877">                replacements</span>
-<span class="source-line-no">878</span><span id="line-878">        );</span>
-<span class="source-line-no">879</span><span id="line-879">    }</span>
-<span class="source-line-no">880</span><span id="line-880"></span>
-<span class="source-line-no">881</span><span id="line-881">    /**</span>
-<span class="source-line-no">882</span><span id="line-882">     * Send a title to the player</span>
-<span class="source-line-no">883</span><span id="line-883">     *</span>
-<span class="source-line-no">884</span><span id="line-884">     * @param title        Title</span>
-<span class="source-line-no">885</span><span id="line-885">     * @param subtitle     Subtitle</span>
-<span class="source-line-no">886</span><span id="line-886">     * @param fadeIn       Fade in time (in ticks)</span>
-<span class="source-line-no">887</span><span id="line-887">     * @param stay         The title stays for (in ticks)</span>
-<span class="source-line-no">888</span><span id="line-888">     * @param fadeOut      Fade out time (in ticks)</span>
-<span class="source-line-no">889</span><span id="line-889">     * @param replacements Variable replacements</span>
-<span class="source-line-no">890</span><span id="line-890">     */</span>
-<span class="source-line-no">891</span><span id="line-891">    public void sendTitle(</span>
-<span class="source-line-no">892</span><span id="line-892">            final @NonNull Caption title, final @NonNull Caption subtitle,</span>
-<span class="source-line-no">893</span><span id="line-893">            final int fadeIn, final int stay, final int fadeOut,</span>
-<span class="source-line-no">894</span><span id="line-894">            final @NonNull TagResolver... replacements</span>
-<span class="source-line-no">895</span><span id="line-895">    ) {</span>
-<span class="source-line-no">896</span><span id="line-896">        final Component titleComponent = MiniMessage.miniMessage().deserialize(title.getComponent(this), replacements);</span>
-<span class="source-line-no">897</span><span id="line-897">        final Component subtitleComponent =</span>
-<span class="source-line-no">898</span><span id="line-898">                MiniMessage.miniMessage().deserialize(subtitle.getComponent(this), replacements);</span>
-<span class="source-line-no">899</span><span id="line-899">        final Title.Times times = Title.Times.times(</span>
-<span class="source-line-no">900</span><span id="line-900">                Duration.of(Settings.Titles.TITLES_FADE_IN * 50L, ChronoUnit.MILLIS),</span>
-<span class="source-line-no">901</span><span id="line-901">                Duration.of(Settings.Titles.TITLES_STAY * 50L, ChronoUnit.MILLIS),</span>
-<span class="source-line-no">902</span><span id="line-902">                Duration.of(Settings.Titles.TITLES_FADE_OUT * 50L, ChronoUnit.MILLIS)</span>
-<span class="source-line-no">903</span><span id="line-903">        );</span>
-<span class="source-line-no">904</span><span id="line-904">        getAudience().showTitle(Title</span>
-<span class="source-line-no">905</span><span id="line-905">                .title(titleComponent, subtitleComponent, times));</span>
-<span class="source-line-no">906</span><span id="line-906">    }</span>
-<span class="source-line-no">907</span><span id="line-907"></span>
-<span class="source-line-no">908</span><span id="line-908">    /**</span>
-<span class="source-line-no">909</span><span id="line-909">     * Method designed to send an ActionBar to a player.</span>
-<span class="source-line-no">910</span><span id="line-910">     *</span>
-<span class="source-line-no">911</span><span id="line-911">     * @param caption      Caption</span>
-<span class="source-line-no">912</span><span id="line-912">     * @param replacements Variable replacements</span>
-<span class="source-line-no">913</span><span id="line-913">     */</span>
-<span class="source-line-no">914</span><span id="line-914">    public void sendActionBar(</span>
-<span class="source-line-no">915</span><span id="line-915">            final @NonNull Caption caption,</span>
-<span class="source-line-no">916</span><span id="line-916">            final @NonNull TagResolver... replacements</span>
-<span class="source-line-no">917</span><span id="line-917">    ) {</span>
-<span class="source-line-no">918</span><span id="line-918">        String message;</span>
-<span class="source-line-no">919</span><span id="line-919">        try {</span>
-<span class="source-line-no">920</span><span id="line-920">            message = caption.getComponent(this);</span>
-<span class="source-line-no">921</span><span id="line-921">        } catch (final CaptionMap.NoSuchCaptionException exception) {</span>
-<span class="source-line-no">922</span><span id="line-922">            // This sends feedback to the player</span>
-<span class="source-line-no">923</span><span id="line-923">            message = NON_EXISTENT_CAPTION + ((TranslatableCaption) caption).getKey();</span>
-<span class="source-line-no">924</span><span id="line-924">            // And this also prints it to the console</span>
-<span class="source-line-no">925</span><span id="line-925">            exception.printStackTrace();</span>
-<span class="source-line-no">926</span><span id="line-926">        }</span>
-<span class="source-line-no">927</span><span id="line-927">        if (message.isEmpty()) {</span>
-<span class="source-line-no">928</span><span id="line-928">            return;</span>
-<span class="source-line-no">929</span><span id="line-929">        }</span>
-<span class="source-line-no">930</span><span id="line-930">        // Replace placeholders, etc</span>
-<span class="source-line-no">931</span><span id="line-931">        message = CaptionUtility.format(this, message)</span>
-<span class="source-line-no">932</span><span id="line-932">                .replace('\u2010', '%').replace('\u2020', '&amp;').replace('\u2030', '&amp;')</span>
-<span class="source-line-no">933</span><span id="line-933">                .replace("&lt;prefix&gt;", TranslatableCaption.of("core.prefix").getComponent(this));</span>
-<span class="source-line-no">934</span><span id="line-934"></span>
-<span class="source-line-no">935</span><span id="line-935"></span>
-<span class="source-line-no">936</span><span id="line-936">        final Component component = MiniMessage.miniMessage().deserialize(message, replacements);</span>
-<span class="source-line-no">937</span><span id="line-937">        getAudience().sendActionBar(component);</span>
-<span class="source-line-no">938</span><span id="line-938">    }</span>
-<span class="source-line-no">939</span><span id="line-939"></span>
-<span class="source-line-no">940</span><span id="line-940">    @Override</span>
-<span class="source-line-no">941</span><span id="line-941">    public void sendMessage(</span>
-<span class="source-line-no">942</span><span id="line-942">            final @NonNull Caption caption,</span>
-<span class="source-line-no">943</span><span id="line-943">            final @NonNull TagResolver... replacements</span>
-<span class="source-line-no">944</span><span id="line-944">    ) {</span>
-<span class="source-line-no">945</span><span id="line-945">        String message;</span>
-<span class="source-line-no">946</span><span id="line-946">        try {</span>
-<span class="source-line-no">947</span><span id="line-947">            message = caption.getComponent(this);</span>
-<span class="source-line-no">948</span><span id="line-948">        } catch (final CaptionMap.NoSuchCaptionException exception) {</span>
-<span class="source-line-no">949</span><span id="line-949">            // This sends feedback to the player</span>
-<span class="source-line-no">950</span><span id="line-950">            message = NON_EXISTENT_CAPTION + ((TranslatableCaption) caption).getKey();</span>
-<span class="source-line-no">951</span><span id="line-951">            // And this also prints it to the console</span>
-<span class="source-line-no">952</span><span id="line-952">            exception.printStackTrace();</span>
-<span class="source-line-no">953</span><span id="line-953">        }</span>
-<span class="source-line-no">954</span><span id="line-954">        if (message.isEmpty()) {</span>
-<span class="source-line-no">955</span><span id="line-955">            return;</span>
-<span class="source-line-no">956</span><span id="line-956">        }</span>
-<span class="source-line-no">957</span><span id="line-957">        // Replace placeholders, etc</span>
-<span class="source-line-no">958</span><span id="line-958">        message = CaptionUtility.format(this, message)</span>
-<span class="source-line-no">959</span><span id="line-959">                .replace('\u2010', '%').replace('\u2020', '&amp;').replace('\u2030', '&amp;')</span>
-<span class="source-line-no">960</span><span id="line-960">                .replace("&lt;prefix&gt;", TranslatableCaption.of("core.prefix").getComponent(this));</span>
-<span class="source-line-no">961</span><span id="line-961">        // Parse the message</span>
-<span class="source-line-no">962</span><span id="line-962">        final Component component = MiniMessage.miniMessage().deserialize(message, replacements);</span>
-<span class="source-line-no">963</span><span id="line-963">        if (!Objects.equal(component, this.getMeta("lastMessage"))</span>
-<span class="source-line-no">964</span><span id="line-964">                || System.currentTimeMillis() - this.&lt;Long&gt;getMeta("lastMessageTime") &gt; 5000) {</span>
-<span class="source-line-no">965</span><span id="line-965">            setMeta("lastMessage", component);</span>
-<span class="source-line-no">966</span><span id="line-966">            setMeta("lastMessageTime", System.currentTimeMillis());</span>
-<span class="source-line-no">967</span><span id="line-967">            getAudience().sendMessage(component);</span>
-<span class="source-line-no">968</span><span id="line-968">        }</span>
-<span class="source-line-no">969</span><span id="line-969">    }</span>
-<span class="source-line-no">970</span><span id="line-970"></span>
-<span class="source-line-no">971</span><span id="line-971">    /**</span>
-<span class="source-line-no">972</span><span id="line-972">     * Sends a message to the command caller, when the future is resolved</span>
-<span class="source-line-no">973</span><span id="line-973">     *</span>
-<span class="source-line-no">974</span><span id="line-974">     * @param caption          Caption to send</span>
-<span class="source-line-no">975</span><span id="line-975">     * @param asyncReplacement Async variable replacement</span>
-<span class="source-line-no">976</span><span id="line-976">     * @return A Future to be resolved, after the message was sent</span>
-<span class="source-line-no">977</span><span id="line-977">     * @since 7.1.0</span>
-<span class="source-line-no">978</span><span id="line-978">     */</span>
-<span class="source-line-no">979</span><span id="line-979">    public final CompletableFuture&lt;Void&gt; sendMessage(</span>
-<span class="source-line-no">980</span><span id="line-980">            @NonNull Caption caption,</span>
-<span class="source-line-no">981</span><span id="line-981">            CompletableFuture&lt;@NonNull TagResolver&gt; asyncReplacement</span>
-<span class="source-line-no">982</span><span id="line-982">    ) {</span>
-<span class="source-line-no">983</span><span id="line-983">        return sendMessage(caption, new CompletableFuture[]{asyncReplacement});</span>
-<span class="source-line-no">984</span><span id="line-984">    }</span>
-<span class="source-line-no">985</span><span id="line-985"></span>
-<span class="source-line-no">986</span><span id="line-986">    /**</span>
-<span class="source-line-no">987</span><span id="line-987">     * Sends a message to the command caller, when all futures are resolved</span>
-<span class="source-line-no">988</span><span id="line-988">     *</span>
-<span class="source-line-no">989</span><span id="line-989">     * @param caption           Caption to send</span>
-<span class="source-line-no">990</span><span id="line-990">     * @param asyncReplacements Async variable replacements</span>
-<span class="source-line-no">991</span><span id="line-991">     * @param replacements      Sync variable replacements</span>
-<span class="source-line-no">992</span><span id="line-992">     * @return A Future to be resolved, after the message was sent</span>
-<span class="source-line-no">993</span><span id="line-993">     * @since 7.1.0</span>
-<span class="source-line-no">994</span><span id="line-994">     */</span>
-<span class="source-line-no">995</span><span id="line-995">    public final CompletableFuture&lt;Void&gt; sendMessage(</span>
-<span class="source-line-no">996</span><span id="line-996">            @NonNull Caption caption,</span>
-<span class="source-line-no">997</span><span id="line-997">            CompletableFuture&lt;@NonNull TagResolver&gt;[] asyncReplacements,</span>
-<span class="source-line-no">998</span><span id="line-998">            @NonNull TagResolver... replacements</span>
-<span class="source-line-no">999</span><span id="line-999">    ) {</span>
-<span class="source-line-no">1000</span><span id="line-1000">        return CompletableFuture.allOf(asyncReplacements).whenComplete((unused, throwable) -&gt; {</span>
-<span class="source-line-no">1001</span><span id="line-1001">            Set&lt;TagResolver&gt; resolvers = new HashSet&lt;&gt;(Arrays.asList(replacements));</span>
-<span class="source-line-no">1002</span><span id="line-1002">            if (throwable != null) {</span>
-<span class="source-line-no">1003</span><span id="line-1003">                sendMessage(</span>
-<span class="source-line-no">1004</span><span id="line-1004">                        TranslatableCaption.of("errors.error"),</span>
-<span class="source-line-no">1005</span><span id="line-1005">                        TagResolver.resolver("value", Tag.inserting(</span>
-<span class="source-line-no">1006</span><span id="line-1006">                                Component.text("Failed to resolve asynchronous caption replacements")</span>
-<span class="source-line-no">1007</span><span id="line-1007">                        ))</span>
-<span class="source-line-no">1008</span><span id="line-1008">                );</span>
-<span class="source-line-no">1009</span><span id="line-1009">                LOGGER.error("Failed to resolve asynchronous tagresolver(s) for " + caption, throwable);</span>
-<span class="source-line-no">1010</span><span id="line-1010">            } else {</span>
-<span class="source-line-no">1011</span><span id="line-1011">                for (final CompletableFuture&lt;TagResolver&gt; asyncReplacement : asyncReplacements) {</span>
-<span class="source-line-no">1012</span><span id="line-1012">                    resolvers.add(asyncReplacement.join());</span>
-<span class="source-line-no">1013</span><span id="line-1013">                }</span>
-<span class="source-line-no">1014</span><span id="line-1014">            }</span>
-<span class="source-line-no">1015</span><span id="line-1015">            sendMessage(caption, resolvers.toArray(TagResolver[]::new));</span>
-<span class="source-line-no">1016</span><span id="line-1016">        });</span>
-<span class="source-line-no">1017</span><span id="line-1017">    }</span>
-<span class="source-line-no">1018</span><span id="line-1018"></span>
-<span class="source-line-no">1019</span><span id="line-1019">    // Redefine from PermissionHolder as it's required from CommandCaller</span>
-<span class="source-line-no">1020</span><span id="line-1020">    @Override</span>
-<span class="source-line-no">1021</span><span id="line-1021">    public boolean hasPermission(@NonNull String permission) {</span>
-<span class="source-line-no">1022</span><span id="line-1022">        return hasPermission(null, permission);</span>
-<span class="source-line-no">1023</span><span id="line-1023">    }</span>
-<span class="source-line-no">1024</span><span id="line-1024"></span>
-<span class="source-line-no">1025</span><span id="line-1025">    boolean hasPersistentMeta(String key) {</span>
-<span class="source-line-no">1026</span><span id="line-1026">        return this.metaMap.containsKey(key);</span>
-<span class="source-line-no">1027</span><span id="line-1027">    }</span>
-<span class="source-line-no">1028</span><span id="line-1028"></span>
-<span class="source-line-no">1029</span><span id="line-1029">    /**</span>
-<span class="source-line-no">1030</span><span id="line-1030">     * Check if the player is able to see the other player.</span>
-<span class="source-line-no">1031</span><span id="line-1031">     * This does not mean that the other player is in line of sight of the player,</span>
-<span class="source-line-no">1032</span><span id="line-1032">     * but rather that the player is permitted to see the other player.</span>
-<span class="source-line-no">1033</span><span id="line-1033">     *</span>
-<span class="source-line-no">1034</span><span id="line-1034">     * @param other Other player</span>
-<span class="source-line-no">1035</span><span id="line-1035">     * @return {@code true} if the player is able to see the other player, {@code false} if not</span>
-<span class="source-line-no">1036</span><span id="line-1036">     */</span>
-<span class="source-line-no">1037</span><span id="line-1037">    public abstract boolean canSee(PlotPlayer&lt;?&gt; other);</span>
-<span class="source-line-no">1038</span><span id="line-1038"></span>
-<span class="source-line-no">1039</span><span id="line-1039">    public abstract void stopSpectating();</span>
-<span class="source-line-no">1040</span><span id="line-1040"></span>
-<span class="source-line-no">1041</span><span id="line-1041">    public boolean hasDebugMode() {</span>
-<span class="source-line-no">1042</span><span id="line-1042">        return this.getAttribute("debug");</span>
-<span class="source-line-no">1043</span><span id="line-1043">    }</span>
-<span class="source-line-no">1044</span><span id="line-1044"></span>
-<span class="source-line-no">1045</span><span id="line-1045">    @NonNull</span>
-<span class="source-line-no">1046</span><span id="line-1046">    @Override</span>
-<span class="source-line-no">1047</span><span id="line-1047">    public Locale getLocale() {</span>
-<span class="source-line-no">1048</span><span id="line-1048">        if (this.locale == null) {</span>
-<span class="source-line-no">1049</span><span id="line-1049">            this.locale = Locale.forLanguageTag(Settings.Enabled_Components.DEFAULT_LOCALE);</span>
-<span class="source-line-no">1050</span><span id="line-1050">        }</span>
-<span class="source-line-no">1051</span><span id="line-1051">        return this.locale;</span>
-<span class="source-line-no">1052</span><span id="line-1052">    }</span>
-<span class="source-line-no">1053</span><span id="line-1053"></span>
-<span class="source-line-no">1054</span><span id="line-1054">    @Override</span>
-<span class="source-line-no">1055</span><span id="line-1055">    public void setLocale(final @NonNull Locale locale) {</span>
-<span class="source-line-no">1056</span><span id="line-1056">        if (!PlotSquared.get().getCaptionMap(TranslatableCaption.DEFAULT_NAMESPACE).supportsLocale(locale)) {</span>
-<span class="source-line-no">1057</span><span id="line-1057">            this.locale = Locale.forLanguageTag(Settings.Enabled_Components.DEFAULT_LOCALE);</span>
-<span class="source-line-no">1058</span><span id="line-1058">        } else {</span>
-<span class="source-line-no">1059</span><span id="line-1059">            this.locale = locale;</span>
-<span class="source-line-no">1060</span><span id="line-1060">        }</span>
-<span class="source-line-no">1061</span><span id="line-1061">    }</span>
-<span class="source-line-no">1062</span><span id="line-1062"></span>
-<span class="source-line-no">1063</span><span id="line-1063">    @Override</span>
-<span class="source-line-no">1064</span><span id="line-1064">    public int hashCode() {</span>
-<span class="source-line-no">1065</span><span id="line-1065">        if (this.hash == 0 || this.hash == 485) {</span>
-<span class="source-line-no">1066</span><span id="line-1066">            this.hash = 485 + this.getUUID().hashCode();</span>
-<span class="source-line-no">1067</span><span id="line-1067">        }</span>
-<span class="source-line-no">1068</span><span id="line-1068">        return this.hash;</span>
-<span class="source-line-no">1069</span><span id="line-1069">    }</span>
-<span class="source-line-no">1070</span><span id="line-1070"></span>
-<span class="source-line-no">1071</span><span id="line-1071">    @Override</span>
-<span class="source-line-no">1072</span><span id="line-1072">    public boolean equals(final Object obj) {</span>
-<span class="source-line-no">1073</span><span id="line-1073">        if (!(obj instanceof final PlotPlayer&lt;?&gt; other)) {</span>
-<span class="source-line-no">1074</span><span id="line-1074">            return false;</span>
-<span class="source-line-no">1075</span><span id="line-1075">        }</span>
-<span class="source-line-no">1076</span><span id="line-1076">        return this.getUUID().equals(other.getUUID());</span>
-<span class="source-line-no">1077</span><span id="line-1077">    }</span>
-<span class="source-line-no">1078</span><span id="line-1078"></span>
-<span class="source-line-no">1079</span><span id="line-1079">    /**</span>
-<span class="source-line-no">1080</span><span id="line-1080">     * Get the {@link Audience} that represents this plot player</span>
-<span class="source-line-no">1081</span><span id="line-1081">     *</span>
-<span class="source-line-no">1082</span><span id="line-1082">     * @return Player audience</span>
-<span class="source-line-no">1083</span><span id="line-1083">     */</span>
-<span class="source-line-no">1084</span><span id="line-1084">    public @NonNull</span>
-<span class="source-line-no">1085</span><span id="line-1085">    abstract Audience getAudience();</span>
-<span class="source-line-no">1086</span><span id="line-1086"></span>
-<span class="source-line-no">1087</span><span id="line-1087">    /**</span>
-<span class="source-line-no">1088</span><span id="line-1088">     * Get this player's {@link LockRepository}</span>
-<span class="source-line-no">1089</span><span id="line-1089">     *</span>
-<span class="source-line-no">1090</span><span id="line-1090">     * @return Lock repository instance</span>
-<span class="source-line-no">1091</span><span id="line-1091">     */</span>
-<span class="source-line-no">1092</span><span id="line-1092">    public @NonNull LockRepository getLockRepository() {</span>
-<span class="source-line-no">1093</span><span id="line-1093">        return this.lockRepository;</span>
-<span class="source-line-no">1094</span><span id="line-1094">    }</span>
-<span class="source-line-no">1095</span><span id="line-1095"></span>
-<span class="source-line-no">1096</span><span id="line-1096">    /**</span>
-<span class="source-line-no">1097</span><span id="line-1097">     * Removes any effects present of the given type.</span>
-<span class="source-line-no">1098</span><span id="line-1098">     *</span>
-<span class="source-line-no">1099</span><span id="line-1099">     * @param name the name of the type to remove</span>
-<span class="source-line-no">1100</span><span id="line-1100">     * @since 6.10.0</span>
-<span class="source-line-no">1101</span><span id="line-1101">     */</span>
-<span class="source-line-no">1102</span><span id="line-1102">    public abstract void removeEffect(@NonNull String name);</span>
-<span class="source-line-no">1103</span><span id="line-1103"></span>
-<span class="source-line-no">1104</span><span id="line-1104">    @FunctionalInterface</span>
-<span class="source-line-no">1105</span><span id="line-1105">    public interface PlotPlayerConverter&lt;BaseObject&gt; {</span>
-<span class="source-line-no">1106</span><span id="line-1106"></span>
-<span class="source-line-no">1107</span><span id="line-1107">        PlotPlayer&lt;?&gt; convert(BaseObject object);</span>
-<span class="source-line-no">1108</span><span id="line-1108"></span>
-<span class="source-line-no">1109</span><span id="line-1109">    }</span>
-<span class="source-line-no">1110</span><span id="line-1110"></span>
-<span class="source-line-no">1111</span><span id="line-1111">}</span>
+<span class="source-line-no">513</span><span id="line-513">    public abstract void teleport(Location location, TeleportCause cause);</span>
+<span class="source-line-no">514</span><span id="line-514"></span>
+<span class="source-line-no">515</span><span id="line-515">    /**</span>
+<span class="source-line-no">516</span><span id="line-516">     * Kick this player to a location</span>
+<span class="source-line-no">517</span><span id="line-517">     *</span>
+<span class="source-line-no">518</span><span id="line-518">     * @param location the target location</span>
+<span class="source-line-no">519</span><span id="line-519">     */</span>
+<span class="source-line-no">520</span><span id="line-520">    public void plotkick(Location location) {</span>
+<span class="source-line-no">521</span><span id="line-521">        setMeta("kick", true);</span>
+<span class="source-line-no">522</span><span id="line-522">        teleport(location, TeleportCause.KICK);</span>
+<span class="source-line-no">523</span><span id="line-523">        deleteMeta("kick");</span>
+<span class="source-line-no">524</span><span id="line-524">    }</span>
+<span class="source-line-no">525</span><span id="line-525"></span>
+<span class="source-line-no">526</span><span id="line-526">    /**</span>
+<span class="source-line-no">527</span><span id="line-527">     * Set this compass target.</span>
+<span class="source-line-no">528</span><span id="line-528">     *</span>
+<span class="source-line-no">529</span><span id="line-529">     * @param location the target location</span>
+<span class="source-line-no">530</span><span id="line-530">     */</span>
+<span class="source-line-no">531</span><span id="line-531">    public abstract void setCompassTarget(Location location);</span>
+<span class="source-line-no">532</span><span id="line-532"></span>
+<span class="source-line-no">533</span><span id="line-533">    /**</span>
+<span class="source-line-no">534</span><span id="line-534">     * Set player data that will persist restarts.</span>
+<span class="source-line-no">535</span><span id="line-535">     * - Please note that this is not intended to store large values</span>
+<span class="source-line-no">536</span><span id="line-536">     * - For session only data use meta</span>
+<span class="source-line-no">537</span><span id="line-537">     *</span>
+<span class="source-line-no">538</span><span id="line-538">     * @param key metadata key</span>
+<span class="source-line-no">539</span><span id="line-539">     */</span>
+<span class="source-line-no">540</span><span id="line-540">    public void setAttribute(String key) {</span>
+<span class="source-line-no">541</span><span id="line-541">        setPersistentMeta("attrib_" + key, new byte[]{(byte) 1});</span>
+<span class="source-line-no">542</span><span id="line-542">    }</span>
+<span class="source-line-no">543</span><span id="line-543"></span>
+<span class="source-line-no">544</span><span id="line-544">    /**</span>
+<span class="source-line-no">545</span><span id="line-545">     * Retrieves the attribute of this player.</span>
+<span class="source-line-no">546</span><span id="line-546">     *</span>
+<span class="source-line-no">547</span><span id="line-547">     * @param key metadata key</span>
+<span class="source-line-no">548</span><span id="line-548">     * @return the attribute will be either {@code true} or {@code false}</span>
+<span class="source-line-no">549</span><span id="line-549">     */</span>
+<span class="source-line-no">550</span><span id="line-550">    public boolean getAttribute(String key) {</span>
+<span class="source-line-no">551</span><span id="line-551">        if (!hasPersistentMeta("attrib_" + key)) {</span>
+<span class="source-line-no">552</span><span id="line-552">            return false;</span>
+<span class="source-line-no">553</span><span id="line-553">        }</span>
+<span class="source-line-no">554</span><span id="line-554">        return getPersistentMeta("attrib_" + key)[0] == 1;</span>
+<span class="source-line-no">555</span><span id="line-555">    }</span>
+<span class="source-line-no">556</span><span id="line-556"></span>
+<span class="source-line-no">557</span><span id="line-557">    /**</span>
+<span class="source-line-no">558</span><span id="line-558">     * Remove an attribute from a player.</span>
+<span class="source-line-no">559</span><span id="line-559">     *</span>
+<span class="source-line-no">560</span><span id="line-560">     * @param key metadata key</span>
+<span class="source-line-no">561</span><span id="line-561">     */</span>
+<span class="source-line-no">562</span><span id="line-562">    public void removeAttribute(String key) {</span>
+<span class="source-line-no">563</span><span id="line-563">        removePersistentMeta("attrib_" + key);</span>
+<span class="source-line-no">564</span><span id="line-564">    }</span>
+<span class="source-line-no">565</span><span id="line-565"></span>
+<span class="source-line-no">566</span><span id="line-566">    /**</span>
+<span class="source-line-no">567</span><span id="line-567">     * Sets the local weather for this Player.</span>
+<span class="source-line-no">568</span><span id="line-568">     *</span>
+<span class="source-line-no">569</span><span id="line-569">     * @param weather the weather visible to the player</span>
+<span class="source-line-no">570</span><span id="line-570">     */</span>
+<span class="source-line-no">571</span><span id="line-571">    public abstract void setWeather(@NonNull PlotWeather weather);</span>
+<span class="source-line-no">572</span><span id="line-572"></span>
+<span class="source-line-no">573</span><span id="line-573">    /**</span>
+<span class="source-line-no">574</span><span id="line-574">     * Get this player's gamemode.</span>
+<span class="source-line-no">575</span><span id="line-575">     *</span>
+<span class="source-line-no">576</span><span id="line-576">     * @return the gamemode of the player.</span>
+<span class="source-line-no">577</span><span id="line-577">     */</span>
+<span class="source-line-no">578</span><span id="line-578">    public abstract @NonNull GameMode getGameMode();</span>
+<span class="source-line-no">579</span><span id="line-579"></span>
+<span class="source-line-no">580</span><span id="line-580">    /**</span>
+<span class="source-line-no">581</span><span id="line-581">     * Set this player's gameMode.</span>
+<span class="source-line-no">582</span><span id="line-582">     *</span>
+<span class="source-line-no">583</span><span id="line-583">     * @param gameMode the gamemode to set</span>
+<span class="source-line-no">584</span><span id="line-584">     */</span>
+<span class="source-line-no">585</span><span id="line-585">    public abstract void setGameMode(@NonNull GameMode gameMode);</span>
+<span class="source-line-no">586</span><span id="line-586"></span>
+<span class="source-line-no">587</span><span id="line-587">    /**</span>
+<span class="source-line-no">588</span><span id="line-588">     * Set this player's local time (ticks).</span>
+<span class="source-line-no">589</span><span id="line-589">     *</span>
+<span class="source-line-no">590</span><span id="line-590">     * @param time the time visible to the player</span>
+<span class="source-line-no">591</span><span id="line-591">     */</span>
+<span class="source-line-no">592</span><span id="line-592">    public abstract void setTime(long time);</span>
+<span class="source-line-no">593</span><span id="line-593"></span>
+<span class="source-line-no">594</span><span id="line-594">    /**</span>
+<span class="source-line-no">595</span><span id="line-595">     * Determines whether or not the player can fly.</span>
+<span class="source-line-no">596</span><span id="line-596">     *</span>
+<span class="source-line-no">597</span><span id="line-597">     * @return {@code true} if the player is allowed to fly</span>
+<span class="source-line-no">598</span><span id="line-598">     */</span>
+<span class="source-line-no">599</span><span id="line-599">    public abstract boolean getFlight();</span>
+<span class="source-line-no">600</span><span id="line-600"></span>
+<span class="source-line-no">601</span><span id="line-601">    /**</span>
+<span class="source-line-no">602</span><span id="line-602">     * Sets whether or not this player can fly.</span>
+<span class="source-line-no">603</span><span id="line-603">     *</span>
+<span class="source-line-no">604</span><span id="line-604">     * @param fly {@code true} if the player can fly, otherwise {@code false}</span>
+<span class="source-line-no">605</span><span id="line-605">     */</span>
+<span class="source-line-no">606</span><span id="line-606">    public abstract void setFlight(boolean fly);</span>
+<span class="source-line-no">607</span><span id="line-607"></span>
+<span class="source-line-no">608</span><span id="line-608">    /**</span>
+<span class="source-line-no">609</span><span id="line-609">     * Play music at a location for this player.</span>
+<span class="source-line-no">610</span><span id="line-610">     *</span>
+<span class="source-line-no">611</span><span id="line-611">     * @param location where to play the music</span>
+<span class="source-line-no">612</span><span id="line-612">     * @param id       the record item id</span>
+<span class="source-line-no">613</span><span id="line-613">     */</span>
+<span class="source-line-no">614</span><span id="line-614">    public abstract void playMusic(@NonNull Location location, @NonNull ItemType id);</span>
+<span class="source-line-no">615</span><span id="line-615"></span>
+<span class="source-line-no">616</span><span id="line-616">    /**</span>
+<span class="source-line-no">617</span><span id="line-617">     * Check if this player is banned.</span>
+<span class="source-line-no">618</span><span id="line-618">     *</span>
+<span class="source-line-no">619</span><span id="line-619">     * @return {@code true} if the player is banned, {@code false} otherwise.</span>
+<span class="source-line-no">620</span><span id="line-620">     */</span>
+<span class="source-line-no">621</span><span id="line-621">    public abstract boolean isBanned();</span>
+<span class="source-line-no">622</span><span id="line-622"></span>
+<span class="source-line-no">623</span><span id="line-623">    /**</span>
+<span class="source-line-no">624</span><span id="line-624">     * Kick this player from the game.</span>
+<span class="source-line-no">625</span><span id="line-625">     *</span>
+<span class="source-line-no">626</span><span id="line-626">     * @param message the reason for the kick</span>
+<span class="source-line-no">627</span><span id="line-627">     */</span>
+<span class="source-line-no">628</span><span id="line-628">    public abstract void kick(String message);</span>
+<span class="source-line-no">629</span><span id="line-629"></span>
+<span class="source-line-no">630</span><span id="line-630">    public void refreshDebug() {</span>
+<span class="source-line-no">631</span><span id="line-631">        final boolean debug = this.getAttribute("debug");</span>
+<span class="source-line-no">632</span><span id="line-632">        if (debug &amp;&amp; !debugModeEnabled.contains(this)) {</span>
+<span class="source-line-no">633</span><span id="line-633">            debugModeEnabled.add(this);</span>
+<span class="source-line-no">634</span><span id="line-634">        } else if (!debug) {</span>
+<span class="source-line-no">635</span><span id="line-635">            debugModeEnabled.remove(this);</span>
+<span class="source-line-no">636</span><span id="line-636">        }</span>
+<span class="source-line-no">637</span><span id="line-637">    }</span>
+<span class="source-line-no">638</span><span id="line-638"></span>
+<span class="source-line-no">639</span><span id="line-639">    /**</span>
+<span class="source-line-no">640</span><span id="line-640">     * Called when this player quits.</span>
+<span class="source-line-no">641</span><span id="line-641">     */</span>
+<span class="source-line-no">642</span><span id="line-642">    public void unregister() {</span>
+<span class="source-line-no">643</span><span id="line-643">        Plot plot = getCurrentPlot();</span>
+<span class="source-line-no">644</span><span id="line-644">        if (plot != null &amp;&amp; Settings.Enabled_Components.PERSISTENT_META &amp;&amp; plot</span>
+<span class="source-line-no">645</span><span id="line-645">                .getArea() instanceof SinglePlotArea) {</span>
+<span class="source-line-no">646</span><span id="line-646">            PlotId id = plot.getId();</span>
+<span class="source-line-no">647</span><span id="line-647">            int x = id.getX();</span>
+<span class="source-line-no">648</span><span id="line-648">            int z = id.getY();</span>
+<span class="source-line-no">649</span><span id="line-649">            ByteBuffer buffer = ByteBuffer.allocate(14);</span>
+<span class="source-line-no">650</span><span id="line-650">            buffer.putShort((short) x);</span>
+<span class="source-line-no">651</span><span id="line-651">            buffer.putShort((short) z);</span>
+<span class="source-line-no">652</span><span id="line-652">            Location location = getLocation();</span>
+<span class="source-line-no">653</span><span id="line-653">            buffer.putInt(location.getX());</span>
+<span class="source-line-no">654</span><span id="line-654">            buffer.putShort((short) location.getY());</span>
+<span class="source-line-no">655</span><span id="line-655">            buffer.putInt(location.getZ());</span>
+<span class="source-line-no">656</span><span id="line-656">            setPersistentMeta("quitLocV2", buffer.array());</span>
+<span class="source-line-no">657</span><span id="line-657">        } else if (hasPersistentMeta("quitLocV2")) {</span>
+<span class="source-line-no">658</span><span id="line-658">            removePersistentMeta("quitLocV2");</span>
+<span class="source-line-no">659</span><span id="line-659">        }</span>
+<span class="source-line-no">660</span><span id="line-660">        if (plot != null) {</span>
+<span class="source-line-no">661</span><span id="line-661">            this.eventDispatcher.callLeave(this, plot);</span>
+<span class="source-line-no">662</span><span id="line-662">        }</span>
+<span class="source-line-no">663</span><span id="line-663">        if (Settings.Enabled_Components.BAN_DELETER &amp;&amp; isBanned()) {</span>
+<span class="source-line-no">664</span><span id="line-664">            for (Plot owned : getPlots()) {</span>
+<span class="source-line-no">665</span><span id="line-665">                owned.getPlotModificationManager().deletePlot(null, null);</span>
+<span class="source-line-no">666</span><span id="line-666">                LOGGER.info("Plot {} was deleted + cleared due to {} getting banned", owned.getId(), getName());</span>
+<span class="source-line-no">667</span><span id="line-667">            }</span>
+<span class="source-line-no">668</span><span id="line-668">        }</span>
+<span class="source-line-no">669</span><span id="line-669">        if (PlotSquared.platform().expireManager() != null) {</span>
+<span class="source-line-no">670</span><span id="line-670">            PlotSquared.platform().expireManager().storeDate(getUUID(), System.currentTimeMillis());</span>
+<span class="source-line-no">671</span><span id="line-671">        }</span>
+<span class="source-line-no">672</span><span id="line-672">        PlotSquared.platform().playerManager().removePlayer(this);</span>
+<span class="source-line-no">673</span><span id="line-673">        PlotSquared.platform().unregister(this);</span>
+<span class="source-line-no">674</span><span id="line-674"></span>
+<span class="source-line-no">675</span><span id="line-675">        debugModeEnabled.remove(this);</span>
+<span class="source-line-no">676</span><span id="line-676">    }</span>
+<span class="source-line-no">677</span><span id="line-677"></span>
+<span class="source-line-no">678</span><span id="line-678">    /**</span>
+<span class="source-line-no">679</span><span id="line-679">     * Get the amount of clusters this player owns in the specific world.</span>
+<span class="source-line-no">680</span><span id="line-680">     *</span>
+<span class="source-line-no">681</span><span id="line-681">     * @param world world</span>
+<span class="source-line-no">682</span><span id="line-682">     * @return number of clusters owned</span>
+<span class="source-line-no">683</span><span id="line-683">     */</span>
+<span class="source-line-no">684</span><span id="line-684">    public int getPlayerClusterCount(String world) {</span>
+<span class="source-line-no">685</span><span id="line-685">        return PlotSquared.get().getClusters(world).stream()</span>
+<span class="source-line-no">686</span><span id="line-686">                .filter(cluster -&gt; getUUID().equals(cluster.owner)).mapToInt(PlotCluster::getArea)</span>
+<span class="source-line-no">687</span><span id="line-687">                .sum();</span>
+<span class="source-line-no">688</span><span id="line-688">    }</span>
+<span class="source-line-no">689</span><span id="line-689"></span>
+<span class="source-line-no">690</span><span id="line-690">    /**</span>
+<span class="source-line-no">691</span><span id="line-691">     * Get the amount of clusters this player owns.</span>
+<span class="source-line-no">692</span><span id="line-692">     *</span>
+<span class="source-line-no">693</span><span id="line-693">     * @return the number of clusters this player owns</span>
+<span class="source-line-no">694</span><span id="line-694">     */</span>
+<span class="source-line-no">695</span><span id="line-695">    public int getPlayerClusterCount() {</span>
+<span class="source-line-no">696</span><span id="line-696">        final AtomicInteger count = new AtomicInteger();</span>
+<span class="source-line-no">697</span><span id="line-697">        this.plotAreaManager.forEachPlotArea(value -&gt; count.addAndGet(value.getClusters().size()));</span>
+<span class="source-line-no">698</span><span id="line-698">        return count.get();</span>
+<span class="source-line-no">699</span><span id="line-699">    }</span>
+<span class="source-line-no">700</span><span id="line-700"></span>
+<span class="source-line-no">701</span><span id="line-701">    /**</span>
+<span class="source-line-no">702</span><span id="line-702">     * Return a {@code Set} of all plots this player owns in a certain world.</span>
+<span class="source-line-no">703</span><span id="line-703">     *</span>
+<span class="source-line-no">704</span><span id="line-704">     * @param world the world to retrieve plots from</span>
+<span class="source-line-no">705</span><span id="line-705">     * @return a {@code Set} of plots this player owns in the provided world</span>
+<span class="source-line-no">706</span><span id="line-706">     */</span>
+<span class="source-line-no">707</span><span id="line-707">    public Set&lt;Plot&gt; getPlots(String world) {</span>
+<span class="source-line-no">708</span><span id="line-708">        return PlotQuery.newQuery().inWorld(world).ownedBy(getUUID()).asSet();</span>
+<span class="source-line-no">709</span><span id="line-709">    }</span>
+<span class="source-line-no">710</span><span id="line-710"></span>
+<span class="source-line-no">711</span><span id="line-711">    public void populatePersistentMetaMap() {</span>
+<span class="source-line-no">712</span><span id="line-712">        if (Settings.Enabled_Components.PERSISTENT_META) {</span>
+<span class="source-line-no">713</span><span id="line-713">            DBFunc.getPersistentMeta(</span>
+<span class="source-line-no">714</span><span id="line-714">                    getUUID(), new RunnableVal&lt;&gt;() {</span>
+<span class="source-line-no">715</span><span id="line-715">                        @Override</span>
+<span class="source-line-no">716</span><span id="line-716">                        public void run(Map&lt;String, byte[]&gt; value) {</span>
+<span class="source-line-no">717</span><span id="line-717">                            try {</span>
+<span class="source-line-no">718</span><span id="line-718">                                PlotPlayer.this.metaMap = value;</span>
+<span class="source-line-no">719</span><span id="line-719">                                if (value.isEmpty()) {</span>
+<span class="source-line-no">720</span><span id="line-720">                                    return;</span>
+<span class="source-line-no">721</span><span id="line-721">                                }</span>
+<span class="source-line-no">722</span><span id="line-722"></span>
+<span class="source-line-no">723</span><span id="line-723">                                if (PlotPlayer.this.getAttribute("debug")) {</span>
+<span class="source-line-no">724</span><span id="line-724">                                    debugModeEnabled.add(PlotPlayer.this);</span>
+<span class="source-line-no">725</span><span id="line-725">                                }</span>
+<span class="source-line-no">726</span><span id="line-726"></span>
+<span class="source-line-no">727</span><span id="line-727">                                if (!Settings.Teleport.ON_LOGIN) {</span>
+<span class="source-line-no">728</span><span id="line-728">                                    return;</span>
+<span class="source-line-no">729</span><span id="line-729">                                }</span>
+<span class="source-line-no">730</span><span id="line-730">                                PlotAreaManager manager = PlotPlayer.this.plotAreaManager;</span>
+<span class="source-line-no">731</span><span id="line-731"></span>
+<span class="source-line-no">732</span><span id="line-732">                                if (!(manager instanceof SinglePlotAreaManager)) {</span>
+<span class="source-line-no">733</span><span id="line-733">                                    return;</span>
+<span class="source-line-no">734</span><span id="line-734">                                }</span>
+<span class="source-line-no">735</span><span id="line-735">                                PlotArea area = ((SinglePlotAreaManager) manager).getArea();</span>
+<span class="source-line-no">736</span><span id="line-736">                                boolean V2 = false;</span>
+<span class="source-line-no">737</span><span id="line-737">                                byte[] arr = PlotPlayer.this.getPersistentMeta("quitLoc");</span>
+<span class="source-line-no">738</span><span id="line-738">                                if (arr == null) {</span>
+<span class="source-line-no">739</span><span id="line-739">                                    arr = PlotPlayer.this.getPersistentMeta("quitLocV2");</span>
+<span class="source-line-no">740</span><span id="line-740">                                    if (arr == null) {</span>
+<span class="source-line-no">741</span><span id="line-741">                                        return;</span>
+<span class="source-line-no">742</span><span id="line-742">                                    }</span>
+<span class="source-line-no">743</span><span id="line-743">                                    V2 = true;</span>
+<span class="source-line-no">744</span><span id="line-744">                                    removePersistentMeta("quitLocV2");</span>
+<span class="source-line-no">745</span><span id="line-745">                                } else {</span>
+<span class="source-line-no">746</span><span id="line-746">                                    removePersistentMeta("quitLoc");</span>
+<span class="source-line-no">747</span><span id="line-747">                                }</span>
+<span class="source-line-no">748</span><span id="line-748"></span>
+<span class="source-line-no">749</span><span id="line-749">                                if (!getMeta("teleportOnLogin", true)) {</span>
+<span class="source-line-no">750</span><span id="line-750">                                    return;</span>
+<span class="source-line-no">751</span><span id="line-751">                                }</span>
+<span class="source-line-no">752</span><span id="line-752">                                ByteBuffer quitWorld = ByteBuffer.wrap(arr);</span>
+<span class="source-line-no">753</span><span id="line-753">                                final int plotX = quitWorld.getShort();</span>
+<span class="source-line-no">754</span><span id="line-754">                                final int plotZ = quitWorld.getShort();</span>
+<span class="source-line-no">755</span><span id="line-755">                                PlotId id = PlotId.of(plotX, plotZ);</span>
+<span class="source-line-no">756</span><span id="line-756">                                int x = quitWorld.getInt();</span>
+<span class="source-line-no">757</span><span id="line-757">                                int y = V2 ? quitWorld.getShort() : (quitWorld.get() &amp; 0xFF);</span>
+<span class="source-line-no">758</span><span id="line-758">                                int z = quitWorld.getInt();</span>
+<span class="source-line-no">759</span><span id="line-759">                                Plot plot = area.getOwnedPlot(id);</span>
+<span class="source-line-no">760</span><span id="line-760"></span>
+<span class="source-line-no">761</span><span id="line-761">                                if (plot == null) {</span>
+<span class="source-line-no">762</span><span id="line-762">                                    return;</span>
+<span class="source-line-no">763</span><span id="line-763">                                }</span>
+<span class="source-line-no">764</span><span id="line-764"></span>
+<span class="source-line-no">765</span><span id="line-765">                                final Location location = Location.at(plot.getWorldName(), x, y, z);</span>
+<span class="source-line-no">766</span><span id="line-766">                                if (plot.isLoaded()) {</span>
+<span class="source-line-no">767</span><span id="line-767">                                    TaskManager.runTask(() -&gt; {</span>
+<span class="source-line-no">768</span><span id="line-768">                                        if (getMeta("teleportOnLogin", true)) {</span>
+<span class="source-line-no">769</span><span id="line-769">                                            teleport(location, TeleportCause.LOGIN);</span>
+<span class="source-line-no">770</span><span id="line-770">                                            sendMessage(</span>
+<span class="source-line-no">771</span><span id="line-771">                                                    TranslatableCaption.of("teleport.teleported_to_plot"));</span>
+<span class="source-line-no">772</span><span id="line-772">                                        }</span>
+<span class="source-line-no">773</span><span id="line-773">                                    });</span>
+<span class="source-line-no">774</span><span id="line-774">                                } else if (!PlotSquared.get().isMainThread(Thread.currentThread())) {</span>
+<span class="source-line-no">775</span><span id="line-775">                                    if (getMeta("teleportOnLogin", true)) {</span>
+<span class="source-line-no">776</span><span id="line-776">                                        plot.teleportPlayer(</span>
+<span class="source-line-no">777</span><span id="line-777">                                                PlotPlayer.this,</span>
+<span class="source-line-no">778</span><span id="line-778">                                                result -&gt; TaskManager.runTask(() -&gt; {</span>
+<span class="source-line-no">779</span><span id="line-779">                                                    if (getMeta("teleportOnLogin", true)) {</span>
+<span class="source-line-no">780</span><span id="line-780">                                                        if (plot.isLoaded()) {</span>
+<span class="source-line-no">781</span><span id="line-781">                                                            teleport(location, TeleportCause.LOGIN);</span>
+<span class="source-line-no">782</span><span id="line-782">                                                            sendMessage(TranslatableCaption</span>
+<span class="source-line-no">783</span><span id="line-783">                                                                    .of("teleport.teleported_to_plot"));</span>
+<span class="source-line-no">784</span><span id="line-784">                                                        }</span>
+<span class="source-line-no">785</span><span id="line-785">                                                    }</span>
+<span class="source-line-no">786</span><span id="line-786">                                                })</span>
+<span class="source-line-no">787</span><span id="line-787">                                        );</span>
+<span class="source-line-no">788</span><span id="line-788">                                    }</span>
+<span class="source-line-no">789</span><span id="line-789">                                }</span>
+<span class="source-line-no">790</span><span id="line-790">                            } catch (Throwable e) {</span>
+<span class="source-line-no">791</span><span id="line-791">                                LOGGER.error("Error populating persistent meta for player {}", PlotPlayer.this.getName(), e);</span>
+<span class="source-line-no">792</span><span id="line-792">                            }</span>
+<span class="source-line-no">793</span><span id="line-793">                        }</span>
+<span class="source-line-no">794</span><span id="line-794">                    }</span>
+<span class="source-line-no">795</span><span id="line-795">            );</span>
+<span class="source-line-no">796</span><span id="line-796">        }</span>
+<span class="source-line-no">797</span><span id="line-797">    }</span>
+<span class="source-line-no">798</span><span id="line-798"></span>
+<span class="source-line-no">799</span><span id="line-799">    byte[] getPersistentMeta(String key) {</span>
+<span class="source-line-no">800</span><span id="line-800">        return this.metaMap.get(key);</span>
+<span class="source-line-no">801</span><span id="line-801">    }</span>
+<span class="source-line-no">802</span><span id="line-802"></span>
+<span class="source-line-no">803</span><span id="line-803">    Object removePersistentMeta(String key) {</span>
+<span class="source-line-no">804</span><span id="line-804">        final Object old = this.metaMap.remove(key);</span>
+<span class="source-line-no">805</span><span id="line-805">        if (Settings.Enabled_Components.PERSISTENT_META) {</span>
+<span class="source-line-no">806</span><span id="line-806">            DBFunc.removePersistentMeta(getUUID(), key);</span>
+<span class="source-line-no">807</span><span id="line-807">        }</span>
+<span class="source-line-no">808</span><span id="line-808">        return old;</span>
+<span class="source-line-no">809</span><span id="line-809">    }</span>
+<span class="source-line-no">810</span><span id="line-810"></span>
+<span class="source-line-no">811</span><span id="line-811">    /**</span>
+<span class="source-line-no">812</span><span id="line-812">     * Access keyed persistent meta data for this player. This returns a meta data</span>
+<span class="source-line-no">813</span><span id="line-813">     * access instance, that MUST be closed. It is meant to be used with try-with-resources,</span>
+<span class="source-line-no">814</span><span id="line-814">     * like such:</span>
+<span class="source-line-no">815</span><span id="line-815">     * &lt;pre&gt;{@code</span>
+<span class="source-line-no">816</span><span id="line-816">     * try (final MetaDataAccess&lt;Integer&gt; access = player.accessPersistentMetaData(PlayerMetaKeys.GRANTS)) {</span>
+<span class="source-line-no">817</span><span id="line-817">     *     int grants = access.get();</span>
+<span class="source-line-no">818</span><span id="line-818">     *     access.set(grants + 1);</span>
+<span class="source-line-no">819</span><span id="line-819">     * }</span>
+<span class="source-line-no">820</span><span id="line-820">     * }&lt;/pre&gt;</span>
+<span class="source-line-no">821</span><span id="line-821">     *</span>
+<span class="source-line-no">822</span><span id="line-822">     * @param key Meta data key</span>
+<span class="source-line-no">823</span><span id="line-823">     * @param &lt;T&gt; Meta data type</span>
+<span class="source-line-no">824</span><span id="line-824">     * @return Meta data access. MUST be closed after being used</span>
+<span class="source-line-no">825</span><span id="line-825">     */</span>
+<span class="source-line-no">826</span><span id="line-826">    public @NonNull &lt;T&gt; MetaDataAccess&lt;T&gt; accessPersistentMetaData(final @NonNull MetaDataKey&lt;T&gt; key) {</span>
+<span class="source-line-no">827</span><span id="line-827">        return new PersistentMetaDataAccess&lt;&gt;(this, key, this.lockRepository.lock(key.getLockKey()));</span>
+<span class="source-line-no">828</span><span id="line-828">    }</span>
+<span class="source-line-no">829</span><span id="line-829"></span>
+<span class="source-line-no">830</span><span id="line-830">    /**</span>
+<span class="source-line-no">831</span><span id="line-831">     * Access keyed temporary meta data for this player. This returns a meta data</span>
+<span class="source-line-no">832</span><span id="line-832">     * access instance, that MUST be closed. It is meant to be used with try-with-resources,</span>
+<span class="source-line-no">833</span><span id="line-833">     * like such:</span>
+<span class="source-line-no">834</span><span id="line-834">     * &lt;pre&gt;{@code</span>
+<span class="source-line-no">835</span><span id="line-835">     * try (final MetaDataAccess&lt;Integer&gt; access = player.accessTemporaryMetaData(PlayerMetaKeys.GRANTS)) {</span>
+<span class="source-line-no">836</span><span id="line-836">     *     int grants = access.get();</span>
+<span class="source-line-no">837</span><span id="line-837">     *     access.set(grants + 1);</span>
+<span class="source-line-no">838</span><span id="line-838">     * }</span>
+<span class="source-line-no">839</span><span id="line-839">     * }&lt;/pre&gt;</span>
+<span class="source-line-no">840</span><span id="line-840">     *</span>
+<span class="source-line-no">841</span><span id="line-841">     * @param key Meta data key</span>
+<span class="source-line-no">842</span><span id="line-842">     * @param &lt;T&gt; Meta data type</span>
+<span class="source-line-no">843</span><span id="line-843">     * @return Meta data access. MUST be closed after being used</span>
+<span class="source-line-no">844</span><span id="line-844">     */</span>
+<span class="source-line-no">845</span><span id="line-845">    public @NonNull &lt;T&gt; MetaDataAccess&lt;T&gt; accessTemporaryMetaData(final @NonNull MetaDataKey&lt;T&gt; key) {</span>
+<span class="source-line-no">846</span><span id="line-846">        return new TemporaryMetaDataAccess&lt;&gt;(this, key, this.lockRepository.lock(key.getLockKey()));</span>
+<span class="source-line-no">847</span><span id="line-847">    }</span>
+<span class="source-line-no">848</span><span id="line-848"></span>
+<span class="source-line-no">849</span><span id="line-849">    &lt;T&gt; void setPersistentMeta(</span>
+<span class="source-line-no">850</span><span id="line-850">            final @NonNull MetaDataKey&lt;T&gt; key,</span>
+<span class="source-line-no">851</span><span id="line-851">            final @NonNull T value</span>
+<span class="source-line-no">852</span><span id="line-852">    ) {</span>
+<span class="source-line-no">853</span><span id="line-853">        if (key.getType().getRawType().equals(Integer.class)) {</span>
+<span class="source-line-no">854</span><span id="line-854">            this.setPersistentMeta(key.toString(), Ints.toByteArray((int) (Object) value));</span>
+<span class="source-line-no">855</span><span id="line-855">        } else if (key.getType().getRawType().equals(Boolean.class)) {</span>
+<span class="source-line-no">856</span><span id="line-856">            this.setPersistentMeta(key.toString(), ByteArrayUtilities.booleanToBytes((boolean) (Object) value));</span>
+<span class="source-line-no">857</span><span id="line-857">        } else {</span>
+<span class="source-line-no">858</span><span id="line-858">            throw new IllegalArgumentException(String.format("Unknown meta data type '%s'", key.getType()));</span>
+<span class="source-line-no">859</span><span id="line-859">        }</span>
+<span class="source-line-no">860</span><span id="line-860">    }</span>
+<span class="source-line-no">861</span><span id="line-861"></span>
+<span class="source-line-no">862</span><span id="line-862">    @SuppressWarnings("unchecked")</span>
+<span class="source-line-no">863</span><span id="line-863">    @Nullable</span>
+<span class="source-line-no">864</span><span id="line-864">    &lt;T&gt; T getPersistentMeta(final @NonNull MetaDataKey&lt;T&gt; key) {</span>
+<span class="source-line-no">865</span><span id="line-865">        final byte[] value = this.getPersistentMeta(key.toString());</span>
+<span class="source-line-no">866</span><span id="line-866">        if (value == null) {</span>
+<span class="source-line-no">867</span><span id="line-867">            return null;</span>
+<span class="source-line-no">868</span><span id="line-868">        }</span>
+<span class="source-line-no">869</span><span id="line-869">        final Object returnValue;</span>
+<span class="source-line-no">870</span><span id="line-870">        if (key.getType().getRawType().equals(Integer.class)) {</span>
+<span class="source-line-no">871</span><span id="line-871">            returnValue = Ints.fromByteArray(value);</span>
+<span class="source-line-no">872</span><span id="line-872">        } else if (key.getType().getRawType().equals(Boolean.class)) {</span>
+<span class="source-line-no">873</span><span id="line-873">            returnValue = ByteArrayUtilities.bytesToBoolean(value);</span>
+<span class="source-line-no">874</span><span id="line-874">        } else {</span>
+<span class="source-line-no">875</span><span id="line-875">            throw new IllegalArgumentException(String.format("Unknown meta data type '%s'", key.getType()));</span>
+<span class="source-line-no">876</span><span id="line-876">        }</span>
+<span class="source-line-no">877</span><span id="line-877">        return (T) returnValue;</span>
+<span class="source-line-no">878</span><span id="line-878">    }</span>
+<span class="source-line-no">879</span><span id="line-879"></span>
+<span class="source-line-no">880</span><span id="line-880">    void setPersistentMeta(String key, byte[] value) {</span>
+<span class="source-line-no">881</span><span id="line-881">        boolean delete = hasPersistentMeta(key);</span>
+<span class="source-line-no">882</span><span id="line-882">        this.metaMap.put(key, value);</span>
+<span class="source-line-no">883</span><span id="line-883">        if (Settings.Enabled_Components.PERSISTENT_META) {</span>
+<span class="source-line-no">884</span><span id="line-884">            DBFunc.addPersistentMeta(getUUID(), key, value, delete);</span>
+<span class="source-line-no">885</span><span id="line-885">        }</span>
+<span class="source-line-no">886</span><span id="line-886">    }</span>
+<span class="source-line-no">887</span><span id="line-887"></span>
+<span class="source-line-no">888</span><span id="line-888">    /**</span>
+<span class="source-line-no">889</span><span id="line-889">     * Send a title to the player that fades in, in 10 ticks, stays for 50 ticks and fades</span>
+<span class="source-line-no">890</span><span id="line-890">     * out in 20 ticks</span>
+<span class="source-line-no">891</span><span id="line-891">     *</span>
+<span class="source-line-no">892</span><span id="line-892">     * @param title        Title text</span>
+<span class="source-line-no">893</span><span id="line-893">     * @param subtitle     Subtitle text</span>
+<span class="source-line-no">894</span><span id="line-894">     * @param replacements Variable replacements</span>
+<span class="source-line-no">895</span><span id="line-895">     */</span>
+<span class="source-line-no">896</span><span id="line-896">    public void sendTitle(</span>
+<span class="source-line-no">897</span><span id="line-897">            final @NonNull Caption title, final @NonNull Caption subtitle,</span>
+<span class="source-line-no">898</span><span id="line-898">            final @NonNull TagResolver... replacements</span>
+<span class="source-line-no">899</span><span id="line-899">    ) {</span>
+<span class="source-line-no">900</span><span id="line-900">        sendTitle(</span>
+<span class="source-line-no">901</span><span id="line-901">                title,</span>
+<span class="source-line-no">902</span><span id="line-902">                subtitle,</span>
+<span class="source-line-no">903</span><span id="line-903">                Settings.Titles.TITLES_FADE_IN,</span>
+<span class="source-line-no">904</span><span id="line-904">                Settings.Titles.TITLES_STAY,</span>
+<span class="source-line-no">905</span><span id="line-905">                Settings.Titles.TITLES_FADE_OUT,</span>
+<span class="source-line-no">906</span><span id="line-906">                replacements</span>
+<span class="source-line-no">907</span><span id="line-907">        );</span>
+<span class="source-line-no">908</span><span id="line-908">    }</span>
+<span class="source-line-no">909</span><span id="line-909"></span>
+<span class="source-line-no">910</span><span id="line-910">    /**</span>
+<span class="source-line-no">911</span><span id="line-911">     * Send a title to the player</span>
+<span class="source-line-no">912</span><span id="line-912">     *</span>
+<span class="source-line-no">913</span><span id="line-913">     * @param title        Title</span>
+<span class="source-line-no">914</span><span id="line-914">     * @param subtitle     Subtitle</span>
+<span class="source-line-no">915</span><span id="line-915">     * @param fadeIn       Fade in time (in ticks)</span>
+<span class="source-line-no">916</span><span id="line-916">     * @param stay         The title stays for (in ticks)</span>
+<span class="source-line-no">917</span><span id="line-917">     * @param fadeOut      Fade out time (in ticks)</span>
+<span class="source-line-no">918</span><span id="line-918">     * @param replacements Variable replacements</span>
+<span class="source-line-no">919</span><span id="line-919">     */</span>
+<span class="source-line-no">920</span><span id="line-920">    public void sendTitle(</span>
+<span class="source-line-no">921</span><span id="line-921">            final @NonNull Caption title, final @NonNull Caption subtitle,</span>
+<span class="source-line-no">922</span><span id="line-922">            final int fadeIn, final int stay, final int fadeOut,</span>
+<span class="source-line-no">923</span><span id="line-923">            final @NonNull TagResolver... replacements</span>
+<span class="source-line-no">924</span><span id="line-924">    ) {</span>
+<span class="source-line-no">925</span><span id="line-925">        final Component titleComponent = MiniMessage.miniMessage().deserialize(title.getComponent(this), replacements);</span>
+<span class="source-line-no">926</span><span id="line-926">        final Component subtitleComponent =</span>
+<span class="source-line-no">927</span><span id="line-927">                MiniMessage.miniMessage().deserialize(subtitle.getComponent(this), replacements);</span>
+<span class="source-line-no">928</span><span id="line-928">        final Title.Times times = Title.Times.times(</span>
+<span class="source-line-no">929</span><span id="line-929">                Duration.of(Settings.Titles.TITLES_FADE_IN * 50L, ChronoUnit.MILLIS),</span>
+<span class="source-line-no">930</span><span id="line-930">                Duration.of(Settings.Titles.TITLES_STAY * 50L, ChronoUnit.MILLIS),</span>
+<span class="source-line-no">931</span><span id="line-931">                Duration.of(Settings.Titles.TITLES_FADE_OUT * 50L, ChronoUnit.MILLIS)</span>
+<span class="source-line-no">932</span><span id="line-932">        );</span>
+<span class="source-line-no">933</span><span id="line-933">        getAudience().showTitle(Title</span>
+<span class="source-line-no">934</span><span id="line-934">                .title(titleComponent, subtitleComponent, times));</span>
+<span class="source-line-no">935</span><span id="line-935">    }</span>
+<span class="source-line-no">936</span><span id="line-936"></span>
+<span class="source-line-no">937</span><span id="line-937">    /**</span>
+<span class="source-line-no">938</span><span id="line-938">     * Method designed to send an ActionBar to a player.</span>
+<span class="source-line-no">939</span><span id="line-939">     *</span>
+<span class="source-line-no">940</span><span id="line-940">     * @param caption      Caption</span>
+<span class="source-line-no">941</span><span id="line-941">     * @param replacements Variable replacements</span>
+<span class="source-line-no">942</span><span id="line-942">     */</span>
+<span class="source-line-no">943</span><span id="line-943">    public void sendActionBar(</span>
+<span class="source-line-no">944</span><span id="line-944">            final @NonNull Caption caption,</span>
+<span class="source-line-no">945</span><span id="line-945">            final @NonNull TagResolver... replacements</span>
+<span class="source-line-no">946</span><span id="line-946">    ) {</span>
+<span class="source-line-no">947</span><span id="line-947">        String message;</span>
+<span class="source-line-no">948</span><span id="line-948">        try {</span>
+<span class="source-line-no">949</span><span id="line-949">            message = caption.getComponent(this);</span>
+<span class="source-line-no">950</span><span id="line-950">        } catch (final CaptionMap.NoSuchCaptionException exception) {</span>
+<span class="source-line-no">951</span><span id="line-951">            // This sends feedback to the player</span>
+<span class="source-line-no">952</span><span id="line-952">            message = NON_EXISTENT_CAPTION + ((TranslatableCaption) caption).getKey();</span>
+<span class="source-line-no">953</span><span id="line-953">            // And this also prints it to the console</span>
+<span class="source-line-no">954</span><span id="line-954">            exception.printStackTrace();</span>
+<span class="source-line-no">955</span><span id="line-955">        }</span>
+<span class="source-line-no">956</span><span id="line-956">        if (message.isEmpty()) {</span>
+<span class="source-line-no">957</span><span id="line-957">            return;</span>
+<span class="source-line-no">958</span><span id="line-958">        }</span>
+<span class="source-line-no">959</span><span id="line-959">        // Replace placeholders, etc</span>
+<span class="source-line-no">960</span><span id="line-960">        message = CaptionUtility.format(this, message)</span>
+<span class="source-line-no">961</span><span id="line-961">                .replace('\u2010', '%').replace('\u2020', '&amp;').replace('\u2030', '&amp;')</span>
+<span class="source-line-no">962</span><span id="line-962">                .replace("&lt;prefix&gt;", TranslatableCaption.of("core.prefix").getComponent(this));</span>
+<span class="source-line-no">963</span><span id="line-963"></span>
+<span class="source-line-no">964</span><span id="line-964"></span>
+<span class="source-line-no">965</span><span id="line-965">        final Component component = MiniMessage.miniMessage().deserialize(message, replacements);</span>
+<span class="source-line-no">966</span><span id="line-966">        getAudience().sendActionBar(component);</span>
+<span class="source-line-no">967</span><span id="line-967">    }</span>
+<span class="source-line-no">968</span><span id="line-968"></span>
+<span class="source-line-no">969</span><span id="line-969">    @Override</span>
+<span class="source-line-no">970</span><span id="line-970">    public void sendMessage(</span>
+<span class="source-line-no">971</span><span id="line-971">            final @NonNull Caption caption,</span>
+<span class="source-line-no">972</span><span id="line-972">            final @NonNull TagResolver... replacements</span>
+<span class="source-line-no">973</span><span id="line-973">    ) {</span>
+<span class="source-line-no">974</span><span id="line-974">        String message;</span>
+<span class="source-line-no">975</span><span id="line-975">        try {</span>
+<span class="source-line-no">976</span><span id="line-976">            message = caption.getComponent(this);</span>
+<span class="source-line-no">977</span><span id="line-977">        } catch (final CaptionMap.NoSuchCaptionException exception) {</span>
+<span class="source-line-no">978</span><span id="line-978">            // This sends feedback to the player</span>
+<span class="source-line-no">979</span><span id="line-979">            message = NON_EXISTENT_CAPTION + ((TranslatableCaption) caption).getKey();</span>
+<span class="source-line-no">980</span><span id="line-980">            // And this also prints it to the console</span>
+<span class="source-line-no">981</span><span id="line-981">            exception.printStackTrace();</span>
+<span class="source-line-no">982</span><span id="line-982">        }</span>
+<span class="source-line-no">983</span><span id="line-983">        if (message.isEmpty()) {</span>
+<span class="source-line-no">984</span><span id="line-984">            return;</span>
+<span class="source-line-no">985</span><span id="line-985">        }</span>
+<span class="source-line-no">986</span><span id="line-986">        // Replace placeholders, etc</span>
+<span class="source-line-no">987</span><span id="line-987">        message = CaptionUtility.format(this, message)</span>
+<span class="source-line-no">988</span><span id="line-988">                .replace('\u2010', '%').replace('\u2020', '&amp;').replace('\u2030', '&amp;')</span>
+<span class="source-line-no">989</span><span id="line-989">                .replace("&lt;prefix&gt;", TranslatableCaption.of("core.prefix").getComponent(this));</span>
+<span class="source-line-no">990</span><span id="line-990">        // Parse the message</span>
+<span class="source-line-no">991</span><span id="line-991">        final Component component = MiniMessage.miniMessage().deserialize(message, replacements);</span>
+<span class="source-line-no">992</span><span id="line-992">        if (!Objects.equal(component, this.getMeta("lastMessage"))</span>
+<span class="source-line-no">993</span><span id="line-993">                || System.currentTimeMillis() - this.&lt;Long&gt;getMeta("lastMessageTime") &gt; 5000) {</span>
+<span class="source-line-no">994</span><span id="line-994">            setMeta("lastMessage", component);</span>
+<span class="source-line-no">995</span><span id="line-995">            setMeta("lastMessageTime", System.currentTimeMillis());</span>
+<span class="source-line-no">996</span><span id="line-996">            getAudience().sendMessage(component);</span>
+<span class="source-line-no">997</span><span id="line-997">        }</span>
+<span class="source-line-no">998</span><span id="line-998">    }</span>
+<span class="source-line-no">999</span><span id="line-999"></span>
+<span class="source-line-no">1000</span><span id="line-1000">    /**</span>
+<span class="source-line-no">1001</span><span id="line-1001">     * Sends a message to the command caller, when the future is resolved</span>
+<span class="source-line-no">1002</span><span id="line-1002">     *</span>
+<span class="source-line-no">1003</span><span id="line-1003">     * @param caption          Caption to send</span>
+<span class="source-line-no">1004</span><span id="line-1004">     * @param asyncReplacement Async variable replacement</span>
+<span class="source-line-no">1005</span><span id="line-1005">     * @return A Future to be resolved, after the message was sent</span>
+<span class="source-line-no">1006</span><span id="line-1006">     * @since 7.1.0</span>
+<span class="source-line-no">1007</span><span id="line-1007">     */</span>
+<span class="source-line-no">1008</span><span id="line-1008">    public final CompletableFuture&lt;Void&gt; sendMessage(</span>
+<span class="source-line-no">1009</span><span id="line-1009">            @NonNull Caption caption,</span>
+<span class="source-line-no">1010</span><span id="line-1010">            CompletableFuture&lt;@NonNull TagResolver&gt; asyncReplacement</span>
+<span class="source-line-no">1011</span><span id="line-1011">    ) {</span>
+<span class="source-line-no">1012</span><span id="line-1012">        return sendMessage(caption, new CompletableFuture[]{asyncReplacement});</span>
+<span class="source-line-no">1013</span><span id="line-1013">    }</span>
+<span class="source-line-no">1014</span><span id="line-1014"></span>
+<span class="source-line-no">1015</span><span id="line-1015">    /**</span>
+<span class="source-line-no">1016</span><span id="line-1016">     * Sends a message to the command caller, when all futures are resolved</span>
+<span class="source-line-no">1017</span><span id="line-1017">     *</span>
+<span class="source-line-no">1018</span><span id="line-1018">     * @param caption           Caption to send</span>
+<span class="source-line-no">1019</span><span id="line-1019">     * @param asyncReplacements Async variable replacements</span>
+<span class="source-line-no">1020</span><span id="line-1020">     * @param replacements      Sync variable replacements</span>
+<span class="source-line-no">1021</span><span id="line-1021">     * @return A Future to be resolved, after the message was sent</span>
+<span class="source-line-no">1022</span><span id="line-1022">     * @since 7.1.0</span>
+<span class="source-line-no">1023</span><span id="line-1023">     */</span>
+<span class="source-line-no">1024</span><span id="line-1024">    public final CompletableFuture&lt;Void&gt; sendMessage(</span>
+<span class="source-line-no">1025</span><span id="line-1025">            @NonNull Caption caption,</span>
+<span class="source-line-no">1026</span><span id="line-1026">            CompletableFuture&lt;@NonNull TagResolver&gt;[] asyncReplacements,</span>
+<span class="source-line-no">1027</span><span id="line-1027">            @NonNull TagResolver... replacements</span>
+<span class="source-line-no">1028</span><span id="line-1028">    ) {</span>
+<span class="source-line-no">1029</span><span id="line-1029">        return CompletableFuture.allOf(asyncReplacements).whenComplete((unused, throwable) -&gt; {</span>
+<span class="source-line-no">1030</span><span id="line-1030">            Set&lt;TagResolver&gt; resolvers = new HashSet&lt;&gt;(Arrays.asList(replacements));</span>
+<span class="source-line-no">1031</span><span id="line-1031">            if (throwable != null) {</span>
+<span class="source-line-no">1032</span><span id="line-1032">                sendMessage(</span>
+<span class="source-line-no">1033</span><span id="line-1033">                        TranslatableCaption.of("errors.error"),</span>
+<span class="source-line-no">1034</span><span id="line-1034">                        TagResolver.resolver(</span>
+<span class="source-line-no">1035</span><span id="line-1035">                                "value", Tag.inserting(</span>
+<span class="source-line-no">1036</span><span id="line-1036">                                        Component.text("Failed to resolve asynchronous caption replacements")</span>
+<span class="source-line-no">1037</span><span id="line-1037">                                )</span>
+<span class="source-line-no">1038</span><span id="line-1038">                        )</span>
+<span class="source-line-no">1039</span><span id="line-1039">                );</span>
+<span class="source-line-no">1040</span><span id="line-1040">                LOGGER.error("Failed to resolve asynchronous tagresolver(s) for " + caption, throwable);</span>
+<span class="source-line-no">1041</span><span id="line-1041">            } else {</span>
+<span class="source-line-no">1042</span><span id="line-1042">                for (final CompletableFuture&lt;TagResolver&gt; asyncReplacement : asyncReplacements) {</span>
+<span class="source-line-no">1043</span><span id="line-1043">                    resolvers.add(asyncReplacement.join());</span>
+<span class="source-line-no">1044</span><span id="line-1044">                }</span>
+<span class="source-line-no">1045</span><span id="line-1045">            }</span>
+<span class="source-line-no">1046</span><span id="line-1046">            sendMessage(caption, resolvers.toArray(TagResolver[]::new));</span>
+<span class="source-line-no">1047</span><span id="line-1047">        });</span>
+<span class="source-line-no">1048</span><span id="line-1048">    }</span>
+<span class="source-line-no">1049</span><span id="line-1049"></span>
+<span class="source-line-no">1050</span><span id="line-1050">    // Redefine from PermissionHolder as it's required from CommandCaller</span>
+<span class="source-line-no">1051</span><span id="line-1051">    @Override</span>
+<span class="source-line-no">1052</span><span id="line-1052">    public boolean hasPermission(@NonNull String permission) {</span>
+<span class="source-line-no">1053</span><span id="line-1053">        return hasPermission(null, permission);</span>
+<span class="source-line-no">1054</span><span id="line-1054">    }</span>
+<span class="source-line-no">1055</span><span id="line-1055"></span>
+<span class="source-line-no">1056</span><span id="line-1056">    boolean hasPersistentMeta(String key) {</span>
+<span class="source-line-no">1057</span><span id="line-1057">        return this.metaMap.containsKey(key);</span>
+<span class="source-line-no">1058</span><span id="line-1058">    }</span>
+<span class="source-line-no">1059</span><span id="line-1059"></span>
+<span class="source-line-no">1060</span><span id="line-1060">    /**</span>
+<span class="source-line-no">1061</span><span id="line-1061">     * Check if the player is able to see the other player.</span>
+<span class="source-line-no">1062</span><span id="line-1062">     * This does not mean that the other player is in line of sight of the player,</span>
+<span class="source-line-no">1063</span><span id="line-1063">     * but rather that the player is permitted to see the other player.</span>
+<span class="source-line-no">1064</span><span id="line-1064">     *</span>
+<span class="source-line-no">1065</span><span id="line-1065">     * @param other Other player</span>
+<span class="source-line-no">1066</span><span id="line-1066">     * @return {@code true} if the player is able to see the other player, {@code false} if not</span>
+<span class="source-line-no">1067</span><span id="line-1067">     */</span>
+<span class="source-line-no">1068</span><span id="line-1068">    public abstract boolean canSee(PlotPlayer&lt;?&gt; other);</span>
+<span class="source-line-no">1069</span><span id="line-1069"></span>
+<span class="source-line-no">1070</span><span id="line-1070">    public abstract void stopSpectating();</span>
+<span class="source-line-no">1071</span><span id="line-1071"></span>
+<span class="source-line-no">1072</span><span id="line-1072">    public boolean hasDebugMode() {</span>
+<span class="source-line-no">1073</span><span id="line-1073">        return this.getAttribute("debug");</span>
+<span class="source-line-no">1074</span><span id="line-1074">    }</span>
+<span class="source-line-no">1075</span><span id="line-1075"></span>
+<span class="source-line-no">1076</span><span id="line-1076">    @NonNull</span>
+<span class="source-line-no">1077</span><span id="line-1077">    @Override</span>
+<span class="source-line-no">1078</span><span id="line-1078">    public Locale getLocale() {</span>
+<span class="source-line-no">1079</span><span id="line-1079">        if (this.locale == null) {</span>
+<span class="source-line-no">1080</span><span id="line-1080">            this.locale = Locale.forLanguageTag(Settings.Enabled_Components.DEFAULT_LOCALE);</span>
+<span class="source-line-no">1081</span><span id="line-1081">        }</span>
+<span class="source-line-no">1082</span><span id="line-1082">        return this.locale;</span>
+<span class="source-line-no">1083</span><span id="line-1083">    }</span>
+<span class="source-line-no">1084</span><span id="line-1084"></span>
+<span class="source-line-no">1085</span><span id="line-1085">    @Override</span>
+<span class="source-line-no">1086</span><span id="line-1086">    public void setLocale(final @NonNull Locale locale) {</span>
+<span class="source-line-no">1087</span><span id="line-1087">        if (!PlotSquared.get().getCaptionMap(TranslatableCaption.DEFAULT_NAMESPACE).supportsLocale(locale)) {</span>
+<span class="source-line-no">1088</span><span id="line-1088">            this.locale = Locale.forLanguageTag(Settings.Enabled_Components.DEFAULT_LOCALE);</span>
+<span class="source-line-no">1089</span><span id="line-1089">        } else {</span>
+<span class="source-line-no">1090</span><span id="line-1090">            this.locale = locale;</span>
+<span class="source-line-no">1091</span><span id="line-1091">        }</span>
+<span class="source-line-no">1092</span><span id="line-1092">    }</span>
+<span class="source-line-no">1093</span><span id="line-1093"></span>
+<span class="source-line-no">1094</span><span id="line-1094">    @Override</span>
+<span class="source-line-no">1095</span><span id="line-1095">    public int hashCode() {</span>
+<span class="source-line-no">1096</span><span id="line-1096">        if (this.hash == 0 || this.hash == 485) {</span>
+<span class="source-line-no">1097</span><span id="line-1097">            this.hash = 485 + this.getUUID().hashCode();</span>
+<span class="source-line-no">1098</span><span id="line-1098">        }</span>
+<span class="source-line-no">1099</span><span id="line-1099">        return this.hash;</span>
+<span class="source-line-no">1100</span><span id="line-1100">    }</span>
+<span class="source-line-no">1101</span><span id="line-1101"></span>
+<span class="source-line-no">1102</span><span id="line-1102">    @Override</span>
+<span class="source-line-no">1103</span><span id="line-1103">    public boolean equals(final Object obj) {</span>
+<span class="source-line-no">1104</span><span id="line-1104">        if (!(obj instanceof final PlotPlayer&lt;?&gt; other)) {</span>
+<span class="source-line-no">1105</span><span id="line-1105">            return false;</span>
+<span class="source-line-no">1106</span><span id="line-1106">        }</span>
+<span class="source-line-no">1107</span><span id="line-1107">        return this.getUUID().equals(other.getUUID());</span>
+<span class="source-line-no">1108</span><span id="line-1108">    }</span>
+<span class="source-line-no">1109</span><span id="line-1109"></span>
+<span class="source-line-no">1110</span><span id="line-1110">    /**</span>
+<span class="source-line-no">1111</span><span id="line-1111">     * Get the {@link Audience} that represents this plot player</span>
+<span class="source-line-no">1112</span><span id="line-1112">     *</span>
+<span class="source-line-no">1113</span><span id="line-1113">     * @return Player audience</span>
+<span class="source-line-no">1114</span><span id="line-1114">     */</span>
+<span class="source-line-no">1115</span><span id="line-1115">    public @NonNull</span>
+<span class="source-line-no">1116</span><span id="line-1116">    abstract Audience getAudience();</span>
+<span class="source-line-no">1117</span><span id="line-1117"></span>
+<span class="source-line-no">1118</span><span id="line-1118">    /**</span>
+<span class="source-line-no">1119</span><span id="line-1119">     * Get this player's {@link LockRepository}</span>
+<span class="source-line-no">1120</span><span id="line-1120">     *</span>
+<span class="source-line-no">1121</span><span id="line-1121">     * @return Lock repository instance</span>
+<span class="source-line-no">1122</span><span id="line-1122">     */</span>
+<span class="source-line-no">1123</span><span id="line-1123">    public @NonNull LockRepository getLockRepository() {</span>
+<span class="source-line-no">1124</span><span id="line-1124">        return this.lockRepository;</span>
+<span class="source-line-no">1125</span><span id="line-1125">    }</span>
+<span class="source-line-no">1126</span><span id="line-1126"></span>
+<span class="source-line-no">1127</span><span id="line-1127">    /**</span>
+<span class="source-line-no">1128</span><span id="line-1128">     * Removes any effects present of the given type.</span>
+<span class="source-line-no">1129</span><span id="line-1129">     *</span>
+<span class="source-line-no">1130</span><span id="line-1130">     * @param name the name of the type to remove</span>
+<span class="source-line-no">1131</span><span id="line-1131">     * @since 6.10.0</span>
+<span class="source-line-no">1132</span><span id="line-1132">     */</span>
+<span class="source-line-no">1133</span><span id="line-1133">    public abstract void removeEffect(@NonNull String name);</span>
+<span class="source-line-no">1134</span><span id="line-1134"></span>
+<span class="source-line-no">1135</span><span id="line-1135">    @FunctionalInterface</span>
+<span class="source-line-no">1136</span><span id="line-1136">    public interface PlotPlayerConverter&lt;BaseObject&gt; {</span>
+<span class="source-line-no">1137</span><span id="line-1137"></span>
+<span class="source-line-no">1138</span><span id="line-1138">        PlotPlayer&lt;?&gt; convert(BaseObject object);</span>
+<span class="source-line-no">1139</span><span id="line-1139"></span>
+<span class="source-line-no">1140</span><span id="line-1140">    }</span>
+<span class="source-line-no">1141</span><span id="line-1141"></span>
+<span class="source-line-no">1142</span><span id="line-1142">}</span>
 
 
 

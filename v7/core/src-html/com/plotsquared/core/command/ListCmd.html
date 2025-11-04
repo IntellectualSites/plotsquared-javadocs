@@ -163,8 +163,8 @@
 <span class="source-line-no">150</span><span id="line-150">            page = 0;</span>
 <span class="source-line-no">151</span><span id="line-151">        }</span>
 <span class="source-line-no">152</span><span id="line-152"></span>
-<span class="source-line-no">153</span><span id="line-153">        String world = player.getCurrentPlot().getWorldName();</span>
-<span class="source-line-no">154</span><span id="line-154">        PlotArea area = player.getCurrentPlot().getArea();</span>
+<span class="source-line-no">153</span><span id="line-153">        PlotArea area = player.getContextualPlotArea();</span>
+<span class="source-line-no">154</span><span id="line-154">        String world = area != null ? area.getWorldName() : "";</span>
 <span class="source-line-no">155</span><span id="line-155">        String arg = args[0].toLowerCase();</span>
 <span class="source-line-no">156</span><span id="line-156">        final boolean[] sort = new boolean[]{true};</span>
 <span class="source-line-no">157</span><span id="line-157"></span>

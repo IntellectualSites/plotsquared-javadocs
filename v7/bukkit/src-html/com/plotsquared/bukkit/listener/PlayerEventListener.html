@@ -613,7 +613,7 @@
 <span class="source-line-no">600</span><span id="line-600">                PlotArea area = location.getPlotArea();</span>
 <span class="source-line-no">601</span><span id="line-601">                if (area == null) {</span>
 <span class="source-line-no">602</span><span id="line-602">                    if (lastPlot != null) {</span>
-<span class="source-line-no">603</span><span id="line-603">                        plotListener.plotExit(pp, lastPlot);</span>
+<span class="source-line-no">603</span><span id="line-603">                        plotListener.plotExit(pp, lastPlot, null, null);</span>
 <span class="source-line-no">604</span><span id="line-604">                        lastPlotAccess.remove();</span>
 <span class="source-line-no">605</span><span id="line-605">                    }</span>
 <span class="source-line-no">606</span><span id="line-606">                    try (final MetaDataAccess&lt;Location&gt; lastLocationAccess =</span>
@@ -766,7 +766,7 @@
 <span class="source-line-no">753</span><span id="line-753">            if (now == null) {</span>
 <span class="source-line-no">754</span><span id="line-754">                try (final MetaDataAccess&lt;Boolean&gt; kickAccess =</span>
 <span class="source-line-no">755</span><span id="line-755">                             pp.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_KICK)) {</span>
-<span class="source-line-no">756</span><span id="line-756">                    if (lastPlot != null &amp;&amp; !plotListener.plotExit(pp, lastPlot) &amp;&amp; this.tmpTeleport &amp;&amp; !kickAccess.get().orElse(</span>
+<span class="source-line-no">756</span><span id="line-756">                    if (lastPlot != null &amp;&amp; !plotListener.plotExit(pp, lastPlot, now, area) &amp;&amp; this.tmpTeleport &amp;&amp; !kickAccess.get().orElse(</span>
 <span class="source-line-no">757</span><span id="line-757">                            false)) {</span>
 <span class="source-line-no">758</span><span id="line-758">                        pp.sendMessage(</span>
 <span class="source-line-no">759</span><span id="line-759">                                TranslatableCaption.of("permission.no_permission_event"),</span>
@@ -860,7 +860,7 @@
 <span class="source-line-no">847</span><span id="line-847">            if (plot == null) {</span>
 <span class="source-line-no">848</span><span id="line-848">                try (final MetaDataAccess&lt;Boolean&gt; kickAccess =</span>
 <span class="source-line-no">849</span><span id="line-849">                             pp.accessTemporaryMetaData(PlayerMetaDataKeys.TEMPORARY_KICK)) {</span>
-<span class="source-line-no">850</span><span id="line-850">                    if (lastPlot != null &amp;&amp; !plotListener.plotExit(pp, lastPlot) &amp;&amp; this.tmpTeleport &amp;&amp; !kickAccess.get().orElse(</span>
+<span class="source-line-no">850</span><span id="line-850">                    if (lastPlot != null &amp;&amp; !plotListener.plotExit(pp, lastPlot, null, area) &amp;&amp; this.tmpTeleport &amp;&amp; !kickAccess.get().orElse(</span>
 <span class="source-line-no">851</span><span id="line-851">                            false)) {</span>
 <span class="source-line-no">852</span><span id="line-852">                        pp.sendMessage(</span>
 <span class="source-line-no">853</span><span id="line-853">                                TranslatableCaption.of("permission.no_permission_event"),</span>

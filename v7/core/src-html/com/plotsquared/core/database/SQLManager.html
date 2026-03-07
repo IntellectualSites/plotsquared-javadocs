@@ -402,7 +402,7 @@
 <span class="source-line-no">389</span><span id="line-389">        }</span>
 <span class="source-line-no">390</span><span id="line-390">    }</span>
 <span class="source-line-no">391</span><span id="line-391"></span>
-<span class="source-line-no">392</span><span id="line-392">    public boolean sendBatch() {</span>
+<span class="source-line-no">392</span><span id="line-392">    public synchronized boolean sendBatch() {</span>
 <span class="source-line-no">393</span><span id="line-393">        try {</span>
 <span class="source-line-no">394</span><span id="line-394">            if (!getGlobalTasks().isEmpty()) {</span>
 <span class="source-line-no">395</span><span id="line-395">                if (this.connection.getAutoCommit()) {</span>

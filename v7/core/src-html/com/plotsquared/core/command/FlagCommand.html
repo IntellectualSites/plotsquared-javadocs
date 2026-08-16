@@ -186,11 +186,11 @@
 <span class="source-line-no">173</span><span id="line-173">    }</span>
 <span class="source-line-no">174</span><span id="line-174"></span>
 <span class="source-line-no">175</span><span id="line-175">    /**</span>
-<span class="source-line-no">176</span><span id="line-176">     * Checks if the player is allowed to modify the flags at their current location</span>
+<span class="source-line-no">176</span><span id="line-176">     * Checks if the player is allowed to interact with flags at their current location</span>
 <span class="source-line-no">177</span><span id="line-177">     *</span>
 <span class="source-line-no">178</span><span id="line-178">     * @return {@code true} if the player is allowed to modify the flags at their current location</span>
 <span class="source-line-no">179</span><span id="line-179">     */</span>
-<span class="source-line-no">180</span><span id="line-180">    private static boolean checkRequirements(final @NonNull PlotPlayer&lt;?&gt; player) {</span>
+<span class="source-line-no">180</span><span id="line-180">    private static boolean checkRequirements(final @NonNull PlotPlayer&lt;?&gt; player, final @NonNull Permission permissionIfNotOwner) {</span>
 <span class="source-line-no">181</span><span id="line-181">        final Plot plot = player.getCurrentPlot();</span>
 <span class="source-line-no">182</span><span id="line-182">        if (plot == null) {</span>
 <span class="source-line-no">183</span><span id="line-183">            player.sendMessage(TranslatableCaption.of("errors.not_in_plot"));</span>
@@ -200,10 +200,10 @@
 <span class="source-line-no">187</span><span id="line-187">            player.sendMessage(TranslatableCaption.of("working.plot_not_claimed"));</span>
 <span class="source-line-no">188</span><span id="line-188">            return false;</span>
 <span class="source-line-no">189</span><span id="line-189">        }</span>
-<span class="source-line-no">190</span><span id="line-190">        if (!plot.isOwner(player.getUUID()) &amp;&amp; !player.hasPermission(Permission.PERMISSION_SET_FLAG_OTHER)) {</span>
+<span class="source-line-no">190</span><span id="line-190">        if (!plot.isOwner(player.getUUID()) &amp;&amp; !player.hasPermission(permissionIfNotOwner)) {</span>
 <span class="source-line-no">191</span><span id="line-191">            player.sendMessage(</span>
 <span class="source-line-no">192</span><span id="line-192">                    TranslatableCaption.of("permission.no_permission"),</span>
-<span class="source-line-no">193</span><span id="line-193">                    TagResolver.resolver("node", Tag.inserting(Permission.PERMISSION_SET_FLAG_OTHER))</span>
+<span class="source-line-no">193</span><span id="line-193">                    TagResolver.resolver("node", Tag.inserting(permissionIfNotOwner))</span>
 <span class="source-line-no">194</span><span id="line-194">            );</span>
 <span class="source-line-no">195</span><span id="line-195">            return false;</span>
 <span class="source-line-no">196</span><span id="line-196">        }</span>
@@ -341,7 +341,7 @@
 <span class="source-line-no">328</span><span id="line-328">            final RunnableVal3&lt;Command, Runnable, Runnable&gt; confirm,</span>
 <span class="source-line-no">329</span><span id="line-329">            final RunnableVal2&lt;Command, CommandResult&gt; whenDone</span>
 <span class="source-line-no">330</span><span id="line-330">    ) {</span>
-<span class="source-line-no">331</span><span id="line-331">        if (!checkRequirements(player)) {</span>
+<span class="source-line-no">331</span><span id="line-331">        if (!checkRequirements(player, Permission.PERMISSION_SET_FLAG_OTHER)) {</span>
 <span class="source-line-no">332</span><span id="line-332">            return;</span>
 <span class="source-line-no">333</span><span id="line-333">        }</span>
 <span class="source-line-no">334</span><span id="line-334">        if (args.length &lt; 2) {</span>
@@ -406,7 +406,7 @@
 <span class="source-line-no">393</span><span id="line-393">            final RunnableVal3&lt;Command, Runnable, Runnable&gt; confirm,</span>
 <span class="source-line-no">394</span><span id="line-394">            final RunnableVal2&lt;Command, CommandResult&gt; whenDone</span>
 <span class="source-line-no">395</span><span id="line-395">    ) {</span>
-<span class="source-line-no">396</span><span id="line-396">        if (!checkRequirements(player)) {</span>
+<span class="source-line-no">396</span><span id="line-396">        if (!checkRequirements(player, Permission.PERMISSION_SET_FLAG_OTHER)) {</span>
 <span class="source-line-no">397</span><span id="line-397">            return;</span>
 <span class="source-line-no">398</span><span id="line-398">        }</span>
 <span class="source-line-no">399</span><span id="line-399">        if (args.length &lt; 2) {</span>
@@ -481,7 +481,7 @@
 <span class="source-line-no">468</span><span id="line-468">            final RunnableVal3&lt;Command, Runnable, Runnable&gt; confirm,</span>
 <span class="source-line-no">469</span><span id="line-469">            final RunnableVal2&lt;Command, CommandResult&gt; whenDone</span>
 <span class="source-line-no">470</span><span id="line-470">    ) {</span>
-<span class="source-line-no">471</span><span id="line-471">        if (!checkRequirements(player)) {</span>
+<span class="source-line-no">471</span><span id="line-471">        if (!checkRequirements(player, Permission.PERMISSION_SET_FLAG_OTHER)) {</span>
 <span class="source-line-no">472</span><span id="line-472">            return;</span>
 <span class="source-line-no">473</span><span id="line-473">        }</span>
 <span class="source-line-no">474</span><span id="line-474">        if (args.length != 1 &amp;&amp; args.length != 2) {</span>
@@ -608,7 +608,7 @@
 <span class="source-line-no">595</span><span id="line-595">            final RunnableVal3&lt;Command, Runnable, Runnable&gt; confirm,</span>
 <span class="source-line-no">596</span><span id="line-596">            final RunnableVal2&lt;Command, CommandResult&gt; whenDone</span>
 <span class="source-line-no">597</span><span id="line-597">    ) {</span>
-<span class="source-line-no">598</span><span id="line-598">        if (!checkRequirements(player)) {</span>
+<span class="source-line-no">598</span><span id="line-598">        if (!checkRequirements(player, Permission.PERMISSION_FLAG_LIST_OTHER)) {</span>
 <span class="source-line-no">599</span><span id="line-599">            return;</span>
 <span class="source-line-no">600</span><span id="line-600">        }</span>
 <span class="source-line-no">601</span><span id="line-601"></span>
@@ -658,7 +658,7 @@
 <span class="source-line-no">645</span><span id="line-645">            final RunnableVal3&lt;Command, Runnable, Runnable&gt; confirm,</span>
 <span class="source-line-no">646</span><span id="line-646">            final RunnableVal2&lt;Command, CommandResult&gt; whenDone</span>
 <span class="source-line-no">647</span><span id="line-647">    ) {</span>
-<span class="source-line-no">648</span><span id="line-648">        if (!checkRequirements(player)) {</span>
+<span class="source-line-no">648</span><span id="line-648">        if (!checkRequirements(player, Permission.PERMISSION_SET_FLAG_OTHER)) {</span>
 <span class="source-line-no">649</span><span id="line-649">            return;</span>
 <span class="source-line-no">650</span><span id="line-650">        }</span>
 <span class="source-line-no">651</span><span id="line-651">        if (args.length &lt; 1) {</span>

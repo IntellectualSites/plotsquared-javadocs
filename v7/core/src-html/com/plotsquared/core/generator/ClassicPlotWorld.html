@@ -177,15 +177,18 @@
 <span class="source-line-no">164</span><span id="line-164">                : getMinBuildHeight();</span>
 <span class="source-line-no">165</span><span id="line-165">    }</span>
 <span class="source-line-no">166</span><span id="line-166"></span>
-<span class="source-line-no">167</span><span id="line-167">    int schematicStartHeight() {</span>
-<span class="source-line-no">168</span><span id="line-168">        int plotRoadMin = Math.min(PLOT_HEIGHT, ROAD_HEIGHT);</span>
-<span class="source-line-no">169</span><span id="line-169">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
-<span class="source-line-no">170</span><span id="line-170">            return plotRoadMin;</span>
-<span class="source-line-no">171</span><span id="line-171">        }</span>
-<span class="source-line-no">172</span><span id="line-172">        return Math.min(WALL_HEIGHT, plotRoadMin);</span>
-<span class="source-line-no">173</span><span id="line-173">    }</span>
-<span class="source-line-no">174</span><span id="line-174"></span>
-<span class="source-line-no">175</span><span id="line-175">}</span>
+<span class="source-line-no">167</span><span id="line-167">    /**</span>
+<span class="source-line-no">168</span><span id="line-168">     * Get the lowest height of plot, road, and wall. Accounts for {@link Settings.Schematics#USE_WALL_IN_ROAD_SCHEM_HEIGHT}</span>
+<span class="source-line-no">169</span><span id="line-169">     */</span>
+<span class="source-line-no">170</span><span id="line-170">    int schematicStartHeight() {</span>
+<span class="source-line-no">171</span><span id="line-171">        int plotRoadMin = Math.min(PLOT_HEIGHT, ROAD_HEIGHT);</span>
+<span class="source-line-no">172</span><span id="line-172">        if (!Settings.Schematics.USE_WALL_IN_ROAD_SCHEM_HEIGHT) {</span>
+<span class="source-line-no">173</span><span id="line-173">            return plotRoadMin;</span>
+<span class="source-line-no">174</span><span id="line-174">        }</span>
+<span class="source-line-no">175</span><span id="line-175">        return Math.min(WALL_HEIGHT, plotRoadMin);</span>
+<span class="source-line-no">176</span><span id="line-176">    }</span>
+<span class="source-line-no">177</span><span id="line-177"></span>
+<span class="source-line-no">178</span><span id="line-178">}</span>
 
 
 

@@ -63,7 +63,7 @@
 <span class="source-line-no">050</span><span id="line-50">    @Override</span>
 <span class="source-line-no">051</span><span id="line-51">    public void populate(@NonNull World world, @NonNull Random random, @NonNull Chunk source) {</span>
 <span class="source-line-no">052</span><span id="line-52">        QueueCoordinator queue = PlotSquared.platform().globalBlockQueue().getNewQueue(BukkitAdapter.adapt(world));</span>
-<span class="source-line-no">053</span><span id="line-53">        // The chunk is already loaded and we do not want to load the chunk in "fully" by using any PaperLib methods.</span>
+<span class="source-line-no">053</span><span id="line-53">        // The chunk is already loaded and we do not want to load the chunk in "fully" by using any Paper methods.</span>
 <span class="source-line-no">054</span><span id="line-54">        queue.setForceSync(true);</span>
 <span class="source-line-no">055</span><span id="line-55">        queue.setSideEffectSet(SideEffectSet.none());</span>
 <span class="source-line-no">056</span><span id="line-56">        queue.setBiomesEnabled(false);</span>

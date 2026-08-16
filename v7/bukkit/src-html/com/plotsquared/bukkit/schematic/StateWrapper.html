@@ -34,16 +34,16 @@
 <span class="source-line-no">021</span><span id="line-21">import com.destroystokyo.paper.profile.PlayerProfile;</span>
 <span class="source-line-no">022</span><span id="line-22">import com.destroystokyo.paper.profile.ProfileProperty;</span>
 <span class="source-line-no">023</span><span id="line-23">import com.plotsquared.bukkit.util.BukkitUtil;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.sk89q.jnbt.ByteTag;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.sk89q.jnbt.CompoundTag;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.sk89q.jnbt.ListTag;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.sk89q.jnbt.ShortTag;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.sk89q.jnbt.StringTag;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.sk89q.jnbt.Tag;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.sk89q.worldedit.blocks.BaseItemStack;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.sk89q.worldedit.bukkit.BukkitAdapter;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.sk89q.worldedit.world.item.ItemType;</span>
-<span class="source-line-no">033</span><span id="line-33">import io.papermc.lib.PaperLib;</span>
+<span class="source-line-no">024</span><span id="line-24">import com.plotsquared.bukkit.util.PaperSupport;</span>
+<span class="source-line-no">025</span><span id="line-25">import com.sk89q.jnbt.ByteTag;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.sk89q.jnbt.CompoundTag;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.sk89q.jnbt.ListTag;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.sk89q.jnbt.ShortTag;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.sk89q.jnbt.StringTag;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.sk89q.jnbt.Tag;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.sk89q.worldedit.blocks.BaseItemStack;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.sk89q.worldedit.bukkit.BukkitAdapter;</span>
+<span class="source-line-no">033</span><span id="line-33">import com.sk89q.worldedit.world.item.ItemType;</span>
 <span class="source-line-no">034</span><span id="line-34">import org.apache.logging.log4j.LogManager;</span>
 <span class="source-line-no">035</span><span id="line-35">import org.apache.logging.log4j.Logger;</span>
 <span class="source-line-no">036</span><span id="line-36">import org.bukkit.Bukkit;</span>
@@ -283,7 +283,7 @@
 <span class="source-line-no">270</span><span id="line-270">                    if (textureValue == null) {</span>
 <span class="source-line-no">271</span><span id="line-271">                        return false;</span>
 <span class="source-line-no">272</span><span id="line-272">                    }</span>
-<span class="source-line-no">273</span><span id="line-273">                    if (!PaperLib.isPaper()) {</span>
+<span class="source-line-no">273</span><span id="line-273">                    if (!PaperSupport.isPaper()) {</span>
 <span class="source-line-no">274</span><span id="line-274">                        if (!paperErrorTextureSent) {</span>
 <span class="source-line-no">275</span><span id="line-275">                            paperErrorTextureSent = true;</span>
 <span class="source-line-no">276</span><span id="line-276">                            LOGGER.error("Failed to populate skull data in your road schematic - This is a Spigot limitation.");</span>

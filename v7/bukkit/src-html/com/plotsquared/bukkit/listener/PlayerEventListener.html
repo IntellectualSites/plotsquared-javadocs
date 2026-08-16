@@ -37,200 +37,200 @@
 <span class="source-line-no">024</span><span id="line-24">import com.plotsquared.bukkit.player.BukkitPlayer;</span>
 <span class="source-line-no">025</span><span id="line-25">import com.plotsquared.bukkit.util.BukkitEntityUtil;</span>
 <span class="source-line-no">026</span><span id="line-26">import com.plotsquared.bukkit.util.BukkitUtil;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.plotsquared.bukkit.util.UpdateUtility;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.plotsquared.core.PlotSquared;</span>
-<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.core.configuration.Settings;</span>
-<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.core.configuration.caption.Caption;</span>
-<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.core.configuration.caption.TranslatableCaption;</span>
-<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.core.listener.PlayerBlockEventType;</span>
-<span class="source-line-no">033</span><span id="line-33">import com.plotsquared.core.listener.PlotListener;</span>
-<span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.location.Location;</span>
-<span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.permissions.Permission;</span>
-<span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.player.ConsolePlayer;</span>
-<span class="source-line-no">037</span><span id="line-37">import com.plotsquared.core.player.MetaDataAccess;</span>
-<span class="source-line-no">038</span><span id="line-38">import com.plotsquared.core.player.PlayerMetaDataKeys;</span>
-<span class="source-line-no">039</span><span id="line-39">import com.plotsquared.core.player.PlotPlayer;</span>
-<span class="source-line-no">040</span><span id="line-40">import com.plotsquared.core.plot.Plot;</span>
-<span class="source-line-no">041</span><span id="line-41">import com.plotsquared.core.plot.PlotArea;</span>
-<span class="source-line-no">042</span><span id="line-42">import com.plotsquared.core.plot.PlotId;</span>
-<span class="source-line-no">043</span><span id="line-43">import com.plotsquared.core.plot.PlotInventory;</span>
-<span class="source-line-no">044</span><span id="line-44">import com.plotsquared.core.plot.flag.FlagContainer;</span>
-<span class="source-line-no">045</span><span id="line-45">import com.plotsquared.core.plot.flag.implementations.AnimalInteractFlag;</span>
-<span class="source-line-no">046</span><span id="line-46">import com.plotsquared.core.plot.flag.implementations.BlockedCmdsFlag;</span>
-<span class="source-line-no">047</span><span id="line-47">import com.plotsquared.core.plot.flag.implementations.ChatFlag;</span>
-<span class="source-line-no">048</span><span id="line-48">import com.plotsquared.core.plot.flag.implementations.DenyPortalTravelFlag;</span>
-<span class="source-line-no">049</span><span id="line-49">import com.plotsquared.core.plot.flag.implementations.DenyPortalsFlag;</span>
-<span class="source-line-no">050</span><span id="line-50">import com.plotsquared.core.plot.flag.implementations.DenyTeleportFlag;</span>
-<span class="source-line-no">051</span><span id="line-51">import com.plotsquared.core.plot.flag.implementations.DoneFlag;</span>
-<span class="source-line-no">052</span><span id="line-52">import com.plotsquared.core.plot.flag.implementations.DropProtectionFlag;</span>
-<span class="source-line-no">053</span><span id="line-53">import com.plotsquared.core.plot.flag.implementations.EditSignFlag;</span>
-<span class="source-line-no">054</span><span id="line-54">import com.plotsquared.core.plot.flag.implementations.HangingBreakFlag;</span>
-<span class="source-line-no">055</span><span id="line-55">import com.plotsquared.core.plot.flag.implementations.HangingPlaceFlag;</span>
-<span class="source-line-no">056</span><span id="line-56">import com.plotsquared.core.plot.flag.implementations.HostileInteractFlag;</span>
-<span class="source-line-no">057</span><span id="line-57">import com.plotsquared.core.plot.flag.implementations.InteractionInteractFlag;</span>
-<span class="source-line-no">058</span><span id="line-58">import com.plotsquared.core.plot.flag.implementations.ItemDropFlag;</span>
-<span class="source-line-no">059</span><span id="line-59">import com.plotsquared.core.plot.flag.implementations.KeepInventoryFlag;</span>
-<span class="source-line-no">060</span><span id="line-60">import com.plotsquared.core.plot.flag.implementations.LecternReadBookFlag;</span>
-<span class="source-line-no">061</span><span id="line-61">import com.plotsquared.core.plot.flag.implementations.MiscInteractFlag;</span>
-<span class="source-line-no">062</span><span id="line-62">import com.plotsquared.core.plot.flag.implementations.PlayerInteractFlag;</span>
-<span class="source-line-no">063</span><span id="line-63">import com.plotsquared.core.plot.flag.implementations.PreventCreativeCopyFlag;</span>
-<span class="source-line-no">064</span><span id="line-64">import com.plotsquared.core.plot.flag.implementations.TamedInteractFlag;</span>
-<span class="source-line-no">065</span><span id="line-65">import com.plotsquared.core.plot.flag.implementations.TileDropFlag;</span>
-<span class="source-line-no">066</span><span id="line-66">import com.plotsquared.core.plot.flag.implementations.UntrustedVisitFlag;</span>
-<span class="source-line-no">067</span><span id="line-67">import com.plotsquared.core.plot.flag.implementations.UseFlag;</span>
-<span class="source-line-no">068</span><span id="line-68">import com.plotsquared.core.plot.flag.implementations.VehicleBreakFlag;</span>
-<span class="source-line-no">069</span><span id="line-69">import com.plotsquared.core.plot.flag.implementations.VehicleUseFlag;</span>
-<span class="source-line-no">070</span><span id="line-70">import com.plotsquared.core.plot.flag.implementations.VillagerInteractFlag;</span>
-<span class="source-line-no">071</span><span id="line-71">import com.plotsquared.core.plot.flag.types.BlockTypeWrapper;</span>
-<span class="source-line-no">072</span><span id="line-72">import com.plotsquared.core.plot.world.PlotAreaManager;</span>
-<span class="source-line-no">073</span><span id="line-73">import com.plotsquared.core.util.EventDispatcher;</span>
-<span class="source-line-no">074</span><span id="line-74">import com.plotsquared.core.util.MathMan;</span>
-<span class="source-line-no">075</span><span id="line-75">import com.plotsquared.core.util.PlotFlagUtil;</span>
-<span class="source-line-no">076</span><span id="line-76">import com.plotsquared.core.util.PremiumVerification;</span>
-<span class="source-line-no">077</span><span id="line-77">import com.plotsquared.core.util.entity.EntityCategories;</span>
-<span class="source-line-no">078</span><span id="line-78">import com.plotsquared.core.util.task.TaskManager;</span>
-<span class="source-line-no">079</span><span id="line-79">import com.plotsquared.core.util.task.TaskTime;</span>
-<span class="source-line-no">080</span><span id="line-80">import com.sk89q.worldedit.WorldEdit;</span>
-<span class="source-line-no">081</span><span id="line-81">import com.sk89q.worldedit.bukkit.BukkitAdapter;</span>
-<span class="source-line-no">082</span><span id="line-82">import com.sk89q.worldedit.util.Enums;</span>
-<span class="source-line-no">083</span><span id="line-83">import com.sk89q.worldedit.world.block.BlockType;</span>
-<span class="source-line-no">084</span><span id="line-84">import com.sk89q.worldedit.world.block.BlockTypes;</span>
-<span class="source-line-no">085</span><span id="line-85">import io.papermc.lib.PaperLib;</span>
-<span class="source-line-no">086</span><span id="line-86">import net.kyori.adventure.text.Component;</span>
-<span class="source-line-no">087</span><span id="line-87">import net.kyori.adventure.text.minimessage.MiniMessage;</span>
-<span class="source-line-no">088</span><span id="line-88">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
-<span class="source-line-no">089</span><span id="line-89">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
-<span class="source-line-no">090</span><span id="line-90">import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;</span>
-<span class="source-line-no">091</span><span id="line-91">import org.bukkit.Bukkit;</span>
-<span class="source-line-no">092</span><span id="line-92">import org.bukkit.FluidCollisionMode;</span>
-<span class="source-line-no">093</span><span id="line-93">import org.bukkit.Material;</span>
-<span class="source-line-no">094</span><span id="line-94">import org.bukkit.block.Block;</span>
-<span class="source-line-no">095</span><span id="line-95">import org.bukkit.block.BlockState;</span>
-<span class="source-line-no">096</span><span id="line-96">import org.bukkit.block.Sign;</span>
-<span class="source-line-no">097</span><span id="line-97">import org.bukkit.command.PluginCommand;</span>
-<span class="source-line-no">098</span><span id="line-98">import org.bukkit.entity.ArmorStand;</span>
-<span class="source-line-no">099</span><span id="line-99">import org.bukkit.entity.Boat;</span>
-<span class="source-line-no">100</span><span id="line-100">import org.bukkit.entity.Entity;</span>
-<span class="source-line-no">101</span><span id="line-101">import org.bukkit.entity.EntityType;</span>
-<span class="source-line-no">102</span><span id="line-102">import org.bukkit.entity.HumanEntity;</span>
-<span class="source-line-no">103</span><span id="line-103">import org.bukkit.entity.ItemFrame;</span>
-<span class="source-line-no">104</span><span id="line-104">import org.bukkit.entity.LivingEntity;</span>
-<span class="source-line-no">105</span><span id="line-105">import org.bukkit.entity.Player;</span>
-<span class="source-line-no">106</span><span id="line-106">import org.bukkit.entity.Projectile;</span>
-<span class="source-line-no">107</span><span id="line-107">import org.bukkit.entity.Tameable;</span>
-<span class="source-line-no">108</span><span id="line-108">import org.bukkit.entity.Vehicle;</span>
-<span class="source-line-no">109</span><span id="line-109">import org.bukkit.event.Event;</span>
-<span class="source-line-no">110</span><span id="line-110">import org.bukkit.event.EventHandler;</span>
-<span class="source-line-no">111</span><span id="line-111">import org.bukkit.event.EventPriority;</span>
-<span class="source-line-no">112</span><span id="line-112">import org.bukkit.event.Listener;</span>
-<span class="source-line-no">113</span><span id="line-113">import org.bukkit.event.block.Action;</span>
-<span class="source-line-no">114</span><span id="line-114">import org.bukkit.event.block.BlockBreakEvent;</span>
-<span class="source-line-no">115</span><span id="line-115">import org.bukkit.event.entity.EntityPickupItemEvent;</span>
-<span class="source-line-no">116</span><span id="line-116">import org.bukkit.event.entity.EntityPlaceEvent;</span>
-<span class="source-line-no">117</span><span id="line-117">import org.bukkit.event.entity.EntityPotionEffectEvent;</span>
-<span class="source-line-no">118</span><span id="line-118">import org.bukkit.event.entity.PlayerDeathEvent;</span>
-<span class="source-line-no">119</span><span id="line-119">import org.bukkit.event.hanging.HangingBreakByEntityEvent;</span>
-<span class="source-line-no">120</span><span id="line-120">import org.bukkit.event.hanging.HangingPlaceEvent;</span>
-<span class="source-line-no">121</span><span id="line-121">import org.bukkit.event.inventory.ClickType;</span>
-<span class="source-line-no">122</span><span id="line-122">import org.bukkit.event.inventory.InventoryClickEvent;</span>
-<span class="source-line-no">123</span><span id="line-123">import org.bukkit.event.inventory.InventoryCloseEvent;</span>
-<span class="source-line-no">124</span><span id="line-124">import org.bukkit.event.player.AsyncPlayerChatEvent;</span>
-<span class="source-line-no">125</span><span id="line-125">import org.bukkit.event.player.AsyncPlayerPreLoginEvent;</span>
-<span class="source-line-no">126</span><span id="line-126">import org.bukkit.event.player.PlayerBucketEmptyEvent;</span>
-<span class="source-line-no">127</span><span id="line-127">import org.bukkit.event.player.PlayerBucketFillEvent;</span>
-<span class="source-line-no">128</span><span id="line-128">import org.bukkit.event.player.PlayerChangedWorldEvent;</span>
-<span class="source-line-no">129</span><span id="line-129">import org.bukkit.event.player.PlayerCommandPreprocessEvent;</span>
-<span class="source-line-no">130</span><span id="line-130">import org.bukkit.event.player.PlayerDropItemEvent;</span>
-<span class="source-line-no">131</span><span id="line-131">import org.bukkit.event.player.PlayerEvent;</span>
-<span class="source-line-no">132</span><span id="line-132">import org.bukkit.event.player.PlayerInteractAtEntityEvent;</span>
-<span class="source-line-no">133</span><span id="line-133">import org.bukkit.event.player.PlayerInteractEntityEvent;</span>
-<span class="source-line-no">134</span><span id="line-134">import org.bukkit.event.player.PlayerInteractEvent;</span>
-<span class="source-line-no">135</span><span id="line-135">import org.bukkit.event.player.PlayerJoinEvent;</span>
-<span class="source-line-no">136</span><span id="line-136">import org.bukkit.event.player.PlayerLocaleChangeEvent;</span>
-<span class="source-line-no">137</span><span id="line-137">import org.bukkit.event.player.PlayerMoveEvent;</span>
-<span class="source-line-no">138</span><span id="line-138">import org.bukkit.event.player.PlayerPortalEvent;</span>
-<span class="source-line-no">139</span><span id="line-139">import org.bukkit.event.player.PlayerQuitEvent;</span>
-<span class="source-line-no">140</span><span id="line-140">import org.bukkit.event.player.PlayerRespawnEvent;</span>
-<span class="source-line-no">141</span><span id="line-141">import org.bukkit.event.player.PlayerTakeLecternBookEvent;</span>
-<span class="source-line-no">142</span><span id="line-142">import org.bukkit.event.player.PlayerTeleportEvent;</span>
-<span class="source-line-no">143</span><span id="line-143">import org.bukkit.event.vehicle.VehicleDestroyEvent;</span>
-<span class="source-line-no">144</span><span id="line-144">import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;</span>
-<span class="source-line-no">145</span><span id="line-145">import org.bukkit.event.vehicle.VehicleMoveEvent;</span>
-<span class="source-line-no">146</span><span id="line-146">import org.bukkit.event.world.PortalCreateEvent;</span>
-<span class="source-line-no">147</span><span id="line-147">import org.bukkit.help.HelpTopic;</span>
-<span class="source-line-no">148</span><span id="line-148">import org.bukkit.inventory.ItemStack;</span>
-<span class="source-line-no">149</span><span id="line-149">import org.bukkit.inventory.PlayerInventory;</span>
-<span class="source-line-no">150</span><span id="line-150">import org.bukkit.inventory.meta.ItemMeta;</span>
-<span class="source-line-no">151</span><span id="line-151">import org.bukkit.metadata.FixedMetadataValue;</span>
-<span class="source-line-no">152</span><span id="line-152">import org.bukkit.metadata.MetadataValue;</span>
-<span class="source-line-no">153</span><span id="line-153">import org.bukkit.plugin.Plugin;</span>
-<span class="source-line-no">154</span><span id="line-154">import org.bukkit.potion.PotionEffect;</span>
-<span class="source-line-no">155</span><span id="line-155">import org.bukkit.util.Vector;</span>
-<span class="source-line-no">156</span><span id="line-156">import org.checkerframework.checker.nullness.qual.NonNull;</span>
-<span class="source-line-no">157</span><span id="line-157"></span>
-<span class="source-line-no">158</span><span id="line-158">import java.lang.reflect.Field;</span>
-<span class="source-line-no">159</span><span id="line-159">import java.util.Collections;</span>
-<span class="source-line-no">160</span><span id="line-160">import java.util.HashSet;</span>
-<span class="source-line-no">161</span><span id="line-161">import java.util.List;</span>
-<span class="source-line-no">162</span><span id="line-162">import java.util.Locale;</span>
-<span class="source-line-no">163</span><span id="line-163">import java.util.Objects;</span>
-<span class="source-line-no">164</span><span id="line-164">import java.util.Optional;</span>
-<span class="source-line-no">165</span><span id="line-165">import java.util.Set;</span>
-<span class="source-line-no">166</span><span id="line-166">import java.util.UUID;</span>
-<span class="source-line-no">167</span><span id="line-167"></span>
-<span class="source-line-no">168</span><span id="line-168">/**</span>
-<span class="source-line-no">169</span><span id="line-169"> * Player Events involving plots.</span>
-<span class="source-line-no">170</span><span id="line-170"> */</span>
-<span class="source-line-no">171</span><span id="line-171">@SuppressWarnings("unused")</span>
-<span class="source-line-no">172</span><span id="line-172">public class PlayerEventListener implements Listener {</span>
-<span class="source-line-no">173</span><span id="line-173"></span>
-<span class="source-line-no">174</span><span id="line-174">    private static final Set&lt;Material&gt; MINECARTS = Set.of(</span>
-<span class="source-line-no">175</span><span id="line-175">            Material.MINECART,</span>
-<span class="source-line-no">176</span><span id="line-176">            Material.TNT_MINECART,</span>
-<span class="source-line-no">177</span><span id="line-177">            Material.CHEST_MINECART,</span>
-<span class="source-line-no">178</span><span id="line-178">            Material.COMMAND_BLOCK_MINECART,</span>
-<span class="source-line-no">179</span><span id="line-179">            Material.FURNACE_MINECART,</span>
-<span class="source-line-no">180</span><span id="line-180">            Material.HOPPER_MINECART</span>
-<span class="source-line-no">181</span><span id="line-181">    );</span>
-<span class="source-line-no">182</span><span id="line-182">    private static final Set&lt;Material&gt; BOOKS = Set.of(</span>
-<span class="source-line-no">183</span><span id="line-183">            Material.BOOK,</span>
-<span class="source-line-no">184</span><span id="line-184">            Material.KNOWLEDGE_BOOK,</span>
-<span class="source-line-no">185</span><span id="line-185">            Material.WRITABLE_BOOK,</span>
-<span class="source-line-no">186</span><span id="line-186">            Material.WRITTEN_BOOK</span>
-<span class="source-line-no">187</span><span id="line-187">    );</span>
-<span class="source-line-no">188</span><span id="line-188"></span>
-<span class="source-line-no">189</span><span id="line-189">    /**</span>
-<span class="source-line-no">190</span><span id="line-190">     * The correct EntityType for End Crystal, determined once at class loading time.</span>
-<span class="source-line-no">191</span><span id="line-191">     * Tries END_CRYSTAL first (1.21+), falls back to ENDER_CRYSTAL (1.20.4 and older).</span>
-<span class="source-line-no">192</span><span id="line-192">     */</span>
-<span class="source-line-no">193</span><span id="line-193">    private static final EntityType END_CRYSTAL_ENTITY_TYPE = Objects.requireNonNull(</span>
-<span class="source-line-no">194</span><span id="line-194">            Enums.findByValue(EntityType.class, "END_CRYSTAL", "ENDER_CRYSTAL")</span>
-<span class="source-line-no">195</span><span id="line-195">    );</span>
-<span class="source-line-no">196</span><span id="line-196"></span>
-<span class="source-line-no">197</span><span id="line-197">    private static final Set&lt;String&gt; DYES;</span>
-<span class="source-line-no">198</span><span id="line-198"></span>
-<span class="source-line-no">199</span><span id="line-199">    static {</span>
-<span class="source-line-no">200</span><span id="line-200">        Set&lt;String&gt; mutableDyes = new HashSet&lt;&gt;(Set.of(</span>
-<span class="source-line-no">201</span><span id="line-201">                "WHITE_DYE",</span>
-<span class="source-line-no">202</span><span id="line-202">                "LIGHT_GRAY_DYE",</span>
-<span class="source-line-no">203</span><span id="line-203">                "GRAY_DYE",</span>
-<span class="source-line-no">204</span><span id="line-204">                "BLACK_DYE",</span>
-<span class="source-line-no">205</span><span id="line-205">                "BROWN_DYE",</span>
-<span class="source-line-no">206</span><span id="line-206">                "RED_DYE",</span>
-<span class="source-line-no">207</span><span id="line-207">                "ORANGE_DYE",</span>
-<span class="source-line-no">208</span><span id="line-208">                "YELLOW_DYE",</span>
-<span class="source-line-no">209</span><span id="line-209">                "LIME_DYE",</span>
-<span class="source-line-no">210</span><span id="line-210">                "GREEN_DYE",</span>
-<span class="source-line-no">211</span><span id="line-211">                "CYAN_DYE",</span>
-<span class="source-line-no">212</span><span id="line-212">                "LIGHT_BLUE_DYE",</span>
-<span class="source-line-no">213</span><span id="line-213">                "BLUE_DYE",</span>
-<span class="source-line-no">214</span><span id="line-214">                "PURPLE_DYE",</span>
-<span class="source-line-no">215</span><span id="line-215">                "MAGENTA_DYE",</span>
-<span class="source-line-no">216</span><span id="line-216">                "PINK_DYE",</span>
-<span class="source-line-no">217</span><span id="line-217">                "GLOW_INK_SAC"</span>
-<span class="source-line-no">218</span><span id="line-218">        ));</span>
-<span class="source-line-no">219</span><span id="line-219">        int[] version = PlotSquared.platform().serverVersion();</span>
-<span class="source-line-no">220</span><span id="line-220">        if (version[1] &gt;= 20) {</span>
+<span class="source-line-no">027</span><span id="line-27">import com.plotsquared.bukkit.util.PaperSupport;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.plotsquared.bukkit.util.UpdateUtility;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.core.PlotSquared;</span>
+<span class="source-line-no">030</span><span id="line-30">import com.plotsquared.core.configuration.Settings;</span>
+<span class="source-line-no">031</span><span id="line-31">import com.plotsquared.core.configuration.caption.Caption;</span>
+<span class="source-line-no">032</span><span id="line-32">import com.plotsquared.core.configuration.caption.TranslatableCaption;</span>
+<span class="source-line-no">033</span><span id="line-33">import com.plotsquared.core.listener.PlayerBlockEventType;</span>
+<span class="source-line-no">034</span><span id="line-34">import com.plotsquared.core.listener.PlotListener;</span>
+<span class="source-line-no">035</span><span id="line-35">import com.plotsquared.core.location.Location;</span>
+<span class="source-line-no">036</span><span id="line-36">import com.plotsquared.core.permissions.Permission;</span>
+<span class="source-line-no">037</span><span id="line-37">import com.plotsquared.core.player.ConsolePlayer;</span>
+<span class="source-line-no">038</span><span id="line-38">import com.plotsquared.core.player.MetaDataAccess;</span>
+<span class="source-line-no">039</span><span id="line-39">import com.plotsquared.core.player.PlayerMetaDataKeys;</span>
+<span class="source-line-no">040</span><span id="line-40">import com.plotsquared.core.player.PlotPlayer;</span>
+<span class="source-line-no">041</span><span id="line-41">import com.plotsquared.core.plot.Plot;</span>
+<span class="source-line-no">042</span><span id="line-42">import com.plotsquared.core.plot.PlotArea;</span>
+<span class="source-line-no">043</span><span id="line-43">import com.plotsquared.core.plot.PlotId;</span>
+<span class="source-line-no">044</span><span id="line-44">import com.plotsquared.core.plot.PlotInventory;</span>
+<span class="source-line-no">045</span><span id="line-45">import com.plotsquared.core.plot.flag.FlagContainer;</span>
+<span class="source-line-no">046</span><span id="line-46">import com.plotsquared.core.plot.flag.implementations.AnimalInteractFlag;</span>
+<span class="source-line-no">047</span><span id="line-47">import com.plotsquared.core.plot.flag.implementations.BlockedCmdsFlag;</span>
+<span class="source-line-no">048</span><span id="line-48">import com.plotsquared.core.plot.flag.implementations.ChatFlag;</span>
+<span class="source-line-no">049</span><span id="line-49">import com.plotsquared.core.plot.flag.implementations.DenyPortalTravelFlag;</span>
+<span class="source-line-no">050</span><span id="line-50">import com.plotsquared.core.plot.flag.implementations.DenyPortalsFlag;</span>
+<span class="source-line-no">051</span><span id="line-51">import com.plotsquared.core.plot.flag.implementations.DenyTeleportFlag;</span>
+<span class="source-line-no">052</span><span id="line-52">import com.plotsquared.core.plot.flag.implementations.DoneFlag;</span>
+<span class="source-line-no">053</span><span id="line-53">import com.plotsquared.core.plot.flag.implementations.DropProtectionFlag;</span>
+<span class="source-line-no">054</span><span id="line-54">import com.plotsquared.core.plot.flag.implementations.EditSignFlag;</span>
+<span class="source-line-no">055</span><span id="line-55">import com.plotsquared.core.plot.flag.implementations.HangingBreakFlag;</span>
+<span class="source-line-no">056</span><span id="line-56">import com.plotsquared.core.plot.flag.implementations.HangingPlaceFlag;</span>
+<span class="source-line-no">057</span><span id="line-57">import com.plotsquared.core.plot.flag.implementations.HostileInteractFlag;</span>
+<span class="source-line-no">058</span><span id="line-58">import com.plotsquared.core.plot.flag.implementations.InteractionInteractFlag;</span>
+<span class="source-line-no">059</span><span id="line-59">import com.plotsquared.core.plot.flag.implementations.ItemDropFlag;</span>
+<span class="source-line-no">060</span><span id="line-60">import com.plotsquared.core.plot.flag.implementations.KeepInventoryFlag;</span>
+<span class="source-line-no">061</span><span id="line-61">import com.plotsquared.core.plot.flag.implementations.LecternReadBookFlag;</span>
+<span class="source-line-no">062</span><span id="line-62">import com.plotsquared.core.plot.flag.implementations.MiscInteractFlag;</span>
+<span class="source-line-no">063</span><span id="line-63">import com.plotsquared.core.plot.flag.implementations.PlayerInteractFlag;</span>
+<span class="source-line-no">064</span><span id="line-64">import com.plotsquared.core.plot.flag.implementations.PreventCreativeCopyFlag;</span>
+<span class="source-line-no">065</span><span id="line-65">import com.plotsquared.core.plot.flag.implementations.TamedInteractFlag;</span>
+<span class="source-line-no">066</span><span id="line-66">import com.plotsquared.core.plot.flag.implementations.TileDropFlag;</span>
+<span class="source-line-no">067</span><span id="line-67">import com.plotsquared.core.plot.flag.implementations.UntrustedVisitFlag;</span>
+<span class="source-line-no">068</span><span id="line-68">import com.plotsquared.core.plot.flag.implementations.UseFlag;</span>
+<span class="source-line-no">069</span><span id="line-69">import com.plotsquared.core.plot.flag.implementations.VehicleBreakFlag;</span>
+<span class="source-line-no">070</span><span id="line-70">import com.plotsquared.core.plot.flag.implementations.VehicleUseFlag;</span>
+<span class="source-line-no">071</span><span id="line-71">import com.plotsquared.core.plot.flag.implementations.VillagerInteractFlag;</span>
+<span class="source-line-no">072</span><span id="line-72">import com.plotsquared.core.plot.flag.types.BlockTypeWrapper;</span>
+<span class="source-line-no">073</span><span id="line-73">import com.plotsquared.core.plot.world.PlotAreaManager;</span>
+<span class="source-line-no">074</span><span id="line-74">import com.plotsquared.core.util.EventDispatcher;</span>
+<span class="source-line-no">075</span><span id="line-75">import com.plotsquared.core.util.MathMan;</span>
+<span class="source-line-no">076</span><span id="line-76">import com.plotsquared.core.util.MinecraftVersion;</span>
+<span class="source-line-no">077</span><span id="line-77">import com.plotsquared.core.util.PlotFlagUtil;</span>
+<span class="source-line-no">078</span><span id="line-78">import com.plotsquared.core.util.PremiumVerification;</span>
+<span class="source-line-no">079</span><span id="line-79">import com.plotsquared.core.util.entity.EntityCategories;</span>
+<span class="source-line-no">080</span><span id="line-80">import com.plotsquared.core.util.task.TaskManager;</span>
+<span class="source-line-no">081</span><span id="line-81">import com.plotsquared.core.util.task.TaskTime;</span>
+<span class="source-line-no">082</span><span id="line-82">import com.sk89q.worldedit.WorldEdit;</span>
+<span class="source-line-no">083</span><span id="line-83">import com.sk89q.worldedit.bukkit.BukkitAdapter;</span>
+<span class="source-line-no">084</span><span id="line-84">import com.sk89q.worldedit.util.Enums;</span>
+<span class="source-line-no">085</span><span id="line-85">import com.sk89q.worldedit.world.block.BlockType;</span>
+<span class="source-line-no">086</span><span id="line-86">import com.sk89q.worldedit.world.block.BlockTypes;</span>
+<span class="source-line-no">087</span><span id="line-87">import net.kyori.adventure.text.Component;</span>
+<span class="source-line-no">088</span><span id="line-88">import net.kyori.adventure.text.minimessage.MiniMessage;</span>
+<span class="source-line-no">089</span><span id="line-89">import net.kyori.adventure.text.minimessage.tag.Tag;</span>
+<span class="source-line-no">090</span><span id="line-90">import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;</span>
+<span class="source-line-no">091</span><span id="line-91">import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;</span>
+<span class="source-line-no">092</span><span id="line-92">import org.bukkit.Bukkit;</span>
+<span class="source-line-no">093</span><span id="line-93">import org.bukkit.FluidCollisionMode;</span>
+<span class="source-line-no">094</span><span id="line-94">import org.bukkit.Material;</span>
+<span class="source-line-no">095</span><span id="line-95">import org.bukkit.block.Block;</span>
+<span class="source-line-no">096</span><span id="line-96">import org.bukkit.block.BlockState;</span>
+<span class="source-line-no">097</span><span id="line-97">import org.bukkit.block.Sign;</span>
+<span class="source-line-no">098</span><span id="line-98">import org.bukkit.command.PluginCommand;</span>
+<span class="source-line-no">099</span><span id="line-99">import org.bukkit.entity.ArmorStand;</span>
+<span class="source-line-no">100</span><span id="line-100">import org.bukkit.entity.Boat;</span>
+<span class="source-line-no">101</span><span id="line-101">import org.bukkit.entity.Entity;</span>
+<span class="source-line-no">102</span><span id="line-102">import org.bukkit.entity.EntityType;</span>
+<span class="source-line-no">103</span><span id="line-103">import org.bukkit.entity.HumanEntity;</span>
+<span class="source-line-no">104</span><span id="line-104">import org.bukkit.entity.ItemFrame;</span>
+<span class="source-line-no">105</span><span id="line-105">import org.bukkit.entity.LivingEntity;</span>
+<span class="source-line-no">106</span><span id="line-106">import org.bukkit.entity.Player;</span>
+<span class="source-line-no">107</span><span id="line-107">import org.bukkit.entity.Projectile;</span>
+<span class="source-line-no">108</span><span id="line-108">import org.bukkit.entity.Tameable;</span>
+<span class="source-line-no">109</span><span id="line-109">import org.bukkit.entity.Vehicle;</span>
+<span class="source-line-no">110</span><span id="line-110">import org.bukkit.event.Event;</span>
+<span class="source-line-no">111</span><span id="line-111">import org.bukkit.event.EventHandler;</span>
+<span class="source-line-no">112</span><span id="line-112">import org.bukkit.event.EventPriority;</span>
+<span class="source-line-no">113</span><span id="line-113">import org.bukkit.event.Listener;</span>
+<span class="source-line-no">114</span><span id="line-114">import org.bukkit.event.block.Action;</span>
+<span class="source-line-no">115</span><span id="line-115">import org.bukkit.event.block.BlockBreakEvent;</span>
+<span class="source-line-no">116</span><span id="line-116">import org.bukkit.event.entity.EntityPickupItemEvent;</span>
+<span class="source-line-no">117</span><span id="line-117">import org.bukkit.event.entity.EntityPlaceEvent;</span>
+<span class="source-line-no">118</span><span id="line-118">import org.bukkit.event.entity.EntityPotionEffectEvent;</span>
+<span class="source-line-no">119</span><span id="line-119">import org.bukkit.event.entity.PlayerDeathEvent;</span>
+<span class="source-line-no">120</span><span id="line-120">import org.bukkit.event.hanging.HangingBreakByEntityEvent;</span>
+<span class="source-line-no">121</span><span id="line-121">import org.bukkit.event.hanging.HangingPlaceEvent;</span>
+<span class="source-line-no">122</span><span id="line-122">import org.bukkit.event.inventory.ClickType;</span>
+<span class="source-line-no">123</span><span id="line-123">import org.bukkit.event.inventory.InventoryClickEvent;</span>
+<span class="source-line-no">124</span><span id="line-124">import org.bukkit.event.inventory.InventoryCloseEvent;</span>
+<span class="source-line-no">125</span><span id="line-125">import org.bukkit.event.player.AsyncPlayerChatEvent;</span>
+<span class="source-line-no">126</span><span id="line-126">import org.bukkit.event.player.AsyncPlayerPreLoginEvent;</span>
+<span class="source-line-no">127</span><span id="line-127">import org.bukkit.event.player.PlayerBucketEmptyEvent;</span>
+<span class="source-line-no">128</span><span id="line-128">import org.bukkit.event.player.PlayerBucketFillEvent;</span>
+<span class="source-line-no">129</span><span id="line-129">import org.bukkit.event.player.PlayerChangedWorldEvent;</span>
+<span class="source-line-no">130</span><span id="line-130">import org.bukkit.event.player.PlayerCommandPreprocessEvent;</span>
+<span class="source-line-no">131</span><span id="line-131">import org.bukkit.event.player.PlayerDropItemEvent;</span>
+<span class="source-line-no">132</span><span id="line-132">import org.bukkit.event.player.PlayerEvent;</span>
+<span class="source-line-no">133</span><span id="line-133">import org.bukkit.event.player.PlayerInteractAtEntityEvent;</span>
+<span class="source-line-no">134</span><span id="line-134">import org.bukkit.event.player.PlayerInteractEntityEvent;</span>
+<span class="source-line-no">135</span><span id="line-135">import org.bukkit.event.player.PlayerInteractEvent;</span>
+<span class="source-line-no">136</span><span id="line-136">import org.bukkit.event.player.PlayerJoinEvent;</span>
+<span class="source-line-no">137</span><span id="line-137">import org.bukkit.event.player.PlayerLocaleChangeEvent;</span>
+<span class="source-line-no">138</span><span id="line-138">import org.bukkit.event.player.PlayerMoveEvent;</span>
+<span class="source-line-no">139</span><span id="line-139">import org.bukkit.event.player.PlayerPortalEvent;</span>
+<span class="source-line-no">140</span><span id="line-140">import org.bukkit.event.player.PlayerQuitEvent;</span>
+<span class="source-line-no">141</span><span id="line-141">import org.bukkit.event.player.PlayerRespawnEvent;</span>
+<span class="source-line-no">142</span><span id="line-142">import org.bukkit.event.player.PlayerTakeLecternBookEvent;</span>
+<span class="source-line-no">143</span><span id="line-143">import org.bukkit.event.player.PlayerTeleportEvent;</span>
+<span class="source-line-no">144</span><span id="line-144">import org.bukkit.event.vehicle.VehicleDestroyEvent;</span>
+<span class="source-line-no">145</span><span id="line-145">import org.bukkit.event.vehicle.VehicleEntityCollisionEvent;</span>
+<span class="source-line-no">146</span><span id="line-146">import org.bukkit.event.vehicle.VehicleMoveEvent;</span>
+<span class="source-line-no">147</span><span id="line-147">import org.bukkit.event.world.PortalCreateEvent;</span>
+<span class="source-line-no">148</span><span id="line-148">import org.bukkit.help.HelpTopic;</span>
+<span class="source-line-no">149</span><span id="line-149">import org.bukkit.inventory.ItemStack;</span>
+<span class="source-line-no">150</span><span id="line-150">import org.bukkit.inventory.PlayerInventory;</span>
+<span class="source-line-no">151</span><span id="line-151">import org.bukkit.inventory.meta.ItemMeta;</span>
+<span class="source-line-no">152</span><span id="line-152">import org.bukkit.metadata.FixedMetadataValue;</span>
+<span class="source-line-no">153</span><span id="line-153">import org.bukkit.metadata.MetadataValue;</span>
+<span class="source-line-no">154</span><span id="line-154">import org.bukkit.plugin.Plugin;</span>
+<span class="source-line-no">155</span><span id="line-155">import org.bukkit.potion.PotionEffect;</span>
+<span class="source-line-no">156</span><span id="line-156">import org.bukkit.util.Vector;</span>
+<span class="source-line-no">157</span><span id="line-157">import org.checkerframework.checker.nullness.qual.NonNull;</span>
+<span class="source-line-no">158</span><span id="line-158"></span>
+<span class="source-line-no">159</span><span id="line-159">import java.lang.reflect.Field;</span>
+<span class="source-line-no">160</span><span id="line-160">import java.util.Collections;</span>
+<span class="source-line-no">161</span><span id="line-161">import java.util.HashSet;</span>
+<span class="source-line-no">162</span><span id="line-162">import java.util.List;</span>
+<span class="source-line-no">163</span><span id="line-163">import java.util.Locale;</span>
+<span class="source-line-no">164</span><span id="line-164">import java.util.Objects;</span>
+<span class="source-line-no">165</span><span id="line-165">import java.util.Optional;</span>
+<span class="source-line-no">166</span><span id="line-166">import java.util.Set;</span>
+<span class="source-line-no">167</span><span id="line-167">import java.util.UUID;</span>
+<span class="source-line-no">168</span><span id="line-168"></span>
+<span class="source-line-no">169</span><span id="line-169">/**</span>
+<span class="source-line-no">170</span><span id="line-170"> * Player Events involving plots.</span>
+<span class="source-line-no">171</span><span id="line-171"> */</span>
+<span class="source-line-no">172</span><span id="line-172">@SuppressWarnings("unused")</span>
+<span class="source-line-no">173</span><span id="line-173">public class PlayerEventListener implements Listener {</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175">    private static final Set&lt;Material&gt; MINECARTS = Set.of(</span>
+<span class="source-line-no">176</span><span id="line-176">            Material.MINECART,</span>
+<span class="source-line-no">177</span><span id="line-177">            Material.TNT_MINECART,</span>
+<span class="source-line-no">178</span><span id="line-178">            Material.CHEST_MINECART,</span>
+<span class="source-line-no">179</span><span id="line-179">            Material.COMMAND_BLOCK_MINECART,</span>
+<span class="source-line-no">180</span><span id="line-180">            Material.FURNACE_MINECART,</span>
+<span class="source-line-no">181</span><span id="line-181">            Material.HOPPER_MINECART</span>
+<span class="source-line-no">182</span><span id="line-182">    );</span>
+<span class="source-line-no">183</span><span id="line-183">    private static final Set&lt;Material&gt; BOOKS = Set.of(</span>
+<span class="source-line-no">184</span><span id="line-184">            Material.BOOK,</span>
+<span class="source-line-no">185</span><span id="line-185">            Material.KNOWLEDGE_BOOK,</span>
+<span class="source-line-no">186</span><span id="line-186">            Material.WRITABLE_BOOK,</span>
+<span class="source-line-no">187</span><span id="line-187">            Material.WRITTEN_BOOK</span>
+<span class="source-line-no">188</span><span id="line-188">    );</span>
+<span class="source-line-no">189</span><span id="line-189"></span>
+<span class="source-line-no">190</span><span id="line-190">    /**</span>
+<span class="source-line-no">191</span><span id="line-191">     * The correct EntityType for End Crystal, determined once at class loading time.</span>
+<span class="source-line-no">192</span><span id="line-192">     * Tries END_CRYSTAL first (1.21+), falls back to ENDER_CRYSTAL (1.20.4 and older).</span>
+<span class="source-line-no">193</span><span id="line-193">     */</span>
+<span class="source-line-no">194</span><span id="line-194">    private static final EntityType END_CRYSTAL_ENTITY_TYPE = Objects.requireNonNull(</span>
+<span class="source-line-no">195</span><span id="line-195">            Enums.findByValue(EntityType.class, "END_CRYSTAL", "ENDER_CRYSTAL")</span>
+<span class="source-line-no">196</span><span id="line-196">    );</span>
+<span class="source-line-no">197</span><span id="line-197"></span>
+<span class="source-line-no">198</span><span id="line-198">    private static final Set&lt;String&gt; DYES;</span>
+<span class="source-line-no">199</span><span id="line-199"></span>
+<span class="source-line-no">200</span><span id="line-200">    static {</span>
+<span class="source-line-no">201</span><span id="line-201">        Set&lt;String&gt; mutableDyes = new HashSet&lt;&gt;(Set.of(</span>
+<span class="source-line-no">202</span><span id="line-202">                "WHITE_DYE",</span>
+<span class="source-line-no">203</span><span id="line-203">                "LIGHT_GRAY_DYE",</span>
+<span class="source-line-no">204</span><span id="line-204">                "GRAY_DYE",</span>
+<span class="source-line-no">205</span><span id="line-205">                "BLACK_DYE",</span>
+<span class="source-line-no">206</span><span id="line-206">                "BROWN_DYE",</span>
+<span class="source-line-no">207</span><span id="line-207">                "RED_DYE",</span>
+<span class="source-line-no">208</span><span id="line-208">                "ORANGE_DYE",</span>
+<span class="source-line-no">209</span><span id="line-209">                "YELLOW_DYE",</span>
+<span class="source-line-no">210</span><span id="line-210">                "LIME_DYE",</span>
+<span class="source-line-no">211</span><span id="line-211">                "GREEN_DYE",</span>
+<span class="source-line-no">212</span><span id="line-212">                "CYAN_DYE",</span>
+<span class="source-line-no">213</span><span id="line-213">                "LIGHT_BLUE_DYE",</span>
+<span class="source-line-no">214</span><span id="line-214">                "BLUE_DYE",</span>
+<span class="source-line-no">215</span><span id="line-215">                "PURPLE_DYE",</span>
+<span class="source-line-no">216</span><span id="line-216">                "MAGENTA_DYE",</span>
+<span class="source-line-no">217</span><span id="line-217">                "PINK_DYE",</span>
+<span class="source-line-no">218</span><span id="line-218">                "GLOW_INK_SAC"</span>
+<span class="source-line-no">219</span><span id="line-219">        ));</span>
+<span class="source-line-no">220</span><span id="line-220">        if (MinecraftVersion.current().isNewerOrEqualThan(MinecraftVersion.TRAILS_AND_TALES)) {</span>
 <span class="source-line-no">221</span><span id="line-221">            mutableDyes.add("HONEYCOMB");</span>
 <span class="source-line-no">222</span><span id="line-222">        }</span>
 <span class="source-line-no">223</span><span id="line-223">        DYES = Set.copyOf(mutableDyes);</span>
@@ -705,7 +705,7 @@
 <span class="source-line-no">692</span><span id="line-692">                    if (dest != null) {</span>
 <span class="source-line-no">693</span><span id="line-693">                        vehicle.eject();</span>
 <span class="source-line-no">694</span><span id="line-694">                        vehicle.setVelocity(new Vector(0d, 0d, 0d));</span>
-<span class="source-line-no">695</span><span id="line-695">                        PaperLib.teleportAsync(vehicle, dest);</span>
+<span class="source-line-no">695</span><span id="line-695">                        PaperSupport.teleportAsync(vehicle, dest);</span>
 <span class="source-line-no">696</span><span id="line-696">                        passengers.forEach(vehicle::addPassenger);</span>
 <span class="source-line-no">697</span><span id="line-697">                        return;</span>
 <span class="source-line-no">698</span><span id="line-698">                    }</span>
@@ -1323,7 +1323,7 @@
 <span class="source-line-no">1310</span><span id="line-1310">                        }</span>
 <span class="source-line-no">1311</span><span id="line-1311">                    }</span>
 <span class="source-line-no">1312</span><span id="line-1312">                }</span>
-<span class="source-line-no">1313</span><span id="line-1313">                if (PaperLib.isPaper()) {</span>
+<span class="source-line-no">1313</span><span id="line-1313">                if (PaperSupport.isPaper()) {</span>
 <span class="source-line-no">1314</span><span id="line-1314">                    if (MaterialTags.SPAWN_EGGS.isTagged(type) || Material.EGG.equals(type)) {</span>
 <span class="source-line-no">1315</span><span id="line-1315">                        eventType = PlayerBlockEventType.SPAWN_MOB;</span>
 <span class="source-line-no">1316</span><span id="line-1316">                        break;</span>

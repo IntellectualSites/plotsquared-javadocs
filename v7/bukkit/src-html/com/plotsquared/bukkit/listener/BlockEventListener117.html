@@ -176,15 +176,16 @@
 <span class="source-line-no">163</span><span id="line-163">        if (plot == null) {</span>
 <span class="source-line-no">164</span><span id="line-164">            return;</span>
 <span class="source-line-no">165</span><span id="line-165">        }</span>
-<span class="source-line-no">166</span><span id="line-166">        if (event.getNewState().getType().name().contains("COPPER")) {</span>
-<span class="source-line-no">167</span><span id="line-167">            if (!plot.getFlag(CopperOxideFlag.class)) {</span>
-<span class="source-line-no">168</span><span id="line-168">                plot.debug("Copper could not oxide because copper-oxide = false");</span>
-<span class="source-line-no">169</span><span id="line-169">                event.setCancelled(true);</span>
-<span class="source-line-no">170</span><span id="line-170">            }</span>
-<span class="source-line-no">171</span><span id="line-171">        }</span>
-<span class="source-line-no">172</span><span id="line-172">    }</span>
-<span class="source-line-no">173</span><span id="line-173"></span>
-<span class="source-line-no">174</span><span id="line-174">}</span>
+<span class="source-line-no">166</span><span id="line-166">        String newTypeName = event.getNewState().getType().name();</span>
+<span class="source-line-no">167</span><span id="line-167">        if (newTypeName.contains("COPPER") || newTypeName.contains("LIGHTNING_ROD")) {</span>
+<span class="source-line-no">168</span><span id="line-168">            if (!plot.getFlag(CopperOxideFlag.class)) {</span>
+<span class="source-line-no">169</span><span id="line-169">                plot.debug("Copper could not oxide because copper-oxide = false");</span>
+<span class="source-line-no">170</span><span id="line-170">                event.setCancelled(true);</span>
+<span class="source-line-no">171</span><span id="line-171">            }</span>
+<span class="source-line-no">172</span><span id="line-172">        }</span>
+<span class="source-line-no">173</span><span id="line-173">    }</span>
+<span class="source-line-no">174</span><span id="line-174"></span>
+<span class="source-line-no">175</span><span id="line-175">}</span>
 
 
 

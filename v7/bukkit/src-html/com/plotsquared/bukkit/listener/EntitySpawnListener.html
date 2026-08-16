@@ -33,13 +33,13 @@
 <span class="source-line-no">020</span><span id="line-20"></span>
 <span class="source-line-no">021</span><span id="line-21">import com.plotsquared.bukkit.util.BukkitEntityUtil;</span>
 <span class="source-line-no">022</span><span id="line-22">import com.plotsquared.bukkit.util.BukkitUtil;</span>
-<span class="source-line-no">023</span><span id="line-23">import com.plotsquared.core.PlotSquared;</span>
-<span class="source-line-no">024</span><span id="line-24">import com.plotsquared.core.configuration.Settings;</span>
-<span class="source-line-no">025</span><span id="line-25">import com.plotsquared.core.location.Location;</span>
-<span class="source-line-no">026</span><span id="line-26">import com.plotsquared.core.plot.Plot;</span>
-<span class="source-line-no">027</span><span id="line-27">import com.plotsquared.core.plot.PlotArea;</span>
-<span class="source-line-no">028</span><span id="line-28">import com.plotsquared.core.plot.flag.implementations.DoneFlag;</span>
-<span class="source-line-no">029</span><span id="line-29">import io.papermc.lib.PaperLib;</span>
+<span class="source-line-no">023</span><span id="line-23">import com.plotsquared.bukkit.util.PaperSupport;</span>
+<span class="source-line-no">024</span><span id="line-24">import com.plotsquared.core.PlotSquared;</span>
+<span class="source-line-no">025</span><span id="line-25">import com.plotsquared.core.configuration.Settings;</span>
+<span class="source-line-no">026</span><span id="line-26">import com.plotsquared.core.location.Location;</span>
+<span class="source-line-no">027</span><span id="line-27">import com.plotsquared.core.plot.Plot;</span>
+<span class="source-line-no">028</span><span id="line-28">import com.plotsquared.core.plot.PlotArea;</span>
+<span class="source-line-no">029</span><span id="line-29">import com.plotsquared.core.plot.flag.implementations.DoneFlag;</span>
 <span class="source-line-no">030</span><span id="line-30">import org.bukkit.Chunk;</span>
 <span class="source-line-no">031</span><span id="line-31">import org.bukkit.World;</span>
 <span class="source-line-no">032</span><span id="line-32">import org.bukkit.block.Block;</span>
@@ -112,7 +112,7 @@
 <span class="source-line-no">099</span><span id="line-99">                        }</span>
 <span class="source-line-no">100</span><span id="line-100">                        try {</span>
 <span class="source-line-no">101</span><span id="line-101">                            ignoreTP = true;</span>
-<span class="source-line-no">102</span><span id="line-102">                            PaperLib.teleportAsync(entity, origin);</span>
+<span class="source-line-no">102</span><span id="line-102">                            PaperSupport.teleportAsync(entity, origin);</span>
 <span class="source-line-no">103</span><span id="line-103">                        } finally {</span>
 <span class="source-line-no">104</span><span id="line-104">                            ignoreTP = false;</span>
 <span class="source-line-no">105</span><span id="line-105">                        }</span>
@@ -138,7 +138,7 @@
 <span class="source-line-no">125</span><span id="line-125">        if (!location.isPlotArea() || area == null) {</span>
 <span class="source-line-no">126</span><span id="line-126">            return;</span>
 <span class="source-line-no">127</span><span id="line-127">        }</span>
-<span class="source-line-no">128</span><span id="line-128">        if (PaperLib.isPaper()) {</span>
+<span class="source-line-no">128</span><span id="line-128">        if (PaperSupport.isPaper()) {</span>
 <span class="source-line-no">129</span><span id="line-129">            //noinspection ConstantValue - getEntitySpawnReason annotated as NotNull, but is not NotNull. lol.</span>
 <span class="source-line-no">130</span><span id="line-130">            if (area.isSpawnCustom() &amp;&amp; entity.getEntitySpawnReason() != null &amp;&amp; "CUSTOM".equals(entity.getEntitySpawnReason().name())) {</span>
 <span class="source-line-no">131</span><span id="line-131">                return;</span>

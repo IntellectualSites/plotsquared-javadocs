@@ -2495,7 +2495,7 @@
 <span class="source-line-no">2482</span><span id="line-2482">    public @NonNull Set&lt;CuboidRegion&gt; getRegions() {</span>
 <span class="source-line-no">2483</span><span id="line-2483">        if (!this.isMerged()) {</span>
 <span class="source-line-no">2484</span><span id="line-2484">            Location pos1 = this.getBottomAbs().withY(getArea().getMinBuildHeight());</span>
-<span class="source-line-no">2485</span><span id="line-2485">            Location pos2 = this.getTopAbs().withY(getArea().getMaxBuildHeight());</span>
+<span class="source-line-no">2485</span><span id="line-2485">            Location pos2 = this.getTopAbs().withY(getArea().getMaxBuildHeight() - 1);</span>
 <span class="source-line-no">2486</span><span id="line-2486">            CuboidRegion rg = new CuboidRegion(pos1.getBlockVector3(), pos2.getBlockVector3());</span>
 <span class="source-line-no">2487</span><span id="line-2487">            return Collections.singleton(rg);</span>
 <span class="source-line-no">2488</span><span id="line-2488">        }</span>

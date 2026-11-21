@@ -1436,637 +1436,643 @@
 <span class="source-line-no">1423</span><span id="line-1423">                        area.getFlag(UseFlag.class) : Collections.emptyList());</span>
 <span class="source-line-no">1424</span><span id="line-1424">        BlockType type = BukkitAdapter.asBlockType(block.getType());</span>
 <span class="source-line-no">1425</span><span id="line-1425">        for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
-<span class="source-line-no">1426</span><span id="line-1426">            if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
-<span class="source-line-no">1427</span><span id="line-1427">                    .accepts(type)) {</span>
-<span class="source-line-no">1428</span><span id="line-1428">                return;</span>
-<span class="source-line-no">1429</span><span id="line-1429">            }</span>
-<span class="source-line-no">1430</span><span id="line-1430">        }</span>
-<span class="source-line-no">1431</span><span id="line-1431">        if (plot == null) {</span>
-<span class="source-line-no">1432</span><span id="line-1432">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD)) {</span>
-<span class="source-line-no">1433</span><span id="line-1433">                return;</span>
-<span class="source-line-no">1434</span><span id="line-1434">            }</span>
-<span class="source-line-no">1435</span><span id="line-1435">            pp.sendMessage(</span>
-<span class="source-line-no">1436</span><span id="line-1436">                    TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1437</span><span id="line-1437">                    TagResolver.resolver("node", Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD))</span>
-<span class="source-line-no">1438</span><span id="line-1438">            );</span>
-<span class="source-line-no">1439</span><span id="line-1439">            event.setCancelled(true);</span>
-<span class="source-line-no">1440</span><span id="line-1440">        } else if (!plot.hasOwner()) {</span>
-<span class="source-line-no">1441</span><span id="line-1441">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)) {</span>
-<span class="source-line-no">1442</span><span id="line-1442">                return;</span>
-<span class="source-line-no">1443</span><span id="line-1443">            }</span>
-<span class="source-line-no">1444</span><span id="line-1444">            pp.sendMessage(</span>
-<span class="source-line-no">1445</span><span id="line-1445">                    TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1446</span><span id="line-1446">                    TagResolver.resolver(</span>
-<span class="source-line-no">1447</span><span id="line-1447">                            "node",</span>
-<span class="source-line-no">1448</span><span id="line-1448">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
-<span class="source-line-no">1449</span><span id="line-1449">                    )</span>
-<span class="source-line-no">1450</span><span id="line-1450">            );</span>
-<span class="source-line-no">1451</span><span id="line-1451">            event.setCancelled(true);</span>
-<span class="source-line-no">1452</span><span id="line-1452">        } else if (!plot.isAdded(pp.getUUID())) {</span>
-<span class="source-line-no">1453</span><span id="line-1453">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
-<span class="source-line-no">1454</span><span id="line-1454">                return;</span>
-<span class="source-line-no">1455</span><span id="line-1455">            }</span>
-<span class="source-line-no">1456</span><span id="line-1456">            pp.sendMessage(</span>
-<span class="source-line-no">1457</span><span id="line-1457">                    TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1458</span><span id="line-1458">                    TagResolver.resolver(</span>
-<span class="source-line-no">1459</span><span id="line-1459">                            "node",</span>
-<span class="source-line-no">1460</span><span id="line-1460">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
-<span class="source-line-no">1461</span><span id="line-1461">                    )</span>
-<span class="source-line-no">1462</span><span id="line-1462">            );</span>
-<span class="source-line-no">1463</span><span id="line-1463">            event.setCancelled(true);</span>
-<span class="source-line-no">1464</span><span id="line-1464">        } else if (Settings.Done.RESTRICT_BUILDING &amp;&amp; DoneFlag.isDone(plot)) {</span>
-<span class="source-line-no">1465</span><span id="line-1465">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
-<span class="source-line-no">1466</span><span id="line-1466">                pp.sendMessage(</span>
-<span class="source-line-no">1467</span><span id="line-1467">                        TranslatableCaption.of("done.building_restricted")</span>
-<span class="source-line-no">1468</span><span id="line-1468">                );</span>
-<span class="source-line-no">1469</span><span id="line-1469">                event.setCancelled(true);</span>
-<span class="source-line-no">1470</span><span id="line-1470">            }</span>
-<span class="source-line-no">1471</span><span id="line-1471">        }</span>
-<span class="source-line-no">1472</span><span id="line-1472">    }</span>
-<span class="source-line-no">1473</span><span id="line-1473"></span>
-<span class="source-line-no">1474</span><span id="line-1474">    @EventHandler(priority = EventPriority.HIGHEST)</span>
-<span class="source-line-no">1475</span><span id="line-1475">    public void onInventoryClose(InventoryCloseEvent event) {</span>
-<span class="source-line-no">1476</span><span id="line-1476">        HumanEntity closer = event.getPlayer();</span>
-<span class="source-line-no">1477</span><span id="line-1477">        if (!(closer instanceof Player player)) {</span>
-<span class="source-line-no">1478</span><span id="line-1478">            return;</span>
-<span class="source-line-no">1479</span><span id="line-1479">        }</span>
-<span class="source-line-no">1480</span><span id="line-1480">        PlotInventory.removePlotInventoryOpen(BukkitUtil.adapt(player));</span>
-<span class="source-line-no">1481</span><span id="line-1481">    }</span>
-<span class="source-line-no">1482</span><span id="line-1482"></span>
-<span class="source-line-no">1483</span><span id="line-1483">    @EventHandler(priority = EventPriority.MONITOR)</span>
-<span class="source-line-no">1484</span><span id="line-1484">    public void onLeave(PlayerQuitEvent event) {</span>
-<span class="source-line-no">1485</span><span id="line-1485">        TaskManager.removeFromTeleportQueue(event.getPlayer().getName());</span>
-<span class="source-line-no">1486</span><span id="line-1486">        BukkitPlayer pp = BukkitUtil.adapt(event.getPlayer());</span>
-<span class="source-line-no">1487</span><span id="line-1487">        pp.unregister();</span>
-<span class="source-line-no">1488</span><span id="line-1488">        plotListener.logout(pp.getUUID());</span>
-<span class="source-line-no">1489</span><span id="line-1489">    }</span>
-<span class="source-line-no">1490</span><span id="line-1490"></span>
-<span class="source-line-no">1491</span><span id="line-1491">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1492</span><span id="line-1492">    public void onBucketFill(PlayerBucketFillEvent event) {</span>
-<span class="source-line-no">1493</span><span id="line-1493">        Block blockClicked = event.getBlockClicked();</span>
-<span class="source-line-no">1494</span><span id="line-1494">        Location location = BukkitUtil.adapt(blockClicked.getLocation());</span>
-<span class="source-line-no">1495</span><span id="line-1495">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1496</span><span id="line-1496">        if (area == null) {</span>
-<span class="source-line-no">1497</span><span id="line-1497">            return;</span>
-<span class="source-line-no">1498</span><span id="line-1498">        }</span>
-<span class="source-line-no">1499</span><span id="line-1499">        Player player = event.getPlayer();</span>
-<span class="source-line-no">1500</span><span id="line-1500">        BukkitPlayer plotPlayer = BukkitUtil.adapt(player);</span>
-<span class="source-line-no">1501</span><span id="line-1501">        Plot plot = area.getPlot(location);</span>
-<span class="source-line-no">1502</span><span id="line-1502">        final List&lt;BlockTypeWrapper&gt; use =</span>
-<span class="source-line-no">1503</span><span id="line-1503">                Optional.ofNullable(plot).map(p -&gt; p.getFlag(UseFlag.class)).orElse(area.isRoadFlags() ?</span>
-<span class="source-line-no">1504</span><span id="line-1504">                        area.getFlag(UseFlag.class) : Collections.emptyList());</span>
-<span class="source-line-no">1505</span><span id="line-1505">        BlockType type = BukkitAdapter.asBlockType(blockClicked.getType());</span>
-<span class="source-line-no">1506</span><span id="line-1506">        for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
-<span class="source-line-no">1507</span><span id="line-1507">            if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper</span>
-<span class="source-line-no">1508</span><span id="line-1508">                    .accepts(type)) {</span>
-<span class="source-line-no">1509</span><span id="line-1509">                return;</span>
-<span class="source-line-no">1510</span><span id="line-1510">            }</span>
-<span class="source-line-no">1511</span><span id="line-1511">        }</span>
-<span class="source-line-no">1512</span><span id="line-1512">        if (plot == null) {</span>
-<span class="source-line-no">1513</span><span id="line-1513">            if (plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD)) {</span>
-<span class="source-line-no">1514</span><span id="line-1514">                return;</span>
-<span class="source-line-no">1515</span><span id="line-1515">            }</span>
-<span class="source-line-no">1516</span><span id="line-1516">            plotPlayer.sendMessage(</span>
-<span class="source-line-no">1517</span><span id="line-1517">                    TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1518</span><span id="line-1518">                    TagResolver.resolver("node", Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD))</span>
-<span class="source-line-no">1519</span><span id="line-1519">            );</span>
-<span class="source-line-no">1520</span><span id="line-1520">            event.setCancelled(true);</span>
-<span class="source-line-no">1521</span><span id="line-1521">        } else if (!plot.hasOwner()) {</span>
-<span class="source-line-no">1522</span><span id="line-1522">            if (plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)) {</span>
-<span class="source-line-no">1523</span><span id="line-1523">                return;</span>
-<span class="source-line-no">1524</span><span id="line-1524">            }</span>
-<span class="source-line-no">1525</span><span id="line-1525">            plotPlayer.sendMessage(</span>
-<span class="source-line-no">1526</span><span id="line-1526">                    TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1527</span><span id="line-1527">                    TagResolver.resolver(</span>
-<span class="source-line-no">1528</span><span id="line-1528">                            "node",</span>
-<span class="source-line-no">1529</span><span id="line-1529">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
-<span class="source-line-no">1530</span><span id="line-1530">                    )</span>
-<span class="source-line-no">1531</span><span id="line-1531">            );</span>
-<span class="source-line-no">1532</span><span id="line-1532">            event.setCancelled(true);</span>
-<span class="source-line-no">1533</span><span id="line-1533">        } else if (!plot.isAdded(plotPlayer.getUUID())) {</span>
-<span class="source-line-no">1534</span><span id="line-1534">            if (plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
-<span class="source-line-no">1535</span><span id="line-1535">                return;</span>
-<span class="source-line-no">1536</span><span id="line-1536">            }</span>
-<span class="source-line-no">1537</span><span id="line-1537">            plotPlayer.sendMessage(</span>
-<span class="source-line-no">1538</span><span id="line-1538">                    TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1539</span><span id="line-1539">                    TagResolver.resolver(</span>
-<span class="source-line-no">1540</span><span id="line-1540">                            "node",</span>
-<span class="source-line-no">1541</span><span id="line-1541">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
-<span class="source-line-no">1542</span><span id="line-1542">                    )</span>
-<span class="source-line-no">1543</span><span id="line-1543">            );</span>
-<span class="source-line-no">1544</span><span id="line-1544">            event.setCancelled(true);</span>
-<span class="source-line-no">1545</span><span id="line-1545">        } else if (Settings.Done.RESTRICT_BUILDING &amp;&amp; DoneFlag.isDone(plot)) {</span>
-<span class="source-line-no">1546</span><span id="line-1546">            if (!plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
-<span class="source-line-no">1547</span><span id="line-1547">                plotPlayer.sendMessage(</span>
-<span class="source-line-no">1548</span><span id="line-1548">                        TranslatableCaption.of("done.building_restricted")</span>
-<span class="source-line-no">1549</span><span id="line-1549">                );</span>
-<span class="source-line-no">1550</span><span id="line-1550">                event.setCancelled(true);</span>
-<span class="source-line-no">1551</span><span id="line-1551">            }</span>
-<span class="source-line-no">1552</span><span id="line-1552">        }</span>
-<span class="source-line-no">1553</span><span id="line-1553">    }</span>
-<span class="source-line-no">1554</span><span id="line-1554"></span>
-<span class="source-line-no">1555</span><span id="line-1555">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1556</span><span id="line-1556">    public void onHangingPlace(HangingPlaceEvent event) {</span>
-<span class="source-line-no">1557</span><span id="line-1557">        Block block = event.getBlock().getRelative(event.getBlockFace());</span>
-<span class="source-line-no">1558</span><span id="line-1558">        Location location = BukkitUtil.adapt(block.getLocation());</span>
-<span class="source-line-no">1559</span><span id="line-1559">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1560</span><span id="line-1560">        if (area == null) {</span>
-<span class="source-line-no">1561</span><span id="line-1561">            return;</span>
-<span class="source-line-no">1562</span><span id="line-1562">        }</span>
-<span class="source-line-no">1563</span><span id="line-1563">        Player p = event.getPlayer();</span>
-<span class="source-line-no">1564</span><span id="line-1564">        if (p == null) {</span>
-<span class="source-line-no">1565</span><span id="line-1565">            event.setCancelled(true);</span>
-<span class="source-line-no">1566</span><span id="line-1566">            return;</span>
-<span class="source-line-no">1567</span><span id="line-1567">        }</span>
-<span class="source-line-no">1568</span><span id="line-1568">        BukkitPlayer pp = BukkitUtil.adapt(p);</span>
-<span class="source-line-no">1569</span><span id="line-1569">        Plot plot = area.getPlot(location);</span>
-<span class="source-line-no">1570</span><span id="line-1570">        if (plot == null) {</span>
-<span class="source-line-no">1571</span><span id="line-1571">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD)) {</span>
-<span class="source-line-no">1572</span><span id="line-1572">                pp.sendMessage(</span>
-<span class="source-line-no">1573</span><span id="line-1573">                        TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1574</span><span id="line-1574">                        TagResolver.resolver(</span>
-<span class="source-line-no">1575</span><span id="line-1575">                                "node",</span>
-<span class="source-line-no">1576</span><span id="line-1576">                                Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD)</span>
-<span class="source-line-no">1577</span><span id="line-1577">                        )</span>
-<span class="source-line-no">1578</span><span id="line-1578">                );</span>
-<span class="source-line-no">1579</span><span id="line-1579">                event.setCancelled(true);</span>
-<span class="source-line-no">1580</span><span id="line-1580">            }</span>
-<span class="source-line-no">1581</span><span id="line-1581">        } else {</span>
-<span class="source-line-no">1582</span><span id="line-1582">            if (!plot.hasOwner()) {</span>
-<span class="source-line-no">1583</span><span id="line-1583">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)) {</span>
-<span class="source-line-no">1584</span><span id="line-1584">                    pp.sendMessage(</span>
-<span class="source-line-no">1585</span><span id="line-1585">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1586</span><span id="line-1586">                            TagResolver.resolver(</span>
-<span class="source-line-no">1587</span><span id="line-1587">                                    "node",</span>
-<span class="source-line-no">1588</span><span id="line-1588">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
-<span class="source-line-no">1589</span><span id="line-1589">                            )</span>
-<span class="source-line-no">1590</span><span id="line-1590">                    );</span>
-<span class="source-line-no">1591</span><span id="line-1591">                    event.setCancelled(true);</span>
-<span class="source-line-no">1592</span><span id="line-1592">                }</span>
-<span class="source-line-no">1593</span><span id="line-1593">                return;</span>
-<span class="source-line-no">1594</span><span id="line-1594">            }</span>
-<span class="source-line-no">1595</span><span id="line-1595">            if (!plot.isAdded(pp.getUUID())) {</span>
-<span class="source-line-no">1596</span><span id="line-1596">                if (!plot.getFlag(HangingPlaceFlag.class)) {</span>
-<span class="source-line-no">1597</span><span id="line-1597">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
-<span class="source-line-no">1598</span><span id="line-1598">                        pp.sendMessage(</span>
-<span class="source-line-no">1599</span><span id="line-1599">                                TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1600</span><span id="line-1600">                                TagResolver.resolver(</span>
-<span class="source-line-no">1601</span><span id="line-1601">                                        "node",</span>
-<span class="source-line-no">1602</span><span id="line-1602">                                        Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
-<span class="source-line-no">1603</span><span id="line-1603">                                )</span>
-<span class="source-line-no">1604</span><span id="line-1604">                        );</span>
-<span class="source-line-no">1605</span><span id="line-1605">                        event.setCancelled(true);</span>
-<span class="source-line-no">1606</span><span id="line-1606">                    }</span>
-<span class="source-line-no">1607</span><span id="line-1607">                    return;</span>
-<span class="source-line-no">1608</span><span id="line-1608">                }</span>
-<span class="source-line-no">1609</span><span id="line-1609">            }</span>
-<span class="source-line-no">1610</span><span id="line-1610">            if (BukkitEntityUtil.checkEntity(event.getEntity(), plot)) {</span>
-<span class="source-line-no">1611</span><span id="line-1611">                event.setCancelled(true);</span>
-<span class="source-line-no">1612</span><span id="line-1612">            }</span>
-<span class="source-line-no">1613</span><span id="line-1613"></span>
-<span class="source-line-no">1614</span><span id="line-1614">        }</span>
-<span class="source-line-no">1615</span><span id="line-1615">    }</span>
-<span class="source-line-no">1616</span><span id="line-1616"></span>
-<span class="source-line-no">1617</span><span id="line-1617">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1618</span><span id="line-1618">    public void onHangingBreakByEntity(HangingBreakByEntityEvent event) {</span>
-<span class="source-line-no">1619</span><span id="line-1619">        Entity remover = event.getRemover();</span>
-<span class="source-line-no">1620</span><span id="line-1620">        if (remover instanceof Player p) {</span>
-<span class="source-line-no">1621</span><span id="line-1621">            Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
-<span class="source-line-no">1622</span><span id="line-1622">            PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1623</span><span id="line-1623">            if (area == null) {</span>
-<span class="source-line-no">1624</span><span id="line-1624">                return;</span>
-<span class="source-line-no">1625</span><span id="line-1625">            }</span>
-<span class="source-line-no">1626</span><span id="line-1626">            BukkitPlayer pp = BukkitUtil.adapt(p);</span>
-<span class="source-line-no">1627</span><span id="line-1627">            Plot plot = area.getPlot(location);</span>
-<span class="source-line-no">1628</span><span id="line-1628">            if (plot == null) {</span>
-<span class="source-line-no">1629</span><span id="line-1629">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_ROAD)) {</span>
-<span class="source-line-no">1630</span><span id="line-1630">                    pp.sendMessage(</span>
-<span class="source-line-no">1631</span><span id="line-1631">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1632</span><span id="line-1632">                            TagResolver.resolver(</span>
-<span class="source-line-no">1633</span><span id="line-1633">                                    "node",</span>
-<span class="source-line-no">1634</span><span id="line-1634">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_ROAD)</span>
-<span class="source-line-no">1635</span><span id="line-1635">                            )</span>
-<span class="source-line-no">1636</span><span id="line-1636">                    );</span>
-<span class="source-line-no">1637</span><span id="line-1637">                    event.setCancelled(true);</span>
-<span class="source-line-no">1638</span><span id="line-1638">                }</span>
-<span class="source-line-no">1639</span><span id="line-1639">            } else if (!plot.hasOwner()) {</span>
-<span class="source-line-no">1640</span><span id="line-1640">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)) {</span>
-<span class="source-line-no">1641</span><span id="line-1641">                    pp.sendMessage(</span>
-<span class="source-line-no">1642</span><span id="line-1642">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1643</span><span id="line-1643">                            TagResolver.resolver(</span>
-<span class="source-line-no">1644</span><span id="line-1644">                                    "node",</span>
-<span class="source-line-no">1645</span><span id="line-1645">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)</span>
-<span class="source-line-no">1646</span><span id="line-1646">                            )</span>
-<span class="source-line-no">1647</span><span id="line-1647">                    );</span>
-<span class="source-line-no">1648</span><span id="line-1648">                    event.setCancelled(true);</span>
-<span class="source-line-no">1649</span><span id="line-1649">                }</span>
-<span class="source-line-no">1650</span><span id="line-1650">            } else if (!plot.isAdded(pp.getUUID())) {</span>
-<span class="source-line-no">1651</span><span id="line-1651">                if (plot.getFlag(HangingBreakFlag.class)) {</span>
-<span class="source-line-no">1652</span><span id="line-1652">                    return;</span>
-<span class="source-line-no">1653</span><span id="line-1653">                }</span>
-<span class="source-line-no">1654</span><span id="line-1654">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_OTHER)) {</span>
-<span class="source-line-no">1655</span><span id="line-1655">                    pp.sendMessage(</span>
-<span class="source-line-no">1656</span><span id="line-1656">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1657</span><span id="line-1657">                            TagResolver.resolver(</span>
-<span class="source-line-no">1658</span><span id="line-1658">                                    "node",</span>
-<span class="source-line-no">1659</span><span id="line-1659">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_OTHER)</span>
-<span class="source-line-no">1660</span><span id="line-1660">                            )</span>
-<span class="source-line-no">1661</span><span id="line-1661">                    );</span>
-<span class="source-line-no">1662</span><span id="line-1662">                    event.setCancelled(true);</span>
-<span class="source-line-no">1663</span><span id="line-1663">                    plot.debug(p.getName()</span>
-<span class="source-line-no">1664</span><span id="line-1664">                            + " could not break hanging entity because hanging-break = false");</span>
-<span class="source-line-no">1665</span><span id="line-1665">                }</span>
-<span class="source-line-no">1666</span><span id="line-1666">            }</span>
-<span class="source-line-no">1667</span><span id="line-1667">        } else if (remover instanceof Projectile p) {</span>
-<span class="source-line-no">1668</span><span id="line-1668">            if (p.getShooter() instanceof Player shooter) {</span>
-<span class="source-line-no">1669</span><span id="line-1669">                Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
-<span class="source-line-no">1670</span><span id="line-1670">                PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1671</span><span id="line-1671">                if (area == null) {</span>
-<span class="source-line-no">1672</span><span id="line-1672">                    return;</span>
-<span class="source-line-no">1673</span><span id="line-1673">                }</span>
-<span class="source-line-no">1674</span><span id="line-1674">                BukkitPlayer player = BukkitUtil.adapt(shooter);</span>
-<span class="source-line-no">1675</span><span id="line-1675">                Plot plot = area.getPlot(BukkitUtil.adapt(event.getEntity().getLocation()));</span>
-<span class="source-line-no">1676</span><span id="line-1676">                if (plot != null) {</span>
-<span class="source-line-no">1677</span><span id="line-1677">                    if (!plot.hasOwner()) {</span>
-<span class="source-line-no">1678</span><span id="line-1678">                        if (!player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)) {</span>
-<span class="source-line-no">1679</span><span id="line-1679">                            player.sendMessage(</span>
-<span class="source-line-no">1680</span><span id="line-1680">                                    TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1681</span><span id="line-1681">                                    TagResolver.resolver(</span>
-<span class="source-line-no">1682</span><span id="line-1682">                                            "node",</span>
-<span class="source-line-no">1683</span><span id="line-1683">                                            Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)</span>
-<span class="source-line-no">1684</span><span id="line-1684">                                    )</span>
-<span class="source-line-no">1685</span><span id="line-1685">                            );</span>
-<span class="source-line-no">1686</span><span id="line-1686">                            event.setCancelled(true);</span>
-<span class="source-line-no">1687</span><span id="line-1687">                        }</span>
-<span class="source-line-no">1688</span><span id="line-1688">                    } else if (!plot.isAdded(player.getUUID())) {</span>
-<span class="source-line-no">1689</span><span id="line-1689">                        if (!plot.getFlag(HangingBreakFlag.class)) {</span>
-<span class="source-line-no">1690</span><span id="line-1690">                            if (!player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_OTHER)) {</span>
-<span class="source-line-no">1691</span><span id="line-1691">                                player.sendMessage(</span>
-<span class="source-line-no">1692</span><span id="line-1692">                                        TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1693</span><span id="line-1693">                                        TagResolver.resolver(</span>
-<span class="source-line-no">1694</span><span id="line-1694">                                                "node",</span>
-<span class="source-line-no">1695</span><span id="line-1695">                                                Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_OTHER)</span>
-<span class="source-line-no">1696</span><span id="line-1696">                                        )</span>
-<span class="source-line-no">1697</span><span id="line-1697">                                );</span>
-<span class="source-line-no">1698</span><span id="line-1698">                                event.setCancelled(true);</span>
-<span class="source-line-no">1699</span><span id="line-1699">                                plot.debug(player.getName()</span>
-<span class="source-line-no">1700</span><span id="line-1700">                                        + " could not break hanging entity because hanging-break = false");</span>
-<span class="source-line-no">1701</span><span id="line-1701">                            }</span>
-<span class="source-line-no">1702</span><span id="line-1702">                        }</span>
-<span class="source-line-no">1703</span><span id="line-1703">                    }</span>
-<span class="source-line-no">1704</span><span id="line-1704">                }</span>
-<span class="source-line-no">1705</span><span id="line-1705">            }</span>
-<span class="source-line-no">1706</span><span id="line-1706">        } else {</span>
-<span class="source-line-no">1707</span><span id="line-1707">            event.setCancelled(true);</span>
-<span class="source-line-no">1708</span><span id="line-1708">        }</span>
-<span class="source-line-no">1709</span><span id="line-1709">    }</span>
-<span class="source-line-no">1710</span><span id="line-1710"></span>
-<span class="source-line-no">1711</span><span id="line-1711">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1712</span><span id="line-1712">    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {</span>
-<span class="source-line-no">1713</span><span id="line-1713">        if (event.getRightClicked().getType() == EntityType.UNKNOWN) {</span>
-<span class="source-line-no">1714</span><span id="line-1714">            return;</span>
-<span class="source-line-no">1715</span><span id="line-1715">        }</span>
-<span class="source-line-no">1716</span><span id="line-1716">        Location location = BukkitUtil.adapt(event.getRightClicked().getLocation());</span>
-<span class="source-line-no">1717</span><span id="line-1717">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1718</span><span id="line-1718">        if (area == null) {</span>
-<span class="source-line-no">1719</span><span id="line-1719">            return;</span>
-<span class="source-line-no">1720</span><span id="line-1720">        }</span>
-<span class="source-line-no">1721</span><span id="line-1721">        Player p = event.getPlayer();</span>
-<span class="source-line-no">1722</span><span id="line-1722">        BukkitPlayer pp = BukkitUtil.adapt(p);</span>
-<span class="source-line-no">1723</span><span id="line-1723">        Plot plot = area.getPlot(location);</span>
-<span class="source-line-no">1724</span><span id="line-1724">        if (plot == null &amp;&amp; !area.isRoadFlags()) {</span>
-<span class="source-line-no">1725</span><span id="line-1725">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_ROAD)) {</span>
-<span class="source-line-no">1726</span><span id="line-1726">                pp.sendMessage(</span>
-<span class="source-line-no">1727</span><span id="line-1727">                        TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1728</span><span id="line-1728">                        TagResolver.resolver(</span>
-<span class="source-line-no">1729</span><span id="line-1729">                                "node",</span>
-<span class="source-line-no">1730</span><span id="line-1730">                                Tag.inserting(Permission.PERMISSION_ADMIN_INTERACT_ROAD)</span>
-<span class="source-line-no">1731</span><span id="line-1731">                        )</span>
-<span class="source-line-no">1732</span><span id="line-1732">                );</span>
-<span class="source-line-no">1733</span><span id="line-1733">                event.setCancelled(true);</span>
-<span class="source-line-no">1734</span><span id="line-1734">            }</span>
-<span class="source-line-no">1735</span><span id="line-1735">        } else if (plot != null &amp;&amp; !plot.hasOwner()) {</span>
-<span class="source-line-no">1736</span><span id="line-1736">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_UNOWNED)) {</span>
-<span class="source-line-no">1737</span><span id="line-1737">                pp.sendMessage(</span>
-<span class="source-line-no">1738</span><span id="line-1738">                        TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1739</span><span id="line-1739">                        TagResolver.resolver(</span>
-<span class="source-line-no">1740</span><span id="line-1740">                                "node",</span>
-<span class="source-line-no">1741</span><span id="line-1741">                                Tag.inserting(Permission.PERMISSION_ADMIN_INTERACT_UNOWNED)</span>
-<span class="source-line-no">1742</span><span id="line-1742">                        )</span>
-<span class="source-line-no">1743</span><span id="line-1743">                );</span>
-<span class="source-line-no">1744</span><span id="line-1744">                event.setCancelled(true);</span>
-<span class="source-line-no">1745</span><span id="line-1745">            }</span>
-<span class="source-line-no">1746</span><span id="line-1746">        } else if ((plot != null &amp;&amp; !plot.isAdded(pp.getUUID())) || (plot == null &amp;&amp; area</span>
-<span class="source-line-no">1747</span><span id="line-1747">                .isRoadFlags())) {</span>
-<span class="source-line-no">1748</span><span id="line-1748">            final Entity entity = event.getRightClicked();</span>
-<span class="source-line-no">1749</span><span id="line-1749">            final com.sk89q.worldedit.world.entity.EntityType entityType =</span>
-<span class="source-line-no">1750</span><span id="line-1750">                    BukkitAdapter.adapt(entity.getType());</span>
-<span class="source-line-no">1751</span><span id="line-1751"></span>
-<span class="source-line-no">1752</span><span id="line-1752">            FlagContainer flagContainer;</span>
-<span class="source-line-no">1753</span><span id="line-1753">            if (plot == null) {</span>
-<span class="source-line-no">1754</span><span id="line-1754">                flagContainer = area.getRoadFlagContainer();</span>
-<span class="source-line-no">1755</span><span id="line-1755">            } else {</span>
-<span class="source-line-no">1756</span><span id="line-1756">                flagContainer = plot.getFlagContainer();</span>
-<span class="source-line-no">1757</span><span id="line-1757">            }</span>
-<span class="source-line-no">1758</span><span id="line-1758"></span>
-<span class="source-line-no">1759</span><span id="line-1759">            if (EntityCategories.HOSTILE.contains(entityType) &amp;&amp; flagContainer</span>
-<span class="source-line-no">1760</span><span id="line-1760">                    .getFlag(HostileInteractFlag.class).getValue()) {</span>
-<span class="source-line-no">1761</span><span id="line-1761">                return;</span>
-<span class="source-line-no">1762</span><span id="line-1762">            }</span>
-<span class="source-line-no">1763</span><span id="line-1763"></span>
-<span class="source-line-no">1764</span><span id="line-1764">            if (EntityCategories.ANIMAL.contains(entityType) &amp;&amp; flagContainer</span>
-<span class="source-line-no">1765</span><span id="line-1765">                    .getFlag(AnimalInteractFlag.class).getValue()) {</span>
-<span class="source-line-no">1766</span><span id="line-1766">                return;</span>
-<span class="source-line-no">1767</span><span id="line-1767">            }</span>
-<span class="source-line-no">1768</span><span id="line-1768"></span>
-<span class="source-line-no">1769</span><span id="line-1769">            // This actually makes use of the interface, so we don't use the</span>
-<span class="source-line-no">1770</span><span id="line-1770">            // category</span>
-<span class="source-line-no">1771</span><span id="line-1771">            if (entity instanceof Tameable &amp;&amp; ((Tameable) entity).isTamed() &amp;&amp; flagContainer</span>
-<span class="source-line-no">1772</span><span id="line-1772">                    .getFlag(TamedInteractFlag.class).getValue()) {</span>
-<span class="source-line-no">1773</span><span id="line-1773">                return;</span>
-<span class="source-line-no">1774</span><span id="line-1774">            }</span>
-<span class="source-line-no">1775</span><span id="line-1775"></span>
-<span class="source-line-no">1776</span><span id="line-1776">            if (EntityCategories.VEHICLE.contains(entityType) &amp;&amp; flagContainer</span>
-<span class="source-line-no">1777</span><span id="line-1777">                    .getFlag(VehicleUseFlag.class).getValue()) {</span>
-<span class="source-line-no">1778</span><span id="line-1778">                return;</span>
-<span class="source-line-no">1779</span><span id="line-1779">            }</span>
-<span class="source-line-no">1780</span><span id="line-1780"></span>
-<span class="source-line-no">1781</span><span id="line-1781">            if (EntityCategories.PLAYER.contains(entityType) &amp;&amp; flagContainer</span>
-<span class="source-line-no">1782</span><span id="line-1782">                    .getFlag(PlayerInteractFlag.class).getValue()) {</span>
-<span class="source-line-no">1783</span><span id="line-1783">                return;</span>
-<span class="source-line-no">1784</span><span id="line-1784">            }</span>
-<span class="source-line-no">1785</span><span id="line-1785"></span>
-<span class="source-line-no">1786</span><span id="line-1786">            if (EntityCategories.INTERACTION.contains(entityType) &amp;&amp; flagContainer</span>
-<span class="source-line-no">1787</span><span id="line-1787">                    .getFlag(InteractionInteractFlag.class).getValue()) {</span>
-<span class="source-line-no">1788</span><span id="line-1788">                return;</span>
-<span class="source-line-no">1789</span><span id="line-1789">            }</span>
-<span class="source-line-no">1790</span><span id="line-1790"></span>
-<span class="source-line-no">1791</span><span id="line-1791">            if (EntityCategories.VILLAGER.contains(entityType) &amp;&amp; flagContainer</span>
-<span class="source-line-no">1792</span><span id="line-1792">                    .getFlag(VillagerInteractFlag.class).getValue()) {</span>
-<span class="source-line-no">1793</span><span id="line-1793">                return;</span>
-<span class="source-line-no">1794</span><span id="line-1794">            }</span>
-<span class="source-line-no">1795</span><span id="line-1795"></span>
-<span class="source-line-no">1796</span><span id="line-1796">            if ((EntityCategories.HANGING.contains(entityType) || EntityCategories.OTHER</span>
-<span class="source-line-no">1797</span><span id="line-1797">                    .contains(entityType)) &amp;&amp; flagContainer.getFlag(MiscInteractFlag.class)</span>
-<span class="source-line-no">1798</span><span id="line-1798">                    .getValue()) {</span>
+<span class="source-line-no">1426</span><span id="line-1426">            if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper.accepts(type)) {</span>
+<span class="source-line-no">1427</span><span id="line-1427">                // Allows this event for blocks that can be interacted with using a bucket without it being considered</span>
+<span class="source-line-no">1428</span><span id="line-1428">                // as "building" (= make it waterlogged or drop the block by flooding it)</span>
+<span class="source-line-no">1429</span><span id="line-1429">                if (type.getId().equals("minecraft:cauldron") || type.getId().endsWith("_cauldron")) {</span>
+<span class="source-line-no">1430</span><span id="line-1430">                    return;</span>
+<span class="source-line-no">1431</span><span id="line-1431">                }</span>
+<span class="source-line-no">1432</span><span id="line-1432">            }</span>
+<span class="source-line-no">1433</span><span id="line-1433">        }</span>
+<span class="source-line-no">1434</span><span id="line-1434">        if (plot == null) {</span>
+<span class="source-line-no">1435</span><span id="line-1435">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD)) {</span>
+<span class="source-line-no">1436</span><span id="line-1436">                return;</span>
+<span class="source-line-no">1437</span><span id="line-1437">            }</span>
+<span class="source-line-no">1438</span><span id="line-1438">            pp.sendMessage(</span>
+<span class="source-line-no">1439</span><span id="line-1439">                    TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1440</span><span id="line-1440">                    TagResolver.resolver("node", Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD))</span>
+<span class="source-line-no">1441</span><span id="line-1441">            );</span>
+<span class="source-line-no">1442</span><span id="line-1442">            event.setCancelled(true);</span>
+<span class="source-line-no">1443</span><span id="line-1443">        } else if (!plot.hasOwner()) {</span>
+<span class="source-line-no">1444</span><span id="line-1444">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)) {</span>
+<span class="source-line-no">1445</span><span id="line-1445">                return;</span>
+<span class="source-line-no">1446</span><span id="line-1446">            }</span>
+<span class="source-line-no">1447</span><span id="line-1447">            pp.sendMessage(</span>
+<span class="source-line-no">1448</span><span id="line-1448">                    TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1449</span><span id="line-1449">                    TagResolver.resolver(</span>
+<span class="source-line-no">1450</span><span id="line-1450">                            "node",</span>
+<span class="source-line-no">1451</span><span id="line-1451">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
+<span class="source-line-no">1452</span><span id="line-1452">                    )</span>
+<span class="source-line-no">1453</span><span id="line-1453">            );</span>
+<span class="source-line-no">1454</span><span id="line-1454">            event.setCancelled(true);</span>
+<span class="source-line-no">1455</span><span id="line-1455">        } else if (!plot.isAdded(pp.getUUID())) {</span>
+<span class="source-line-no">1456</span><span id="line-1456">            if (pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
+<span class="source-line-no">1457</span><span id="line-1457">                return;</span>
+<span class="source-line-no">1458</span><span id="line-1458">            }</span>
+<span class="source-line-no">1459</span><span id="line-1459">            pp.sendMessage(</span>
+<span class="source-line-no">1460</span><span id="line-1460">                    TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1461</span><span id="line-1461">                    TagResolver.resolver(</span>
+<span class="source-line-no">1462</span><span id="line-1462">                            "node",</span>
+<span class="source-line-no">1463</span><span id="line-1463">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
+<span class="source-line-no">1464</span><span id="line-1464">                    )</span>
+<span class="source-line-no">1465</span><span id="line-1465">            );</span>
+<span class="source-line-no">1466</span><span id="line-1466">            event.setCancelled(true);</span>
+<span class="source-line-no">1467</span><span id="line-1467">        } else if (Settings.Done.RESTRICT_BUILDING &amp;&amp; DoneFlag.isDone(plot)) {</span>
+<span class="source-line-no">1468</span><span id="line-1468">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
+<span class="source-line-no">1469</span><span id="line-1469">                pp.sendMessage(</span>
+<span class="source-line-no">1470</span><span id="line-1470">                        TranslatableCaption.of("done.building_restricted")</span>
+<span class="source-line-no">1471</span><span id="line-1471">                );</span>
+<span class="source-line-no">1472</span><span id="line-1472">                event.setCancelled(true);</span>
+<span class="source-line-no">1473</span><span id="line-1473">            }</span>
+<span class="source-line-no">1474</span><span id="line-1474">        }</span>
+<span class="source-line-no">1475</span><span id="line-1475">    }</span>
+<span class="source-line-no">1476</span><span id="line-1476"></span>
+<span class="source-line-no">1477</span><span id="line-1477">    @EventHandler(priority = EventPriority.HIGHEST)</span>
+<span class="source-line-no">1478</span><span id="line-1478">    public void onInventoryClose(InventoryCloseEvent event) {</span>
+<span class="source-line-no">1479</span><span id="line-1479">        HumanEntity closer = event.getPlayer();</span>
+<span class="source-line-no">1480</span><span id="line-1480">        if (!(closer instanceof Player player)) {</span>
+<span class="source-line-no">1481</span><span id="line-1481">            return;</span>
+<span class="source-line-no">1482</span><span id="line-1482">        }</span>
+<span class="source-line-no">1483</span><span id="line-1483">        PlotInventory.removePlotInventoryOpen(BukkitUtil.adapt(player));</span>
+<span class="source-line-no">1484</span><span id="line-1484">    }</span>
+<span class="source-line-no">1485</span><span id="line-1485"></span>
+<span class="source-line-no">1486</span><span id="line-1486">    @EventHandler(priority = EventPriority.MONITOR)</span>
+<span class="source-line-no">1487</span><span id="line-1487">    public void onLeave(PlayerQuitEvent event) {</span>
+<span class="source-line-no">1488</span><span id="line-1488">        TaskManager.removeFromTeleportQueue(event.getPlayer().getName());</span>
+<span class="source-line-no">1489</span><span id="line-1489">        BukkitPlayer pp = BukkitUtil.adapt(event.getPlayer());</span>
+<span class="source-line-no">1490</span><span id="line-1490">        pp.unregister();</span>
+<span class="source-line-no">1491</span><span id="line-1491">        plotListener.logout(pp.getUUID());</span>
+<span class="source-line-no">1492</span><span id="line-1492">    }</span>
+<span class="source-line-no">1493</span><span id="line-1493"></span>
+<span class="source-line-no">1494</span><span id="line-1494">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1495</span><span id="line-1495">    public void onBucketFill(PlayerBucketFillEvent event) {</span>
+<span class="source-line-no">1496</span><span id="line-1496">        Block block = event.getBlock();</span>
+<span class="source-line-no">1497</span><span id="line-1497">        Location location = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">1498</span><span id="line-1498">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1499</span><span id="line-1499">        if (area == null) {</span>
+<span class="source-line-no">1500</span><span id="line-1500">            return;</span>
+<span class="source-line-no">1501</span><span id="line-1501">        }</span>
+<span class="source-line-no">1502</span><span id="line-1502">        Player player = event.getPlayer();</span>
+<span class="source-line-no">1503</span><span id="line-1503">        BukkitPlayer plotPlayer = BukkitUtil.adapt(player);</span>
+<span class="source-line-no">1504</span><span id="line-1504">        Plot plot = area.getPlot(location);</span>
+<span class="source-line-no">1505</span><span id="line-1505">        final List&lt;BlockTypeWrapper&gt; use =</span>
+<span class="source-line-no">1506</span><span id="line-1506">                Optional.ofNullable(plot).map(p -&gt; p.getFlag(UseFlag.class)).orElse(area.isRoadFlags() ?</span>
+<span class="source-line-no">1507</span><span id="line-1507">                        area.getFlag(UseFlag.class) : Collections.emptyList());</span>
+<span class="source-line-no">1508</span><span id="line-1508">        BlockType type = BukkitAdapter.asBlockType(block.getType());</span>
+<span class="source-line-no">1509</span><span id="line-1509">        for (final BlockTypeWrapper blockTypeWrapper : use) {</span>
+<span class="source-line-no">1510</span><span id="line-1510">            if (blockTypeWrapper.accepts(BlockTypes.AIR) || blockTypeWrapper.accepts(type)) {</span>
+<span class="source-line-no">1511</span><span id="line-1511">                // Allows this event for blocks that can be interacted with using a bucket without it being considered</span>
+<span class="source-line-no">1512</span><span id="line-1512">                // as "building" (= make it waterlogged or drop the block by flooding it)</span>
+<span class="source-line-no">1513</span><span id="line-1513">                if (type.getId().equals("minecraft:cauldron") || type.getId().endsWith("_cauldron")) {</span>
+<span class="source-line-no">1514</span><span id="line-1514">                    return;</span>
+<span class="source-line-no">1515</span><span id="line-1515">                }</span>
+<span class="source-line-no">1516</span><span id="line-1516">            }</span>
+<span class="source-line-no">1517</span><span id="line-1517">        }</span>
+<span class="source-line-no">1518</span><span id="line-1518">        if (plot == null) {</span>
+<span class="source-line-no">1519</span><span id="line-1519">            if (plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD)) {</span>
+<span class="source-line-no">1520</span><span id="line-1520">                return;</span>
+<span class="source-line-no">1521</span><span id="line-1521">            }</span>
+<span class="source-line-no">1522</span><span id="line-1522">            plotPlayer.sendMessage(</span>
+<span class="source-line-no">1523</span><span id="line-1523">                    TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1524</span><span id="line-1524">                    TagResolver.resolver("node", Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD))</span>
+<span class="source-line-no">1525</span><span id="line-1525">            );</span>
+<span class="source-line-no">1526</span><span id="line-1526">            event.setCancelled(true);</span>
+<span class="source-line-no">1527</span><span id="line-1527">        } else if (!plot.hasOwner()) {</span>
+<span class="source-line-no">1528</span><span id="line-1528">            if (plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)) {</span>
+<span class="source-line-no">1529</span><span id="line-1529">                return;</span>
+<span class="source-line-no">1530</span><span id="line-1530">            }</span>
+<span class="source-line-no">1531</span><span id="line-1531">            plotPlayer.sendMessage(</span>
+<span class="source-line-no">1532</span><span id="line-1532">                    TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1533</span><span id="line-1533">                    TagResolver.resolver(</span>
+<span class="source-line-no">1534</span><span id="line-1534">                            "node",</span>
+<span class="source-line-no">1535</span><span id="line-1535">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
+<span class="source-line-no">1536</span><span id="line-1536">                    )</span>
+<span class="source-line-no">1537</span><span id="line-1537">            );</span>
+<span class="source-line-no">1538</span><span id="line-1538">            event.setCancelled(true);</span>
+<span class="source-line-no">1539</span><span id="line-1539">        } else if (!plot.isAdded(plotPlayer.getUUID())) {</span>
+<span class="source-line-no">1540</span><span id="line-1540">            if (plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
+<span class="source-line-no">1541</span><span id="line-1541">                return;</span>
+<span class="source-line-no">1542</span><span id="line-1542">            }</span>
+<span class="source-line-no">1543</span><span id="line-1543">            plotPlayer.sendMessage(</span>
+<span class="source-line-no">1544</span><span id="line-1544">                    TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1545</span><span id="line-1545">                    TagResolver.resolver(</span>
+<span class="source-line-no">1546</span><span id="line-1546">                            "node",</span>
+<span class="source-line-no">1547</span><span id="line-1547">                            Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
+<span class="source-line-no">1548</span><span id="line-1548">                    )</span>
+<span class="source-line-no">1549</span><span id="line-1549">            );</span>
+<span class="source-line-no">1550</span><span id="line-1550">            event.setCancelled(true);</span>
+<span class="source-line-no">1551</span><span id="line-1551">        } else if (Settings.Done.RESTRICT_BUILDING &amp;&amp; DoneFlag.isDone(plot)) {</span>
+<span class="source-line-no">1552</span><span id="line-1552">            if (!plotPlayer.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
+<span class="source-line-no">1553</span><span id="line-1553">                plotPlayer.sendMessage(</span>
+<span class="source-line-no">1554</span><span id="line-1554">                        TranslatableCaption.of("done.building_restricted")</span>
+<span class="source-line-no">1555</span><span id="line-1555">                );</span>
+<span class="source-line-no">1556</span><span id="line-1556">                event.setCancelled(true);</span>
+<span class="source-line-no">1557</span><span id="line-1557">            }</span>
+<span class="source-line-no">1558</span><span id="line-1558">        }</span>
+<span class="source-line-no">1559</span><span id="line-1559">    }</span>
+<span class="source-line-no">1560</span><span id="line-1560"></span>
+<span class="source-line-no">1561</span><span id="line-1561">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1562</span><span id="line-1562">    public void onHangingPlace(HangingPlaceEvent event) {</span>
+<span class="source-line-no">1563</span><span id="line-1563">        Block block = event.getBlock().getRelative(event.getBlockFace());</span>
+<span class="source-line-no">1564</span><span id="line-1564">        Location location = BukkitUtil.adapt(block.getLocation());</span>
+<span class="source-line-no">1565</span><span id="line-1565">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1566</span><span id="line-1566">        if (area == null) {</span>
+<span class="source-line-no">1567</span><span id="line-1567">            return;</span>
+<span class="source-line-no">1568</span><span id="line-1568">        }</span>
+<span class="source-line-no">1569</span><span id="line-1569">        Player p = event.getPlayer();</span>
+<span class="source-line-no">1570</span><span id="line-1570">        if (p == null) {</span>
+<span class="source-line-no">1571</span><span id="line-1571">            event.setCancelled(true);</span>
+<span class="source-line-no">1572</span><span id="line-1572">            return;</span>
+<span class="source-line-no">1573</span><span id="line-1573">        }</span>
+<span class="source-line-no">1574</span><span id="line-1574">        BukkitPlayer pp = BukkitUtil.adapt(p);</span>
+<span class="source-line-no">1575</span><span id="line-1575">        Plot plot = area.getPlot(location);</span>
+<span class="source-line-no">1576</span><span id="line-1576">        if (plot == null) {</span>
+<span class="source-line-no">1577</span><span id="line-1577">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_ROAD)) {</span>
+<span class="source-line-no">1578</span><span id="line-1578">                pp.sendMessage(</span>
+<span class="source-line-no">1579</span><span id="line-1579">                        TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1580</span><span id="line-1580">                        TagResolver.resolver(</span>
+<span class="source-line-no">1581</span><span id="line-1581">                                "node",</span>
+<span class="source-line-no">1582</span><span id="line-1582">                                Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_ROAD)</span>
+<span class="source-line-no">1583</span><span id="line-1583">                        )</span>
+<span class="source-line-no">1584</span><span id="line-1584">                );</span>
+<span class="source-line-no">1585</span><span id="line-1585">                event.setCancelled(true);</span>
+<span class="source-line-no">1586</span><span id="line-1586">            }</span>
+<span class="source-line-no">1587</span><span id="line-1587">        } else {</span>
+<span class="source-line-no">1588</span><span id="line-1588">            if (!plot.hasOwner()) {</span>
+<span class="source-line-no">1589</span><span id="line-1589">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)) {</span>
+<span class="source-line-no">1590</span><span id="line-1590">                    pp.sendMessage(</span>
+<span class="source-line-no">1591</span><span id="line-1591">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1592</span><span id="line-1592">                            TagResolver.resolver(</span>
+<span class="source-line-no">1593</span><span id="line-1593">                                    "node",</span>
+<span class="source-line-no">1594</span><span id="line-1594">                                    Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_UNOWNED)</span>
+<span class="source-line-no">1595</span><span id="line-1595">                            )</span>
+<span class="source-line-no">1596</span><span id="line-1596">                    );</span>
+<span class="source-line-no">1597</span><span id="line-1597">                    event.setCancelled(true);</span>
+<span class="source-line-no">1598</span><span id="line-1598">                }</span>
+<span class="source-line-no">1599</span><span id="line-1599">                return;</span>
+<span class="source-line-no">1600</span><span id="line-1600">            }</span>
+<span class="source-line-no">1601</span><span id="line-1601">            if (!plot.isAdded(pp.getUUID())) {</span>
+<span class="source-line-no">1602</span><span id="line-1602">                if (!plot.getFlag(HangingPlaceFlag.class)) {</span>
+<span class="source-line-no">1603</span><span id="line-1603">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_BUILD_OTHER)) {</span>
+<span class="source-line-no">1604</span><span id="line-1604">                        pp.sendMessage(</span>
+<span class="source-line-no">1605</span><span id="line-1605">                                TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1606</span><span id="line-1606">                                TagResolver.resolver(</span>
+<span class="source-line-no">1607</span><span id="line-1607">                                        "node",</span>
+<span class="source-line-no">1608</span><span id="line-1608">                                        Tag.inserting(Permission.PERMISSION_ADMIN_BUILD_OTHER)</span>
+<span class="source-line-no">1609</span><span id="line-1609">                                )</span>
+<span class="source-line-no">1610</span><span id="line-1610">                        );</span>
+<span class="source-line-no">1611</span><span id="line-1611">                        event.setCancelled(true);</span>
+<span class="source-line-no">1612</span><span id="line-1612">                    }</span>
+<span class="source-line-no">1613</span><span id="line-1613">                    return;</span>
+<span class="source-line-no">1614</span><span id="line-1614">                }</span>
+<span class="source-line-no">1615</span><span id="line-1615">            }</span>
+<span class="source-line-no">1616</span><span id="line-1616">            if (BukkitEntityUtil.checkEntity(event.getEntity(), plot)) {</span>
+<span class="source-line-no">1617</span><span id="line-1617">                event.setCancelled(true);</span>
+<span class="source-line-no">1618</span><span id="line-1618">            }</span>
+<span class="source-line-no">1619</span><span id="line-1619"></span>
+<span class="source-line-no">1620</span><span id="line-1620">        }</span>
+<span class="source-line-no">1621</span><span id="line-1621">    }</span>
+<span class="source-line-no">1622</span><span id="line-1622"></span>
+<span class="source-line-no">1623</span><span id="line-1623">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1624</span><span id="line-1624">    public void onHangingBreakByEntity(HangingBreakByEntityEvent event) {</span>
+<span class="source-line-no">1625</span><span id="line-1625">        Entity remover = event.getRemover();</span>
+<span class="source-line-no">1626</span><span id="line-1626">        if (remover instanceof Player p) {</span>
+<span class="source-line-no">1627</span><span id="line-1627">            Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
+<span class="source-line-no">1628</span><span id="line-1628">            PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1629</span><span id="line-1629">            if (area == null) {</span>
+<span class="source-line-no">1630</span><span id="line-1630">                return;</span>
+<span class="source-line-no">1631</span><span id="line-1631">            }</span>
+<span class="source-line-no">1632</span><span id="line-1632">            BukkitPlayer pp = BukkitUtil.adapt(p);</span>
+<span class="source-line-no">1633</span><span id="line-1633">            Plot plot = area.getPlot(location);</span>
+<span class="source-line-no">1634</span><span id="line-1634">            if (plot == null) {</span>
+<span class="source-line-no">1635</span><span id="line-1635">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_ROAD)) {</span>
+<span class="source-line-no">1636</span><span id="line-1636">                    pp.sendMessage(</span>
+<span class="source-line-no">1637</span><span id="line-1637">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1638</span><span id="line-1638">                            TagResolver.resolver(</span>
+<span class="source-line-no">1639</span><span id="line-1639">                                    "node",</span>
+<span class="source-line-no">1640</span><span id="line-1640">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_ROAD)</span>
+<span class="source-line-no">1641</span><span id="line-1641">                            )</span>
+<span class="source-line-no">1642</span><span id="line-1642">                    );</span>
+<span class="source-line-no">1643</span><span id="line-1643">                    event.setCancelled(true);</span>
+<span class="source-line-no">1644</span><span id="line-1644">                }</span>
+<span class="source-line-no">1645</span><span id="line-1645">            } else if (!plot.hasOwner()) {</span>
+<span class="source-line-no">1646</span><span id="line-1646">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)) {</span>
+<span class="source-line-no">1647</span><span id="line-1647">                    pp.sendMessage(</span>
+<span class="source-line-no">1648</span><span id="line-1648">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1649</span><span id="line-1649">                            TagResolver.resolver(</span>
+<span class="source-line-no">1650</span><span id="line-1650">                                    "node",</span>
+<span class="source-line-no">1651</span><span id="line-1651">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)</span>
+<span class="source-line-no">1652</span><span id="line-1652">                            )</span>
+<span class="source-line-no">1653</span><span id="line-1653">                    );</span>
+<span class="source-line-no">1654</span><span id="line-1654">                    event.setCancelled(true);</span>
+<span class="source-line-no">1655</span><span id="line-1655">                }</span>
+<span class="source-line-no">1656</span><span id="line-1656">            } else if (!plot.isAdded(pp.getUUID())) {</span>
+<span class="source-line-no">1657</span><span id="line-1657">                if (plot.getFlag(HangingBreakFlag.class)) {</span>
+<span class="source-line-no">1658</span><span id="line-1658">                    return;</span>
+<span class="source-line-no">1659</span><span id="line-1659">                }</span>
+<span class="source-line-no">1660</span><span id="line-1660">                if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_OTHER)) {</span>
+<span class="source-line-no">1661</span><span id="line-1661">                    pp.sendMessage(</span>
+<span class="source-line-no">1662</span><span id="line-1662">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1663</span><span id="line-1663">                            TagResolver.resolver(</span>
+<span class="source-line-no">1664</span><span id="line-1664">                                    "node",</span>
+<span class="source-line-no">1665</span><span id="line-1665">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_OTHER)</span>
+<span class="source-line-no">1666</span><span id="line-1666">                            )</span>
+<span class="source-line-no">1667</span><span id="line-1667">                    );</span>
+<span class="source-line-no">1668</span><span id="line-1668">                    event.setCancelled(true);</span>
+<span class="source-line-no">1669</span><span id="line-1669">                    plot.debug(p.getName()</span>
+<span class="source-line-no">1670</span><span id="line-1670">                            + " could not break hanging entity because hanging-break = false");</span>
+<span class="source-line-no">1671</span><span id="line-1671">                }</span>
+<span class="source-line-no">1672</span><span id="line-1672">            }</span>
+<span class="source-line-no">1673</span><span id="line-1673">        } else if (remover instanceof Projectile p) {</span>
+<span class="source-line-no">1674</span><span id="line-1674">            if (p.getShooter() instanceof Player shooter) {</span>
+<span class="source-line-no">1675</span><span id="line-1675">                Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
+<span class="source-line-no">1676</span><span id="line-1676">                PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1677</span><span id="line-1677">                if (area == null) {</span>
+<span class="source-line-no">1678</span><span id="line-1678">                    return;</span>
+<span class="source-line-no">1679</span><span id="line-1679">                }</span>
+<span class="source-line-no">1680</span><span id="line-1680">                BukkitPlayer player = BukkitUtil.adapt(shooter);</span>
+<span class="source-line-no">1681</span><span id="line-1681">                Plot plot = area.getPlot(BukkitUtil.adapt(event.getEntity().getLocation()));</span>
+<span class="source-line-no">1682</span><span id="line-1682">                if (plot != null) {</span>
+<span class="source-line-no">1683</span><span id="line-1683">                    if (!plot.hasOwner()) {</span>
+<span class="source-line-no">1684</span><span id="line-1684">                        if (!player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)) {</span>
+<span class="source-line-no">1685</span><span id="line-1685">                            player.sendMessage(</span>
+<span class="source-line-no">1686</span><span id="line-1686">                                    TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1687</span><span id="line-1687">                                    TagResolver.resolver(</span>
+<span class="source-line-no">1688</span><span id="line-1688">                                            "node",</span>
+<span class="source-line-no">1689</span><span id="line-1689">                                            Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_UNOWNED)</span>
+<span class="source-line-no">1690</span><span id="line-1690">                                    )</span>
+<span class="source-line-no">1691</span><span id="line-1691">                            );</span>
+<span class="source-line-no">1692</span><span id="line-1692">                            event.setCancelled(true);</span>
+<span class="source-line-no">1693</span><span id="line-1693">                        }</span>
+<span class="source-line-no">1694</span><span id="line-1694">                    } else if (!plot.isAdded(player.getUUID())) {</span>
+<span class="source-line-no">1695</span><span id="line-1695">                        if (!plot.getFlag(HangingBreakFlag.class)) {</span>
+<span class="source-line-no">1696</span><span id="line-1696">                            if (!player.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_OTHER)) {</span>
+<span class="source-line-no">1697</span><span id="line-1697">                                player.sendMessage(</span>
+<span class="source-line-no">1698</span><span id="line-1698">                                        TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1699</span><span id="line-1699">                                        TagResolver.resolver(</span>
+<span class="source-line-no">1700</span><span id="line-1700">                                                "node",</span>
+<span class="source-line-no">1701</span><span id="line-1701">                                                Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_OTHER)</span>
+<span class="source-line-no">1702</span><span id="line-1702">                                        )</span>
+<span class="source-line-no">1703</span><span id="line-1703">                                );</span>
+<span class="source-line-no">1704</span><span id="line-1704">                                event.setCancelled(true);</span>
+<span class="source-line-no">1705</span><span id="line-1705">                                plot.debug(player.getName()</span>
+<span class="source-line-no">1706</span><span id="line-1706">                                        + " could not break hanging entity because hanging-break = false");</span>
+<span class="source-line-no">1707</span><span id="line-1707">                            }</span>
+<span class="source-line-no">1708</span><span id="line-1708">                        }</span>
+<span class="source-line-no">1709</span><span id="line-1709">                    }</span>
+<span class="source-line-no">1710</span><span id="line-1710">                }</span>
+<span class="source-line-no">1711</span><span id="line-1711">            }</span>
+<span class="source-line-no">1712</span><span id="line-1712">        } else {</span>
+<span class="source-line-no">1713</span><span id="line-1713">            event.setCancelled(true);</span>
+<span class="source-line-no">1714</span><span id="line-1714">        }</span>
+<span class="source-line-no">1715</span><span id="line-1715">    }</span>
+<span class="source-line-no">1716</span><span id="line-1716"></span>
+<span class="source-line-no">1717</span><span id="line-1717">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1718</span><span id="line-1718">    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {</span>
+<span class="source-line-no">1719</span><span id="line-1719">        if (event.getRightClicked().getType() == EntityType.UNKNOWN) {</span>
+<span class="source-line-no">1720</span><span id="line-1720">            return;</span>
+<span class="source-line-no">1721</span><span id="line-1721">        }</span>
+<span class="source-line-no">1722</span><span id="line-1722">        Location location = BukkitUtil.adapt(event.getRightClicked().getLocation());</span>
+<span class="source-line-no">1723</span><span id="line-1723">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1724</span><span id="line-1724">        if (area == null) {</span>
+<span class="source-line-no">1725</span><span id="line-1725">            return;</span>
+<span class="source-line-no">1726</span><span id="line-1726">        }</span>
+<span class="source-line-no">1727</span><span id="line-1727">        Player p = event.getPlayer();</span>
+<span class="source-line-no">1728</span><span id="line-1728">        BukkitPlayer pp = BukkitUtil.adapt(p);</span>
+<span class="source-line-no">1729</span><span id="line-1729">        Plot plot = area.getPlot(location);</span>
+<span class="source-line-no">1730</span><span id="line-1730">        if (plot == null &amp;&amp; !area.isRoadFlags()) {</span>
+<span class="source-line-no">1731</span><span id="line-1731">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_ROAD)) {</span>
+<span class="source-line-no">1732</span><span id="line-1732">                pp.sendMessage(</span>
+<span class="source-line-no">1733</span><span id="line-1733">                        TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1734</span><span id="line-1734">                        TagResolver.resolver(</span>
+<span class="source-line-no">1735</span><span id="line-1735">                                "node",</span>
+<span class="source-line-no">1736</span><span id="line-1736">                                Tag.inserting(Permission.PERMISSION_ADMIN_INTERACT_ROAD)</span>
+<span class="source-line-no">1737</span><span id="line-1737">                        )</span>
+<span class="source-line-no">1738</span><span id="line-1738">                );</span>
+<span class="source-line-no">1739</span><span id="line-1739">                event.setCancelled(true);</span>
+<span class="source-line-no">1740</span><span id="line-1740">            }</span>
+<span class="source-line-no">1741</span><span id="line-1741">        } else if (plot != null &amp;&amp; !plot.hasOwner()) {</span>
+<span class="source-line-no">1742</span><span id="line-1742">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_UNOWNED)) {</span>
+<span class="source-line-no">1743</span><span id="line-1743">                pp.sendMessage(</span>
+<span class="source-line-no">1744</span><span id="line-1744">                        TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1745</span><span id="line-1745">                        TagResolver.resolver(</span>
+<span class="source-line-no">1746</span><span id="line-1746">                                "node",</span>
+<span class="source-line-no">1747</span><span id="line-1747">                                Tag.inserting(Permission.PERMISSION_ADMIN_INTERACT_UNOWNED)</span>
+<span class="source-line-no">1748</span><span id="line-1748">                        )</span>
+<span class="source-line-no">1749</span><span id="line-1749">                );</span>
+<span class="source-line-no">1750</span><span id="line-1750">                event.setCancelled(true);</span>
+<span class="source-line-no">1751</span><span id="line-1751">            }</span>
+<span class="source-line-no">1752</span><span id="line-1752">        } else if ((plot != null &amp;&amp; !plot.isAdded(pp.getUUID())) || (plot == null &amp;&amp; area</span>
+<span class="source-line-no">1753</span><span id="line-1753">                .isRoadFlags())) {</span>
+<span class="source-line-no">1754</span><span id="line-1754">            final Entity entity = event.getRightClicked();</span>
+<span class="source-line-no">1755</span><span id="line-1755">            final com.sk89q.worldedit.world.entity.EntityType entityType =</span>
+<span class="source-line-no">1756</span><span id="line-1756">                    BukkitAdapter.adapt(entity.getType());</span>
+<span class="source-line-no">1757</span><span id="line-1757"></span>
+<span class="source-line-no">1758</span><span id="line-1758">            FlagContainer flagContainer;</span>
+<span class="source-line-no">1759</span><span id="line-1759">            if (plot == null) {</span>
+<span class="source-line-no">1760</span><span id="line-1760">                flagContainer = area.getRoadFlagContainer();</span>
+<span class="source-line-no">1761</span><span id="line-1761">            } else {</span>
+<span class="source-line-no">1762</span><span id="line-1762">                flagContainer = plot.getFlagContainer();</span>
+<span class="source-line-no">1763</span><span id="line-1763">            }</span>
+<span class="source-line-no">1764</span><span id="line-1764"></span>
+<span class="source-line-no">1765</span><span id="line-1765">            if (EntityCategories.HOSTILE.contains(entityType) &amp;&amp; flagContainer</span>
+<span class="source-line-no">1766</span><span id="line-1766">                    .getFlag(HostileInteractFlag.class).getValue()) {</span>
+<span class="source-line-no">1767</span><span id="line-1767">                return;</span>
+<span class="source-line-no">1768</span><span id="line-1768">            }</span>
+<span class="source-line-no">1769</span><span id="line-1769"></span>
+<span class="source-line-no">1770</span><span id="line-1770">            if (EntityCategories.ANIMAL.contains(entityType) &amp;&amp; flagContainer</span>
+<span class="source-line-no">1771</span><span id="line-1771">                    .getFlag(AnimalInteractFlag.class).getValue()) {</span>
+<span class="source-line-no">1772</span><span id="line-1772">                return;</span>
+<span class="source-line-no">1773</span><span id="line-1773">            }</span>
+<span class="source-line-no">1774</span><span id="line-1774"></span>
+<span class="source-line-no">1775</span><span id="line-1775">            // This actually makes use of the interface, so we don't use the</span>
+<span class="source-line-no">1776</span><span id="line-1776">            // category</span>
+<span class="source-line-no">1777</span><span id="line-1777">            if (entity instanceof Tameable &amp;&amp; ((Tameable) entity).isTamed() &amp;&amp; flagContainer</span>
+<span class="source-line-no">1778</span><span id="line-1778">                    .getFlag(TamedInteractFlag.class).getValue()) {</span>
+<span class="source-line-no">1779</span><span id="line-1779">                return;</span>
+<span class="source-line-no">1780</span><span id="line-1780">            }</span>
+<span class="source-line-no">1781</span><span id="line-1781"></span>
+<span class="source-line-no">1782</span><span id="line-1782">            if (EntityCategories.VEHICLE.contains(entityType) &amp;&amp; flagContainer</span>
+<span class="source-line-no">1783</span><span id="line-1783">                    .getFlag(VehicleUseFlag.class).getValue()) {</span>
+<span class="source-line-no">1784</span><span id="line-1784">                return;</span>
+<span class="source-line-no">1785</span><span id="line-1785">            }</span>
+<span class="source-line-no">1786</span><span id="line-1786"></span>
+<span class="source-line-no">1787</span><span id="line-1787">            if (EntityCategories.PLAYER.contains(entityType) &amp;&amp; flagContainer</span>
+<span class="source-line-no">1788</span><span id="line-1788">                    .getFlag(PlayerInteractFlag.class).getValue()) {</span>
+<span class="source-line-no">1789</span><span id="line-1789">                return;</span>
+<span class="source-line-no">1790</span><span id="line-1790">            }</span>
+<span class="source-line-no">1791</span><span id="line-1791"></span>
+<span class="source-line-no">1792</span><span id="line-1792">            if (EntityCategories.INTERACTION.contains(entityType) &amp;&amp; flagContainer</span>
+<span class="source-line-no">1793</span><span id="line-1793">                    .getFlag(InteractionInteractFlag.class).getValue()) {</span>
+<span class="source-line-no">1794</span><span id="line-1794">                return;</span>
+<span class="source-line-no">1795</span><span id="line-1795">            }</span>
+<span class="source-line-no">1796</span><span id="line-1796"></span>
+<span class="source-line-no">1797</span><span id="line-1797">            if (EntityCategories.VILLAGER.contains(entityType) &amp;&amp; flagContainer</span>
+<span class="source-line-no">1798</span><span id="line-1798">                    .getFlag(VillagerInteractFlag.class).getValue()) {</span>
 <span class="source-line-no">1799</span><span id="line-1799">                return;</span>
 <span class="source-line-no">1800</span><span id="line-1800">            }</span>
 <span class="source-line-no">1801</span><span id="line-1801"></span>
-<span class="source-line-no">1802</span><span id="line-1802">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_OTHER)) {</span>
-<span class="source-line-no">1803</span><span id="line-1803">                pp.sendMessage(</span>
-<span class="source-line-no">1804</span><span id="line-1804">                        TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1805</span><span id="line-1805">                        TagResolver.resolver(</span>
-<span class="source-line-no">1806</span><span id="line-1806">                                "node",</span>
-<span class="source-line-no">1807</span><span id="line-1807">                                Tag.inserting(Permission.PERMISSION_ADMIN_INTERACT_OTHER)</span>
-<span class="source-line-no">1808</span><span id="line-1808">                        )</span>
-<span class="source-line-no">1809</span><span id="line-1809">                );</span>
-<span class="source-line-no">1810</span><span id="line-1810">                event.setCancelled(true);</span>
-<span class="source-line-no">1811</span><span id="line-1811">            }</span>
-<span class="source-line-no">1812</span><span id="line-1812">        }</span>
-<span class="source-line-no">1813</span><span id="line-1813">    }</span>
-<span class="source-line-no">1814</span><span id="line-1814"></span>
-<span class="source-line-no">1815</span><span id="line-1815">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
-<span class="source-line-no">1816</span><span id="line-1816">    public void onVehicleDestroy(VehicleDestroyEvent event) {</span>
-<span class="source-line-no">1817</span><span id="line-1817">        Location location = BukkitUtil.adapt(event.getVehicle().getLocation());</span>
-<span class="source-line-no">1818</span><span id="line-1818">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1819</span><span id="line-1819">        if (area == null) {</span>
-<span class="source-line-no">1820</span><span id="line-1820">            return;</span>
-<span class="source-line-no">1821</span><span id="line-1821">        }</span>
-<span class="source-line-no">1822</span><span id="line-1822">        Entity attacker = event.getAttacker();</span>
-<span class="source-line-no">1823</span><span id="line-1823">        if (attacker instanceof Player p) {</span>
-<span class="source-line-no">1824</span><span id="line-1824">            BukkitPlayer pp = BukkitUtil.adapt(p);</span>
-<span class="source-line-no">1825</span><span id="line-1825">            Plot plot = area.getPlot(location);</span>
-<span class="source-line-no">1826</span><span id="line-1826">            if (plot == null) {</span>
-<span class="source-line-no">1827</span><span id="line-1827">                if (!PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, VehicleBreakFlag.class, true) &amp;&amp; !pp.hasPermission(</span>
-<span class="source-line-no">1828</span><span id="line-1828">                        Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_ROAD</span>
-<span class="source-line-no">1829</span><span id="line-1829">                )) {</span>
-<span class="source-line-no">1830</span><span id="line-1830">                    pp.sendMessage(</span>
-<span class="source-line-no">1831</span><span id="line-1831">                            TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1832</span><span id="line-1832">                            TagResolver.resolver(</span>
-<span class="source-line-no">1833</span><span id="line-1833">                                    "node",</span>
-<span class="source-line-no">1834</span><span id="line-1834">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_ROAD)</span>
-<span class="source-line-no">1835</span><span id="line-1835">                            )</span>
-<span class="source-line-no">1836</span><span id="line-1836">                    );</span>
-<span class="source-line-no">1837</span><span id="line-1837">                    event.setCancelled(true);</span>
-<span class="source-line-no">1838</span><span id="line-1838">                }</span>
-<span class="source-line-no">1839</span><span id="line-1839">            } else {</span>
-<span class="source-line-no">1840</span><span id="line-1840">                if (!plot.hasOwner()) {</span>
-<span class="source-line-no">1841</span><span id="line-1841">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_UNOWNED)) {</span>
-<span class="source-line-no">1842</span><span id="line-1842">                        pp.sendMessage(</span>
-<span class="source-line-no">1843</span><span id="line-1843">                                TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1844</span><span id="line-1844">                                TagResolver.resolver(</span>
-<span class="source-line-no">1845</span><span id="line-1845">                                        "node",</span>
-<span class="source-line-no">1846</span><span id="line-1846">                                        Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_UNOWNED)</span>
-<span class="source-line-no">1847</span><span id="line-1847">                                )</span>
-<span class="source-line-no">1848</span><span id="line-1848">                        );</span>
-<span class="source-line-no">1849</span><span id="line-1849">                        event.setCancelled(true);</span>
-<span class="source-line-no">1850</span><span id="line-1850">                        return;</span>
-<span class="source-line-no">1851</span><span id="line-1851">                    }</span>
-<span class="source-line-no">1852</span><span id="line-1852">                    return;</span>
-<span class="source-line-no">1853</span><span id="line-1853">                }</span>
-<span class="source-line-no">1854</span><span id="line-1854">                if (!plot.isAdded(pp.getUUID())) {</span>
-<span class="source-line-no">1855</span><span id="line-1855">                    if (plot.getFlag(VehicleBreakFlag.class)) {</span>
+<span class="source-line-no">1802</span><span id="line-1802">            if ((EntityCategories.HANGING.contains(entityType) || EntityCategories.OTHER</span>
+<span class="source-line-no">1803</span><span id="line-1803">                    .contains(entityType)) &amp;&amp; flagContainer.getFlag(MiscInteractFlag.class)</span>
+<span class="source-line-no">1804</span><span id="line-1804">                    .getValue()) {</span>
+<span class="source-line-no">1805</span><span id="line-1805">                return;</span>
+<span class="source-line-no">1806</span><span id="line-1806">            }</span>
+<span class="source-line-no">1807</span><span id="line-1807"></span>
+<span class="source-line-no">1808</span><span id="line-1808">            if (!pp.hasPermission(Permission.PERMISSION_ADMIN_INTERACT_OTHER)) {</span>
+<span class="source-line-no">1809</span><span id="line-1809">                pp.sendMessage(</span>
+<span class="source-line-no">1810</span><span id="line-1810">                        TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1811</span><span id="line-1811">                        TagResolver.resolver(</span>
+<span class="source-line-no">1812</span><span id="line-1812">                                "node",</span>
+<span class="source-line-no">1813</span><span id="line-1813">                                Tag.inserting(Permission.PERMISSION_ADMIN_INTERACT_OTHER)</span>
+<span class="source-line-no">1814</span><span id="line-1814">                        )</span>
+<span class="source-line-no">1815</span><span id="line-1815">                );</span>
+<span class="source-line-no">1816</span><span id="line-1816">                event.setCancelled(true);</span>
+<span class="source-line-no">1817</span><span id="line-1817">            }</span>
+<span class="source-line-no">1818</span><span id="line-1818">        }</span>
+<span class="source-line-no">1819</span><span id="line-1819">    }</span>
+<span class="source-line-no">1820</span><span id="line-1820"></span>
+<span class="source-line-no">1821</span><span id="line-1821">    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)</span>
+<span class="source-line-no">1822</span><span id="line-1822">    public void onVehicleDestroy(VehicleDestroyEvent event) {</span>
+<span class="source-line-no">1823</span><span id="line-1823">        Location location = BukkitUtil.adapt(event.getVehicle().getLocation());</span>
+<span class="source-line-no">1824</span><span id="line-1824">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1825</span><span id="line-1825">        if (area == null) {</span>
+<span class="source-line-no">1826</span><span id="line-1826">            return;</span>
+<span class="source-line-no">1827</span><span id="line-1827">        }</span>
+<span class="source-line-no">1828</span><span id="line-1828">        Entity attacker = event.getAttacker();</span>
+<span class="source-line-no">1829</span><span id="line-1829">        if (attacker instanceof Player p) {</span>
+<span class="source-line-no">1830</span><span id="line-1830">            BukkitPlayer pp = BukkitUtil.adapt(p);</span>
+<span class="source-line-no">1831</span><span id="line-1831">            Plot plot = area.getPlot(location);</span>
+<span class="source-line-no">1832</span><span id="line-1832">            if (plot == null) {</span>
+<span class="source-line-no">1833</span><span id="line-1833">                if (!PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, VehicleBreakFlag.class, true) &amp;&amp; !pp.hasPermission(</span>
+<span class="source-line-no">1834</span><span id="line-1834">                        Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_ROAD</span>
+<span class="source-line-no">1835</span><span id="line-1835">                )) {</span>
+<span class="source-line-no">1836</span><span id="line-1836">                    pp.sendMessage(</span>
+<span class="source-line-no">1837</span><span id="line-1837">                            TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1838</span><span id="line-1838">                            TagResolver.resolver(</span>
+<span class="source-line-no">1839</span><span id="line-1839">                                    "node",</span>
+<span class="source-line-no">1840</span><span id="line-1840">                                    Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_ROAD)</span>
+<span class="source-line-no">1841</span><span id="line-1841">                            )</span>
+<span class="source-line-no">1842</span><span id="line-1842">                    );</span>
+<span class="source-line-no">1843</span><span id="line-1843">                    event.setCancelled(true);</span>
+<span class="source-line-no">1844</span><span id="line-1844">                }</span>
+<span class="source-line-no">1845</span><span id="line-1845">            } else {</span>
+<span class="source-line-no">1846</span><span id="line-1846">                if (!plot.hasOwner()) {</span>
+<span class="source-line-no">1847</span><span id="line-1847">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_UNOWNED)) {</span>
+<span class="source-line-no">1848</span><span id="line-1848">                        pp.sendMessage(</span>
+<span class="source-line-no">1849</span><span id="line-1849">                                TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1850</span><span id="line-1850">                                TagResolver.resolver(</span>
+<span class="source-line-no">1851</span><span id="line-1851">                                        "node",</span>
+<span class="source-line-no">1852</span><span id="line-1852">                                        Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_UNOWNED)</span>
+<span class="source-line-no">1853</span><span id="line-1853">                                )</span>
+<span class="source-line-no">1854</span><span id="line-1854">                        );</span>
+<span class="source-line-no">1855</span><span id="line-1855">                        event.setCancelled(true);</span>
 <span class="source-line-no">1856</span><span id="line-1856">                        return;</span>
 <span class="source-line-no">1857</span><span id="line-1857">                    }</span>
-<span class="source-line-no">1858</span><span id="line-1858">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_OTHER)) {</span>
-<span class="source-line-no">1859</span><span id="line-1859">                        pp.sendMessage(</span>
-<span class="source-line-no">1860</span><span id="line-1860">                                TranslatableCaption.of("permission.no_permission_event"),</span>
-<span class="source-line-no">1861</span><span id="line-1861">                                TagResolver.resolver(</span>
-<span class="source-line-no">1862</span><span id="line-1862">                                        "node",</span>
-<span class="source-line-no">1863</span><span id="line-1863">                                        Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_OTHER)</span>
-<span class="source-line-no">1864</span><span id="line-1864">                                )</span>
-<span class="source-line-no">1865</span><span id="line-1865">                        );</span>
-<span class="source-line-no">1866</span><span id="line-1866">                        event.setCancelled(true);</span>
-<span class="source-line-no">1867</span><span id="line-1867">                        plot.debug(pp.getName()</span>
-<span class="source-line-no">1868</span><span id="line-1868">                                + " could not break vehicle because vehicle-break = false");</span>
-<span class="source-line-no">1869</span><span id="line-1869">                    }</span>
-<span class="source-line-no">1870</span><span id="line-1870">                }</span>
-<span class="source-line-no">1871</span><span id="line-1871">            }</span>
-<span class="source-line-no">1872</span><span id="line-1872">        }</span>
-<span class="source-line-no">1873</span><span id="line-1873">    }</span>
-<span class="source-line-no">1874</span><span id="line-1874"></span>
-<span class="source-line-no">1875</span><span id="line-1875">    @EventHandler</span>
-<span class="source-line-no">1876</span><span id="line-1876">    public void onItemDrop(PlayerDropItemEvent event) {</span>
-<span class="source-line-no">1877</span><span id="line-1877">        Player player = event.getPlayer();</span>
-<span class="source-line-no">1878</span><span id="line-1878">        BukkitPlayer pp = BukkitUtil.adapt(player);</span>
-<span class="source-line-no">1879</span><span id="line-1879">        Location location = pp.getLocation();</span>
-<span class="source-line-no">1880</span><span id="line-1880">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1881</span><span id="line-1881">        if (area == null) {</span>
-<span class="source-line-no">1882</span><span id="line-1882">            return;</span>
-<span class="source-line-no">1883</span><span id="line-1883">        }</span>
-<span class="source-line-no">1884</span><span id="line-1884">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">1885</span><span id="line-1885">        if (plot == null) {</span>
-<span class="source-line-no">1886</span><span id="line-1886">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, ItemDropFlag.class, false)) {</span>
-<span class="source-line-no">1887</span><span id="line-1887">                event.setCancelled(true);</span>
-<span class="source-line-no">1888</span><span id="line-1888">            }</span>
-<span class="source-line-no">1889</span><span id="line-1889">            return;</span>
-<span class="source-line-no">1890</span><span id="line-1890">        }</span>
-<span class="source-line-no">1891</span><span id="line-1891">        UUID uuid = pp.getUUID();</span>
-<span class="source-line-no">1892</span><span id="line-1892">        if (!plot.isAdded(uuid)) {</span>
-<span class="source-line-no">1893</span><span id="line-1893">            if (!plot.getFlag(ItemDropFlag.class)) {</span>
-<span class="source-line-no">1894</span><span id="line-1894">                plot.debug(player.getName() + " could not drop item because of item-drop = false");</span>
-<span class="source-line-no">1895</span><span id="line-1895">                event.setCancelled(true);</span>
-<span class="source-line-no">1896</span><span id="line-1896">            }</span>
-<span class="source-line-no">1897</span><span id="line-1897">        }</span>
-<span class="source-line-no">1898</span><span id="line-1898">    }</span>
-<span class="source-line-no">1899</span><span id="line-1899"></span>
-<span class="source-line-no">1900</span><span id="line-1900">    @EventHandler</span>
-<span class="source-line-no">1901</span><span id="line-1901">    public void onItemPickup(EntityPickupItemEvent event) {</span>
-<span class="source-line-no">1902</span><span id="line-1902">        LivingEntity ent = event.getEntity();</span>
-<span class="source-line-no">1903</span><span id="line-1903">        if (ent instanceof Player player) {</span>
-<span class="source-line-no">1904</span><span id="line-1904">            BukkitPlayer pp = BukkitUtil.adapt(player);</span>
-<span class="source-line-no">1905</span><span id="line-1905">            Location location = pp.getLocation();</span>
-<span class="source-line-no">1906</span><span id="line-1906">            PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1907</span><span id="line-1907">            if (area == null) {</span>
-<span class="source-line-no">1908</span><span id="line-1908">                return;</span>
-<span class="source-line-no">1909</span><span id="line-1909">            }</span>
-<span class="source-line-no">1910</span><span id="line-1910">            Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">1911</span><span id="line-1911">            if (plot == null) {</span>
-<span class="source-line-no">1912</span><span id="line-1912">                if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, DropProtectionFlag.class, true)) {</span>
-<span class="source-line-no">1913</span><span id="line-1913">                    event.setCancelled(true);</span>
-<span class="source-line-no">1914</span><span id="line-1914">                }</span>
-<span class="source-line-no">1915</span><span id="line-1915">                return;</span>
-<span class="source-line-no">1916</span><span id="line-1916">            }</span>
-<span class="source-line-no">1917</span><span id="line-1917">            UUID uuid = pp.getUUID();</span>
-<span class="source-line-no">1918</span><span id="line-1918">            if (!plot.isAdded(uuid) &amp;&amp; plot.getFlag(DropProtectionFlag.class)) {</span>
-<span class="source-line-no">1919</span><span id="line-1919">                plot.debug(player.getName() + " could not pick up item because of drop-protection = true");</span>
-<span class="source-line-no">1920</span><span id="line-1920">                event.setCancelled(true);</span>
-<span class="source-line-no">1921</span><span id="line-1921">            }</span>
-<span class="source-line-no">1922</span><span id="line-1922">        }</span>
-<span class="source-line-no">1923</span><span id="line-1923">    }</span>
-<span class="source-line-no">1924</span><span id="line-1924"></span>
-<span class="source-line-no">1925</span><span id="line-1925">    @EventHandler</span>
-<span class="source-line-no">1926</span><span id="line-1926">    public void onDeath(final PlayerDeathEvent event) {</span>
-<span class="source-line-no">1927</span><span id="line-1927">        Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
-<span class="source-line-no">1928</span><span id="line-1928">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1929</span><span id="line-1929">        if (area == null) {</span>
-<span class="source-line-no">1930</span><span id="line-1930">            return;</span>
-<span class="source-line-no">1931</span><span id="line-1931">        }</span>
-<span class="source-line-no">1932</span><span id="line-1932">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">1933</span><span id="line-1933">        if (plot == null) {</span>
-<span class="source-line-no">1934</span><span id="line-1934">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, KeepInventoryFlag.class, true)) {</span>
-<span class="source-line-no">1935</span><span id="line-1935">                event.setCancelled(true);</span>
-<span class="source-line-no">1936</span><span id="line-1936">            }</span>
-<span class="source-line-no">1937</span><span id="line-1937">            return;</span>
-<span class="source-line-no">1938</span><span id="line-1938">        }</span>
-<span class="source-line-no">1939</span><span id="line-1939">        if (plot.getFlag(KeepInventoryFlag.class)) {</span>
-<span class="source-line-no">1940</span><span id="line-1940">            plot.debug(event.getEntity().getName() + " kept their inventory because of keep-inventory = true");</span>
-<span class="source-line-no">1941</span><span id="line-1941">            event.getDrops().clear();</span>
-<span class="source-line-no">1942</span><span id="line-1942">            event.setKeepInventory(true);</span>
-<span class="source-line-no">1943</span><span id="line-1943">        }</span>
-<span class="source-line-no">1944</span><span id="line-1944">    }</span>
-<span class="source-line-no">1945</span><span id="line-1945"></span>
-<span class="source-line-no">1946</span><span id="line-1946">    @SuppressWarnings("deprecation") // #getLocate is needed for Spigot compatibility</span>
-<span class="source-line-no">1947</span><span id="line-1947">    @EventHandler</span>
-<span class="source-line-no">1948</span><span id="line-1948">    public void onLocaleChange(final PlayerLocaleChangeEvent event) {</span>
-<span class="source-line-no">1949</span><span id="line-1949">        // The event is fired before the player is deemed online upon login</span>
-<span class="source-line-no">1950</span><span id="line-1950">        if (!event.getPlayer().isOnline()) {</span>
-<span class="source-line-no">1951</span><span id="line-1951">            return;</span>
-<span class="source-line-no">1952</span><span id="line-1952">        }</span>
-<span class="source-line-no">1953</span><span id="line-1953">        BukkitPlayer player = BukkitUtil.adapt(event.getPlayer());</span>
-<span class="source-line-no">1954</span><span id="line-1954">        // we're stripping the country code as we don't want to differ between countries</span>
-<span class="source-line-no">1955</span><span id="line-1955">        player.setLocale(Locale.forLanguageTag(event.getLocale().substring(0, 2)));</span>
-<span class="source-line-no">1956</span><span id="line-1956">    }</span>
-<span class="source-line-no">1957</span><span id="line-1957"></span>
-<span class="source-line-no">1958</span><span id="line-1958">    @EventHandler</span>
-<span class="source-line-no">1959</span><span id="line-1959">    public void onPortalEnter(PlayerPortalEvent event) {</span>
-<span class="source-line-no">1960</span><span id="line-1960">        Location location = BukkitUtil.adapt(event.getPlayer().getLocation());</span>
-<span class="source-line-no">1961</span><span id="line-1961">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">1962</span><span id="line-1962">        if (area == null) {</span>
-<span class="source-line-no">1963</span><span id="line-1963">            return;</span>
-<span class="source-line-no">1964</span><span id="line-1964">        }</span>
-<span class="source-line-no">1965</span><span id="line-1965">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">1966</span><span id="line-1966">        if (plot == null) {</span>
-<span class="source-line-no">1967</span><span id="line-1967">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, DenyPortalTravelFlag.class, true)) {</span>
-<span class="source-line-no">1968</span><span id="line-1968">                event.setCancelled(true);</span>
-<span class="source-line-no">1969</span><span id="line-1969">            }</span>
-<span class="source-line-no">1970</span><span id="line-1970">            return;</span>
-<span class="source-line-no">1971</span><span id="line-1971">        }</span>
-<span class="source-line-no">1972</span><span id="line-1972">        if (plot.getFlag(DenyPortalTravelFlag.class)) {</span>
-<span class="source-line-no">1973</span><span id="line-1973">            plot.debug(event.getPlayer().getName() + " did not travel thru a portal because of deny-portal-travel = true");</span>
-<span class="source-line-no">1974</span><span id="line-1974">            event.setCancelled(true);</span>
-<span class="source-line-no">1975</span><span id="line-1975">        }</span>
-<span class="source-line-no">1976</span><span id="line-1976">    }</span>
-<span class="source-line-no">1977</span><span id="line-1977"></span>
-<span class="source-line-no">1978</span><span id="line-1978">    @EventHandler</span>
-<span class="source-line-no">1979</span><span id="line-1979">    public void onPortalCreation(PortalCreateEvent event) {</span>
-<span class="source-line-no">1980</span><span id="line-1980">        String world = event.getWorld().getName();</span>
-<span class="source-line-no">1981</span><span id="line-1981">        if (PlotSquared.get().getPlotAreaManager().getPlotAreasSet(world).size() == 0) {</span>
-<span class="source-line-no">1982</span><span id="line-1982">            return;</span>
-<span class="source-line-no">1983</span><span id="line-1983">        }</span>
-<span class="source-line-no">1984</span><span id="line-1984">        BukkitPlayer pp = (event.getEntity() instanceof Player player) ? BukkitUtil.adapt(player) : null;</span>
-<span class="source-line-no">1985</span><span id="line-1985">        int minX = Integer.MAX_VALUE;</span>
-<span class="source-line-no">1986</span><span id="line-1986">        int maxX = Integer.MIN_VALUE;</span>
-<span class="source-line-no">1987</span><span id="line-1987">        int minZ = Integer.MAX_VALUE;</span>
-<span class="source-line-no">1988</span><span id="line-1988">        int maxZ = Integer.MIN_VALUE;</span>
-<span class="source-line-no">1989</span><span id="line-1989">        for (BlockState state : event.getBlocks()) {</span>
-<span class="source-line-no">1990</span><span id="line-1990">            minX = Math.min(state.getX(), minX);</span>
-<span class="source-line-no">1991</span><span id="line-1991">            maxX = Math.max(state.getX(), maxX);</span>
-<span class="source-line-no">1992</span><span id="line-1992">            minZ = Math.min(state.getZ(), minZ);</span>
-<span class="source-line-no">1993</span><span id="line-1993">            maxZ = Math.max(state.getZ(), maxZ);</span>
-<span class="source-line-no">1994</span><span id="line-1994">        }</span>
-<span class="source-line-no">1995</span><span id="line-1995">        int y = event.getBlocks().get(0).getY(); // Don't need to worry about this too much</span>
-<span class="source-line-no">1996</span><span id="line-1996">        for (Location location : List.of( // We don't care about duplicate locations</span>
-<span class="source-line-no">1997</span><span id="line-1997">                Location.at(world, minX, y, minZ),</span>
-<span class="source-line-no">1998</span><span id="line-1998">                Location.at(world, minX, y, maxZ),</span>
-<span class="source-line-no">1999</span><span id="line-1999">                Location.at(world, maxX, y, minZ),</span>
-<span class="source-line-no">2000</span><span id="line-2000">                Location.at(world, maxX, y, maxZ)</span>
-<span class="source-line-no">2001</span><span id="line-2001">        )) {</span>
-<span class="source-line-no">2002</span><span id="line-2002">            PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">2003</span><span id="line-2003">            if (area == null) {</span>
-<span class="source-line-no">2004</span><span id="line-2004">                continue;</span>
-<span class="source-line-no">2005</span><span id="line-2005">            }</span>
-<span class="source-line-no">2006</span><span id="line-2006">            if (area.notifyIfOutsideBuildArea(pp, location.getY())) {</span>
-<span class="source-line-no">2007</span><span id="line-2007">                event.setCancelled(true);</span>
-<span class="source-line-no">2008</span><span id="line-2008">                return;</span>
-<span class="source-line-no">2009</span><span id="line-2009">            }</span>
-<span class="source-line-no">2010</span><span id="line-2010">            Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">2011</span><span id="line-2011">            if (plot == null) {</span>
-<span class="source-line-no">2012</span><span id="line-2012">                if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, DenyPortalsFlag.class, true)) {</span>
-<span class="source-line-no">2013</span><span id="line-2013">                    event.setCancelled(true);</span>
-<span class="source-line-no">2014</span><span id="line-2014">                    return;</span>
-<span class="source-line-no">2015</span><span id="line-2015">                }</span>
-<span class="source-line-no">2016</span><span id="line-2016">                continue;</span>
-<span class="source-line-no">2017</span><span id="line-2017">            }</span>
-<span class="source-line-no">2018</span><span id="line-2018">            if (plot.getFlag(DenyPortalsFlag.class)) {</span>
-<span class="source-line-no">2019</span><span id="line-2019">                StringBuilder builder = new StringBuilder();</span>
-<span class="source-line-no">2020</span><span id="line-2020">                if (event.getEntity() != null) {</span>
-<span class="source-line-no">2021</span><span id="line-2021">                    builder.append(event.getEntity().getName()).append(" did not create a portal");</span>
-<span class="source-line-no">2022</span><span id="line-2022">                } else {</span>
-<span class="source-line-no">2023</span><span id="line-2023">                    builder.append("Portal creation cancelled");</span>
-<span class="source-line-no">2024</span><span id="line-2024">                }</span>
-<span class="source-line-no">2025</span><span id="line-2025">                plot.debug(builder.append(" because of deny-portals = true").toString());</span>
-<span class="source-line-no">2026</span><span id="line-2026">                event.setCancelled(true);</span>
-<span class="source-line-no">2027</span><span id="line-2027">                return;</span>
-<span class="source-line-no">2028</span><span id="line-2028">            }</span>
-<span class="source-line-no">2029</span><span id="line-2029">        }</span>
-<span class="source-line-no">2030</span><span id="line-2030">    }</span>
-<span class="source-line-no">2031</span><span id="line-2031"></span>
-<span class="source-line-no">2032</span><span id="line-2032">    @EventHandler</span>
-<span class="source-line-no">2033</span><span id="line-2033">    public void onPlayerTakeLecternBook(PlayerTakeLecternBookEvent event) {</span>
-<span class="source-line-no">2034</span><span id="line-2034">        Player player = event.getPlayer();</span>
-<span class="source-line-no">2035</span><span id="line-2035">        BukkitPlayer pp = BukkitUtil.adapt(player);</span>
-<span class="source-line-no">2036</span><span id="line-2036">        Location location = pp.getLocation();</span>
-<span class="source-line-no">2037</span><span id="line-2037">        PlotArea area = location.getPlotArea();</span>
-<span class="source-line-no">2038</span><span id="line-2038">        if (area == null) {</span>
-<span class="source-line-no">2039</span><span id="line-2039">            return;</span>
-<span class="source-line-no">2040</span><span id="line-2040">        }</span>
-<span class="source-line-no">2041</span><span id="line-2041">        Plot plot = location.getOwnedPlot();</span>
-<span class="source-line-no">2042</span><span id="line-2042">        if (plot == null) {</span>
-<span class="source-line-no">2043</span><span id="line-2043">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, LecternReadBookFlag.class, true)) {</span>
-<span class="source-line-no">2044</span><span id="line-2044">                event.setCancelled(true);</span>
-<span class="source-line-no">2045</span><span id="line-2045">            }</span>
-<span class="source-line-no">2046</span><span id="line-2046">            return;</span>
-<span class="source-line-no">2047</span><span id="line-2047">        }</span>
-<span class="source-line-no">2048</span><span id="line-2048">        if (!plot.isAdded(pp.getUUID())) {</span>
-<span class="source-line-no">2049</span><span id="line-2049">            if (plot.getFlag(LecternReadBookFlag.class)) {</span>
-<span class="source-line-no">2050</span><span id="line-2050">                plot.debug(event.getPlayer().getName() + " could not take the book because of lectern-read-book = true");</span>
-<span class="source-line-no">2051</span><span id="line-2051">                event.setCancelled(true);</span>
-<span class="source-line-no">2052</span><span id="line-2052">            }</span>
+<span class="source-line-no">1858</span><span id="line-1858">                    return;</span>
+<span class="source-line-no">1859</span><span id="line-1859">                }</span>
+<span class="source-line-no">1860</span><span id="line-1860">                if (!plot.isAdded(pp.getUUID())) {</span>
+<span class="source-line-no">1861</span><span id="line-1861">                    if (plot.getFlag(VehicleBreakFlag.class)) {</span>
+<span class="source-line-no">1862</span><span id="line-1862">                        return;</span>
+<span class="source-line-no">1863</span><span id="line-1863">                    }</span>
+<span class="source-line-no">1864</span><span id="line-1864">                    if (!pp.hasPermission(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_OTHER)) {</span>
+<span class="source-line-no">1865</span><span id="line-1865">                        pp.sendMessage(</span>
+<span class="source-line-no">1866</span><span id="line-1866">                                TranslatableCaption.of("permission.no_permission_event"),</span>
+<span class="source-line-no">1867</span><span id="line-1867">                                TagResolver.resolver(</span>
+<span class="source-line-no">1868</span><span id="line-1868">                                        "node",</span>
+<span class="source-line-no">1869</span><span id="line-1869">                                        Tag.inserting(Permission.PERMISSION_ADMIN_DESTROY_VEHICLE_OTHER)</span>
+<span class="source-line-no">1870</span><span id="line-1870">                                )</span>
+<span class="source-line-no">1871</span><span id="line-1871">                        );</span>
+<span class="source-line-no">1872</span><span id="line-1872">                        event.setCancelled(true);</span>
+<span class="source-line-no">1873</span><span id="line-1873">                        plot.debug(pp.getName()</span>
+<span class="source-line-no">1874</span><span id="line-1874">                                + " could not break vehicle because vehicle-break = false");</span>
+<span class="source-line-no">1875</span><span id="line-1875">                    }</span>
+<span class="source-line-no">1876</span><span id="line-1876">                }</span>
+<span class="source-line-no">1877</span><span id="line-1877">            }</span>
+<span class="source-line-no">1878</span><span id="line-1878">        }</span>
+<span class="source-line-no">1879</span><span id="line-1879">    }</span>
+<span class="source-line-no">1880</span><span id="line-1880"></span>
+<span class="source-line-no">1881</span><span id="line-1881">    @EventHandler</span>
+<span class="source-line-no">1882</span><span id="line-1882">    public void onItemDrop(PlayerDropItemEvent event) {</span>
+<span class="source-line-no">1883</span><span id="line-1883">        Player player = event.getPlayer();</span>
+<span class="source-line-no">1884</span><span id="line-1884">        BukkitPlayer pp = BukkitUtil.adapt(player);</span>
+<span class="source-line-no">1885</span><span id="line-1885">        Location location = pp.getLocation();</span>
+<span class="source-line-no">1886</span><span id="line-1886">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1887</span><span id="line-1887">        if (area == null) {</span>
+<span class="source-line-no">1888</span><span id="line-1888">            return;</span>
+<span class="source-line-no">1889</span><span id="line-1889">        }</span>
+<span class="source-line-no">1890</span><span id="line-1890">        Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">1891</span><span id="line-1891">        if (plot == null) {</span>
+<span class="source-line-no">1892</span><span id="line-1892">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, ItemDropFlag.class, false)) {</span>
+<span class="source-line-no">1893</span><span id="line-1893">                event.setCancelled(true);</span>
+<span class="source-line-no">1894</span><span id="line-1894">            }</span>
+<span class="source-line-no">1895</span><span id="line-1895">            return;</span>
+<span class="source-line-no">1896</span><span id="line-1896">        }</span>
+<span class="source-line-no">1897</span><span id="line-1897">        UUID uuid = pp.getUUID();</span>
+<span class="source-line-no">1898</span><span id="line-1898">        if (!plot.isAdded(uuid)) {</span>
+<span class="source-line-no">1899</span><span id="line-1899">            if (!plot.getFlag(ItemDropFlag.class)) {</span>
+<span class="source-line-no">1900</span><span id="line-1900">                plot.debug(player.getName() + " could not drop item because of item-drop = false");</span>
+<span class="source-line-no">1901</span><span id="line-1901">                event.setCancelled(true);</span>
+<span class="source-line-no">1902</span><span id="line-1902">            }</span>
+<span class="source-line-no">1903</span><span id="line-1903">        }</span>
+<span class="source-line-no">1904</span><span id="line-1904">    }</span>
+<span class="source-line-no">1905</span><span id="line-1905"></span>
+<span class="source-line-no">1906</span><span id="line-1906">    @EventHandler</span>
+<span class="source-line-no">1907</span><span id="line-1907">    public void onItemPickup(EntityPickupItemEvent event) {</span>
+<span class="source-line-no">1908</span><span id="line-1908">        LivingEntity ent = event.getEntity();</span>
+<span class="source-line-no">1909</span><span id="line-1909">        if (ent instanceof Player player) {</span>
+<span class="source-line-no">1910</span><span id="line-1910">            BukkitPlayer pp = BukkitUtil.adapt(player);</span>
+<span class="source-line-no">1911</span><span id="line-1911">            Location location = pp.getLocation();</span>
+<span class="source-line-no">1912</span><span id="line-1912">            PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1913</span><span id="line-1913">            if (area == null) {</span>
+<span class="source-line-no">1914</span><span id="line-1914">                return;</span>
+<span class="source-line-no">1915</span><span id="line-1915">            }</span>
+<span class="source-line-no">1916</span><span id="line-1916">            Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">1917</span><span id="line-1917">            if (plot == null) {</span>
+<span class="source-line-no">1918</span><span id="line-1918">                if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, DropProtectionFlag.class, true)) {</span>
+<span class="source-line-no">1919</span><span id="line-1919">                    event.setCancelled(true);</span>
+<span class="source-line-no">1920</span><span id="line-1920">                }</span>
+<span class="source-line-no">1921</span><span id="line-1921">                return;</span>
+<span class="source-line-no">1922</span><span id="line-1922">            }</span>
+<span class="source-line-no">1923</span><span id="line-1923">            UUID uuid = pp.getUUID();</span>
+<span class="source-line-no">1924</span><span id="line-1924">            if (!plot.isAdded(uuid) &amp;&amp; plot.getFlag(DropProtectionFlag.class)) {</span>
+<span class="source-line-no">1925</span><span id="line-1925">                plot.debug(player.getName() + " could not pick up item because of drop-protection = true");</span>
+<span class="source-line-no">1926</span><span id="line-1926">                event.setCancelled(true);</span>
+<span class="source-line-no">1927</span><span id="line-1927">            }</span>
+<span class="source-line-no">1928</span><span id="line-1928">        }</span>
+<span class="source-line-no">1929</span><span id="line-1929">    }</span>
+<span class="source-line-no">1930</span><span id="line-1930"></span>
+<span class="source-line-no">1931</span><span id="line-1931">    @EventHandler</span>
+<span class="source-line-no">1932</span><span id="line-1932">    public void onDeath(final PlayerDeathEvent event) {</span>
+<span class="source-line-no">1933</span><span id="line-1933">        Location location = BukkitUtil.adapt(event.getEntity().getLocation());</span>
+<span class="source-line-no">1934</span><span id="line-1934">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1935</span><span id="line-1935">        if (area == null) {</span>
+<span class="source-line-no">1936</span><span id="line-1936">            return;</span>
+<span class="source-line-no">1937</span><span id="line-1937">        }</span>
+<span class="source-line-no">1938</span><span id="line-1938">        Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">1939</span><span id="line-1939">        if (plot == null) {</span>
+<span class="source-line-no">1940</span><span id="line-1940">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, KeepInventoryFlag.class, true)) {</span>
+<span class="source-line-no">1941</span><span id="line-1941">                event.setCancelled(true);</span>
+<span class="source-line-no">1942</span><span id="line-1942">            }</span>
+<span class="source-line-no">1943</span><span id="line-1943">            return;</span>
+<span class="source-line-no">1944</span><span id="line-1944">        }</span>
+<span class="source-line-no">1945</span><span id="line-1945">        if (plot.getFlag(KeepInventoryFlag.class)) {</span>
+<span class="source-line-no">1946</span><span id="line-1946">            plot.debug(event.getEntity().getName() + " kept their inventory because of keep-inventory = true");</span>
+<span class="source-line-no">1947</span><span id="line-1947">            event.getDrops().clear();</span>
+<span class="source-line-no">1948</span><span id="line-1948">            event.setKeepInventory(true);</span>
+<span class="source-line-no">1949</span><span id="line-1949">        }</span>
+<span class="source-line-no">1950</span><span id="line-1950">    }</span>
+<span class="source-line-no">1951</span><span id="line-1951"></span>
+<span class="source-line-no">1952</span><span id="line-1952">    @SuppressWarnings("deprecation") // #getLocate is needed for Spigot compatibility</span>
+<span class="source-line-no">1953</span><span id="line-1953">    @EventHandler</span>
+<span class="source-line-no">1954</span><span id="line-1954">    public void onLocaleChange(final PlayerLocaleChangeEvent event) {</span>
+<span class="source-line-no">1955</span><span id="line-1955">        // The event is fired before the player is deemed online upon login</span>
+<span class="source-line-no">1956</span><span id="line-1956">        if (!event.getPlayer().isOnline()) {</span>
+<span class="source-line-no">1957</span><span id="line-1957">            return;</span>
+<span class="source-line-no">1958</span><span id="line-1958">        }</span>
+<span class="source-line-no">1959</span><span id="line-1959">        BukkitPlayer player = BukkitUtil.adapt(event.getPlayer());</span>
+<span class="source-line-no">1960</span><span id="line-1960">        // we're stripping the country code as we don't want to differ between countries</span>
+<span class="source-line-no">1961</span><span id="line-1961">        player.setLocale(Locale.forLanguageTag(event.getLocale().substring(0, 2)));</span>
+<span class="source-line-no">1962</span><span id="line-1962">    }</span>
+<span class="source-line-no">1963</span><span id="line-1963"></span>
+<span class="source-line-no">1964</span><span id="line-1964">    @EventHandler</span>
+<span class="source-line-no">1965</span><span id="line-1965">    public void onPortalEnter(PlayerPortalEvent event) {</span>
+<span class="source-line-no">1966</span><span id="line-1966">        Location location = BukkitUtil.adapt(event.getPlayer().getLocation());</span>
+<span class="source-line-no">1967</span><span id="line-1967">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">1968</span><span id="line-1968">        if (area == null) {</span>
+<span class="source-line-no">1969</span><span id="line-1969">            return;</span>
+<span class="source-line-no">1970</span><span id="line-1970">        }</span>
+<span class="source-line-no">1971</span><span id="line-1971">        Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">1972</span><span id="line-1972">        if (plot == null) {</span>
+<span class="source-line-no">1973</span><span id="line-1973">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, DenyPortalTravelFlag.class, true)) {</span>
+<span class="source-line-no">1974</span><span id="line-1974">                event.setCancelled(true);</span>
+<span class="source-line-no">1975</span><span id="line-1975">            }</span>
+<span class="source-line-no">1976</span><span id="line-1976">            return;</span>
+<span class="source-line-no">1977</span><span id="line-1977">        }</span>
+<span class="source-line-no">1978</span><span id="line-1978">        if (plot.getFlag(DenyPortalTravelFlag.class)) {</span>
+<span class="source-line-no">1979</span><span id="line-1979">            plot.debug(event.getPlayer().getName() + " did not travel thru a portal because of deny-portal-travel = true");</span>
+<span class="source-line-no">1980</span><span id="line-1980">            event.setCancelled(true);</span>
+<span class="source-line-no">1981</span><span id="line-1981">        }</span>
+<span class="source-line-no">1982</span><span id="line-1982">    }</span>
+<span class="source-line-no">1983</span><span id="line-1983"></span>
+<span class="source-line-no">1984</span><span id="line-1984">    @EventHandler</span>
+<span class="source-line-no">1985</span><span id="line-1985">    public void onPortalCreation(PortalCreateEvent event) {</span>
+<span class="source-line-no">1986</span><span id="line-1986">        String world = event.getWorld().getName();</span>
+<span class="source-line-no">1987</span><span id="line-1987">        if (PlotSquared.get().getPlotAreaManager().getPlotAreasSet(world).size() == 0) {</span>
+<span class="source-line-no">1988</span><span id="line-1988">            return;</span>
+<span class="source-line-no">1989</span><span id="line-1989">        }</span>
+<span class="source-line-no">1990</span><span id="line-1990">        BukkitPlayer pp = (event.getEntity() instanceof Player player) ? BukkitUtil.adapt(player) : null;</span>
+<span class="source-line-no">1991</span><span id="line-1991">        int minX = Integer.MAX_VALUE;</span>
+<span class="source-line-no">1992</span><span id="line-1992">        int maxX = Integer.MIN_VALUE;</span>
+<span class="source-line-no">1993</span><span id="line-1993">        int minZ = Integer.MAX_VALUE;</span>
+<span class="source-line-no">1994</span><span id="line-1994">        int maxZ = Integer.MIN_VALUE;</span>
+<span class="source-line-no">1995</span><span id="line-1995">        for (BlockState state : event.getBlocks()) {</span>
+<span class="source-line-no">1996</span><span id="line-1996">            minX = Math.min(state.getX(), minX);</span>
+<span class="source-line-no">1997</span><span id="line-1997">            maxX = Math.max(state.getX(), maxX);</span>
+<span class="source-line-no">1998</span><span id="line-1998">            minZ = Math.min(state.getZ(), minZ);</span>
+<span class="source-line-no">1999</span><span id="line-1999">            maxZ = Math.max(state.getZ(), maxZ);</span>
+<span class="source-line-no">2000</span><span id="line-2000">        }</span>
+<span class="source-line-no">2001</span><span id="line-2001">        int y = event.getBlocks().get(0).getY(); // Don't need to worry about this too much</span>
+<span class="source-line-no">2002</span><span id="line-2002">        for (Location location : List.of( // We don't care about duplicate locations</span>
+<span class="source-line-no">2003</span><span id="line-2003">                Location.at(world, minX, y, minZ),</span>
+<span class="source-line-no">2004</span><span id="line-2004">                Location.at(world, minX, y, maxZ),</span>
+<span class="source-line-no">2005</span><span id="line-2005">                Location.at(world, maxX, y, minZ),</span>
+<span class="source-line-no">2006</span><span id="line-2006">                Location.at(world, maxX, y, maxZ)</span>
+<span class="source-line-no">2007</span><span id="line-2007">        )) {</span>
+<span class="source-line-no">2008</span><span id="line-2008">            PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">2009</span><span id="line-2009">            if (area == null) {</span>
+<span class="source-line-no">2010</span><span id="line-2010">                continue;</span>
+<span class="source-line-no">2011</span><span id="line-2011">            }</span>
+<span class="source-line-no">2012</span><span id="line-2012">            if (area.notifyIfOutsideBuildArea(pp, location.getY())) {</span>
+<span class="source-line-no">2013</span><span id="line-2013">                event.setCancelled(true);</span>
+<span class="source-line-no">2014</span><span id="line-2014">                return;</span>
+<span class="source-line-no">2015</span><span id="line-2015">            }</span>
+<span class="source-line-no">2016</span><span id="line-2016">            Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">2017</span><span id="line-2017">            if (plot == null) {</span>
+<span class="source-line-no">2018</span><span id="line-2018">                if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, DenyPortalsFlag.class, true)) {</span>
+<span class="source-line-no">2019</span><span id="line-2019">                    event.setCancelled(true);</span>
+<span class="source-line-no">2020</span><span id="line-2020">                    return;</span>
+<span class="source-line-no">2021</span><span id="line-2021">                }</span>
+<span class="source-line-no">2022</span><span id="line-2022">                continue;</span>
+<span class="source-line-no">2023</span><span id="line-2023">            }</span>
+<span class="source-line-no">2024</span><span id="line-2024">            if (plot.getFlag(DenyPortalsFlag.class)) {</span>
+<span class="source-line-no">2025</span><span id="line-2025">                StringBuilder builder = new StringBuilder();</span>
+<span class="source-line-no">2026</span><span id="line-2026">                if (event.getEntity() != null) {</span>
+<span class="source-line-no">2027</span><span id="line-2027">                    builder.append(event.getEntity().getName()).append(" did not create a portal");</span>
+<span class="source-line-no">2028</span><span id="line-2028">                } else {</span>
+<span class="source-line-no">2029</span><span id="line-2029">                    builder.append("Portal creation cancelled");</span>
+<span class="source-line-no">2030</span><span id="line-2030">                }</span>
+<span class="source-line-no">2031</span><span id="line-2031">                plot.debug(builder.append(" because of deny-portals = true").toString());</span>
+<span class="source-line-no">2032</span><span id="line-2032">                event.setCancelled(true);</span>
+<span class="source-line-no">2033</span><span id="line-2033">                return;</span>
+<span class="source-line-no">2034</span><span id="line-2034">            }</span>
+<span class="source-line-no">2035</span><span id="line-2035">        }</span>
+<span class="source-line-no">2036</span><span id="line-2036">    }</span>
+<span class="source-line-no">2037</span><span id="line-2037"></span>
+<span class="source-line-no">2038</span><span id="line-2038">    @EventHandler</span>
+<span class="source-line-no">2039</span><span id="line-2039">    public void onPlayerTakeLecternBook(PlayerTakeLecternBookEvent event) {</span>
+<span class="source-line-no">2040</span><span id="line-2040">        Player player = event.getPlayer();</span>
+<span class="source-line-no">2041</span><span id="line-2041">        BukkitPlayer pp = BukkitUtil.adapt(player);</span>
+<span class="source-line-no">2042</span><span id="line-2042">        Location location = pp.getLocation();</span>
+<span class="source-line-no">2043</span><span id="line-2043">        PlotArea area = location.getPlotArea();</span>
+<span class="source-line-no">2044</span><span id="line-2044">        if (area == null) {</span>
+<span class="source-line-no">2045</span><span id="line-2045">            return;</span>
+<span class="source-line-no">2046</span><span id="line-2046">        }</span>
+<span class="source-line-no">2047</span><span id="line-2047">        Plot plot = location.getOwnedPlot();</span>
+<span class="source-line-no">2048</span><span id="line-2048">        if (plot == null) {</span>
+<span class="source-line-no">2049</span><span id="line-2049">            if (PlotFlagUtil.isAreaRoadFlagsAndFlagEquals(area, LecternReadBookFlag.class, true)) {</span>
+<span class="source-line-no">2050</span><span id="line-2050">                event.setCancelled(true);</span>
+<span class="source-line-no">2051</span><span id="line-2051">            }</span>
+<span class="source-line-no">2052</span><span id="line-2052">            return;</span>
 <span class="source-line-no">2053</span><span id="line-2053">        }</span>
-<span class="source-line-no">2054</span><span id="line-2054">    }</span>
-<span class="source-line-no">2055</span><span id="line-2055"></span>
-<span class="source-line-no">2056</span><span id="line-2056">}</span>
+<span class="source-line-no">2054</span><span id="line-2054">        if (!plot.isAdded(pp.getUUID())) {</span>
+<span class="source-line-no">2055</span><span id="line-2055">            if (plot.getFlag(LecternReadBookFlag.class)) {</span>
+<span class="source-line-no">2056</span><span id="line-2056">                plot.debug(event.getPlayer().getName() + " could not take the book because of lectern-read-book = true");</span>
+<span class="source-line-no">2057</span><span id="line-2057">                event.setCancelled(true);</span>
+<span class="source-line-no">2058</span><span id="line-2058">            }</span>
+<span class="source-line-no">2059</span><span id="line-2059">        }</span>
+<span class="source-line-no">2060</span><span id="line-2060">    }</span>
+<span class="source-line-no">2061</span><span id="line-2061"></span>
+<span class="source-line-no">2062</span><span id="line-2062">}</span>
 
 
 

@@ -211,7 +211,7 @@
 <span class="source-line-no">198</span><span id="line-198">                        BiomeType biome = biomesLayer[j];</span>
 <span class="source-line-no">199</span><span id="line-199">                        if (biome != null) {</span>
 <span class="source-line-no">200</span><span id="line-200">                            int x = sx + ChunkUtil.getX(j);</span>
-<span class="source-line-no">201</span><span id="line-201">                            int y = ChunkUtil.getY(layer, j);</span>
+<span class="source-line-no">201</span><span id="line-201">                            int y = ChunkUtil.getY(layer + localChunk.getMinSection(), j);</span>
 <span class="source-line-no">202</span><span id="line-202">                            int z = sz + ChunkUtil.getZ(j);</span>
 <span class="source-line-no">203</span><span id="line-203">                            getWorld().setBiome(BlockVector3.at(x, y, z), biome);</span>
 <span class="source-line-no">204</span><span id="line-204">                        }</span>
